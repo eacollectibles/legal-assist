@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, ArrowRight, X, ChevronDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Image } from '@/components/ui/image';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -12,52 +11,21 @@ import { motion } from 'framer-motion';
 
 export default function LegalServicesPage() {
   const [categories, setCategories] = useState<LegalServiceCategories[]>([]);
-  const [filteredCategories, setFilteredCategories] = useState<LegalServiceCategories[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterOffered, setFilterOffered] = useState<'all' | 'offered' | 'not-offered'>('all');
   const [isLoading, setIsLoading] = useState(true);
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     loadCategories();
   }, []);
 
-  useEffect(() => {
-    applyFilters();
-  }, [categories, searchTerm, filterOffered]);
-
   const loadCategories = async () => {
     try {
       const { items } = await BaseCrudService.getAll<LegalServiceCategories>('legalservicecategories');
       setCategories(items);
-      setFilteredCategories(items);
     } catch (error) {
       console.error('Error loading categories:', error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const applyFilters = () => {
-    let filtered = [...categories];
-
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter(cat => 
-        cat.categoryName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        cat.shortDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        cat.relevantTribunal?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Apply offered filter
-    if (filterOffered === 'offered') {
-      filtered = filtered.filter(cat => cat.isCurrentlyOffered === true);
-    } else if (filterOffered === 'not-offered') {
-      filtered = filtered.filter(cat => cat.isCurrentlyOffered === false);
-    }
-
-    setFilteredCategories(filtered);
   };
 
   const containerVariants = {
@@ -113,90 +81,7 @@ export default function LegalServicesPage() {
         </motion.div>
       </section>
 
-      {/* Filters Section - Mobile Optimized */}
-      <section className="bg-gradient-to-b from-pastelbeige to-background py-6 sm:py-8 sticky top-16 z-40">
-        <div className="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-12">
-          {/* Search Bar */}
-          <div className="mb-4 sm:mb-6">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-secondary/40" />
-              <Input
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 py-3 sm:py-4 font-paragraph text-base sm:text-lg bg-background border-2 border-secondary/20 focus:border-primary rounded-lg transition-colors"
-              />
-            </div>
-          </div>
 
-          {/* Filter Toggle Button - Mobile */}
-          <div className="lg:hidden mb-4">
-            <button
-              onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="w-full flex items-center justify-between bg-primary text-primary-foreground font-paragraph px-4 py-3 rounded-lg transition-all active:scale-95"
-            >
-              <div className="flex items-center gap-2">
-                <Filter className="w-5 h-5" />
-                <span>Filters</span>
-              </div>
-              <ChevronDown className={`w-5 h-5 transition-transform ${showMobileFilters ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
-
-          {/* Filter Buttons - Desktop */}
-          <div className={`${showMobileFilters ? 'block' : 'hidden'} lg:block`}>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <button
-                onClick={() => setFilterOffered('all')}
-                className={`flex-1 sm:flex-none font-paragraph px-4 sm:px-6 py-3 sm:py-2 rounded-lg transition-all active:scale-95 ${
-                  filterOffered === 'all'
-                    ? 'bg-primary text-primary-foreground font-semibold'
-                    : 'bg-background text-secondary border-2 border-secondary/20 hover:border-primary'
-                }`}
-              >
-                All Services
-              </button>
-              <button
-                onClick={() => setFilterOffered('offered')}
-                className={`flex-1 sm:flex-none font-paragraph px-4 sm:px-6 py-3 sm:py-2 rounded-lg transition-all active:scale-95 ${
-                  filterOffered === 'offered'
-                    ? 'bg-primary text-primary-foreground font-semibold'
-                    : 'bg-background text-secondary border-2 border-secondary/20 hover:border-primary'
-                }`}
-              >
-                Available Now
-              </button>
-              <button
-                onClick={() => setFilterOffered('not-offered')}
-                className={`flex-1 sm:flex-none font-paragraph px-4 sm:px-6 py-3 sm:py-2 rounded-lg transition-all active:scale-95 ${
-                  filterOffered === 'not-offered'
-                    ? 'bg-primary text-primary-foreground font-semibold'
-                    : 'bg-background text-secondary border-2 border-secondary/20 hover:border-primary'
-                }`}
-              >
-                Coming Soon
-              </button>
-            </div>
-          </div>
-          
-          {/* Results Count */}
-          <div className="mt-4 flex items-center justify-between">
-            <p className="font-paragraph text-sm sm:text-base text-secondary/70">
-              <span className="font-semibold text-secondary">{filteredCategories.length}</span> of <span className="font-semibold text-secondary">{categories.length}</span> services
-            </p>
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="flex items-center gap-1 text-primary font-paragraph text-sm hover:underline"
-              >
-                Clear search
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* Categories Grid - Mobile Optimized */}
       <section className="py-8 sm:py-12 lg:py-16">
@@ -212,24 +97,15 @@ export default function LegalServicesPage() {
               </div>
               <p className="font-paragraph text-base sm:text-lg text-secondary/60">Loading practice areas...</p>
             </motion.div>
-          ) : filteredCategories.length === 0 ? (
+          ) : categories.length === 0 ? (
             <motion.div 
               className="text-center py-16 sm:py-20"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
               <p className="font-paragraph text-base sm:text-lg text-secondary/60 mb-4">
-                No practice areas found matching your criteria.
+                No practice areas available at this time.
               </p>
-              <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setFilterOffered('all');
-                }}
-                className="font-paragraph text-primary hover:underline"
-              >
-                Reset filters
-              </button>
             </motion.div>
           ) : (
             <motion.div 
@@ -238,7 +114,7 @@ export default function LegalServicesPage() {
               initial="hidden"
               animate="visible"
             >
-              {filteredCategories.map((category) => (
+              {categories.map((category) => (
                 <motion.div key={category._id} variants={itemVariants}>
                   <Link
                     to={`/legal-services/${category._id}`}
