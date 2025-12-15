@@ -153,7 +153,7 @@ export default function HomePage() {
             style={{ transform: 'translateY(calc(var(--scroll-progress) * 100px))' }}
           >
             <Image 
-              src="https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png?id=hero-legal-office"
+              src="https://static.wixstatic.com/media/99571b_3a3cefec19b443b5a4f3b53c0f884c26~mv2.png?originWidth=1920&originHeight=1024"
               alt="Professional legal office environment with warm lighting"
               className="w-full h-full object-cover"
               width={1920}
@@ -336,7 +336,7 @@ export default function HomePage() {
                 style={{ transform: 'translateY(calc(var(--scroll-progress) * 50px))' }}
               >
                 <Image 
-                  src="https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png?id=legal-consultation"
+                  src="https://static.wixstatic.com/media/99571b_9954538ec5b24b4a8a245180de229f4b~mv2.png?originWidth=1152&originHeight=640"
                   alt="Legal consultation in progress"
                   className="w-full h-full object-cover opacity-80"
                   width={1200}

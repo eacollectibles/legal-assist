@@ -1,24 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
 export default function Header() {
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
   return (
-    <header className="bg-background border-b border-secondary/10">
-      <div className="max-w-[120rem] mx-auto px-6 lg:px-12 py-6">
+    <header className="bg-background border-b border-secondary/10 sticky top-0 z-50">
+      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-sm flex items-center justify-center">
-              <span className="text-primary-foreground font-heading font-bold text-xl">LA</span>
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="w-9 sm:w-10 h-9 sm:h-10 bg-primary rounded-sm flex items-center justify-center">
+              <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">LA</span>
             </div>
-            <span className="font-heading text-2xl text-secondary font-bold">LegalAssist</span>
+            <span className="font-heading text-xl sm:text-2xl text-secondary font-bold hidden sm:inline">LegalAssist</span>
           </Link>
           
-          <nav className="flex items-center gap-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
             <Link 
               to="/" 
               className={`font-paragraph text-base transition-colors ${
@@ -39,14 +43,62 @@ export default function Header() {
             >
               Legal Services
             </Link>
-            <Link 
-              to="/legal-services#contact" 
-              className="bg-primary text-primary-foreground font-paragraph px-6 py-3 transition-all hover:bg-primary/90"
+            <a 
+              href="#contact" 
+              className="bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
             >
               Get Started
-            </Link>
+            </a>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 text-secondary hover:text-primary transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <nav className="lg:hidden mt-4 pb-4 flex flex-col gap-3 border-t border-secondary/10 pt-4">
+            <Link 
+              to="/" 
+              onClick={() => setMobileMenuOpen(false)}
+              className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                isActive('/') 
+                  ? 'bg-primary text-primary-foreground font-semibold' 
+                  : 'text-secondary hover:bg-pastelbeige'
+              }`}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/legal-services" 
+              onClick={() => setMobileMenuOpen(false)}
+              className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                isActive('/legal-services') 
+                  ? 'bg-primary text-primary-foreground font-semibold' 
+                  : 'text-secondary hover:bg-pastelbeige'
+              }`}
+            >
+              Legal Services
+            </Link>
+            <a 
+              href="#contact" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="bg-primary text-primary-foreground font-paragraph px-3 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95 text-center"
+            >
+              Get Started
+            </a>
+          </nav>
+        )}
       </div>
     </header>
   );
