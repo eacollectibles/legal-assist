@@ -11,10 +11,10 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-background border-b border-secondary/10 sticky top-0 z-50">
+    <header className="bg-background border-b border-secondary/10 sticky top-0 z-50" role="banner">
       <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0" aria-label="LegalAssist home">
             <div className="w-9 sm:w-10 h-9 sm:h-10 bg-primary rounded-sm flex items-center justify-center">
               <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">LA</span>
             </div>
@@ -22,7 +22,7 @@ export default function Header() {
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
             <Link 
               to="/" 
               className={`font-paragraph text-base transition-colors ${
@@ -56,6 +56,7 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 text-secondary hover:text-primary transition-colors"
             aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -67,7 +68,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <nav className="lg:hidden mt-4 pb-4 flex flex-col gap-3 border-t border-secondary/10 pt-4">
+          <nav className="lg:hidden mt-4 pb-4 flex flex-col gap-3 border-t border-secondary/10 pt-4" aria-label="Mobile navigation">
             <Link 
               to="/" 
               onClick={() => setMobileMenuOpen(false)}

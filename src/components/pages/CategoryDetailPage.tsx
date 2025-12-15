@@ -19,6 +19,101 @@ export default function CategoryDetailPage() {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (category) {
+      // Update document title and meta tags for SEO
+      const pageTitle = `${category.categoryName} - Legal Services in Ontario | LegalAssist`;
+      document.title = pageTitle;
+      
+      // Update meta description
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const descriptionContent = `${category.shortDescription || category.categoryName} - Professional legal representation in Ontario. ${category.relevantTribunal ? `Tribunal: ${category.relevantTribunal}` : ''}`;
+      if (metaDescription) {
+        metaDescription.setAttribute('content', descriptionContent);
+      } else {
+        const meta = document.createElement('meta');
+        meta.name = 'description';
+        meta.content = descriptionContent;
+        document.head.appendChild(meta);
+      }
+
+      // Add keywords meta tag
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      const keywordsContent = `${category.categoryName}, legal services Ontario, paralegal, ${category.relevantTribunal || 'legal representation'}`;
+      if (metaKeywords) {
+        metaKeywords.setAttribute('content', keywordsContent);
+      } else {
+        const meta = document.createElement('meta');
+        meta.name = 'keywords';
+        meta.content = keywordsContent;
+        document.head.appendChild(meta);
+      }
+
+      // Add Open Graph tags for social sharing
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) {
+        ogTitle.setAttribute('content', pageTitle);
+      } else {
+        const meta = document.createElement('meta');
+        meta.setAttribute('property', 'og:title');
+        meta.content = pageTitle;
+        document.head.appendChild(meta);
+      }
+
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      if (ogDescription) {
+        ogDescription.setAttribute('content', descriptionContent);
+      } else {
+        const meta = document.createElement('meta');
+        meta.setAttribute('property', 'og:description');
+        meta.content = descriptionContent;
+        document.head.appendChild(meta);
+      }
+
+      // Add canonical URL
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) {
+        canonical.setAttribute('href', `${window.location.origin}/legal-services/${id}`);
+      } else {
+        const link = document.createElement('link');
+        link.rel = 'canonical';
+        link.href = `${window.location.origin}/legal-services/${id}`;
+        document.head.appendChild(link);
+      }
+    }
+  }, [category, id]);
+
+  useEffect(() => {
+    if (category) {
+      // Add JSON-LD structured data for search engines
+      const schemaScript = document.createElement('script');
+      schemaScript.type = 'application/ld+json';
+      schemaScript.innerHTML = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: category.categoryName,
+        description: category.shortDescription || category.detailedDescription,
+        areaServed: 'Ontario',
+        ...(category.relevantTribunal && { jurisdiction: category.relevantTribunal }),
+        serviceType: 'Legal Services',
+        provider: {
+          '@type': 'LocalBusiness',
+          name: 'LegalAssist',
+          description: 'Professional legal services and paralegal representation',
+        },
+        offers: {
+          '@type': 'Offer',
+          availability: category.isCurrentlyOffered ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        },
+      });
+      document.head.appendChild(schemaScript);
+
+      return () => {
+        document.head.removeChild(schemaScript);
+      };
+    }
+  }, [category]);
+
   const loadCategory = async (categoryId: string) => {
     try {
       const item = await BaseCrudService.getById<LegalServiceCategories>('legalservicecategories', categoryId);
@@ -66,15 +161,16 @@ export default function CategoryDetailPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative w-full max-w-[120rem] mx-auto min-h-[400px] flex items-center">
+      <section className="relative w-full max-w-[120rem] mx-auto min-h-[400px] flex items-center" aria-label={`${category.categoryName} legal service details`}>
         {category.categoryImage && (
           <>
             <div className="absolute inset-0">
               <Image 
                 src={category.categoryImage}
-                alt={category.categoryName || 'Legal service category'}
+                alt={`${category.categoryName} - Professional legal services in Ontario`}
                 className="w-full h-full object-cover"
                 width={1920}
+                loading="eager"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-secondary/60 to-secondary/30" />
             </div>
@@ -129,7 +225,7 @@ export default function CategoryDetailPage() {
 
       {/* Detailed Description Section */}
       {category.detailedDescription && (
-        <section className="py-16 bg-pastelbeige">
+        <section className="py-16 bg-pastelbeige" aria-label="Detailed service description">
           <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
             <div className="max-w-5xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
@@ -151,7 +247,7 @@ export default function CategoryDetailPage() {
 
       {/* Eligibility Criteria Section */}
       {category.eligibilityCriteria && (
-        <section className="py-16 bg-background">
+        <section className="py-16 bg-background" aria-label="Eligibility criteria and requirements">
           <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
             <div className="max-w-5xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
@@ -172,7 +268,7 @@ export default function CategoryDetailPage() {
       )}
 
       {/* How We Can Help Section */}
-      <section className="py-16 bg-pastellavender/30">
+      <section className="py-16 bg-pastellavender/30" aria-label="How LegalAssist can help with your case">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-8">
@@ -232,7 +328,7 @@ export default function CategoryDetailPage() {
       </section>
 
       {/* Related Information */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-background" aria-label="Important information about our legal services">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
           <div className="max-w-5xl mx-auto">
             <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-8 text-center">
@@ -272,7 +368,7 @@ export default function CategoryDetailPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-secondary text-secondary-foreground">
+      <section className="py-20 bg-secondary text-secondary-foreground" aria-label="Call to action for legal consultation">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12 text-center">
           <h2 className="font-heading text-4xl lg:text-5xl mb-6">
             Ready to Move Forward?

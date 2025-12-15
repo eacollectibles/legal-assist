@@ -17,6 +17,110 @@ export default function LegalServicesPage() {
     loadCategories();
   }, []);
 
+  useEffect(() => {
+    // Update document title and meta tags for SEO
+    document.title = 'Legal Services in Ontario | Licensed Paralegal Services | LegalAssist';
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Explore our comprehensive legal services in Ontario. Licensed paralegals providing professional representation across multiple practice areas including family law, real estate, employment, and more.');
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'description';
+      meta.content = 'Explore our comprehensive legal services in Ontario. Licensed paralegals providing professional representation across multiple practice areas including family law, real estate, employment, and more.';
+      document.head.appendChild(meta);
+    }
+
+    // Add keywords meta tag
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', 'legal services Ontario, paralegal services, legal representation, family law, real estate law, employment law, tribunal representation');
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'keywords';
+      meta.content = 'legal services Ontario, paralegal services, legal representation, family law, real estate law, employment law, tribunal representation';
+      document.head.appendChild(meta);
+    }
+
+    // Add Open Graph tags for social sharing
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Legal Services in Ontario | LegalAssist');
+    } else {
+      const meta = document.createElement('meta');
+      meta.setAttribute('property', 'og:title');
+      meta.content = 'Legal Services in Ontario | LegalAssist';
+      document.head.appendChild(meta);
+    }
+
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', 'Professional legal services provided by licensed paralegals across Ontario.');
+    } else {
+      const meta = document.createElement('meta');
+      meta.setAttribute('property', 'og:description');
+      meta.content = 'Professional legal services provided by licensed paralegals across Ontario.';
+      document.head.appendChild(meta);
+    }
+
+    const ogType = document.querySelector('meta[property="og:type"]');
+    if (!ogType) {
+      const meta = document.createElement('meta');
+      meta.setAttribute('property', 'og:type');
+      meta.content = 'website';
+      document.head.appendChild(meta);
+    }
+
+    // Add canonical URL
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', `${window.location.origin}/legal-services`);
+    } else {
+      const link = document.createElement('link');
+      link.rel = 'canonical';
+      link.href = `${window.location.origin}/legal-services`;
+      document.head.appendChild(link);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Add JSON-LD structured data for search engines
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.innerHTML = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Legal Services in Ontario',
+      description: 'Comprehensive legal services provided by licensed paralegals across Ontario',
+      url: `${window.location.origin}/legal-services`,
+      mainEntity: {
+        '@type': 'LocalBusiness',
+        name: 'LegalAssist',
+        description: 'Professional legal services and paralegal representation',
+        areaServed: 'Ontario',
+        serviceType: 'Legal Services',
+        knowsAbout: categories.map(cat => cat.categoryName).filter(Boolean),
+      },
+      hasPart: categories.map(category => ({
+        '@type': 'Service',
+        name: category.categoryName,
+        description: category.shortDescription,
+        areaServed: 'Ontario',
+        ...(category.relevantTribunal && { jurisdiction: category.relevantTribunal }),
+        offers: {
+          '@type': 'Offer',
+          availability: category.isCurrentlyOffered ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        },
+      })),
+    });
+    document.head.appendChild(schemaScript);
+
+    return () => {
+      document.head.removeChild(schemaScript);
+    };
+  }, [categories]);
+
   const loadCategories = async () => {
     try {
       const { items } = await BaseCrudService.getAll<LegalServiceCategories>('legalservicecategories');
@@ -53,13 +157,14 @@ export default function LegalServicesPage() {
       <Header />
       
       {/* Hero Section - Mobile Optimized */}
-      <section className="relative w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-center overflow-hidden">
+      <section className="relative w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-center overflow-hidden" aria-label="Legal services hero section">
         <div className="absolute inset-0">
           <Image 
             src="https://static.wixstatic.com/media/99571b_037d480b44144f5eab86c4809b0ad38f~mv2.png?originWidth=1920&originHeight=576"
-            alt="Legal services and representation"
+            alt="Professional legal services and paralegal representation in Ontario"
             className="w-full h-full object-cover"
             width={1920}
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-secondary/60 via-secondary/40 to-transparent" />
         </div>
@@ -84,7 +189,7 @@ export default function LegalServicesPage() {
 
 
       {/* Categories Grid - Mobile Optimized */}
-      <section className="py-8 sm:py-12 lg:py-16">
+      <section className="py-8 sm:py-12 lg:py-16" aria-label="Legal services categories">
         <div className="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-12">
           {isLoading ? (
             <motion.div 
@@ -124,9 +229,10 @@ export default function LegalServicesPage() {
                       <div className="relative h-48 sm:h-56 overflow-hidden bg-secondary/5">
                         <Image
                           src={category.categoryImage}
-                          alt={category.categoryName || 'Legal service category'}
+                          alt={`${category.categoryName} - Legal service in Ontario`}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           width={600}
+                          loading="lazy"
                         />
                         {category.isCurrentlyOffered !== undefined && (
                           <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
@@ -173,7 +279,7 @@ export default function LegalServicesPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-r from-pastelgreen/40 via-pastellavender/40 to-pastelpeach/40">
+      <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-r from-pastelgreen/40 via-pastellavender/40 to-pastelpeach/40" aria-label="Legal services statistics">
         <div className="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <motion.div 
@@ -219,7 +325,7 @@ export default function LegalServicesPage() {
       </section>
 
       {/* CTA Section - Mobile Optimized */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-pastelgreen/30 to-background">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-pastelgreen/30 to-background" aria-label="Call to action for legal consultation">
         <div className="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-12 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
