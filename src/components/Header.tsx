@@ -46,12 +46,12 @@ export default function Header() {
             >
               Services
             </Link>
-            <a 
-              href="#contact" 
+            <Link 
+              to="/booking" 
               className="bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
             >
               Get Started
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -94,13 +94,13 @@ export default function Header() {
             >
               Services
             </Link>
-            <a 
-              href="#contact" 
+            <Link 
+              to="/booking" 
               onClick={() => setMobileMenuOpen(false)}
               className="bg-primary text-primary-foreground font-paragraph px-3 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95 text-center"
             >
               Get Started
-            </a>
+            </Link>
           </nav>
         )}
       </div>
