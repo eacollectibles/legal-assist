@@ -13,6 +13,7 @@ import FederalHumanRightsPage from '@/components/pages/FederalHumanRightsPage';
 import FamilyMattersPage from '@/components/pages/FamilyMattersPage';
 import MediationServicesPage from '@/components/pages/MediationServicesPage';
 import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
+import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "services/criminal-matters",
         element: <CriminalMattersPage />,
+      },
+      {
+        path: "services/notary-public",
+        element: <NotaryPublicPage />,
       },
       {
         path: "booking",
