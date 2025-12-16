@@ -244,7 +244,7 @@ export default function HomePage() {
                     At LegalAssist, we bridge the gap between complex legal processes and everyday people. Our licensed paralegals bring years of specialized experience to help you navigate Ontario's legal system with confidence and clarity.
                   </p>
                   <p className="text-lg leading-loose">
-                    Whether you're facing a traffic violation, small claims dispute, or landlord-tenant issue, we provide the expertise you need without the overwhelming costs of traditional law firms. We believe that justice should be accessible, understandable, and affordable for everyone.
+                    Whether you're facing a traffic violation, small claims dispute (up to $50,000), or landlord-tenant issue, we provide the expertise you need without the overwhelming costs of traditional law firms. We believe that justice should be accessible, understandable, and affordable for everyone.
                   </p>
                 </div>
               </AnimatedElement>
@@ -368,7 +368,7 @@ export default function HomePage() {
 
               <AnimatedElement delay={200}>
                 <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-8">
-                  Licensed paralegals in Ontario are authorized to represent clients in a wide range of legal matters. From traffic tickets to small claims court, landlord-tenant disputes to provincial offences, we cover the full spectrum of paralegal practice areas.
+                  Licensed paralegals in Ontario are authorized to represent clients in a wide range of legal matters. From traffic tickets to small claims court (up to $50,000), landlord-tenant disputes to provincial offences, we cover the full spectrum of paralegal practice areas.
                 </p>
                 <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-12">
                   Our team specializes in making the legal process understandable and manageable, guiding you through each step with clarity and confidence.
