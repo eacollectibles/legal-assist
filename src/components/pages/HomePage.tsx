@@ -414,17 +414,17 @@ export default function HomePage() {
 
             <AnimatedElement delay={300}>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <Link 
+                  to="/booking"
+                  className="min-w-[200px] bg-primary text-primary-foreground font-paragraph px-8 py-5 text-lg transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
+                >
+                  Get Started
+                </Link>
                 <a 
                   href="tel:4165550123"
-                  className="min-w-[200px] bg-primary text-primary-foreground font-paragraph px-8 py-5 text-lg transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-sm"
-                >
-                  Call (416) 555-0123
-                </a>
-                <a 
-                  href="mailto:info@legalassist.ca"
                   className="min-w-[200px] bg-white text-secondary border border-secondary/10 font-paragraph px-8 py-5 text-lg transition-all hover:bg-secondary hover:text-white hover:shadow-lg hover:-translate-y-1 rounded-sm"
                 >
-                  Email Us
+                  Call (416) 555-0123
                 </a>
               </div>
             </AnimatedElement>
