@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -233,6 +233,38 @@ Our certified mediators create a safe, neutral environment where both parties ca
     costInfo: 'Hourly rates $150-250/hour, typically split between parties. Flat fees available for straightforward mediations.',
     timeline: 'Most mediations complete within 4-12 weeks, compared to years for court proceedings.',
     eligibility: 'Available for any dispute where both parties are willing to participate in good faith negotiation.'
+  },
+  {
+    id: 'criminal-matters',
+    name: 'Criminal Matters',
+    tribunal: 'Provincial Court - Summary Conviction',
+    shortDescription: 'Expert paralegal representation for summary conviction offences in Ontario.',
+    icon: <Shield className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_4ba7fcab4a44445f8d02822f47c00c92~mv2.png?id=criminal-matters',
+    learnMore: `Criminal charges can have serious consequences for your future. Our licensed paralegals provide skilled defense representation for summary conviction offences in Provincial Court, helping you navigate the criminal justice system with confidence.
+
+We represent clients charged with:
+
+• Assault and violence offences
+• Property crimes (theft, mischief)
+• Driving offences (impaired, suspended license)
+• Public order violations
+• Fraud and dishonesty offences
+• Breach of court orders and conditions
+
+Our approach includes thorough case assessment, disclosure review, Crown negotiations, and vigorous trial representation when necessary. We work to minimize consequences and achieve the best possible outcome for your situation.
+
+IMPORTANT: We can only represent you for summary conviction offences in Provincial Court. For indictable offences or matters in Superior Court, you will need to retain a lawyer.`,
+    keyPoints: [
+      'Summary conviction offence expertise',
+      'Provincial Court representation',
+      'Bail and release hearings',
+      'Crown negotiation and plea advice',
+      'Trial defense representation'
+    ],
+    costInfo: 'Flexible fee arrangements available. Hourly rates and fixed fees for specific services. Discuss your budget during consultation.',
+    timeline: 'Summary conviction cases typically resolve within 3-12 months depending on complexity and court scheduling.',
+    eligibility: 'Available to individuals charged with summary conviction offences in Ontario. Scope limited to Provincial Court matters.'
   }
 ];
 
@@ -344,6 +376,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'mediation' ? (
                         <Link to="/services/mediation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'criminal-matters' ? (
+                        <Link to="/services/criminal-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
