@@ -227,7 +227,7 @@ export default function ServicesPage() {
                 Our Legal Services
               </h1>
               <p className="font-paragraph text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-                Expert paralegal representation across all practice areas authorized in Ontario.
+                Professional paralegal representation that gets results across all authorized practice areas in Ontario.
               </p>
             </motion.div>
           </div>
