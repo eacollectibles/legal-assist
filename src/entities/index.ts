@@ -4,6 +4,31 @@
  */
 
 /**
+ * Collection ID: bookings
+ * Interface for Bookings
+ */
+export interface Bookings {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientName?: string;
+  /** @wixFieldType text */
+  clientEmail?: string;
+  /** @wixFieldType text */
+  clientPhone?: string;
+  /** @wixFieldType date */
+  preferredDate?: Date | string;
+  /** @wixFieldType time */
+  preferredTime?: any;
+  /** @wixFieldType text */
+  serviceType?: string;
+  /** @wixFieldType text */
+  clientNotes?: string;
+}
+
+
+/**
  * Collection ID: legalservicecategories
  * Interface for LegalServiceCategories
  */

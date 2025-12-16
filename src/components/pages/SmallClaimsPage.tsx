@@ -22,12 +22,16 @@ export default function SmallClaimsPage() {
                 Expert legal representation for civil disputes up to $50,000 in Ontario. Whether you're an applicant seeking compensation or a defendant protecting your interests, we provide comprehensive support throughout the entire process.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Get Started Today
-                </Button>
-                <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">
-                  Schedule Consultation
-                </Button>
+                <Link to="/booking">
+                  <Button className="bg-primary hover:bg-primary/90 text-white w-full">
+                    Get Started Today
+                  </Button>
+                </Link>
+                <Link to="/booking">
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
+                    Schedule Consultation
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
@@ -444,9 +448,11 @@ export default function SmallClaimsPage() {
             Whether you're pursuing a claim or defending against one, our experienced team is here to guide you through every step of the Small Claims process.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-primary hover:bg-primary/90 text-white">
-              Schedule Your Consultation
-            </Button>
+            <Link to="/booking">
+              <Button className="bg-primary hover:bg-primary/90 text-white w-full">
+                Schedule Your Consultation
+              </Button>
+            </Link>
             <Link to="/services">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
                 Back to Services
