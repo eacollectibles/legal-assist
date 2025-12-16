@@ -34,14 +34,14 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              to="/legal-services" 
+              to="/services-directory" 
               className={`font-paragraph text-base transition-colors ${
-                isActive('/legal-services') 
+                isActive('/services-directory') 
                   ? 'text-primary font-semibold' 
                   : 'text-secondary hover:text-primary'
               }`}
             >
-              Legal Services
+              Services
             </Link>
             <a 
               href="#contact" 
@@ -81,15 +81,15 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              to="/legal-services" 
+              to="/services-directory" 
               onClick={() => setMobileMenuOpen(false)}
               className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                isActive('/legal-services') 
+                isActive('/services-directory') 
                   ? 'bg-primary text-primary-foreground font-semibold' 
                   : 'text-secondary hover:bg-pastelbeige'
               }`}
             >
-              Legal Services
+              Services
             </Link>
             <a 
               href="#contact" 
