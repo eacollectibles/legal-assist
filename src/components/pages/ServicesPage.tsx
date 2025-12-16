@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle, Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -329,6 +329,38 @@ When you swear an oath before our Commissioner of Oaths, you are making a legall
     costInfo: 'Competitive rates for oath administration and statutory declarations. Affordable fees for legal document certification.',
     timeline: 'Same-day service available for most oath and declaration matters. Appointments can be scheduled at your convenience.',
     eligibility: 'Available to anyone requiring oath administration or statutory declarations for legal proceedings, court matters, or official purposes.'
+  },
+  {
+    id: 'pro-bono',
+    name: 'Pro Bono Legal Services',
+    tribunal: 'Pro Bono Services',
+    shortDescription: 'Free legal representation for those who cannot afford it. We believe everyone deserves access to justice.',
+    icon: <Heart className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_pro_bono_legal_services~mv2.png?id=pro-bono-services',
+    learnMore: `We are committed to providing quality legal representation to individuals and families who cannot afford to pay for legal services. Our pro bono program ensures that financial barriers do not prevent people from accessing the justice system.
+
+Through our pro bono initiative, we take on cases based on merit and the client's financial need. We believe that everyone deserves competent legal representation, regardless of their economic circumstances.
+
+Our pro bono services include:
+
+• Family law matters (custody, support, separation)
+• Landlord and tenant disputes (eviction defense, rent disputes)
+• Small claims court representation
+• Human rights complaints (discrimination cases)
+• Traffic violation defense
+• Summary conviction criminal matters
+
+To qualify, you must meet financial eligibility requirements and your case must have legal merit. The application process includes an intake interview, financial review, and case assessment.`,
+    keyPoints: [
+      'Completely free legal services',
+      'Expert paralegal representation',
+      'Multiple practice areas covered',
+      'Confidential and professional',
+      'Community commitment to access to justice'
+    ],
+    costInfo: 'Completely free. No cost to you regardless of case outcome. No hidden fees or charges.',
+    timeline: 'Application process typically takes 2-4 weeks. Limited availability due to high demand.',
+    eligibility: 'Household income at or below 200% of poverty line, limited assets, and case must have legal merit and fall within our authorized practice areas.'
   }
 ];
 
@@ -455,6 +487,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'commissioner-of-oaths' ? (
                         <Link to="/services/commissioner-of-oaths" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'pro-bono' ? (
+                        <Link to="/services/pro-bono" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
