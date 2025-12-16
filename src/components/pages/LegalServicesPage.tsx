@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 export default function LegalServicesPage() {
   const [categories, setCategories] = useState<LegalServiceCategories[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadCategories();
@@ -123,10 +124,17 @@ export default function LegalServicesPage() {
 
   const loadCategories = async () => {
     try {
+      setError(null);
       const { items } = await BaseCrudService.getAll<LegalServiceCategories>('legalservicecategories');
-      setCategories(items);
-    } catch (error) {
-      console.error('Error loading categories:', error);
+      if (!items || items.length === 0) {
+        setError('No legal services found. Please check back later.');
+      } else {
+        setCategories(items);
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load legal services. Please try again later.';
+      setError(errorMessage);
+      console.error('Error loading categories:', err);
     } finally {
       setIsLoading(false);
     }
@@ -202,6 +210,27 @@ export default function LegalServicesPage() {
               </div>
               <p className="font-paragraph text-base sm:text-lg text-secondary/60">Loading practice areas...</p>
             </motion.div>
+          ) : error ? (
+            <motion.div 
+              className="text-center py-16 sm:py-20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-6 max-w-md mx-auto">
+                <p className="font-paragraph text-base sm:text-lg text-destructive mb-4">
+                  {error}
+                </p>
+                <button
+                  onClick={() => {
+                    setIsLoading(true);
+                    loadCategories();
+                  }}
+                  className="bg-primary text-primary-foreground font-paragraph px-6 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
+                >
+                  Try Again
+                </button>
+              </div>
+            </motion.div>
           ) : categories.length === 0 ? (
             <motion.div 
               className="text-center py-16 sm:py-20"
@@ -211,6 +240,15 @@ export default function LegalServicesPage() {
               <p className="font-paragraph text-base sm:text-lg text-secondary/60 mb-4">
                 No practice areas available at this time.
               </p>
+              <button
+                onClick={() => {
+                  setIsLoading(true);
+                  loadCategories();
+                }}
+                className="bg-primary text-primary-foreground font-paragraph px-6 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
+              >
+                Refresh
+              </button>
             </motion.div>
           ) : (
             <motion.div 
