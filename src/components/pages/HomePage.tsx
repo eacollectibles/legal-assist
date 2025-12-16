@@ -189,7 +189,7 @@ export default function HomePage() {
                   
                   <div className="flex flex-col sm:flex-row gap-4 relative z-10">
                     <Link 
-                      to="/services-directory"
+                      to="/services"
                       className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-paragraph px-8 py-4 text-lg transition-all hover:bg-primary/90 hover:gap-4 group/btn"
                     >
                       Explore Services
@@ -377,7 +377,7 @@ export default function HomePage() {
 
               <AnimatedElement delay={300}>
                 <Link 
-                  to="/services-directory"
+                  to="/services"
                   className="inline-flex items-center gap-3 text-white border-b border-primary pb-1 hover:text-primary hover:border-white transition-colors text-lg font-paragraph group"
                 >
                   View All Practice Areas

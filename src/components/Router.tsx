@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-rou
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
 import HomePage from '@/components/pages/HomePage';
-import ServicesDirectoryPage from '@/components/pages/ServicesDirectoryPage';
+import ServicesPage from '@/components/pages/ServicesPage';
 import CategoryDetailPage from '@/components/pages/CategoryDetailPage';
 
 // Layout component that includes ScrollToTop
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "services-directory",
-        element: <ServicesDirectoryPage />,
+        path: "services",
+        element: <ServicesPage />,
       },
       {
         path: "legal-services/:id",

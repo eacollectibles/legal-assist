@@ -34,9 +34,9 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              to="/services-directory" 
+              to="/services" 
               className={`font-paragraph text-base transition-colors ${
-                isActive('/services-directory') 
+                isActive('/services') 
                   ? 'text-primary font-semibold' 
                   : 'text-secondary hover:text-primary'
               }`}
@@ -81,10 +81,10 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              to="/services-directory" 
+              to="/services" 
               onClick={() => setMobileMenuOpen(false)}
               className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                isActive('/services-directory') 
+                isActive('/services') 
                   ? 'bg-primary text-primary-foreground font-semibold' 
                   : 'text-secondary hover:bg-pastelbeige'
               }`}
