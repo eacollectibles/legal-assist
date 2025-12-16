@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Image } from '@/components/ui/image';
+import { Link } from 'react-router-dom';
 
 interface Service {
   id: string;
@@ -281,13 +282,20 @@ export default function ServicesPage() {
 
                     {/* Learn More Button */}
                     <div className="px-6 py-4 border-t border-gray-100 mt-auto">
-                      <button
-                        onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-                        className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2"
-                      >
-                        <span>Learn More</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
+                      {service.id === 'small-claims' ? (
+                        <Link to="/services/small-claims" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : (
+                        <button
+                          onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
+                          className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2"
+                        >
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      )}
                     </div>
                   </div>
 
