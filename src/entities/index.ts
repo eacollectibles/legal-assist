@@ -39,4 +39,6 @@ export interface LegalServiceCategories {
   categoryImage?: string;
   /** @wixFieldType boolean */
   isCurrentlyOffered?: boolean;
+  /** @wixFieldType text */
+  complianceNotes?: string;
 }

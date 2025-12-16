@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, AlertCircle, Loader2, Search } from 'lucide-react';
+import { ArrowRight, Loader2, Search } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -10,31 +10,14 @@ import { BaseCrudService } from '@/integrations';
 import { LegalServiceCategories } from '@/entities';
 import { motion } from 'framer-motion';
 
-// Legal Services List - Non-categorized
-const LEGAL_SERVICES_LIST = [
-  'Provincial Human Rights',
-  'Uncontested Divorce Filings',
-  'Simple Motion to Change Orders',
-  'Enforcement of Support Orders',
-  'Small Claims Court Matters (up to $50,000)',
-  'Landlord and Tenant Disputes',
-  'Provincial Offences Act Matters',
-  'WSIB Claims and Appeals',
-  'Criminal Summary Conviction Matters',
-  'Administrative Tribunals and Boards',
-  'Federal Human Rights',
-  'Immigration Appeals',
-  'Municipal by-law infractions',
-  'Debt Collections',
-  'Employment Standards Act',
-  'Accident Benefits Claims',
-  'License Appeal Tribunal',
-  'Notary Public',
-  'Commissioner of Oaths'
-];
-
 export default function ServicesPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [services, setServices] = useState<LegalServiceCategories[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    loadServices();
+  }, []);
 
   useEffect(() => {
     // SEO Meta Tags
@@ -61,9 +44,21 @@ export default function ServicesPage() {
     }
   }, []);
 
+  const loadServices = async () => {
+    try {
+      const { items } = await BaseCrudService.getAll<LegalServiceCategories>('legalservicecategories');
+      setServices(items.filter(service => service.isCurrentlyOffered !== false));
+    } catch (error) {
+      console.error('Error loading services:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Filter services based on search
-  const filteredServices = LEGAL_SERVICES_LIST.filter(service =>
-    service.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredServices = services.filter(service =>
+    (service.categoryName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     service.shortDescription?.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -111,33 +106,73 @@ export default function ServicesPage() {
         {/* Main Content */}
         <section className="w-full py-16 md:py-24">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-            {/* Services Grid */}
-            <div className="space-y-4">
-              {filteredServices.length > 0 ? (
-                filteredServices.map((service, index) => (
+            {isLoading ? (
+              <div className="text-center py-20">
+                <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+                <p className="font-paragraph text-lg text-gray-600">Loading services...</p>
+              </div>
+            ) : filteredServices.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredServices.map((service, index) => (
                   <motion.div
-                    key={service}
+                    key={service._id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.05 }}
-                    className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-primary/20"
+                    className="group h-full"
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <h3 className="font-heading text-lg md:text-xl font-bold text-foreground">
-                        {service}
-                      </h3>
-                      <ArrowRight className="w-5 h-5 text-primary flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
+                    <Link to={`/legal-services/${service._id}`} className="h-full block">
+                      <div className="h-full bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-primary/20 flex flex-col">
+                        {/* Image */}
+                        {service.categoryImage && (
+                          <div className="relative h-48 overflow-hidden bg-gray-100">
+                            <Image
+                              src={service.categoryImage}
+                              alt={`${service.categoryName} - Professional legal services`}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              width={400}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent" />
+                          </div>
+                        )}
+
+                        {/* Content */}
+                        <div className="p-6 flex flex-col flex-grow">
+                          {/* Badge */}
+                          {service.relevantTribunal && (
+                            <Badge className="w-fit mb-3 bg-primary/10 text-primary font-paragraph text-xs">
+                              {service.relevantTribunal}
+                            </Badge>
+                          )}
+
+                          {/* Title */}
+                          <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                            {service.categoryName}
+                          </h3>
+
+                          {/* Description */}
+                          <p className="font-paragraph text-sm text-secondary/70 mb-6 flex-grow line-clamp-3">
+                            {service.shortDescription}
+                          </p>
+
+                          {/* Learn More Link */}
+                          <div className="flex items-center gap-2 text-primary font-paragraph font-semibold group-hover:gap-3 transition-all">
+                            Learn More
+                            <ArrowRight className="w-4 h-4" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
                   </motion.div>
-                ))
-              ) : (
-                <div className="text-center py-16">
-                  <p className="font-paragraph text-lg text-gray-600 mb-6">
-                    No services found matching "{searchTerm}". Try a different search term.
-                  </p>
-                </div>
-              )}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <p className="font-paragraph text-lg text-gray-600 mb-6">
+                  No services found matching "{searchTerm}". Try a different search term.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
