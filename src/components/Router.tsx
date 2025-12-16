@@ -11,6 +11,7 @@ import TrafficTicketsPage from '@/components/pages/TrafficTicketsPage';
 import BookingPage from '@/components/pages/BookingPage';
 import FederalHumanRightsPage from '@/components/pages/FederalHumanRightsPage';
 import FamilyMattersPage from '@/components/pages/FamilyMattersPage';
+import MediationServicesPage from '@/components/pages/MediationServicesPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "services/family-matters",
         element: <FamilyMattersPage />,
+      },
+      {
+        path: "services/mediation",
+        element: <MediationServicesPage />,
       },
       {
         path: "booking",

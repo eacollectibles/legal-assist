@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -203,6 +203,36 @@ We understand the emotional complexity of family matters and work to achieve fai
     costInfo: 'Flexible fee arrangements available, including hourly rates and fixed fees for specific services.',
     timeline: 'Family matters vary greatly in timeline. Simple agreements may be resolved in weeks; contested matters may take 6-18 months.',
     eligibility: 'Available to individuals involved in family law matters in Ontario, including separation, divorce, and custody issues.'
+  },
+  {
+    id: 'mediation',
+    name: 'Mediation Services',
+    tribunal: 'Mediation & Dispute Resolution',
+    shortDescription: 'Professional mediation to resolve disputes collaboratively and cost-effectively.',
+    icon: <Handshake className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_mediation_services_hero~mv2.png?id=mediation-services',
+    learnMore: `Mediation is a voluntary, confidential process where a neutral third party helps disputing parties communicate effectively and reach a mutually acceptable resolution. Unlike litigation, mediation empowers the parties to control the outcome.
+
+We offer mediation for:
+
+• Family disputes (separation, divorce, custody)
+• Commercial and business conflicts
+• Civil disputes (property, landlord-tenant)
+• Community and interpersonal conflicts
+• Employment and workplace disputes
+• Contract and payment disagreements
+
+Our certified mediators create a safe, neutral environment where both parties can express their concerns and work toward creative solutions. Mediation typically costs 50-70% less than litigation and resolves in weeks or months rather than years.`,
+    keyPoints: [
+      'Cost-effective dispute resolution',
+      'Faster resolution than litigation',
+      'Confidential and private process',
+      'Preserves relationships',
+      'Control over outcomes'
+    ],
+    costInfo: 'Hourly rates $150-250/hour, typically split between parties. Flat fees available for straightforward mediations.',
+    timeline: 'Most mediations complete within 4-12 weeks, compared to years for court proceedings.',
+    eligibility: 'Available for any dispute where both parties are willing to participate in good faith negotiation.'
   }
 ];
 
@@ -309,6 +339,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'family-matters' ? (
                         <Link to="/services/family-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'mediation' ? (
+                        <Link to="/services/mediation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
