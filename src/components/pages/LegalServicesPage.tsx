@@ -125,10 +125,14 @@ export default function LegalServicesPage() {
   const loadCategories = async () => {
     try {
       setError(null);
+      console.log('Loading legal service categories...');
       const { items } = await BaseCrudService.getAll<LegalServiceCategories>('legalservicecategories');
+      console.log('Loaded items:', items);
       if (!items || items.length === 0) {
+        console.warn('No items found in collection');
         setError('No legal services found. Please check back later.');
       } else {
+        console.log(`Successfully loaded ${items.length} categories`);
         setCategories(items);
       }
     } catch (err) {
