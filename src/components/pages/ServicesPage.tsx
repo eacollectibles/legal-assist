@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -265,6 +265,70 @@ IMPORTANT: We can only represent you for summary conviction offences in Provinci
     costInfo: 'Flexible fee arrangements available. Hourly rates and fixed fees for specific services. Discuss your budget during consultation.',
     timeline: 'Summary conviction cases typically resolve within 3-12 months depending on complexity and court scheduling.',
     eligibility: 'Available to individuals charged with summary conviction offences in Ontario. Scope limited to Provincial Court matters.'
+  },
+  {
+    id: 'notary-public',
+    name: 'Notary Public Services',
+    tribunal: 'Notary Public',
+    shortDescription: 'Professional notarization of documents, affidavits, and statutory declarations.',
+    icon: <Stamp className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_df17fea496c94fbfa4d9b440d3a97917~mv2.png?id=notary-public-services',
+    learnMore: `A notary public is an official authorized to witness the signing of documents, administer oaths, and certify the authenticity of signatures. Notarization adds a layer of legal credibility to important documents and is often required for international transactions, real estate matters, and legal proceedings.
+
+Our notary public services include:
+
+• Document notarization and witnessing
+• Affidavit preparation and administration
+• Statutory declaration witnessing
+• Signature verification and certification
+• Document authentication for international use
+• Certified copies of original documents
+• Power of attorney witnessing
+• Loan document notarization
+
+We provide professional, efficient notary services at competitive rates. Whether you need a single document notarized or multiple documents for a transaction, our experienced notary public is available to assist you.`,
+    keyPoints: [
+      'Document notarization',
+      'Affidavit administration',
+      'Signature verification',
+      'International document authentication',
+      'Quick turnaround service'
+    ],
+    costInfo: 'Affordable per-document notarization fees. Volume discounts available for multiple documents. Rates are competitive and transparent.',
+    timeline: 'Most notarizations completed same-day or within 24 hours. Appointments available for your convenience.',
+    eligibility: 'Open to anyone requiring notarization services. Bring valid government-issued ID and the documents requiring notarization.'
+  },
+  {
+    id: 'commissioner-of-oaths',
+    name: 'Commissioner of Oaths',
+    tribunal: 'Commissioner of Oaths',
+    shortDescription: 'Official administration of oaths and statutory declarations for legal proceedings.',
+    icon: <CheckCircle className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_ac8e6a387b054b7b9b641d85cae3048c~mv2.png?id=commissioner-of-oaths',
+    learnMore: `A Commissioner of Oaths is a legal official authorized to administer oaths and affirmations, and to witness statutory declarations. This service is essential for legal proceedings, court documents, and matters requiring sworn statements under penalty of perjury.
+
+Our Commissioner of Oaths services include:
+
+• Oath and affirmation administration
+• Statutory declaration witnessing and certification
+• Affidavit preparation and administration
+• Solemn declaration witnessing
+• Court document preparation and certification
+• Witness statement certification
+• Declaration of truth for legal proceedings
+• Penalty of perjury administration
+
+When you swear an oath before our Commissioner of Oaths, you are making a legally binding commitment to tell the truth. This carries serious legal consequences if false information is provided. Our experienced commissioner ensures proper procedure and documentation for all matters.`,
+    keyPoints: [
+      'Oath and affirmation administration',
+      'Statutory declaration witnessing',
+      'Affidavit certification',
+      'Court document preparation',
+      'Legal compliance assurance'
+    ],
+    costInfo: 'Competitive rates for oath administration and statutory declarations. Affordable fees for legal document certification.',
+    timeline: 'Same-day service available for most oath and declaration matters. Appointments can be scheduled at your convenience.',
+    eligibility: 'Available to anyone requiring oath administration or statutory declarations for legal proceedings, court matters, or official purposes.'
   }
 ];
 
