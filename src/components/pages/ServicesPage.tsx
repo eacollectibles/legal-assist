@@ -210,7 +210,7 @@ We understand the emotional complexity of family matters and work to achieve fai
     tribunal: 'Mediation & Dispute Resolution',
     shortDescription: 'Professional mediation to resolve disputes collaboratively and cost-effectively.',
     icon: <Handshake className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_mediation_services_hero~mv2.png?id=mediation-services',
+    image: 'https://static.wixstatic.com/media/99571b_45e4ddef1b79494a92d7e0856a1601a0~mv2.png?id=mediation-services',
     learnMore: `Mediation is a voluntary, confidential process where a neutral third party helps disputing parties communicate effectively and reach a mutually acceptable resolution. Unlike litigation, mediation empowers the parties to control the outcome.
 
 We offer mediation for:
