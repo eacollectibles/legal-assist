@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, Scale, FileText, AlertCircle, Clock, DollarSign, ListChecks, XCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Scale, FileText, AlertCircle, Clock, DollarSign, ListChecks, XCircle, HelpCircle } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { LegalServiceCategories } from '@/entities';
+import { motion } from 'framer-motion';
 
 export default function CategoryDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -329,26 +330,53 @@ export default function CategoryDetailPage() {
 
       {/* Process Steps Section */}
       {category.processSteps && (
-        <section className="py-16 bg-pastellavender/20" aria-label="Service process and steps">
+        <section className="py-20 bg-gradient-to-b from-background to-pastelbeige/30" aria-label="Service process and steps">
           <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
             <div className="max-w-5xl mx-auto">
-              <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-12 text-center">
-                Our Process
-              </h2>
+              <div className="text-center mb-16">
+                <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-4">
+                  Our Process
+                </h2>
+                <p className="font-paragraph text-lg text-secondary/60">
+                  Follow these steps to understand how we handle your case
+                </p>
+              </div>
               
-              <div className="space-y-4">
-                {category.processSteps.split('\n').filter(step => step.trim()).map((step, idx) => (
-                  <div key={idx} className="flex gap-6 items-start">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary text-primary-foreground font-heading font-bold">
-                        {idx + 1}
+              <div className="relative">
+                {/* Vertical line connector */}
+                <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-primary to-primary/30" style={{ top: '2rem' }} />
+                
+                <div className="space-y-8 lg:space-y-12">
+                  {category.processSteps.split('\n').filter(step => step.trim()).map((step, idx, arr) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      className={`flex gap-6 lg:gap-12 items-start ${idx % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+                    >
+                      {/* Step Number Circle */}
+                      <div className="flex-shrink-0 flex justify-center lg:flex-1">
+                        <div className="relative">
+                          <div className="flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-heading font-bold text-xl shadow-lg">
+                            {idx + 1}
+                          </div>
+                          {idx < arr.length - 1 && (
+                            <div className="hidden lg:block absolute top-full left-1/2 transform -translate-x-1/2 w-1 h-8 bg-gradient-to-b from-primary to-primary/30" />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex-1 bg-background p-6 rounded-lg">
-                      <p className="font-paragraph text-lg text-secondary/80">{step.trim()}</p>
-                    </div>
-                  </div>
-                ))}
+                      
+                      {/* Step Content */}
+                      <div className="flex-1 lg:flex-1">
+                        <div className="bg-white border-l-4 border-primary p-6 lg:p-8 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+                          <p className="font-paragraph text-lg text-secondary/80 leading-relaxed">{step.trim()}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -402,30 +430,52 @@ export default function CategoryDetailPage() {
 
       {/* FAQs Section */}
       {category.faqs && (
-        <section className="py-16 bg-pastelbeige" aria-label="Frequently asked questions">
+        <section className="py-20 bg-gradient-to-b from-pastelbeige to-background" aria-label="Frequently asked questions">
           <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
             <div className="max-w-5xl mx-auto">
-              <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-12 text-center">
-                Frequently Asked Questions
-              </h2>
+              <div className="text-center mb-16">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <HelpCircle className="w-8 h-8 text-primary" />
+                  <h2 className="font-heading text-3xl lg:text-4xl text-secondary">
+                    Frequently Asked Questions
+                  </h2>
+                </div>
+                <p className="font-paragraph text-lg text-secondary/60">
+                  Find answers to common questions about this service
+                </p>
+              </div>
               
-              <Accordion type="single" collapsible className="w-full">
+              <div className="space-y-3">
                 {category.faqs.split('\n\n').filter(faq => faq.trim()).map((faqItem, idx) => {
                   const lines = faqItem.split('\n').filter(line => line.trim());
                   const question = lines[0];
                   const answer = lines.slice(1).join('\n');
                   return (
-                    <AccordionItem key={idx} value={`faq-${idx}`} className="border-b border-secondary/20">
-                      <AccordionTrigger className="font-heading text-lg text-secondary hover:text-primary py-4">
-                        {question?.trim()}
-                      </AccordionTrigger>
-                      <AccordionContent className="font-paragraph text-secondary/80 pb-4">
-                        {answer?.trim()}
-                      </AccordionContent>
-                    </AccordionItem>
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: idx * 0.05 }}
+                      viewport={{ once: true }}
+                    >
+                      <AccordionItem value={`faq-${idx}`} className="border border-secondary/10 rounded-lg overflow-hidden bg-white hover:border-primary/20 transition-colors">
+                        <AccordionTrigger className="font-heading text-lg text-secondary hover:text-primary py-5 px-6 transition-colors">
+                          <span className="flex items-center gap-3">
+                            <span className="text-primary font-bold">Q:</span>
+                            {question?.trim()}
+                          </span>
+                        </AccordionTrigger>
+                        <AccordionContent className="font-paragraph text-secondary/80 pb-6 px-6 pt-2 border-t border-secondary/10">
+                          <div className="flex gap-3">
+                            <span className="text-primary font-bold flex-shrink-0">A:</span>
+                            <p className="leading-relaxed">{answer?.trim()}</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </motion.div>
                   );
                 })}
-              </Accordion>
+              </div>
             </div>
           </div>
         </section>

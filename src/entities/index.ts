@@ -14,6 +14,8 @@ export interface LegalServiceCategories {
   /** @wixFieldType text */
   costStructure?: string;
   /** @wixFieldType text */
+  complianceNotes?: string;
+  /** @wixFieldType text */
   servicesIncluded?: string;
   /** @wixFieldType text */
   estimatedTimeline?: string;
@@ -39,6 +41,4 @@ export interface LegalServiceCategories {
   categoryImage?: string;
   /** @wixFieldType boolean */
   isCurrentlyOffered?: boolean;
-  /** @wixFieldType text */
-  complianceNotes?: string;
 }
