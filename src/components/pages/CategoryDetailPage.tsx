@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, Scale, FileText } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Scale, FileText, AlertCircle, Clock, DollarSign, ListChecks, XCircle } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { Badge } from '@/components/ui/badge';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
@@ -223,6 +224,87 @@ export default function CategoryDetailPage() {
         </div>
       </section>
 
+      {/* Disclaimer Section - LSO Compliance */}
+      {category.disclaimers && (
+        <section className="py-16 bg-pastelpeach/20" aria-label="Legal disclaimers and scope of practice">
+          <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+            <div className="max-w-5xl mx-auto">
+              <div className="flex items-center gap-3 mb-8">
+                <AlertCircle className="w-8 h-8 text-primary" />
+                <h2 className="font-heading text-3xl lg:text-4xl text-secondary">
+                  Important Disclaimer
+                </h2>
+              </div>
+              
+              <div className="bg-white border-l-4 border-primary p-8 lg:p-12">
+                <p className="font-paragraph text-lg text-secondary/80 leading-relaxed whitespace-pre-line">
+                  {category.disclaimers}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Services Included & Excluded Section */}
+      {(category.servicesIncluded || category.servicesExcluded) && (
+        <section className="py-16 bg-background" aria-label="Services included and excluded">
+          <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-12 text-center">
+                Service Scope
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Services Included */}
+                {category.servicesIncluded && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-6">
+                      <ListChecks className="w-8 h-8 text-pastelgreen" />
+                      <h3 className="font-heading text-2xl text-secondary">
+                        What's Included
+                      </h3>
+                    </div>
+                    <div className="bg-pastelgreen/20 p-6 lg:p-8">
+                      <ul className="space-y-3">
+                        {category.servicesIncluded.split('\n').filter(item => item.trim()).map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <CheckCircle className="w-5 h-5 text-pastelgreen flex-shrink-0 mt-1" />
+                            <span className="font-paragraph text-secondary/80">{item.trim()}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {/* Services Excluded */}
+                {category.servicesExcluded && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-6">
+                      <XCircle className="w-8 h-8 text-pastelpeach" />
+                      <h3 className="font-heading text-2xl text-secondary">
+                        What's Not Included
+                      </h3>
+                    </div>
+                    <div className="bg-pastelpeach/20 p-6 lg:p-8">
+                      <ul className="space-y-3">
+                        {category.servicesExcluded.split('\n').filter(item => item.trim()).map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <XCircle className="w-5 h-5 text-pastelpeach flex-shrink-0 mt-1" />
+                            <span className="font-paragraph text-secondary/80">{item.trim()}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Detailed Description Section */}
       {category.detailedDescription && (
         <section className="py-16 bg-pastelbeige" aria-label="Detailed service description">
@@ -245,23 +327,105 @@ export default function CategoryDetailPage() {
         </section>
       )}
 
-      {/* Eligibility Criteria Section */}
-      {category.eligibilityCriteria && (
-        <section className="py-16 bg-background" aria-label="Eligibility criteria and requirements">
+      {/* Process Steps Section */}
+      {category.processSteps && (
+        <section className="py-16 bg-pastellavender/20" aria-label="Service process and steps">
           <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
             <div className="max-w-5xl mx-auto">
-              <div className="flex items-center gap-3 mb-8">
-                <CheckCircle className="w-8 h-8 text-primary" />
-                <h2 className="font-heading text-3xl lg:text-4xl text-secondary">
-                  Eligibility & Requirements
-                </h2>
-              </div>
+              <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-12 text-center">
+                Our Process
+              </h2>
               
-              <div className="bg-pastelgreen/30 p-8 lg:p-12">
-                <p className="font-paragraph text-lg text-secondary/80 leading-relaxed whitespace-pre-line">
-                  {category.eligibilityCriteria}
-                </p>
+              <div className="space-y-4">
+                {category.processSteps.split('\n').filter(step => step.trim()).map((step, idx) => (
+                  <div key={idx} className="flex gap-6 items-start">
+                    <div className="flex-shrink-0">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary text-primary-foreground font-heading font-bold">
+                        {idx + 1}
+                      </div>
+                    </div>
+                    <div className="flex-1 bg-background p-6 rounded-lg">
+                      <p className="font-paragraph text-lg text-secondary/80">{step.trim()}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Timeline & Cost Section */}
+      {(category.estimatedTimeline || category.costStructure) && (
+        <section className="py-16 bg-background" aria-label="Timeline and cost information">
+          <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-12 text-center">
+                Timeline & Costs
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Timeline */}
+                {category.estimatedTimeline && (
+                  <div className="bg-pastelbeige p-8 lg:p-10">
+                    <div className="flex items-center gap-3 mb-6">
+                      <Clock className="w-8 h-8 text-primary" />
+                      <h3 className="font-heading text-2xl text-secondary">
+                        Estimated Timeline
+                      </h3>
+                    </div>
+                    <p className="font-paragraph text-lg text-secondary/80 leading-relaxed whitespace-pre-line">
+                      {category.estimatedTimeline}
+                    </p>
+                  </div>
+                )}
+
+                {/* Cost Structure */}
+                {category.costStructure && (
+                  <div className="bg-pastelgreen/20 p-8 lg:p-10">
+                    <div className="flex items-center gap-3 mb-6">
+                      <DollarSign className="w-8 h-8 text-primary" />
+                      <h3 className="font-heading text-2xl text-secondary">
+                        Cost Structure
+                      </h3>
+                    </div>
+                    <p className="font-paragraph text-lg text-secondary/80 leading-relaxed whitespace-pre-line">
+                      {category.costStructure}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* FAQs Section */}
+      {category.faqs && (
+        <section className="py-16 bg-pastelbeige" aria-label="Frequently asked questions">
+          <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="font-heading text-3xl lg:text-4xl text-secondary mb-12 text-center">
+                Frequently Asked Questions
+              </h2>
+              
+              <Accordion type="single" collapsible className="w-full">
+                {category.faqs.split('\n\n').filter(faq => faq.trim()).map((faqItem, idx) => {
+                  const lines = faqItem.split('\n').filter(line => line.trim());
+                  const question = lines[0];
+                  const answer = lines.slice(1).join('\n');
+                  return (
+                    <AccordionItem key={idx} value={`faq-${idx}`} className="border-b border-secondary/20">
+                      <AccordionTrigger className="font-heading text-lg text-secondary hover:text-primary py-4">
+                        {question?.trim()}
+                      </AccordionTrigger>
+                      <AccordionContent className="font-paragraph text-secondary/80 pb-4">
+                        {answer?.trim()}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
             </div>
           </div>
         </section>

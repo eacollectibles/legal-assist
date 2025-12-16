@@ -147,8 +147,8 @@ export default function LegalServicesPage() {
                               variant={category.isCurrentlyOffered ? 'default' : 'secondary'}
                               className={`${
                                 category.isCurrentlyOffered
-                                  ? 'bg-green-500 text-white hover:bg-green-600'
-                                  : 'bg-gray-400 text-white hover:bg-gray-500'
+                                  ? 'bg-pastelgreen text-secondary hover:bg-pastelgreen/80'
+                                  : 'bg-pastelpeach text-secondary hover:bg-pastelpeach/80'
                               }`}
                             >
                               {category.isCurrentlyOffered ? 'Available Now' : 'Coming Soon'}

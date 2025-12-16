@@ -25,4 +25,18 @@ export interface LegalServiceCategories {
   categoryImage?: string;
   /** @wixFieldType boolean */
   isCurrentlyOffered?: boolean;
+  /** @wixFieldType text */
+  processSteps?: string;
+  /** @wixFieldType text */
+  faqs?: string;
+  /** @wixFieldType text */
+  disclaimers?: string;
+  /** @wixFieldType text */
+  servicesIncluded?: string;
+  /** @wixFieldType text */
+  servicesExcluded?: string;
+  /** @wixFieldType text */
+  estimatedTimeline?: string;
+  /** @wixFieldType text */
+  costStructure?: string;
 }
