@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle, Heart } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle, Heart, Landmark } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -361,6 +361,35 @@ To qualify, you must meet financial eligibility requirements and your case must 
     costInfo: 'Completely free. No cost to you regardless of case outcome. No hidden fees or charges.',
     timeline: 'Application process typically takes 2-4 weeks. Limited availability due to high demand.',
     eligibility: 'Household income at or below 200% of poverty line, limited assets, and case must have legal merit and fall within our authorized practice areas.'
+  },
+  {
+    id: 'social-benefits-tribunal',
+    name: 'Social Benefits Tribunal',
+    tribunal: 'Social Benefits Tribunal (SBT)',
+    shortDescription: 'Expert representation for social assistance and disability support appeals in Ontario.',
+    icon: <Landmark className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_faf5f604ad2e4e5580802a20f563e710~mv2.png?id=social-benefits-tribunal',
+    learnMore: `The Social Benefits Tribunal (SBT) hears appeals from individuals denied social assistance or disability support benefits in Ontario. If your Ontario Works or ODSP application has been denied or terminated, we can help you appeal that decision.
+
+Our experienced representatives understand complex eligibility requirements and appeal procedures. We work to ensure your case is presented effectively and that you receive fair consideration of your circumstances and entitlements.
+
+We handle appeals for:
+
+• Ontario Works (OW) denials and terminations
+• ODSP (Ontario Disability Support Program) appeals
+• Eligibility disputes and income calculations
+• Overpayment challenges
+• Special circumstances and hardship claims`,
+    keyPoints: [
+      '30-day appeal deadline',
+      '60%+ success rate with representation',
+      'Free tribunal filing',
+      'Expert knowledge of regulations',
+      'Strong documentation and advocacy'
+    ],
+    costInfo: 'Hourly rates $150-250/hour or flat fees for straightforward appeals. Free initial consultation.',
+    timeline: 'Typically 4-6 months from initial consultation to tribunal decision.',
+    eligibility: 'Available to anyone with a denied or terminated Ontario Works or ODSP decision who wishes to appeal.'
   }
 ];
 
@@ -492,6 +521,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'pro-bono' ? (
                         <Link to="/services/pro-bono" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'social-benefits-tribunal' ? (
+                        <Link to="/services/social-benefits-tribunal" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>

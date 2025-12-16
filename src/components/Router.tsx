@@ -16,6 +16,7 @@ import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
 import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
 import ProBonoPage from '@/components/pages/ProBonoPage';
+import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "services/pro-bono",
         element: <ProBonoPage />,
+      },
+      {
+        path: "services/social-benefits-tribunal",
+        element: <SocialBenefitsTribunalPage />,
       },
       {
         path: "booking",
