@@ -302,6 +302,16 @@ export default function ServicesPage() {
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
+                      ) : service.id === 'federal-human-rights' ? (
+                        <Link to="/services/federal-human-rights" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'family-matters' ? (
+                        <Link to="/services/family-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
                       ) : (
                         <button
                           onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
