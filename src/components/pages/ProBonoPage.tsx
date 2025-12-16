@@ -70,8 +70,8 @@ export default function ProBonoPage() {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="https://static.wixstatic.com/media/99571b_pro_bono_legal_services~mv2.png?id=pro-bono-hero"
-                  alt="Pro Bono Legal Services - Lawyer helping a client"
+                  src="https://static.wixstatic.com/media/99571b_a4a22ca60af149e0abcd06e31c5f9ae1~mv2.png?id=pro-bono-hero"
+                  alt="Pro Bono Legal Services - Lawyer compassionately assisting a client in a welcoming office setting"
                   className="w-full h-auto rounded-lg shadow-lg"
                 />
               </motion.div>

@@ -336,7 +336,7 @@ When you swear an oath before our Commissioner of Oaths, you are making a legall
     tribunal: 'Pro Bono Services',
     shortDescription: 'Free legal representation for those who cannot afford it. We believe everyone deserves access to justice.',
     icon: <Heart className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_pro_bono_legal_services~mv2.png?id=pro-bono-services',
+    image: 'https://static.wixstatic.com/media/99571b_a4a22ca60af149e0abcd06e31c5f9ae1~mv2.png?id=pro-bono-services',
     learnMore: `We are committed to providing quality legal representation to individuals and families who cannot afford to pay for legal services. Our pro bono program ensures that financial barriers do not prevent people from accessing the justice system.
 
 Through our pro bono initiative, we take on cases based on merit and the client's financial need. We believe that everyone deserves competent legal representation, regardless of their economic circumstances.
