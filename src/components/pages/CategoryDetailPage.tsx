@@ -119,7 +119,11 @@ export default function CategoryDetailPage() {
   const loadCategory = async (categoryId: string) => {
     try {
       const item = await BaseCrudService.getById<LegalServiceCategories>('legalservicecategories', categoryId);
-      setCategory(item);
+      if (item) {
+        setCategory(item);
+      } else {
+        console.warn(`Category with ID ${categoryId} not found`);
+      }
     } catch (error) {
       console.error('Error loading category:', error);
     } finally {
@@ -145,8 +149,11 @@ export default function CategoryDetailPage() {
         <Header />
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12 py-20 text-center">
           <h1 className="font-heading text-4xl text-secondary mb-6">Practice Area Not Found</h1>
+          <p className="font-paragraph text-lg text-secondary/60 mb-8">
+            The service you're looking for doesn't exist or may have been removed.
+          </p>
           <Link 
-            to="/legal-services"
+            to="/services"
             className="inline-flex items-center gap-2 text-primary font-paragraph hover:underline"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -182,7 +189,7 @@ export default function CategoryDetailPage() {
         <div className="relative z-10 px-6 lg:px-12 py-16 w-full">
           <div className="max-w-4xl">
             <Link 
-              to="/legal-services"
+              to="/services"
               className="inline-flex items-center gap-2 text-primary-foreground font-paragraph mb-6 hover:underline"
             >
               <ArrowLeft className="w-4 h-4" />
