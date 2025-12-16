@@ -36,7 +36,7 @@ export default function MediationServicesPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_e1872c07d2bb4b38b969728e6ea10274~mv2.png?id=mediation-handshake-professionals"
+                src="https://static.wixstatic.com/media/99571b_af3ec1b5317240fe9a74ac8fd0125b05~mv2.png?id=mediation-handshake-professionals"
                 alt="Two professional business people shaking hands in a bright, modern neutral office setting representing collaboration and resolution"
                 width={600}
                 height={400}
