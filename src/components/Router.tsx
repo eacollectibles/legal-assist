@@ -7,6 +7,7 @@ import ServicesPage from '@/components/pages/ServicesPage';
 import SmallClaimsPage from '@/components/pages/SmallClaimsPage';
 import LandlordTenantBoardPage from '@/components/pages/LandlordTenantBoardPage';
 import HumanRightsTribunalPage from '@/components/pages/HumanRightsTribunalPage';
+import TrafficTicketsPage from '@/components/pages/TrafficTicketsPage';
 import BookingPage from '@/components/pages/BookingPage';
 
 // Layout component that includes ScrollToTop
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "services/human-rights-tribunal",
         element: <HumanRightsTribunalPage />,
+      },
+      {
+        path: "services/traffic-tickets",
+        element: <TrafficTicketsPage />,
       },
       {
         path: "booking",
