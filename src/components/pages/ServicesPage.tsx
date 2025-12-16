@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
+import { Image } from '@/components/ui/image';
 
 interface Service {
   id: string;
@@ -11,6 +12,7 @@ interface Service {
   tribunal: string;
   shortDescription: string;
   icon: React.ReactNode;
+  image: string;
   learnMore: string;
   keyPoints: string[];
   costInfo: string;
@@ -25,6 +27,7 @@ const services: Service[] = [
     tribunal: 'Small Claims Court',
     shortDescription: 'Professional representation for civil disputes up to $50,000 in Ontario.',
     icon: <Scale className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_550f67d8225c4defa23bfe4f0a39d9aa~mv2.png?id=small-claims-court',
     learnMore: `Small Claims Court is designed for straightforward civil disputes involving amounts up to $50,000. Our licensed paralegals have extensive experience representing clients in these proceedings, helping you navigate the process from initial claim to judgment.
 
 Whether you're pursuing a debt recovery, property damage claim, or contract dispute, we provide comprehensive representation including:
@@ -53,6 +56,7 @@ We understand that small claims disputes can be stressful and time-consuming. Ou
     tribunal: 'Landlord and Tenant Board (LTB)',
     shortDescription: 'Expert representation for residential tenancy disputes and eviction proceedings.',
     icon: <Home className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_2ed4aa7fa2d2489cadb2a57634e4da85~mv2.png?id=landlord-tenant-board',
     learnMore: `The Landlord and Tenant Board (LTB) handles disputes between landlords and tenants in Ontario. Whether you're facing eviction, dealing with maintenance issues, or disputing rent increases, our paralegals provide skilled representation.
 
 We represent both landlords and tenants in matters including:
@@ -82,6 +86,7 @@ Our team understands the Residential Tenancies Act and LTB procedures thoroughly
     tribunal: 'Human Rights Tribunal of Ontario (HRTO)',
     shortDescription: 'Advocacy for discrimination and human rights violations in employment, housing, and services.',
     icon: <Users className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_8eeb6e0cb3ea4bb783f3c8570051be7d~mv2.png?id=human-rights-tribunal',
     learnMore: `The Human Rights Tribunal of Ontario (HRTO) addresses complaints of discrimination based on protected grounds including race, gender, disability, age, and more. These matters are serious and require experienced representation.
 
 We handle complaints involving:
@@ -111,6 +116,7 @@ Our paralegals work with you to build a strong case, gather evidence, and presen
     tribunal: 'Ontario Court of Justice',
     shortDescription: 'Defense representation for traffic violations, speeding, and driving-related offences.',
     icon: <AlertCircle className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_0dccbb591a504451bfaf96024f5b2b24~mv2.png?id=traffic-tickets',
     learnMore: `Traffic violations can result in fines, demerit points, and increased insurance premiums. Our paralegals provide skilled defense representation to help minimize these consequences.
 
 We defend against charges including:
@@ -141,6 +147,7 @@ Our approach includes reviewing evidence, identifying procedural issues, negotia
     tribunal: 'Canadian Human Rights Commission',
     shortDescription: 'Representation for discrimination complaints under federal jurisdiction.',
     icon: <Briefcase className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_49f6982ca3874aae93ce8e745bececa4~mv2.png?id=federal-human-rights',
     learnMore: `The Canadian Human Rights Commission handles discrimination complaints in federally regulated industries such as banking, telecommunications, interprovincial transportation, and federal government employment.
 
 We assist with complaints involving:
@@ -170,6 +177,7 @@ Federal human rights complaints follow different procedures than provincial comp
     tribunal: 'Ontario Superior Court / Family Court',
     shortDescription: 'Representation for family law issues including custody, support, and property division.',
     icon: <FileText className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_52626f36e852448ca59c6a21d26750d4~mv2.png?id=family-matters',
     learnMore: `Family law matters are deeply personal and require compassionate, knowledgeable representation. Our paralegals assist with various family law issues to help you navigate these challenging situations.
 
 We provide guidance and representation for:
@@ -237,6 +245,11 @@ export default function ServicesPage() {
                   className="group h-full"
                 >
                   <div className="h-full bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-primary/20 flex flex-col">
+                    {/* Service Image */}
+                    <div className="w-full h-48 overflow-hidden bg-gray-200">
+                      <Image src={service.image} alt={service.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+
                     {/* Icon and Header */}
                     <div className="p-6 bg-gradient-to-br from-pastelbeige to-pastelbeige/50">
                       <div className="w-14 h-14 bg-primary text-primary-foreground rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
