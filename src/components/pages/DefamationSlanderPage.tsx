@@ -280,32 +280,144 @@ export default function DefamationSlanderPage() {
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <h2 className="font-heading text-4xl font-bold text-foreground mb-12">Common Defamation Scenarios</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-4">Workplace Defamation</h3>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                A coworker spreads false rumors that you stole from the company or engaged in unethical behavior. These false statements damage your professional reputation and result in lost job opportunities or termination. We help document the false statements and their impact on your career.
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Google Reviews</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                Fake negative reviews posted on Google Business profiles damaging your business reputation and search rankings.
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-4">Online Review Defamation</h3>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                A competitor or disgruntled person posts false, damaging reviews about your business on Google, Yelp, or social media. These false statements harm your business reputation and result in lost customers. We help identify the source and pursue removal or correction.
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Fake Online Business Reviews</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False reviews on multiple platforms (Google, Yelp, TripAdvisor) designed to harm your business credibility.
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-4">Personal Reputation Damage</h3>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                Someone makes false accusations about your character, integrity, or personal conduct on social media or in public. These false statements spread and damage your personal relationships and reputation in your community. We help document the harm and pursue accountability.
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Social Media Posts</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                Defamatory false statements posted on Facebook, Instagram, X/Twitter, or other social platforms.
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-4">Professional Credentials Defamation</h3>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                Someone falsely claims you lack proper credentials, are unqualified, or engaged in professional misconduct. These false statements damage your professional standing and result in lost clients or business. We help prove the falsity and quantify damages.
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Defamatory Comments on Reddit or Forums</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False accusations or harmful statements made in online forums, Reddit threads, or discussion boards.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Accusations of Criminal Conduct</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False claims that you committed a crime, posted publicly or privately to damage your reputation.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Allegations of Fraud or Scams</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False statements claiming you engaged in fraudulent or scam activities, harming your business credibility.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Reputation Attacks Against Small Businesses</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                Coordinated false statements targeting small business owners to damage their reputation and revenue.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Statements About Professional Competence</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False claims that you lack professional skills, expertise, or competence in your field.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Defamatory Emails Sent to Employers or Clients</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False statements sent via email to your employer or clients designed to damage your professional relationships.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Workplace Defamation by Co-Workers or Supervisors</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False rumors or accusations spread by colleagues or supervisors damaging your career and employment prospects.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Allegations in Community Groups or Message Boards</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False accusations posted in neighborhood groups, HOA boards, or community message boards.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Online Harassment and Reputation Smearing</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                Coordinated campaigns of false statements and harassment designed to damage your reputation online.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Defamatory Yelp Reviews</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False negative reviews on Yelp designed to harm your business reputation and customer base.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Claims in Marketplace Listings</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False statements about products or services in online marketplace listings (Amazon, eBay, etc.).
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Malicious Complaints to Regulators or Associations</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False complaints filed with regulatory bodies or professional associations to damage your credentials.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Statements in Tenant–Landlord Disputes</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False accusations made by tenants or landlords during rental disputes posted online or shared publicly.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Defamatory Statements Between Business Competitors</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False statements made by competitors to damage your business reputation and market position.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">False Accusations in Dating or Relationship Disputes</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False accusations made by ex-partners or dating app users posted online to damage your reputation.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Online Impersonation and Fake Profiles</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                Someone creates fake profiles impersonating you and posting false or defamatory content.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Defamatory Reviews Following Contract Disputes</h3>
+              <p className="font-paragraph text-sm text-foreground/80">
+                False reviews or accusations posted after business or service contract disputes to damage your reputation.
               </p>
             </div>
           </div>
