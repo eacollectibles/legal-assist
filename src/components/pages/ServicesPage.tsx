@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle, Heart, Landmark } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle, Heart, Landmark, Gavel } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -390,6 +390,25 @@ We handle appeals for:
     costInfo: 'Hourly rates $150-250/hour or flat fees for straightforward appeals. Free initial consultation.',
     timeline: 'Typically 4-6 months from initial consultation to tribunal decision.',
     eligibility: 'Available to anyone with a denied or terminated Ontario Works or ODSP decision who wishes to appeal.'
+  },
+  {
+    id: 'defamation-slander',
+    name: 'Defamation & Slander',
+    tribunal: 'Ontario Superior Court',
+    shortDescription: 'Expert guidance on defamation claims and reputation protection. Paralegal support for pre-litigation matters.',
+    icon: <Gavel className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_8f4c2e9a3d5f4e2b1a9c8d7e6f5g4h3i~mv2.png?id=defamation-slander',
+    learnMore: `Defamation is a false statement that damages your reputation. Whether spoken (slander) or written (libel), defamation can have serious consequences for your personal and professional life. We provide expert guidance on pursuing defamation claims and protecting your reputation.\n\nWhile Ontario paralegals cannot represent you in defamation lawsuits, we provide valuable pre-litigation support including:\n\n• Case assessment and legal analysis\n• Evidence gathering and documentation\n• Demand letter preparation\n• Negotiation and settlement discussions\n• Damages calculation and documentation\n• Online defamation investigation and removal\n• Lawyer referral for litigation\n\nWe understand the emotional impact of being defamed and work to help you hold those responsible accountable. Our goal is to achieve resolution through negotiation when possible, while preparing your case for litigation if necessary.`,
+    keyPoints: [
+      'Pre-litigation case assessment',
+      'Evidence gathering and documentation',
+      'Demand letter preparation',
+      'Settlement negotiation',
+      'Online defamation support'
+    ],
+    costInfo: 'Hourly rates $150-250/hour for paralegal services. Flat fees available for pre-litigation packages. Lawyer referrals for litigation.',
+    timeline: 'Pre-litigation phase: 2-6 weeks. Negotiation: 4-12 weeks. Litigation (with lawyer): 12-24+ months. Critical: 2-year limitation period from publication.',
+    eligibility: 'Available to anyone who believes they have been defamed. Paralegal services for pre-litigation support; lawyer required for court representation.'
   }
 ];
 
@@ -526,6 +545,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'social-benefits-tribunal' ? (
                         <Link to="/services/social-benefits-tribunal" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'defamation-slander' ? (
+                        <Link to="/services/defamation-slander" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
