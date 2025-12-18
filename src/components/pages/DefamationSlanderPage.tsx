@@ -329,15 +329,11 @@ export default function DefamationSlanderPage() {
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Burden of Proof</h3>
-                <p>
-                  You must prove that the statement is false, was published to third parties, identified you, and caused measurable harm. Opinion, hyperbole, and statements of fact that are true are not defamation. We help you gather evidence to meet this burden.
-                </p>
+                <p>{"In Ontario, a defamation claim requires proof that a statement was published to a third party, referred to you, and was defamatory in nature. Once these elements are established, damage is presumed. Defendants may raise defences such as truth, fair comment, or privilege. We assist clients in gathering and organizing evidence to support their claim within the appropriate court jurisdiction."}</p>
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Defenses Available to Defendants</h3>
-                <p>
-                  Defendants may claim the statement is true, protected by privilege (like court testimony), fair comment on a matter of public interest, or qualified privilege (like honest employee references). A lawyer must evaluate these defenses and advise on the strength of your claim.
-                </p>
+                <p>{"Defendants may raise defences such as truth (justification), privilege (for example, statements made in court proceedings), fair comment on matters of public interest, or qualified privilege (such as employment references). Our Licensed Paralegals can review these potential defences and provide guidance on how they may affect a defamation claim within the Small Claims Court jurisdiction. Where a matter proceeds outside the paralegal scope of practice, we will refer you to a lawyer as appropriate."}</p>
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Damages You Can Recover</h3>
