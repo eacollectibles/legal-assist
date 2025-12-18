@@ -236,13 +236,9 @@ export default function HomePage() {
               
               <AnimatedElement delay={300}>
                 <div className="prose prose-lg prose-stone text-secondary/80 font-paragraph">
-                  <p className="mb-6 text-lg leading-loose">
-                    At LegalAssist, we bridge the gap between complex legal processes and everyday people. Our licensed paralegals bring years of specialized experience to help you navigate Ontario's legal system with confidence and clarity.
-                  </p>
-                  <p className="text-lg leading-loose">
-                    Whether you're facing a traffic violation, small claims dispute (up to $50,000), or landlord-tenant issue, we provide the expertise you need without the overwhelming costs of traditional law firms. We believe that justice should be accessible, understandable, and affordable for everyone.
-                  </p>
-                </div>
+                  <p className="text-lg leading-loose">{"Whether you are dealing with a traffic offence, a Small Claims Court matter within the court’s monetary jurisdiction, or a landlord-tenant dispute, our Licensed Paralegals provide knowledgeable and practical legal services within the authorized scope of practice. We are committed to offering services that are accessible, understandable, and cost-effective."}</p>
+                <p className="mb-6 text-lg leading-loose">{"At LegalAssist, we help individuals navigate Ontario’s legal system with clarity and confidence. Our services are provided by Licensed Paralegals in good standing with the Law Society of Ontario, offering knowledgeable and practical assistance within the authorized scope of paralegal practice."}</p>
+                  </div>
               </AnimatedElement>
 
               <AnimatedElement delay={400}>
