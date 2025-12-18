@@ -9,7 +9,6 @@ export default function DefamationSlanderPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -46,7 +45,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Understanding Defamation Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -83,7 +81,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Scope of Services Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -131,7 +128,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Types of Defamation */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -179,7 +175,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Process Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -219,9 +214,7 @@ export default function DefamationSlanderPage() {
               <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">4</div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Litigation</h3>
-                <p className="font-paragraph text-foreground/80">
-                  If negotiation fails, we refer you to an experienced defamation lawyer to pursue your claim through civil court proceedings, including discovery, trial preparation, and representation before the court.
-                </p>
+                <p className="font-paragraph text-foreground/80">{"If negotiation efforts are unsuccessful, we can pursue litigation on your behalf in Ontario Small Claims Court where the claim falls within the court’s monetary jurisdiction, currently up to $50,000"}</p>
               </div>
             </div>
 
@@ -229,7 +222,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Timeline & Costs Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -284,7 +276,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Case Examples Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -320,7 +311,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* Important Information Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -329,9 +319,7 @@ export default function DefamationSlanderPage() {
             <div className="space-y-6 font-paragraph text-foreground/80">
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Paralegal Scope Limitations</h3>
-                <p>
-                  Ontario paralegals cannot represent you in defamation lawsuits. However, we can provide valuable pre-litigation support including case assessment, evidence gathering, demand letter preparation, and negotiation. Once litigation is necessary, we will refer you to an experienced defamation lawyer.
-                </p>
+                <p>{"Defamation claims may be pursued in Ontario Small Claims Court where the amount claimed falls within the court’s monetary jurisdiction, currently up to $50,000. In such cases, our Licensed Paralegals may provide representation and assistance within the authorized scope of paralegal practice. For defamation matters proceeding in the Superior Court of Justice, we can assist with pre-litigation support and refer clients to a lawyer where litigation is required."}</p>
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">The 2-Year Limitation Period</h3>
@@ -373,7 +361,6 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="w-full bg-secondary/5 py-16 md:py-20">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
@@ -390,7 +377,6 @@ export default function DefamationSlanderPage() {
           </Link>
         </div>
       </section>
-
       <Footer />
     </div>
   );
