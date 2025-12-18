@@ -14,13 +14,13 @@ export default function Header() {
     <header className="bg-background border-b border-secondary/10 sticky top-0 z-50" role="banner">
       <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0" aria-label="LegalAssist home">
+          <Link to="/" className="flex flex-col items-center gap-1 flex-shrink-0" aria-label="LegalAssist home">
             <div className="w-9 sm:w-10 h-9 sm:h-10 bg-primary rounded-sm flex items-center justify-center">
               <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">LA</span>
             </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-heading text-xl sm:text-2xl text-secondary font-bold leading-tight">LegalAssist</span>
-              <span className="font-paragraph text-xs sm:text-sm text-secondary/60 font-normal leading-tight">Paralegal Services</span>
+            <div className="flex flex-col items-center">
+              <span className="font-heading text-xs sm:text-sm text-secondary font-bold leading-tight">LegalAssist</span>
+              <span className="font-paragraph text-xs text-secondary/60 font-normal leading-tight">Paralegal Services</span>
             </div>
           </Link>
           
