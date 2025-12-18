@@ -394,8 +394,8 @@ We handle appeals for:
   {
     id: 'defamation-slander',
     name: 'Defamation & Slander',
-    tribunal: 'Ontario Superior Court',
-    shortDescription: 'Expert guidance on defamation claims and reputation protection. Paralegal support for pre-litigation matters.',
+    tribunal: 'Small Claims Court or Superior Court',
+    shortDescription: 'Expert guidance on defamation claims and reputation protection. Paralegal support for pre-litigation matters and Small Claims Court representation.',
     icon: <Gavel className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_42444ec42c4a427db445d028d3149b76~mv2.png?id=defamation-slander',
     learnMore: `Defamation is a false statement that damages your reputation. Whether spoken (slander) or written (libel), defamation can have serious consequences for your personal and professional life. We provide expert guidance on pursuing defamation claims and protecting your reputation.\n\nWhile Ontario paralegals cannot represent you in defamation lawsuits, we provide valuable pre-litigation support including:\n\n• Case assessment and legal analysis\n• Evidence gathering and documentation\n• Demand letter preparation\n• Negotiation and settlement discussions\n• Damages calculation and documentation\n• Online defamation investigation and removal\n• Lawyer referral for litigation\n\nWe understand the emotional impact of being defamed and work to help you hold those responsible accountable. Our goal is to achieve resolution through negotiation when possible, while preparing your case for litigation if necessary.`,
