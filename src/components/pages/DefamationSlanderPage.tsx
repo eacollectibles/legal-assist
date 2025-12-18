@@ -36,8 +36,8 @@ export default function DefamationSlanderPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_8f4c2e9a3d5f4e2b1a9c8d7e6f5g4h3i~mv2.png?id=defamation-slander-hero"
-                alt="Defamation and Slander Services"
+                src="https://static.wixstatic.com/media/99571b_42444ec42c4a427db445d028d3149b76~mv2.png?id=defamation-slander-hero"
+                alt="Defamation and Slander Services - Professional legal protection and reputation defense"
                 width={600}
                 height={400}
                 className="w-full h-auto"
