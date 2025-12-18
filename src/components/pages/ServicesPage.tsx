@@ -174,7 +174,7 @@ Federal human rights complaints follow different procedures than provincial comp
   },
   {
     id: 'family-matters',
-    name: 'Family Matters',
+    name: 'Family Legal Services Provider',
     tribunal: 'Ontario Superior Court / Family Court',
     shortDescription: 'Representation for family law issues including custody, support, and property division.',
     icon: <FileText className="w-8 h-8" />,

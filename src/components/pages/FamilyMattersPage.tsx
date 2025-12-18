@@ -16,7 +16,7 @@ export default function FamilyMattersPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Family Matters Services
+                Family Legal Services Provider
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 Compassionate, professional representation for family law issues. We understand the emotional complexity of family matters and work to achieve fair, practical solutions that prioritize your family's wellbeing.
