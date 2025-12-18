@@ -174,9 +174,7 @@ export default function DefamationSlanderPage() {
               <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">1</div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Initial Assessment</h3>
-                <p className="font-paragraph text-foreground/80">
-                  We evaluate your situation to determine if the legal elements of defamation are present and advise you on the strength of your potential claim.
-                </p>
+                <p className="font-paragraph text-foreground/80">{"We conduct an initial review of your matter to help you understand whether it may raise defamation-related issues and what options may be available."}</p>
               </div>
             </div>
 
@@ -184,9 +182,7 @@ export default function DefamationSlanderPage() {
               <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">2</div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Evidence Gathering</h3>
-                <p className="font-paragraph text-foreground/80">
-                  We help you collect and organize all relevant evidence including the false statements, proof of publication, and documentation of harm caused.
-                </p>
+                <p className="font-paragraph text-foreground/80">{"We help clients gather and organize relevant materials, such as copies of the alleged statements, information about where and how they were published, and documents relating to any claimed harm."}</p>
               </div>
             </div>
 
@@ -194,9 +190,7 @@ export default function DefamationSlanderPage() {
               <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">3</div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Demand & Negotiation</h3>
-                <p className="font-paragraph text-foreground/80">
-                  We prepare and send a formal demand letter requesting retraction, correction, and compensation. Many cases settle at this stage without litigation.
-                </p>
+                <p className="font-paragraph text-foreground/80">{"We assist with preparing demand or retraction letters and, where appropriate, support negotiation efforts to seek resolution of defamation-related disputes prior to litigation."}</p>
               </div>
             </div>
 
