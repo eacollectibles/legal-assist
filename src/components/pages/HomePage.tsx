@@ -236,9 +236,9 @@ export default function HomePage() {
               
               <AnimatedElement delay={300}>
                 <div className="prose prose-lg prose-stone text-secondary/80 font-paragraph">
+                  <p className="mb-6 text-lg leading-loose">{"At LegalAssist, we help individuals navigate Ontario’s legal system with clarity and confidence. Our services are provided by Licensed Paralegals in good standing with the Law Society of Ontario, offering knowledgeable and practical assistance within the authorized scope of paralegal practice."}</p>
                   <p className="text-lg leading-loose">{"Whether you are dealing with a traffic offence, a Small Claims Court matter within the court’s monetary jurisdiction, or a landlord-tenant dispute, our Licensed Paralegals provide knowledgeable and practical legal services within the authorized scope of practice. We are committed to offering services that are accessible, understandable, and cost-effective."}</p>
-                <p className="mb-6 text-lg leading-loose">{"At LegalAssist, we help individuals navigate Ontario’s legal system with clarity and confidence. Our services are provided by Licensed Paralegals in good standing with the Law Society of Ontario, offering knowledgeable and practical assistance within the authorized scope of paralegal practice."}</p>
-                  </div>
+                </div>
               </AnimatedElement>
 
               <AnimatedElement delay={400}>
@@ -274,9 +274,7 @@ export default function HomePage() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <AnimatedElement>
               <h2 className="font-heading text-4xl md:text-5xl text-secondary mb-6">Why Partner With LegalAssist</h2>
-              <p className="font-paragraph text-lg text-secondary/70">
-                We combine professional excellence with a client-first philosophy to deliver outstanding results.
-              </p>
+              <p className="font-paragraph text-lg text-secondary/70">{"We combine professional standards with a client-focused approach to provide reliable and practical legal services."}</p>
             </AnimatedElement>
           </div>
 
@@ -396,9 +394,7 @@ export default function HomePage() {
             </AnimatedElement>
             
             <AnimatedElement delay={200}>
-              <p className="font-paragraph text-xl text-secondary/70 mb-12 leading-relaxed max-w-2xl mx-auto">
-                Schedule a consultation with our experienced paralegals today. We'll review your case, explain your options, and develop a strategy tailored to your needs.
-              </p>
+              <p className="font-paragraph text-xl text-secondary/70 mb-12 leading-relaxed max-w-2xl mx-auto">{"Schedule a free 30-minute consultation with our Licensed Paralegals. During this initial consultation, we will review your matter, explain the available options within the paralegal scope of practice, and discuss possible next steps."}</p>
             </AnimatedElement>
 
             <AnimatedElement delay={300}>
