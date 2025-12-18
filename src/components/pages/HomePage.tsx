@@ -153,8 +153,8 @@ export default function HomePage() {
             style={{ transform: 'translateY(calc(var(--scroll-progress) * 100px))' }}
           >
             <Image 
-              src="https://static.wixstatic.com/media/99571b_3a3cefec19b443b5a4f3b53c0f884c26~mv2.png?originWidth=1920&originHeight=1024"
-              alt="Professional legal office environment with warm lighting"
+              src="https://static.wixstatic.com/media/99571b_116291d834424659a3dd7ba8988f92f3~mv2.png?originWidth=1920&originHeight=1024"
+              alt="Professional paralegal team in modern office, diverse lawyers and paralegals providing trusted legal consultation"
               className="w-full h-full object-cover"
               width={1920}
             />
