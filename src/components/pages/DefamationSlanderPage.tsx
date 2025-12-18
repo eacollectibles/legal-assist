@@ -215,6 +215,16 @@ export default function DefamationSlanderPage() {
               </div>
             </div>
 
+            <div className="relative">
+              <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">4</div>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Litigation</h3>
+                <p className="font-paragraph text-foreground/80">
+                  If negotiation fails, we refer you to an experienced defamation lawyer to pursue your claim through civil court proceedings, including discovery, trial preparation, and representation before the court.
+                </p>
+              </div>
+            </div>
+
 
           </div>
         </div>
