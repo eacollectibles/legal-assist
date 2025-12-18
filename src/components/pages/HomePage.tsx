@@ -141,7 +141,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
-
       {/* HERO SECTION */}
       {/* Design Motif: Full-bleed image with overlapping, asymmetrical content card. 
           Inspiration: Cassadi image structure. */}
@@ -183,9 +182,7 @@ export default function HomePage() {
                   {/* Decorative background element */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-pastelbeige/30 rounded-bl-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150" />
                   
-                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">
-                    Expert paralegal services across Ontario, providing professional representation at a fraction of traditional legal costs.
-                  </p>
+                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">{"Paralegal services across Ontario, providing professional representation at a fraction of traditional legal costs."}</p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 relative z-10">
                     <Link 
@@ -202,7 +199,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* EDITORIAL INTRO SECTION */}
       {/* Layout: Sticky side note with scrolling content */}
       <section className="py-24 lg:py-32 bg-pastelbeige/30 relative">
@@ -265,7 +261,7 @@ export default function HomePage() {
                       <CheckCircle2 className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-heading text-lg text-secondary mb-1">Licensed Pros</h4>
+                      <h4 className="font-heading text-lg text-secondary mb-1">{"Licensed Paralegals"}</h4>
                       <p className="text-sm text-secondary/70">Fully accredited and experienced team.</p>
                     </div>
                   </div>
@@ -276,7 +272,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* FEATURES SECTION - "Bento Box" Style Grid */}
       <section className="py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -322,7 +317,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* SERVICES SPLIT SECTION */}
       {/* Layout: Full width split with sticky image */}
       <section className="relative bg-secondary text-secondary-foreground overflow-hidden">
@@ -389,7 +383,6 @@ export default function HomePage() {
 
         </div>
       </section>
-
       {/* CTA SECTION */}
       <section id="contact" className="py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
         {/* Decorative Background Elements */}
@@ -423,15 +416,12 @@ export default function HomePage() {
                 <a 
                   href="tel:4165550123"
                   className="min-w-[200px] bg-white text-secondary border border-secondary/10 font-paragraph px-8 py-5 text-lg transition-all hover:bg-secondary hover:text-white hover:shadow-lg hover:-translate-y-1 rounded-sm"
-                >
-                  Call (416) 555-0123
-                </a>
+                >{"Call (000) 000-0000"}</a>
               </div>
             </AnimatedElement>
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
