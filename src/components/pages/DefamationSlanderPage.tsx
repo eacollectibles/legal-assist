@@ -17,9 +17,7 @@ export default function DefamationSlanderPage() {
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
                 Defamation & Slander Services
               </h1>
-              <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Protect your reputation and pursue justice for false statements that have damaged your character. We provide expert guidance on defamation claims, helping you understand your legal options and navigate the complex process of proving harm to your reputation.
-              </p>
+              <p className="font-paragraph text-lg text-foreground/80 mb-8">{"In Ontario, to establish defamation, a plaintiff must show that the impugned statement was published to at least one third party, referred to the plaintiff, and would lower the plaintiff’s reputation in the eyes of a reasonable person. In cases of libel, harm to reputation is presumed. Truth, fair comment, privilege, and responsible communication may be raised as defences. We assist clients in organizing evidence relevant to these legal requirements."}</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
@@ -138,9 +136,7 @@ export default function DefamationSlanderPage() {
                 <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <h3 className="font-heading text-xl font-bold text-foreground">Slander (Spoken Defamation)</h3>
               </div>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                False statements made verbally that damage your reputation. Examples include false accusations made in person, at work, or in public settings. Slander can spread quickly through word-of-mouth and cause significant harm to your personal and professional relationships.
-              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">{"Slander refers to defamatory statements made verbally or in a transient form that may harm a person’s reputation. Examples can include false accusations made in person, in the workplace, or in public settings. Depending on the circumstances, slander may require proof of resulting harm. Licensed Paralegals may assist with slander claims within the jurisdiction of Ontario Small Claims Court, where authorized."}</p>
             </div>
 
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
@@ -148,9 +144,7 @@ export default function DefamationSlanderPage() {
                 <FileText className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <h3 className="font-heading text-xl font-bold text-foreground">Libel (Written Defamation)</h3>
               </div>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                False statements in written form including emails, letters, articles, and online posts. Libel is often considered more serious than slander because written statements are permanent and can reach a wider audience. Social media posts and online reviews are common sources of libel.
-              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">{"Libel refers to defamatory statements made in written or recorded form, including emails, letters, articles, online posts, reviews, and other published material. Because libel involves statements that are recorded or capable of ongoing circulation, it may have a broader and more lasting impact on a person’s reputation. Social media posts, online reviews, and website content are common sources of libel. Licensed Paralegals may assist with libel claims within the jurisdiction of Ontario Small Claims Court, where authorized."}</p>
             </div>
 
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
@@ -158,9 +152,7 @@ export default function DefamationSlanderPage() {
                 <TrendingUp className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <h3 className="font-heading text-xl font-bold text-foreground">Online Defamation</h3>
               </div>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                False statements published on social media, review websites, blogs, and forums. Online defamation can spread rapidly and be difficult to contain. We help identify sources, document evidence, and pursue removal or correction of false statements.
-              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">{"Online defamation involves false statements published on social media platforms, review websites, blogs, forums, or other online sources. Such statements can spread quickly and may be difficult to contain. Licensed Paralegals may assist with identifying the source of the statements, documenting and preserving online evidence, and pursuing resolution or relief, including claims brought within the jurisdiction of Ontario Small Claims Court where authorized."}</p>
             </div>
 
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
@@ -168,9 +160,7 @@ export default function DefamationSlanderPage() {
                 <Gavel className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <h3 className="font-heading text-xl font-bold text-foreground">Business & Professional Defamation</h3>
               </div>
-              <p className="font-paragraph text-foreground/80 mb-4">
-                False statements that damage your business reputation, professional standing, or economic interests. This includes false claims about your business practices, qualifications, or financial stability that result in lost clients or business opportunities.
-              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">{"Business and professional defamation involves false statements that harm a person’s business reputation, professional standing, or economic interests. This may include inaccurate claims about business practices, professional qualifications, or financial stability that result in reputational damage or economic loss. Licensed Paralegals may assist with business or professional defamation matters within the jurisdiction of Ontario Small Claims Court, where authorized."}</p>
             </div>
           </div>
         </div>
