@@ -127,35 +127,7 @@ export default function DefamationSlanderPage() {
               </ul>
             </div>
 
-            {/* Limitations & When You Need a Lawyer */}
-            <div className="bg-pastelpeach/10 rounded-lg p-8 border border-pastelpeach/30">
-              <div className="flex items-center gap-3 mb-6">
-                <AlertCircle className="w-8 h-8 text-primary" />
-                <h3 className="font-heading text-2xl font-bold text-foreground">Important Limitations</h3>
-              </div>
-              <ul className="space-y-3">
-                <li className="flex gap-3">
-                  <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Lawyer Representation Required:</strong> Defamation lawsuits must be handled by a lawyer, not a paralegal. We can assist with preparation and evidence gathering, but you will need to retain a lawyer for court representation</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Complex Legal Issues:</strong> Defamation law involves nuanced concepts like privilege, opinion, and public figure status that require legal expertise</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Statute of Limitations:</strong> Ontario has a 2-year limitation period from publication. We will advise you of critical deadlines</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Defenses Available:</strong> Defendants may claim truth, privilege, or fair comment. A lawyer must evaluate these defenses</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Damages Proof:</strong> You must prove actual damages (financial loss, emotional distress, lost opportunities) which requires careful documentation</span>
-                </li>
-              </ul>
-            </div>
+
           </div>
         </div>
       </section>
