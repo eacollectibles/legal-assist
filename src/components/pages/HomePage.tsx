@@ -182,7 +182,7 @@ export default function HomePage() {
                   {/* Decorative background element */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-pastelbeige/30 rounded-bl-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150" />
                   
-                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">{"Professional paralegal representation for individuals and small businesses across Ontario"}</p>
+                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">{"Professional paralegal representation for individuals and small businesses across Ontario. We are accepting new clients."}</p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 relative z-10">
                     <Link 
