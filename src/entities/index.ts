@@ -25,6 +25,16 @@ export interface Bookings {
   serviceType?: string;
   /** @wixFieldType text */
   clientNotes?: string;
+  /** @wixFieldType text */
+  meetingLink?: string;
+  /** @wixFieldType text */
+  zoomUrl?: string;
+  /** @wixFieldType text */
+  googleCalendarEventId?: string;
+  /** @wixFieldType text */
+  status?: 'pending' | 'confirmed' | 'rescheduled' | 'cancelled';
+  /** @wixFieldType text */
+  confirmationToken?: string;
 }
 
 

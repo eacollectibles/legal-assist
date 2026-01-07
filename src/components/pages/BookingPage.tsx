@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle } from 'lucide-react';
+import { generateMeetingLink, generateZoomUrl, generateConfirmationToken } from '@/lib/meeting-utils';
 
 interface BookingFormData {
   clientName: string;
@@ -83,9 +84,18 @@ export default function BookingPage() {
 
     setIsSubmitting(true);
     try {
+      const bookingId = crypto.randomUUID();
+      const meetingLink = generateMeetingLink(bookingId);
+      const zoomUrl = generateZoomUrl(bookingId);
+      const confirmationToken = generateConfirmationToken();
+
       await BaseCrudService.create('bookings', {
-        _id: crypto.randomUUID(),
-        ...formData
+        _id: bookingId,
+        ...formData,
+        meetingLink,
+        zoomUrl,
+        confirmationToken,
+        status: 'pending'
       });
 
       setSubmitStatus('success');

@@ -57,6 +57,16 @@ export default function Header() {
               Contact
             </Link>
             <Link 
+              to="/dashboard" 
+              className={`font-paragraph text-base transition-colors ${
+                isActive('/dashboard') 
+                  ? 'text-primary font-semibold' 
+                  : 'text-secondary hover:text-primary'
+              }`}
+            >
+              Dashboard
+            </Link>
+            <Link 
               to="/booking" 
               className="bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
             >
@@ -114,6 +124,17 @@ export default function Header() {
               }`}
             >
               Contact
+            </Link>
+            <Link 
+              to="/dashboard" 
+              onClick={() => setMobileMenuOpen(false)}
+              className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                isActive('/dashboard') 
+                  ? 'bg-primary text-primary-foreground font-semibold' 
+                  : 'text-secondary hover:bg-pastelbeige'
+              }`}
+            >
+              Dashboard
             </Link>
             <Link 
               to="/booking" 
