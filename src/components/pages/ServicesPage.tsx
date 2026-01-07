@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel, Lock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -229,13 +229,44 @@ IMPORTANT: We can only represent you for summary conviction offences in Provinci
     keyPoints: [
       'Summary conviction offence expertise',
       'Provincial Court representation',
-      'Bail and release hearings',
       'Crown negotiation and plea advice',
-      'Trial defense representation'
+      'Trial defense representation',
+      'Case assessment and strategy'
     ],
     costInfo: 'Flexible fee arrangements available. Hourly rates and fixed fees for specific services. Discuss your budget during consultation.',
     timeline: 'Summary conviction cases typically resolve within 3-12 months depending on complexity and court scheduling.',
     eligibility: 'Available to individuals charged with summary conviction offences in Ontario. Scope limited to Provincial Court matters.'
+  },
+  {
+    id: 'bail-hearings',
+    name: 'Bail Hearings & Release',
+    tribunal: 'Provincial Court - Bail Proceedings',
+    shortDescription: 'Emergency representation to secure your release on reasonable bail conditions after arrest.',
+    icon: <Lock className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_967c0331818f46028ebf68e309549013~mv2.png?id=bail-hearings',
+    learnMore: `When you're arrested, getting out of custody quickly is critical. A bail hearing determines whether you should be released and under what conditions. Our licensed paralegals fight for your freedom with experienced bail hearing advocacy.
+
+We provide immediate assistance with:
+
+• Emergency representation within 24 hours
+• Bail hearing preparation and strategy
+• Character reference and documentation gathering
+• Surety coordination and preparation
+• Court appearance and advocacy
+• Bail condition negotiation
+• Post-release guidance and support
+
+Time is critical in bail hearings—they must be held within 3 days of arrest. Contact us immediately if you or a loved one has been arrested. We offer 24/7 emergency consultations and can often appear in court the same day.`,
+    keyPoints: [
+      '24/7 emergency availability',
+      'Same-day court appearance',
+      'Bail condition negotiation',
+      'Surety preparation and coordination',
+      'Proven track record of successful releases'
+    ],
+    costInfo: 'Emergency rates available. Flexible payment arrangements for urgent matters. Discuss your situation during emergency consultation.',
+    timeline: 'Bail hearings must be held within 3 days of arrest. We can often appear in court the same day you contact us.',
+    eligibility: 'Available to anyone arrested and facing a bail hearing in Ontario Provincial Court. 24/7 emergency service.'
   },
   {
     id: 'notary-public',
@@ -338,7 +369,19 @@ We handle appeals for:
     shortDescription: 'Expert guidance on defamation claims and reputation protection. Paralegal support for pre-litigation matters and Small Claims Court representation.',
     icon: <Gavel className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_42444ec42c4a427db445d028d3149b76~mv2.png?id=defamation-slander',
-    learnMore: `Defamation is a false statement that damages your reputation. Whether spoken (slander) or written (libel), defamation can have serious consequences for your personal and professional life. We provide expert guidance on pursuing defamation claims and protecting your reputation.\n\nWhile Ontario paralegals cannot represent you in defamation lawsuits, we provide valuable pre-litigation support including:\n\n• Case assessment and legal analysis\n• Evidence gathering and documentation\n• Demand letter preparation\n• Negotiation and settlement discussions\n• Damages calculation and documentation\n• Online defamation investigation and removal\n• Lawyer referral for litigation\n\nWe understand the emotional impact of being defamed and work to help you hold those responsible accountable. Our goal is to achieve resolution through negotiation when possible, while preparing your case for litigation if necessary.`,
+    learnMore: `Defamation is a false statement that damages your reputation. Whether spoken (slander) or written (libel), defamation can have serious consequences for your personal and professional life. We provide expert guidance on pursuing defamation claims and protecting your reputation.
+
+While Ontario paralegals cannot represent you in defamation lawsuits, we provide valuable pre-litigation support including:
+
+• Case assessment and legal analysis
+• Evidence gathering and documentation
+• Demand letter preparation
+• Negotiation and settlement discussions
+• Damages calculation and documentation
+• Online defamation investigation and removal
+• Lawyer referral for litigation
+
+We understand the emotional impact of being defamed and work to help you hold those responsible accountable. Our goal is to achieve resolution through negotiation when possible, while preparing your case for litigation if necessary.`,
     keyPoints: [
       'Pre-litigation case assessment',
       'Evidence gathering and documentation',
@@ -460,6 +503,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'criminal-matters' ? (
                         <Link to="/services/criminal-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'bail-hearings' ? (
+                        <Link to="/services/bail-hearings" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>

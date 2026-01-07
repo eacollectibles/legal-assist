@@ -12,6 +12,7 @@ import BookingPage from '@/components/pages/BookingPage';
 import FamilyMattersPage from '@/components/pages/FamilyMattersPage';
 import MediationServicesPage from '@/components/pages/MediationServicesPage';
 import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
+import BailHearingsPage from '@/components/pages/BailHearingsPage';
 import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
 import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "services/criminal-matters",
         element: <CriminalMattersPage />,
+      },
+      {
+        path: "services/bail-hearings",
+        element: <BailHearingsPage />,
       },
       {
         path: "services/notary-public",
