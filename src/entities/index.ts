@@ -31,6 +31,8 @@ export interface Bookings {
   meetingLink?: string;
   /** @wixFieldType text */
   zoomUrl?: string;
+  /** @wixFieldType text */
+  confirmationToken?: string;
 }
 
 
