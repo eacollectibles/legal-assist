@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel, Lock } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -238,37 +238,6 @@ IMPORTANT: We can only represent you for summary conviction offences in Provinci
     eligibility: 'Available to individuals charged with summary conviction offences in Ontario. Scope limited to Provincial Court matters.'
   },
   {
-    id: 'bail-hearings',
-    name: 'Bail Hearings & Release',
-    tribunal: 'Provincial Court - Bail Proceedings',
-    shortDescription: 'Emergency representation to secure your release on reasonable bail conditions after arrest.',
-    icon: <Lock className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_967c0331818f46028ebf68e309549013~mv2.png?id=bail-hearings',
-    learnMore: `When you're arrested, getting out of custody quickly is critical. A bail hearing determines whether you should be released and under what conditions. Our licensed paralegals fight for your freedom with experienced bail hearing advocacy.
-
-We provide immediate assistance with:
-
-• Emergency representation within 24 hours
-• Bail hearing preparation and strategy
-• Character reference and documentation gathering
-• Surety coordination and preparation
-• Court appearance and advocacy
-• Bail condition negotiation
-• Post-release guidance and support
-
-Time is critical in bail hearings—they must be held within 3 days of arrest. Contact us immediately if you or a loved one has been arrested. We offer 24/7 emergency consultations and can often appear in court the same day.`,
-    keyPoints: [
-      '24/7 emergency availability',
-      'Same-day court appearance',
-      'Bail condition negotiation',
-      'Surety preparation and coordination',
-      'Proven track record of successful releases'
-    ],
-    costInfo: 'Emergency rates available. Flexible payment arrangements for urgent matters. Discuss your situation during emergency consultation.',
-    timeline: 'Bail hearings must be held within 3 days of arrest. We can often appear in court the same day you contact us.',
-    eligibility: 'Available to anyone arrested and facing a bail hearing in Ontario Provincial Court. 24/7 emergency service.'
-  },
-  {
     id: 'notary-public',
     name: 'Notary Public Services',
     tribunal: 'Notary Public',
@@ -503,11 +472,6 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'criminal-matters' ? (
                         <Link to="/services/criminal-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      ) : service.id === 'bail-hearings' ? (
-                        <Link to="/services/bail-hearings" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
