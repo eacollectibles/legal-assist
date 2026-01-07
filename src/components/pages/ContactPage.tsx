@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle, MessageSquare } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -113,9 +113,9 @@ const ContactMethodCard: React.FC<ContactMethodProps> = ({
   if (actionHref) {
     return (
       <AnimatedElement delay={delay} className="h-full">
-        <Link to={actionHref} className="block h-full">
+        <a href={actionHref} className="block h-full">
           {content}
-        </Link>
+        </a>
       </AnimatedElement>
     );
   }
@@ -405,12 +405,21 @@ export default function ContactPage() {
   const contactMethods = [
     {
       icon: Phone,
-      title: 'Schedule an Appointment',
-      description: 'Book a consultation with our Licensed Paralegals. Choose your preferred date and time.',
-      action: 'Book Now',
-      actionHref: '/booking',
+      title: 'Call Us',
+      description: 'Speak directly with our team. Call us during business hours for immediate assistance.',
+      action: 'Call Now',
+      actionHref: 'tel:16399992222',
       color: 'bg-pastelgreen',
       delay: 0
+    },
+    {
+      icon: MessageSquare,
+      title: 'Text Us',
+      description: 'Send us a text message and we\'ll respond as soon as possible.',
+      action: 'Text Now',
+      actionHref: 'sms:16399992222',
+      color: 'bg-pastellavender',
+      delay: 100
     },
     {
       icon: Mail,
@@ -418,16 +427,16 @@ export default function ContactPage() {
       description: 'Have questions? Send us an email and we\'ll respond within 24 business hours.',
       action: 'Email Us',
       actionHref: 'mailto:info@legalassist.ca',
-      color: 'bg-pastellavender',
-      delay: 100
+      color: 'bg-pastelpeach',
+      delay: 200
     },
     {
       icon: Clock,
       title: 'Request a Callback',
       description: 'Prefer to talk by phone? Request a callback and we\'ll reach out at your convenience.',
       action: 'Request Now',
-      color: 'bg-pastelpeach',
-      delay: 200
+      color: 'bg-pastelbeige',
+      delay: 300
     },
     {
       icon: Mail,
@@ -435,7 +444,7 @@ export default function ContactPage() {
       description: 'Help us improve! Share your feedback, suggestions, or comments about our services.',
       action: 'Share Feedback',
       color: 'bg-pastelbeige',
-      delay: 300
+      delay: 400
     }
   ];
 
@@ -487,7 +496,7 @@ export default function ContactPage() {
             </AnimatedElement>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {contactMethods.map((method, index) => (
               <ContactMethodCard
                 key={index}
@@ -527,8 +536,8 @@ export default function ContactPage() {
                   <p className="font-paragraph text-secondary-foreground/80 mb-2">
                     Call us during business hours
                   </p>
-                  <a href="tel:4165550123" className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
-                    (416) 555-0123
+                  <a href="tel:16399992222" className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
+                    (639) 999-2222
                   </a>
                 </div>
               </div>
