@@ -26,15 +26,11 @@ export interface Bookings {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
+  status?: 'pending' | 'confirmed' | 'rescheduled' | 'cancelled';
+  /** @wixFieldType text */
   meetingLink?: string;
   /** @wixFieldType text */
   zoomUrl?: string;
-  /** @wixFieldType text */
-  googleCalendarEventId?: string;
-  /** @wixFieldType text */
-  status?: 'pending' | 'confirmed' | 'rescheduled' | 'cancelled';
-  /** @wixFieldType text */
-  confirmationToken?: string;
 }
 
 

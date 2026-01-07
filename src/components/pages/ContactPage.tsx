@@ -443,7 +443,7 @@ export default function ContactPage() {
       title: 'Schedule an Appointment',
       description: 'Book a consultation with our Licensed Paralegals. Choose your preferred date and time.',
       action: 'Book Now',
-      actionHref: '/booking',
+      actionHref: '/dashboard',
       color: 'bg-pastelbeige',
       delay: 400
     }
