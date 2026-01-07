@@ -9,13 +9,11 @@ import LandlordTenantBoardPage from '@/components/pages/LandlordTenantBoardPage'
 import HumanRightsTribunalPage from '@/components/pages/HumanRightsTribunalPage';
 import TrafficTicketsPage from '@/components/pages/TrafficTicketsPage';
 import BookingPage from '@/components/pages/BookingPage';
-import FederalHumanRightsPage from '@/components/pages/FederalHumanRightsPage';
 import FamilyMattersPage from '@/components/pages/FamilyMattersPage';
 import MediationServicesPage from '@/components/pages/MediationServicesPage';
 import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
 import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
-import ProBonoPage from '@/components/pages/ProBonoPage';
 import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
 import DefamationSlanderPage from '@/components/pages/DefamationSlanderPage';
 
@@ -60,10 +58,6 @@ const router = createBrowserRouter([
         element: <TrafficTicketsPage />,
       },
       {
-        path: "services/federal-human-rights",
-        element: <FederalHumanRightsPage />,
-      },
-      {
         path: "services/family-matters",
         element: <FamilyMattersPage />,
       },
@@ -82,10 +76,6 @@ const router = createBrowserRouter([
       {
         path: "services/commissioner-of-oaths",
         element: <CommissionerOfOathsPage />,
-      },
-      {
-        path: "services/pro-bono",
-        element: <ProBonoPage />,
       },
       {
         path: "services/social-benefits-tribunal",

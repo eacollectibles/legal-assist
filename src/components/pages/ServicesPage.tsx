@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Briefcase, Handshake, Shield, Stamp, CheckCircle, Heart, Landmark, Gavel } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -142,36 +142,7 @@ Our approach includes reviewing evidence, identifying procedural issues, negotia
     timeline: 'Traffic court dates typically set within 4-8 weeks. Resolution depends on court scheduling and case complexity.',
     eligibility: 'Available to anyone charged with a traffic violation in Ontario. Representation can significantly improve outcomes.'
   },
-  {
-    id: 'federal-human-rights',
-    name: 'Federal Human Rights Commission',
-    tribunal: 'Canadian Human Rights Commission',
-    shortDescription: 'Representation for discrimination complaints under federal jurisdiction.',
-    icon: <Briefcase className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_49f6982ca3874aae93ce8e745bececa4~mv2.png?id=federal-human-rights',
-    learnMore: `The Canadian Human Rights Commission handles discrimination complaints in federally regulated industries such as banking, telecommunications, interprovincial transportation, and federal government employment.
 
-We assist with complaints involving:
-
-• Federal employment discrimination
-• Discrimination by federal agencies
-• Harassment in federally regulated workplaces
-• Disability accommodation in federal jurisdiction
-• Discrimination in federally regulated services
-• Retaliation for human rights complaints
-
-Federal human rights complaints follow different procedures than provincial complaints. Our team has experience navigating the Canadian Human Rights Act and Commission processes to effectively advocate for your rights.`,
-    keyPoints: [
-      'Federal jurisdiction expertise',
-      'Canadian Human Rights Act knowledge',
-      'Federally regulated industry focus',
-      'Commission investigation support',
-      'Tribunal representation'
-    ],
-    costInfo: 'Specialized rates for federal human rights matters. Consultation available to assess your complaint eligibility.',
-    timeline: 'Federal complaints can take 18-36 months from filing to resolution, depending on investigation complexity.',
-    eligibility: 'Available to individuals with complaints in federally regulated industries or against federal agencies.'
-  },
   {
     id: 'family-matters',
     name: 'Family Legal Services Provider',
@@ -330,38 +301,7 @@ When you swear an oath before our Commissioner of Oaths, you are making a legall
     timeline: 'Same-day service available for most oath and declaration matters. Appointments can be scheduled at your convenience.',
     eligibility: 'Available to anyone requiring oath administration or statutory declarations for legal proceedings, court matters, or official purposes.'
   },
-  {
-    id: 'pro-bono',
-    name: 'Pro Bono Legal Services',
-    tribunal: 'Pro Bono Services',
-    shortDescription: 'Free legal representation for those who cannot afford it. We believe everyone deserves access to justice.',
-    icon: <Heart className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_a4a22ca60af149e0abcd06e31c5f9ae1~mv2.png?id=pro-bono-services',
-    learnMore: `We are committed to providing quality legal representation to individuals and families who cannot afford to pay for legal services. Our pro bono program ensures that financial barriers do not prevent people from accessing the justice system.
 
-Through our pro bono initiative, we take on cases based on merit and the client's financial need. We believe that everyone deserves competent legal representation, regardless of their economic circumstances.
-
-Our pro bono services include:
-
-• Family law matters (custody, support, separation)
-• Landlord and tenant disputes (eviction defense, rent disputes)
-• Small claims court representation
-• Human rights complaints (discrimination cases)
-• Traffic violation defense
-• Summary conviction criminal matters
-
-To qualify, you must meet financial eligibility requirements and your case must have legal merit. The application process includes an intake interview, financial review, and case assessment.`,
-    keyPoints: [
-      'Completely free legal services',
-      'Expert paralegal representation',
-      'Multiple practice areas covered',
-      'Confidential and professional',
-      'Community commitment to access to justice'
-    ],
-    costInfo: 'Completely free. No cost to you regardless of case outcome. No hidden fees or charges.',
-    timeline: 'Application process typically takes 2-4 weeks. Limited availability due to high demand.',
-    eligibility: 'Household income at or below 200% of poverty line, limited assets, and case must have legal merit and fall within our authorized practice areas.'
-  },
   {
     id: 'social-benefits-tribunal',
     name: 'Social Benefits Tribunal',
@@ -508,11 +448,6 @@ export default function ServicesPage() {
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
-                      ) : service.id === 'federal-human-rights' ? (
-                        <Link to="/services/federal-human-rights" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
                       ) : service.id === 'family-matters' ? (
                         <Link to="/services/family-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
@@ -535,11 +470,6 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'commissioner-of-oaths' ? (
                         <Link to="/services/commissioner-of-oaths" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      ) : service.id === 'pro-bono' ? (
-                        <Link to="/services/pro-bono" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
