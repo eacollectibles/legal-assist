@@ -17,6 +17,7 @@ import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
 import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
 import DefamationSlanderPage from '@/components/pages/DefamationSlanderPage';
+import ContactPage from '@/components/pages/ContactPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "booking",
         element: <BookingPage />,
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
       },
       {
         path: "*",

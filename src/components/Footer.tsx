@@ -24,12 +24,15 @@ export default function Footer() {
               <Link to="/" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
                 Home
               </Link>
-              <Link to="/legal-services" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
-                Legal Services
+              <Link to="/services" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
+                Services
               </Link>
-              <a href="#contact" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
-                Contact Us
-              </a>
+              <Link to="/contact" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
+                Contact
+              </Link>
+              <Link to="/booking" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
+                Book Now
+              </Link>
             </nav>
           </div>
           
