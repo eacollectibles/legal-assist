@@ -186,10 +186,10 @@ export default function HomePage() {
                   
                   <div className="flex flex-col sm:flex-row gap-4 relative z-10">
                     <Link 
-                      to="/services"
+                      to="/contact"
                       className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-paragraph px-8 py-4 text-lg transition-all hover:bg-primary/90 hover:gap-4 group/btn"
                     >
-                      Explore Services
+                      Get Started
                       <ArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
                     </Link>
                   </div>
@@ -398,7 +398,7 @@ export default function HomePage() {
             <AnimatedElement delay={300}>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link 
-                  to="/booking"
+                  to="/contact"
                   className="min-w-[200px] bg-primary text-primary-foreground font-paragraph px-8 py-5 text-lg transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
                 >
                   Get Started
