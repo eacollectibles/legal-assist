@@ -182,7 +182,7 @@ export default function HomePage() {
                   {/* Decorative background element */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-pastelbeige/30 rounded-bl-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150" />
                   
-                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">{"Paralegal services across Ontario, providing professional representation at a fraction of traditional legal costs."}</p>
+                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">{"Professional paralegal representation for individuals and small businesses across Ontario"}</p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 relative z-10">
                     <Link 
@@ -355,9 +355,7 @@ export default function HomePage() {
               </AnimatedElement>
 
               <AnimatedElement delay={200}>
-                <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-8">
-                  Licensed paralegals in Ontario are authorized to represent clients in a wide range of legal matters. From traffic tickets to small claims court (up to $50,000), landlord-tenant disputes to provincial offences, we cover the full spectrum of paralegal practice areas.
-                </p>
+                <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-8">{"Licensed paralegals in Ontario are authorized to represent clients in a broad range of legal matters. This includes summary conviction criminal offences, provincial offences such as traffic tickets, landlord-tenant disputes, and Small Claims Court matters up to $50,000. We provide professional representation across the full scope of paralegal-permitted practice areas."}</p>
                 <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-12">
                   Our team specializes in making the legal process understandable and manageable, guiding you through each step with clarity and confidence.
                 </p>
