@@ -439,10 +439,11 @@ export default function ContactPage() {
       delay: 300
     },
     {
-      icon: Mail,
-      title: 'Send Feedback',
-      description: 'Help us improve! Share your feedback, suggestions, or comments about our services.',
-      action: 'Share Feedback',
+      icon: Phone,
+      title: 'Schedule an Appointment',
+      description: 'Book a consultation with our Licensed Paralegals. Choose your preferred date and time.',
+      action: 'Book Now',
+      actionHref: '/booking',
       color: 'bg-pastelbeige',
       delay: 400
     }
