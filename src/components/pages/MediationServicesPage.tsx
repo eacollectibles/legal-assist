@@ -22,7 +22,7 @@ export default function MediationServicesPage() {
                 Professional mediation to resolve disputes collaboratively and cost-effectively. Our experienced mediators help parties find mutually beneficial solutions while maintaining control over the outcome.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Get Started Today
                   </Button>

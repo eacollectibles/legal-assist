@@ -22,7 +22,7 @@ export default function SocialBenefitsTribunalPage() {
                 Expert representation for social assistance and disability support appeals. We help you navigate the Social Benefits Tribunal to secure the benefits you deserve.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Get Started Today
                   </Button>

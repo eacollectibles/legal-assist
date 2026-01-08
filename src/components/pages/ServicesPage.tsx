@@ -498,13 +498,13 @@ export default function ServicesPage() {
                         </div>
                       </div>
 
-                      <a
-                        href="#contact"
+                      <Link
+                        to="/contact"
                         className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90"
                       >
                         Get Started
                         <ArrowRight className="w-4 h-4" />
-                      </a>
+                      </Link>
                     </motion.div>
                   )}
                 </motion.div>

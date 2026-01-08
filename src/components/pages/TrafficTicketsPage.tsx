@@ -22,7 +22,7 @@ export default function TrafficTicketsPage() {
                 Expert legal representation for traffic violations in Ontario. Our experienced paralegals help minimize fines, demerit points, and insurance impacts through skilled defense and negotiation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Get Started Today
                   </Button>
