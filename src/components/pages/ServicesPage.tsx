@@ -144,38 +144,6 @@ Our approach includes reviewing evidence, identifying procedural issues, negotia
   },
 
   {
-    id: 'family-matters',
-    name: 'Family Legal Services Provider',
-    tribunal: 'Ontario Superior Court / Family Court',
-    shortDescription: 'Representation for family law issues including custody, support, and property division.',
-    icon: <FileText className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_52626f36e852448ca59c6a21d26750d4~mv2.png?id=family-matters',
-    learnMore: `Family law matters are deeply personal and require compassionate, knowledgeable representation. Our paralegals assist with various family law issues to help you navigate these challenging situations.
-
-We provide guidance and representation for:
-
-• Child custody and access arrangements
-• Child support calculations and modifications
-• Spousal support matters
-• Property division and equalization
-• Separation agreements
-• Divorce-related issues
-• Parenting plan development
-• Family violence protection orders
-
-We understand the emotional complexity of family matters and work to achieve fair, practical solutions that prioritize your family's wellbeing. Our approach emphasizes clear communication and, where possible, collaborative resolution.`,
-    keyPoints: [
-      'Child custody expertise',
-      'Support calculation knowledge',
-      'Property division guidance',
-      'Separation agreement drafting',
-      'Family violence protection'
-    ],
-    costInfo: 'Flexible fee arrangements available, including hourly rates and fixed fees for specific services.',
-    timeline: 'Family matters vary greatly in timeline. Simple agreements may be resolved in weeks; contested matters may take 6-18 months.',
-    eligibility: 'Available to individuals involved in family law matters in Ontario, including separation, divorce, and custody issues.'
-  },
-  {
     id: 'mediation',
     name: 'Mediation Services',
     tribunal: 'Mediation & Dispute Resolution',
@@ -457,11 +425,6 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'traffic-tickets' ? (
                         <Link to="/services/traffic-tickets" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      ) : service.id === 'family-matters' ? (
-                        <Link to="/services/family-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>

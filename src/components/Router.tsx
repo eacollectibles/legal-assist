@@ -9,7 +9,7 @@ import LandlordTenantBoardPage from '@/components/pages/LandlordTenantBoardPage'
 import HumanRightsTribunalPage from '@/components/pages/HumanRightsTribunalPage';
 import TrafficTicketsPage from '@/components/pages/TrafficTicketsPage';
 import BookingPage from '@/components/pages/BookingPage';
-import FamilyMattersPage from '@/components/pages/FamilyMattersPage';
+
 import MediationServicesPage from '@/components/pages/MediationServicesPage';
 import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
 import BailHearingsPage from '@/components/pages/BailHearingsPage';
@@ -60,10 +60,7 @@ const router = createBrowserRouter([
         path: "services/traffic-tickets",
         element: <TrafficTicketsPage />,
       },
-      {
-        path: "services/family-matters",
-        element: <FamilyMattersPage />,
-      },
+
       {
         path: "services/mediation",
         element: <MediationServicesPage />,
