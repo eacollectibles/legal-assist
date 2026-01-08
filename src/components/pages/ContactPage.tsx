@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -404,31 +404,13 @@ export default function ContactPage() {
 
   const contactMethods = [
     {
-      icon: Phone,
-      title: 'Call Us',
-      description: 'Speak directly with our team. Call us during business hours for immediate assistance.',
-      action: 'Call Now',
-      actionHref: 'tel:16399992222',
-      color: 'bg-pastelgreen',
-      delay: 0
-    },
-    {
-      icon: MessageSquare,
-      title: 'Text Us',
-      description: 'Send us a text message and we\'ll respond as soon as possible.',
-      action: 'Text Now',
-      actionHref: 'sms:16399992222',
-      color: 'bg-pastellavender',
-      delay: 100
-    },
-    {
       icon: Mail,
       title: 'Send an Email',
       description: 'Have questions? Send us an email and we\'ll respond within 24 business hours.',
       action: 'Email Us',
       actionHref: 'mailto:info@legalassist.ca',
       color: 'bg-pastelpeach',
-      delay: 200
+      delay: 0
     },
     {
       icon: Clock,
@@ -436,7 +418,7 @@ export default function ContactPage() {
       description: 'Prefer to talk by phone? Request a callback and we\'ll reach out at your convenience.',
       action: 'Request Now',
       color: 'bg-pastelbeige',
-      delay: 300
+      delay: 100
     },
     {
       icon: Phone,
@@ -445,7 +427,7 @@ export default function ContactPage() {
       action: 'Book Now',
       actionHref: '/dashboard',
       color: 'bg-pastelbeige',
-      delay: 400
+      delay: 200
     }
   ];
 
@@ -497,7 +479,7 @@ export default function ContactPage() {
             </AnimatedElement>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {contactMethods.map((method, index) => (
               <ContactMethodCard
                 key={index}
@@ -526,25 +508,8 @@ export default function ContactPage() {
       {/* CONTACT INFORMATION SECTION */}
       <section className="py-24 lg:py-32 bg-secondary text-secondary-foreground">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
             <AnimatedElement delay={0}>
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/20 rounded-full flex-shrink-0">
-                  <Phone className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-xl font-bold mb-2">Phone</h3>
-                  <p className="font-paragraph text-secondary-foreground/80 mb-2">
-                    Call us during business hours
-                  </p>
-                  <a href="tel:16399992222" className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
-                    (639) 999-2222
-                  </a>
-                </div>
-              </div>
-            </AnimatedElement>
-
-            <AnimatedElement delay={100}>
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-primary/20 rounded-full flex-shrink-0">
                   <Mail className="w-6 h-6 text-primary" />
@@ -561,7 +526,7 @@ export default function ContactPage() {
               </div>
             </AnimatedElement>
 
-            <AnimatedElement delay={200}>
+            <AnimatedElement delay={100}>
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-primary/20 rounded-full flex-shrink-0">
                   <MapPin className="w-6 h-6 text-primary" />
