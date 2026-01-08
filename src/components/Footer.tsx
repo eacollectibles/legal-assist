@@ -11,7 +11,10 @@ export default function Footer() {
               <div className="w-9 sm:w-10 h-9 sm:h-10 bg-primary rounded-sm flex items-center justify-center">
                 <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">LA</span>
               </div>
-              <span className="font-heading text-xl sm:text-2xl font-bold">LegalAssist</span>
+              <div className="flex flex-col">
+                <span className="font-heading text-xl sm:text-2xl font-bold">LegalAssist</span>
+                <span className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 font-normal leading-tight">Paralegal Services</span>
+              </div>
             </div>
             <p className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 leading-relaxed">
               Professional paralegal services across Ontario, delivering accessible and affordable legal support for individuals and businesses.
