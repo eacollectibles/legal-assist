@@ -45,7 +45,7 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                 <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80">
-                  123 Bay Street, Suite 500<br />Toronto, ON M5J 2N8
+                  P.O Box 1000<br />London, Ontario, N6A 2L1
                 </span>
               </div>
               <div className="flex items-center gap-3">
