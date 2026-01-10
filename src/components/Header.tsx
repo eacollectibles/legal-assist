@@ -37,6 +37,16 @@ export default function Header() {
               Home
             </Link>
             <Link 
+              to="/about" 
+              className={`font-paragraph text-base transition-colors ${
+                isActive('/about') 
+                  ? 'text-primary font-semibold' 
+                  : 'text-secondary hover:text-primary'
+              }`}
+            >
+              About
+            </Link>
+            <Link 
               to="/services" 
               className={`font-paragraph text-base transition-colors ${
                 isActive('/services') 
@@ -83,6 +93,17 @@ export default function Header() {
               }`}
             >
               Home
+            </Link>
+            <Link 
+              to="/about" 
+              onClick={() => setMobileMenuOpen(false)}
+              className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                isActive('/about') 
+                  ? 'bg-primary text-primary-foreground font-semibold' 
+                  : 'text-secondary hover:bg-pastelbeige'
+              }`}
+            >
+              About
             </Link>
             <Link 
               to="/services" 
