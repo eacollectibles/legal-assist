@@ -57,7 +57,7 @@ export default function Footer() {
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
                 <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80">
-                  info@legalassist.ca
+                  info@legalassist.london
                 </span>
               </div>
             </div>
