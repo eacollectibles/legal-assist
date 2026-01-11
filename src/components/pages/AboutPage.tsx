@@ -182,10 +182,6 @@ export default function AboutPage() {
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Bail Hearings:</strong> Representation at bail and release hearings</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <span className="font-paragraph text-foreground/80"><strong>Mediation Services:</strong> Dispute resolution and settlement negotiation</span>
                   </li>
                   <li className="flex items-start gap-3">
