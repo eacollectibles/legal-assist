@@ -64,7 +64,12 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-secondary-foreground/20 pt-6 sm:pt-8">
+        <div className="border-t border-secondary-foreground/20 pt-6 sm:pt-8 mb-6 sm:mb-8">
+          <div className="bg-secondary-foreground/5 rounded-lg p-4 sm:p-6 border border-secondary-foreground/10 mb-6 sm:mb-8">
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+              <strong className="text-secondary-foreground/90">Disclaimer:</strong> This website provides general information about paralegal services and is not intended to constitute legal advice. The information contained herein should not be construed as legal advice in any manner, nor does it create or imply any attorney-client or paralegal-client relationship. Contacting LegalAssist through this website, submitting a form, or sending an email will not establish a paralegal-client relationship unless and until a written retainer agreement is executed. No confidentiality or privilege attaches to information sent through this website prior to the establishment of a formal client relationship. For legal advice specific to your situation, please contact us to schedule a consultation with a licensed paralegal.
+            </p>
+          </div>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
             © {new Date().getFullYear()} LegalAssist. All rights reserved. Licensed Paralegals serving Ontario.
           </p>
