@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel, Briefcase } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -329,6 +329,43 @@ We understand the emotional impact of being defamed and work to help you hold th
     costInfo: 'Hourly rates $150-250/hour for paralegal services. Flat fees available for pre-litigation packages. Lawyer referrals for litigation.',
     timeline: 'Pre-litigation phase: 2-6 weeks. Negotiation: 4-12 weeks. Litigation (with lawyer): 12-24+ months. Critical: 2-year limitation period from publication.',
     eligibility: 'Available to anyone who believes they have been defamed. Paralegal services for pre-litigation support; lawyer required for court representation.'
+  },
+  {
+    id: 'employment-issues',
+    name: 'Employment Issues',
+    tribunal: 'Small Claims Court / Employment Standards Act',
+    shortDescription: 'Expert guidance on employment disputes including wrongful dismissal, constructive dismissal, severance reviews, and workplace rights violations.',
+    icon: <Briefcase className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_9954538ec5b24b4a8a245180de229f4b~mv2.png?id=employment-issues',
+    learnMore: `Employment disputes can be complex and stressful. Whether you've been wrongfully dismissed, face constructive dismissal, need a severance package reviewed, or believe your workplace rights have been violated, our licensed paralegals provide expert guidance and support.
+
+We assist with a wide range of employment issues:
+
+• Wrongful Dismissal: Representation for employees terminated without just cause or proper notice
+• Constructive Dismissal: Guidance when working conditions become intolerable, forcing resignation
+• Severance Package Review: Expert analysis of severance offers to ensure fair compensation
+• Termination Without Cause: Negotiation of severance and benefits following job loss
+• Notice and Pay in Lieu: Ensuring compliance with Employment Standards Act requirements
+• Unpaid Wages and Overtime: Recovery of unpaid compensation and overtime pay
+• Workplace Rights Violations: Guidance on violations of employment standards and workplace laws
+• Human Rights Violations in Employment: Discrimination, harassment, and retaliation claims
+• Wrongful Termination Due to Illness or Disability: Protection against disability-based dismissal
+• Breach of Employment Contract: Enforcement of contractual rights and remedies
+• Workplace Harassment and Bullying: Documentation and response strategies
+• Retaliation Claims: Protection against retaliation for reporting violations or exercising rights
+
+Our paralegals understand Ontario's Employment Standards Act and common law employment principles. We work to protect your rights, negotiate fair settlements, and pursue claims through appropriate channels.`,
+    keyPoints: [
+      'Wrongful dismissal analysis',
+      'Severance package review and negotiation',
+      'Constructive dismissal guidance',
+      'Employment Standards Act compliance',
+      'Workplace rights protection',
+      'Human rights violation support'
+    ],
+    costInfo: 'Hourly rates $150-250/hour or flat fees for specific services. Free initial consultation to assess your employment situation.',
+    timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Small Claims Court proceedings (if necessary): 3-6 months.',
+    eligibility: 'Available to employees and employers in Ontario dealing with employment disputes, termination issues, or workplace rights violations. Paralegal representation available for Small Claims Court matters up to $50,000.'
   }
 ];
 
@@ -455,6 +492,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'defamation-slander' ? (
                         <Link to="/services/defamation-slander" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'employment-issues' ? (
+                        <Link to="/services/employment-issues" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>

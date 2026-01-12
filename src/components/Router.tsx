@@ -18,6 +18,7 @@ import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
 import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
 import DefamationSlanderPage from '@/components/pages/DefamationSlanderPage';
+import EmploymentIssuesPage from '@/components/pages/EmploymentIssuesPage';
 import ContactPage from '@/components/pages/ContactPage';
 import MeetingDashboardPage from '@/components/pages/MeetingDashboardPage';
 
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "services/defamation-slander",
         element: <DefamationSlanderPage />,
+      },
+      {
+        path: "services/employment-issues",
+        element: <EmploymentIssuesPage />,
       },
       {
         path: "booking",
