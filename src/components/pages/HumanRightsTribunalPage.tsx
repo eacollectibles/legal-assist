@@ -63,7 +63,7 @@ export default function HumanRightsTribunalPage() {
           </div>
 
           {/* Key Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-4xl font-bold text-primary mb-2">12-24</div>
               <p className="font-paragraph text-foreground/80">Months to Hearing</p>
@@ -79,6 +79,109 @@ export default function HumanRightsTribunalPage() {
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-4xl font-bold text-primary mb-2">Expert</div>
               <p className="font-paragraph text-foreground/80">Tribunal Advocates</p>
+            </div>
+          </div>
+
+          {/* Common HRTO Violations Section */}
+          <div>
+            <h3 className="font-heading text-3xl font-bold text-foreground mb-8">
+              Common HRTO Violations & Discrimination Types
+            </h3>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">
+              The HRTO addresses a wide range of discrimination and harassment claims. Below are common violations that fall under the tribunal's jurisdiction:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  title: 'Employment Discrimination',
+                  description: 'Unfair treatment in hiring, promotion, compensation, or termination based on protected grounds such as race, gender, disability, age, or other prohibited characteristics.'
+                },
+                {
+                  title: 'Harassment in the Workplace',
+                  description: 'Unwelcome conduct, comments, or behavior based on protected grounds that creates a hostile or intimidating work environment.'
+                },
+                {
+                  title: 'Sexual Harassment & Assault',
+                  description: 'Unwanted sexual conduct, comments, advances, or assault in the workplace or other covered areas, including quid pro quo harassment.'
+                },
+                {
+                  title: 'Disability Discrimination',
+                  description: 'Failure to accommodate employees or service users with disabilities, or discrimination based on disability status, including mental health conditions.'
+                },
+                {
+                  title: 'Racial & Ethnic Discrimination',
+                  description: 'Unfair treatment based on race, colour, ancestry, ethnic origin, or place of origin in employment, housing, or services.'
+                },
+                {
+                  title: 'Gender Identity & Expression Discrimination',
+                  description: 'Discrimination based on gender identity or gender expression, including denial of services or employment opportunities.'
+                },
+                {
+                  title: 'Age Discrimination',
+                  description: 'Unfair treatment in employment or services based on age, including mandatory retirement or age-based exclusions.'
+                },
+                {
+                  title: 'Sexual Orientation Discrimination',
+                  description: 'Discrimination based on sexual orientation in employment, housing, services, or public accommodations.'
+                },
+                {
+                  title: 'Religion & Creed Discrimination',
+                  description: 'Unfair treatment based on religious beliefs or practices, including failure to accommodate religious observances.'
+                },
+                {
+                  title: 'Family Status Discrimination',
+                  description: 'Discrimination based on family status, including parental status, pregnancy, or childcare responsibilities.'
+                },
+                {
+                  title: 'Marital Status Discrimination',
+                  description: 'Unfair treatment based on marital status, including single, married, divorced, or widowed status.'
+                },
+                {
+                  title: 'Record of Offences Discrimination',
+                  description: 'Discrimination based on a record of criminal conviction, including employment or housing denial.'
+                },
+                {
+                  title: 'Housing Discrimination',
+                  description: 'Denial of housing, unfair rental terms, or discriminatory practices by landlords based on protected grounds.'
+                },
+                {
+                  title: 'Service Discrimination',
+                  description: 'Denial of goods, services, or facilities based on protected grounds, including retail, hospitality, and professional services.'
+                },
+                {
+                  title: 'Retaliation for Human Rights Complaints',
+                  description: 'Adverse treatment or punishment for filing a human rights complaint or participating in an investigation.'
+                },
+                {
+                  title: 'Systemic Discrimination',
+                  description: 'Policies, practices, or procedures that appear neutral but have a discriminatory effect on individuals with protected characteristics.'
+                },
+                {
+                  title: 'Intersectional Discrimination',
+                  description: 'Discrimination based on multiple protected grounds simultaneously, such as race and gender, or disability and age.'
+                },
+                {
+                  title: 'Accommodation Failures',
+                  description: 'Employer or service provider failure to provide reasonable accommodation for disabilities, religious practices, or other protected needs.'
+                },
+                {
+                  title: 'Pregnancy & Parental Leave Discrimination',
+                  description: 'Unfair treatment related to pregnancy, childbirth, breastfeeding, or parental leave entitlements.'
+                },
+                {
+                  title: 'Bullying & Intimidation',
+                  description: 'Persistent bullying, intimidation, or threatening behavior based on protected grounds creating a hostile environment.'
+                }
+              ].map((violation, idx) => (
+                <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-lg p-6 border border-pastelbeige hover:shadow-md transition-shadow">
+                  <h4 className="font-heading text-lg font-bold text-foreground mb-2">
+                    {violation.title}
+                  </h4>
+                  <p className="font-paragraph text-foreground/80 text-sm">
+                    {violation.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
