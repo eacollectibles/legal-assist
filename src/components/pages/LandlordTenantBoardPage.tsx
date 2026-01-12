@@ -63,7 +63,7 @@ export default function LandlordTenantBoardPage() {
           </div>
 
           {/* Key Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-4xl font-bold text-primary mb-2">30-60</div>
               <p className="font-paragraph text-foreground/80">Days to Hearing</p>
@@ -79,6 +79,109 @@ export default function LandlordTenantBoardPage() {
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-4xl font-bold text-primary mb-2">Both</div>
               <p className="font-paragraph text-foreground/80">Landlord & Tenant Support</p>
+            </div>
+          </div>
+
+          {/* Common LTB Violations & Disputes Section */}
+          <div>
+            <h3 className="font-heading text-3xl font-bold text-foreground mb-8">
+              Common LTB Violations & Dispute Types
+            </h3>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">
+              The Landlord and Tenant Board addresses a wide range of residential tenancy disputes. Below are common violations and issues that fall under the LTB's jurisdiction:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  title: 'Non-Payment of Rent',
+                  description: 'Eviction applications for unpaid rent, including arrears, late payments, and disputes over rent amounts owed.'
+                },
+                {
+                  title: 'Illegal Rent Increases',
+                  description: 'Rent increases that exceed the annual guideline, lack proper notice, or violate the Residential Tenancies Act.'
+                },
+                {
+                  title: 'Maintenance & Repair Breaches',
+                  description: 'Landlord failure to maintain the rental unit in good condition, including heating, plumbing, electrical, and structural issues.'
+                },
+                {
+                  title: 'Lease Violations by Tenants',
+                  description: 'Tenant breaches including noise complaints, unauthorized occupants, pets in violation of lease, and property damage.'
+                },
+                {
+                  title: 'Illegal Entry & Lockouts',
+                  description: 'Landlord entry without proper notice, lockouts, and other violations of tenant right to quiet enjoyment.'
+                },
+                {
+                  title: 'Improper Eviction Notices',
+                  description: 'Eviction notices that lack proper notice periods, contain procedural errors, or are issued without valid grounds.'
+                },
+                {
+                  title: 'Security Deposit Disputes',
+                  description: 'Improper withholding of security deposits, failure to return deposits, and disputes over deductions claimed.'
+                },
+                {
+                  title: 'Illegal Charges & Key Money',
+                  description: 'Landlord collection of illegal charges, key money, or other fees prohibited under the Residential Tenancies Act.'
+                },
+                {
+                  title: 'Harassment & Intimidation',
+                  description: 'Landlord harassment, threats, intimidation, or other conduct designed to force tenant departure.'
+                },
+                {
+                  title: 'Discrimination',
+                  description: 'Discrimination based on protected grounds including race, gender, disability, family status, or other prohibited characteristics.'
+                },
+                {
+                  title: 'Retaliation',
+                  description: 'Landlord retaliation against tenants for asserting rights, filing complaints, or participating in tenant organizations.'
+                },
+                {
+                  title: 'Unauthorized Occupants',
+                  description: 'Disputes over additional occupants in the rental unit beyond those authorized in the lease agreement.'
+                },
+                {
+                  title: 'Utilities & Services Disputes',
+                  description: 'Disputes over utility costs, disconnection of services, or failure to provide included services.'
+                },
+                {
+                  title: 'Rent Abatement Claims',
+                  description: 'Tenant claims for rent reduction due to maintenance breaches, lack of services, or other landlord failures.'
+                },
+                {
+                  title: 'Eviction for Personal Use',
+                  description: 'Landlord eviction of tenant for personal use, family member occupancy, or property renovation.'
+                },
+                {
+                  title: 'Subletting & Assignment Disputes',
+                  description: 'Disputes over tenant rights to sublet or assign the lease, including landlord consent requirements.'
+                },
+                {
+                  title: 'Noise & Nuisance Complaints',
+                  description: 'Complaints about excessive noise, disruptive behavior, or other conduct interfering with other tenants\' enjoyment.'
+                },
+                {
+                  title: 'Pet-Related Disputes',
+                  description: 'Disputes over pet policies, unauthorized pets, pet damage claims, and pet-related lease violations.'
+                },
+                {
+                  title: 'Parking & Common Area Issues',
+                  description: 'Disputes over parking rights, common area access, and maintenance of shared facilities.'
+                },
+                {
+                  title: 'Lease Termination & End of Tenancy',
+                  description: 'Disputes over lease termination, end of tenancy procedures, and final inspections and move-out conditions.'
+                }
+              ].map((violation, idx) => (
+                <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-lg p-6 border border-pastelbeige hover:shadow-md transition-shadow">
+                  <h4 className="font-heading text-lg font-bold text-foreground mb-2">
+                    {violation.title}
+                  </h4>
+                  <p className="font-paragraph text-foreground/80 text-sm">
+                    {violation.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
