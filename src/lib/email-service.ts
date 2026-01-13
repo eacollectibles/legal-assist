@@ -14,7 +14,38 @@ export interface EmailNotificationPayload {
   bookingId: string;
 }
 
+export interface BookingConfirmationPayload {
+  clientName: string;
+  clientEmail: string;
+  serviceType: string;
+  preferredDate: string;
+  preferredTime: string;
+  bookingId: string;
+  confirmationToken: string;
+}
+
 const BUSINESS_EMAIL = 'jeanfrancois@legalassist.london';
+
+/**
+ * Send booking confirmation email to client immediately after submission
+ */
+export const sendBookingConfirmationEmail = async (payload: BookingConfirmationPayload): Promise<void> => {
+  try {
+    const { clientName, clientEmail, serviceType, preferredDate, preferredTime, bookingId, confirmationToken } = payload;
+
+    const subject = 'Your Appointment Request Has Been Received';
+    const htmlContent = getBookingConfirmationTemplate(clientName, serviceType, preferredDate, preferredTime, bookingId, confirmationToken);
+
+    await sendEmail({
+      to: clientEmail,
+      subject,
+      html: htmlContent,
+    });
+  } catch (error) {
+    console.error('Failed to send booking confirmation email:', error);
+    throw error;
+  }
+};
 
 /**
  * Send email notification for appointment status change
@@ -338,4 +369,114 @@ const getStatusColor = (status: string): string => {
     default:
       return '#ffc107'; // Yellow/Orange
   }
+};
+
+/**
+ * Get HTML email template for booking confirmation (sent immediately after submission)
+ */
+const getBookingConfirmationTemplate = (
+  clientName: string,
+  serviceType: string,
+  preferredDate: string,
+  preferredTime: string,
+  bookingId: string,
+  confirmationToken: string
+): string => {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #B94A1F; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { background-color: #f9f5f0; padding: 20px; border-radius: 0 0 8px 8px; }
+          .status-badge { display: inline-block; background-color: #ffc107; color: #333; padding: 8px 16px; border-radius: 4px; font-weight: bold; margin: 10px 0; }
+          .details { background-color: white; padding: 15px; border-radius: 4px; margin: 15px 0; border-left: 4px solid #B94A1F; }
+          .detail-row { margin: 10px 0; }
+          .detail-label { font-weight: bold; color: #4A2C23; }
+          .confirmation-box { background-color: #e8f5e9; border: 2px solid #4caf50; padding: 15px; border-radius: 4px; margin: 15px 0; }
+          .confirmation-box h3 { color: #2e7d32; margin-top: 0; }
+          .next-steps { background-color: #fff3e0; border: 2px solid #ff9800; padding: 15px; border-radius: 4px; margin: 15px 0; }
+          .next-steps h3 { color: #e65100; margin-top: 0; }
+          .next-steps ol { margin: 10px 0; padding-left: 20px; }
+          .next-steps li { margin: 8px 0; }
+          .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+          .contact-info { background-color: #f5f5f5; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>LegalAssist</h1>
+            <p>Appointment Request Received</p>
+          </div>
+          <div class="content">
+            <p>Dear ${clientName},</p>
+            
+            <p>Thank you for submitting your appointment request with LegalAssist. We have received your submission and are pleased to confirm that your request is now pending review.</p>
+            
+            <div class="status-badge">PENDING REVIEW</div>
+            
+            <div class="confirmation-box">
+              <h3>✓ Your Request Has Been Received</h3>
+              <p>We have successfully received your appointment request. Our team will review your information and contact you shortly to confirm your appointment or discuss any additional details we may need.</p>
+            </div>
+            
+            <h3>Your Appointment Details</h3>
+            <div class="details">
+              <div class="detail-row">
+                <span class="detail-label">Confirmation ID:</span> ${bookingId}
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Service Type:</span> ${serviceType}
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Preferred Date:</span> ${preferredDate}
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Preferred Time:</span> ${preferredTime}
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Confirmation Token:</span> <code style="background-color: #f0f0f0; padding: 2px 6px; border-radius: 3px;">${confirmationToken}</code>
+              </div>
+            </div>
+            
+            <div class="next-steps">
+              <h3>What Happens Next?</h3>
+              <ol>
+                <li><strong>Review:</strong> Our team will review your appointment request within 1-2 business days</li>
+                <li><strong>Confirmation:</strong> We will contact you via phone or email to confirm your appointment</li>
+                <li><strong>Preparation:</strong> We may provide additional information or ask clarifying questions about your legal matter</li>
+                <li><strong>Appointment:</strong> Your appointment will be scheduled at the confirmed date and time</li>
+              </ol>
+            </div>
+            
+            <h3>Keep This Information</h3>
+            <p>Please save your Confirmation ID (${bookingId}) for your records. You may need it for future reference or if you need to reschedule your appointment.</p>
+            
+            <div class="contact-info">
+              <h3>Questions or Need to Reschedule?</h3>
+              <p>If you need to make changes to your appointment request or have any questions, please contact us:</p>
+              <p>
+                <strong>Phone:</strong> (555) 123-4567<br>
+                <strong>Email:</strong> info@legalservices.com<br>
+                <strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM
+              </p>
+            </div>
+            
+            <p>We look forward to assisting you with your legal matter.</p>
+            
+            <p>Best regards,<br><strong>The LegalAssist Team</strong></p>
+          </div>
+          <div class="footer">
+            <p>This is an automated confirmation message. Please do not reply to this email.</p>
+            <p>If you did not submit this appointment request, please contact us immediately at info@legalservices.com</p>
+            <p>&copy; 2025 LegalAssist. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
 };

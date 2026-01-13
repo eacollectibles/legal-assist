@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle } from 'lucide-react';
 import { generateMeetingLink, generateZoomUrl, generateConfirmationToken } from '@/lib/meeting-utils';
+import { sendBookingConfirmationEmail } from '@/lib/email-service';
 
 interface BookingFormData {
   clientName: string;
@@ -96,6 +97,17 @@ export default function BookingPage() {
         zoomUrl,
         confirmationToken,
         status: 'pending'
+      });
+
+      // Send confirmation email to client
+      await sendBookingConfirmationEmail({
+        clientName: formData.clientName,
+        clientEmail: formData.clientEmail,
+        serviceType: formData.serviceType,
+        preferredDate: formData.preferredDate,
+        preferredTime: formData.preferredTime,
+        bookingId: bookingId,
+        confirmationToken: confirmationToken
       });
 
       setSubmitStatus('success');

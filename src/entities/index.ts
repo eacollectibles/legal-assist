@@ -26,7 +26,7 @@ export interface Bookings {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
-  status?: string;
+  status?: 'pending' | 'confirmed' | 'approved' | 'rejected' | 'rescheduled' | 'cancelled';
   /** @wixFieldType text */
   approvalNotes?: string;
   /** @wixFieldType text */
@@ -35,9 +35,8 @@ export interface Bookings {
   zoomUrl?: string;
   /** @wixFieldType text */
   confirmationToken?: string;
-  /** @wixFieldType boolean */
-  emailNotificationSent?: boolean;
 }
+
 
 /**
  * Collection ID: meetingrequests
@@ -62,7 +61,7 @@ export interface MeetingRequests {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
-  status?: string;
+  status?: 'pending' | 'approved' | 'rejected';
   /** @wixFieldType text */
   approvalNotes?: string;
   /** @wixFieldType text */
@@ -71,8 +70,6 @@ export interface MeetingRequests {
   zoomUrl?: string;
   /** @wixFieldType text */
   confirmationToken?: string;
-  /** @wixFieldType boolean */
-  emailNotificationSent?: boolean;
 }
 
 
