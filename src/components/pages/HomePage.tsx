@@ -112,6 +112,12 @@ export default function HomePage() {
       icon: Scale,
       title: "Licensed Expertise",
       description: "All our paralegals are licensed by the Law Society of Ontario, ensuring professional standards and accountability.",
+      benefits: [
+        "Regulated by Law Society of Ontario",
+        "Bound by professional conduct rules",
+        "Professional liability insurance",
+        "Subject to discipline procedures"
+      ],
       color: "bg-pastelgreen",
       delay: 0
     },
@@ -119,6 +125,12 @@ export default function HomePage() {
       icon: Users,
       title: "Client-Centered Care",
       description: "We take time to understand your unique situation and tailor our approach to meet your specific needs.",
+      benefits: [
+        "Personalized case strategy",
+        "Regular communication updates",
+        "Flexible appointment scheduling",
+        "Compassionate, judgment-free approach"
+      ],
       color: "bg-pastellavender",
       delay: 100
     },
@@ -126,6 +138,12 @@ export default function HomePage() {
       icon: Clock,
       title: "Efficient Process",
       description: "Streamlined procedures and clear communication keep your case moving forward without unnecessary delays.",
+      benefits: [
+        "Quick initial consultations (30 min)",
+        "Fast response times (24-48 hours)",
+        "Clear timeline expectations",
+        "Proactive case management"
+      ],
       color: "bg-pastelpeach",
       delay: 200
     },
@@ -133,6 +151,12 @@ export default function HomePage() {
       icon: Shield,
       title: "Affordable Rates",
       description: "Quality legal representation shouldn't break the bank. Our transparent pricing makes justice accessible.",
+      benefits: [
+        "Hourly rates: $150-250/hour",
+        "Flat-fee packages available",
+        "Payment plan options",
+        "Free initial 30-minute consultation"
+      ],
       color: "bg-pastelbeige",
       delay: 300
     }
@@ -282,25 +306,37 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <AnimatedElement key={index} delay={feature.delay} className="h-full">
                 <div className={cn(
-                  "group relative h-full p-8 lg:p-10 transition-all duration-500 hover:-translate-y-2 overflow-hidden",
+                  "group relative h-full p-8 lg:p-10 transition-all duration-500 hover:-translate-y-2 overflow-hidden flex flex-col",
                   feature.color
                 )}>
                   {/* Hover Effect Background */}
                   <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/20" />
                   
                   {/* Icon */}
-                  <div className="relative z-10 w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <div className="relative z-10 w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
                     <feature.icon className="w-7 h-7" />
                   </div>
 
                   {/* Content */}
-                  <div className="relative z-10">
-                    <h3 className="font-heading text-2xl text-secondary mb-4 group-hover:translate-x-1 transition-transform duration-300">
+                  <div className="relative z-10 flex-1 flex flex-col">
+                    <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:translate-x-1 transition-transform duration-300">
                       {feature.title}
                     </h3>
-                    <p className="font-paragraph text-secondary/80 leading-relaxed">
+                    <p className="font-paragraph text-secondary/80 leading-relaxed mb-6">
                       {feature.description}
                     </p>
+
+                    {/* Benefits List */}
+                    <div className="space-y-2 mt-auto">
+                      {feature.benefits.map((benefit, benefitIdx) => (
+                        <div key={benefitIdx} className="flex items-start gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-secondary flex-shrink-0 mt-1" />
+                          <span className="font-paragraph text-sm text-secondary/75 leading-snug">
+                            {benefit}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Decorative Watermark Icon */}
