@@ -181,7 +181,9 @@ export default function HomePage() {
               className="w-full h-full object-cover"
               width={1920}
             />
-            <div className="absolute inset-0 bg-secondary/10" />
+            {/* Enhanced Dark Overlay for Better Text Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-r from-secondary/60 via-secondary/50 to-secondary/40" />
+            <div className="absolute inset-0 bg-secondary/20" />
           </div>
         </ParallaxContainer>
 
