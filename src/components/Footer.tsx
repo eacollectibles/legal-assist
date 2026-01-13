@@ -71,7 +71,7 @@ export default function Footer() {
             </p>
           </div>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
-            © {new Date().getFullYear()} LegalAssist. All rights reserved. Licensed Paralegals serving Ontario.
+            © 2026 LegalAssist Paralegal Services. Operated by XXXXX XXXXX, Licensed Paralegal (Law Society of Ontario), Licence No. [LSO Licence #]. All rights reserved.
           </p>
         </div>
       </div>
