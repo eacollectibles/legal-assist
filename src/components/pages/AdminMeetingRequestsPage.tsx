@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Clock, X, Lock } from 'lucide-react';
 import { MeetingRequests } from '@/entities';
+import { sendStatusNotificationEmails } from '@/lib/email-service';
 
 export default function AdminMeetingRequestsPage() {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
@@ -59,6 +60,18 @@ export default function AdminMeetingRequestsPage() {
         approvalNotes: approvalNotes,
       });
 
+      // Send email notifications
+      await sendStatusNotificationEmails({
+        clientName: selectedRequest.clientName || '',
+        clientEmail: selectedRequest.clientEmail || '',
+        status: 'approved',
+        serviceType: selectedRequest.serviceType || '',
+        preferredDate: String(selectedRequest.preferredDate || ''),
+        preferredTime: String(selectedRequest.preferredTime || ''),
+        approvalNotes: approvalNotes,
+        bookingId: selectedRequest._id,
+      });
+
       // Update local state
       setRequests(requests.map(r =>
         r._id === selectedRequest._id
@@ -85,6 +98,18 @@ export default function AdminMeetingRequestsPage() {
         _id: selectedRequest._id,
         status: 'rejected',
         approvalNotes: approvalNotes,
+      });
+
+      // Send email notifications
+      await sendStatusNotificationEmails({
+        clientName: selectedRequest.clientName || '',
+        clientEmail: selectedRequest.clientEmail || '',
+        status: 'rejected',
+        serviceType: selectedRequest.serviceType || '',
+        preferredDate: String(selectedRequest.preferredDate || ''),
+        preferredTime: String(selectedRequest.preferredTime || ''),
+        approvalNotes: approvalNotes,
+        bookingId: selectedRequest._id,
       });
 
       // Update local state

@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Clock, X, Lock } from 'lucide-react';
 import { Bookings } from '@/entities';
+import { sendStatusNotificationEmails } from '@/lib/email-service';
 
 export default function AdminBookingsPage() {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
@@ -59,6 +60,18 @@ export default function AdminBookingsPage() {
         approvalNotes: approvalNotes,
       });
 
+      // Send email notifications
+      await sendStatusNotificationEmails({
+        clientName: selectedBooking.clientName || '',
+        clientEmail: selectedBooking.clientEmail || '',
+        status: 'approved',
+        serviceType: selectedBooking.serviceType || '',
+        preferredDate: String(selectedBooking.preferredDate || ''),
+        preferredTime: String(selectedBooking.preferredTime || ''),
+        approvalNotes: approvalNotes,
+        bookingId: selectedBooking._id,
+      });
+
       // Update local state
       setBookings(bookings.map(b =>
         b._id === selectedBooking._id
@@ -85,6 +98,18 @@ export default function AdminBookingsPage() {
         _id: selectedBooking._id,
         status: 'rejected',
         approvalNotes: approvalNotes,
+      });
+
+      // Send email notifications
+      await sendStatusNotificationEmails({
+        clientName: selectedBooking.clientName || '',
+        clientEmail: selectedBooking.clientEmail || '',
+        status: 'rejected',
+        serviceType: selectedBooking.serviceType || '',
+        preferredDate: String(selectedBooking.preferredDate || ''),
+        preferredTime: String(selectedBooking.preferredTime || ''),
+        approvalNotes: approvalNotes,
+        bookingId: selectedBooking._id,
       });
 
       // Update local state
