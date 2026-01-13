@@ -19,14 +19,14 @@ export default function DefamationSlanderPage() {
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">{"In Ontario, to establish defamation, a plaintiff must show that the impugned statement was published to at least one third party, referred to the plaintiff, and would lower the plaintiff’s reputation in the eyes of a reasonable person. In cases of libel, harm to reputation is presumed. Truth, fair comment, privilege, and responsible communication may be raised as defences. We assist clients in organizing evidence relevant to these legal requirements."}</p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
-                    Get Started Today
+                    Schedule Consultation
                   </Button>
                 </Link>
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
-                    Schedule Consultation
+                    Contact Us
                   </Button>
                 </Link>
               </div>

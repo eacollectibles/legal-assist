@@ -22,14 +22,14 @@ export default function EmploymentIssuesPage() {
                 Expert guidance on employment disputes, wrongful dismissal, severance packages, and workplace rights violations. Our licensed paralegals help you navigate complex employment matters and protect your rights.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
-                    Get Started Today
+                    Schedule Consultation
                   </Button>
                 </Link>
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
-                    Schedule Consultation
+                    Contact Us
                   </Button>
                 </Link>
               </div>

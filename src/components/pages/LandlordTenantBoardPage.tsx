@@ -22,14 +22,14 @@ export default function LandlordTenantBoardPage() {
                 Expert legal representation for residential tenancy disputes in Ontario. Whether you're a landlord seeking eviction or a tenant defending your rights, we provide comprehensive support throughout the LTB process.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
-                    Get Started Today
+                    Schedule Consultation
                   </Button>
                 </Link>
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
-                    Schedule Consultation
+                    Contact Us
                   </Button>
                 </Link>
               </div>

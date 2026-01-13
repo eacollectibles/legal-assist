@@ -22,14 +22,14 @@ export default function SmallClaimsPage() {
                 Expert legal representation for civil disputes up to $50,000 in Ontario. Whether you're an applicant seeking compensation or a defendant protecting your interests, we provide comprehensive support throughout the entire process.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
-                    Get Started Today
+                    Schedule Consultation
                   </Button>
                 </Link>
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
-                    Schedule Consultation
+                    Contact Us
                   </Button>
                 </Link>
               </div>

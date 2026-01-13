@@ -22,14 +22,14 @@ export default function MediationServicesPage() {
                 Professional mediation to resolve disputes collaboratively and cost-effectively. Our experienced mediators help parties find mutually beneficial solutions while maintaining control over the outcome.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
-                    Get Started Today
+                    Schedule Consultation
                   </Button>
                 </Link>
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
-                    Schedule Consultation
+                    Contact Us
                   </Button>
                 </Link>
               </div>
