@@ -150,7 +150,7 @@ export default function BookingPage() {
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-heading font-bold text-green-900 mb-1">Booking Submitted Successfully!</h3>
-                      <p className="font-paragraph text-green-800">We'll contact you shortly to confirm your consultation appointment.</p>
+                      <p className="font-paragraph text-green-800">Your appointment request has been submitted for approval. Our team will review your request and contact you shortly to confirm.</p>
                     </div>
                   </div>
                 )}
@@ -314,9 +314,9 @@ export default function BookingPage() {
                   </div>
 
                   <div>
-                    <h4 className="font-heading font-bold text-foreground mb-2">Case Assessment</h4>
+                    <h4 className="font-heading font-bold text-foreground mb-2">Approval Process</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      We'll evaluate the merits of your case and provide honest legal advice.
+                      Your appointment request will be reviewed by our team. We'll contact you to confirm once approved.
                     </p>
                   </div>
 
