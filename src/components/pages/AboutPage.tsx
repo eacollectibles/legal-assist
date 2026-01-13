@@ -132,6 +132,171 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Client Focus Section */}
+      <section className="w-full py-16 md:py-24 bg-white">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          <div className="mb-12">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6 text-center">
+              Our Client Focus
+            </h2>
+            <p className="font-paragraph text-lg text-foreground/80 text-center max-w-3xl mx-auto">
+              We serve a diverse range of clients facing distinct legal challenges. Our commitment is to understand your specific situation and provide tailored solutions that address your unique needs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {/* Individuals Facing Criminal Charges */}
+            <div className="bg-gradient-to-br from-pastelbeige/30 to-transparent rounded-lg p-8 border border-pastelbeige">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center flex-shrink-0">
+                  <Gavel className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-foreground">
+                  Individuals Facing Criminal Charges
+                </h3>
+              </div>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Whether you're dealing with a traffic ticket, provincial offence, or summary conviction criminal charge, we provide expert defense representation. We help you understand the charges, navigate the court system, and work toward the best possible outcome.
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Traffic tickets and provincial offences</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Summary conviction criminal charges</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Bail hearings and release proceedings</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Tenants and Landlords */}
+            <div className="bg-gradient-to-br from-pastelgreen/20 to-transparent rounded-lg p-8 border border-pastelgreen/30">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center flex-shrink-0">
+                  <Briefcase className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-foreground">
+                  Tenants and Landlords
+                </h3>
+              </div>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Residential tenancy disputes can be stressful and complex. We represent both tenants and landlords in disputes before the Landlord and Tenant Board, addressing issues like eviction, rent disputes, and maintenance concerns.
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Eviction defense and tenant rights</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Rent disputes and payment issues</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Maintenance and habitability claims</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Small Business Owners */}
+            <div className="bg-gradient-to-br from-pastellavender/20 to-transparent rounded-lg p-8 border border-pastellavender/30">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center flex-shrink-0">
+                  <DollarSign className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-foreground">
+                  Small Business Owners
+                </h3>
+              </div>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Small business owners face unique legal challenges including customer disputes, employment issues, and contract matters. We provide practical guidance and representation to protect your business interests.
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Small Claims Court representation</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Employment dispute resolution</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Contract and customer disputes</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Individuals Facing Discrimination */}
+            <div className="bg-gradient-to-br from-pastelpeach/20 to-transparent rounded-lg p-8 border border-pastelpeach/30">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-foreground">
+                  Individuals Facing Discrimination
+                </h3>
+              </div>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Discrimination in employment, housing, or public services is unacceptable. We help individuals pursue human rights complaints and navigate the Human Rights Tribunal of Ontario to seek justice and remedies.
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Employment discrimination claims</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Housing discrimination complaints</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="font-paragraph text-sm text-foreground/80">Human Rights Tribunal representation</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Client Commitment Statement */}
+          <div className="bg-gradient-to-r from-primary/5 to-pastelbeige/20 rounded-lg p-8 border border-primary/10">
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-4">
+              Our Commitment to Your Success
+            </h3>
+            <p className="font-paragraph text-lg text-foreground/80 mb-6">
+              Every client's situation is unique. We don't believe in one-size-fits-all solutions. Instead, we take the time to:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-heading font-bold text-foreground mb-1">Listen Carefully</p>
+                  <p className="font-paragraph text-sm text-foreground/80">Understand your specific circumstances, concerns, and goals</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-heading font-bold text-foreground mb-1">Provide Clear Guidance</p>
+                  <p className="font-paragraph text-sm text-foreground/80">Explain your options in plain language so you can make informed decisions</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-heading font-bold text-foreground mb-1">Deliver Results</p>
+                  <p className="font-paragraph text-sm text-foreground/80">Work tirelessly to achieve the best possible outcome for your situation</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What Do Paralegals Do Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
