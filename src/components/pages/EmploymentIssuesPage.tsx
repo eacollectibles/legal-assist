@@ -325,53 +325,289 @@ export default function EmploymentIssuesPage() {
       {/* FAQ Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
-            Frequently Asked Questions
-          </h2>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">
+              Frequently Asked Questions
+            </h2>
+            <p className="font-paragraph text-lg text-foreground/80">
+              Get answers to common questions about employment rights, dismissal, severance, and how our paralegals can help you navigate employment disputes.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                q: 'What is wrongful dismissal?',
-                a: 'Wrongful dismissal occurs when an employer terminates an employee without just cause and without providing proper notice or pay in lieu of notice. Employees may be entitled to compensation for lost wages, benefits, and damages.'
-              },
-              {
-                q: 'What is constructive dismissal?',
-                a: 'Constructive dismissal occurs when an employer makes working conditions so intolerable that an employee is forced to resign. This may include significant changes to job duties, compensation, or working conditions without consent.'
-              },
-              {
-                q: 'How much notice am I entitled to?',
-                a: 'Under the Employment Standards Act, employees are entitled to 2 weeks written notice if employed for 3 months or more. However, common law may provide for longer notice periods depending on factors like age, length of service, and position.'
-              },
-              {
-                q: 'What is severance pay?',
-                a: 'Severance pay is compensation paid to employees when their employment is terminated. It may be required under the Employment Standards Act if the employer has a payroll of $2.5 million or more and the employee has worked for 12 months or more.'
-              },
-              {
-                q: 'Can I negotiate my severance package?',
-                a: 'Yes, severance packages are often negotiable. We can review the offer, calculate your entitlements, and negotiate on your behalf to ensure you receive fair compensation.'
-              },
-              {
-                q: 'What should I do if I\'ve been wrongfully dismissed?',
-                a: 'Contact us immediately. We can assess your situation, explain your rights, and help you pursue a claim. Time limits may apply, so it\'s important to act quickly.'
-              },
-              {
-                q: 'Can I pursue a claim for unpaid wages?',
-                a: 'Yes, you may be able to recover unpaid wages, overtime pay, and other compensation owed. We can help you calculate what you\'re owed and pursue recovery.'
-              },
-              {
-                q: 'What is the difference between notice and severance?',
-                a: 'Notice is the advance warning of termination. Severance is additional compensation paid when employment ends. Both may be required depending on the circumstances and applicable laws.'
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-3">
-                  {item.q}
-                </h3>
-                <p className="font-paragraph text-foreground/80">
-                  {item.a}
-                </p>
-              </div>
-            ))}
+            {/* Wrongful Dismissal */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is wrongful dismissal?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Wrongful dismissal occurs when an employer terminates an employee without just cause and without providing proper notice or pay in lieu of notice. This is a breach of the employment contract.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                Employees may be entitled to compensation for lost wages, benefits, damages for breach of contract, and in some cases, damages for mental distress. The amount depends on factors like length of service, age, position, and availability of similar employment.
+              </p>
+            </div>
+
+            {/* Constructive Dismissal */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is constructive dismissal?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Constructive dismissal occurs when an employer makes working conditions so intolerable that an employee is forced to resign. The employee didn't quit voluntarily—they were effectively forced out.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                Examples include significant unilateral changes to job duties, compensation, work location, or reporting structure without consent. If you resign due to constructive dismissal, you may have the same remedies as wrongful dismissal.
+              </p>
+            </div>
+
+            {/* Employment Contracts */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What should I know about employment contracts?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Employment contracts define the terms and conditions of your employment, including salary, benefits, notice periods, and termination clauses. It's crucial to understand what your contract says before signing.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                We can review your contract, explain the terms, identify any problematic clauses, and advise you on your rights and obligations. Some contract terms may be unenforceable if they violate employment standards legislation.
+              </p>
+            </div>
+
+            {/* Notice Requirements */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                How much notice am I entitled to?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Under the Employment Standards Act, employees are entitled to 2 weeks written notice if employed for 3 months or more. However, common law may provide for longer notice periods.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                Common law notice depends on factors like age, length of service, position, and availability of similar employment. Senior employees with long service may be entitled to several months of notice. Your contract may also specify notice requirements.
+              </p>
+            </div>
+
+            {/* Severance Pay */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is severance pay and when am I entitled to it?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Severance pay is additional compensation paid when employment ends. Under the Employment Standards Act, severance is required if the employer has a payroll of $2.5 million or more and the employee has worked for 12 months or more.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                The amount is calculated based on length of service (2 days per year of employment). However, common law may entitle you to additional severance beyond statutory minimums, depending on your circumstances.
+              </p>
+            </div>
+
+            {/* Severance Negotiation */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Can I negotiate my severance package?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Yes, severance packages are often negotiable, especially if you have leverage or a strong legal claim. Many employers are willing to negotiate to avoid litigation.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                We can review the offer, calculate your legal entitlements, identify gaps, and negotiate on your behalf to ensure you receive fair compensation. We help you understand what you're entitled to and what's negotiable.
+              </p>
+            </div>
+
+            {/* Just Cause */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What does "just cause" for dismissal mean?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Just cause means the employer has a legitimate, serious reason to terminate employment immediately without notice or pay in lieu. Examples include theft, violence, gross insubordination, or repeated serious misconduct.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                Just cause is a high legal standard. Minor performance issues, single instances of misconduct, or poor fit are generally not just cause. If your employer claims just cause, we can assess whether it's legally justified.
+              </p>
+            </div>
+
+            {/* Unpaid Wages */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Can I recover unpaid wages and overtime?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Yes, you have the right to be paid for all work performed. If your employer hasn't paid you wages, overtime, vacation pay, or statutory holiday pay, you can pursue recovery.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                We can help you calculate what you're owed, document the unpaid amounts, and pursue recovery through negotiation or Small Claims Court. There are time limits, so contact us promptly.
+              </p>
+            </div>
+
+            {/* Notice vs Severance */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is the difference between notice and severance?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                <strong>Notice</strong> is advance warning of termination, allowing you time to find new employment. <strong>Severance</strong> is additional compensation paid when employment ends.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                An employer can provide notice (allowing you to work during the notice period) or pay in lieu of notice (paying you instead of having you work). Severance is separate and may be required in addition to notice.
+              </p>
+            </div>
+
+            {/* Wrongful Dismissal Steps */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What should I do if I've been wrongfully dismissed?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                <strong>Contact us immediately.</strong> Time limits apply to employment claims, and evidence can be lost. Here's what to do:
+              </p>
+              <ul className="space-y-2 font-paragraph text-foreground/80">
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">1.</span>
+                  <span>Document everything (emails, letters, termination notice)</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">2.</span>
+                  <span>Gather information about your employment (length, salary, benefits)</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">3.</span>
+                  <span>Contact us for a free consultation to assess your claim</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">4.</span>
+                  <span>We'll help you pursue recovery through negotiation or court</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Role of Paralegal */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What can a paralegal do in employment disputes?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Licensed paralegals can provide comprehensive support in employment matters within their scope of practice, including:
+              </p>
+              <ul className="space-y-2 font-paragraph text-foreground/80">
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-1" />
+                  <span>Case assessment and legal analysis</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-1" />
+                  <span>Contract review and explanation</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-1" />
+                  <span>Negotiation with employers</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-1" />
+                  <span>Small Claims Court representation (up to $50,000)</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Time Limits */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Are there time limits for pursuing employment claims?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Yes, time limits are critical. Generally, you have <strong>2 years from the date of termination</strong> to commence a wrongful dismissal action. Some claims may have different time limits.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                If you miss the deadline, you lose your right to sue. Contact us promptly to ensure your rights are protected and your claim is filed within the required timeframe.
+              </p>
+            </div>
+
+            {/* Discrimination and Harassment */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What if I was dismissed due to discrimination or harassment?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Dismissal based on protected grounds (race, gender, disability, age, etc.) is illegal under human rights legislation. You may have claims for both wrongful dismissal and human rights violations.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                We can help you assess whether discrimination or harassment occurred, document the evidence, and pursue claims through Small Claims Court or refer you to a lawyer for human rights tribunal proceedings.
+              </p>
+            </div>
+
+            {/* Retaliation */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Can I be fired for reporting violations or exercising my rights?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                No. Retaliation for reporting violations, exercising legal rights, or refusing to do something illegal is prohibited. If you were dismissed or disciplined for these reasons, you may have a retaliation claim.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                Examples include reporting health and safety violations, requesting accommodation for disability, or refusing to work in unsafe conditions. We can help you assess and pursue retaliation claims.
+              </p>
+            </div>
+
+            {/* Cost and Fees */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                How much does it cost to get help with an employment dispute?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                We offer transparent, affordable pricing. Our paralegals charge hourly rates ($150-250/hour depending on experience) or flat-fee packages for specific services.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                We offer a free 30-minute initial consultation to assess your situation. We'll discuss your options, explain our fees, and help you understand what to expect. Payment plans may be available.
+              </p>
+            </div>
+
+            {/* Confidentiality */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Is my information confidential?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Yes, absolutely. All communications between you and our paralegals are protected by solicitor-client privilege. We maintain strict confidentiality regarding your employment situation and personal information.
+              </p>
+              <p className="font-paragraph text-foreground/80 leading-relaxed">
+                We will not disclose any information without your consent, except as required by law. Your privacy and confidentiality are fundamental to our service.
+              </p>
+            </div>
+
+            {/* When to Contact */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                When should I contact a paralegal about my employment issue?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
+                Contact us as soon as possible if you:
+              </p>
+              <ul className="space-y-2 font-paragraph text-foreground/80">
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span>Have been terminated or given notice</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span>Received a severance offer you want to review</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span>Haven't been paid wages or overtime</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span>Are experiencing workplace harassment or discrimination</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span>Need to review an employment contract</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary font-bold">•</span>
+                  <span>Have questions about your employment rights</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
