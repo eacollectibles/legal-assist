@@ -541,10 +541,10 @@ export default function ServicesPage() {
                       </div>
 
                       <Link
-                        to="/contact"
+                        to="/booking"
                         className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90"
                       >
-                        Get Started
+                        Schedule an Appointment
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </motion.div>

@@ -37,7 +37,6 @@ export interface Bookings {
   confirmationToken?: string;
 }
 
-
 /**
  * Collection ID: meetingrequests
  * Interface for MeetingRequests
