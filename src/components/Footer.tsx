@@ -33,9 +33,6 @@ export default function Footer() {
               <Link to="/contact" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
                 Contact
               </Link>
-              <Link to="/booking" className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground transition-colors">
-                Book Now
-              </Link>
             </nav>
           </div>
           
