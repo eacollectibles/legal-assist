@@ -21,6 +21,8 @@ import DefamationSlanderPage from '@/components/pages/DefamationSlanderPage';
 import EmploymentIssuesPage from '@/components/pages/EmploymentIssuesPage';
 import ContactPage from '@/components/pages/ContactPage';
 import MeetingDashboardPage from '@/components/pages/MeetingDashboardPage';
+import MeetingRequestPage from '@/components/pages/MeetingRequestPage';
+import AdminMeetingRequestsPage from '@/components/pages/AdminMeetingRequestsPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -110,6 +112,14 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <MeetingDashboardPage />,
+      },
+      {
+        path: "meeting-request",
+        element: <MeetingRequestPage />,
+      },
+      {
+        path: "admin/meeting-requests",
+        element: <AdminMeetingRequestsPage />,
       },
       {
         path: "*",

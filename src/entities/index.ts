@@ -25,8 +25,52 @@ export interface Bookings {
   serviceType?: string;
   /** @wixFieldType text */
   clientNotes?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType text */
+  approvalNotes?: string;
+  /** @wixFieldType text */
+  meetingLink?: string;
+  /** @wixFieldType text */
+  zoomUrl?: string;
+  /** @wixFieldType text */
+  confirmationToken?: string;
 }
 
+
+/**
+ * Collection ID: meetingrequests
+ * Interface for Meeting Requests
+ */
+export interface MeetingRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientName?: string;
+  /** @wixFieldType text */
+  clientEmail?: string;
+  /** @wixFieldType text */
+  clientPhone?: string;
+  /** @wixFieldType date */
+  preferredDate?: Date | string;
+  /** @wixFieldType time */
+  preferredTime?: any;
+  /** @wixFieldType text */
+  serviceType?: string;
+  /** @wixFieldType text */
+  clientNotes?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType text */
+  approvalNotes?: string;
+  /** @wixFieldType text */
+  meetingLink?: string;
+  /** @wixFieldType text */
+  zoomUrl?: string;
+  /** @wixFieldType text */
+  confirmationToken?: string;
+}
 
 /**
  * Collection ID: legalservicecategories
