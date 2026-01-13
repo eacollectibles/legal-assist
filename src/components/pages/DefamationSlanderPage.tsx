@@ -407,6 +407,295 @@ export default function DefamationSlanderPage() {
           </div>
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">
+              Frequently Asked Questions About Defamation
+            </h2>
+            <p className="font-paragraph text-lg text-foreground/80 max-w-3xl mx-auto">
+              Get answers to common questions about defamation law, the legal process, and your rights.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* What is Defamation? */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is Defamation?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Defamation is a false statement of fact that damages someone's reputation. In Ontario, defamation can take two forms: slander (spoken false statements) and libel (written false statements). The key element is that the statement must be false—opinions and truthful statements are not defamatory.
+              </p>
+              <p className="font-paragraph text-foreground/80">
+                For a statement to be defamatory, it must be published (communicated to at least one third party), refer to the plaintiff, and would lower the plaintiff's reputation in the eyes of a reasonable person.
+              </p>
+            </div>
+
+            {/* Difference Between Libel and Slander */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is the Difference Between Libel and Slander?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                <strong>Libel</strong> refers to defamatory statements made in written or recorded form, including emails, letters, articles, online posts, reviews, and other published material. Because libel is recorded and capable of ongoing circulation, it may have a broader and more lasting impact on reputation.
+              </p>
+              <p className="font-paragraph text-foreground/80">
+                <strong>Slander</strong> refers to defamatory statements made verbally or in a transient form. Slander may require proof of resulting harm, whereas libel presumes harm to reputation.
+              </p>
+            </div>
+
+            {/* Elements of Defamation Claim */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What Are the Elements of a Defamation Claim?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                To establish defamation in Ontario, you must prove:
+              </p>
+              <ul className="space-y-3">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">1.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>False Statement:</strong> The statement must be factually false, not opinion or hyperbole</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">2.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Published/Communicated:</strong> The false statement must be shared with at least one third party</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">3.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Identifies You:</strong> The statement must reasonably identify you as the subject</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">4.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Causes Harm:</strong> The statement must damage your reputation or cause financial loss</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Common Defenses */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What Are Common Defenses to Defamation?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Defendants may raise several defenses to defamation claims:
+              </p>
+              <ul className="space-y-3">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Truth (Justification):</strong> If the statement is true, it is not defamatory</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Fair Comment:</strong> Honest opinion on matters of public interest may be protected</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Privilege:</strong> Statements made in court proceedings or parliament may be privileged</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Qualified Privilege:</strong> Statements made in good faith for legitimate purposes (e.g., employment references)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Responsible Communication:</strong> Statements on matters of public interest made responsibly may be protected</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Remedies Available */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What Remedies Are Available for Defamation?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                If you successfully prove defamation, you may recover:
+              </p>
+              <ul className="space-y-3">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>General Damages:</strong> Compensation for harm to reputation and emotional distress</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Special Damages:</strong> Compensation for proven financial losses (e.g., lost business, lost wages)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Punitive Damages:</strong> Additional damages to punish egregious or malicious conduct</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Injunctive Relief:</strong> Court orders to stop further publication of defamatory statements</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Retraction/Apology:</strong> Court-ordered retraction or apology from the defendant</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Limitation Period */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                How Long Do I Have to Sue for Defamation?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                <strong>In Ontario, you have only 2 years from the date of publication to commence a defamation action.</strong> This is a critical deadline. If you miss this deadline, you lose your right to sue, regardless of the merits of your case.
+              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                For ongoing defamation (such as false reviews or social media posts that continue to be published), the limitation period may restart with each new publication.
+              </p>
+              <p className="font-paragraph text-foreground/80 font-semibold text-primary">
+                Contact us immediately if you believe you have been defamed.
+              </p>
+            </div>
+
+            {/* Legal Process */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is the Legal Process for a Defamation Claim?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                The typical process includes:
+              </p>
+              <ul className="space-y-3">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">1.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Initial Assessment:</strong> Review your situation and determine if you have a viable defamation claim</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">2.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Evidence Gathering:</strong> Collect documentation of the false statements and resulting harm</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">3.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Demand Letter:</strong> Send formal notice demanding retraction and compensation</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">4.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Negotiation:</strong> Attempt to resolve the matter without litigation</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">5.</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Litigation:</strong> If necessary, pursue the claim in Small Claims Court (up to $50,000) or Superior Court</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Online Defamation */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                How Do I Handle Online Defamation?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Online defamation (false statements on social media, review sites, forums, etc.) is treated the same as traditional defamation under Ontario law. However, online defamation presents unique challenges:
+              </p>
+              <ul className="space-y-3">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Rapid Spread:</strong> False statements can spread quickly and be difficult to contain</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Anonymity:</strong> Identifying the person responsible may require legal action against the platform</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Evidence Preservation:</strong> Screenshots and documentation are critical before content is deleted</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Platform Removal:</strong> Many platforms have policies against defamatory content and may remove it upon notice</span>
+                </li>
+              </ul>
+              <p className="font-paragraph text-foreground/80 mt-4">
+                We can help you document online defamation, preserve evidence, and pursue removal or legal action.
+              </p>
+            </div>
+
+            {/* Public Figures */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Do Public Figures Have Different Protections?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Yes. Public figures and matters of public interest have different legal standards. If you are a public figure or the defamatory statement relates to a matter of public interest, you must prove that the defendant acted with "malice"—meaning they knew the statement was false or acted with reckless disregard for its truth.
+              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                This higher standard makes it more difficult for public figures to succeed in defamation claims. We assess whether these heightened standards apply to your situation.
+              </p>
+            </div>
+
+            {/* Cost and Timeline */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What Are the Costs and Timeline for a Defamation Claim?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                <strong>Timeline:</strong>
+              </p>
+              <ul className="space-y-2 mb-4">
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80">Pre-litigation phase: 2-6 weeks</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80">Negotiation phase: 4-12 weeks</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80">Small Claims Court: 6-12 months</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">•</span>
+                  <span className="font-paragraph text-foreground/80">Superior Court: 12-24+ months</span>
+                </li>
+              </ul>
+              <p className="font-paragraph text-foreground/80">
+                <strong>Costs:</strong> Paralegal services typically range from $150-250/hour. We offer flat-fee options for pre-litigation packages. Discuss your budget during your consultation.
+              </p>
+            </div>
+
+            {/* Burden of Proof */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                What is the Burden of Proof in a Defamation Case?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                In a defamation case, you (the plaintiff) must prove your case on the "balance of probabilities"—meaning it is more likely than not that the defendant's statement was false and defamatory.
+              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Once you establish the basic elements of defamation, damage to reputation is presumed. The defendant then has the burden of proving any available defenses (such as truth or privilege).
+              </p>
+              <p className="font-paragraph text-foreground/80">
+                We help you gather and organize evidence to meet this burden of proof.
+              </p>
+            </div>
+
+            {/* Opinion vs Fact */}
+            <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Is an Opinion Protected from Defamation?
+              </h3>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                Generally, yes. Opinions are protected from defamation claims. However, the distinction between fact and opinion can be complex. A statement may appear to be opinion but actually imply false facts.
+              </p>
+              <p className="font-paragraph text-foreground/80 mb-4">
+                For example, saying "I think this business is dishonest" may imply the false fact that the business engaged in dishonest conduct, making it potentially defamatory.
+              </p>
+              <p className="font-paragraph text-foreground/80">
+                We assess whether statements are protected opinions or actionable false statements of fact.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Important Information Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
