@@ -4,6 +4,31 @@
  */
 
 /**
+ * Collection ID: activitylogs
+ * Interface for ActivityLogs
+ */
+export interface ActivityLogs {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  userId?: string;
+  /** @wixFieldType text */
+  activityType?: string;
+  /** @wixFieldType text */
+  activityDescription?: string;
+  /** @wixFieldType text */
+  performedBy?: string;
+  /** @wixFieldType text */
+  performedByName?: string;
+  /** @wixFieldType datetime */
+  timestamp?: Date | string;
+  /** @wixFieldType text */
+  relatedItemId?: string;
+}
+
+
+/**
  * Collection ID: bookings
  * Interface for Bookings
  */
@@ -147,6 +172,31 @@ export interface Messages {
   isRead?: boolean;
   /** @wixFieldType text */
   conversationId?: string;
+}
+
+
+/**
+ * Collection ID: notifications
+ * Interface for Notifications
+ */
+export interface Notifications {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  userId?: string;
+  /** @wixFieldType text */
+  notificationType?: string;
+  /** @wixFieldType text */
+  notificationTitle?: string;
+  /** @wixFieldType text */
+  notificationMessage?: string;
+  /** @wixFieldType boolean */
+  isRead?: boolean;
+  /** @wixFieldType datetime */
+  createdDate?: Date | string;
+  /** @wixFieldType text */
+  relatedActivityId?: string;
 }
 
 

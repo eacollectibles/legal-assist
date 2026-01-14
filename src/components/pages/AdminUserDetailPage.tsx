@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin } from '@/lib/auth-service';
@@ -28,8 +29,35 @@ import {
   MapPin,
   Calendar,
   Download,
-  ExternalLink
+  ExternalLink,
+  Upload,
+  Plus,
+  History,
+  Clock
 } from 'lucide-react';
+
+interface ActivityLog {
+  _id: string;
+  userId?: string;
+  activityType?: string;
+  activityDescription?: string;
+  performedBy?: string;
+  performedByName?: string;
+  timestamp?: Date | string;
+  relatedItemId?: string;
+  _createdDate?: Date;
+}
+
+interface Notification {
+  _id: string;
+  userId?: string;
+  notificationType?: string;
+  notificationTitle?: string;
+  notificationMessage?: string;
+  isRead?: boolean;
+  createdDate?: Date | string;
+  relatedActivityId?: string;
+}
 
 export default function AdminUserDetailPage() {
   const navigate = useNavigate();
@@ -47,10 +75,21 @@ export default function AdminUserDetailPage() {
   const [documents, setDocuments] = useState<ClientDocuments[]>([]);
   const [messages, setMessages] = useState<Messages[]>([]);
   const [payments, setPayments] = useState<PaymentRecords[]>([]);
+  const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
 
   // Edit states
   const [editedProfile, setEditedProfile] = useState<Partial<ClientProfiles>>({});
   const [editedAccount, setEditedAccount] = useState<Partial<UserAccounts>>({});
+
+  // Document upload states
+  const [showUploadForm, setShowUploadForm] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadFormData, setUploadFormData] = useState({
+    documentName: '',
+    documentCategory: 'other',
+    notes: '',
+    file: null as File | null,
+  });
 
   // Check if user is admin
   useEffect(() => {
@@ -100,11 +139,79 @@ export default function AdminUserDetailPage() {
       const { items: allPayments } = await BaseCrudService.getAll<PaymentRecords>('paymentrecords');
       setPayments(allPayments);
 
+      // Load activity logs for this user
+      const { items: allLogs } = await BaseCrudService.getAll<ActivityLog>('activitylogs');
+      const userLogs = allLogs.filter(log => log.userId === userId);
+      // Sort by timestamp, newest first
+      userLogs.sort((a, b) => {
+        const dateA = new Date(a.timestamp || 0).getTime();
+        const dateB = new Date(b.timestamp || 0).getTime();
+        return dateB - dateA;
+      });
+      setActivityLogs(userLogs);
+
     } catch (error) {
       console.error('Failed to load user data:', error);
       setErrorMessage('Failed to load user data. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Helper function to log activity and create notification
+  const logActivity = async (
+    activityType: string,
+    description: string,
+    relatedItemId?: string
+  ) => {
+    if (!userId || !userAccount) return;
+
+    try {
+      const activityId = crypto.randomUUID();
+      const activity: ActivityLog = {
+        _id: activityId,
+        userId: userId,
+        activityType,
+        activityDescription: description,
+        performedBy: currentUser?.email || '',
+        performedByName: currentUser?.firstName 
+          ? `${currentUser.firstName} ${currentUser.lastName || ''}`.trim()
+          : currentUser?.email || 'Admin',
+        timestamp: new Date(),
+        relatedItemId: relatedItemId || ''
+      };
+
+      await BaseCrudService.create('activitylogs', activity);
+      setActivityLogs(prev => [activity, ...prev]);
+
+      // Create notification for the user
+      const notification: Notification = {
+        _id: crypto.randomUUID(),
+        userId: userId,
+        notificationType: activityType,
+        notificationTitle: getNotificationTitle(activityType),
+        notificationMessage: description,
+        isRead: false,
+        createdDate: new Date(),
+        relatedActivityId: activityId
+      };
+
+      await BaseCrudService.create('notifications', notification);
+    } catch (error) {
+      console.error('Failed to log activity:', error);
+    }
+  };
+
+  const getNotificationTitle = (activityType: string): string => {
+    switch (activityType) {
+      case 'document_upload':
+        return 'New Document Uploaded';
+      case 'profile_update':
+        return 'Profile Updated';
+      case 'account_update':
+        return 'Account Information Updated';
+      default:
+        return 'Account Activity';
     }
   };
 
@@ -119,6 +226,21 @@ export default function AdminUserDetailPage() {
       });
 
       setUserAccount({ ...userAccount, ...editedAccount });
+      
+      // Log the activity
+      const changes = [];
+      if (editedAccount.firstName !== userAccount.firstName) changes.push('first name');
+      if (editedAccount.lastName !== userAccount.lastName) changes.push('last name');
+      if (editedAccount.email !== userAccount.email) changes.push('email');
+      if (editedAccount.accountStatus !== userAccount.accountStatus) changes.push('account status');
+      
+      if (changes.length > 0) {
+        await logActivity(
+          'account_update',
+          `Account information updated: ${changes.join(', ')}`
+        );
+      }
+
       setSuccessMessage('Account information updated successfully');
       setTimeout(() => setSuccessMessage(''), 5000);
     } catch (error) {
@@ -152,6 +274,12 @@ export default function AdminUserDetailPage() {
         setClientProfile(newProfile);
       }
 
+      // Log the activity
+      await logActivity(
+        'profile_update',
+        clientProfile ? 'Client profile information updated' : 'Client profile created'
+      );
+
       setSuccessMessage('Profile information updated successfully');
       setTimeout(() => setSuccessMessage(''), 5000);
     } catch (error) {
@@ -160,6 +288,89 @@ export default function AdminUserDetailPage() {
       setTimeout(() => setErrorMessage(''), 5000);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file size (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setErrorMessage('File size must be less than 10MB');
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
+      if (!allowedTypes.includes(file.type)) {
+        setErrorMessage('Only PDF, DOC, DOCX, JPG, and PNG files are allowed');
+        return;
+      }
+
+      setUploadFormData(prev => ({ ...prev, file }));
+      setErrorMessage('');
+    }
+  };
+
+  const handleUploadDocument = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!userId || !userAccount) return;
+
+    if (!uploadFormData.documentName.trim()) {
+      setErrorMessage('Document name is required');
+      return;
+    }
+
+    if (!uploadFormData.file) {
+      setErrorMessage('Please select a file to upload');
+      return;
+    }
+
+    setIsUploading(true);
+
+    try {
+      // In a real implementation, you would upload the file to a storage service
+      // and get back a URL. For now, we'll create a mock URL.
+      const mockFileUrl = `https://storage.example.com/${uploadFormData.file.name}`;
+
+      const documentId = crypto.randomUUID();
+      const newDocument: ClientDocuments = {
+        _id: documentId,
+        documentName: uploadFormData.documentName,
+        fileUrl: mockFileUrl,
+        uploadDate: new Date(),
+        clientEmail: userAccount.email || '',
+        fileType: uploadFormData.file.type,
+        fileSize: uploadFormData.file.size,
+        documentCategory: uploadFormData.documentCategory,
+        notes: uploadFormData.notes,
+      };
+
+      await BaseCrudService.create('clientdocuments', newDocument);
+
+      setDocuments(prev => [newDocument, ...prev]);
+      
+      // Log the activity
+      await logActivity(
+        'document_upload',
+        `Admin uploaded document: ${uploadFormData.documentName}`,
+        documentId
+      );
+
+      setUploadFormData({
+        documentName: '',
+        documentCategory: 'other',
+        notes: '',
+        file: null,
+      });
+      setShowUploadForm(false);
+      setSuccessMessage('Document uploaded successfully');
+      setTimeout(() => setSuccessMessage(''), 5000);
+    } catch (error) {
+      console.error('Failed to upload document:', error);
+      setErrorMessage('Failed to upload document. Please try again.');
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -276,12 +487,13 @@ export default function AdminUserDetailPage() {
       <section className="w-full py-12 md:py-16 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <Tabs defaultValue="account" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8">
+            <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-8">
               <TabsTrigger value="account">Account Info</TabsTrigger>
               <TabsTrigger value="profile">Personal Details</TabsTrigger>
               <TabsTrigger value="documents">Documents ({documents.length})</TabsTrigger>
               <TabsTrigger value="messages">Messages ({messages.length})</TabsTrigger>
               <TabsTrigger value="billing">Billing ({payments.length})</TabsTrigger>
+              <TabsTrigger value="activity">Activity ({activityLogs.length})</TabsTrigger>
             </TabsList>
 
             {/* Account Info Tab */}
@@ -536,10 +748,128 @@ export default function AdminUserDetailPage() {
                     Documents
                   </CardTitle>
                   <CardDescription className="font-paragraph">
-                    View and manage client documents
+                    View and manage client documents. Upload new documents on behalf of the user.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
+                  {/* Upload Form */}
+                  <div className="mb-8">
+                    {!showUploadForm ? (
+                      <Button
+                        onClick={() => setShowUploadForm(true)}
+                        className="bg-primary hover:bg-primary/90 text-white flex items-center gap-2"
+                      >
+                        <Plus className="w-5 h-5" />
+                        Upload Document for User
+                      </Button>
+                    ) : (
+                      <div className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige">
+                        <h3 className="font-heading text-xl font-bold text-foreground mb-4">Upload Document</h3>
+
+                        <form onSubmit={handleUploadDocument} className="space-y-4">
+                          <div>
+                            <Label htmlFor="documentName" className="font-paragraph">Document Name *</Label>
+                            <Input
+                              id="documentName"
+                              value={uploadFormData.documentName}
+                              onChange={(e) => setUploadFormData(prev => ({ ...prev, documentName: e.target.value }))}
+                              placeholder="e.g., Court Order, Contract"
+                              className="border-gray-300"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="category" className="font-paragraph">Category</Label>
+                            <Select 
+                              value={uploadFormData.documentCategory} 
+                              onValueChange={(value) => setUploadFormData(prev => ({ ...prev, documentCategory: value }))}
+                            >
+                              <SelectTrigger className="border-gray-300">
+                                <SelectValue placeholder="Select a category" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="contract">Contract</SelectItem>
+                                <SelectItem value="invoice">Invoice</SelectItem>
+                                <SelectItem value="court-order">Court Order</SelectItem>
+                                <SelectItem value="evidence">Evidence</SelectItem>
+                                <SelectItem value="correspondence">Correspondence</SelectItem>
+                                <SelectItem value="other">Other</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="file" className="font-paragraph">Select File *</Label>
+                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                              <Upload className="w-10 h-10 text-gray-400 mx-auto mb-3" />
+                              <p className="font-paragraph text-foreground/80 mb-2">
+                                {uploadFormData.file ? uploadFormData.file.name : 'Click to browse'}
+                              </p>
+                              <p className="font-paragraph text-sm text-foreground/60 mb-3">
+                                PDF, DOC, DOCX, JPG, PNG (Max 10MB)
+                              </p>
+                              <input
+                                id="file"
+                                type="file"
+                                onChange={handleFileSelect}
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                className="hidden"
+                              />
+                              <Button
+                                type="button"
+                                onClick={() => document.getElementById('file')?.click()}
+                                variant="outline"
+                                className="border-primary text-primary hover:bg-primary/5"
+                              >
+                                Choose File
+                              </Button>
+                            </div>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="notes" className="font-paragraph">Notes (Optional)</Label>
+                            <Textarea
+                              id="notes"
+                              value={uploadFormData.notes}
+                              onChange={(e) => setUploadFormData(prev => ({ ...prev, notes: e.target.value }))}
+                              placeholder="Add any notes about this document..."
+                              className="border-gray-300"
+                              rows={3}
+                            />
+                          </div>
+
+                          <div className="flex gap-3">
+                            <Button
+                              type="submit"
+                              disabled={isUploading}
+                              className="bg-primary hover:bg-primary/90 text-white"
+                            >
+                              {isUploading ? 'Uploading...' : 'Upload Document'}
+                            </Button>
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                setShowUploadForm(false);
+                                setUploadFormData({
+                                  documentName: '',
+                                  documentCategory: 'other',
+                                  notes: '',
+                                  file: null,
+                                });
+                              }}
+                              variant="outline"
+                              className="border-gray-300"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </form>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Documents List */}
                   {documents.length === 0 ? (
                     <div className="bg-gray-50 rounded-lg p-12 text-center">
                       <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -729,6 +1059,96 @@ export default function AdminUserDetailPage() {
                         ))}
                       </TableBody>
                     </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Activity History Tab */}
+            <TabsContent value="activity">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-heading text-2xl flex items-center gap-2">
+                    <History className="w-6 h-6" />
+                    Activity History
+                  </CardTitle>
+                  <CardDescription className="font-paragraph">
+                    Complete history of all changes and actions performed on this user account
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {activityLogs.length === 0 ? (
+                    <div className="bg-gray-50 rounded-lg p-12 text-center">
+                      <History className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <p className="font-paragraph text-foreground/80">No activity history yet.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {activityLogs.map((log) => (
+                        <div
+                          key={log._id}
+                          className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow"
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0 mt-1">
+                              {log.activityType === 'document_upload' && (
+                                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                  <Upload className="w-5 h-5 text-blue-600" />
+                                </div>
+                              )}
+                              {log.activityType === 'profile_update' && (
+                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                                  <User className="w-5 h-5 text-green-600" />
+                                </div>
+                              )}
+                              {log.activityType === 'account_update' && (
+                                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                                  <Save className="w-5 h-5 text-purple-600" />
+                                </div>
+                              )}
+                              {!['document_upload', 'profile_update', 'account_update'].includes(log.activityType || '') && (
+                                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                                  <Clock className="w-5 h-5 text-gray-600" />
+                                </div>
+                              )}
+                            </div>
+                            
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between mb-2">
+                                <div>
+                                  <h3 className="font-heading text-base font-semibold text-foreground">
+                                    {log.activityDescription}
+                                  </h3>
+                                  <p className="font-paragraph text-sm text-foreground/70 mt-1">
+                                    Performed by: <span className="font-semibold">{log.performedByName || log.performedBy}</span>
+                                  </p>
+                                </div>
+                                <Badge variant="outline" className="ml-4">
+                                  {log.activityType?.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                </Badge>
+                              </div>
+                              
+                              <div className="flex items-center gap-2 text-sm text-foreground/60">
+                                <Clock className="w-4 h-4" />
+                                <span className="font-paragraph">
+                                  {log.timestamp 
+                                    ? new Date(log.timestamp).toLocaleString()
+                                    : 'N/A'}
+                                </span>
+                              </div>
+
+                              {log.relatedItemId && (
+                                <div className="mt-2 pt-2 border-t border-gray-100">
+                                  <p className="font-paragraph text-xs text-foreground/60">
+                                    Related Item ID: <span className="font-mono">{log.relatedItemId}</span>
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   )}
                 </CardContent>
               </Card>
