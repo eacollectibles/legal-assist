@@ -942,7 +942,48 @@ export default function AdminUserDetailPage() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => window.open(doc.fileUrl, '_blank')}
+                                  onClick={() => {
+                                    // Create a new window/tab with the file content
+                                    const newWindow = window.open('', '_blank');
+                                    if (newWindow) {
+                                      if (doc.fileType?.startsWith('image/')) {
+                                        // For images, display directly
+                                        newWindow.document.write(`
+                                          <html>
+                                            <head>
+                                              <title>${doc.documentName || 'Document'}</title>
+                                              <style>
+                                                body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f0f0; }
+                                                img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+                                              </style>
+                                            </head>
+                                            <body>
+                                              <img src="${doc.fileUrl}" alt="${doc.documentName || 'Document'}" />
+                                            </body>
+                                          </html>
+                                        `);
+                                      } else if (doc.fileType === 'application/pdf') {
+                                        // For PDFs, embed in iframe
+                                        newWindow.document.write(`
+                                          <html>
+                                            <head>
+                                              <title>${doc.documentName || 'Document'}</title>
+                                              <style>
+                                                body { margin: 0; }
+                                                iframe { width: 100vw; height: 100vh; border: none; }
+                                              </style>
+                                            </head>
+                                            <body>
+                                              <iframe src="${doc.fileUrl}" type="application/pdf"></iframe>
+                                            </body>
+                                          </html>
+                                        `);
+                                      } else {
+                                        // For other file types, trigger download
+                                        newWindow.location.href = doc.fileUrl;
+                                      }
+                                    }
+                                  }}
                                 >
                                   <ExternalLink className="w-4 h-4 mr-2" />
                                   View

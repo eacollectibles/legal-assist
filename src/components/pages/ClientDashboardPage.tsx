@@ -933,6 +933,56 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                       </div>
 
                       <div className="flex gap-2 ml-4">
+                        <button
+                          onClick={() => {
+                            if (doc.fileUrl) {
+                              // Create a new window/tab with the file content
+                              const newWindow = window.open('', '_blank');
+                              if (newWindow) {
+                                if (doc.fileType?.startsWith('image/')) {
+                                  // For images, display directly
+                                  newWindow.document.write(`
+                                    <html>
+                                      <head>
+                                        <title>${doc.documentName || 'Document'}</title>
+                                        <style>
+                                          body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f0f0; }
+                                          img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+                                        </style>
+                                      </head>
+                                      <body>
+                                        <img src="${doc.fileUrl}" alt="${doc.documentName || 'Document'}" />
+                                      </body>
+                                    </html>
+                                  `);
+                                } else if (doc.fileType === 'application/pdf') {
+                                  // For PDFs, embed in iframe
+                                  newWindow.document.write(`
+                                    <html>
+                                      <head>
+                                        <title>${doc.documentName || 'Document'}</title>
+                                        <style>
+                                          body { margin: 0; }
+                                          iframe { width: 100vw; height: 100vh; border: none; }
+                                        </style>
+                                      </head>
+                                      <body>
+                                        <iframe src="${doc.fileUrl}" type="application/pdf"></iframe>
+                                      </body>
+                                    </html>
+                                  `);
+                                } else {
+                                  // For other file types, trigger download
+                                  newWindow.location.href = doc.fileUrl;
+                                }
+                              }
+                            }
+                          }}
+                          className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                          title="View document"
+                        >
+                          <FileText className="w-5 h-5" />
+                        </button>
                         <a
                           href={doc.fileUrl}
                           download={doc.documentName}
@@ -941,17 +991,6 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                         >
                           <Download className="w-5 h-5" />
                         </a>
-                        <button
-                          onClick={() => {
-                            if (doc.fileUrl) {
-                              window.open(doc.fileUrl, '_blank');
-                            }
-                          }}
-                          className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
-                          title="View document"
-                        >
-                          <FileText className="w-5 h-5" />
-                        </button>
                         <button
                           onClick={() => handleDeleteDocument(doc._id)}
                           className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
