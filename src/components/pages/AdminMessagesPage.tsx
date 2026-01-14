@@ -7,7 +7,8 @@ import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User, Plus } from 'lucide-react';
+import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User, Plus, Trash2 } from 'lucide-react';
+import { getCurrentUser } from '@/lib/auth-service';
 
 interface Message {
   _id: string;
@@ -30,6 +31,7 @@ interface Conversation {
 }
 
 export default function AdminMessagesPage() {
+  const currentUser = getCurrentUser();
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
@@ -134,10 +136,14 @@ export default function AdminMessagesPage() {
     setIsSending(true);
 
     try {
+      const senderName = currentUser?.firstName && currentUser?.lastName
+        ? `${currentUser.firstName} ${currentUser.lastName}`
+        : currentUser?.firstName || 'Admin Team';
+
       const messageData: Message = {
         _id: crypto.randomUUID(),
         senderEmail: 'admin@legalservices.com',
-        senderName: 'Admin Team',
+        senderName: senderName,
         recipientEmail: conversation.clientEmail,
         messageContent: replyText,
         sentDate: new Date(),
@@ -185,6 +191,16 @@ export default function AdminMessagesPage() {
     }));
   };
 
+  const handleDeleteMessage = async (messageId: string) => {
+    try {
+      await BaseCrudService.delete('messages', messageId);
+      setMessages(prev => prev.filter(msg => msg._id !== messageId));
+    } catch (error) {
+      console.error('Failed to delete message:', error);
+      setSendError('Failed to delete message. Please try again.');
+    }
+  };
+
   const handleSendNewMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     setSendError('');
@@ -204,11 +220,15 @@ export default function AdminMessagesPage() {
     setIsSending(true);
 
     try {
+      const senderName = currentUser?.firstName && currentUser?.lastName
+        ? `${currentUser.firstName} ${currentUser.lastName}`
+        : currentUser?.firstName || 'Admin Team';
+
       const conversationId = crypto.randomUUID();
       const messageData: Message = {
         _id: crypto.randomUUID(),
         senderEmail: 'admin@legalservices.com',
-        senderName: 'Admin Team',
+        senderName: senderName,
         recipientEmail: newMessageEmail,
         messageContent: newMessageContent,
         sentDate: new Date(),
@@ -441,14 +461,23 @@ export default function AdminMessagesPage() {
                               }`}
                             >
                               <div className="flex items-start justify-between mb-2">
-                                <p className="font-heading font-bold text-foreground text-sm">
-                                  {isFromAdmin ? 'Admin Team' : msg.senderName}
-                                </p>
-                                <p className="font-paragraph text-xs text-foreground/60">
-                                  {msg.sentDate instanceof Date
-                                    ? msg.sentDate.toLocaleString()
-                                    : new Date(msg.sentDate || '').toLocaleString()}
-                                </p>
+                                <div className="flex-1">
+                                  <p className="font-heading font-bold text-foreground text-sm">
+                                    {isFromAdmin ? (msg.senderName || 'Admin Team') : msg.senderName}
+                                  </p>
+                                  <p className="font-paragraph text-xs text-foreground/60">
+                                    {msg.sentDate instanceof Date
+                                      ? msg.sentDate.toLocaleString()
+                                      : new Date(msg.sentDate || '').toLocaleString()}
+                                  </p>
+                                </div>
+                                <button
+                                  onClick={() => handleDeleteMessage(msg._id)}
+                                  className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                                  title="Delete message"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
                               </div>
                               <p className="font-paragraph text-foreground whitespace-pre-wrap">
                                 {msg.messageContent}

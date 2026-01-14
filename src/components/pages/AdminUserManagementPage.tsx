@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin, getAllUsers, setAdminStatus } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { Messages } from '@/entities';
-import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare } from 'lucide-react';
+import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare, UserX, Trash2 } from 'lucide-react';
 
 interface User {
   _id: string;
@@ -81,6 +81,98 @@ export default function AdminUserManagementPage() {
       setTimeout(() => setSuccessMessage(''), 5000);
     } else {
       setErrorMessage('Failed to update admin status. Please try again.');
+      setTimeout(() => setErrorMessage(''), 5000);
+    }
+  };
+
+  const handleDisableAccount = async (userId: string, email: string) => {
+    if (!confirm(`Are you sure you want to disable the account for ${email}? The user will not be able to log in.`)) {
+      return;
+    }
+
+    try {
+      await BaseCrudService.update('useraccounts', {
+        _id: userId,
+        accountStatus: 'Disabled'
+      });
+
+      setUsers(prev => prev.map(u => 
+        u._id === userId ? { ...u } : u
+      ));
+      
+      setSuccessMessage(`Account for ${email} has been disabled.`);
+      setTimeout(() => setSuccessMessage(''), 5000);
+      
+      // Reload users to reflect changes
+      loadUsers();
+    } catch (error) {
+      console.error('Failed to disable account:', error);
+      setErrorMessage('Failed to disable account. Please try again.');
+      setTimeout(() => setErrorMessage(''), 5000);
+    }
+  };
+
+  const handleDeleteAccount = async (userId: string, email: string) => {
+    if (!confirm(`⚠️ WARNING: Are you sure you want to PERMANENTLY DELETE the account for ${email}?\n\nThis will delete:\n- User account\n- All documents\n- All messages\n- All payment records\n- All activity logs\n\nThis action CANNOT be undone!`)) {
+      return;
+    }
+
+    // Double confirmation
+    const confirmText = prompt(`Type "DELETE" to confirm permanent deletion of ${email}:`);
+    if (confirmText !== 'DELETE') {
+      setErrorMessage('Account deletion cancelled.');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
+    }
+
+    try {
+      // Delete all related data
+      const { items: documents } = await BaseCrudService.getAll('clientdocuments');
+      const userDocs = documents.filter(doc => doc.clientEmail === email);
+      for (const doc of userDocs) {
+        await BaseCrudService.delete('clientdocuments', doc._id);
+      }
+
+      const { items: messages } = await BaseCrudService.getAll('messages');
+      const userMessages = messages.filter(msg => msg.senderEmail === email || msg.recipientEmail === email);
+      for (const msg of userMessages) {
+        await BaseCrudService.delete('messages', msg._id);
+      }
+
+      const { items: payments } = await BaseCrudService.getAll('paymentrecords');
+      const userPayments = payments.filter(p => p._id.includes(email));
+      for (const payment of userPayments) {
+        await BaseCrudService.delete('paymentrecords', payment._id);
+      }
+
+      const { items: logs } = await BaseCrudService.getAll('activitylogs');
+      const userLogs = logs.filter(log => log.userId === userId);
+      for (const log of userLogs) {
+        await BaseCrudService.delete('activitylogs', log._id);
+      }
+
+      const { items: notifications } = await BaseCrudService.getAll('notifications');
+      const userNotifications = notifications.filter(n => n.userId === userId);
+      for (const notif of userNotifications) {
+        await BaseCrudService.delete('notifications', notif._id);
+      }
+
+      // Delete profile if exists
+      try {
+        await BaseCrudService.delete('clientprofiles', userId);
+      } catch (e) {
+        // Profile might not exist, continue
+      }
+
+      // Finally delete the user account
+      await BaseCrudService.delete('useraccounts', userId);
+
+      setUsers(prev => prev.filter(u => u._id !== userId));
+      setSuccessMessage(`Account for ${email} has been permanently deleted.`);
+      setTimeout(() => setSuccessMessage(''), 5000);
+    } catch (error) {
+      console.error('Failed to delete account:', error);
+      setErrorMessage('Failed to delete account. Please try again.');
       setTimeout(() => setErrorMessage(''), 5000);
     }
   };
