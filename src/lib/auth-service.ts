@@ -331,3 +331,62 @@ export async function getAllUsers(): Promise<any[]> {
     return [];
   }
 }
+
+/**
+ * Change password for the current user
+ */
+export async function changePassword(currentPassword: string, newPassword: string): Promise<AuthResponse> {
+  try {
+    const currentUser = getCurrentUser();
+    if (!currentUser?.email) {
+      return {
+        success: false,
+        message: 'You must be logged in to change your password',
+      };
+    }
+
+    // Verify current password
+    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const user = users?.find(u => u.email === currentUser.email);
+
+    if (!user) {
+      return {
+        success: false,
+        message: 'User account not found',
+      };
+    }
+
+    // Check if current password is correct
+    if (user.passwordHash !== hashPassword(currentPassword)) {
+      return {
+        success: false,
+        message: 'Current password is incorrect',
+      };
+    }
+
+    // Validate new password
+    if (newPassword.length < 6) {
+      return {
+        success: false,
+        message: 'New password must be at least 6 characters long',
+      };
+    }
+
+    // Update password
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      passwordHash: hashPassword(newPassword),
+    });
+
+    return {
+      success: true,
+      message: 'Password changed successfully',
+    };
+  } catch (error) {
+    console.error('Change password error:', error);
+    return {
+      success: false,
+      message: 'Failed to change password. Please try again.',
+    };
+  }
+}
