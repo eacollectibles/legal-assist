@@ -436,7 +436,7 @@ export default function AdminUserDetailPage() {
             <p className="font-paragraph text-foreground/80 mb-6">The requested user account could not be found.</p>
             <Button onClick={() => navigate('/admin/users')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to User Management
+              Back to File Management
             </Button>
           </div>
         </section>
@@ -458,7 +458,7 @@ export default function AdminUserDetailPage() {
             className="mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to User Management
+            Back to File Management
           </Button>
 
           <div className="flex items-start justify-between">

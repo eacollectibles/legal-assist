@@ -85,7 +85,7 @@ export default function Header() {
                             : 'text-secondary hover:text-primary'
                         }`}
                       >
-                        User Management
+                        File Management
                       </Link>
                     )}
                     <div className="flex items-center gap-4 pl-4 border-l border-secondary/10">
@@ -209,7 +209,7 @@ export default function Header() {
                             : 'text-secondary hover:bg-pastelbeige'
                         }`}
                       >
-                        User Management
+                        File Management
                       </Link>
                     )}
                     <button

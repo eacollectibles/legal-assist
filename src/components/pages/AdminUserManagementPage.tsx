@@ -203,7 +203,7 @@ export default function AdminUserManagementPage() {
           <div className="flex items-center gap-4 mb-6">
             <Shield className="w-12 h-12 text-primary" />
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground">
-              User Management
+              File Management
             </h1>
           </div>
           <p className="font-paragraph text-lg text-foreground/80">
