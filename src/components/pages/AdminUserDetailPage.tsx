@@ -431,7 +431,13 @@ export default function AdminUserDetailPage() {
 
   // Check if user needs master code verification
   const requiresMasterCode = () => {
-    return currentUser?.email !== 'jeanfrancois@legalassist.london' && !isMasterCodeVerified;
+    // Only require master code if:
+    // 1. The current user is NOT jeanfrancois@legalassist.london
+    // 2. The user being viewed IS jeanfrancois@legalassist.london
+    // 3. Master code has not been verified yet
+    return currentUser?.email !== 'jeanfrancois@legalassist.london' 
+      && userAccount?.email === 'jeanfrancois@legalassist.london'
+      && !isMasterCodeVerified;
   };
 
   // Handle view document with master code check
