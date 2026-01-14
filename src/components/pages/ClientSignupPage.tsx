@@ -297,6 +297,20 @@ export default function ClientSignupPage() {
             {/* Sidebar Info */}
             <div className="lg:col-span-1">
               <div className="bg-pastelbeige/20 rounded-lg p-8 border border-pastelbeige sticky top-8">
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-3 mb-8">
+                  <Link to="/client-signup">
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3">
+                      Create an Account
+                    </Button>
+                  </Link>
+                  <Link to="/client-login">
+                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/5 font-semibold py-3">
+                      Login
+                    </Button>
+                  </Link>
+                </div>
+
                 <h3 className="font-heading text-2xl font-bold text-foreground mb-6">
                   Why Create an Account?
                 </h3>
