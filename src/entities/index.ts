@@ -169,3 +169,28 @@ export interface PaymentRecords {
   /** @wixFieldType text */
   transactionId?: string;
 }
+
+
+/**
+ * Collection ID: useraccounts
+ * Interface for UserAccounts
+ */
+export interface UserAccounts {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  email?: string;
+  /** @wixFieldType text */
+  passwordHash?: string;
+  /** @wixFieldType text */
+  firstName?: string;
+  /** @wixFieldType text */
+  lastName?: string;
+  /** @wixFieldType boolean */
+  isAdmin?: boolean;
+  /** @wixFieldType datetime */
+  lastLoginDate?: Date | string;
+  /** @wixFieldType text */
+  accountStatus?: string;
+}

@@ -177,8 +177,12 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsLoadingPayments(true);
     try {
       const { items } = await BaseCrudService.getAll<PaymentRecord>('paymentrecords');
-      // Filter payments for current user (using _id as user identifier)
-      const userPayments = items?.filter(p => p._id.startsWith(currentUser?.email || '')) || [];
+      // Filter payments for current user by checking if _id contains user email
+      // This maintains backward compatibility with existing payment records
+      const userPayments = items?.filter(p => 
+        p._id.includes(currentUser?.email || '') || 
+        p._id.startsWith(currentUser?.email || '')
+      ) || [];
       setPayments(userPayments);
     } catch (error) {
       console.error('Failed to load payments:', error);

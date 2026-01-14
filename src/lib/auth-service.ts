@@ -1,7 +1,9 @@
 /**
  * Authentication Service
- * Handles user signup, login, and session management
+ * Handles user signup, login, and session management using CMS backend
  */
+
+import { BaseCrudService } from '@/integrations';
 
 export interface AuthCredentials {
   email: string;
@@ -22,34 +24,54 @@ export interface AuthResponse {
   };
 }
 
+interface UserAccount {
+  _id: string;
+  email?: string;
+  passwordHash?: string;
+  firstName?: string;
+  lastName?: string;
+  isAdmin?: boolean;
+  lastLoginDate?: Date | string;
+  accountStatus?: string;
+}
+
+/**
+ * Simple hash function for passwords
+ * In production, use bcrypt or similar secure hashing
+ */
+function hashPassword(password: string): string {
+  // Simple hash for demo - in production use bcrypt
+  return btoa(password + 'salt_key_2026');
+}
+
 /**
  * Sign up a new user
  * Creates a new account and automatically logs them in
  */
 export async function signup(credentials: AuthCredentials): Promise<AuthResponse> {
   try {
-    // Store user data in localStorage (in production, this would be a backend call)
-    const userData = {
-      email: credentials.email,
-      firstName: credentials.firstName,
-      lastName: credentials.lastName,
-      password: credentials.password, // In production, never store plain passwords
-      isAdmin: false, // New users are not admins by default
-      createdAt: new Date().toISOString(),
-    };
-
     // Check if user already exists
-    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
-    if (existingUsers.some((u: any) => u.email === credentials.email)) {
+    const { items: existingUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    if (existingUsers?.some(u => u.email === credentials.email)) {
       return {
         success: false,
         message: 'An account with this email already exists',
       };
     }
 
-    // Add new user
-    existingUsers.push(userData);
-    localStorage.setItem('users', JSON.stringify(existingUsers));
+    // Create new user account
+    const userData: UserAccount = {
+      _id: crypto.randomUUID(),
+      email: credentials.email,
+      passwordHash: hashPassword(credentials.password),
+      firstName: credentials.firstName,
+      lastName: credentials.lastName,
+      isAdmin: false,
+      accountStatus: 'active',
+      lastLoginDate: new Date(),
+    };
+
+    await BaseCrudService.create('useraccounts', userData);
 
     // Create session token
     const token = generateToken(credentials.email);
@@ -73,6 +95,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       },
     };
   } catch (error) {
+    console.error('Signup error:', error);
     return {
       success: false,
       message: 'Failed to create account. Please try again.',
@@ -85,8 +108,8 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
  */
 export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'lastName'>): Promise<AuthResponse> {
   try {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === credentials.email && u.password === credentials.password);
+    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const user = users?.find(u => u.email === credentials.email && u.passwordHash === hashPassword(credentials.password));
 
     if (!user) {
       return {
@@ -94,6 +117,27 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
         message: 'Invalid email or password',
       };
     }
+
+    // Check account status
+    if (user.accountStatus === 'suspended') {
+      return {
+        success: false,
+        message: 'Your account has been suspended. Please contact support.',
+      };
+    }
+
+    if (user.accountStatus === 'inactive') {
+      return {
+        success: false,
+        message: 'Your account is inactive. Please contact support.',
+      };
+    }
+
+    // Update last login date
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      lastLoginDate: new Date(),
+    });
 
     // Create session token
     const token = generateToken(credentials.email);
@@ -110,13 +154,14 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       message: 'Logged in successfully',
       token,
       user: {
-        email: user.email,
+        email: user.email || '',
         firstName: user.firstName,
         lastName: user.lastName,
         isAdmin: user.isAdmin || false,
       },
     };
   } catch (error) {
+    console.error('Login error:', error);
     return {
       success: false,
       message: 'Failed to log in. Please try again.',
@@ -179,31 +224,32 @@ export function isAdmin(): boolean {
 
 /**
  * Set admin status for a user (admin-only function)
- * In production, this would be a protected backend endpoint
  */
-export function setAdminStatus(email: string, isAdmin: boolean): boolean {
+export async function setAdminStatus(email: string, isAdminStatus: boolean): Promise<boolean> {
   try {
     // Only admins can set admin status
-    if (!isAdmin() && email !== getCurrentUser()?.email) {
+    if (!isAdmin()) {
       console.error('Unauthorized: Only admins can set admin status');
       return false;
     }
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const userIndex = users.findIndex((u: any) => u.email === email);
+    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const user = users?.find(u => u.email === email);
 
-    if (userIndex === -1) {
+    if (!user) {
       console.error('User not found');
       return false;
     }
 
-    users[userIndex].isAdmin = isAdmin;
-    localStorage.setItem('users', JSON.stringify(users));
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      isAdmin: isAdminStatus,
+    });
 
     // Update current user if it's the same user
     const currentUser = getCurrentUser();
     if (currentUser?.email === email) {
-      currentUser.isAdmin = isAdmin;
+      currentUser.isAdmin = isAdminStatus;
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
@@ -217,23 +263,27 @@ export function setAdminStatus(email: string, isAdmin: boolean): boolean {
 /**
  * Get all users (admin-only function)
  */
-export function getAllUsers(): any[] {
+export async function getAllUsers(): Promise<any[]> {
   try {
     if (!isAdmin()) {
       console.error('Unauthorized: Only admins can view all users');
       return [];
     }
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    // Don't return passwords
-    return users.map((u: any) => ({
+    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    
+    // Don't return password hashes
+    return (users || []).map(u => ({
       email: u.email,
       firstName: u.firstName,
       lastName: u.lastName,
       isAdmin: u.isAdmin || false,
-      createdAt: u.createdAt,
+      createdAt: u._createdDate,
+      accountStatus: u.accountStatus,
+      lastLoginDate: u.lastLoginDate,
     }));
-  } catch {
+  } catch (error) {
+    console.error('Failed to get all users:', error);
     return [];
   }
 }

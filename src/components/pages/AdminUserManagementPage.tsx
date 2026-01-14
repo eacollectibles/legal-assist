@@ -34,10 +34,10 @@ export default function AdminUserManagementPage() {
     }
   }, [navigate]);
 
-  const loadUsers = () => {
+  const loadUsers = async () => {
     setIsLoading(true);
     try {
-      const allUsers = getAllUsers();
+      const allUsers = await getAllUsers();
       setUsers(allUsers);
     } catch (error) {
       console.error('Failed to load users:', error);
@@ -47,9 +47,9 @@ export default function AdminUserManagementPage() {
     }
   };
 
-  const handleToggleAdmin = (email: string, currentStatus: boolean) => {
+  const handleToggleAdmin = async (email: string, currentStatus: boolean) => {
     const newStatus = !currentStatus;
-    const success = setAdminStatus(email, newStatus);
+    const success = await setAdminStatus(email, newStatus);
 
     if (success) {
       setUsers(prev => prev.map(u => 
