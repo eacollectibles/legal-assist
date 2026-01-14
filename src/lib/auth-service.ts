@@ -59,19 +59,39 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       };
     }
 
-    // Create new user account
+    // Create new user account with proper data structure
+    const userId = crypto.randomUUID();
     const userData: UserAccount = {
-      _id: crypto.randomUUID(),
+      _id: userId,
       email: credentials.email,
       passwordHash: hashPassword(credentials.password),
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       isAdmin: false,
       accountStatus: 'active',
-      lastLoginDate: new Date(),
+      lastLoginDate: new Date().toISOString(),
     };
 
-    await BaseCrudService.create('useraccounts', userData);
+    console.log('Creating user account:', { email: credentials.email, userId });
+    
+    // Create the user account in the database
+    const createdUser = await BaseCrudService.create('useraccounts', userData);
+    
+    console.log('User account created successfully:', createdUser);
+
+    // Verify the user was created by fetching it back
+    const { items: verifyUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const userExists = verifyUsers?.some(u => u.email === credentials.email);
+    
+    if (!userExists) {
+      console.error('User creation verification failed - user not found in database');
+      return {
+        success: false,
+        message: 'Account creation failed. Please try again.',
+      };
+    }
+
+    console.log('User account verified in database');
 
     // Create session token
     const token = generateToken(credentials.email);
@@ -136,7 +156,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
     // Update last login date
     await BaseCrudService.update('useraccounts', {
       _id: user._id,
-      lastLoginDate: new Date(),
+      lastLoginDate: new Date().toISOString(),
     });
 
     // Create session token
