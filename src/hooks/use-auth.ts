@@ -20,7 +20,7 @@ export function useAuth() {
     if (currentUser) {
       setUser(currentUser);
       setIsAuthenticated(true);
-      setUserIsAdmin(isAdmin());
+      setUserIsAdmin(currentUser.isAdmin === true);
     }
     setIsLoading(false);
   }, []);

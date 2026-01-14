@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { getCurrentUser } from '@/lib/auth-service';
 
 export default function GrantAdminPage() {
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,18 @@ export default function GrantAdminPage() {
           type: 'success',
           text: `User ${targetEmail} already has admin privileges.`
         });
+        
+        // Update localStorage if this is the current user
+        const currentUser = getCurrentUser();
+        if (currentUser?.email === targetEmail && !currentUser.isAdmin) {
+          currentUser.isAdmin = true;
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          setMessage({
+            type: 'success',
+            text: `User ${targetEmail} already has admin privileges. Session updated - please refresh the page.`
+          });
+        }
+        
         setLoading(false);
         return;
       }
@@ -46,10 +59,21 @@ export default function GrantAdminPage() {
         isAdmin: true
       });
 
-      setMessage({
-        type: 'success',
-        text: `Successfully granted admin privileges to ${targetEmail}!`
-      });
+      // Update localStorage if this is the current user
+      const currentUser = getCurrentUser();
+      if (currentUser?.email === targetEmail) {
+        currentUser.isAdmin = true;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        setMessage({
+          type: 'success',
+          text: `Successfully granted admin privileges to ${targetEmail}! Session updated - please refresh the page to see admin features.`
+        });
+      } else {
+        setMessage({
+          type: 'success',
+          text: `Successfully granted admin privileges to ${targetEmail}! User will see admin features on next login.`
+        });
+      }
     } catch (error) {
       setMessage({
         type: 'error',

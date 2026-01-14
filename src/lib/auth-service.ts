@@ -159,6 +159,11 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       lastLoginDate: new Date().toISOString(),
     });
 
+    // Fetch the user again to ensure we have the latest data (including admin status)
+    const { items: updatedUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const updatedUser = updatedUsers?.find(u => u.email === credentials.email);
+    const isAdminStatus = updatedUser?.isAdmin || false;
+
     // Create session token
     const token = generateToken(credentials.email);
     localStorage.setItem('authToken', token);
@@ -166,7 +171,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      isAdmin: user.isAdmin || false,
+      isAdmin: isAdminStatus,
     }));
 
     return {
@@ -177,7 +182,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
         email: user.email || '',
         firstName: user.firstName,
         lastName: user.lastName,
-        isAdmin: user.isAdmin || false,
+        isAdmin: isAdminStatus,
       },
     };
   } catch (error) {
