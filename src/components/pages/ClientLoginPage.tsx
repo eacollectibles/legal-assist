@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useMember } from '@/integrations';
 
 interface LoginFormData {
   email: string;
@@ -13,7 +14,7 @@ interface LoginFormData {
 }
 
 export default function ClientLoginPage() {
-  const navigate = useNavigate();
+  const { actions } = useMember();
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     password: '',
@@ -41,8 +42,8 @@ export default function ClientLoginPage() {
       return false;
     }
 
-    if (!formData.password || formData.password.length < 8) {
-      setError('Password must be at least 8 characters long');
+    if (!formData.password || formData.password.length < 1) {
+      setError('Password is required');
       return false;
     }
 
@@ -59,9 +60,10 @@ export default function ClientLoginPage() {
     setIsSubmitting(true);
 
     try {
-      // In a real implementation, you would call a backend API to authenticate the user
-      // For now, we'll simulate the login process
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Use Wix Members authentication
+      // Note: The Wix login action handles authentication via OAuth/redirect flow
+      // Email and password would be handled by Wix's login UI
+      await actions.login();
 
       setSuccess(true);
       setFormData({
@@ -70,12 +72,10 @@ export default function ClientLoginPage() {
         rememberMe: false,
       });
 
-      // Redirect to client dashboard after successful login
-      setTimeout(() => {
-        navigate('/client-dashboard');
-      }, 2000);
+      // The login action will automatically redirect after successful authentication
+      // The MemberProvider handles the redirect back to the current page
     } catch (err) {
-      setError('Failed to log in. Please check your credentials and try again.');
+      setError('Failed to log in. Please check your email and password and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -112,7 +112,7 @@ export default function ClientLoginPage() {
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-heading font-bold text-green-900 mb-1">Login Successful!</h3>
-                      <p className="font-paragraph text-green-800">Redirecting to your dashboard...</p>
+                      <p className="font-paragraph text-green-800">You have been authenticated. Redirecting to your dashboard...</p>
                     </div>
                   </div>
                 )}

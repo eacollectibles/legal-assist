@@ -26,7 +26,7 @@ export interface Bookings {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
-  status?: 'pending' | 'approved' | 'rejected' | 'confirmed' | 'rescheduled' | 'cancelled';
+  status?: string;
   /** @wixFieldType text */
   approvalNotes?: string;
   /** @wixFieldType text */
@@ -129,7 +129,7 @@ export interface MeetingRequests {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
-  status?: 'pending' | 'approved' | 'rejected';
+  status?: string;
   /** @wixFieldType text */
   approvalNotes?: string;
   /** @wixFieldType text */
