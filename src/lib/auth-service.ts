@@ -299,6 +299,7 @@ export async function getAllUsers(): Promise<any[]> {
     
     // Don't return password hashes
     return (users || []).map(u => ({
+      _id: u._id,
       email: u.email,
       firstName: u.firstName,
       lastName: u.lastName,

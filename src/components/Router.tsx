@@ -29,6 +29,7 @@ import ClientLoginPage from '@/components/pages/ClientLoginPage';
 import ClientDashboardPage from '@/components/pages/ClientDashboardPage';
 import AdminMessagesPage from '@/components/pages/AdminMessagesPage';
 import AdminUserManagementPage from '@/components/pages/AdminUserManagementPage';
+import AdminUserDetailPage from '@/components/pages/AdminUserDetailPage';
 import GrantAdminPage from '@/components/pages/GrantAdminPage';
 
 // Layout component that includes ScrollToTop
@@ -139,6 +140,10 @@ const router = createBrowserRouter([
       {
         path: "admin/users",
         element: <AdminUserManagementPage />,
+      },
+      {
+        path: "admin/users/:userId",
+        element: <AdminUserDetailPage />,
       },
       {
         path: "client-signup",

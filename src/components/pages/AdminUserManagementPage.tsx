@@ -7,9 +7,10 @@ import { Switch } from '@/components/ui/switch';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin, getAllUsers, setAdminStatus } from '@/lib/auth-service';
-import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye } from 'lucide-react';
 
 interface User {
+  _id: string;
   email: string;
   firstName?: string;
   lastName?: string;
@@ -182,6 +183,15 @@ export default function AdminUserManagementPage() {
                         </div>
 
                         <div className="flex items-center gap-4 ml-6">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/admin/users/${user._id}`)}
+                          >
+                            <Eye className="w-4 h-4 mr-2" />
+                            View Details
+                          </Button>
+                          
                           <div className="flex items-center gap-2">
                             {user.isAdmin ? (
                               <Shield className="w-5 h-5 text-primary" />
