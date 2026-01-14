@@ -77,10 +77,10 @@ export default function AdminUserManagementPage() {
       setUsers(prev => prev.map(u => 
         u.email === email ? { ...u, isAdmin: newStatus } : u
       ));
-      setSuccessMessage(`Successfully ${newStatus ? 'granted' : 'revoked'} admin privileges for ${email}`);
+      setSuccessMessage(`Successfully ${newStatus ? 'granted' : 'revoked'} paralegal privileges for ${email}`);
       setTimeout(() => setSuccessMessage(''), 5000);
     } else {
-      setErrorMessage('Failed to update admin status. Please try again.');
+      setErrorMessage('Failed to update paralegal status. Please try again.');
       setTimeout(() => setErrorMessage(''), 5000);
     }
   };
@@ -207,7 +207,7 @@ export default function AdminUserManagementPage() {
             </h1>
           </div>
           <p className="font-paragraph text-lg text-foreground/80">
-            Manage user accounts and admin privileges
+            Manage client accounts and paralegal privileges
           </p>
         </div>
       </section>
@@ -235,22 +235,22 @@ export default function AdminUserManagementPage() {
             <CardHeader>
               <CardTitle className="font-heading text-2xl flex items-center gap-2">
                 <Users className="w-6 h-6" />
-                All Users
+                All Clients
               </CardTitle>
               <CardDescription className="font-paragraph">
-                View and manage user accounts and admin privileges
+                View and manage client accounts and paralegal privileges
               </CardDescription>
             </CardHeader>
             <CardContent>
               {isLoading ? (
                 <div className="text-center py-12">
                   <Loader className="w-8 h-8 text-primary animate-spin mx-auto mb-4" />
-                  <p className="font-paragraph text-foreground/80">Loading users...</p>
+                  <p className="font-paragraph text-foreground/80">Loading clients...</p>
                 </div>
               ) : users.length === 0 ? (
                 <div className="bg-gray-50 rounded-lg p-12 text-center">
                   <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="font-paragraph text-foreground/80">No users found.</p>
+                  <p className="font-paragraph text-foreground/80">No clients found.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -270,7 +270,7 @@ export default function AdminUserManagementPage() {
                             {user.isAdmin && (
                               <Badge className="bg-primary text-white">
                                 <Shield className="w-3 h-3 mr-1" />
-                                Admin
+                                Paralegal
                               </Badge>
                             )}
                             {user.email === currentUser.email && (
@@ -319,7 +319,7 @@ export default function AdminUserManagementPage() {
                                 <ShieldOff className="w-5 h-5 text-gray-400" />
                               )}
                               <span className="font-paragraph text-sm text-foreground/80">
-                                Admin
+                                Paralegal
                               </span>
                               <Switch
                                 checked={user.isAdmin}
@@ -359,7 +359,7 @@ export default function AdminUserManagementPage() {
                       {user.email === currentUser.email && (
                         <div className="mt-4 pt-4 border-t border-gray-200">
                           <p className="font-paragraph text-sm text-foreground/60 italic">
-                            You cannot modify your own admin status
+                            You cannot modify your own paralegal status
                           </p>
                         </div>
                       )}

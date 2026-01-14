@@ -473,7 +473,7 @@ export default function AdminUserDetailPage() {
               </div>
               <div className="flex items-center gap-3">
                 <Badge className={userAccount.isAdmin ? 'bg-primary text-white' : 'bg-gray-500 text-white'}>
-                  {userAccount.isAdmin ? 'Admin' : 'User'}
+                  {userAccount.isAdmin ? 'Paralegal' : 'Client'}
                 </Badge>
                 <Badge variant="outline" className="border-foreground/30">
                   {userAccount.accountStatus || 'Active'}
