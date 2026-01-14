@@ -125,9 +125,6 @@ export default function ClientSignupPage() {
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
               Create Your Client Account
             </h1>
-            <p className="font-paragraph text-lg text-foreground/80">
-              Sign up to access your secure client portal. Upload documents, track your case, and communicate with our legal team.
-            </p>
           </div>
         </div>
       </section>

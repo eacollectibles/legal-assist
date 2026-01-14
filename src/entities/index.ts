@@ -26,47 +26,12 @@ export interface Bookings {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
-  status?: 'pending' | 'confirmed' | 'approved' | 'rejected' | 'rescheduled' | 'cancelled';
+  status?: string;
   /** @wixFieldType text */
   approvalNotes?: string;
-  /** @wixFieldType url */
+  /** @wixFieldType text */
   meetingLink?: string;
-  /** @wixFieldType url */
-  zoomUrl?: string;
   /** @wixFieldType text */
-  confirmationToken?: string;
-}
-
-
-/**
- * Collection ID: meetingrequests
- * Interface for MeetingRequests
- */
-export interface MeetingRequests {
-  _id: string;
-  _createdDate?: Date;
-  _updatedDate?: Date;
-  /** @wixFieldType text */
-  clientName?: string;
-  /** @wixFieldType text */
-  clientEmail?: string;
-  /** @wixFieldType text */
-  clientPhone?: string;
-  /** @wixFieldType date */
-  preferredDate?: Date | string;
-  /** @wixFieldType time */
-  preferredTime?: any;
-  /** @wixFieldType text */
-  serviceType?: string;
-  /** @wixFieldType text */
-  clientNotes?: string;
-  /** @wixFieldType text */
-  status?: 'pending' | 'approved' | 'rejected';
-  /** @wixFieldType text */
-  approvalNotes?: string;
-  /** @wixFieldType url */
-  meetingLink?: string;
-  /** @wixFieldType url */
   zoomUrl?: string;
   /** @wixFieldType text */
   confirmationToken?: string;
@@ -97,6 +62,41 @@ export interface ClientDocuments {
   documentCategory?: string;
   /** @wixFieldType text */
   notes?: string;
+}
+
+
+/**
+ * Collection ID: meetingrequests
+ * Interface for MeetingRequests
+ */
+export interface MeetingRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientName?: string;
+  /** @wixFieldType text */
+  clientEmail?: string;
+  /** @wixFieldType text */
+  clientPhone?: string;
+  /** @wixFieldType date */
+  preferredDate?: Date | string;
+  /** @wixFieldType time */
+  preferredTime?: any;
+  /** @wixFieldType text */
+  serviceType?: string;
+  /** @wixFieldType text */
+  clientNotes?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType text */
+  approvalNotes?: string;
+  /** @wixFieldType text */
+  meetingLink?: string;
+  /** @wixFieldType text */
+  zoomUrl?: string;
+  /** @wixFieldType text */
+  confirmationToken?: string;
 }
 
 
