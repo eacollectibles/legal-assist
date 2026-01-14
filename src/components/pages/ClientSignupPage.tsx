@@ -305,28 +305,28 @@ export default function ClientSignupPage() {
                   <div>
                     <h4 className="font-heading font-bold text-foreground mb-2">📁 Secure Document Upload</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      Upload and store important documents securely in your personal portal.
+                      Upload and store important documents securely in your personal client portal.
                     </p>
                   </div>
 
                   <div>
                     <h4 className="font-heading font-bold text-foreground mb-2">📊 Case Tracking</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      Monitor the progress of your case and stay updated on important milestones.
+                      Monitor the status of your matter and stay informed of key developments.
                     </p>
                   </div>
 
                   <div>
                     <h4 className="font-heading font-bold text-foreground mb-2">💬 Direct Communication</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      Communicate directly with your legal team through secure messaging.
+                      Communicate securely with your licensed paralegal through protected messaging.
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="font-heading font-bold text-foreground mb-2">🔒 Complete Privacy</h4>
+                    <h4 className="font-heading font-bold text-foreground mb-2">🔒 Privacy & Confidentiality</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      All information is encrypted and protected by solicitor-client privilege.
+                      All information is securely encrypted and handled in accordance with professional confidentiality obligations applicable to licensed paralegals in Ontario.
                     </p>
                   </div>
 
