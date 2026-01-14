@@ -331,30 +331,31 @@ export default function AdminUserManagementPage() {
             </div>
           )}
 
-          <Card>
+          {/* Paralegals Section */}
+          <Card className="mb-8">
             <CardHeader>
               <CardTitle className="font-heading text-2xl flex items-center gap-2">
-                <Users className="w-6 h-6" />
-                All Clients
+                <Shield className="w-6 h-6 text-primary" />
+                Paralegals
               </CardTitle>
               <CardDescription className="font-paragraph">
-                View and manage client accounts and paralegal privileges
+                Licensed paralegals with administrative privileges
               </CardDescription>
             </CardHeader>
             <CardContent>
               {isLoading ? (
                 <div className="text-center py-12">
                   <Loader className="w-8 h-8 text-primary animate-spin mx-auto mb-4" />
-                  <p className="font-paragraph text-foreground/80">Loading clients...</p>
+                  <p className="font-paragraph text-foreground/80">Loading paralegals...</p>
                 </div>
-              ) : users.length === 0 ? (
+              ) : users.filter(u => u.isAdmin).length === 0 ? (
                 <div className="bg-gray-50 rounded-lg p-12 text-center">
-                  <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="font-paragraph text-foreground/80">No clients found.</p>
+                  <Shield className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <p className="font-paragraph text-foreground/80">No paralegals found.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {users.map(user => (
+                  {users.filter(u => u.isAdmin).map(user => (
                     <div
                       key={user.email}
                       className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
@@ -367,12 +368,10 @@ export default function AdminUserManagementPage() {
                                 ? `${user.firstName} ${user.lastName}`
                                 : user.email}
                             </h3>
-                            {user.isAdmin && (
-                              <Badge className="bg-primary text-white">
-                                <Shield className="w-3 h-3 mr-1" />
-                                Paralegal
-                              </Badge>
-                            )}
+                            <Badge className="bg-primary text-white">
+                              <Shield className="w-3 h-3 mr-1" />
+                              Paralegal
+                            </Badge>
                             {user.email === currentUser.email && (
                               <Badge variant="outline" className="border-primary text-primary">
                                 You
@@ -418,11 +417,140 @@ export default function AdminUserManagementPage() {
                             {/* Only show toggle for jeanfrancois@legalassist.london */}
                             {currentUser?.email === 'jeanfrancois@legalassist.london' && (
                               <div className="flex items-center gap-2">
-                                {user.isAdmin ? (
-                                  <Shield className="w-5 h-5 text-primary" />
-                                ) : (
-                                  <ShieldOff className="w-5 h-5 text-gray-400" />
-                                )}
+                                <Shield className="w-5 h-5 text-primary" />
+                                <span className="font-paragraph text-sm text-foreground/80">
+                                  Paralegal
+                                </span>
+                                <Switch
+                                  checked={user.isAdmin}
+                                  onCheckedChange={() => handleToggleAdmin(user.email, user.isAdmin)}
+                                  disabled={user.email === currentUser.email}
+                                />
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Account Actions */}
+                          {user.email !== currentUser.email && (
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDisableAccount(user._id, user.email)}
+                                className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                              >
+                                <UserX className="w-4 h-4 mr-2" />
+                                Disable
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDeleteAccount(user._id, user.email)}
+                                className="border-destructive text-destructive hover:bg-destructive/10"
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Delete
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {user.email === currentUser.email && (
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <p className="font-paragraph text-sm text-foreground/60 italic">
+                            You cannot modify your own paralegal status
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Clients Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-heading text-2xl flex items-center gap-2">
+                <Users className="w-6 h-6" />
+                Clients
+              </CardTitle>
+              <CardDescription className="font-paragraph">
+                View and manage client accounts
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <div className="text-center py-12">
+                  <Loader className="w-8 h-8 text-primary animate-spin mx-auto mb-4" />
+                  <p className="font-paragraph text-foreground/80">Loading clients...</p>
+                </div>
+              ) : users.filter(u => !u.isAdmin).length === 0 ? (
+                <div className="bg-gray-50 rounded-lg p-12 text-center">
+                  <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <p className="font-paragraph text-foreground/80">No clients found.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {users.filter(u => !u.isAdmin).map(user => (
+                    <div
+                      key={user.email}
+                      className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="font-heading text-lg font-bold text-foreground">
+                              {user.firstName && user.lastName
+                                ? `${user.firstName} ${user.lastName}`
+                                : user.email}
+                            </h3>
+                            {user.email === currentUser.email && (
+                              <Badge variant="outline" className="border-primary text-primary">
+                                You
+                              </Badge>
+                            )}
+                            {user.unreadMessageCount && user.unreadMessageCount > 0 && (
+                              <Badge className="bg-red-500 text-white flex items-center gap-1">
+                                <MessageSquare className="w-3 h-3" />
+                                {user.unreadMessageCount} unread
+                              </Badge>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div>
+                              <p className="font-paragraph text-foreground/60">Email</p>
+                              <p className="font-paragraph font-semibold text-foreground">
+                                {user.email}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-paragraph text-foreground/60">Member Since</p>
+                              <p className="font-paragraph font-semibold text-foreground">
+                                {new Date(user.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-4 ml-6">
+                          <div className="flex items-center gap-3">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleViewDetails(user._id, user.email)}
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </Button>
+                            
+                            {/* Only show toggle for jeanfrancois@legalassist.london */}
+                            {currentUser?.email === 'jeanfrancois@legalassist.london' && (
+                              <div className="flex items-center gap-2">
+                                <ShieldOff className="w-5 h-5 text-gray-400" />
                                 <span className="font-paragraph text-sm text-foreground/80">
                                   Paralegal
                                 </span>
