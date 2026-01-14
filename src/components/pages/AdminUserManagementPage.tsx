@@ -4,12 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin, getAllUsers, setAdminStatus } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { Messages } from '@/entities';
-import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare, UserX, Trash2 } from 'lucide-react';
+import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare, UserX, Trash2, Lock } from 'lucide-react';
 
 interface User {
   _id: string;
@@ -28,6 +31,12 @@ export default function AdminUserManagementPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Master code verification state
+  const [showMasterCodeDialog, setShowMasterCodeDialog] = useState(false);
+  const [masterCodeInput, setMasterCodeInput] = useState('');
+  const [pendingUserId, setPendingUserId] = useState<string | null>(null);
+  const MASTER_CODE = 'd0813840';
 
   // Check if user is admin
   useEffect(() => {
@@ -184,6 +193,40 @@ export default function AdminUserManagementPage() {
     }
   };
 
+  // Master code verification handler
+  const handleMasterCodeVerification = () => {
+    if (masterCodeInput === MASTER_CODE) {
+      setShowMasterCodeDialog(false);
+      setMasterCodeInput('');
+      
+      // Navigate to the pending user's detail page
+      if (pendingUserId) {
+        navigate(`/admin/users/${pendingUserId}`);
+        setPendingUserId(null);
+      }
+      
+      setSuccessMessage('Master code verified. Access granted.');
+      setTimeout(() => setSuccessMessage(''), 5000);
+    } else {
+      setErrorMessage('Invalid master code. Access denied.');
+      setTimeout(() => setErrorMessage(''), 5000);
+      setMasterCodeInput('');
+    }
+  };
+
+  // Handle view details with master code check
+  const handleViewDetails = (userId: string, userEmail: string) => {
+    // Check if viewing jeanfrancois@legalassist.london's account
+    if (userEmail === 'jeanfrancois@legalassist.london' && currentUser?.email !== 'jeanfrancois@legalassist.london') {
+      // Require master code
+      setPendingUserId(userId);
+      setShowMasterCodeDialog(true);
+    } else {
+      // Navigate directly
+      navigate(`/admin/users/${userId}`);
+    }
+  };
+
   if (!currentUser || !isAdmin()) {
     return (
       <div className="min-h-screen bg-background">
@@ -203,6 +246,56 @@ export default function AdminUserManagementPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+
+      {/* Master Code Dialog */}
+      <Dialog open={showMasterCodeDialog} onOpenChange={setShowMasterCodeDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="font-heading text-2xl flex items-center gap-2">
+              <Lock className="w-6 h-6 text-primary" />
+              Master Code Required
+            </DialogTitle>
+            <DialogDescription className="font-paragraph">
+              Enter the master code to view details for jeanfrancois@legalassist.london's account.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="masterCode" className="font-paragraph">Master Code</Label>
+              <Input
+                id="masterCode"
+                type="password"
+                value={masterCodeInput}
+                onChange={(e) => setMasterCodeInput(e.target.value)}
+                placeholder="Enter master code"
+                className="font-paragraph"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleMasterCodeVerification();
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowMasterCodeDialog(false);
+                setMasterCodeInput('');
+                setPendingUserId(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleMasterCodeVerification}>
+              Verify Code
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
@@ -313,10 +406,13 @@ export default function AdminUserManagementPage() {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => navigate(`/admin/users/${user._id}`)}
+                              onClick={() => handleViewDetails(user._id, user.email)}
                             >
                               <Eye className="w-4 h-4 mr-2" />
                               View Details
+                              {user.email === 'jeanfrancois@legalassist.london' && currentUser?.email !== 'jeanfrancois@legalassist.london' && (
+                                <Lock className="w-3 h-3 ml-2 text-primary" />
+                              )}
                             </Button>
                             
                             {/* Only show toggle for jeanfrancois@legalassist.london */}
