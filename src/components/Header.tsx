@@ -1,12 +1,15 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu, X, LogOut } from 'lucide-react';
 import { useMember } from '@/integrations';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isAuthenticated, member, actions, isLoading } = useMember();
+  const { user, isAuthenticated: isAuthenticatedLocal, logout: logoutLocal } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -61,7 +64,7 @@ export default function Header() {
 
             {!isLoading && (
               <>
-                {isAuthenticated ? (
+                {isAuthenticated || isAuthenticatedLocal ? (
                   <>
                     <Link 
                       to="/client-dashboard" 
@@ -75,10 +78,17 @@ export default function Header() {
                     </Link>
                     <div className="flex items-center gap-4 pl-4 border-l border-secondary/10">
                       <span className="font-paragraph text-sm text-secondary">
-                        {member?.profile?.nickname || member?.contact?.firstName || 'Client'}
+                        {user?.firstName || member?.profile?.nickname || member?.contact?.firstName || 'Client'}
                       </span>
                       <button
-                        onClick={actions.logout}
+                        onClick={() => {
+                          if (isAuthenticatedLocal) {
+                            logoutLocal();
+                            navigate('/');
+                          } else {
+                            actions.logout();
+                          }
+                        }}
                         className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
@@ -164,7 +174,7 @@ export default function Header() {
 
             {!isLoading && (
               <>
-                {isAuthenticated ? (
+                {isAuthenticated || isAuthenticatedLocal ? (
                   <>
                     <Link 
                       to="/client-dashboard" 
@@ -179,7 +189,12 @@ export default function Header() {
                     </Link>
                     <button
                       onClick={() => {
-                        actions.logout();
+                        if (isAuthenticatedLocal) {
+                          logoutLocal();
+                          navigate('/');
+                        } else {
+                          actions.logout();
+                        }
                         setMobileMenuOpen(false);
                       }}
                       className="flex items-center gap-2 font-paragraph text-base py-2 px-3 rounded-lg text-secondary hover:bg-pastelbeige transition-colors w-full"

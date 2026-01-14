@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useMember } from '@/integrations';
-import { MemberProtectedRoute } from '@/components/ui/member-protected-route';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -9,17 +8,43 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { ClientDocuments } from '@/entities';
 import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { getCurrentUser, isAuthenticated } from '@/lib/auth-service';
 
 export default function ClientDashboardPage() {
-  return (
-    <MemberProtectedRoute messageToSignIn="Sign in to access your client dashboard">
-      <ClientDashboardContent />
-    </MemberProtectedRoute>
-  );
+  const navigate = useNavigate();
+  const currentUser = getCurrentUser();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate('/client-login');
+    }
+  }, [navigate]);
+
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <section className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <p className="font-paragraph text-foreground/80">Redirecting to login...</p>
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
+
+  return <ClientDashboardContent currentUser={currentUser} />;
 }
 
-function ClientDashboardContent() {
-  const { member } = useMember();
+interface CurrentUser {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const [documents, setDocuments] = useState<ClientDocuments[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
@@ -38,14 +63,14 @@ function ClientDashboardContent() {
   // Load documents on mount
   useEffect(() => {
     loadDocuments();
-  }, [member?.loginEmail]);
+  }, [currentUser?.email]);
 
   const loadDocuments = async () => {
     setIsLoading(true);
     try {
       const { items } = await BaseCrudService.getAll<ClientDocuments>('clientdocuments');
       // Filter documents for current user
-      const userDocuments = items?.filter(doc => doc.clientEmail === member?.loginEmail) || [];
+      const userDocuments = items?.filter(doc => doc.clientEmail === currentUser?.email) || [];
       setDocuments(userDocuments);
     } catch (error) {
       console.error('Failed to load documents:', error);
@@ -102,7 +127,7 @@ function ClientDashboardContent() {
         documentName: uploadFormData.documentName,
         fileUrl: mockFileUrl,
         uploadDate: new Date(),
-        clientEmail: member?.loginEmail || '',
+        clientEmail: currentUser?.email || '',
         fileType: uploadFormData.file.type,
         fileSize: uploadFormData.file.size,
         documentCategory: uploadFormData.documentCategory,
@@ -163,7 +188,7 @@ function ClientDashboardContent() {
                 Your Client Portal
               </h1>
               <p className="font-paragraph text-lg text-foreground/80">
-                Welcome, {member?.profile?.nickname || member?.contact?.firstName || 'Client'}! Manage your documents and case information securely.
+                Welcome, {currentUser?.firstName || currentUser?.email}! Manage your documents and case information securely.
               </p>
             </div>
           </div>

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useMember } from '@/integrations';
+import { login } from '@/lib/auth-service';
 
 interface LoginFormData {
   email: string;
@@ -14,6 +15,7 @@ interface LoginFormData {
 }
 
 export default function ClientLoginPage() {
+  const navigate = useNavigate();
   const { actions } = useMember();
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
@@ -58,13 +60,22 @@ export default function ClientLoginPage() {
     }
 
     setIsSubmitting(true);
+    setError('');
 
     try {
-      // Use Wix Members authentication
-      // Note: The Wix login action handles authentication via OAuth/redirect flow
-      // Email and password would be handled by Wix's login UI
-      await actions.login();
+      // Call login service to authenticate user
+      const result = await login({
+        email: formData.email,
+        password: formData.password,
+      });
 
+      if (!result.success) {
+        setError(result.message);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Login successful
       setSuccess(true);
       setFormData({
         email: '',
@@ -72,11 +83,12 @@ export default function ClientLoginPage() {
         rememberMe: false,
       });
 
-      // The login action will automatically redirect after successful authentication
-      // The MemberProvider handles the redirect back to the current page
+      // Redirect to dashboard after successful login
+      setTimeout(() => {
+        navigate('/client-dashboard');
+      }, 1500);
     } catch (err) {
       setError('Failed to log in. Please check your email and password and try again.');
-    } finally {
       setIsSubmitting(false);
     }
   };

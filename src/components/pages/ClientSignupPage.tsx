@@ -6,6 +6,7 @@ import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useMember } from '@/integrations';
+import { signup } from '@/lib/auth-service';
 
 interface SignupFormData {
   firstName: string;
@@ -87,12 +88,24 @@ export default function ClientSignupPage() {
     }
 
     setIsSubmitting(true);
+    setError('');
 
     try {
-      // In a real implementation, you would call a backend API to create the account
-      // For now, we'll simulate the signup process
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Call signup service to create account and authenticate user
+      const result = await signup({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      });
 
+      if (!result.success) {
+        setError(result.message);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Account created successfully and user is authenticated
       setSuccess(true);
       setFormData({
         firstName: '',
@@ -103,13 +116,12 @@ export default function ClientSignupPage() {
         agreeToTerms: false,
       });
 
-      // Redirect to login or dashboard after successful signup
+      // Redirect to dashboard after successful signup (user is already logged in)
       setTimeout(() => {
         navigate('/client-dashboard');
-      }, 2000);
+      }, 1500);
     } catch (err) {
       setError('Failed to create account. Please try again.');
-    } finally {
       setIsSubmitting(false);
     }
   };
