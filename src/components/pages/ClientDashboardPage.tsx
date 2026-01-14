@@ -230,8 +230,14 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsLoadingProfile(true);
     try {
       const { items } = await BaseCrudService.getAll<ClientProfile>('clientprofiles');
-      // Find profile for current user (using email as identifier)
-      const userProfile = items?.find(p => p._id === currentUser?.email);
+      // Find profile for current user - check both _id matching email and userAccountId
+      let userProfile = items?.find(p => p._id === currentUser?.email);
+      
+      // If not found by email, try to find by userAccountId
+      if (!userProfile && userAccountId) {
+        userProfile = items?.find(p => p._id === userAccountId);
+      }
+      
       setProfile(userProfile || null);
     } catch (error) {
       console.error('Failed to load profile:', error);
@@ -286,8 +292,11 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsSavingProfile(true);
 
     try {
+      // Use userAccountId if available, otherwise fall back to email
+      const profileId = userAccountId || currentUser?.email || crypto.randomUUID();
+      
       const profileData: ClientProfile = {
-        _id: currentUser?.email || crypto.randomUUID(),
+        _id: profileId,
         firstName: (e.target as any).firstName.value,
         lastName: (e.target as any).lastName.value,
         streetAddress: (e.target as any).streetAddress.value,
@@ -299,13 +308,31 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
         emergencyContactPhone: (e.target as any).emergencyContactPhone.value,
       };
 
+      console.log('Saving profile with ID:', profileId, 'Profile exists:', !!profile);
+
       if (profile) {
+        // Update existing profile
         await BaseCrudService.update('clientprofiles', profileData);
+        console.log('Profile updated successfully');
       } else {
+        // Create new profile
         await BaseCrudService.create('clientprofiles', profileData);
+        console.log('Profile created successfully');
       }
 
-      setProfile(profileData);
+      // Verify the profile was saved by fetching it back
+      const { items } = await BaseCrudService.getAll<ClientProfile>('clientprofiles');
+      const savedProfile = items?.find(p => p._id === profileId);
+      
+      if (!savedProfile) {
+        console.error('Profile save verification failed - profile not found in database');
+        setProfileError('Failed to verify profile save. Please refresh and try again.');
+        setIsSavingProfile(false);
+        return;
+      }
+
+      console.log('Profile verified in database:', savedProfile);
+      setProfile(savedProfile);
       setProfileSuccess(true);
       setTimeout(() => setProfileSuccess(false), 3000);
     } catch (error) {

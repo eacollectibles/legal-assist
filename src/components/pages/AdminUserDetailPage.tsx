@@ -258,22 +258,37 @@ export default function AdminUserDetailPage() {
 
     setIsSaving(true);
     try {
+      const profileData = {
+        _id: userId,
+        ...editedProfile
+      };
+
+      console.log('Saving profile for user:', userId, 'Profile exists:', !!clientProfile);
+
       if (clientProfile) {
         // Update existing profile
-        await BaseCrudService.update<ClientProfiles>('clientprofiles', {
-          _id: userId,
-          ...editedProfile
-        });
-        setClientProfile({ ...clientProfile, ...editedProfile });
+        await BaseCrudService.update<ClientProfiles>('clientprofiles', profileData);
+        console.log('Profile updated successfully');
       } else {
         // Create new profile
-        await BaseCrudService.create('clientprofiles', {
-          _id: userId,
-          ...editedProfile
-        });
-        const newProfile = { _id: userId, ...editedProfile } as ClientProfiles;
-        setClientProfile(newProfile);
+        await BaseCrudService.create('clientprofiles', profileData);
+        console.log('Profile created successfully');
       }
+
+      // Verify the profile was saved by fetching it back
+      const { items: profiles } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      const savedProfile = profiles.find(p => p._id === userId);
+      
+      if (!savedProfile) {
+        console.error('Profile save verification failed - profile not found in database');
+        setErrorMessage('Failed to verify profile save. Please refresh and try again.');
+        setIsSaving(false);
+        return;
+      }
+
+      console.log('Profile verified in database:', savedProfile);
+      setClientProfile(savedProfile);
+      setEditedProfile({ ...savedProfile });
 
       // Log the activity
       await logActivity(
