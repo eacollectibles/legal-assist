@@ -301,31 +301,58 @@ export default function AdminUserManagementPage() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-4 ml-6">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => navigate(`/admin/users/${user._id}`)}
-                          >
-                            <Eye className="w-4 h-4 mr-2" />
-                            View Details
-                          </Button>
-                          
-                          <div className="flex items-center gap-2">
-                            {user.isAdmin ? (
-                              <Shield className="w-5 h-5 text-primary" />
-                            ) : (
-                              <ShieldOff className="w-5 h-5 text-gray-400" />
-                            )}
-                            <span className="font-paragraph text-sm text-foreground/80">
-                              Admin
-                            </span>
-                            <Switch
-                              checked={user.isAdmin}
-                              onCheckedChange={() => handleToggleAdmin(user.email, user.isAdmin)}
-                              disabled={user.email === currentUser.email}
-                            />
+                        <div className="flex flex-col gap-4 ml-6">
+                          <div className="flex items-center gap-3">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => navigate(`/admin/users/${user._id}`)}
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </Button>
+                            
+                            <div className="flex items-center gap-2">
+                              {user.isAdmin ? (
+                                <Shield className="w-5 h-5 text-primary" />
+                              ) : (
+                                <ShieldOff className="w-5 h-5 text-gray-400" />
+                              )}
+                              <span className="font-paragraph text-sm text-foreground/80">
+                                Admin
+                              </span>
+                              <Switch
+                                checked={user.isAdmin}
+                                onCheckedChange={() => handleToggleAdmin(user.email, user.isAdmin)}
+                                disabled={user.email === currentUser.email}
+                              />
+                            </div>
                           </div>
+
+                          {/* Account Actions */}
+                          {user.email !== currentUser.email && (
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDisableAccount(user._id, user.email)}
+                                className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                              >
+                                <UserX className="w-4 h-4 mr-2" />
+                                Disable
+                              </Button>
+                              
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDeleteAccount(user._id, user.email)}
+                                className="border-destructive text-destructive hover:bg-destructive/10"
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Delete
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       </div>
 
