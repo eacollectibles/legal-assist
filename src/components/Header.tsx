@@ -9,7 +9,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isAuthenticated, member, actions, isLoading } = useMember();
-  const { user, isAuthenticated: isAuthenticatedLocal, logout: logoutLocal } = useAuth();
+  const { user, isAuthenticated: isAuthenticatedLocal, isAdmin: userIsAdmin, logout: logoutLocal } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -76,6 +76,18 @@ export default function Header() {
                     >
                       Dashboard
                     </Link>
+                    {userIsAdmin && (
+                      <Link 
+                        to="/admin/users" 
+                        className={`font-paragraph text-base transition-colors ${
+                          isActive('/admin/users') 
+                            ? 'text-primary font-semibold' 
+                            : 'text-secondary hover:text-primary'
+                        }`}
+                      >
+                        User Management
+                      </Link>
+                    )}
                     <div className="flex items-center gap-4 pl-4 border-l border-secondary/10">
                       <span className="font-paragraph text-sm text-secondary">
                         {user?.firstName || member?.profile?.nickname || member?.contact?.firstName || 'Client'}
@@ -187,6 +199,19 @@ export default function Header() {
                     >
                       Dashboard
                     </Link>
+                    {userIsAdmin && (
+                      <Link 
+                        to="/admin/users" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                          isActive('/admin/users') 
+                            ? 'bg-primary text-primary-foreground font-semibold' 
+                            : 'text-secondary hover:bg-pastelbeige'
+                        }`}
+                      >
+                        User Management
+                      </Link>
+                    )}
                     <button
                       onClick={() => {
                         if (isAuthenticatedLocal) {

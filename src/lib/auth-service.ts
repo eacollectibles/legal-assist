@@ -18,6 +18,7 @@ export interface AuthResponse {
     email: string;
     firstName?: string;
     lastName?: string;
+    isAdmin?: boolean;
   };
 }
 
@@ -33,6 +34,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       password: credentials.password, // In production, never store plain passwords
+      isAdmin: false, // New users are not admins by default
       createdAt: new Date().toISOString(),
     };
 
@@ -56,6 +58,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       email: credentials.email,
       firstName: credentials.firstName,
       lastName: credentials.lastName,
+      isAdmin: false,
     }));
 
     return {
@@ -66,6 +69,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
         email: credentials.email,
         firstName: credentials.firstName,
         lastName: credentials.lastName,
+        isAdmin: false,
       },
     };
   } catch (error) {
@@ -98,6 +102,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      isAdmin: user.isAdmin || false,
     }));
 
     return {
@@ -108,6 +113,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        isAdmin: user.isAdmin || false,
       },
     };
   } catch (error) {
@@ -157,4 +163,77 @@ export function getAuthToken(): string | null {
  */
 function generateToken(email: string): string {
   return btoa(`${email}:${Date.now()}:${Math.random()}`);
+}
+
+/**
+ * Check if the current user is an admin
+ */
+export function isAdmin(): boolean {
+  try {
+    const user = getCurrentUser();
+    return user?.isAdmin === true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Set admin status for a user (admin-only function)
+ * In production, this would be a protected backend endpoint
+ */
+export function setAdminStatus(email: string, isAdmin: boolean): boolean {
+  try {
+    // Only admins can set admin status
+    if (!isAdmin() && email !== getCurrentUser()?.email) {
+      console.error('Unauthorized: Only admins can set admin status');
+      return false;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIndex = users.findIndex((u: any) => u.email === email);
+
+    if (userIndex === -1) {
+      console.error('User not found');
+      return false;
+    }
+
+    users[userIndex].isAdmin = isAdmin;
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // Update current user if it's the same user
+    const currentUser = getCurrentUser();
+    if (currentUser?.email === email) {
+      currentUser.isAdmin = isAdmin;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Failed to set admin status:', error);
+    return false;
+  }
+}
+
+/**
+ * Get all users (admin-only function)
+ */
+export function getAllUsers(): any[] {
+  try {
+    if (!isAdmin()) {
+      console.error('Unauthorized: Only admins can view all users');
+      return [];
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    // Don't return passwords
+    return users.map((u: any) => ({
+      email: u.email,
+      firstName: u.firstName,
+      lastName: u.lastName,
+      isAdmin: u.isAdmin || false,
+      createdAt: u.createdAt,
+    }));
+  } catch {
+    return [];
+  }
 }

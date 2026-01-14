@@ -9,7 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send } from 'lucide-react';
-import { getCurrentUser, isAuthenticated } from '@/lib/auth-service';
+import { getCurrentUser, isAuthenticated, isAdmin } from '@/lib/auth-service';
 
 export default function ClientDashboardPage() {
   const navigate = useNavigate();
@@ -43,6 +43,7 @@ interface CurrentUser {
   email: string;
   firstName?: string;
   lastName?: string;
+  isAdmin?: boolean;
 }
 
 interface ClientDocument {
@@ -452,9 +453,16 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Your Client Portal
-              </h1>
+              <div className="flex items-center gap-4 mb-6">
+                <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground">
+                  Your Client Portal
+                </h1>
+                {isAdmin() && (
+                  <span className="px-4 py-2 bg-primary text-white font-paragraph font-semibold rounded-lg text-sm">
+                    Admin
+                  </span>
+                )}
+              </div>
               <p className="font-paragraph text-lg text-foreground/80">
                 Welcome, {currentUser?.firstName || currentUser?.email}! Manage your profile, documents, and payments securely.
               </p>

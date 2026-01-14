@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getCurrentUser, isAuthenticated, logout as logoutService } from '@/lib/auth-service';
+import { getCurrentUser, isAuthenticated, logout as logoutService, isAdmin } from '@/lib/auth-service';
 
 export interface AuthUser {
   email: string;
   firstName?: string;
   lastName?: string;
+  isAdmin?: boolean;
 }
 
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userIsAdmin, setUserIsAdmin] = useState(false);
 
   // Initialize auth state on mount
   useEffect(() => {
@@ -18,6 +20,7 @@ export function useAuth() {
     if (currentUser) {
       setUser(currentUser);
       setIsAuthenticated(true);
+      setUserIsAdmin(isAdmin());
     }
     setIsLoading(false);
   }, []);
@@ -26,12 +29,14 @@ export function useAuth() {
     logoutService();
     setUser(null);
     setIsAuthenticated(false);
+    setUserIsAdmin(false);
   }, []);
 
   return {
     user,
     isLoading,
     isAuthenticated,
+    isAdmin: userIsAdmin,
     logout,
   };
 }
