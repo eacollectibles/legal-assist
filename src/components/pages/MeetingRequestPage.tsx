@@ -8,7 +8,24 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Lock } from 'lucide-react';
 import { generateMeetingLink, generateZoomUrl, generateConfirmationToken } from '@/lib/meeting-utils';
-import { MeetingRequests } from '@/entities';
+
+interface MeetingRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  clientName?: string;
+  clientEmail?: string;
+  clientPhone?: string;
+  preferredDate?: Date | string;
+  preferredTime?: any;
+  serviceType?: string;
+  clientNotes?: string;
+  status?: string;
+  approvalNotes?: string;
+  meetingLink?: string;
+  zoomUrl?: string;
+  confirmationToken?: string;
+}
 
 interface MeetingRequestFormData {
   clientName: string;

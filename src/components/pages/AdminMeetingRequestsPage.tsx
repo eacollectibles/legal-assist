@@ -6,8 +6,25 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Clock, X, Lock } from 'lucide-react';
-import { MeetingRequests } from '@/entities';
 import { sendStatusNotificationEmails } from '@/lib/email-service';
+
+interface MeetingRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  clientName?: string;
+  clientEmail?: string;
+  clientPhone?: string;
+  preferredDate?: Date | string;
+  preferredTime?: any;
+  serviceType?: string;
+  clientNotes?: string;
+  status?: string;
+  approvalNotes?: string;
+  meetingLink?: string;
+  zoomUrl?: string;
+  confirmationToken?: string;
+}
 
 export default function AdminMeetingRequestsPage() {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);

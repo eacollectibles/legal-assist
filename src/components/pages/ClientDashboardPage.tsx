@@ -654,7 +654,6 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
             )}
           </div>
         </div>
-              </div>
             </TabsContent>
 
             {/* Profile Tab */}
