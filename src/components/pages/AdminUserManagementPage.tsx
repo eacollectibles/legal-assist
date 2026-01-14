@@ -369,35 +369,6 @@ export default function AdminUserManagementPage() {
               )}
             </CardContent>
           </Card>
-
-          {/* Info Card */}
-          <Card className="mt-8 bg-pastelbeige/20 border-pastelbeige">
-            <CardHeader>
-              <CardTitle className="font-heading text-xl flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-primary" />
-                About Admin Privileges
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 font-paragraph text-foreground/80">
-                <p>
-                  <strong>Admin users have access to:</strong>
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>View and manage all client documents</li>
-                  <li>Access all client personal information and profiles</li>
-                  <li>View and respond to all messages</li>
-                  <li>Manage payment records and billing information</li>
-                  <li>Grant or revoke admin privileges for other users</li>
-                  <li>Access admin-only pages and features</li>
-                </ul>
-                <p className="mt-4 text-sm text-foreground/60">
-                  <strong>Note:</strong> Admin privileges should only be granted to trusted staff members.
-                  Regular users can only access their own information.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
