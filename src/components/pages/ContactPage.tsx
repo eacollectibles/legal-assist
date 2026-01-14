@@ -453,36 +453,6 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
 
-      {/* HERO SECTION */}
-      <section className="relative w-full min-h-[70vh] flex flex-col justify-center py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image 
-            src="https://static.wixstatic.com/media/99571b_116291d834424659a3dd7ba8988f92f3~mv2.png?originWidth=1920&originHeight=1024"
-            alt="Contact us - Professional legal consultation"
-            className="w-full h-full object-cover"
-            width={1920}
-          />
-          <div className="absolute inset-0 bg-secondary/20" />
-        </div>
-
-        <div className="relative z-10 w-full max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="max-w-3xl">
-            <AnimatedElement animation="fade-up" delay={200}>
-              <h1 className="font-heading text-6xl md:text-7xl lg:text-8xl text-white drop-shadow-lg leading-[0.9] tracking-tight mb-6">
-                Get in <br/>
-                <span className="text-pastelbeige italic">Touch</span>
-              </h1>
-            </AnimatedElement>
-
-            <AnimatedElement animation="fade-up" delay={400}>
-              <p className="font-paragraph text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl">
-                We're here to help. Reach out through any of these convenient methods and we'll get back to you promptly.
-              </p>
-            </AnimatedElement>
-          </div>
-        </div>
-      </section>
-
       {/* CONTACT METHODS SECTION */}
       <section className="py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
