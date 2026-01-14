@@ -509,15 +509,19 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsUploading(true);
 
     try {
-      // In a real implementation, you would upload the file to a storage service
-      // and get back a URL. For now, we'll create a mock URL.
-      const mockFileUrl = `https://storage.example.com/${uploadFormData.file.name}`;
+      // Convert file to base64 data URL for storage
+      const fileDataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(uploadFormData.file!);
+      });
 
       const documentId = crypto.randomUUID();
       const newDocument: ClientDocument = {
         _id: documentId,
         documentName: uploadFormData.documentName,
-        fileUrl: mockFileUrl,
+        fileUrl: fileDataUrl,
         uploadDate: new Date(),
         clientEmail: currentUser?.email || '',
         fileType: uploadFormData.file.type,
@@ -876,12 +880,23 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                       <div className="flex gap-2 ml-4">
                         <a
                           href={doc.fileUrl}
-                          download
+                          download={doc.documentName}
                           className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
                           title="Download document"
                         >
                           <Download className="w-5 h-5" />
                         </a>
+                        <button
+                          onClick={() => {
+                            if (doc.fileUrl) {
+                              window.open(doc.fileUrl, '_blank');
+                            }
+                          }}
+                          className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                          title="View document"
+                        >
+                          <FileText className="w-5 h-5" />
+                        </button>
                         <button
                           onClick={() => handleDeleteDocument(doc._id)}
                           className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"

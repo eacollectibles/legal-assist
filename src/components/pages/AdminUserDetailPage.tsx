@@ -345,15 +345,19 @@ export default function AdminUserDetailPage() {
     setIsUploading(true);
 
     try {
-      // In a real implementation, you would upload the file to a storage service
-      // and get back a URL. For now, we'll create a mock URL.
-      const mockFileUrl = `https://storage.example.com/${uploadFormData.file.name}`;
+      // Convert file to base64 data URL for storage
+      const fileDataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(uploadFormData.file!);
+      });
 
       const documentId = crypto.randomUUID();
       const newDocument: ClientDocuments = {
         _id: documentId,
         documentName: uploadFormData.documentName,
-        fileUrl: mockFileUrl,
+        fileUrl: fileDataUrl,
         uploadDate: new Date(),
         clientEmail: userAccount.email || '',
         fileType: uploadFormData.file.type,
@@ -934,15 +938,24 @@ export default function AdminUserDetailPage() {
                               )}
                             </div>
                             {doc.fileUrl && (
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => window.open(doc.fileUrl, '_blank')}
-                                className="ml-4"
-                              >
-                                <ExternalLink className="w-4 h-4 mr-2" />
-                                View
-                              </Button>
+                              <div className="flex gap-2 ml-4">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => window.open(doc.fileUrl, '_blank')}
+                                >
+                                  <ExternalLink className="w-4 h-4 mr-2" />
+                                  View
+                                </Button>
+                                <a
+                                  href={doc.fileUrl}
+                                  download={doc.documentName}
+                                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 px-3"
+                                >
+                                  <Download className="w-4 h-4 mr-2" />
+                                  Download
+                                </a>
+                              </div>
                             )}
                           </div>
                         </div>
