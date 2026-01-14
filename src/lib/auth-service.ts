@@ -21,6 +21,7 @@ export interface AuthResponse {
     firstName?: string;
     lastName?: string;
     isAdmin?: boolean;
+    clientId?: string;
   };
 }
 
@@ -33,6 +34,7 @@ interface UserAccount {
   isAdmin?: boolean;
   lastLoginDate?: Date | string;
   accountStatus?: string;
+  clientId?: string;
 }
 
 /**
@@ -42,6 +44,15 @@ interface UserAccount {
 function hashPassword(password: string): string {
   // Simple hash for demo - in production use bcrypt
   return btoa(password + 'salt_key_2026');
+}
+
+/**
+ * Generate a random client ID number
+ * Format: CL-XXXXXX (6 random digits)
+ */
+function generateClientId(): string {
+  const randomNumber = Math.floor(100000 + Math.random() * 900000);
+  return `CL-${randomNumber}`;
 }
 
 /**
@@ -61,6 +72,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
 
     // Create new user account with proper data structure
     const userId = crypto.randomUUID();
+    const clientId = generateClientId(); // Generate client ID for non-admin users
     const userData: UserAccount = {
       _id: userId,
       email: credentials.email,
@@ -70,6 +82,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       isAdmin: false,
       accountStatus: 'active',
       lastLoginDate: new Date().toISOString(),
+      clientId: clientId,
     };
 
     console.log('Creating user account:', { email: credentials.email, userId });
@@ -101,6 +114,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       isAdmin: false,
+      clientId: clientId,
     }));
 
     return {
@@ -112,6 +126,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
         firstName: credentials.firstName,
         lastName: credentials.lastName,
         isAdmin: false,
+        clientId: clientId,
       },
     };
   } catch (error) {
@@ -172,6 +187,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       firstName: user.firstName,
       lastName: user.lastName,
       isAdmin: isAdminStatus,
+      clientId: user.clientId,
     }));
 
     return {
@@ -183,6 +199,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
         firstName: user.firstName,
         lastName: user.lastName,
         isAdmin: isAdminStatus,
+        clientId: user.clientId,
       },
     };
   } catch (error) {
@@ -307,6 +324,7 @@ export async function getAllUsers(): Promise<any[]> {
       createdAt: u._createdDate,
       accountStatus: u.accountStatus,
       lastLoginDate: u.lastLoginDate,
+      clientId: u.clientId,
     }));
   } catch (error) {
     console.error('Failed to get all users:', error);

@@ -56,6 +56,7 @@ interface CurrentUser {
   firstName?: string;
   lastName?: string;
   isAdmin?: boolean;
+  clientId?: string;
 }
 
 interface ClientDocument {
@@ -561,6 +562,11 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
               <p className="font-paragraph text-lg text-foreground/80">
                 Welcome, {currentUser?.firstName || currentUser?.email}! Manage your profile, documents, and payments securely.
               </p>
+              {currentUser?.clientId && !currentUser?.isAdmin && (
+                <p className="font-paragraph text-base text-foreground/70 mt-2">
+                  Client ID: <span className="font-semibold text-primary">{currentUser.clientId}</span>
+                </p>
+              )}
             </div>
           </div>
         </div>
