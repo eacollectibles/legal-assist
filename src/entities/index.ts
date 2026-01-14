@@ -230,6 +230,8 @@ export interface UserAccounts {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
   email?: string;
   /** @wixFieldType text */
   passwordHash?: string;

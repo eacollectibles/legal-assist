@@ -7,7 +7,9 @@ import { Switch } from '@/components/ui/switch';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin, getAllUsers, setAdminStatus } from '@/lib/auth-service';
-import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye } from 'lucide-react';
+import { BaseCrudService } from '@/integrations';
+import { Messages } from '@/entities';
+import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare } from 'lucide-react';
 
 interface User {
   _id: string;
@@ -16,6 +18,7 @@ interface User {
   lastName?: string;
   isAdmin: boolean;
   createdAt: string;
+  unreadMessageCount?: number;
 }
 
 export default function AdminUserManagementPage() {
@@ -39,7 +42,25 @@ export default function AdminUserManagementPage() {
     setIsLoading(true);
     try {
       const allUsers = await getAllUsers();
-      setUsers(allUsers);
+      
+      // Load all messages to count unread messages per user
+      const { items: allMessages } = await BaseCrudService.getAll<Messages>('messages');
+      
+      // Count unread messages for each user (messages sent by user to admin that are unread)
+      const usersWithUnreadCounts = allUsers.map(user => {
+        const unreadCount = allMessages.filter(
+          msg => msg.senderEmail === user.email && 
+                 msg.recipientEmail === 'admin@legalservices.com' && 
+                 !msg.isRead
+        ).length;
+        
+        return {
+          ...user,
+          unreadMessageCount: unreadCount
+        };
+      });
+      
+      setUsers(usersWithUnreadCounts);
     } catch (error) {
       console.error('Failed to load users:', error);
       setErrorMessage('Failed to load users. Please try again.');
@@ -163,6 +184,12 @@ export default function AdminUserManagementPage() {
                             {user.email === currentUser.email && (
                               <Badge variant="outline" className="border-primary text-primary">
                                 You
+                              </Badge>
+                            )}
+                            {user.unreadMessageCount && user.unreadMessageCount > 0 && (
+                              <Badge className="bg-red-500 text-white flex items-center gap-1">
+                                <MessageSquare className="w-3 h-3" />
+                                {user.unreadMessageCount} unread
                               </Badge>
                             )}
                           </div>

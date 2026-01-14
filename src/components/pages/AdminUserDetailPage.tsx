@@ -33,7 +33,8 @@ import {
   Upload,
   Plus,
   History,
-  Clock
+  Clock,
+  Send
 } from 'lucide-react';
 
 interface ActivityLog {
@@ -946,52 +947,154 @@ export default function AdminUserDetailPage() {
                     Messages
                   </CardTitle>
                   <CardDescription className="font-paragraph">
-                    View message history for this user
+                    View message history and send messages to this user
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {messages.length === 0 ? (
-                    <div className="bg-gray-50 rounded-lg p-12 text-center">
-                      <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <p className="font-paragraph text-foreground/80">No messages found for this user.</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {messages.map((msg) => (
-                        <div
-                          key={msg._id}
-                          className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                        >
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="flex items-center gap-3">
-                              <MessageSquare className="w-5 h-5 text-primary" />
-                              <div>
-                                <p className="font-heading font-semibold text-foreground">
-                                  {msg.senderName || msg.senderEmail}
-                                </p>
-                                <p className="font-paragraph text-sm text-foreground/60">
-                                  To: {msg.recipientEmail}
+                  {/* Send Message Form */}
+                  <div className="mb-8 bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige">
+                    <h3 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                      <Send className="w-5 h-5" />
+                      Send Message to User
+                    </h3>
+                    
+                    <form onSubmit={async (e) => {
+                      e.preventDefault();
+                      if (!userAccount?.email) return;
+                      
+                      const messageContent = (e.target as any).messageContent.value;
+                      if (!messageContent.trim()) {
+                        setErrorMessage('Please enter a message');
+                        setTimeout(() => setErrorMessage(''), 5000);
+                        return;
+                      }
+
+                      setIsSaving(true);
+                      try {
+                        // Find existing conversation or create new one
+                        const existingConversation = messages.find(
+                          msg => msg.senderEmail === userAccount.email || msg.recipientEmail === userAccount.email
+                        );
+                        const conversationId = existingConversation?.conversationId || crypto.randomUUID();
+
+                        const messageData: Messages = {
+                          _id: crypto.randomUUID(),
+                          senderEmail: 'admin@legalservices.com',
+                          senderName: 'Admin Team',
+                          recipientEmail: userAccount.email,
+                          messageContent: messageContent,
+                          sentDate: new Date(),
+                          isRead: false,
+                          conversationId: conversationId,
+                        };
+
+                        await BaseCrudService.create('messages', messageData);
+                        setMessages(prev => [messageData, ...prev]);
+                        
+                        // Log the activity
+                        await logActivity(
+                          'message_sent',
+                          `Admin sent a message to user`,
+                          messageData._id
+                        );
+
+                        (e.target as any).reset();
+                        setSuccessMessage('Message sent successfully');
+                        setTimeout(() => setSuccessMessage(''), 5000);
+                      } catch (error) {
+                        console.error('Failed to send message:', error);
+                        setErrorMessage('Failed to send message. Please try again.');
+                        setTimeout(() => setErrorMessage(''), 5000);
+                      } finally {
+                        setIsSaving(false);
+                      }
+                    }} className="space-y-4">
+                      <div>
+                        <Label htmlFor="messageContent" className="font-paragraph">Message *</Label>
+                        <textarea
+                          id="messageContent"
+                          name="messageContent"
+                          placeholder="Type your message here..."
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg font-paragraph text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                          rows={4}
+                          required
+                        />
+                      </div>
+
+                      <Button
+                        type="submit"
+                        disabled={isSaving}
+                        className="bg-primary hover:bg-primary/90 text-white flex items-center gap-2"
+                      >
+                        {isSaving ? (
+                          <>
+                            <LoadingSpinner />
+                            <span className="ml-2">Sending...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            Send Message
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </div>
+
+                  {/* Message History */}
+                  <div className="border-t border-gray-200 pt-6">
+                    <h3 className="font-heading text-lg font-bold text-foreground mb-4">Message History</h3>
+                    
+                    {messages.length === 0 ? (
+                      <div className="bg-gray-50 rounded-lg p-12 text-center">
+                        <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                        <p className="font-paragraph text-foreground/80">No messages found for this user.</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {messages.map((msg) => {
+                          const isFromAdmin = msg.senderEmail === 'admin@legalservices.com';
+                          return (
+                            <div
+                              key={msg._id}
+                              className={`rounded-lg p-4 ${
+                                isFromAdmin
+                                  ? 'bg-primary/5 border border-primary/20 ml-8'
+                                  : 'bg-white border border-gray-200 mr-8'
+                              }`}
+                            >
+                              <div className="flex items-start justify-between mb-3">
+                                <div className="flex items-center gap-3">
+                                  <MessageSquare className="w-5 h-5 text-primary" />
+                                  <div>
+                                    <p className="font-heading font-semibold text-foreground">
+                                      {isFromAdmin ? 'Admin Team' : (msg.senderName || msg.senderEmail)}
+                                    </p>
+                                    <p className="font-paragraph text-sm text-foreground/60">
+                                      To: {msg.recipientEmail}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <p className="font-paragraph text-sm text-foreground/60">
+                                    {msg.sentDate ? new Date(msg.sentDate).toLocaleString() : 'N/A'}
+                                  </p>
+                                  {!msg.isRead && !isFromAdmin && (
+                                    <Badge className="mt-1 bg-primary text-white">Unread</Badge>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 rounded p-3">
+                                <p className="font-paragraph text-foreground whitespace-pre-wrap">
+                                  {msg.messageContent}
                                 </p>
                               </div>
                             </div>
-                            <div className="text-right">
-                              <p className="font-paragraph text-sm text-foreground/60">
-                                {msg.sentDate ? new Date(msg.sentDate).toLocaleDateString() : 'N/A'}
-                              </p>
-                              {!msg.isRead && (
-                                <Badge className="mt-1 bg-primary text-white">Unread</Badge>
-                              )}
-                            </div>
-                          </div>
-                          <div className="bg-gray-50 rounded p-3">
-                            <p className="font-paragraph text-foreground whitespace-pre-wrap">
-                              {msg.messageContent}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

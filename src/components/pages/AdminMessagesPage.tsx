@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User } from 'lucide-react';
+import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User, Plus } from 'lucide-react';
 
 interface Message {
   _id: string;
@@ -38,6 +39,11 @@ export default function AdminMessagesPage() {
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // New message states
+  const [showNewMessageForm, setShowNewMessageForm] = useState(false);
+  const [newMessageEmail, setNewMessageEmail] = useState('');
+  const [newMessageContent, setNewMessageContent] = useState('');
 
   useEffect(() => {
     loadMessages();
@@ -179,6 +185,54 @@ export default function AdminMessagesPage() {
     }));
   };
 
+  const handleSendNewMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSendError('');
+
+    if (!newMessageEmail.trim() || !newMessageContent.trim()) {
+      setSendError('Please enter both email and message');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newMessageEmail)) {
+      setSendError('Please enter a valid email address');
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      const conversationId = crypto.randomUUID();
+      const messageData: Message = {
+        _id: crypto.randomUUID(),
+        senderEmail: 'admin@legalservices.com',
+        senderName: 'Admin Team',
+        recipientEmail: newMessageEmail,
+        messageContent: newMessageContent,
+        sentDate: new Date(),
+        isRead: false,
+        conversationId: conversationId,
+      };
+
+      await BaseCrudService.create('messages', messageData);
+
+      setMessages(prev => [messageData, ...prev]);
+      setNewMessageEmail('');
+      setNewMessageContent('');
+      setShowNewMessageForm(false);
+      setSendSuccess(true);
+
+      setTimeout(() => setSendSuccess(false), 3000);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      setSendError('Failed to send message. Please try again.');
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   const selectedConv = conversations.find(c => c.conversationId === selectedConversation);
 
   const filteredConversations = conversations.filter(conv =>
@@ -212,13 +266,81 @@ export default function AdminMessagesPage() {
       {/* Main Content */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          {/* New Message Button */}
+          <div className="mb-6">
+            <Button
+              onClick={() => setShowNewMessageForm(!showNewMessageForm)}
+              className="bg-primary hover:bg-primary/90 text-white flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              {showNewMessageForm ? 'Cancel New Message' : 'New Message to User'}
+            </Button>
+          </div>
+
+          {/* New Message Form */}
+          {showNewMessageForm && (
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="font-heading text-xl">Send New Message to User</CardTitle>
+                <CardDescription className="font-paragraph">
+                  Start a new conversation with a client
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSendNewMessage} className="space-y-4">
+                  <div>
+                    <Label htmlFor="newMessageEmail" className="font-paragraph">Client Email *</Label>
+                    <Input
+                      id="newMessageEmail"
+                      type="email"
+                      value={newMessageEmail}
+                      onChange={(e) => setNewMessageEmail(e.target.value)}
+                      placeholder="client@example.com"
+                      className="border-gray-300"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="newMessageContent" className="font-paragraph">Message *</Label>
+                    <textarea
+                      id="newMessageContent"
+                      value={newMessageContent}
+                      onChange={(e) => setNewMessageContent(e.target.value)}
+                      placeholder="Type your message here..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg font-paragraph text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                      rows={5}
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isSending}
+                    className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 flex items-center gap-2"
+                  >
+                    <Send className="w-4 h-4" />
+                    {isSending ? 'Sending...' : 'Send Message'}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          )}
+
           {sendSuccess && (
             <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
               <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-heading font-bold text-green-900 mb-1">Reply Sent!</h3>
+                <h3 className="font-heading font-bold text-green-900 mb-1">Message Sent!</h3>
                 <p className="font-paragraph text-green-800">Your message has been sent to the client.</p>
               </div>
+            </div>
+          )}
+
+          {sendError && (
+            <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="font-paragraph text-red-800">{sendError}</p>
             </div>
           )}
 
