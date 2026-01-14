@@ -33,6 +33,7 @@ export default function ClientSignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [showSignupForm, setShowSignupForm] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -134,10 +135,39 @@ export default function ClientSignupPage() {
       {/* Signup Form Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Form */}
-            <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="space-y-6">
+          {!showSignupForm ? (
+            // Initial state: Show buttons in the middle
+            <div className="flex flex-col items-center justify-center min-h-[400px]">
+              <div className="text-center mb-12">
+                <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
+                  Get Started Today
+                </h2>
+                <p className="font-paragraph text-lg text-foreground/80 max-w-2xl">
+                  Choose an option below to access your secure client portal.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <Button
+                  onClick={() => setShowSignupForm(true)}
+                  className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 min-w-[200px]"
+                >
+                  Create an Account
+                </Button>
+                <Link to="/client-login" className="w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    className="w-full border-primary text-primary hover:bg-primary/5 font-semibold py-3 px-8"
+                  >
+                    Login
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            // Form visible state
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              <div className="lg:col-span-2">
+                <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Success Message */}
                 {success && (
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
@@ -292,25 +322,11 @@ export default function ClientSignupPage() {
                   Already have an account? <Link to="/client-login" className="text-primary hover:underline">Sign in here</Link>
                 </p>
               </form>
-            </div>
+              </div>
 
-            {/* Sidebar Info */}
-            <div className="lg:col-span-1">
+              {/* Sidebar Info */}
+              <div className="lg:col-span-1">
               <div className="bg-pastelbeige/20 rounded-lg p-8 border border-pastelbeige sticky top-8">
-                {/* Action Buttons */}
-                <div className="flex flex-col gap-3 mb-8">
-                  <Link to="/client-signup">
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3">
-                      Create an Account
-                    </Button>
-                  </Link>
-                  <Link to="/client-login">
-                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/5 font-semibold py-3">
-                      Login
-                    </Button>
-                  </Link>
-                </div>
-
                 <h3 className="font-heading text-2xl font-bold text-foreground mb-6">
                   Why Create an Account?
                 </h3>
@@ -357,9 +373,18 @@ export default function ClientSignupPage() {
                     <strong>Need help?</strong> Contact our support team at <a href="mailto:support@legalassist.com" className="text-primary hover:underline">support@legalassist.com</a>
                   </p>
                 </div>
+
+                <Button
+                  onClick={() => setShowSignupForm(false)}
+                  variant="outline"
+                  className="w-full mt-8 border-gray-300 text-foreground hover:bg-gray-50"
+                >
+                  Back
+                </Button>
               </div>
             </div>
           </div>
+          )}
         </div>
       </section>
 
