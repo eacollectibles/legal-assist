@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
+import { useMember } from '@/integrations';
 
 export default function Header() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated, member, actions, isLoading } = useMember();
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -57,12 +59,55 @@ export default function Header() {
               Services
             </Link>
 
-            <Link 
-              to="/contact" 
-              className="bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
-            >
-              Get Started
-            </Link>
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <>
+                    <Link 
+                      to="/client-dashboard" 
+                      className={`font-paragraph text-base transition-colors ${
+                        isActive('/client-dashboard') 
+                          ? 'text-primary font-semibold' 
+                          : 'text-secondary hover:text-primary'
+                      }`}
+                    >
+                      Dashboard
+                    </Link>
+                    <div className="flex items-center gap-4 pl-4 border-l border-secondary/10">
+                      <span className="font-paragraph text-sm text-secondary">
+                        {member?.profile?.nickname || member?.contact?.firstName || 'Client'}
+                      </span>
+                      <button
+                        onClick={actions.logout}
+                        className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Link 
+                      to="/client-signup" 
+                      className={`font-paragraph text-base transition-colors ${
+                        isActive('/client-signup') 
+                          ? 'text-primary font-semibold' 
+                          : 'text-secondary hover:text-primary'
+                      }`}
+                    >
+                      Client Portal
+                    </Link>
+                    <Link 
+                      to="/contact" 
+                      className="bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
+              </>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -117,13 +162,56 @@ export default function Header() {
               Services
             </Link>
 
-            <Link 
-              to="/contact" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="bg-primary text-primary-foreground font-paragraph px-3 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95 text-center"
-            >
-              Get Started
-            </Link>
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <>
+                    <Link 
+                      to="/client-dashboard" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                        isActive('/client-dashboard') 
+                          ? 'bg-primary text-primary-foreground font-semibold' 
+                          : 'text-secondary hover:bg-pastelbeige'
+                      }`}
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={() => {
+                        actions.logout();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 font-paragraph text-base py-2 px-3 rounded-lg text-secondary hover:bg-pastelbeige transition-colors w-full"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link 
+                      to="/client-signup" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                        isActive('/client-signup') 
+                          ? 'bg-primary text-primary-foreground font-semibold' 
+                          : 'text-secondary hover:bg-pastelbeige'
+                      }`}
+                    >
+                      Client Portal
+                    </Link>
+                    <Link 
+                      to="/contact" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="bg-primary text-primary-foreground font-paragraph px-3 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95 text-center"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
+              </>
+            )}
           </nav>
         )}
       </div>

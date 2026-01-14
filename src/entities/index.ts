@@ -25,6 +25,43 @@ export interface Bookings {
   serviceType?: string;
   /** @wixFieldType text */
   clientNotes?: string;
+  /** @wixFieldType text */
+  status?: 'pending' | 'confirmed' | 'approved' | 'rejected' | 'rescheduled' | 'cancelled';
+  /** @wixFieldType text */
+  approvalNotes?: string;
+  /** @wixFieldType text */
+  meetingLink?: string;
+  /** @wixFieldType text */
+  zoomUrl?: string;
+  /** @wixFieldType text */
+  confirmationToken?: string;
+}
+
+
+/**
+ * Collection ID: clientdocuments
+ * Interface for ClientDocuments
+ */
+export interface ClientDocuments {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  documentName?: string;
+  /** @wixFieldType url */
+  fileUrl?: string;
+  /** @wixFieldType datetime */
+  uploadDate?: Date | string;
+  /** @wixFieldType text */
+  clientEmail?: string;
+  /** @wixFieldType text */
+  fileType?: string;
+  /** @wixFieldType number */
+  fileSize?: number;
+  /** @wixFieldType text */
+  documentCategory?: string;
+  /** @wixFieldType text */
+  notes?: string;
 }
 
 
@@ -66,4 +103,38 @@ export interface LegalServiceCategories {
   categoryImage?: string;
   /** @wixFieldType boolean */
   isCurrentlyOffered?: boolean;
+}
+
+/**
+ * Collection ID: meetingrequests
+ * Interface for MeetingRequests
+ */
+export interface MeetingRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientName?: string;
+  /** @wixFieldType text */
+  clientEmail?: string;
+  /** @wixFieldType text */
+  clientPhone?: string;
+  /** @wixFieldType date */
+  preferredDate?: Date | string;
+  /** @wixFieldType time */
+  preferredTime?: any;
+  /** @wixFieldType text */
+  serviceType?: string;
+  /** @wixFieldType text */
+  clientNotes?: string;
+  /** @wixFieldType text */
+  status?: 'pending' | 'approved' | 'rejected';
+  /** @wixFieldType text */
+  approvalNotes?: string;
+  /** @wixFieldType text */
+  meetingLink?: string;
+  /** @wixFieldType text */
+  zoomUrl?: string;
+  /** @wixFieldType text */
+  confirmationToken?: string;
 }
