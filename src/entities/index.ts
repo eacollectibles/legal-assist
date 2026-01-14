@@ -126,6 +126,31 @@ export interface LegalServiceCategories {
 
 
 /**
+ * Collection ID: messages
+ * Interface for Messages
+ */
+export interface Messages {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  senderEmail?: string;
+  /** @wixFieldType text */
+  senderName?: string;
+  /** @wixFieldType text */
+  recipientEmail?: string;
+  /** @wixFieldType text */
+  messageContent?: string;
+  /** @wixFieldType datetime */
+  sentDate?: Date | string;
+  /** @wixFieldType boolean */
+  isRead?: boolean;
+  /** @wixFieldType text */
+  conversationId?: string;
+}
+
+
+/**
  * Collection ID: paymentrecords
  * Interface for PaymentRecords
  */

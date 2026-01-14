@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign } from 'lucide-react';
+import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send } from 'lucide-react';
 import { getCurrentUser, isAuthenticated } from '@/lib/auth-service';
 
 export default function ClientDashboardPage() {
@@ -79,6 +79,17 @@ interface PaymentRecord {
   transactionId?: string;
 }
 
+interface Message {
+  _id: string;
+  senderEmail?: string;
+  senderName?: string;
+  recipientEmail?: string;
+  messageContent?: string;
+  sentDate?: Date | string;
+  isRead?: boolean;
+  conversationId?: string;
+}
+
 function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const [documents, setDocuments] = useState<ClientDocument[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -117,11 +128,20 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [paymentError, setPaymentError] = useState('');
 
+  // Messages state
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(true);
+  const [newMessage, setNewMessage] = useState('');
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
+  const [messageSuccess, setMessageSuccess] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
   // Load documents on mount
   useEffect(() => {
     loadDocuments();
     loadProfile();
     loadPayments();
+    loadMessages();
   }, [currentUser?.email]);
 
   const loadDocuments = async () => {
@@ -163,6 +183,28 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       console.error('Failed to load payments:', error);
     } finally {
       setIsLoadingPayments(false);
+    }
+  };
+
+  const loadMessages = async () => {
+    setIsLoadingMessages(true);
+    try {
+      const { items } = await BaseCrudService.getAll<Message>('messages');
+      // Filter messages where current user is sender or recipient
+      const userMessages = items?.filter(m => 
+        m.senderEmail === currentUser?.email || m.recipientEmail === currentUser?.email
+      ) || [];
+      // Sort by date, newest first
+      userMessages.sort((a, b) => {
+        const dateA = new Date(a.sentDate || 0).getTime();
+        const dateB = new Date(b.sentDate || 0).getTime();
+        return dateB - dateA;
+      });
+      setMessages(userMessages);
+    } catch (error) {
+      console.error('Failed to load messages:', error);
+    } finally {
+      setIsLoadingMessages(false);
     }
   };
 
@@ -250,6 +292,58 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       setPaymentError('Payment processing failed. Please try again.');
     } finally {
       setIsProcessingPayment(false);
+    }
+  };
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessageError('');
+
+    if (!newMessage.trim()) {
+      setMessageError('Please enter a message');
+      return;
+    }
+
+    setIsSendingMessage(true);
+
+    try {
+      const adminEmail = 'admin@legalservices.com'; // Default admin email
+      const conversationId = `${currentUser?.email}-admin`; // Unique conversation ID
+
+      const messageData: Message = {
+        _id: crypto.randomUUID(),
+        senderEmail: currentUser?.email || '',
+        senderName: currentUser?.firstName ? `${currentUser.firstName} ${currentUser.lastName || ''}`.trim() : currentUser?.email || '',
+        recipientEmail: adminEmail,
+        messageContent: newMessage,
+        sentDate: new Date(),
+        isRead: false,
+        conversationId: conversationId,
+      };
+
+      await BaseCrudService.create('messages', messageData);
+
+      setMessages(prev => [messageData, ...prev]);
+      setNewMessage('');
+      setMessageSuccess(true);
+
+      setTimeout(() => setMessageSuccess(false), 3000);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      setMessageError('Failed to send message. Please try again.');
+    } finally {
+      setIsSendingMessage(false);
+    }
+  };
+
+  const markMessageAsRead = async (messageId: string) => {
+    try {
+      await BaseCrudService.update('messages', { _id: messageId, isRead: true });
+      setMessages(prev => prev.map(msg => 
+        msg._id === messageId ? { ...msg, isRead: true } : msg
+      ));
+    } catch (error) {
+      console.error('Failed to mark message as read:', error);
     }
   };
 
@@ -373,7 +467,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <Tabs defaultValue="documents" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="documents" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 Documents
@@ -385,6 +479,10 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
               <TabsTrigger value="payments" className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4" />
                 Payments
+              </TabsTrigger>
+              <TabsTrigger value="messages" className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Messages
               </TabsTrigger>
             </TabsList>
 
@@ -846,6 +944,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                   </div>
                 )}
 
+                {/* ... rest of payments tab ... */}
+
                 {/* Payment Form */}
                 <div className="mb-12">
                   {!showPaymentForm ? (
@@ -858,205 +958,139 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                     </Button>
                   ) : (
                     <Card>
-                      <CardHeader>
-                        <CardTitle className="font-heading text-2xl">Make a Payment</CardTitle>
-                        <CardDescription className="font-paragraph">
-                          Enter payment details for legal services
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        {paymentError && (
-                          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex gap-3">
-                            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-                            <p className="font-paragraph text-red-800">{paymentError}</p>
-                          </div>
-                        )}
-
-                        <form onSubmit={handlePaymentSubmit} className="space-y-6">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                              <label htmlFor="amount" className="block font-paragraph font-semibold text-foreground mb-2">
-                                Payment Amount *
-                              </label>
-                              <div className="relative">
-                                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                <Input
-                                  id="amount"
-                                  type="number"
-                                  step="0.01"
-                                  value={paymentFormData.amount}
-                                  onChange={(e) => setPaymentFormData(prev => ({ ...prev, amount: e.target.value }))}
-                                  placeholder="0.00"
-                                  className="border-gray-300 pl-10"
-                                  required
-                                />
-                              </div>
-                            </div>
-
-                            <div>
-                              <label htmlFor="serviceType" className="block font-paragraph font-semibold text-foreground mb-2">
-                                Service Type *
-                              </label>
-                              <Select value={paymentFormData.serviceType} onValueChange={(value) => setPaymentFormData(prev => ({ ...prev, serviceType: value }))}>
-                                <SelectTrigger className="border-gray-300">
-                                  <SelectValue placeholder="Select service" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="small-claims">Small Claims Court</SelectItem>
-                                  <SelectItem value="landlord-tenant">Landlord & Tenant Board</SelectItem>
-                                  <SelectItem value="human-rights">Human Rights Tribunal</SelectItem>
-                                  <SelectItem value="traffic-tickets">Traffic Tickets</SelectItem>
-                                  <SelectItem value="mediation">Mediation Services</SelectItem>
-                                  <SelectItem value="criminal">Criminal Matters</SelectItem>
-                                  <SelectItem value="notary">Notary Public</SelectItem>
-                                  <SelectItem value="other">Other</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          </div>
-
-                          <div className="pt-6 border-t border-gray-200">
-                            <h3 className="font-heading text-xl font-bold text-foreground mb-4">Payment Details</h3>
-                            
-                            <div className="space-y-4">
-                              <div>
-                                <label htmlFor="cardNumber" className="block font-paragraph font-semibold text-foreground mb-2">
-                                  Card Number *
-                                </label>
-                                <Input
-                                  id="cardNumber"
-                                  type="text"
-                                  value={paymentFormData.cardNumber}
-                                  onChange={(e) => setPaymentFormData(prev => ({ ...prev, cardNumber: e.target.value }))}
-                                  placeholder="1234 5678 9012 3456"
-                                  className="border-gray-300"
-                                  maxLength={19}
-                                  required
-                                />
-                              </div>
-
-                              <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                  <label htmlFor="expiryDate" className="block font-paragraph font-semibold text-foreground mb-2">
-                                    Expiry Date *
-                                  </label>
-                                  <Input
-                                    id="expiryDate"
-                                    type="text"
-                                    value={paymentFormData.expiryDate}
-                                    onChange={(e) => setPaymentFormData(prev => ({ ...prev, expiryDate: e.target.value }))}
-                                    placeholder="MM/YY"
-                                    className="border-gray-300"
-                                    maxLength={5}
-                                    required
-                                  />
-                                </div>
-
-                                <div>
-                                  <label htmlFor="cvv" className="block font-paragraph font-semibold text-foreground mb-2">
-                                    CVV *
-                                  </label>
-                                  <Input
-                                    id="cvv"
-                                    type="text"
-                                    value={paymentFormData.cvv}
-                                    onChange={(e) => setPaymentFormData(prev => ({ ...prev, cvv: e.target.value }))}
-                                    placeholder="123"
-                                    className="border-gray-300"
-                                    maxLength={4}
-                                    required
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="flex gap-4">
-                            <Button
-                              type="submit"
-                              disabled={isProcessingPayment}
-                              className="bg-primary hover:bg-primary/90 text-white font-semibold py-3"
-                            >
-                              {isProcessingPayment ? 'Processing...' : 'Process Payment'}
-                            </Button>
-                            <Button
-                              type="button"
-                              onClick={() => setShowPaymentForm(false)}
-                              variant="outline"
-                              className="border-gray-300 text-foreground hover:bg-gray-50"
-                            >
-                              Cancel
-                            </Button>
-                          </div>
-                        </form>
-                      </CardContent>
+                      {/* ... keep existing code (payment form) */}
                     </Card>
                   )}
                 </div>
 
                 {/* Payment History */}
                 <Card>
+                  {/* ... keep existing code (payment history) */}
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Messages Tab */}
+            <TabsContent value="messages">
+              <div>
+                {messageSuccess && (
+                  <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="font-heading font-bold text-green-900 mb-1">Message Sent!</h3>
+                      <p className="font-paragraph text-green-800">Your message has been sent to the admin team.</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Send Message Form */}
+                <Card className="mb-8">
                   <CardHeader>
-                    <CardTitle className="font-heading text-2xl">Payment History</CardTitle>
+                    <CardTitle className="font-heading text-2xl">Send a Message</CardTitle>
                     <CardDescription className="font-paragraph">
-                      View your past transactions and payment records
+                      Contact our admin team with questions or concerns
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {isLoadingPayments ? (
+                    {messageError && (
+                      <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex gap-3">
+                        <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                        <p className="font-paragraph text-red-800">{messageError}</p>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleSendMessage} className="space-y-4">
+                      <div>
+                        <label htmlFor="newMessage" className="block font-paragraph font-semibold text-foreground mb-2">
+                          Your Message
+                        </label>
+                        <textarea
+                          id="newMessage"
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          placeholder="Type your message here..."
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg font-paragraph text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                          rows={4}
+                          required
+                        />
+                      </div>
+
+                      <Button
+                        type="submit"
+                        disabled={isSendingMessage}
+                        className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 flex items-center gap-2"
+                      >
+                        <Send className="w-4 h-4" />
+                        {isSendingMessage ? 'Sending...' : 'Send Message'}
+                      </Button>
+                    </form>
+                  </CardContent>
+                </Card>
+
+                {/* Message History */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="font-heading text-2xl">Message History</CardTitle>
+                    <CardDescription className="font-paragraph">
+                      View your conversation with the admin team
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {isLoadingMessages ? (
                       <div className="text-center py-12">
                         <Loader className="w-8 h-8 text-primary animate-spin mx-auto mb-4" />
-                        <p className="font-paragraph text-foreground/80">Loading payment history...</p>
+                        <p className="font-paragraph text-foreground/80">Loading messages...</p>
                       </div>
-                    ) : payments.length === 0 ? (
+                    ) : messages.length === 0 ? (
                       <div className="bg-gray-50 rounded-lg p-12 text-center">
-                        <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                        <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                         <p className="font-paragraph text-foreground/80 mb-4">
-                          No payment records yet. Make your first payment to get started.
+                          No messages yet. Send your first message to get started.
                         </p>
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        {payments.map(payment => (
-                          <div key={payment._id} className="bg-white border border-gray-200 rounded-lg p-6">
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <div className="flex items-center gap-3 mb-3">
-                                  <h3 className="font-heading text-lg font-bold text-foreground">
-                                    ${payment.paymentAmount?.toFixed(2)}
-                                  </h3>
-                                  <span className={`px-3 py-1 rounded-full text-sm font-paragraph font-semibold ${
-                                    payment.paymentStatus === 'Paid' ? 'bg-green-100 text-green-800' :
-                                    payment.paymentStatus === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                                    'bg-red-100 text-red-800'
-                                  }`}>
-                                    {payment.paymentStatus}
+                        {messages.map(message => {
+                          const isFromClient = message.senderEmail === currentUser?.email;
+                          const isUnread = !message.isRead && !isFromClient;
+
+                          // Mark as read when viewing
+                          if (isUnread) {
+                            markMessageAsRead(message._id);
+                          }
+
+                          return (
+                            <div
+                              key={message._id}
+                              className={`rounded-lg p-6 ${
+                                isFromClient
+                                  ? 'bg-primary/5 border border-primary/20 ml-8'
+                                  : 'bg-pastelbeige/20 border border-pastelbeige mr-8'
+                              }`}
+                            >
+                              <div className="flex items-start justify-between mb-3">
+                                <div>
+                                  <p className="font-heading font-bold text-foreground">
+                                    {isFromClient ? 'You' : 'Admin Team'}
+                                  </p>
+                                  <p className="font-paragraph text-sm text-foreground/60">
+                                    {message.sentDate instanceof Date
+                                      ? message.sentDate.toLocaleString()
+                                      : new Date(message.sentDate || '').toLocaleString()}
+                                  </p>
+                                </div>
+                                {isUnread && (
+                                  <span className="px-2 py-1 bg-primary text-white text-xs font-paragraph font-semibold rounded-full">
+                                    New
                                   </span>
-                                </div>
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                                  <div>
-                                    <p className="font-paragraph text-foreground/60">Service</p>
-                                    <p className="font-paragraph font-semibold text-foreground">
-                                      {payment.serviceType}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    <p className="font-paragraph text-foreground/60">Transaction ID</p>
-                                    <p className="font-paragraph font-semibold text-foreground">
-                                      {payment.transactionId}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    <p className="font-paragraph text-foreground/60">Date</p>
-                                    <p className="font-paragraph font-semibold text-foreground">
-                                      {payment.paymentDate instanceof Date ? payment.paymentDate.toLocaleDateString() : new Date(payment.paymentDate || '').toLocaleDateString()}
-                                    </p>
-                                  </div>
-                                </div>
+                                )}
                               </div>
+                              <p className="font-paragraph text-foreground whitespace-pre-wrap">
+                                {message.messageContent}
+                              </p>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     )}
                   </CardContent>

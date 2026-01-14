@@ -27,6 +27,7 @@ import AdminBookingsPage from '@/components/pages/AdminBookingsPage';
 import ClientSignupPage from '@/components/pages/ClientSignupPage';
 import ClientLoginPage from '@/components/pages/ClientLoginPage';
 import ClientDashboardPage from '@/components/pages/ClientDashboardPage';
+import AdminMessagesPage from '@/components/pages/AdminMessagesPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -128,6 +129,10 @@ const router = createBrowserRouter([
       {
         path: "admin/bookings",
         element: <AdminBookingsPage />,
+      },
+      {
+        path: "admin/messages",
+        element: <AdminMessagesPage />,
       },
       {
         path: "client-signup",
