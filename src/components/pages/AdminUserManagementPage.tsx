@@ -70,6 +70,13 @@ export default function AdminUserManagementPage() {
   };
 
   const handleToggleAdmin = async (email: string, currentStatus: boolean) => {
+    // Check if current user is authorized to modify paralegal privileges
+    if (currentUser?.email !== 'jeanfrancois@legalassist.london') {
+      setErrorMessage('Access Denied: Only jeanfrancois@legalassist.london can modify paralegal privileges.');
+      setTimeout(() => setErrorMessage(''), 5000);
+      return;
+    }
+
     const newStatus = !currentStatus;
     const success = await setAdminStatus(email, newStatus);
 
@@ -80,7 +87,7 @@ export default function AdminUserManagementPage() {
       setSuccessMessage(`Successfully ${newStatus ? 'granted' : 'revoked'} paralegal privileges for ${email}`);
       setTimeout(() => setSuccessMessage(''), 5000);
     } else {
-      setErrorMessage('Failed to update paralegal status. Please try again.');
+      setErrorMessage('Failed to update paralegal status. Only jeanfrancois@legalassist.london can modify paralegal privileges.');
       setTimeout(() => setErrorMessage(''), 5000);
     }
   };
@@ -312,21 +319,24 @@ export default function AdminUserManagementPage() {
                               View Details
                             </Button>
                             
-                            <div className="flex items-center gap-2">
-                              {user.isAdmin ? (
-                                <Shield className="w-5 h-5 text-primary" />
-                              ) : (
-                                <ShieldOff className="w-5 h-5 text-gray-400" />
-                              )}
-                              <span className="font-paragraph text-sm text-foreground/80">
-                                Paralegal
-                              </span>
-                              <Switch
-                                checked={user.isAdmin}
-                                onCheckedChange={() => handleToggleAdmin(user.email, user.isAdmin)}
-                                disabled={user.email === currentUser.email}
-                              />
-                            </div>
+                            {/* Only show toggle for jeanfrancois@legalassist.london */}
+                            {currentUser?.email === 'jeanfrancois@legalassist.london' && (
+                              <div className="flex items-center gap-2">
+                                {user.isAdmin ? (
+                                  <Shield className="w-5 h-5 text-primary" />
+                                ) : (
+                                  <ShieldOff className="w-5 h-5 text-gray-400" />
+                                )}
+                                <span className="font-paragraph text-sm text-foreground/80">
+                                  Paralegal
+                                </span>
+                                <Switch
+                                  checked={user.isAdmin}
+                                  onCheckedChange={() => handleToggleAdmin(user.email, user.isAdmin)}
+                                  disabled={user.email === currentUser.email}
+                                />
+                              </div>
+                            )}
                           </div>
 
                           {/* Account Actions */}

@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin } from '@/lib/auth-service';
@@ -34,7 +35,8 @@ import {
   Plus,
   History,
   Clock,
-  Send
+  Send,
+  Lock
 } from 'lucide-react';
 
 interface ActivityLog {
@@ -69,6 +71,13 @@ export default function AdminUserDetailPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Master code verification state
+  const [showMasterCodeDialog, setShowMasterCodeDialog] = useState(false);
+  const [masterCodeInput, setMasterCodeInput] = useState('');
+  const [isMasterCodeVerified, setIsMasterCodeVerified] = useState(false);
+  const [pendingDocumentAction, setPendingDocumentAction] = useState<{ action: 'view' | 'download', doc: ClientDocuments } | null>(null);
+  const MASTER_CODE = 'd0813840';
 
   // User data
   const [userAccount, setUserAccount] = useState<UserAccounts | null>(null);
@@ -394,6 +403,107 @@ export default function AdminUserDetailPage() {
     }
   };
 
+  // Master code verification handler
+  const handleMasterCodeVerification = () => {
+    if (masterCodeInput === MASTER_CODE) {
+      setIsMasterCodeVerified(true);
+      setShowMasterCodeDialog(false);
+      setMasterCodeInput('');
+      
+      // Execute pending action if any
+      if (pendingDocumentAction) {
+        if (pendingDocumentAction.action === 'view') {
+          executeViewDocument(pendingDocumentAction.doc);
+        } else if (pendingDocumentAction.action === 'download') {
+          executeDownloadDocument(pendingDocumentAction.doc);
+        }
+        setPendingDocumentAction(null);
+      }
+      
+      setSuccessMessage('Master code verified. You can now view files.');
+      setTimeout(() => setSuccessMessage(''), 5000);
+    } else {
+      setErrorMessage('Invalid master code. Please try again.');
+      setTimeout(() => setErrorMessage(''), 5000);
+      setMasterCodeInput('');
+    }
+  };
+
+  // Check if user needs master code verification
+  const requiresMasterCode = () => {
+    return currentUser?.email !== 'jeanfrancois@legalassist.london' && !isMasterCodeVerified;
+  };
+
+  // Handle view document with master code check
+  const handleViewDocument = (doc: ClientDocuments) => {
+    if (requiresMasterCode()) {
+      setPendingDocumentAction({ action: 'view', doc });
+      setShowMasterCodeDialog(true);
+    } else {
+      executeViewDocument(doc);
+    }
+  };
+
+  // Handle download document with master code check
+  const handleDownloadDocument = (doc: ClientDocuments) => {
+    if (requiresMasterCode()) {
+      setPendingDocumentAction({ action: 'download', doc });
+      setShowMasterCodeDialog(true);
+    } else {
+      executeDownloadDocument(doc);
+    }
+  };
+
+  // Execute view document action
+  const executeViewDocument = (doc: ClientDocuments) => {
+    const newWindow = window.open('', '_blank');
+    if (newWindow && doc.fileUrl) {
+      if (doc.fileType?.startsWith('image/')) {
+        newWindow.document.write(`
+          <html>
+            <head>
+              <title>${doc.documentName || 'Document'}</title>
+              <style>
+                body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f0f0; }
+                img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+              </style>
+            </head>
+            <body>
+              <img src="${doc.fileUrl}" alt="${doc.documentName || 'Document'}" />
+            </body>
+          </html>
+        `);
+      } else if (doc.fileType === 'application/pdf') {
+        newWindow.document.write(`
+          <html>
+            <head>
+              <title>${doc.documentName || 'Document'}</title>
+              <style>
+                body { margin: 0; }
+                iframe { width: 100vw; height: 100vh; border: none; }
+              </style>
+            </head>
+            <body>
+              <iframe src="${doc.fileUrl}" type="application/pdf"></iframe>
+            </body>
+          </html>
+        `);
+      } else {
+        newWindow.location.href = doc.fileUrl;
+      }
+    }
+  };
+
+  // Execute download document action
+  const executeDownloadDocument = (doc: ClientDocuments) => {
+    if (doc.fileUrl) {
+      const link = document.createElement('a');
+      link.href = doc.fileUrl;
+      link.download = doc.documentName || 'document';
+      link.click();
+    }
+  };
+
   if (!currentUser || !isAdmin()) {
     return (
       <div className="min-h-screen bg-background">
@@ -448,6 +558,56 @@ export default function AdminUserDetailPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+
+      {/* Master Code Dialog */}
+      <Dialog open={showMasterCodeDialog} onOpenChange={setShowMasterCodeDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="font-heading text-2xl flex items-center gap-2">
+              <Lock className="w-6 h-6 text-primary" />
+              Master Code Required
+            </DialogTitle>
+            <DialogDescription className="font-paragraph">
+              Enter the master code to view client files.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="masterCode" className="font-paragraph">Master Code</Label>
+              <Input
+                id="masterCode"
+                type="password"
+                value={masterCodeInput}
+                onChange={(e) => setMasterCodeInput(e.target.value)}
+                placeholder="Enter master code"
+                className="font-paragraph"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleMasterCodeVerification();
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowMasterCodeDialog(false);
+                setMasterCodeInput('');
+                setPendingDocumentAction(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleMasterCodeVerification}>
+              Verify Code
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-12 md:py-16">
@@ -942,60 +1102,19 @@ export default function AdminUserDetailPage() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => {
-                                    // Create a new window/tab with the file content
-                                    const newWindow = window.open('', '_blank');
-                                    if (newWindow) {
-                                      if (doc.fileType?.startsWith('image/')) {
-                                        // For images, display directly
-                                        newWindow.document.write(`
-                                          <html>
-                                            <head>
-                                              <title>${doc.documentName || 'Document'}</title>
-                                              <style>
-                                                body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f0f0; }
-                                                img { max-width: 100%; max-height: 100vh; object-fit: contain; }
-                                              </style>
-                                            </head>
-                                            <body>
-                                              <img src="${doc.fileUrl}" alt="${doc.documentName || 'Document'}" />
-                                            </body>
-                                          </html>
-                                        `);
-                                      } else if (doc.fileType === 'application/pdf') {
-                                        // For PDFs, embed in iframe
-                                        newWindow.document.write(`
-                                          <html>
-                                            <head>
-                                              <title>${doc.documentName || 'Document'}</title>
-                                              <style>
-                                                body { margin: 0; }
-                                                iframe { width: 100vw; height: 100vh; border: none; }
-                                              </style>
-                                            </head>
-                                            <body>
-                                              <iframe src="${doc.fileUrl}" type="application/pdf"></iframe>
-                                            </body>
-                                          </html>
-                                        `);
-                                      } else {
-                                        // For other file types, trigger download
-                                        newWindow.location.href = doc.fileUrl;
-                                      }
-                                    }
-                                  }}
+                                  onClick={() => handleViewDocument(doc)}
                                 >
                                   <ExternalLink className="w-4 h-4 mr-2" />
                                   View
                                 </Button>
-                                <a
-                                  href={doc.fileUrl}
-                                  download={doc.documentName}
-                                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 px-3"
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleDownloadDocument(doc)}
                                 >
                                   <Download className="w-4 h-4 mr-2" />
                                   Download
-                                </a>
+                                </Button>
                               </div>
                             )}
                           </div>

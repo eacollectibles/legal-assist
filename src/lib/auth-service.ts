@@ -266,12 +266,20 @@ export function isAdmin(): boolean {
 
 /**
  * Set admin status for a user (admin-only function)
+ * RESTRICTED: Only jeanfrancois@legalassist.london can modify paralegal privileges
  */
 export async function setAdminStatus(email: string, isAdminStatus: boolean): Promise<boolean> {
   try {
     // Only admins can set admin status
     if (!isAdmin()) {
       console.error('Unauthorized: Only admins can set admin status');
+      return false;
+    }
+
+    // SECURITY RESTRICTION: Only jeanfrancois@legalassist.london can modify paralegal privileges
+    const currentUser = getCurrentUser();
+    if (currentUser?.email !== 'jeanfrancois@legalassist.london') {
+      console.error('Unauthorized: Only jeanfrancois@legalassist.london can modify paralegal privileges');
       return false;
     }
 
@@ -289,7 +297,6 @@ export async function setAdminStatus(email: string, isAdminStatus: boolean): Pro
     });
 
     // Update current user if it's the same user
-    const currentUser = getCurrentUser();
     if (currentUser?.email === email) {
       currentUser.isAdmin = isAdminStatus;
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
