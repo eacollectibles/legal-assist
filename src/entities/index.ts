@@ -25,16 +25,6 @@ export interface Bookings {
   serviceType?: string;
   /** @wixFieldType text */
   clientNotes?: string;
-  /** @wixFieldType text */
-  status?: 'pending' | 'confirmed' | 'approved' | 'rejected' | 'rescheduled' | 'cancelled';
-  /** @wixFieldType text */
-  approvalNotes?: string;
-  /** @wixFieldType url */
-  meetingLink?: string;
-  /** @wixFieldType url */
-  zoomUrl?: string;
-  /** @wixFieldType text */
-  confirmationToken?: string;
 }
 
 
@@ -62,6 +52,35 @@ export interface ClientDocuments {
   documentCategory?: string;
   /** @wixFieldType text */
   notes?: string;
+}
+
+
+/**
+ * Collection ID: clientprofiles
+ * Interface for ClientProfiles
+ */
+export interface ClientProfiles {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  firstName?: string;
+  /** @wixFieldType text */
+  lastName?: string;
+  /** @wixFieldType text */
+  streetAddress?: string;
+  /** @wixFieldType text */
+  city?: string;
+  /** @wixFieldType text */
+  state?: string;
+  /** @wixFieldType text */
+  zipCode?: string;
+  /** @wixFieldType text */
+  phoneNumber?: string;
+  /** @wixFieldType text */
+  emergencyContactName?: string;
+  /** @wixFieldType text */
+  emergencyContactPhone?: string;
 }
 
 
@@ -99,7 +118,7 @@ export interface LegalServiceCategories {
   relevantTribunal?: string;
   /** @wixFieldType text */
   eligibilityCriteria?: string;
-  /** @wixFieldType image */
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   categoryImage?: string;
   /** @wixFieldType boolean */
   isCurrentlyOffered?: boolean;
@@ -107,35 +126,21 @@ export interface LegalServiceCategories {
 
 
 /**
- * Collection ID: meetingrequests
- * Interface for MeetingRequests
+ * Collection ID: paymentrecords
+ * Interface for PaymentRecords
  */
-export interface MeetingRequests {
+export interface PaymentRecords {
   _id: string;
   _createdDate?: Date;
   _updatedDate?: Date;
-  /** @wixFieldType text */
-  clientName?: string;
-  /** @wixFieldType text */
-  clientEmail?: string;
-  /** @wixFieldType text */
-  clientPhone?: string;
-  /** @wixFieldType date */
-  preferredDate?: Date | string;
-  /** @wixFieldType time */
-  preferredTime?: any;
+  /** @wixFieldType number */
+  paymentAmount?: number;
   /** @wixFieldType text */
   serviceType?: string;
+  /** @wixFieldType date */
+  paymentDate?: Date | string;
   /** @wixFieldType text */
-  clientNotes?: string;
+  paymentStatus?: string;
   /** @wixFieldType text */
-  status?: 'pending' | 'approved' | 'rejected';
-  /** @wixFieldType text */
-  approvalNotes?: string;
-  /** @wixFieldType url */
-  meetingLink?: string;
-  /** @wixFieldType url */
-  zoomUrl?: string;
-  /** @wixFieldType text */
-  confirmationToken?: string;
+  transactionId?: string;
 }
