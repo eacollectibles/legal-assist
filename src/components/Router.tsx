@@ -25,6 +25,7 @@ import MeetingRequestPage from '@/components/pages/MeetingRequestPage';
 import AdminMeetingRequestsPage from '@/components/pages/AdminMeetingRequestsPage';
 import AdminBookingsPage from '@/components/pages/AdminBookingsPage';
 import ClientSignupPage from '@/components/pages/ClientSignupPage';
+import ClientLoginPage from '@/components/pages/ClientLoginPage';
 import ClientDashboardPage from '@/components/pages/ClientDashboardPage';
 
 // Layout component that includes ScrollToTop
@@ -131,6 +132,10 @@ const router = createBrowserRouter([
       {
         path: "client-signup",
         element: <ClientSignupPage />,
+      },
+      {
+        path: "client-login",
+        element: <ClientLoginPage />,
       },
       {
         path: "client-dashboard",

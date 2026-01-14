@@ -5,31 +5,22 @@ import { Input } from '@/components/ui/input';
 import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useMember } from '@/integrations';
 
-interface SignupFormData {
-  firstName: string;
-  lastName: string;
+interface LoginFormData {
   email: string;
   password: string;
-  confirmPassword: string;
-  agreeToTerms: boolean;
+  rememberMe: boolean;
 }
 
-export default function ClientSignupPage() {
+export default function ClientLoginPage() {
   const navigate = useNavigate();
-  const { actions } = useMember();
-  const [formData, setFormData] = useState<SignupFormData>({
-    firstName: '',
-    lastName: '',
+  const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     password: '',
-    confirmPassword: '',
-    agreeToTerms: false,
+    rememberMe: false,
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -45,16 +36,6 @@ export default function ClientSignupPage() {
   const validateForm = (): boolean => {
     setError('');
 
-    if (!formData.firstName.trim()) {
-      setError('First name is required');
-      return false;
-    }
-
-    if (!formData.lastName.trim()) {
-      setError('Last name is required');
-      return false;
-    }
-
     if (!formData.email.trim() || !formData.email.includes('@')) {
       setError('Valid email address is required');
       return false;
@@ -62,16 +43,6 @@ export default function ClientSignupPage() {
 
     if (!formData.password || formData.password.length < 8) {
       setError('Password must be at least 8 characters long');
-      return false;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return false;
-    }
-
-    if (!formData.agreeToTerms) {
-      setError('You must agree to the terms and conditions');
       return false;
     }
 
@@ -88,26 +59,23 @@ export default function ClientSignupPage() {
     setIsSubmitting(true);
 
     try {
-      // In a real implementation, you would call a backend API to create the account
-      // For now, we'll simulate the signup process
+      // In a real implementation, you would call a backend API to authenticate the user
+      // For now, we'll simulate the login process
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       setSuccess(true);
       setFormData({
-        firstName: '',
-        lastName: '',
         email: '',
         password: '',
-        confirmPassword: '',
-        agreeToTerms: false,
+        rememberMe: false,
       });
 
-      // Redirect to login or dashboard after successful signup
+      // Redirect to client dashboard after successful login
       setTimeout(() => {
         navigate('/client-dashboard');
       }, 2000);
     } catch (err) {
-      setError('Failed to create account. Please try again.');
+      setError('Failed to log in. Please check your credentials and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -122,16 +90,16 @@ export default function ClientSignupPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="text-center max-w-2xl mx-auto">
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Create Your Client Account
+              Client Login
             </h1>
             <p className="font-paragraph text-lg text-foreground/80">
-              Sign up to access your secure client portal. Upload documents, track your case, and communicate with our legal team.
+              Sign in to your account to access your secure client portal. Upload documents, track your case, and communicate with our legal team.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Signup Form Section */}
+      {/* Login Form Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -143,7 +111,7 @@ export default function ClientSignupPage() {
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h3 className="font-heading font-bold text-green-900 mb-1">Account Created Successfully!</h3>
+                      <h3 className="font-heading font-bold text-green-900 mb-1">Login Successful!</h3>
                       <p className="font-paragraph text-green-800">Redirecting to your dashboard...</p>
                     </div>
                   </div>
@@ -159,40 +127,6 @@ export default function ClientSignupPage() {
                     </div>
                   </div>
                 )}
-
-                {/* First Name */}
-                <div>
-                  <label htmlFor="firstName" className="block font-paragraph font-semibold text-foreground mb-2">
-                    First Name *
-                  </label>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    placeholder="John"
-                    className="border-gray-300"
-                    required
-                  />
-                </div>
-
-                {/* Last Name */}
-                <div>
-                  <label htmlFor="lastName" className="block font-paragraph font-semibold text-foreground mb-2">
-                    Last Name *
-                  </label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Doe"
-                    className="border-gray-300"
-                    required
-                  />
-                </div>
 
                 {/* Email */}
                 <div>
@@ -223,7 +157,7 @@ export default function ClientSignupPage() {
                       type={showPassword ? 'text' : 'password'}
                       value={formData.password}
                       onChange={handleInputChange}
-                      placeholder="At least 8 characters"
+                      placeholder="Enter your password"
                       className="border-gray-300 pr-10"
                       required
                     />
@@ -232,51 +166,29 @@ export default function ClientSignupPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-foreground/60 hover:text-foreground"
                     >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
                     </button>
                   </div>
                 </div>
 
-                {/* Confirm Password */}
-                <div>
-                  <label htmlFor="confirmPassword" className="block font-paragraph font-semibold text-foreground mb-2">
-                    Confirm Password *
-                  </label>
-                  <div className="relative">
-                    <Input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      value={formData.confirmPassword}
+                {/* Remember Me & Forgot Password */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <input
+                      id="rememberMe"
+                      name="rememberMe"
+                      type="checkbox"
+                      checked={formData.rememberMe}
                       onChange={handleInputChange}
-                      placeholder="Confirm your password"
-                      className="border-gray-300 pr-10"
-                      required
+                      className="w-4 h-4 border-gray-300 rounded cursor-pointer"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-foreground/60 hover:text-foreground"
-                    >
-                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
+                    <label htmlFor="rememberMe" className="font-paragraph text-foreground/80 cursor-pointer">
+                      Remember me
+                    </label>
                   </div>
-                </div>
-
-                {/* Terms & Conditions */}
-                <div className="flex items-start gap-3">
-                  <input
-                    id="agreeToTerms"
-                    name="agreeToTerms"
-                    type="checkbox"
-                    checked={formData.agreeToTerms}
-                    onChange={handleInputChange}
-                    className="w-5 h-5 mt-1 border-gray-300 rounded cursor-pointer"
-                    required
-                  />
-                  <label htmlFor="agreeToTerms" className="font-paragraph text-foreground/80 cursor-pointer">
-                    I agree to the <a href="#" className="text-primary hover:underline">Terms and Conditions</a> and <a href="#" className="text-primary hover:underline">Privacy Policy</a> *
-                  </label>
+                  <a href="#" className="font-paragraph text-primary hover:underline text-sm">
+                    Forgot password?
+                  </a>
                 </div>
 
                 {/* Submit Button */}
@@ -285,11 +197,11 @@ export default function ClientSignupPage() {
                   disabled={isSubmitting}
                   className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3"
                 >
-                  {isSubmitting ? 'Creating Account...' : 'Create Account'}
+                  {isSubmitting ? 'Signing In...' : 'Sign In'}
                 </Button>
 
                 <p className="font-paragraph text-sm text-foreground/60 text-center">
-                  Already have an account? <Link to="/client-login" className="text-primary hover:underline">Sign in here</Link>
+                  Don't have an account? <Link to="/client-signup" className="text-primary hover:underline">Create one here</Link>
                 </p>
               </form>
             </div>
@@ -298,7 +210,7 @@ export default function ClientSignupPage() {
             <div className="lg:col-span-1">
               <div className="bg-pastelbeige/20 rounded-lg p-8 border border-pastelbeige sticky top-8">
                 <h3 className="font-heading text-2xl font-bold text-foreground mb-6">
-                  Why Create an Account?
+                  Client Portal Benefits
                 </h3>
 
                 <div className="space-y-6">

@@ -26,7 +26,7 @@ export interface Bookings {
   /** @wixFieldType text */
   clientNotes?: string;
   /** @wixFieldType text */
-  status?: 'pending' | 'confirmed' | 'approved' | 'rejected' | 'rescheduled' | 'cancelled';
+  status?: 'pending' | 'approved' | 'rejected' | 'confirmed' | 'rescheduled' | 'cancelled';
   /** @wixFieldType text */
   approvalNotes?: string;
   /** @wixFieldType text */
@@ -104,6 +104,7 @@ export interface LegalServiceCategories {
   /** @wixFieldType boolean */
   isCurrentlyOffered?: boolean;
 }
+
 
 /**
  * Collection ID: meetingrequests
