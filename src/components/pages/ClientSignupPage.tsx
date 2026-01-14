@@ -118,17 +118,6 @@ export default function ClientSignupPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section */}
-      <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Create Your Client Account
-            </h1>
-          </div>
-        </div>
-      </section>
-
       {/* Signup Form Section */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
