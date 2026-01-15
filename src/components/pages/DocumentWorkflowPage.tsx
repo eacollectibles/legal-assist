@@ -253,6 +253,10 @@ export default function DocumentWorkflowPage() {
       const doc = generatedDocs.find(d => d._id === selectedDocumentId);
       if (!doc) return;
 
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
+
       // Update document status to 'sent'
       await BaseCrudService.update('generateddocuments', {
         _id: selectedDocumentId,
@@ -273,8 +277,9 @@ export default function DocumentWorkflowPage() {
       });
 
       // Copy document to client's documents
+      const clientDocId = crypto.randomUUID();
       await BaseCrudService.create('clientdocuments', {
-        _id: crypto.randomUUID(),
+        _id: clientDocId,
         documentName: doc.documentName,
         fileUrl: doc.documentUrl,
         uploadDate: new Date().toISOString(),
@@ -283,6 +288,36 @@ export default function DocumentWorkflowPage() {
         documentCategory: 'generated-document',
         notes: `Generated from template. ${doc.requiresSignature ? 'Signature required.' : ''}`
       });
+
+      // Get user account ID for the client
+      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
+      const clientAccount = userAccounts.find(u => u.email === doc.clientEmail);
+
+      // Create activity log entry
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: clientAccount?._id || doc.clientEmail || '',
+        activityType: 'document_sent',
+        activityDescription: `Document "${doc.documentName}" was sent to client`,
+        performedBy: userEmail,
+        performedByName: userName,
+        timestamp: new Date().toISOString(),
+        relatedItemId: clientDocId
+      });
+
+      // Create notification for the client
+      if (clientAccount) {
+        await BaseCrudService.create('notifications', {
+          _id: crypto.randomUUID(),
+          userId: clientAccount._id,
+          notificationType: 'document_upload',
+          notificationTitle: 'New Document Available',
+          notificationMessage: `A new document "${doc.documentName}" has been sent to you. ${doc.requiresSignature ? 'Your signature is required.' : 'Please review it in your documents section.'}`,
+          isRead: false,
+          createdDate: new Date().toISOString(),
+          relatedActivityId: clientDocId
+        });
+      }
 
       setIsSendDialogOpen(false);
       setSelectedDocumentId('');
