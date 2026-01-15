@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
@@ -382,6 +382,19 @@ export default function ParalegalDashboardPage() {
     } catch (error) {
       console.error('Error sharing document:', error);
       alert('Failed to share document. Please try again.');
+    }
+  };
+
+  const handleDeleteDocument = async (documentId: string) => {
+    if (!confirm('Are you sure you want to delete this document? This action cannot be undone.')) return;
+
+    try {
+      await BaseCrudService.delete('clientdocuments', documentId);
+      setDocuments(prev => prev.filter(doc => doc._id !== documentId));
+      alert('Document deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      alert('Failed to delete document. Please try again.');
     }
   };
 
@@ -1063,6 +1076,15 @@ export default function ParalegalDashboardPage() {
                         >
                           <Share2 className="h-4 w-4" />
                           Share
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDeleteDocument(doc._id)}
+                          className="gap-2 border-destructive text-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          Delete
                         </Button>
                       </div>
                     </CardContent>
