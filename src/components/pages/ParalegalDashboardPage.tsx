@@ -11,9 +11,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2 } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
+import { GeneratedDocuments } from '@/entities';
 
 interface Appointment {
   _id: string;
@@ -96,6 +98,12 @@ export default function ParalegalDashboardPage() {
   const [shareEmail, setShareEmail] = useState('');
   const [shareMessage, setShareMessage] = useState('');
 
+  // Document signing states
+  const [generatedDocuments, setGeneratedDocuments] = useState<GeneratedDocuments[]>([]);
+  const [isLoadingGeneratedDocs, setIsLoadingGeneratedDocs] = useState(true);
+  const [signingDocument, setSigningDocument] = useState<GeneratedDocuments | null>(null);
+  const [signatureSuccess, setSignatureSuccess] = useState(false);
+
   // Form states for new appointment
   const [newAppointment, setNewAppointment] = useState({
     title: '',
@@ -125,6 +133,7 @@ export default function ParalegalDashboardPage() {
   useEffect(() => {
     loadData();
     loadCurrentParalegal();
+    loadGeneratedDocuments();
   }, []);
 
   const loadCurrentParalegal = async () => {
@@ -398,6 +407,94 @@ export default function ParalegalDashboardPage() {
     }
   };
 
+  const loadGeneratedDocuments = async () => {
+    setIsLoadingGeneratedDocs(true);
+    try {
+      const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
+      
+      // Sort by generation date, newest first
+      items.sort((a, b) => {
+        const dateA = new Date(a.generationDate || 0).getTime();
+        const dateB = new Date(b.generationDate || 0).getTime();
+        return dateB - dateA;
+      });
+      
+      setGeneratedDocuments(items);
+    } catch (error) {
+      console.error('Failed to load generated documents:', error);
+    } finally {
+      setIsLoadingGeneratedDocs(false);
+    }
+  };
+
+  const handleSignatureComplete = async (signatureData: SignatureData) => {
+    if (!signingDocument) return;
+
+    try {
+      // Embed signature into the document using the PDF generator utility
+      const { embedSignatureInPDF } = await import('@/lib/pdf-generator');
+      const signedPdfDataUrl = await embedSignatureInPDF(
+        signingDocument.documentUrl || '',
+        signatureData,
+        signingDocument.documentName || 'Document'
+      );
+
+      // Update the generated document with signed version
+      const updatedDoc: GeneratedDocuments = {
+        ...signingDocument,
+        status: 'Signed',
+        signedDate: signatureData.timestamp,
+        signedDocumentUrl: signedPdfDataUrl,
+      };
+
+      await BaseCrudService.update('generateddocuments', updatedDoc);
+
+      // Update local generated documents state
+      setGeneratedDocuments(prev =>
+        prev.map(doc => doc._id === signingDocument._id ? updatedDoc : doc)
+      );
+
+      // Create activity log
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: currentParalegalId,
+        activityType: 'document_signed',
+        activityDescription: `Document "${signingDocument.documentName}" was electronically signed by paralegal`,
+        performedBy: 'paralegal@legalservices.com',
+        performedByName: 'Paralegal',
+        timestamp: signatureData.timestamp.toISOString(),
+        relatedItemId: signingDocument._id
+      });
+
+      setSigningDocument(null);
+      setSignatureSuccess(true);
+      setTimeout(() => setSignatureSuccess(false), 5000);
+    } catch (error) {
+      console.error('Failed to save signature:', error);
+      alert('Failed to save signature. Please try again.');
+    }
+  };
+
+  // Show signature modal if signing a document
+  if (signingDocument) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <section className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <DocumentSignature
+              documentId={signingDocument._id}
+              documentName={signingDocument.documentName || 'Untitled Document'}
+              onSignatureComplete={handleSignatureComplete}
+              onCancel={() => setSigningDocument(null)}
+            />
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -412,10 +509,28 @@ export default function ParalegalDashboardPage() {
           </p>
         </div>
 
+        {signatureSuccess && (
+          <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
+            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-heading font-bold text-green-900 mb-1">Document Signed Successfully!</h3>
+              <p className="font-paragraph text-green-800">Your electronic signature has been recorded and attached to the document.</p>
+            </div>
+          </div>
+        )}
+
         <Tabs defaultValue="appointments" className="w-full">
           <TabsList className="mb-8">
             <TabsTrigger value="appointments">Appointments & Deadlines</TabsTrigger>
             <TabsTrigger value="assignments">File Assignments</TabsTrigger>
+            <TabsTrigger value="signatures" className="relative">
+              Sign Documents
+              {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length}
+                </span>
+              )}
+            </TabsTrigger>
             <TabsTrigger value="filemanagement">File Management</TabsTrigger>
           </TabsList>
 
@@ -887,6 +1002,163 @@ export default function ParalegalDashboardPage() {
                 ))
               )}
             </div>
+          </TabsContent>
+
+          <TabsContent value="signatures" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-heading text-3xl font-bold text-foreground">
+                Documents Requiring Signature
+              </h2>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-heading text-2xl flex items-center gap-2">
+                  <FileSignature className="w-6 h-6 text-primary" />
+                  Sign Documents
+                </CardTitle>
+                <p className="font-paragraph text-foreground/80">
+                  Review and electronically sign documents that require your signature
+                </p>
+              </CardHeader>
+              <CardContent>
+                {isLoadingGeneratedDocs ? (
+                  <div className="text-center py-12">
+                    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="font-paragraph text-foreground/80">Loading documents...</p>
+                  </div>
+                ) : generatedDocuments.length === 0 ? (
+                  <div className="bg-gray-50 rounded-lg p-12 text-center">
+                    <FileSignature className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="font-paragraph text-foreground/80 mb-4">
+                      No documents available for signing at this time.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {generatedDocuments.map(doc => {
+                      const isSigned = doc.status === 'Signed';
+                      const requiresSignature = doc.requiresSignature;
+
+                      return (
+                        <div
+                          key={doc._id}
+                          className={`rounded-lg p-6 border transition-all ${
+                            isSigned
+                              ? 'bg-green-50 border-green-200'
+                              : requiresSignature
+                              ? 'bg-yellow-50 border-yellow-200'
+                              : 'bg-white border-gray-200'
+                          }`}
+                        >
+                          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-3">
+                                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                  <FileSignature className="w-5 h-5 text-primary" />
+                                </div>
+                                <div>
+                                  <h3 className="font-heading text-lg font-bold text-foreground">
+                                    {doc.documentName || 'Untitled Document'}
+                                  </h3>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <Badge
+                                      variant="outline"
+                                      className={
+                                        isSigned
+                                          ? 'bg-green-100 text-green-800 border-green-300'
+                                          : requiresSignature
+                                          ? 'bg-yellow-100 text-yellow-800 border-yellow-300'
+                                          : 'bg-gray-100 text-gray-800 border-gray-300'
+                                      }
+                                    >
+                                      {doc.status || 'Pending'}
+                                    </Badge>
+                                    {requiresSignature && !isSigned && (
+                                      <Badge className="bg-destructive text-white">
+                                        Signature Required
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="ml-13 space-y-2 text-sm font-paragraph">
+                                {doc.clientEmail && (
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-foreground/60">Client:</span>
+                                    <span className="text-foreground font-semibold">
+                                      {doc.clientEmail}
+                                    </span>
+                                  </div>
+                                )}
+                                {doc.generationDate && (
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-foreground/60">Generated:</span>
+                                    <span className="text-foreground font-semibold">
+                                      {new Date(doc.generationDate).toLocaleString()}
+                                    </span>
+                                  </div>
+                                )}
+                                {isSigned && doc.signedDate && (
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-foreground/60">Signed:</span>
+                                    <span className="text-foreground font-semibold">
+                                      {new Date(doc.signedDate).toLocaleString()}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="flex md:flex-col gap-2">
+                              {doc.documentUrl && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  asChild
+                                  className="flex-1 md:flex-none"
+                                >
+                                  <a href={doc.documentUrl} target="_blank" rel="noopener noreferrer">
+                                    <FileText className="w-4 h-4 md:mr-2" />
+                                    <span className="hidden md:inline">View</span>
+                                  </a>
+                                </Button>
+                              )}
+                              {requiresSignature && !isSigned && (
+                                <Button
+                                  size="sm"
+                                  onClick={() => setSigningDocument(doc)}
+                                  className="bg-primary hover:bg-primary/90 text-white flex-1 md:flex-none"
+                                >
+                                  <FileSignature className="w-4 h-4 md:mr-2" />
+                                  <span className="hidden md:inline">Sign Now</span>
+                                  <span className="md:hidden">Sign</span>
+                                </Button>
+                              )}
+                              {isSigned && doc.signedDocumentUrl && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  asChild
+                                  className="flex-1 md:flex-none border-green-300 text-green-700 hover:bg-green-50"
+                                >
+                                  <a href={doc.signedDocumentUrl} download>
+                                    <Download className="w-4 h-4 md:mr-2" />
+                                    <span className="hidden md:inline">Download Signed</span>
+                                    <span className="md:hidden">Download</span>
+                                  </a>
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="filemanagement" className="space-y-6">
