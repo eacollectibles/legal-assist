@@ -209,6 +209,11 @@ export default function DocumentWorkflowPage() {
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
 
+      // Get client's email from user accounts
+      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
+      const clientAccount = userAccounts.find(u => u._id === selectedClientId);
+      const clientEmailAddress = clientAccount?.email || selectedClientId;
+
       // Replace placeholders in template content
       let documentContent = template.templateContent || '';
       documentContent = documentContent.replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim());
@@ -224,7 +229,7 @@ export default function DocumentWorkflowPage() {
         documentName: documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`,
         templateId: selectedTemplateId,
         clientId: selectedClientId,
-        clientEmail: client._id,
+        clientEmail: clientEmailAddress,
         generatedBy: userEmail,
         generationDate: new Date().toISOString(),
         status: 'draft',
