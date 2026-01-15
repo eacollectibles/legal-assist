@@ -403,7 +403,7 @@ export default function ParalegalDashboardPage() {
           <TabsList className="mb-8">
             <TabsTrigger value="appointments">Appointments & Deadlines</TabsTrigger>
             <TabsTrigger value="assignments">File Assignments</TabsTrigger>
-            <TabsTrigger value="documents">Document Management</TabsTrigger>
+            <TabsTrigger value="filemanagement">File Management</TabsTrigger>
           </TabsList>
 
           <TabsContent value="appointments" className="space-y-6">
@@ -876,71 +876,28 @@ export default function ParalegalDashboardPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="documents" className="space-y-6">
+          <TabsContent value="filemanagement" className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="font-heading text-3xl font-bold text-foreground">
-                Document Management
+                File Management
               </h2>
             </div>
 
-            {/* Document Workflow Management Quick Access */}
-            <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/30 shadow-lg">
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <FileEdit className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <CardTitle className="font-heading text-2xl text-foreground mb-1">
-                        Document Workflow Management
-                      </CardTitle>
-                      <p className="font-paragraph text-foreground/70">
-                        Generate documents, manage templates, and streamline your workflow
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={() => navigate('/document-workflow')}
-                    className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
-                  >
-                    Open Workflow
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <FileText className="h-5 w-5 text-primary" />
-                      <h3 className="font-heading font-semibold text-foreground">Document Generation</h3>
-                    </div>
-                    <p className="font-paragraph text-sm text-foreground/70">
-                      Create new documents from templates with automated field population
-                    </p>
-                  </div>
-                  <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <FileEdit className="h-5 w-5 text-primary" />
-                      <h3 className="font-heading font-semibold text-foreground">Template Management</h3>
-                    </div>
-                    <p className="font-paragraph text-sm text-foreground/70">
-                      View, edit, and organize document templates for various legal services
-                    </p>
-                  </div>
-                  <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <CheckCircle className="h-5 w-5 text-primary" />
-                      <h3 className="font-heading font-semibold text-foreground">Track Status</h3>
-                    </div>
-                    <p className="font-paragraph text-sm text-foreground/70">
-                      Monitor document generation, sending, and signature status
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Nested Tabs for File Management */}
+            <Tabs defaultValue="documents" className="w-full">
+              <TabsList>
+                <TabsTrigger value="documents">Document Management</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="documents" className="space-y-6 mt-6">
+                {/* Nested Tabs for Document Management */}
+                <Tabs defaultValue="overview" className="w-full">
+                  <TabsList>
+                    <TabsTrigger value="overview">Overview</TabsTrigger>
+                    <TabsTrigger value="tools">Tools</TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="overview" className="space-y-6 mt-6">
 
             {/* Advanced Search and Filter */}
             <Card>
@@ -1130,131 +1087,197 @@ export default function ParalegalDashboardPage() {
               )}
             </div>
 
-            {/* Version History Dialog */}
-            <Dialog open={isVersionHistoryOpen} onOpenChange={setIsVersionHistoryOpen}>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Document Version History</DialogTitle>
-                </DialogHeader>
-                {selectedDocument && (
-                  <div className="space-y-4 py-4">
-                    <div className="bg-pastelbeige/20 rounded-lg p-4">
-                      <h3 className="font-heading font-bold text-foreground mb-2">Current Version</h3>
-                      <p className="font-paragraph text-sm text-foreground/80 mb-2">
-                        <strong>Version:</strong> {selectedDocument.version || 1}
-                      </p>
-                      <p className="font-paragraph text-sm text-foreground/80 mb-2">
-                        <strong>Upload Date:</strong> {selectedDocument.uploadDate ? format(new Date(selectedDocument.uploadDate), 'MMM d, yyyy HH:mm') : 'N/A'}
-                      </p>
-                      {selectedDocument.notes && (
-                        <p className="font-paragraph text-sm text-foreground/80">
-                          <strong>Notes:</strong> {selectedDocument.notes}
-                        </p>
-                      )}
-                    </div>
+                  </TabsContent>
 
-                    {selectedDocument.previousVersions && selectedDocument.previousVersions.length > 0 ? (
-                      <div className="space-y-3">
-                        <h3 className="font-heading font-bold text-foreground">Previous Versions</h3>
-                        {selectedDocument.previousVersions.map((version, index) => (
-                          <div key={index} className="border border-gray-200 rounded-lg p-4">
-                            <div className="flex justify-between items-start mb-2">
-                              <div>
-                                <p className="font-paragraph text-sm text-foreground/80 mb-1">
-                                  <strong>Version:</strong> {version.version}
-                                </p>
-                                <p className="font-paragraph text-sm text-foreground/80 mb-1">
-                                  <strong>Date:</strong> {format(new Date(version.uploadDate), 'MMM d, yyyy HH:mm')}
-                                </p>
-                                {version.notes && (
-                                  <p className="font-paragraph text-sm text-foreground/80">
-                                    <strong>Notes:</strong> {version.notes}
-                                  </p>
-                                )}
-                              </div>
-                              <Button
-                                size="sm"
-                                onClick={() => handleRevertToVersion(selectedDocument._id, index)}
-                              >
-                                Revert
-                              </Button>
+                  <TabsContent value="tools" className="space-y-6 mt-6">
+                    {/* Document Workflow Management */}
+                    <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/30 shadow-lg">
+                      <CardHeader className="pb-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+                              <FileEdit className="h-6 w-6 text-primary" />
+                            </div>
+                            <div>
+                              <CardTitle className="font-heading text-2xl text-foreground mb-1">
+                                Document Workflow Management
+                              </CardTitle>
+                              <p className="font-paragraph text-foreground/70">
+                                Generate documents, manage templates, and streamline your workflow
+                              </p>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="font-paragraph text-foreground/60 text-center py-4">
-                        No previous versions available
-                      </p>
-                    )}
-                  </div>
-                )}
-              </DialogContent>
-            </Dialog>
-
-            {/* Share Document Dialog */}
-            <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Share Document</DialogTitle>
-                </DialogHeader>
-                {selectedDocument && (
-                  <div className="space-y-4 py-4">
-                    <div className="bg-pastelbeige/20 rounded-lg p-4">
-                      <p className="font-heading font-bold text-foreground">
-                        {selectedDocument.documentName}
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="shareEmail">Recipient Email *</Label>
-                      <Input
-                        id="shareEmail"
-                        type="email"
-                        placeholder="recipient@example.com"
-                        value={shareEmail}
-                        onChange={(e) => setShareEmail(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="shareMessage">Message (Optional)</Label>
-                      <Textarea
-                        id="shareMessage"
-                        placeholder="Add a message for the recipient..."
-                        value={shareMessage}
-                        onChange={(e) => setShareMessage(e.target.value)}
-                        rows={3}
-                      />
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={handleShareDocument}
-                        disabled={!shareEmail}
-                        className="flex-1"
-                      >
-                        <Share2 className="h-4 w-4 mr-2" />
-                        Share Document
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          setIsShareDialogOpen(false);
-                          setShareEmail('');
-                          setShareMessage('');
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </DialogContent>
-            </Dialog>
+                          <Button
+                            onClick={() => navigate('/document-workflow')}
+                            className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
+                          >
+                            Open Workflow
+                            <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
+                            <div className="flex items-center gap-2 mb-2">
+                              <FileText className="h-5 w-5 text-primary" />
+                              <h3 className="font-heading font-semibold text-foreground">Document Generation</h3>
+                            </div>
+                            <p className="font-paragraph text-sm text-foreground/70">
+                              Create new documents from templates with automated field population
+                            </p>
+                          </div>
+                          <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
+                            <div className="flex items-center gap-2 mb-2">
+                              <FileEdit className="h-5 w-5 text-primary" />
+                              <h3 className="font-heading font-semibold text-foreground">Template Management</h3>
+                            </div>
+                            <p className="font-paragraph text-sm text-foreground/70">
+                              View, edit, and organize document templates for various legal services
+                            </p>
+                          </div>
+                          <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
+                            <div className="flex items-center gap-2 mb-2">
+                              <CheckCircle className="h-5 w-5 text-primary" />
+                              <h3 className="font-heading font-semibold text-foreground">Track Status</h3>
+                            </div>
+                            <p className="font-paragraph text-sm text-foreground/70">
+                              Monitor document generation, sending, and signature status
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         </Tabs>
+
+        {/* Version History Dialog */}
+        <Dialog open={isVersionHistoryOpen} onOpenChange={setIsVersionHistoryOpen}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Document Version History</DialogTitle>
+            </DialogHeader>
+            {selectedDocument && (
+              <div className="space-y-4 py-4">
+                <div className="bg-pastelbeige/20 rounded-lg p-4">
+                  <h3 className="font-heading font-bold text-foreground mb-2">Current Version</h3>
+                  <p className="font-paragraph text-sm text-foreground/80 mb-2">
+                    <strong>Version:</strong> {selectedDocument.version || 1}
+                  </p>
+                  <p className="font-paragraph text-sm text-foreground/80 mb-2">
+                    <strong>Upload Date:</strong> {selectedDocument.uploadDate ? format(new Date(selectedDocument.uploadDate), 'MMM d, yyyy HH:mm') : 'N/A'}
+                  </p>
+                  {selectedDocument.notes && (
+                    <p className="font-paragraph text-sm text-foreground/80">
+                      <strong>Notes:</strong> {selectedDocument.notes}
+                    </p>
+                  )}
+                </div>
+
+                {selectedDocument.previousVersions && selectedDocument.previousVersions.length > 0 ? (
+                  <div className="space-y-3">
+                    <h3 className="font-heading font-bold text-foreground">Previous Versions</h3>
+                    {selectedDocument.previousVersions.map((version, index) => (
+                      <div key={index} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <p className="font-paragraph text-sm text-foreground/80 mb-1">
+                              <strong>Version:</strong> {version.version}
+                            </p>
+                            <p className="font-paragraph text-sm text-foreground/80 mb-1">
+                              <strong>Date:</strong> {format(new Date(version.uploadDate), 'MMM d, yyyy HH:mm')}
+                            </p>
+                            {version.notes && (
+                              <p className="font-paragraph text-sm text-foreground/80">
+                                <strong>Notes:</strong> {version.notes}
+                              </p>
+                            )}
+                          </div>
+                          <Button
+                            size="sm"
+                            onClick={() => handleRevertToVersion(selectedDocument._id, index)}
+                          >
+                            Revert
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="font-paragraph text-foreground/60 text-center py-4">
+                    No previous versions available
+                  </p>
+                )}
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Share Document Dialog */}
+        <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Share Document</DialogTitle>
+            </DialogHeader>
+            {selectedDocument && (
+              <div className="space-y-4 py-4">
+                <div className="bg-pastelbeige/20 rounded-lg p-4">
+                  <p className="font-heading font-bold text-foreground">
+                    {selectedDocument.documentName}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="shareEmail">Recipient Email *</Label>
+                  <Input
+                    id="shareEmail"
+                    type="email"
+                    placeholder="recipient@example.com"
+                    value={shareEmail}
+                    onChange={(e) => setShareEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="shareMessage">Message (Optional)</Label>
+                  <Textarea
+                    id="shareMessage"
+                    placeholder="Add a message for the recipient..."
+                    value={shareMessage}
+                    onChange={(e) => setShareMessage(e.target.value)}
+                    rows={3}
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleShareDocument}
+                    disabled={!shareEmail}
+                    className="flex-1"
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share Document
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsShareDialogOpen(false);
+                      setShareEmail('');
+                      setShareMessage('');
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </main>
 
       <Footer />
