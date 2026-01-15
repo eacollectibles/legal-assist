@@ -12,8 +12,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2 } from 'lucide-react';
+import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2, PenTool } from 'lucide-react';
 import { format } from 'date-fns';
+import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generator';
+import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 
 interface DocumentTemplate {
   _id: string;
@@ -84,6 +86,10 @@ export default function DocumentWorkflowPage() {
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
+
+  // Signature dialog state
+  const [isSignatureDialogOpen, setIsSignatureDialogOpen] = useState(false);
+  const [documentToSign, setDocumentToSign] = useState<GeneratedDocument | null>(null);
 
   useEffect(() => {
     loadData();
@@ -220,13 +226,13 @@ export default function DocumentWorkflowPage() {
       documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '');
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
 
-      // Encode UTF-8 string to base64 safely
-      const utf8Bytes = new TextEncoder().encode(documentContent);
-      const base64String = btoa(String.fromCharCode(...utf8Bytes));
+      // Generate PDF from content
+      const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;
+      const pdfDataUrl = await generatePDF(documentContent, docName);
 
       const newDoc = {
         _id: crypto.randomUUID(),
-        documentName: documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`,
+        documentName: docName,
         templateId: selectedTemplateId,
         clientId: selectedClientId,
         clientEmail: clientEmailAddress,
@@ -234,7 +240,7 @@ export default function DocumentWorkflowPage() {
         generationDate: new Date().toISOString(),
         status: 'draft',
         requiresSignature: requiresSignature,
-        documentUrl: `data:text/plain;base64,${base64String}`,
+        documentUrl: pdfDataUrl,
         _createdDate: new Date()
       };
 
@@ -367,21 +373,67 @@ export default function DocumentWorkflowPage() {
   };
 
   const handleMarkAsSigned = async (docId: string) => {
+    const doc = generatedDocs.find(d => d._id === docId);
+    if (!doc) return;
+
+    // Open signature dialog
+    setDocumentToSign(doc);
+    setIsSignatureDialogOpen(true);
+  };
+
+  const handleSignatureComplete = async (signatureData: SignatureData) => {
+    if (!documentToSign) return;
+
     try {
+      // Embed signature into PDF
+      const signedPdfDataUrl = await embedSignatureInPDF(
+        documentToSign.documentUrl || '',
+        signatureData,
+        documentToSign.documentName || 'Document'
+      );
+
+      // Update document with signed version
       const updatedDocs = generatedDocs.map(d => 
-        d._id === docId 
-          ? { ...d, status: 'signed', signedDate: new Date().toISOString() }
+        d._id === documentToSign._id 
+          ? { 
+              ...d, 
+              status: 'signed', 
+              signedDate: signatureData.timestamp.toISOString(),
+              signedDocumentUrl: signedPdfDataUrl
+            }
           : d
       );
       setGeneratedDocs(updatedDocs);
       
       await BaseCrudService.update('generateddocuments', {
-        _id: docId,
+        _id: documentToSign._id,
         status: 'signed',
-        signedDate: new Date().toISOString()
+        signedDate: signatureData.timestamp.toISOString(),
+        signedDocumentUrl: signedPdfDataUrl
       });
+
+      // Create activity log
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
+
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: documentToSign.clientId || '',
+        activityType: 'document_signed',
+        activityDescription: `Document "${documentToSign.documentName}" was electronically signed`,
+        performedBy: userEmail,
+        performedByName: userName,
+        timestamp: signatureData.timestamp.toISOString(),
+        relatedItemId: documentToSign._id
+      });
+
+      setIsSignatureDialogOpen(false);
+      setDocumentToSign(null);
+      alert('Document signed successfully!');
     } catch (error) {
-      console.error('Error marking document as signed:', error);
+      console.error('Error signing document:', error);
+      alert('Failed to sign document. Please try again.');
       loadData();
     }
   };
@@ -717,6 +769,22 @@ export default function DocumentWorkflowPage() {
                         <Button
                           size="sm"
                           variant="outline"
+                          onClick={() => {
+                            const urlToDownload = doc.status === 'signed' && doc.signedDocumentUrl 
+                              ? doc.signedDocumentUrl 
+                              : doc.documentUrl;
+                            if (urlToDownload) {
+                              downloadPDF(urlToDownload, doc.documentName || 'document');
+                            }
+                          }}
+                          className="gap-2"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download PDF
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
                           onClick={() => handlePrintDocument(doc.documentUrl)}
                           className="gap-2"
                         >
@@ -742,8 +810,23 @@ export default function DocumentWorkflowPage() {
                             onClick={() => handleMarkAsSigned(doc._id)}
                             className="gap-2 bg-green-600 hover:bg-green-700"
                           >
+                            <PenTool className="h-4 w-4" />
+                            Sign Document
+                          </Button>
+                        )}
+                        {doc.status === 'signed' && doc.signedDocumentUrl && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              if (doc.signedDocumentUrl) {
+                                window.open(doc.signedDocumentUrl, '_blank');
+                              }
+                            }}
+                            className="gap-2 border-green-600 text-green-700 hover:bg-green-50"
+                          >
                             <CheckCircle className="h-4 w-4" />
-                            Mark as Signed
+                            View Signed PDF
                           </Button>
                         )}
                         <Button
@@ -947,6 +1030,21 @@ export default function DocumentWorkflowPage() {
                 Send Document
               </Button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Signature Dialog */}
+        <Dialog open={isSignatureDialogOpen} onOpenChange={setIsSignatureDialogOpen}>
+          <DialogContent className="max-w-4xl">
+            <DocumentSignature
+              documentId={documentToSign?._id || ''}
+              documentName={documentToSign?.documentName || 'Document'}
+              onSignatureComplete={handleSignatureComplete}
+              onCancel={() => {
+                setIsSignatureDialogOpen(false);
+                setDocumentToSign(null);
+              }}
+            />
           </DialogContent>
         </Dialog>
       </main>
