@@ -63,6 +63,8 @@ export default function DocumentWorkflowPage() {
   
   // Template dialog state
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingTemplateId, setEditingTemplateId] = useState<string>('');
   const [newTemplate, setNewTemplate] = useState({
     templateName: '',
     templateType: 'Authorization Letter',
@@ -110,13 +112,25 @@ export default function DocumentWorkflowPage() {
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
 
-      await BaseCrudService.create('documenttemplates', {
-        _id: crypto.randomUUID(),
-        ...newTemplate,
-        createdBy: userEmail
-      });
+      if (isEditMode && editingTemplateId) {
+        // Update existing template
+        await BaseCrudService.update('documenttemplates', {
+          _id: editingTemplateId,
+          ...newTemplate,
+          createdBy: userEmail
+        });
+      } else {
+        // Create new template
+        await BaseCrudService.create('documenttemplates', {
+          _id: crypto.randomUUID(),
+          ...newTemplate,
+          createdBy: userEmail
+        });
+      }
 
       setIsTemplateDialogOpen(false);
+      setIsEditMode(false);
+      setEditingTemplateId('');
       setNewTemplate({
         templateName: '',
         templateType: 'Authorization Letter',
@@ -125,7 +139,31 @@ export default function DocumentWorkflowPage() {
       });
       loadData();
     } catch (error) {
-      console.error('Error creating template:', error);
+      console.error('Error saving template:', error);
+    }
+  };
+
+  const handleEditTemplate = (template: DocumentTemplate) => {
+    setIsEditMode(true);
+    setEditingTemplateId(template._id);
+    setNewTemplate({
+      templateName: template.templateName || '',
+      templateType: template.templateType || 'Authorization Letter',
+      templateContent: template.templateContent || '',
+      isActive: template.isActive ?? true
+    });
+    setIsTemplateDialogOpen(true);
+  };
+
+  const handleToggleTemplateStatus = async (templateId: string, currentStatus: boolean) => {
+    try {
+      await BaseCrudService.update('documenttemplates', {
+        _id: templateId,
+        isActive: !currentStatus
+      });
+      loadData();
+    } catch (error) {
+      console.error('Error toggling template status:', error);
     }
   };
 
@@ -508,7 +546,19 @@ export default function DocumentWorkflowPage() {
               <h2 className="font-heading text-3xl font-bold text-foreground">
                 Document Templates
               </h2>
-              <Dialog open={isTemplateDialogOpen} onOpenChange={setIsTemplateDialogOpen}>
+              <Dialog open={isTemplateDialogOpen} onOpenChange={(open) => {
+                setIsTemplateDialogOpen(open);
+                if (!open) {
+                  setIsEditMode(false);
+                  setEditingTemplateId('');
+                  setNewTemplate({
+                    templateName: '',
+                    templateType: 'Authorization Letter',
+                    templateContent: '',
+                    isActive: true
+                  });
+                }
+              }}>
                 <DialogTrigger asChild>
                   <Button className="gap-2">
                     <Plus className="h-4 w-4" />
@@ -517,7 +567,7 @@ export default function DocumentWorkflowPage() {
                 </DialogTrigger>
                 <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
-                    <DialogTitle>Create Document Template</DialogTitle>
+                    <DialogTitle>{isEditMode ? 'Edit Document Template' : 'Create Document Template'}</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
@@ -565,7 +615,7 @@ export default function DocumentWorkflowPage() {
                     </div>
 
                     <Button onClick={handleCreateTemplate} className="w-full">
-                      Create Template
+                      {isEditMode ? 'Update Template' : 'Create Template'}
                     </Button>
                   </div>
                 </DialogContent>
@@ -610,6 +660,25 @@ export default function DocumentWorkflowPage() {
                         <span>Created by: {template.createdBy}</span>
                         <span>•</span>
                         <span>{template._createdDate ? format(new Date(template._createdDate), 'MMM d, yyyy') : 'N/A'}</span>
+                      </div>
+                      <div className="flex gap-2 pt-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEditTemplate(template)}
+                          className="gap-2"
+                        >
+                          <Edit className="h-4 w-4" />
+                          Edit Template
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleToggleTemplateStatus(template._id, template.isActive ?? true)}
+                          className="gap-2"
+                        >
+                          {template.isActive ? 'Deactivate' : 'Activate'}
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
