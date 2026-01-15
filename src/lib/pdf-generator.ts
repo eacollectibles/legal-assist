@@ -168,8 +168,13 @@ ${isHtmlContent ? content : escapeHtml(content)}
     <h2>Signature Section</h2>
     <p>This document requires your electronic signature. Please sign using the document workflow portal.</p>
     <div class="signature-line">
-      Signature
+      Signature: {SIGNATURE_SECTION}
     </div>
+    <p style="font-size: 9pt; color: #666; margin-top: 20px; font-style: italic;">
+      Note: To have the signature replace a specific location in your template, add the placeholder 
+      <strong>{SIGNATURE_SECTION}</strong>, <strong>{SIGNATURE}</strong>, or <strong>{{SIGNATURE}}</strong> 
+      where you want the signature to appear in your template content.
+    </p>
   </div>
 
   <div class="footer">
@@ -203,6 +208,8 @@ export async function embedSignatureInPDF(
 
   // Extract the original document content from the data URL
   let originalContent = '';
+  let hasSignaturePlaceholder = false;
+  
   try {
     if (originalDocDataUrl.startsWith('data:text/html;base64,')) {
       const base64Content = originalDocDataUrl.split(',')[1];
@@ -222,10 +229,66 @@ export async function embedSignatureInPDF(
           originalContent = bodyContent.innerHTML;
         }
       }
+      
+      // Check if content has signature placeholder
+      hasSignaturePlaceholder = originalContent.includes('{SIGNATURE_SECTION}') || 
+                                 originalContent.includes('{SIGNATURE}') ||
+                                 originalContent.includes('{{SIGNATURE}}');
     }
   } catch (error) {
     console.error('Error extracting original document content:', error);
     originalContent = '<p>Original document content could not be extracted.</p>';
+  }
+
+  // Create the signature HTML block
+  const signatureBlock = `
+    <div class="signature-section">
+      <h2>Electronic Signature</h2>
+      
+      <div class="signature-image">
+        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" />
+        <div style="margin-top: 10px; font-size: 10pt;">Electronically Signed</div>
+      </div>
+
+      <div class="signature-details">
+        <h3>Signature Verification Details</h3>
+        <div class="detail-row">
+          <div class="detail-label">Date:</div>
+          <div class="detail-value">${escapeHtml(signatureData.signedDate)}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Time:</div>
+          <div class="detail-value">${escapeHtml(signatureData.signedTime)}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">IP Address:</div>
+          <div class="detail-value">${escapeHtml(signatureData.ipAddress)}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Timestamp:</div>
+          <div class="detail-value">${signatureData.timestamp.toISOString()}</div>
+        </div>
+      </div>
+
+      <div class="certification">
+        <strong>CERTIFICATION:</strong><br>
+        This document has been electronically signed. The signature, date, time, and 
+        IP address have been permanently affixed to this document and cannot be altered.
+      </div>
+    </div>
+  `;
+
+  // Replace signature placeholder if it exists, otherwise append at the end
+  let finalContent = originalContent;
+  if (hasSignaturePlaceholder) {
+    // Replace any of the signature placeholders with the actual signature block
+    finalContent = originalContent
+      .replace(/{SIGNATURE_SECTION}/g, signatureBlock)
+      .replace(/{SIGNATURE}/g, signatureBlock)
+      .replace(/{{SIGNATURE}}/g, signatureBlock);
+  } else {
+    // Append signature at the end if no placeholder found
+    finalContent = originalContent + signatureBlock;
   }
 
   // Create HTML content for signed PDF with original content + signature
@@ -418,42 +481,7 @@ export async function embedSignatureInPDF(
   </div>
 
   <div class="content">
-${originalContent}
-  </div>
-
-  <div class="signature-section">
-    <h2>Electronic Signature</h2>
-    
-    <div class="signature-image">
-      <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" />
-      <div style="margin-top: 10px; font-size: 10pt;">Electronically Signed</div>
-    </div>
-
-    <div class="signature-details">
-      <h3>Signature Verification Details</h3>
-      <div class="detail-row">
-        <div class="detail-label">Date:</div>
-        <div class="detail-value">${escapeHtml(signatureData.signedDate)}</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Time:</div>
-        <div class="detail-value">${escapeHtml(signatureData.signedTime)}</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">IP Address:</div>
-        <div class="detail-value">${escapeHtml(signatureData.ipAddress)}</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Timestamp:</div>
-        <div class="detail-value">${signatureData.timestamp.toISOString()}</div>
-      </div>
-    </div>
-
-    <div class="certification">
-      <strong>CERTIFICATION:</strong><br>
-      This document has been electronically signed. The signature, date, time, and 
-      IP address have been permanently affixed to this document and cannot be altered.
-    </div>
+${finalContent}
   </div>
 
   <div class="footer">
