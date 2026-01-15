@@ -662,26 +662,31 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <Tabs defaultValue="documents" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 mb-8">
-              <TabsTrigger value="documents" className="flex items-center gap-2">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2 mb-8 h-auto">
+              <TabsTrigger value="documents" className="flex items-center gap-2 py-3">
                 <FileText className="w-4 h-4" />
-                Documents
+                <span className="hidden sm:inline">Documents</span>
+                <span className="sm:hidden">Docs</span>
               </TabsTrigger>
-              <TabsTrigger value="profile" className="flex items-center gap-2">
+              <TabsTrigger value="profile" className="flex items-center gap-2 py-3">
                 <User className="w-4 h-4" />
-                Personal Details
+                <span className="hidden sm:inline">Personal Details</span>
+                <span className="sm:hidden">Profile</span>
               </TabsTrigger>
-              <TabsTrigger value="payments" className="flex items-center gap-2">
+              <TabsTrigger value="payments" className="flex items-center gap-2 py-3">
                 <CreditCard className="w-4 h-4" />
-                Payments
+                <span className="hidden sm:inline">Payments</span>
+                <span className="sm:hidden">Pay</span>
               </TabsTrigger>
-              <TabsTrigger value="messages" className="flex items-center gap-2">
+              <TabsTrigger value="messages" className="flex items-center gap-2 py-3">
                 <MessageSquare className="w-4 h-4" />
-                Messages
+                <span className="hidden sm:inline">Messages</span>
+                <span className="sm:hidden">Msgs</span>
               </TabsTrigger>
-              <TabsTrigger value="notifications" className="flex items-center gap-2 relative">
+              <TabsTrigger value="notifications" className="flex items-center gap-2 py-3 relative">
                 {unreadCount > 0 ? <BellDot className="w-4 h-4" /> : <Bell className="w-4 h-4" />}
-                Notifications
+                <span className="hidden sm:inline">Notifications</span>
+                <span className="sm:hidden">Alerts</span>
                 {unreadCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {unreadCount}
@@ -869,6 +874,47 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
               </div>
             </div>
 
+            {/* Documents Summary Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-paragraph text-sm text-foreground/60 mb-1">Total Documents</p>
+                      <p className="font-heading text-3xl font-bold text-foreground">{documents.length}</p>
+                    </div>
+                    <FileText className="w-10 h-10 text-primary/30" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-paragraph text-sm text-foreground/60 mb-1">Total Storage</p>
+                      <p className="font-heading text-3xl font-bold text-foreground">
+                        {(documents.reduce((sum, doc) => sum + (doc.fileSize || 0), 0) / (1024 * 1024)).toFixed(1)} MB
+                      </p>
+                    </div>
+                    <Download className="w-10 h-10 text-primary/30" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-paragraph text-sm text-foreground/60 mb-1">Categories</p>
+                      <p className="font-heading text-3xl font-bold text-foreground">
+                        {new Set(documents.map(doc => doc.documentCategory).filter(Boolean)).size}
+                      </p>
+                    </div>
+                    <AlertCircle className="w-10 h-10 text-primary/30" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
             {/* Documents List */}
             {isLoading ? (
               <div className="text-center py-12">
@@ -893,54 +939,53 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
             ) : (
               <div className="space-y-4">
                 {filteredDocuments.map(doc => (
-                  <div key={doc._id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-heading text-lg font-bold text-foreground mb-2">
-                          {doc.documentName}
-                        </h3>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                          <div>
-                            <p className="font-paragraph text-foreground/60">Category</p>
-                            <p className="font-paragraph font-semibold text-foreground">
-                              {doc.documentCategory ? doc.documentCategory.charAt(0).toUpperCase() + doc.documentCategory.slice(1).replace('-', ' ') : 'Uncategorized'}
-                            </p>
+                  <div key={doc._id} className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 hover:shadow-lg transition-shadow">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <FileText className="w-5 h-5 text-primary" />
                           </div>
-                          <div>
-                            <p className="font-paragraph text-foreground/60">File Type</p>
-                            <p className="font-paragraph font-semibold text-foreground">{doc.fileType?.split('/')[1]?.toUpperCase() || 'Unknown'}</p>
-                          </div>
-                          <div>
-                            <p className="font-paragraph text-foreground/60">File Size</p>
-                            <p className="font-paragraph font-semibold text-foreground">
-                              {doc.fileSize ? (doc.fileSize / 1024).toFixed(2) + ' KB' : 'Unknown'}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="font-paragraph text-foreground/60">Uploaded</p>
-                            <p className="font-paragraph font-semibold text-foreground">
-                              {doc.uploadDate instanceof Date ? doc.uploadDate.toLocaleDateString() : new Date(doc.uploadDate || '').toLocaleDateString()}
-                            </p>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-heading text-lg font-bold text-foreground mb-1 truncate">
+                              {doc.documentName}
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-2">
+                              <Badge variant="outline" className="text-xs">
+                                {doc.documentCategory ? doc.documentCategory.charAt(0).toUpperCase() + doc.documentCategory.slice(1).replace('-', ' ') : 'Uncategorized'}
+                              </Badge>
+                              <span className="text-xs text-foreground/60">
+                                {doc.fileType?.split('/')[1]?.toUpperCase() || 'Unknown'}
+                              </span>
+                              <span className="text-xs text-foreground/60">•</span>
+                              <span className="text-xs text-foreground/60">
+                                {doc.fileSize ? (doc.fileSize / 1024).toFixed(2) + ' KB' : 'Unknown'}
+                              </span>
+                              <span className="text-xs text-foreground/60">•</span>
+                              <span className="text-xs text-foreground/60">
+                                {doc.uploadDate instanceof Date ? doc.uploadDate.toLocaleDateString() : new Date(doc.uploadDate || '').toLocaleDateString()}
+                              </span>
+                            </div>
                           </div>
                         </div>
                         {doc.notes && (
-                          <div className="mt-4 pt-4 border-t border-gray-200">
-                            <p className="font-paragraph text-sm text-foreground/80">
-                              <strong>Notes:</strong> {doc.notes}
+                          <div className="ml-13 pl-4 border-l-2 border-gray-200">
+                            <p className="font-paragraph text-sm text-foreground/70">
+                              {doc.notes}
                             </p>
                           </div>
                         )}
                       </div>
 
-                      <div className="flex gap-2 ml-4">
-                        <button
+                      <div className="flex md:flex-col gap-2 md:ml-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
                           onClick={() => {
                             if (doc.fileUrl) {
-                              // Create a new window/tab with the file content
                               const newWindow = window.open('', '_blank');
                               if (newWindow) {
                                 if (doc.fileType?.startsWith('image/')) {
-                                  // For images, display directly
                                   newWindow.document.write(`
                                     <html>
                                       <head>
@@ -956,7 +1001,6 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                                     </html>
                                   `);
                                 } else if (doc.fileType === 'application/pdf') {
-                                  // For PDFs, embed in iframe
                                   newWindow.document.write(`
                                     <html>
                                       <head>
@@ -972,32 +1016,39 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                                     </html>
                                   `);
                                 } else {
-                                  // For other file types, trigger download
                                   newWindow.location.href = doc.fileUrl;
                                 }
                               }
                             }
                           }}
-                          className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                          className="flex-1 md:flex-none border-primary text-primary hover:bg-primary/5"
                           title="View document"
                         >
-                          <FileText className="w-5 h-5" />
-                        </button>
-                        <a
-                          href={doc.fileUrl}
-                          download={doc.documentName}
-                          className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                          <FileText className="w-4 h-4 md:mr-2" />
+                          <span className="hidden md:inline">View</span>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          asChild
+                          className="flex-1 md:flex-none"
                           title="Download document"
                         >
-                          <Download className="w-5 h-5" />
-                        </a>
-                        <button
+                          <a href={doc.fileUrl} download={doc.documentName}>
+                            <Download className="w-4 h-4 md:mr-2" />
+                            <span className="hidden md:inline">Download</span>
+                          </a>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
                           onClick={() => handleDeleteDocument(doc._id)}
-                          className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                          className="flex-1 md:flex-none border-destructive text-destructive hover:bg-destructive/10"
                           title="Delete document"
                         >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
+                          <Trash2 className="w-4 h-4 md:mr-2" />
+                          <span className="hidden md:inline">Delete</span>
+                        </Button>
                       </div>
                     </div>
                   </div>

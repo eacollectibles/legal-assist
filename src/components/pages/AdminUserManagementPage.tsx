@@ -331,12 +331,49 @@ export default function AdminUserManagementPage() {
             </div>
           )}
 
+          {/* Summary Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Total Users</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{users.length}</p>
+                  </div>
+                  <Users className="w-10 h-10 text-primary/30" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Paralegals</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{users.filter(u => u.isAdmin).length}</p>
+                  </div>
+                  <Shield className="w-10 h-10 text-primary/30" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Clients</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{users.filter(u => !u.isAdmin).length}</p>
+                  </div>
+                  <Users className="w-10 h-10 text-primary/30" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Paralegals Section */}
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="font-heading text-2xl flex items-center gap-2">
                 <Shield className="w-6 h-6 text-primary" />
-                Paralegals
+                Paralegals ({users.filter(u => u.isAdmin).length})
               </CardTitle>
               <CardDescription className="font-paragraph">
                 Licensed paralegals with administrative privileges
@@ -358,41 +395,45 @@ export default function AdminUserManagementPage() {
                   {users.filter(u => u.isAdmin).map(user => (
                     <div
                       key={user.email}
-                      className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                      className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 hover:shadow-lg transition-shadow"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="font-heading text-lg font-bold text-foreground">
-                              {user.firstName && user.lastName
-                                ? `${user.firstName} ${user.lastName}`
-                                : user.email}
-                            </h3>
-                            <Badge className="bg-primary text-white">
-                              <Shield className="w-3 h-3 mr-1" />
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <Shield className="w-5 h-5 text-primary" />
+                              </div>
+                              <h3 className="font-heading text-lg font-bold text-foreground truncate">
+                                {user.firstName && user.lastName
+                                  ? `${user.firstName} ${user.lastName}`
+                                  : user.email}
+                              </h3>
+                            </div>
+                            <Badge className="bg-primary text-white flex-shrink-0">
                               Paralegal
                             </Badge>
                             {user.email === currentUser.email && (
-                              <Badge variant="outline" className="border-primary text-primary">
+                              <Badge variant="outline" className="border-primary text-primary flex-shrink-0">
                                 You
                               </Badge>
                             )}
                             {user.unreadMessageCount && user.unreadMessageCount > 0 && (
-                              <Badge className="bg-red-500 text-white flex items-center gap-1">
+                              <Badge className="bg-red-500 text-white flex items-center gap-1 flex-shrink-0">
                                 <MessageSquare className="w-3 h-3" />
-                                {user.unreadMessageCount} unread
+                                {user.unreadMessageCount}
                               </Badge>
                             )}
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             <div>
-                              <p className="font-paragraph text-foreground/60">Email</p>
-                              <p className="font-paragraph font-semibold text-foreground">
+                              <p className="font-paragraph text-foreground/60 text-xs mb-1">Email</p>
+                              <p className="font-paragraph font-semibold text-foreground truncate">
                                 {user.email}
                               </p>
                             </div>
                             <div>
-                              <p className="font-paragraph text-foreground/60">Member Since</p>
+                              <p className="font-paragraph text-foreground/60 text-xs mb-1">Member Since</p>
                               <p className="font-paragraph font-semibold text-foreground">
                                 {new Date(user.createdAt).toLocaleDateString()}
                               </p>
@@ -400,25 +441,25 @@ export default function AdminUserManagementPage() {
                           </div>
                         </div>
 
-                        <div className="flex flex-col gap-4 ml-6">
-                          <div className="flex items-center gap-3">
+                        <div className="flex flex-col gap-3 lg:ml-6">
+                          <div className="flex flex-wrap items-center gap-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleViewDetails(user._id, user.email)}
+                              className="flex-1 sm:flex-none"
                             >
                               <Eye className="w-4 h-4 mr-2" />
-                              View Details
+                              View
                               {user.email === 'jeanfrancois@legalassist.london' && currentUser?.email !== 'jeanfrancois@legalassist.london' && (
                                 <Lock className="w-3 h-3 ml-2 text-primary" />
                               )}
                             </Button>
                             
-                            {/* Only show toggle for jeanfrancois@legalassist.london */}
                             {currentUser?.email === 'jeanfrancois@legalassist.london' && (
-                              <div className="flex items-center gap-2">
-                                <Shield className="w-5 h-5 text-primary" />
-                                <span className="font-paragraph text-sm text-foreground/80">
+                              <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                                <Shield className="w-4 h-4 text-primary" />
+                                <span className="font-paragraph text-xs text-foreground/80">
                                   Paralegal
                                 </span>
                                 <Switch
@@ -430,14 +471,13 @@ export default function AdminUserManagementPage() {
                             )}
                           </div>
 
-                          {/* Account Actions */}
                           {user.email !== currentUser.email && (
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
                               <Button
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleDisableAccount(user._id, user.email)}
-                                className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                                className="flex-1 sm:flex-none border-orange-500 text-orange-600 hover:bg-orange-50"
                               >
                                 <UserX className="w-4 h-4 mr-2" />
                                 Disable
@@ -447,7 +487,7 @@ export default function AdminUserManagementPage() {
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleDeleteAccount(user._id, user.email)}
-                                className="border-destructive text-destructive hover:bg-destructive/10"
+                                className="flex-1 sm:flex-none border-destructive text-destructive hover:bg-destructive/10"
                               >
                                 <Trash2 className="w-4 h-4 mr-2" />
                                 Delete
@@ -476,7 +516,7 @@ export default function AdminUserManagementPage() {
             <CardHeader>
               <CardTitle className="font-heading text-2xl flex items-center gap-2">
                 <Users className="w-6 h-6" />
-                Clients
+                Clients ({users.filter(u => !u.isAdmin).length})
               </CardTitle>
               <CardDescription className="font-paragraph">
                 View and manage client accounts
@@ -498,37 +538,42 @@ export default function AdminUserManagementPage() {
                   {users.filter(u => !u.isAdmin).map(user => (
                     <div
                       key={user.email}
-                      className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                      className="bg-white border border-gray-200 rounded-lg p-4 md:p-6 hover:shadow-lg transition-shadow"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="font-heading text-lg font-bold text-foreground">
-                              {user.firstName && user.lastName
-                                ? `${user.firstName} ${user.lastName}`
-                                : user.email}
-                            </h3>
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                                <Users className="w-5 h-5 text-gray-600" />
+                              </div>
+                              <h3 className="font-heading text-lg font-bold text-foreground truncate">
+                                {user.firstName && user.lastName
+                                  ? `${user.firstName} ${user.lastName}`
+                                  : user.email}
+                              </h3>
+                            </div>
                             {user.email === currentUser.email && (
-                              <Badge variant="outline" className="border-primary text-primary">
+                              <Badge variant="outline" className="border-primary text-primary flex-shrink-0">
                                 You
                               </Badge>
                             )}
                             {user.unreadMessageCount && user.unreadMessageCount > 0 && (
-                              <Badge className="bg-red-500 text-white flex items-center gap-1">
+                              <Badge className="bg-red-500 text-white flex items-center gap-1 flex-shrink-0">
                                 <MessageSquare className="w-3 h-3" />
-                                {user.unreadMessageCount} unread
+                                {user.unreadMessageCount}
                               </Badge>
                             )}
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             <div>
-                              <p className="font-paragraph text-foreground/60">Email</p>
-                              <p className="font-paragraph font-semibold text-foreground">
+                              <p className="font-paragraph text-foreground/60 text-xs mb-1">Email</p>
+                              <p className="font-paragraph font-semibold text-foreground truncate">
                                 {user.email}
                               </p>
                             </div>
                             <div>
-                              <p className="font-paragraph text-foreground/60">Member Since</p>
+                              <p className="font-paragraph text-foreground/60 text-xs mb-1">Member Since</p>
                               <p className="font-paragraph font-semibold text-foreground">
                                 {new Date(user.createdAt).toLocaleDateString()}
                               </p>
@@ -536,22 +581,22 @@ export default function AdminUserManagementPage() {
                           </div>
                         </div>
 
-                        <div className="flex flex-col gap-4 ml-6">
-                          <div className="flex items-center gap-3">
+                        <div className="flex flex-col gap-3 lg:ml-6">
+                          <div className="flex flex-wrap items-center gap-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => handleViewDetails(user._id, user.email)}
+                              className="flex-1 sm:flex-none"
                             >
                               <Eye className="w-4 h-4 mr-2" />
-                              View Details
+                              View
                             </Button>
                             
-                            {/* Only show toggle for jeanfrancois@legalassist.london */}
                             {currentUser?.email === 'jeanfrancois@legalassist.london' && (
-                              <div className="flex items-center gap-2">
-                                <ShieldOff className="w-5 h-5 text-gray-400" />
-                                <span className="font-paragraph text-sm text-foreground/80">
+                              <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                                <ShieldOff className="w-4 h-4 text-gray-400" />
+                                <span className="font-paragraph text-xs text-foreground/80">
                                   Paralegal
                                 </span>
                                 <Switch
@@ -563,14 +608,13 @@ export default function AdminUserManagementPage() {
                             )}
                           </div>
 
-                          {/* Account Actions */}
                           {user.email !== currentUser.email && (
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
                               <Button
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleDisableAccount(user._id, user.email)}
-                                className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                                className="flex-1 sm:flex-none border-orange-500 text-orange-600 hover:bg-orange-50"
                               >
                                 <UserX className="w-4 h-4 mr-2" />
                                 Disable
@@ -580,7 +624,7 @@ export default function AdminUserManagementPage() {
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleDeleteAccount(user._id, user.email)}
-                                className="border-destructive text-destructive hover:bg-destructive/10"
+                                className="flex-1 sm:flex-none border-destructive text-destructive hover:bg-destructive/10"
                               >
                                 <Trash2 className="w-4 h-4 mr-2" />
                                 Delete
