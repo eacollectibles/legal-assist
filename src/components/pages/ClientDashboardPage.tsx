@@ -574,9 +574,31 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsLoadingGeneratedDocs(true);
     try {
       const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
-      // Filter documents for current client by email
-      const userDocs = items?.filter(doc => doc.clientEmail === currentUser?.email) || [];
+      // Filter documents for current client by email (check both clientEmail and exact match)
+      const userDocs = items?.filter(doc => {
+        // Check if clientEmail matches current user's email
+        if (doc.clientEmail === currentUser?.email) return true;
+        // Also check if clientId matches userAccountId or email
+        if (doc.clientId === userAccountId || doc.clientId === currentUser?.email) return true;
+        return false;
+      }) || [];
+      
+      // Sort by generation date, newest first
+      userDocs.sort((a, b) => {
+        const dateA = new Date(a.generationDate || 0).getTime();
+        const dateB = new Date(b.generationDate || 0).getTime();
+        return dateB - dateA;
+      });
+      
       setGeneratedDocuments(userDocs);
+      
+      console.log('Loaded generated documents for client:', {
+        email: currentUser?.email,
+        userAccountId,
+        totalDocs: items?.length,
+        userDocs: userDocs.length,
+        docsRequiringSignature: userDocs.filter(d => d.requiresSignature && d.status !== 'signed').length
+      });
     } catch (error) {
       console.error('Failed to load generated documents:', error);
     } finally {
