@@ -201,7 +201,34 @@ export async function embedSignatureInPDF(
   const documentId = `DOC-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
   const signedDate = new Date().toISOString();
 
-  // Create HTML content for signed PDF
+  // Extract the original document content from the data URL
+  let originalContent = '';
+  try {
+    if (originalDocDataUrl.startsWith('data:text/html;base64,')) {
+      const base64Content = originalDocDataUrl.split(',')[1];
+      const decodedContent = decodeURIComponent(escape(atob(base64Content)));
+      
+      // Parse the original HTML to extract just the content section
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(decodedContent, 'text/html');
+      const contentDiv = doc.querySelector('.content');
+      
+      if (contentDiv) {
+        originalContent = contentDiv.innerHTML;
+      } else {
+        // Fallback: extract body content if .content div not found
+        const bodyContent = doc.querySelector('body');
+        if (bodyContent) {
+          originalContent = bodyContent.innerHTML;
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error extracting original document content:', error);
+    originalContent = '<p>Original document content could not be extracted.</p>';
+  }
+
+  // Create HTML content for signed PDF with original content + signature
   const htmlContent = `
 <!DOCTYPE html>
 <html>
@@ -243,11 +270,74 @@ export async function embedSignatureInPDF(
       font-weight: bold;
       margin-top: 10px;
     }
+    .content {
+      margin: 30px 0;
+      text-align: justify;
+    }
+    .content.plain-text {
+      white-space: pre-wrap;
+    }
+    /* HTML content styling */
+    .content h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      margin: 20px 0 10px 0;
+    }
+    .content h2 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 18px 0 8px 0;
+    }
+    .content h3 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin: 16px 0 6px 0;
+    }
+    .content p {
+      margin: 10px 0;
+    }
+    .content ul, .content ol {
+      margin: 10px 0;
+      padding-left: 30px;
+    }
+    .content li {
+      margin: 5px 0;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .content table th,
+    .content table td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+    .content table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    .content strong {
+      font-weight: bold;
+    }
+    .content em {
+      font-style: italic;
+    }
+    .content u {
+      text-decoration: underline;
+    }
+    .content hr {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 20px 0;
+    }
     .signature-section {
       margin-top: 60px;
       border: 2px solid #000;
       padding: 30px;
       background: #f9f9f9;
+      page-break-before: avoid;
     }
     .signature-section h2 {
       font-size: 14pt;
@@ -325,6 +415,10 @@ export async function embedSignatureInPDF(
   <div class="header">
     <h1>${escapeHtml(documentName)}</h1>
     <div class="status">✓ ELECTRONICALLY SIGNED</div>
+  </div>
+
+  <div class="content">
+${originalContent}
   </div>
 
   <div class="signature-section">
