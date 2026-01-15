@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, FileEdit, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
@@ -883,23 +883,7 @@ export default function ParalegalDashboardPage() {
               </h2>
             </div>
 
-            {/* Nested Tabs for File Management */}
-            <Tabs defaultValue="documents" className="w-full">
-              <TabsList>
-                <TabsTrigger value="documents">Document Management</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="documents" className="space-y-6 mt-6">
-                {/* Nested Tabs for Document Management */}
-                <Tabs defaultValue="overview" className="w-full">
-                  <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="tools">Tools</TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="overview" className="space-y-6 mt-6">
-
-            {/* Advanced Search and Filter */}
+            {/* Document Management Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -1086,72 +1070,6 @@ export default function ParalegalDashboardPage() {
                 ))
               )}
             </div>
-
-                  </TabsContent>
-
-                  <TabsContent value="tools" className="space-y-6 mt-6">
-                    {/* Document Workflow Management */}
-                    <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/30 shadow-lg">
-                      <CardHeader className="pb-4">
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                              <FileEdit className="h-6 w-6 text-primary" />
-                            </div>
-                            <div>
-                              <CardTitle className="font-heading text-2xl text-foreground mb-1">
-                                Document Workflow Management
-                              </CardTitle>
-                              <p className="font-paragraph text-foreground/70">
-                                Generate documents, manage templates, and streamline your workflow
-                              </p>
-                            </div>
-                          </div>
-                          <Button
-                            onClick={() => navigate('/document-workflow')}
-                            className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
-                          >
-                            Open Workflow
-                            <ArrowRight className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
-                            <div className="flex items-center gap-2 mb-2">
-                              <FileText className="h-5 w-5 text-primary" />
-                              <h3 className="font-heading font-semibold text-foreground">Document Generation</h3>
-                            </div>
-                            <p className="font-paragraph text-sm text-foreground/70">
-                              Create new documents from templates with automated field population
-                            </p>
-                          </div>
-                          <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
-                            <div className="flex items-center gap-2 mb-2">
-                              <FileEdit className="h-5 w-5 text-primary" />
-                              <h3 className="font-heading font-semibold text-foreground">Template Management</h3>
-                            </div>
-                            <p className="font-paragraph text-sm text-foreground/70">
-                              View, edit, and organize document templates for various legal services
-                            </p>
-                          </div>
-                          <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
-                            <div className="flex items-center gap-2 mb-2">
-                              <CheckCircle className="h-5 w-5 text-primary" />
-                              <h3 className="font-heading font-semibold text-foreground">Track Status</h3>
-                            </div>
-                            <p className="font-paragraph text-sm text-foreground/70">
-                              Monitor document generation, sending, and signature status
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </TabsContent>
-                </Tabs>
-              </TabsContent>
-            </Tabs>
           </TabsContent>
         </Tabs>
 

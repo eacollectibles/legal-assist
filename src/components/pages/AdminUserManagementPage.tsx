@@ -12,7 +12,7 @@ import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin, getAllUsers, setAdminStatus } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { Messages } from '@/entities';
-import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare, UserX, Trash2, Lock } from 'lucide-react';
+import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare, UserX, Trash2, Lock, FileEdit, FileText, ArrowRight, Wrench } from 'lucide-react';
 
 interface User {
   _id: string;
@@ -512,7 +512,7 @@ export default function AdminUserManagementPage() {
           </Card>
 
           {/* Clients Section */}
-          <Card>
+          <Card className="mb-8">
             <CardHeader>
               <CardTitle className="font-heading text-2xl flex items-center gap-2">
                 <Users className="w-6 h-6" />
@@ -645,6 +645,79 @@ export default function AdminUserManagementPage() {
                   ))}
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          {/* Tools Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-heading text-2xl flex items-center gap-2">
+                <Wrench className="w-6 h-6 text-primary" />
+                Tools
+              </CardTitle>
+              <CardDescription className="font-paragraph">
+                Access administrative tools and workflow management
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* Document Workflow Management */}
+              <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/30 shadow-lg">
+                <CardHeader className="pb-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+                        <FileEdit className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle className="font-heading text-2xl text-foreground mb-1">
+                          Document Workflow Management
+                        </CardTitle>
+                        <p className="font-paragraph text-foreground/70">
+                          Generate documents, manage templates, and streamline your workflow
+                        </p>
+                      </div>
+                    </div>
+                    <Button
+                      onClick={() => navigate('/document-workflow')}
+                      className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
+                    >
+                      Open Workflow
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <FileText className="h-5 w-5 text-primary" />
+                        <h3 className="font-heading font-semibold text-foreground">Document Generation</h3>
+                      </div>
+                      <p className="font-paragraph text-sm text-foreground/70">
+                        Create new documents from templates with automated field population
+                      </p>
+                    </div>
+                    <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <FileEdit className="h-5 w-5 text-primary" />
+                        <h3 className="font-heading font-semibold text-foreground">Template Management</h3>
+                      </div>
+                      <p className="font-paragraph text-sm text-foreground/70">
+                        View, edit, and organize document templates for various legal services
+                      </p>
+                    </div>
+                    <div className="bg-white/50 rounded-lg p-4 border border-primary/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="h-5 w-5 text-primary" />
+                        <h3 className="font-heading font-semibold text-foreground">Track Status</h3>
+                      </div>
+                      <p className="font-paragraph text-sm text-foreground/70">
+                        Monitor document generation, sending, and signature status
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </CardContent>
           </Card>
         </div>
