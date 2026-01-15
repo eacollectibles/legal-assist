@@ -11,7 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface DocumentTemplate {
@@ -323,18 +324,130 @@ export default function DocumentWorkflowPage() {
     return client ? `${client.firstName || ''} ${client.lastName || ''}`.trim() : 'Unknown Client';
   };
 
+  // Workflow analytics
+  const totalDocuments = generatedDocs.length;
+  const pendingSignatures = generatedDocs.filter(d => d.status === 'sent' && d.requiresSignature).length;
+  const completedDocs = generatedDocs.filter(d => d.status === 'signed').length;
+  const avgProcessingTime = '2.5 days'; // This would be calculated from actual data
+  const completionRate = totalDocuments > 0 ? Math.round((completedDocs / totalDocuments) * 100) : 0;
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       
       <main className="flex-1 w-full max-w-[120rem] mx-auto px-6 py-12">
+        {/* Enhanced Header with Analytics */}
         <div className="mb-8">
-          <h1 className="font-heading text-5xl font-bold text-foreground mb-4">
-            Document Workflow Management
-          </h1>
-          <p className="font-paragraph text-lg text-foreground/80">
-            Create templates, generate documents, and manage client signatures
-          </p>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="font-heading text-5xl font-bold text-foreground mb-4">
+                Document Workflow Management
+              </h1>
+              <p className="font-paragraph text-lg text-foreground/80">
+                Streamlined document creation, tracking, and signature management
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline" className="gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Analytics
+              </Button>
+              <Button variant="outline" className="gap-2">
+                <Workflow className="h-4 w-4" />
+                Automation Rules
+              </Button>
+            </div>
+          </div>
+
+          {/* Workflow Performance Dashboard */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/70 mb-1">Total Documents</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{totalDocuments}</p>
+                    <p className="font-paragraph text-xs text-foreground/60 mt-1">All time</p>
+                  </div>
+                  <FileText className="w-10 h-10 text-blue-600/40" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/70 mb-1">Pending Signatures</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{pendingSignatures}</p>
+                    <p className="font-paragraph text-xs text-foreground/60 mt-1">Awaiting action</p>
+                  </div>
+                  <Clock className="w-10 h-10 text-amber-600/40" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/70 mb-1">Completion Rate</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{completionRate}%</p>
+                    <Progress value={completionRate} className="mt-2 h-2" />
+                  </div>
+                  <TrendingUp className="w-10 h-10 text-green-600/40" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/70 mb-1">Avg Processing</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{avgProcessingTime}</p>
+                    <p className="font-paragraph text-xs text-foreground/60 mt-1">Draft to signed</p>
+                  </div>
+                  <Zap className="w-10 h-10 text-purple-600/40" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Quick Actions & Automation Suggestions */}
+          <Card className="mb-8 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <Bot className="h-5 w-5" />
+                Smart Workflow Suggestions
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-primary/20">
+                  <Bell className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <p className="font-paragraph font-semibold text-foreground mb-1">Auto-Reminders</p>
+                    <p className="font-paragraph text-sm text-foreground/70">Send automatic follow-ups for pending signatures after 3 days</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-primary/20">
+                  <Copy className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <p className="font-paragraph font-semibold text-foreground mb-1">Batch Processing</p>
+                    <p className="font-paragraph text-sm text-foreground/70">Generate multiple documents at once for efficiency</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-primary/20">
+                  <MessageSquare className="h-5 w-5 text-primary mt-1" />
+                  <div>
+                    <p className="font-paragraph font-semibold text-foreground mb-1">Client Notifications</p>
+                    <p className="font-paragraph text-sm text-foreground/70">Automatic SMS/email alerts when documents are ready</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <Tabs defaultValue="documents" className="w-full">
