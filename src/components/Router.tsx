@@ -31,6 +31,7 @@ import AdminMessagesPage from '@/components/pages/AdminMessagesPage';
 import AdminUserManagementPage from '@/components/pages/AdminUserManagementPage';
 import AdminUserDetailPage from '@/components/pages/AdminUserDetailPage';
 import GrantAdminPage from '@/components/pages/GrantAdminPage';
+import ParalegalDashboardPage from '@/components/pages/ParalegalDashboardPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -160,6 +161,10 @@ const router = createBrowserRouter([
       {
         path: "grant-admin",
         element: <GrantAdminPage />,
+      },
+      {
+        path: "paralegal-dashboard",
+        element: <ParalegalDashboardPage />,
       },
       {
         path: "*",

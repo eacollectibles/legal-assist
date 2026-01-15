@@ -29,6 +29,37 @@ export interface ActivityLogs {
 
 
 /**
+ * Collection ID: appointments
+ * Interface for UpcomingAppointmentsandDeadlines
+ */
+export interface UpcomingAppointmentsandDeadlines {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  title?: string;
+  /** @wixFieldType text */
+  type?: string;
+  /** @wixFieldType date */
+  eventDate?: Date | string;
+  /** @wixFieldType time */
+  eventTime?: any;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  assignedParalegalId?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType text */
+  priority?: string;
+  /** @wixFieldType text */
+  location?: string;
+  /** @wixFieldType text */
+  notes?: string;
+}
+
+
+/**
  * Collection ID: bookings
  * Interface for Bookings
  */
@@ -106,6 +137,31 @@ export interface ClientProfiles {
   emergencyContactName?: string;
   /** @wixFieldType text */
   emergencyContactPhone?: string;
+}
+
+
+/**
+ * Collection ID: fileassignments
+ * Interface for FileAssignments
+ */
+export interface FileAssignments {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  paralegalId?: string;
+  /** @wixFieldType datetime */
+  assignedDate?: Date | string;
+  /** @wixFieldType text */
+  assignedBy?: string;
+  /** @wixFieldType text */
+  notes?: string;
+  /** @wixFieldType text */
+  fileStatus?: string;
+  /** @wixFieldType text */
+  caseType?: string;
 }
 
 
