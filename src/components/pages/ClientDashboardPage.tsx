@@ -866,27 +866,6 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                               variant="outline"
                               size="sm"
                               onClick={() => {
-                                // Convert client document to generated document format for signing
-                                const genDoc: GeneratedDocuments = {
-                                  _id: doc._id,
-                                  documentName: doc.documentName,
-                                  documentUrl: doc.fileUrl,
-                                  status: 'Pending',
-                                  requiresSignature: true,
-                                  generationDate: doc.uploadDate,
-                                };
-                                setSigningDocument(genDoc);
-                              }}
-                              className="flex-1 border-primary text-primary hover:bg-primary/5 font-semibold"
-                              title="Sign this document"
-                            >
-                              <FileSignature className="w-4 h-4 mr-1" />
-                              <span className="text-xs">Sign</span>
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => {
                                 if (doc.fileUrl) {
                                   const newWindow = window.open('', '_blank');
                                   if (newWindow) {
@@ -1433,28 +1412,6 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                       </div>
 
                       <div className="flex md:flex-col gap-2 md:ml-4">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            // Convert client document to generated document format for signing
-                            const genDoc: GeneratedDocuments = {
-                              _id: doc._id,
-                              documentName: doc.documentName,
-                              documentUrl: doc.fileUrl,
-                              status: 'Pending',
-                              requiresSignature: true,
-                              generationDate: doc.uploadDate,
-                            };
-                            setSigningDocument(genDoc);
-                          }}
-                          className="flex-1 md:flex-none border-primary text-primary hover:bg-primary/5 font-semibold"
-                          title="Sign this document"
-                        >
-                          <FileSignature className="w-4 h-4 md:mr-2" />
-                          <span className="hidden md:inline">Sign Document</span>
-                          <span className="md:hidden">Sign</span>
-                        </Button>
                         <Button
                           variant="outline"
                           size="sm"
