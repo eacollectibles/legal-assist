@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare } from 'lucide-react';
+import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface DocumentTemplate {
@@ -115,6 +115,13 @@ export default function DocumentWorkflowPage() {
 
       if (isEditMode && editingTemplateId) {
         // Update existing template
+        const updatedTemplates = templates.map(t => 
+          t._id === editingTemplateId 
+            ? { ...t, ...newTemplate, createdBy: userEmail }
+            : t
+        );
+        setTemplates(updatedTemplates);
+        
         await BaseCrudService.update('documenttemplates', {
           _id: editingTemplateId,
           ...newTemplate,
@@ -122,11 +129,16 @@ export default function DocumentWorkflowPage() {
         });
       } else {
         // Create new template
-        await BaseCrudService.create('documenttemplates', {
+        const newTemplateData = {
           _id: crypto.randomUUID(),
           ...newTemplate,
-          createdBy: userEmail
-        });
+          createdBy: userEmail,
+          _createdDate: new Date()
+        };
+        
+        setTemplates([...templates, newTemplateData]);
+        
+        await BaseCrudService.create('documenttemplates', newTemplateData);
       }
 
       setIsTemplateDialogOpen(false);
@@ -138,9 +150,9 @@ export default function DocumentWorkflowPage() {
         templateContent: '',
         isActive: true
       });
-      loadData();
     } catch (error) {
       console.error('Error saving template:', error);
+      loadData();
     }
   };
 
@@ -158,13 +170,32 @@ export default function DocumentWorkflowPage() {
 
   const handleToggleTemplateStatus = async (templateId: string, currentStatus: boolean) => {
     try {
+      const updatedTemplates = templates.map(t => 
+        t._id === templateId ? { ...t, isActive: !currentStatus } : t
+      );
+      setTemplates(updatedTemplates);
+      
       await BaseCrudService.update('documenttemplates', {
         _id: templateId,
         isActive: !currentStatus
       });
-      loadData();
     } catch (error) {
       console.error('Error toggling template status:', error);
+      loadData();
+    }
+  };
+
+  const handleDeleteTemplate = async (templateId: string) => {
+    if (!confirm('Are you sure you want to delete this template? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      setTemplates(templates.filter(t => t._id !== templateId));
+      await BaseCrudService.delete('documenttemplates', templateId);
+    } catch (error) {
+      console.error('Error deleting template:', error);
+      loadData();
     }
   };
 
@@ -184,27 +215,32 @@ export default function DocumentWorkflowPage() {
       documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '');
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
 
-      await BaseCrudService.create('generateddocuments', {
+      const newDoc = {
         _id: crypto.randomUUID(),
         documentName: documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`,
         templateId: selectedTemplateId,
         clientId: selectedClientId,
-        clientEmail: client._id, // Using _id as email identifier
+        clientEmail: client._id,
         generatedBy: userEmail,
         generationDate: new Date().toISOString(),
         status: 'draft',
         requiresSignature: requiresSignature,
-        documentUrl: `data:text/plain;base64,${btoa(documentContent)}`
-      });
+        documentUrl: `data:text/plain;base64,${btoa(documentContent)}`,
+        _createdDate: new Date()
+      };
+
+      setGeneratedDocs([...generatedDocs, newDoc]);
+
+      await BaseCrudService.create('generateddocuments', newDoc);
 
       setIsGenerateDialogOpen(false);
       setSelectedTemplateId('');
       setSelectedClientId('');
       setDocumentName('');
       setRequiresSignature(true);
-      loadData();
     } catch (error) {
       console.error('Error generating document:', error);
+      loadData();
     }
   };
 
@@ -288,14 +324,35 @@ export default function DocumentWorkflowPage() {
 
   const handleMarkAsSigned = async (docId: string) => {
     try {
+      const updatedDocs = generatedDocs.map(d => 
+        d._id === docId 
+          ? { ...d, status: 'signed', signedDate: new Date().toISOString() }
+          : d
+      );
+      setGeneratedDocs(updatedDocs);
+      
       await BaseCrudService.update('generateddocuments', {
         _id: docId,
         status: 'signed',
         signedDate: new Date().toISOString()
       });
-      loadData();
     } catch (error) {
       console.error('Error marking document as signed:', error);
+      loadData();
+    }
+  };
+
+  const handleDeleteDocument = async (docId: string) => {
+    if (!confirm('Are you sure you want to delete this document? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      setGeneratedDocs(generatedDocs.filter(d => d._id !== docId));
+      await BaseCrudService.delete('generateddocuments', docId);
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      loadData();
     }
   };
 
@@ -645,6 +702,15 @@ export default function DocumentWorkflowPage() {
                             Mark as Signed
                           </Button>
                         )}
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleDeleteDocument(doc._id)}
+                          className="gap-2"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          Delete
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -791,6 +857,15 @@ export default function DocumentWorkflowPage() {
                           className="gap-2"
                         >
                           {template.isActive ? 'Deactivate' : 'Activate'}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleDeleteTemplate(template._id)}
+                          className="gap-2"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          Delete
                         </Button>
                       </div>
                     </CardContent>
