@@ -877,10 +877,11 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                                 };
                                 setSigningDocument(genDoc);
                               }}
-                              className="flex-1 border-primary text-primary hover:bg-primary/5"
+                              className="flex-1 border-primary text-primary hover:bg-primary/5 font-semibold"
                               title="Sign this document"
                             >
-                              <FileSignature className="w-4 h-4" />
+                              <FileSignature className="w-4 h-4 mr-1" />
+                              <span className="text-xs">Sign</span>
                             </Button>
                             <Button
                               variant="outline"
@@ -925,9 +926,10 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                                   }
                                 }
                               }}
-                              className="flex-1 border-primary text-primary hover:bg-primary/5"
+                              className="flex-1 border-primary text-primary hover:bg-primary/5 font-semibold"
                             >
-                              View
+                              <FileText className="w-4 h-4 mr-1" />
+                              <span className="text-xs">View</span>
                             </Button>
                             <Button
                               variant="outline"
@@ -936,7 +938,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                               className="flex-1"
                             >
                               <a href={doc.fileUrl} download={doc.documentName}>
-                                <Download className="w-4 h-4" />
+                                <Download className="w-4 h-4 mr-1" />
+                                <span className="text-xs">Download</span>
                               </a>
                             </Button>
                           </div>
@@ -1445,11 +1448,12 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                             };
                             setSigningDocument(genDoc);
                           }}
-                          className="flex-1 md:flex-none border-primary text-primary hover:bg-primary/5"
+                          className="flex-1 md:flex-none border-primary text-primary hover:bg-primary/5 font-semibold"
                           title="Sign this document"
                         >
                           <FileSignature className="w-4 h-4 md:mr-2" />
-                          <span className="hidden md:inline">Sign</span>
+                          <span className="hidden md:inline">Sign Document</span>
+                          <span className="md:hidden">Sign</span>
                         </Button>
                         <Button
                           variant="outline"
@@ -1494,11 +1498,12 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                               }
                             }
                           }}
-                          className="flex-1 md:flex-none border-primary text-primary hover:bg-primary/5"
+                          className="flex-1 md:flex-none border-primary text-primary hover:bg-primary/5 font-semibold"
                           title="View document"
                         >
                           <FileText className="w-4 h-4 md:mr-2" />
                           <span className="hidden md:inline">View</span>
+                          <span className="md:hidden">View</span>
                         </Button>
                         <Button
                           variant="outline"
@@ -1510,6 +1515,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                           <a href={doc.fileUrl} download={doc.documentName}>
                             <Download className="w-4 h-4 md:mr-2" />
                             <span className="hidden md:inline">Download</span>
+                            <span className="md:hidden">Download</span>
                           </a>
                         </Button>
                         <Button
