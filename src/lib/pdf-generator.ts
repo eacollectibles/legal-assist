@@ -208,7 +208,6 @@ export async function embedSignatureInPDF(
 
   // Extract the original document content from the data URL
   let originalContent = '';
-  let hasSignaturePlaceholder = false;
   
   try {
     if (originalDocDataUrl.startsWith('data:text/html;base64,')) {
@@ -229,18 +228,31 @@ export async function embedSignatureInPDF(
           originalContent = bodyContent.innerHTML;
         }
       }
-      
-      // Check if content has signature placeholder
-      hasSignaturePlaceholder = originalContent.includes('{SIGNATURE_SECTION}') || 
-                                 originalContent.includes('{SIGNATURE}') ||
-                                 originalContent.includes('{{SIGNATURE}}');
     }
   } catch (error) {
     console.error('Error extracting original document content:', error);
     originalContent = '<p>Original document content could not be extracted.</p>';
   }
 
-  // Create the signature HTML block
+  // Define signature placeholders in order of priority
+  const placeholders = ['{SIGNATURE_SECTION}', '{SIGNATURE}', '{{SIGNATURE}}'];
+  
+  // Find the first placeholder that exists in the template
+  let foundPlaceholder = null;
+  for (const placeholder of placeholders) {
+    if (originalContent.includes(placeholder)) {
+      foundPlaceholder = placeholder;
+      break;
+    }
+  }
+
+  // Create verification details with preserved line breaks using <pre> tag
+  const verificationDetails = `Date: ${escapeHtml(signatureData.signedDate)}
+Time: ${escapeHtml(signatureData.signedTime)}
+IP Address: ${escapeHtml(signatureData.ipAddress)}
+Timestamp: ${signatureData.timestamp.toISOString()}`;
+
+  // Create the signature HTML block with <pre> for verification details
   const signatureBlock = `
     <div class="signature-section">
       <h2>Electronic Signature</h2>
@@ -252,22 +264,7 @@ export async function embedSignatureInPDF(
 
       <div class="signature-details">
         <h3>Signature Verification Details</h3>
-        <div class="detail-row">
-          <div class="detail-label">Date:</div>
-          <div class="detail-value">${escapeHtml(signatureData.signedDate)}</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Time:</div>
-          <div class="detail-value">${escapeHtml(signatureData.signedTime)}</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">IP Address:</div>
-          <div class="detail-value">${escapeHtml(signatureData.ipAddress)}</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Timestamp:</div>
-          <div class="detail-value">${signatureData.timestamp.toISOString()}</div>
-        </div>
+        <pre style="white-space: pre-wrap; font-family: monospace; font-size: 12px; line-height: 1.35; word-break: break-word; margin: 0; padding: 15px; background: white; border: 1px solid #ddd;">${verificationDetails}</pre>
       </div>
 
       <div class="certification">
@@ -278,14 +275,11 @@ export async function embedSignatureInPDF(
     </div>
   `;
 
-  // Replace signature placeholder if it exists, otherwise append at the end
-  let finalContent = originalContent;
-  if (hasSignaturePlaceholder) {
-    // Replace any of the signature placeholders with the actual signature block
-    finalContent = originalContent
-      .replace(/{SIGNATURE_SECTION}/g, signatureBlock)
-      .replace(/{SIGNATURE}/g, signatureBlock)
-      .replace(/{{SIGNATURE}}/g, signatureBlock);
+  // Replace signature placeholder if found, otherwise append at the end
+  let finalContent;
+  if (foundPlaceholder) {
+    // Replace ONLY the first occurrence of the found placeholder
+    finalContent = originalContent.replace(foundPlaceholder, signatureBlock);
   } else {
     // Append signature at the end if no placeholder found
     finalContent = originalContent + signatureBlock;
@@ -436,19 +430,16 @@ export async function embedSignatureInPDF(
       color: white;
       padding: 10px;
     }
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .detail-label {
-      font-weight: bold;
-      width: 40%;
-    }
-    .detail-value {
-      width: 60%;
-      font-family: 'Courier New', monospace;
+    .signature-details pre {
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.35;
+      word-break: break-word;
+      margin: 0;
+      padding: 15px;
+      background: white;
+      border: 1px solid #ddd;
     }
     .certification {
       margin-top: 30px;
