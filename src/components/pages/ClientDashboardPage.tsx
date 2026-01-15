@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send, Bell, BellDot, Lock } from 'lucide-react';
+import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send, Bell, BellDot, Lock, Clock, Activity, Star } from 'lucide-react';
 import { getCurrentUser, isAuthenticated, isAdmin, changePassword } from '@/lib/auth-service';
 
 interface Notification {
@@ -174,6 +174,13 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState('');
 
+  // Activity Log state
+  const [activityLogs, setActivityLogs] = useState<any[]>([]);
+  const [isLoadingActivityLogs, setIsLoadingActivityLogs] = useState(true);
+
+  // Quick Access Documents state
+  const [quickAccessDocs, setQuickAccessDocs] = useState<ClientDocument[]>([]);
+
   // Load documents on mount
   useEffect(() => {
     loadUserAccountId();
@@ -181,6 +188,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     loadProfile();
     loadPayments();
     loadMessages();
+    loadActivityLogs();
   }, [currentUser?.email]);
 
   // Load notifications when userAccountId is available
@@ -230,6 +238,14 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       // Filter documents for current user
       const userDocuments = items?.filter(doc => doc.clientEmail === currentUser?.email) || [];
       setDocuments(userDocuments);
+      
+      // Set quick access documents (most recent 5)
+      const sortedDocs = [...userDocuments].sort((a, b) => {
+        const dateA = new Date(a.uploadDate || 0).getTime();
+        const dateB = new Date(b.uploadDate || 0).getTime();
+        return dateB - dateA;
+      });
+      setQuickAccessDocs(sortedDocs.slice(0, 5));
     } catch (error) {
       console.error('Failed to load documents:', error);
     } finally {
@@ -526,6 +542,26 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     }
   };
 
+  const loadActivityLogs = async () => {
+    setIsLoadingActivityLogs(true);
+    try {
+      const { items } = await BaseCrudService.getAll('activitylogs');
+      // Filter activity logs for current user
+      const userLogs = items?.filter(log => log.userId === userAccountId || log.performedBy === currentUser?.email) || [];
+      // Sort by timestamp, newest first
+      userLogs.sort((a, b) => {
+        const dateA = new Date(a.timestamp || 0).getTime();
+        const dateB = new Date(b.timestamp || 0).getTime();
+        return dateB - dateA;
+      });
+      setActivityLogs(userLogs.slice(0, 10)); // Show last 10 activities
+    } catch (error) {
+      console.error('Failed to load activity logs:', error);
+    } finally {
+      setIsLoadingActivityLogs(false);
+    }
+  };
+
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -661,6 +697,190 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       {/* Main Content */}
       <section className="w-full py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          {/* Quick Stats & Activity Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Total Documents</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{documents.length}</p>
+                  </div>
+                  <FileText className="w-10 h-10 text-primary/30" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Unread Messages</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">
+                      {messages.filter(m => !m.isRead && m.recipientEmail === currentUser?.email).length}
+                    </p>
+                  </div>
+                  <MessageSquare className="w-10 h-10 text-primary/30" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Recent Activities</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{activityLogs.length}</p>
+                  </div>
+                  <Activity className="w-10 h-10 text-primary/30" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Quick Access Section */}
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-heading text-3xl font-bold text-foreground flex items-center gap-2">
+                <Star className="w-8 h-8 text-primary" />
+                Quick Access Documents
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {quickAccessDocs.length === 0 ? (
+                <div className="col-span-full bg-gray-50 rounded-lg p-8 text-center">
+                  <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <p className="font-paragraph text-foreground/80">No documents yet. Upload your first document to get started.</p>
+                </div>
+              ) : (
+                quickAccessDocs.map(doc => (
+                  <Card key={doc._id} className="hover:shadow-lg transition-shadow cursor-pointer">
+                    <CardContent className="pt-6">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-heading text-base font-bold text-foreground mb-1 truncate">
+                            {doc.documentName}
+                          </h3>
+                          <div className="flex items-center gap-2 text-xs text-foreground/60 mb-2">
+                            <span>{doc.fileType?.split('/')[1]?.toUpperCase() || 'Unknown'}</span>
+                            <span>•</span>
+                            <span>{doc.uploadDate instanceof Date ? doc.uploadDate.toLocaleDateString() : new Date(doc.uploadDate || '').toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                if (doc.fileUrl) {
+                                  const newWindow = window.open('', '_blank');
+                                  if (newWindow) {
+                                    if (doc.fileType?.startsWith('image/')) {
+                                      newWindow.document.write(`
+                                        <html>
+                                          <head>
+                                            <title>${doc.documentName || 'Document'}</title>
+                                            <style>
+                                              body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f0f0; }
+                                              img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+                                            </style>
+                                          </head>
+                                          <body>
+                                            <img src="${doc.fileUrl}" alt="${doc.documentName || 'Document'}" />
+                                          </body>
+                                        </html>
+                                      `);
+                                    } else if (doc.fileType === 'application/pdf') {
+                                      newWindow.document.write(`
+                                        <html>
+                                          <head>
+                                            <title>${doc.documentName || 'Document'}</title>
+                                            <style>
+                                              body { margin: 0; }
+                                              iframe { width: 100vw; height: 100vh; border: none; }
+                                            </style>
+                                          </head>
+                                          <body>
+                                            <iframe src="${doc.fileUrl}" type="application/pdf"></iframe>
+                                          </body>
+                                        </html>
+                                      `);
+                                    } else {
+                                      newWindow.location.href = doc.fileUrl;
+                                    }
+                                  }
+                                }
+                              }}
+                              className="flex-1 border-primary text-primary hover:bg-primary/5"
+                            >
+                              View
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              asChild
+                              className="flex-1"
+                            >
+                              <a href={doc.fileUrl} download={doc.documentName}>
+                                <Download className="w-4 h-4" />
+                              </a>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Activity Timeline */}
+          <div className="mb-12">
+            <h2 className="font-heading text-3xl font-bold text-foreground mb-6 flex items-center gap-2">
+              <Clock className="w-8 h-8 text-primary" />
+              Recent Activity Timeline
+            </h2>
+            <Card>
+              <CardContent className="pt-6">
+                {isLoadingActivityLogs ? (
+                  <div className="text-center py-8">
+                    <Loader className="w-8 h-8 text-primary animate-spin mx-auto mb-4" />
+                    <p className="font-paragraph text-foreground/80">Loading activity...</p>
+                  </div>
+                ) : activityLogs.length === 0 ? (
+                  <div className="bg-gray-50 rounded-lg p-8 text-center">
+                    <Activity className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="font-paragraph text-foreground/80">No recent activity to display.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {activityLogs.map((log, index) => (
+                      <div key={log._id} className="flex gap-4 pb-4 border-b border-gray-200 last:border-0">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          {log.activityType === 'document_upload' && <FileText className="w-5 h-5 text-primary" />}
+                          {log.activityType === 'profile_update' && <User className="w-5 h-5 text-primary" />}
+                          {log.activityType === 'payment' && <CreditCard className="w-5 h-5 text-primary" />}
+                          {log.activityType === 'message' && <MessageSquare className="w-5 h-5 text-primary" />}
+                          {!['document_upload', 'profile_update', 'payment', 'message'].includes(log.activityType) && (
+                            <Activity className="w-5 h-5 text-primary" />
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-heading font-semibold text-foreground">{log.activityDescription}</p>
+                          <p className="font-paragraph text-sm text-foreground/60">
+                            {log.performedByName || log.performedBy || 'System'} • {' '}
+                            {log.timestamp ? new Date(log.timestamp).toLocaleString() : 'N/A'}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
           <Tabs defaultValue="documents" className="w-full">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2 mb-8 h-auto">
               <TabsTrigger value="documents" className="flex items-center gap-2 py-3">

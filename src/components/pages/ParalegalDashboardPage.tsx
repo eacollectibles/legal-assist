@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Appointment {
@@ -54,14 +54,45 @@ interface ClientProfile {
   phoneNumber?: string;
 }
 
+interface ClientDocument {
+  _id: string;
+  documentName?: string;
+  fileUrl?: string;
+  uploadDate?: Date | string;
+  clientEmail?: string;
+  fileType?: string;
+  fileSize?: number;
+  documentCategory?: string;
+  notes?: string;
+  version?: number;
+  previousVersions?: Array<{
+    version: number;
+    fileUrl: string;
+    uploadDate: Date | string;
+    notes?: string;
+  }>;
+}
+
 export default function ParalegalDashboardPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [fileAssignments, setFileAssignments] = useState<FileAssignment[]>([]);
   const [paralegals, setParalegals] = useState<UserAccount[]>([]);
   const [clients, setClients] = useState<ClientProfile[]>([]);
+  const [documents, setDocuments] = useState<ClientDocument[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAddAppointmentOpen, setIsAddAppointmentOpen] = useState(false);
   const [isAddAssignmentOpen, setIsAddAssignmentOpen] = useState(false);
+
+  // Document management states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [filterDateFrom, setFilterDateFrom] = useState('');
+  const [filterDateTo, setFilterDateTo] = useState('');
+  const [selectedDocument, setSelectedDocument] = useState<ClientDocument | null>(null);
+  const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const [shareEmail, setShareEmail] = useState('');
+  const [shareMessage, setShareMessage] = useState('');
 
   // Form states for new appointment
   const [newAppointment, setNewAppointment] = useState({
@@ -93,17 +124,19 @@ export default function ParalegalDashboardPage() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const [appointmentsRes, assignmentsRes, usersRes, clientsRes] = await Promise.all([
+      const [appointmentsRes, assignmentsRes, usersRes, clientsRes, documentsRes] = await Promise.all([
         BaseCrudService.getAll<Appointment>('appointments'),
         BaseCrudService.getAll<FileAssignment>('fileassignments'),
         BaseCrudService.getAll<UserAccount>('useraccounts'),
-        BaseCrudService.getAll<ClientProfile>('clientprofiles')
+        BaseCrudService.getAll<ClientProfile>('clientprofiles'),
+        BaseCrudService.getAll<ClientDocument>('clientdocuments')
       ]);
 
       setAppointments(appointmentsRes.items);
       setFileAssignments(assignmentsRes.items);
       setParalegals(usersRes.items.filter(u => u.isAdmin));
       setClients(clientsRes.items);
+      setDocuments(documentsRes.items);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -214,6 +247,87 @@ export default function ParalegalDashboardPage() {
       return dateA - dateB;
     });
 
+  // Document filtering logic
+  const filteredDocuments = documents.filter(doc => {
+    const matchesSearch = doc.documentName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          doc.notes?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = filterCategory === 'all' || doc.documentCategory === filterCategory;
+    
+    let matchesDate = true;
+    if (filterDateFrom || filterDateTo) {
+      const docDate = new Date(doc.uploadDate || 0);
+      if (filterDateFrom) {
+        matchesDate = matchesDate && docDate >= new Date(filterDateFrom);
+      }
+      if (filterDateTo) {
+        matchesDate = matchesDate && docDate <= new Date(filterDateTo);
+      }
+    }
+    
+    return matchesSearch && matchesCategory && matchesDate;
+  });
+
+  const handleRevertToVersion = async (documentId: string, versionIndex: number) => {
+    try {
+      const doc = documents.find(d => d._id === documentId);
+      if (!doc || !doc.previousVersions || !doc.previousVersions[versionIndex]) return;
+
+      const previousVersion = doc.previousVersions[versionIndex];
+      
+      // Create new version entry with current data
+      const newPreviousVersions = [
+        ...(doc.previousVersions || []),
+        {
+          version: doc.version || 1,
+          fileUrl: doc.fileUrl || '',
+          uploadDate: doc.uploadDate || new Date(),
+          notes: doc.notes
+        }
+      ];
+
+      // Update document with reverted version
+      await BaseCrudService.update('clientdocuments', {
+        _id: documentId,
+        fileUrl: previousVersion.fileUrl,
+        version: (doc.version || 1) + 1,
+        previousVersions: newPreviousVersions,
+        notes: `Reverted to version ${previousVersion.version}`
+      });
+
+      loadData();
+      setIsVersionHistoryOpen(false);
+    } catch (error) {
+      console.error('Error reverting to version:', error);
+    }
+  };
+
+  const handleShareDocument = async () => {
+    if (!selectedDocument || !shareEmail) return;
+
+    try {
+      // In a real app, this would send an email or create a secure share link
+      // For now, we'll create a message record
+      await BaseCrudService.create('messages', {
+        _id: crypto.randomUUID(),
+        senderEmail: 'paralegal@legalservices.com',
+        senderName: 'Paralegal Team',
+        recipientEmail: shareEmail,
+        messageContent: `Document shared: ${selectedDocument.documentName}\n\n${shareMessage}\n\nDocument link: ${selectedDocument.fileUrl}`,
+        sentDate: new Date(),
+        isRead: false,
+        conversationId: crypto.randomUUID()
+      });
+
+      setIsShareDialogOpen(false);
+      setShareEmail('');
+      setShareMessage('');
+      alert('Document shared successfully!');
+    } catch (error) {
+      console.error('Error sharing document:', error);
+      alert('Failed to share document. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -232,6 +346,7 @@ export default function ParalegalDashboardPage() {
           <TabsList className="mb-8">
             <TabsTrigger value="appointments">Appointments & Deadlines</TabsTrigger>
             <TabsTrigger value="assignments">File Assignments</TabsTrigger>
+            <TabsTrigger value="documents">Document Management</TabsTrigger>
           </TabsList>
 
           <TabsContent value="appointments" className="space-y-6">
@@ -641,6 +756,326 @@ export default function ParalegalDashboardPage() {
                 ))
               )}
             </div>
+          </TabsContent>
+
+          <TabsContent value="documents" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-heading text-3xl font-bold text-foreground">
+                Document Management
+              </h2>
+            </div>
+
+            {/* Advanced Search and Filter */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Search className="h-5 w-5" />
+                  Search & Filter Documents
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="searchTerm">Search</Label>
+                    <Input
+                      id="searchTerm"
+                      placeholder="Search by name or notes..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filterCategory">Category</Label>
+                    <Select value={filterCategory} onValueChange={setFilterCategory}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="contract">Contract</SelectItem>
+                        <SelectItem value="invoice">Invoice</SelectItem>
+                        <SelectItem value="court-order">Court Order</SelectItem>
+                        <SelectItem value="evidence">Evidence</SelectItem>
+                        <SelectItem value="correspondence">Correspondence</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filterDateFrom">Date From</Label>
+                    <Input
+                      id="filterDateFrom"
+                      type="date"
+                      value={filterDateFrom}
+                      onChange={(e) => setFilterDateFrom(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="filterDateTo">Date To</Label>
+                    <Input
+                      id="filterDateTo"
+                      type="date"
+                      value={filterDateTo}
+                      onChange={(e) => setFilterDateTo(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-sm text-foreground/70">
+                  <Filter className="h-4 w-4" />
+                  <span>Showing {filteredDocuments.length} of {documents.length} documents</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Documents List */}
+            <div className="grid gap-4" style={{ minHeight: '400px' }}>
+              {isLoading ? null : filteredDocuments.length === 0 ? (
+                <Card>
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <FileText className="h-12 w-12 text-foreground/40 mb-4" />
+                    <p className="font-paragraph text-lg text-foreground/60">
+                      {documents.length === 0 ? 'No documents available' : 'No documents match your filters'}
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                filteredDocuments.map((doc) => (
+                  <Card key={doc._id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <CardTitle className="font-heading text-xl mb-2">
+                            {doc.documentName}
+                          </CardTitle>
+                          <div className="flex flex-wrap gap-2 mb-2">
+                            <Badge variant="outline">
+                              {doc.documentCategory ? doc.documentCategory.charAt(0).toUpperCase() + doc.documentCategory.slice(1).replace('-', ' ') : 'Uncategorized'}
+                            </Badge>
+                            <Badge className="bg-pastelbeige text-foreground">
+                              {doc.fileType?.split('/')[1]?.toUpperCase() || 'Unknown'}
+                            </Badge>
+                            {doc.version && (
+                              <Badge className="bg-pastelgreen text-foreground">
+                                v{doc.version}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div>
+                          <p className="font-paragraph text-foreground/60">Upload Date</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {doc.uploadDate ? format(new Date(doc.uploadDate), 'MMM d, yyyy') : 'N/A'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="font-paragraph text-foreground/60">File Size</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {doc.fileSize ? (doc.fileSize / 1024).toFixed(2) + ' KB' : 'Unknown'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="font-paragraph text-foreground/60">Client</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {doc.clientEmail || 'N/A'}
+                          </p>
+                        </div>
+                      </div>
+
+                      {doc.notes && (
+                        <div className="pt-2 border-t border-gray-200">
+                          <p className="font-paragraph text-sm text-foreground/80">
+                            <strong>Notes:</strong> {doc.notes}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            if (doc.fileUrl) {
+                              window.open(doc.fileUrl, '_blank');
+                            }
+                          }}
+                          className="gap-2"
+                        >
+                          <Eye className="h-4 w-4" />
+                          View
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          asChild
+                          className="gap-2"
+                        >
+                          <a href={doc.fileUrl} download={doc.documentName}>
+                            <Download className="h-4 w-4" />
+                            Download
+                          </a>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            setSelectedDocument(doc);
+                            setIsVersionHistoryOpen(true);
+                          }}
+                          className="gap-2"
+                        >
+                          <History className="h-4 w-4" />
+                          Version History
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            setSelectedDocument(doc);
+                            setIsShareDialogOpen(true);
+                          }}
+                          className="gap-2"
+                        >
+                          <Share2 className="h-4 w-4" />
+                          Share
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+
+            {/* Version History Dialog */}
+            <Dialog open={isVersionHistoryOpen} onOpenChange={setIsVersionHistoryOpen}>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Document Version History</DialogTitle>
+                </DialogHeader>
+                {selectedDocument && (
+                  <div className="space-y-4 py-4">
+                    <div className="bg-pastelbeige/20 rounded-lg p-4">
+                      <h3 className="font-heading font-bold text-foreground mb-2">Current Version</h3>
+                      <p className="font-paragraph text-sm text-foreground/80 mb-2">
+                        <strong>Version:</strong> {selectedDocument.version || 1}
+                      </p>
+                      <p className="font-paragraph text-sm text-foreground/80 mb-2">
+                        <strong>Upload Date:</strong> {selectedDocument.uploadDate ? format(new Date(selectedDocument.uploadDate), 'MMM d, yyyy HH:mm') : 'N/A'}
+                      </p>
+                      {selectedDocument.notes && (
+                        <p className="font-paragraph text-sm text-foreground/80">
+                          <strong>Notes:</strong> {selectedDocument.notes}
+                        </p>
+                      )}
+                    </div>
+
+                    {selectedDocument.previousVersions && selectedDocument.previousVersions.length > 0 ? (
+                      <div className="space-y-3">
+                        <h3 className="font-heading font-bold text-foreground">Previous Versions</h3>
+                        {selectedDocument.previousVersions.map((version, index) => (
+                          <div key={index} className="border border-gray-200 rounded-lg p-4">
+                            <div className="flex justify-between items-start mb-2">
+                              <div>
+                                <p className="font-paragraph text-sm text-foreground/80 mb-1">
+                                  <strong>Version:</strong> {version.version}
+                                </p>
+                                <p className="font-paragraph text-sm text-foreground/80 mb-1">
+                                  <strong>Date:</strong> {format(new Date(version.uploadDate), 'MMM d, yyyy HH:mm')}
+                                </p>
+                                {version.notes && (
+                                  <p className="font-paragraph text-sm text-foreground/80">
+                                    <strong>Notes:</strong> {version.notes}
+                                  </p>
+                                )}
+                              </div>
+                              <Button
+                                size="sm"
+                                onClick={() => handleRevertToVersion(selectedDocument._id, index)}
+                              >
+                                Revert
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="font-paragraph text-foreground/60 text-center py-4">
+                        No previous versions available
+                      </p>
+                    )}
+                  </div>
+                )}
+              </DialogContent>
+            </Dialog>
+
+            {/* Share Document Dialog */}
+            <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Share Document</DialogTitle>
+                </DialogHeader>
+                {selectedDocument && (
+                  <div className="space-y-4 py-4">
+                    <div className="bg-pastelbeige/20 rounded-lg p-4">
+                      <p className="font-heading font-bold text-foreground">
+                        {selectedDocument.documentName}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="shareEmail">Recipient Email *</Label>
+                      <Input
+                        id="shareEmail"
+                        type="email"
+                        placeholder="recipient@example.com"
+                        value={shareEmail}
+                        onChange={(e) => setShareEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="shareMessage">Message (Optional)</Label>
+                      <Textarea
+                        id="shareMessage"
+                        placeholder="Add a message for the recipient..."
+                        value={shareMessage}
+                        onChange={(e) => setShareMessage(e.target.value)}
+                        rows={3}
+                      />
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={handleShareDocument}
+                        disabled={!shareEmail}
+                        className="flex-1"
+                      >
+                        <Share2 className="h-4 w-4 mr-2" />
+                        Share Document
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setIsShareDialogOpen(false);
+                          setShareEmail('');
+                          setShareMessage('');
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </DialogContent>
+            </Dialog>
           </TabsContent>
         </Tabs>
       </main>
