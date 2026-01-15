@@ -993,9 +993,9 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                 <FileSignature className="w-4 h-4" />
                 <span className="hidden sm:inline">Sign Documents</span>
                 <span className="sm:hidden">Sign</span>
-                {generatedDocuments.filter(d => d.requiresSignature && d.status !== 'Signed').length > 0 && (
+                {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {generatedDocuments.filter(d => d.requiresSignature && d.status !== 'Signed').length}
+                    {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length}
                   </span>
                 )}
               </TabsTrigger>
