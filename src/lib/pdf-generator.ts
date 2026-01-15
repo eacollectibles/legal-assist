@@ -322,25 +322,28 @@ export async function embedSignatureInPDF(
  * @param filename - The filename for the download
  */
 export function downloadPDF(dataUrl: string, filename: string): void {
+  // Ensure filename has .html extension for HTML-based documents
+  const finalFilename = filename.endsWith('.html') || filename.endsWith('.pdf') 
+    ? filename 
+    : `${filename}.html`;
+  
   const link = document.createElement('a');
   link.href = dataUrl;
-  
-  // Ensure filename has .pdf extension
-  const finalFilename = filename.endsWith('.pdf') ? filename : `${filename}.pdf`;
-  
   link.download = finalFilename;
+  link.target = '_blank';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
 /**
- * Validates if a string is a valid PDF data URL
+ * Validates if a string is a valid PDF or HTML data URL
  * @param dataUrl - The data URL to validate
- * @returns True if valid PDF data URL
+ * @returns True if valid document data URL
  */
 export function isValidPDFDataUrl(dataUrl: string): boolean {
-  return dataUrl.startsWith('data:application/pdf;base64,');
+  return dataUrl.startsWith('data:application/pdf;base64,') || 
+         dataUrl.startsWith('data:text/html;base64,');
 }
 
 /**
@@ -357,71 +360,19 @@ function escapeHtml(text: string): string {
 /**
  * Converts HTML content to PDF data URL using browser's print functionality
  * @param htmlContent - HTML content to convert
- * @returns Base64 encoded PDF data URL
+ * @returns Base64 encoded PDF data URL (HTML format for viewing)
  */
 async function htmlToPDF(htmlContent: string): Promise<string> {
   return new Promise((resolve) => {
-    // Create an iframe to render the HTML
-    const iframe = document.createElement('iframe');
-    iframe.style.position = 'fixed';
-    iframe.style.top = '-10000px';
-    iframe.style.left = '-10000px';
-    iframe.style.width = '8.5in';
-    iframe.style.height = '11in';
-    document.body.appendChild(iframe);
-
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-    if (!iframeDoc) {
-      document.body.removeChild(iframe);
-      // Fallback: return as base64 encoded HTML wrapped in PDF structure
-      const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
-      resolve(`data:application/pdf;base64,${base64Content}`);
-      return;
-    }
-
-    iframeDoc.open();
-    iframeDoc.write(htmlContent);
-    iframeDoc.close();
-
-    // Wait for content to render
-    setTimeout(() => {
-      try {
-        // Create a canvas to capture the content
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        if (!ctx || !iframe.contentWindow) {
-          document.body.removeChild(iframe);
-          // Fallback
-          const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
-          resolve(`data:application/pdf;base64,${base64Content}`);
-          return;
-        }
-
-        // Set canvas size to letter size (8.5" x 11" at 96 DPI)
-        canvas.width = 816;  // 8.5 * 96
-        canvas.height = 1056; // 11 * 96
-
-        // Fill white background
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // For now, we'll use a simplified approach:
-        // Convert the HTML to a data URL that can be downloaded as PDF
-        // In a production environment, you'd use a library like jsPDF or html2pdf
-        
-        const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
-        const pdfDataUrl = `data:application/pdf;base64,${base64Content}`;
-        
-        document.body.removeChild(iframe);
-        resolve(pdfDataUrl);
-      } catch (error) {
-        console.error('Error converting HTML to PDF:', error);
-        document.body.removeChild(iframe);
-        // Fallback
-        const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
-        resolve(`data:application/pdf;base64,${base64Content}`);
-      }
-    }, 500);
+    // Create a blob URL for the HTML content that can be viewed in browser
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const blobUrl = URL.createObjectURL(blob);
+    
+    // For better compatibility, we'll return the HTML as a data URL
+    // This allows the document to be viewed in the browser and printed as PDF
+    const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
+    const htmlDataUrl = `data:text/html;base64,${base64Content}`;
+    
+    resolve(htmlDataUrl);
   });
 }

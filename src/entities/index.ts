@@ -195,7 +195,11 @@ export interface GeneratedDocuments {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
   documentName?: string;
+  /** @wixFieldType text */
+  clientEmail?: string;
   /** @wixFieldType text */
   status?: string;
   /** @wixFieldType datetime */

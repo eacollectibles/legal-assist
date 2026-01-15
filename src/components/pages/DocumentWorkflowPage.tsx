@@ -779,8 +779,11 @@ export default function DocumentWorkflowPage() {
                           size="sm"
                           variant="outline"
                           onClick={() => {
-                            if (doc.documentUrl) {
-                              window.open(doc.documentUrl, '_blank');
+                            const urlToView = doc.status === 'signed' && doc.signedDocumentUrl 
+                              ? doc.signedDocumentUrl 
+                              : doc.documentUrl;
+                            if (urlToView) {
+                              window.open(urlToView, '_blank');
                             }
                           }}
                           className="gap-2"
@@ -802,7 +805,7 @@ export default function DocumentWorkflowPage() {
                           className="gap-2"
                         >
                           <Download className="h-4 w-4" />
-                          Download PDF
+                          Download
                         </Button>
                         <Button
                           size="sm"
@@ -826,16 +829,7 @@ export default function DocumentWorkflowPage() {
                             Send to Client
                           </Button>
                         )}
-                        {doc.status === 'sent' && doc.requiresSignature && (
-                          <Button
-                            size="sm"
-                            onClick={() => handleMarkAsSigned(doc._id)}
-                            className="gap-2 bg-green-600 hover:bg-green-700"
-                          >
-                            <PenTool className="h-4 w-4" />
-                            Sign Document
-                          </Button>
-                        )}
+
                         {doc.status === 'signed' && doc.signedDocumentUrl && (
                           <Button
                             size="sm"
