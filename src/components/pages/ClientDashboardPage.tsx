@@ -574,9 +574,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsLoadingGeneratedDocs(true);
     try {
       const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
-      // Filter documents that require signature and are not yet signed
-      // In a real app, you'd filter by client ID, but for now we'll show all
-      const userDocs = items || [];
+      // Filter documents for current client by email
+      const userDocs = items?.filter(doc => doc.clientEmail === currentUser?.email) || [];
       setGeneratedDocuments(userDocs);
     } catch (error) {
       console.error('Failed to load generated documents:', error);
@@ -589,41 +588,71 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     if (!signingDocument) return;
 
     try {
-      // Update the document with signature information
+      // Embed signature into the document using the PDF generator utility
+      const { embedSignatureInPDF } = await import('@/lib/pdf-generator');
+      const signedPdfDataUrl = await embedSignatureInPDF(
+        signingDocument.documentUrl || '',
+        signatureData,
+        signingDocument.documentName || 'Document'
+      );
+
+      // Update the generated document with signed version
       const updatedDoc: GeneratedDocuments = {
         ...signingDocument,
-        status: 'Signed',
+        status: 'signed',
         signedDate: signatureData.timestamp,
-        signedDocumentUrl: signatureData.signatureDataUrl,
+        signedDocumentUrl: signedPdfDataUrl,
       };
 
       await BaseCrudService.update('generateddocuments', updatedDoc);
 
-      // Create a signed document record in client documents
-      const signedDocRecord = {
-        _id: crypto.randomUUID(),
-        documentName: `${signingDocument.documentName} (Signed)`,
-        fileUrl: signatureData.signatureDataUrl,
-        uploadDate: new Date(),
-        clientEmail: currentUser?.email || '',
-        fileType: 'image/png',
-        documentCategory: 'signed-document',
-        notes: `Electronically signed on ${signatureData.signedDate} at ${signatureData.signedTime}. IP Address: ${signatureData.ipAddress}`,
-      };
+      // Update the client's document with the signed version
+      const { items: clientDocs } = await BaseCrudService.getAll('clientdocuments');
+      const clientDoc = clientDocs.find(cd => 
+        cd.documentName === signingDocument.documentName && 
+        cd.clientEmail === currentUser?.email
+      );
 
-      await BaseCrudService.create('clientdocuments', signedDocRecord);
+      if (clientDoc) {
+        // Update existing client document with signed version
+        await BaseCrudService.update('clientdocuments', {
+          _id: clientDoc._id,
+          fileUrl: signedPdfDataUrl,
+          documentCategory: 'signed-document',
+          notes: `${clientDoc.notes || ''}\n\nElectronically signed on ${signatureData.signedDate} at ${signatureData.signedTime}. IP Address: ${signatureData.ipAddress}`
+        });
 
-      // Update local state
+        // Update local documents state
+        setDocuments(prev => prev.map(doc => 
+          doc._id === clientDoc._id 
+            ? { ...doc, fileUrl: signedPdfDataUrl, documentCategory: 'signed-document' }
+            : doc
+        ));
+      }
+
+      // Update local generated documents state
       setGeneratedDocuments(prev => 
         prev.map(doc => doc._id === signingDocument._id ? updatedDoc : doc)
       );
-      setDocuments(prev => [signedDocRecord, ...prev]);
+
+      // Create activity log
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: userAccountId || currentUser?.email || '',
+        activityType: 'document_signed',
+        activityDescription: `Document "${signingDocument.documentName}" was electronically signed by client`,
+        performedBy: currentUser?.email || '',
+        performedByName: `${currentUser?.firstName || ''} ${currentUser?.lastName || ''}`.trim() || currentUser?.email || '',
+        timestamp: signatureData.timestamp.toISOString(),
+        relatedItemId: signingDocument._id
+      });
 
       setSigningDocument(null);
       setSignatureSuccess(true);
       setTimeout(() => setSignatureSuccess(false), 5000);
     } catch (error) {
       console.error('Failed to save signature:', error);
+      alert('Failed to save signature. Please try again.');
     }
   };
 

@@ -157,7 +157,7 @@ export default function DocumentSignature({
       <CardHeader>
         <CardTitle className="font-heading text-2xl flex items-center gap-2">
           <Pen className="w-6 h-6 text-primary" />
-          Sign Document
+          Electronic Signature Required
         </CardTitle>
         <CardDescription className="font-paragraph">
           Please sign the document: <span className="font-semibold text-foreground">{documentName}</span>
@@ -171,12 +171,26 @@ export default function DocumentSignature({
           </div>
         )}
 
+        {/* Instructions */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h3 className="font-heading text-base font-bold text-foreground mb-2 flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-blue-600" />
+            How to Sign
+          </h3>
+          <ul className="font-paragraph text-sm text-foreground/80 space-y-1 ml-7">
+            <li>• Use your mouse or finger to draw your signature in the box below</li>
+            <li>• Sign naturally as you would on paper</li>
+            <li>• Click "Clear" if you want to start over</li>
+            <li>• Click "Sign Document" when you're satisfied with your signature</li>
+          </ul>
+        </div>
+
         {/* Signature Canvas */}
         <div className="space-y-3">
-          <label className="block font-paragraph font-semibold text-foreground">
+          <label className="block font-paragraph font-semibold text-foreground text-lg">
             Your Signature *
           </label>
-          <div className="border-2 border-gray-300 rounded-lg overflow-hidden bg-white">
+          <div className="border-2 border-dashed border-primary/40 rounded-lg overflow-hidden bg-white shadow-sm hover:border-primary/60 transition-colors">
             <canvas
               ref={canvasRef}
               width={700}
@@ -193,28 +207,38 @@ export default function DocumentSignature({
           </div>
           <div className="flex items-center justify-between">
             <p className="font-paragraph text-sm text-foreground/60">
-              Draw your signature in the box above
+              {hasSignature ? (
+                <span className="text-green-600 font-semibold flex items-center gap-1">
+                  <CheckCircle className="w-4 h-4" />
+                  Signature captured
+                </span>
+              ) : (
+                'Draw your signature in the box above'
+              )}
             </p>
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={clearSignature}
+              disabled={!hasSignature}
               className="border-gray-300 text-foreground hover:bg-gray-50"
             >
+              <X className="w-4 h-4 mr-1" />
               Clear
             </Button>
           </div>
         </div>
 
         {/* Signature Details */}
-        <div className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige space-y-3">
-          <h3 className="font-heading text-lg font-bold text-foreground mb-4">
-            Signature Details
+        <div className="bg-gradient-to-br from-pastelbeige/20 to-pastelgreen/20 rounded-lg p-6 border border-pastelbeige space-y-3">
+          <h3 className="font-heading text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-primary" />
+            Signature Verification Details
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-paragraph text-sm">
-            <div>
-              <p className="text-foreground/60 mb-1">Date</p>
+            <div className="bg-white/60 rounded-lg p-3">
+              <p className="text-foreground/60 mb-1 text-xs uppercase tracking-wide">Date</p>
               <p className="font-semibold text-foreground">
                 {new Date().toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -223,8 +247,8 @@ export default function DocumentSignature({
                 })}
               </p>
             </div>
-            <div>
-              <p className="text-foreground/60 mb-1">Time</p>
+            <div className="bg-white/60 rounded-lg p-3">
+              <p className="text-foreground/60 mb-1 text-xs uppercase tracking-wide">Time</p>
               <p className="font-semibold text-foreground">
                 {new Date().toLocaleTimeString('en-US', {
                   hour: '2-digit',
@@ -234,17 +258,18 @@ export default function DocumentSignature({
                 })}
               </p>
             </div>
-            <div className="md:col-span-2">
-              <p className="text-foreground/60 mb-1">IP Address</p>
+            <div className="md:col-span-2 bg-white/60 rounded-lg p-3">
+              <p className="text-foreground/60 mb-1 text-xs uppercase tracking-wide">IP Address</p>
               <p className="font-semibold text-foreground font-mono">
                 {ipAddress || 'Loading...'}
               </p>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t border-pastelbeige">
-            <p className="font-paragraph text-xs text-foreground/70">
-              By signing this document, you acknowledge that the signature, date, time, and IP address
-              will be recorded and attached to this document as proof of your electronic signature.
+            <p className="font-paragraph text-xs text-foreground/70 leading-relaxed">
+              By signing this document, you acknowledge that your electronic signature is legally binding 
+              and equivalent to a handwritten signature. The signature, date, time, and IP address 
+              will be permanently recorded and attached to this document as proof of your consent.
             </p>
           </div>
         </div>
@@ -254,20 +279,28 @@ export default function DocumentSignature({
           <Button
             onClick={handleSubmit}
             disabled={isLoading || !hasSignature}
-            className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 flex items-center gap-2 flex-1"
+            className="bg-primary hover:bg-primary/90 text-white font-semibold py-6 text-lg flex items-center gap-2 flex-1 shadow-lg hover:shadow-xl transition-all"
           >
-            <CheckCircle className="w-4 h-4" />
-            {isLoading ? 'Processing...' : 'Sign Document'}
+            <CheckCircle className="w-5 h-5" />
+            {isLoading ? 'Processing Signature...' : 'Sign Document'}
           </Button>
           <Button
             type="button"
             onClick={onCancel}
             variant="outline"
-            className="border-gray-300 text-foreground hover:bg-gray-50 flex items-center gap-2"
+            className="border-gray-300 text-foreground hover:bg-gray-50 flex items-center gap-2 py-6"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
             Cancel
           </Button>
+        </div>
+
+        {/* Additional Help */}
+        <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <p className="font-paragraph text-xs text-foreground/70 text-center">
+            Having trouble? Make sure you're using a mouse or touch-enabled device. 
+            Your signature should be clear and legible.
+          </p>
         </div>
       </CardContent>
     </Card>

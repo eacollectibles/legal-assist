@@ -268,26 +268,11 @@ export default function DocumentWorkflowPage() {
       const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
       const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
 
-      // Update document status to 'sent'
-      await BaseCrudService.update('generateddocuments', {
-        _id: selectedDocumentId,
-        status: 'sent',
-        sentDate: new Date().toISOString()
-      });
+      // Get user account ID for the client FIRST
+      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
+      const clientAccount = userAccounts.find(u => u.email === doc.clientEmail);
 
-      // Create a message record for the client
-      await BaseCrudService.create('messages', {
-        _id: crypto.randomUUID(),
-        senderEmail: 'admin@legalservices.com',
-        senderName: 'Legal Services Team',
-        recipientEmail: doc.clientEmail || '',
-        messageContent: `Document Ready for Signature: ${doc.documentName}\n\n${emailMessage}\n\nPlease review and sign the document in your client portal.`,
-        sentDate: new Date().toISOString(),
-        isRead: false,
-        conversationId: crypto.randomUUID()
-      });
-
-      // Copy document to client's documents
+      // Copy document to client's documents collection
       const clientDocId = crypto.randomUUID();
       await BaseCrudService.create('clientdocuments', {
         _id: clientDocId,
@@ -300,16 +285,38 @@ export default function DocumentWorkflowPage() {
         notes: `Generated from template. ${doc.requiresSignature ? 'Signature required.' : ''}`
       });
 
-      // Get user account ID for the client
-      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
-      const clientAccount = userAccounts.find(u => u.email === doc.clientEmail);
+      // Update generated document status to 'sent' and link to client document
+      const updatedDocs = generatedDocs.map(d => 
+        d._id === selectedDocumentId 
+          ? { ...d, status: 'sent', sentDate: new Date().toISOString() }
+          : d
+      );
+      setGeneratedDocs(updatedDocs);
+
+      await BaseCrudService.update('generateddocuments', {
+        _id: selectedDocumentId,
+        status: 'sent',
+        sentDate: new Date().toISOString()
+      });
+
+      // Create a message record for the client
+      await BaseCrudService.create('messages', {
+        _id: crypto.randomUUID(),
+        senderEmail: 'admin@legalservices.com',
+        senderName: 'Legal Services Team',
+        recipientEmail: doc.clientEmail || '',
+        messageContent: `Document Ready for Signature: ${doc.documentName}\n\n${emailMessage}\n\nPlease review and sign the document in your client portal under the Documents section.`,
+        sentDate: new Date().toISOString(),
+        isRead: false,
+        conversationId: crypto.randomUUID()
+      });
 
       // Create activity log entry
       await BaseCrudService.create('activitylogs', {
         _id: crypto.randomUUID(),
         userId: clientAccount?._id || doc.clientEmail || '',
         activityType: 'document_sent',
-        activityDescription: `Document "${doc.documentName}" was sent to client`,
+        activityDescription: `Document "${doc.documentName}" was sent to client for ${doc.requiresSignature ? 'signature' : 'review'}`,
         performedBy: userEmail,
         performedByName: userName,
         timestamp: new Date().toISOString(),
@@ -333,11 +340,11 @@ export default function DocumentWorkflowPage() {
       setIsSendDialogOpen(false);
       setSelectedDocumentId('');
       setEmailMessage('');
-      loadData();
-      alert('Document sent successfully to client!');
+      alert('Document sent successfully to client! The document is now available in the client\'s Documents section.');
     } catch (error) {
       console.error('Error sending document:', error);
       alert('Failed to send document. Please try again.');
+      loadData();
     }
   };
 
@@ -392,7 +399,7 @@ export default function DocumentWorkflowPage() {
         documentToSign.documentName || 'Document'
       );
 
-      // Update document with signed version
+      // Update generated document with signed version
       const updatedDocs = generatedDocs.map(d => 
         d._id === documentToSign._id 
           ? { 
@@ -412,6 +419,21 @@ export default function DocumentWorkflowPage() {
         signedDocumentUrl: signedPdfDataUrl
       });
 
+      // Update the client's document with the signed version
+      const { items: clientDocs } = await BaseCrudService.getAll('clientdocuments');
+      const clientDoc = clientDocs.find(cd => 
+        cd.documentName === documentToSign.documentName && 
+        cd.clientEmail === documentToSign.clientEmail
+      );
+
+      if (clientDoc) {
+        await BaseCrudService.update('clientdocuments', {
+          _id: clientDoc._id,
+          fileUrl: signedPdfDataUrl,
+          notes: `${clientDoc.notes || ''}\n\nElectronically signed on ${signatureData.signedDate} at ${signatureData.signedTime}. IP Address: ${signatureData.ipAddress}`
+        });
+      }
+
       // Create activity log
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
@@ -430,7 +452,7 @@ export default function DocumentWorkflowPage() {
 
       setIsSignatureDialogOpen(false);
       setDocumentToSign(null);
-      alert('Document signed successfully!');
+      alert('Document signed successfully! The signed version is now available in the client\'s Documents section.');
     } catch (error) {
       console.error('Error signing document:', error);
       alert('Failed to sign document. Please try again.');
