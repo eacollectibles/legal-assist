@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send, Bell, BellDot, Lock, Clock, Activity, Star } from 'lucide-react';
+import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send, Bell, BellDot, Lock, Star } from 'lucide-react';
 import { getCurrentUser, isAuthenticated, isAdmin, changePassword } from '@/lib/auth-service';
 
 interface Notification {
@@ -174,12 +174,11 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState('');
 
-  // Activity Log state
-  const [activityLogs, setActivityLogs] = useState<any[]>([]);
-  const [isLoadingActivityLogs, setIsLoadingActivityLogs] = useState(true);
-
   // Quick Access Documents state
   const [quickAccessDocs, setQuickAccessDocs] = useState<ClientDocument[]>([]);
+
+  // Assigned paralegal state
+  const [assignedParalegal, setAssignedParalegal] = useState<string>('');
 
   // Load documents on mount
   useEffect(() => {
@@ -188,7 +187,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     loadProfile();
     loadPayments();
     loadMessages();
-    loadActivityLogs();
+    loadAssignedParalegal();
   }, [currentUser?.email]);
 
   // Load notifications when userAccountId is available
@@ -542,23 +541,23 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     }
   };
 
-  const loadActivityLogs = async () => {
-    setIsLoadingActivityLogs(true);
+  const loadAssignedParalegal = async () => {
     try {
-      const { items } = await BaseCrudService.getAll('activitylogs');
-      // Filter activity logs for current user
-      const userLogs = items?.filter(log => log.userId === userAccountId || log.performedBy === currentUser?.email) || [];
-      // Sort by timestamp, newest first
-      userLogs.sort((a, b) => {
-        const dateA = new Date(a.timestamp || 0).getTime();
-        const dateB = new Date(b.timestamp || 0).getTime();
-        return dateB - dateA;
-      });
-      setActivityLogs(userLogs.slice(0, 10)); // Show last 10 activities
+      const { items: assignments } = await BaseCrudService.getAll('fileassignments');
+      const { items: users } = await BaseCrudService.getAll('useraccounts');
+      
+      // Find assignment for current user
+      const userAssignment = assignments?.find(a => a.clientId === userAccountId || a.clientId === currentUser?.email);
+      
+      if (userAssignment && userAssignment.paralegalId) {
+        // Find paralegal details
+        const paralegal = users?.find(u => u._id === userAssignment.paralegalId);
+        if (paralegal) {
+          setAssignedParalegal(`${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim() || paralegal.email || 'Unknown');
+        }
+      }
     } catch (error) {
-      console.error('Failed to load activity logs:', error);
-    } finally {
-      setIsLoadingActivityLogs(false);
+      console.error('Failed to load assigned paralegal:', error);
     }
   };
 
@@ -684,10 +683,19 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
               <p className="font-paragraph text-lg text-foreground/80">
                 Welcome, {currentUser?.firstName || currentUser?.email}! Manage your profile, documents, and payments securely.
               </p>
-              {currentUser?.clientId && !currentUser?.isAdmin && (
-                <p className="font-paragraph text-base text-foreground/70 mt-2">
-                  Client ID: <span className="font-semibold text-primary">{currentUser.clientId}</span>
-                </p>
+              {!currentUser?.isAdmin && (
+                <div className="mt-3 space-y-1">
+                  {(currentUser?.clientId || userAccountId) && (
+                    <p className="font-paragraph text-base text-foreground/70">
+                      Client Number: <span className="font-semibold text-primary">{currentUser.clientId || userAccountId}</span>
+                    </p>
+                  )}
+                  {assignedParalegal && (
+                    <p className="font-paragraph text-base text-foreground/70">
+                      Assigned Paralegal: <span className="font-semibold text-primary">{assignedParalegal}</span>
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -727,10 +735,10 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Recent Activities</p>
-                    <p className="font-heading text-3xl font-bold text-foreground">{activityLogs.length}</p>
+                    <p className="font-paragraph text-sm text-foreground/60 mb-1">Total Payments</p>
+                    <p className="font-heading text-3xl font-bold text-foreground">{payments.length}</p>
                   </div>
-                  <Activity className="w-10 h-10 text-primary/30" />
+                  <CreditCard className="w-10 h-10 text-primary/30" />
                 </div>
               </CardContent>
             </Card>
@@ -833,52 +841,6 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                 ))
               )}
             </div>
-          </div>
-
-          {/* Activity Timeline */}
-          <div className="mb-12">
-            <h2 className="font-heading text-3xl font-bold text-foreground mb-6 flex items-center gap-2">
-              <Clock className="w-8 h-8 text-primary" />
-              Recent Activity Timeline
-            </h2>
-            <Card>
-              <CardContent className="pt-6">
-                {isLoadingActivityLogs ? (
-                  <div className="text-center py-8">
-                    <Loader className="w-8 h-8 text-primary animate-spin mx-auto mb-4" />
-                    <p className="font-paragraph text-foreground/80">Loading activity...</p>
-                  </div>
-                ) : activityLogs.length === 0 ? (
-                  <div className="bg-gray-50 rounded-lg p-8 text-center">
-                    <Activity className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="font-paragraph text-foreground/80">No recent activity to display.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {activityLogs.map((log, index) => (
-                      <div key={log._id} className="flex gap-4 pb-4 border-b border-gray-200 last:border-0">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          {log.activityType === 'document_upload' && <FileText className="w-5 h-5 text-primary" />}
-                          {log.activityType === 'profile_update' && <User className="w-5 h-5 text-primary" />}
-                          {log.activityType === 'payment' && <CreditCard className="w-5 h-5 text-primary" />}
-                          {log.activityType === 'message' && <MessageSquare className="w-5 h-5 text-primary" />}
-                          {!['document_upload', 'profile_update', 'payment', 'message'].includes(log.activityType) && (
-                            <Activity className="w-5 h-5 text-primary" />
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-heading font-semibold text-foreground">{log.activityDescription}</p>
-                          <p className="font-paragraph text-sm text-foreground/60">
-                            {log.performedByName || log.performedBy || 'System'} • {' '}
-                            {log.timestamp ? new Date(log.timestamp).toLocaleString() : 'N/A'}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
           </div>
 
           <Tabs defaultValue="documents" className="w-full">

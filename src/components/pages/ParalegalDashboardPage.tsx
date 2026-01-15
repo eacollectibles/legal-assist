@@ -117,9 +117,27 @@ export default function ParalegalDashboardPage() {
     notes: ''
   });
 
+  // Current paralegal ID (in real app, get from auth context)
+  const [currentParalegalId, setCurrentParalegalId] = useState<string>('');
+
   useEffect(() => {
     loadData();
+    loadCurrentParalegal();
   }, []);
+
+  const loadCurrentParalegal = async () => {
+    try {
+      // In a real app, get from auth context
+      // For now, get the first admin user as the current paralegal
+      const { items } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+      const paralegal = items.find(u => u.isAdmin);
+      if (paralegal) {
+        setCurrentParalegalId(paralegal._id);
+      }
+    } catch (error) {
+      console.error('Error loading current paralegal:', error);
+    }
+  };
 
   const loadData = async () => {
     setIsLoading(true);
@@ -175,13 +193,11 @@ export default function ParalegalDashboardPage() {
 
   const handleAddAssignment = async () => {
     try {
-      const currentUser = paralegals[0]; // In real app, get from auth context
-      
       await BaseCrudService.create('fileassignments', {
         _id: crypto.randomUUID(),
         ...newAssignment,
         assignedDate: new Date().toISOString(),
-        assignedBy: currentUser?._id || ''
+        assignedBy: currentParalegalId
       });
 
       setIsAddAssignmentOpen(false);
@@ -195,6 +211,45 @@ export default function ParalegalDashboardPage() {
       loadData();
     } catch (error) {
       console.error('Error adding assignment:', error);
+    }
+  };
+
+  const handleSelfAssign = async (clientId: string) => {
+    if (!currentParalegalId) {
+      alert('Unable to determine current paralegal. Please try again.');
+      return;
+    }
+
+    try {
+      // Check if assignment already exists for this client
+      const existingAssignment = fileAssignments.find(a => a.clientId === clientId);
+      
+      if (existingAssignment) {
+        // Update existing assignment
+        await BaseCrudService.update('fileassignments', {
+          _id: existingAssignment._id,
+          paralegalId: currentParalegalId,
+          assignedDate: new Date().toISOString(),
+          assignedBy: currentParalegalId
+        });
+      } else {
+        // Create new assignment
+        await BaseCrudService.create('fileassignments', {
+          _id: crypto.randomUUID(),
+          clientId: clientId,
+          paralegalId: currentParalegalId,
+          fileStatus: 'Active',
+          assignedDate: new Date().toISOString(),
+          assignedBy: currentParalegalId,
+          notes: 'Self-assigned by paralegal'
+        });
+      }
+
+      loadData();
+      alert('Successfully assigned to client file!');
+    } catch (error) {
+      console.error('Error self-assigning:', error);
+      alert('Failed to assign. Please try again.');
     }
   };
 
@@ -701,6 +756,41 @@ export default function ParalegalDashboardPage() {
               </Dialog>
             </div>
 
+            {/* Unassigned Clients Section */}
+            {!isLoading && clients.length > 0 && (
+              <Card className="mb-6 bg-pastelbeige/10">
+                <CardHeader>
+                  <CardTitle className="font-heading text-xl">Unassigned Clients</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    {clients
+                      .filter(client => !fileAssignments.some(a => a.clientId === client._id))
+                      .map(client => (
+                        <div key={client._id} className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+                          <span className="font-paragraph text-foreground">
+                            {client.firstName} {client.lastName}
+                          </span>
+                          <Button
+                            size="sm"
+                            onClick={() => handleSelfAssign(client._id)}
+                            className="gap-2"
+                          >
+                            <User className="h-4 w-4" />
+                            Assign to Me
+                          </Button>
+                        </div>
+                      ))}
+                    {clients.filter(client => !fileAssignments.some(a => a.clientId === client._id)).length === 0 && (
+                      <p className="font-paragraph text-foreground/60 text-center py-4">
+                        All clients have been assigned
+                      </p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             <div className="grid gap-4" style={{ minHeight: '400px' }}>
               {isLoading ? null : fileAssignments.length === 0 ? (
                 <Card>
@@ -750,6 +840,18 @@ export default function ParalegalDashboardPage() {
                         <p className="font-paragraph text-foreground/80">
                           <strong>Notes:</strong> {assignment.notes}
                         </p>
+                      )}
+                      {assignment.paralegalId !== currentParalegalId && (
+                        <div className="pt-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleSelfAssign(assignment.clientId || '')}
+                            className="gap-2"
+                          >
+                            <User className="h-4 w-4" />
+                            Assign to Me
+                          </Button>
+                        </div>
                       )}
                     </CardContent>
                   </Card>
