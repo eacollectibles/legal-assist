@@ -924,16 +924,241 @@ export default function DocumentWorkflowPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="templateContent">Template Content</Label>
-                      <p className="text-sm text-foreground/60">
-                        Use placeholders: {'{CLIENT_NAME}'}, {'{CLIENT_PHONE}'}, {'{DATE}'}
-                      </p>
-                      <Textarea
-                        id="templateContent"
-                        value={newTemplate.templateContent}
-                        onChange={(e) => setNewTemplate({ ...newTemplate, templateContent: e.target.value })}
-                        placeholder="Enter the template content with placeholders..."
-                        rows={12}
-                      />
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-sm text-foreground/60">
+                          Use placeholders: {'{CLIENT_NAME}'}, {'{CLIENT_PHONE}'}, {'{DATE}'}
+                        </p>
+                        <Badge variant="outline" className="gap-1">
+                          <PenTool className="h-3 w-3" />
+                          HTML Editor
+                        </Badge>
+                      </div>
+                      <div className="border rounded-lg overflow-hidden">
+                        <div className="bg-gray-50 border-b p-2 flex flex-wrap gap-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const end = textarea.selectionEnd;
+                                const selectedText = newTemplate.templateContent.substring(start, end);
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<strong>${selectedText || 'bold text'}</strong>` + 
+                                  newTemplate.templateContent.substring(end);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2"
+                          >
+                            <strong>B</strong>
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const end = textarea.selectionEnd;
+                                const selectedText = newTemplate.templateContent.substring(start, end);
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<em>${selectedText || 'italic text'}</em>` + 
+                                  newTemplate.templateContent.substring(end);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2"
+                          >
+                            <em>I</em>
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const end = textarea.selectionEnd;
+                                const selectedText = newTemplate.templateContent.substring(start, end);
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<u>${selectedText || 'underlined text'}</u>` + 
+                                  newTemplate.templateContent.substring(end);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2"
+                          >
+                            <u>U</u>
+                          </Button>
+                          <div className="w-px bg-gray-300 mx-1" />
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<h1>Heading 1</h1>\n` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            H1
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<h2>Heading 2</h2>\n` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            H2
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<p>Paragraph text</p>\n` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            P
+                          </Button>
+                          <div className="w-px bg-gray-300 mx-1" />
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n  <li>Item 3</li>\n</ul>\n` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            • List
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<ol>\n  <li>First</li>\n  <li>Second</li>\n  <li>Third</li>\n</ol>\n` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            1. List
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<table border="1" style="border-collapse: collapse; width: 100%;">\n  <tr>\n    <th style="padding: 8px; border: 1px solid #000;">Header 1</th>\n    <th style="padding: 8px; border: 1px solid #000;">Header 2</th>\n  </tr>\n  <tr>\n    <td style="padding: 8px; border: 1px solid #000;">Cell 1</td>\n    <td style="padding: 8px; border: 1px solid #000;">Cell 2</td>\n  </tr>\n</table>\n` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            Table
+                          </Button>
+                          <div className="w-px bg-gray-300 mx-1" />
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<br/>` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            Line Break
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const textarea = document.getElementById('templateContent') as HTMLTextAreaElement;
+                              if (textarea) {
+                                const start = textarea.selectionStart;
+                                const newText = newTemplate.templateContent.substring(0, start) + 
+                                  `<hr/>` + 
+                                  newTemplate.templateContent.substring(start);
+                                setNewTemplate({ ...newTemplate, templateContent: newText });
+                              }
+                            }}
+                            className="h-8 px-2 text-xs"
+                          >
+                            Divider
+                          </Button>
+                        </div>
+                        <Textarea
+                          id="templateContent"
+                          value={newTemplate.templateContent}
+                          onChange={(e) => setNewTemplate({ ...newTemplate, templateContent: e.target.value })}
+                          placeholder="Enter HTML template content with placeholders..."
+                          rows={16}
+                          className="border-0 rounded-none font-mono text-sm"
+                        />
+                      </div>
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-2">
+                        <p className="text-xs font-semibold text-blue-900 mb-1">HTML Preview:</p>
+                        <div 
+                          className="bg-white border border-blue-200 rounded p-3 text-sm max-h-40 overflow-y-auto"
+                          dangerouslySetInnerHTML={{ __html: newTemplate.templateContent || '<p class="text-gray-400">Preview will appear here...</p>' }}
+                        />
+                      </div>
                     </div>
 
                     <Button onClick={handleCreateTemplate} className="w-full">

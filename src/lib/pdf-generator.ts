@@ -20,6 +20,10 @@ export async function generatePDF(content: string, documentName: string): Promis
   const documentId = `DOC-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
   const generatedDate = new Date().toLocaleString();
 
+  // Check if content is HTML or plain text
+  const isHtmlContent = content.trim().startsWith('<') || 
+                        /<[a-z][\s\S]*>/i.test(content);
+
   // Create HTML content for PDF
   const htmlContent = `
 <!DOCTYPE html>
@@ -59,7 +63,64 @@ export async function generatePDF(content: string, documentName: string): Promis
     .content {
       margin: 30px 0;
       text-align: justify;
+    }
+    .content.plain-text {
       white-space: pre-wrap;
+    }
+    /* HTML content styling */
+    .content h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      margin: 20px 0 10px 0;
+    }
+    .content h2 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin: 18px 0 8px 0;
+    }
+    .content h3 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin: 16px 0 6px 0;
+    }
+    .content p {
+      margin: 10px 0;
+    }
+    .content ul, .content ol {
+      margin: 10px 0;
+      padding-left: 30px;
+    }
+    .content li {
+      margin: 5px 0;
+    }
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .content table th,
+    .content table td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+    .content table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    .content strong {
+      font-weight: bold;
+    }
+    .content em {
+      font-style: italic;
+    }
+    .content u {
+      text-decoration: underline;
+    }
+    .content hr {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 20px 0;
     }
     .signature-section {
       margin-top: 60px;
@@ -99,8 +160,8 @@ export async function generatePDF(content: string, documentName: string): Promis
     <div class="meta">Generated: ${generatedDate}</div>
   </div>
 
-  <div class="content">
-${escapeHtml(content)}
+  <div class="content${isHtmlContent ? '' : ' plain-text'}">
+${isHtmlContent ? content : escapeHtml(content)}
   </div>
 
   <div class="signature-section">
