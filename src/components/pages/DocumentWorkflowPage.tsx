@@ -215,6 +215,10 @@ export default function DocumentWorkflowPage() {
       documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '');
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
 
+      // Encode UTF-8 string to base64 safely
+      const utf8Bytes = new TextEncoder().encode(documentContent);
+      const base64String = btoa(String.fromCharCode(...utf8Bytes));
+
       const newDoc = {
         _id: crypto.randomUUID(),
         documentName: documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`,
@@ -225,7 +229,7 @@ export default function DocumentWorkflowPage() {
         generationDate: new Date().toISOString(),
         status: 'draft',
         requiresSignature: requiresSignature,
-        documentUrl: `data:text/plain;base64,${btoa(documentContent)}`,
+        documentUrl: `data:text/plain;base64,${base64String}`,
         _createdDate: new Date()
       };
 
