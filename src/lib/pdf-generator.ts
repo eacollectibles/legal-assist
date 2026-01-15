@@ -252,37 +252,64 @@ Time: ${escapeHtml(signatureData.signedTime)}
 IP Address: ${escapeHtml(signatureData.ipAddress)}
 Timestamp: ${signatureData.timestamp.toISOString()}`;
 
-  // Create the signature HTML block with <pre> for verification details
-  const signatureBlock = `
-    <div class="signature-section">
-      <h2>Electronic Signature</h2>
+  // Create the signature HTML block with inline styles and <pre> for verification details
+  let signatureBlockHtml = '';
+  
+  // Build signature block with inline styles for rendering compatibility
+  if (signatureData.signatureDataUrl && verificationDetails) {
+    signatureBlockHtml = `
+    <div style="margin-top: 60px; border: 2px solid #000; padding: 30px; background: #f9f9f9; page-break-before: avoid;">
+      <h2 style="font-size: 14pt; font-weight: bold; margin: 0 0 20px 0; text-align: center; text-transform: uppercase;">Electronic Signature</h2>
       
-      <div class="signature-image">
-        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" />
+      <div style="text-align: center; margin: 20px 0; padding: 20px; background: white; border: 1px solid #ccc;">
+        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" style="max-width: 300px; max-height: 100px; border-bottom: 2px solid #000;" />
         <div style="margin-top: 10px; font-size: 10pt;">Electronically Signed</div>
       </div>
 
-      <div class="signature-details">
-        <h3>Signature Verification Details</h3>
+      <div style="margin-top: 30px; border: 1px solid #000; padding: 20px; background: white;">
+        <h3 style="font-size: 12pt; font-weight: bold; margin: 0 0 15px 0; text-align: center; background: #000; color: white; padding: 10px;">Signature Verification Details</h3>
         <pre style="white-space: pre-wrap; font-family: monospace; font-size: 12px; line-height: 1.35; word-break: break-word; margin: 0; padding: 15px; background: white; border: 1px solid #ddd;">${verificationDetails}</pre>
       </div>
 
-      <div class="certification">
+      <div style="margin-top: 30px; padding: 20px; background: #fffbcc; border: 2px solid #ffcc00; border-radius: 4px; font-size: 10pt; text-align: center;">
         <strong>CERTIFICATION:</strong><br>
         This document has been electronically signed. The signature, date, time, and 
         IP address have been permanently affixed to this document and cannot be altered.
       </div>
     </div>
   `;
+  }
+
+  // CRITICAL: If signatureBlockHtml is empty, use fallback marker
+  if (!signatureBlockHtml || signatureBlockHtml.trim() === '') {
+    signatureBlockHtml = '__SIGNATURE_NOT_AVAILABLE__';
+  }
 
   // Replace signature placeholder if found, otherwise append at the end
   let finalContent;
   if (foundPlaceholder) {
     // Replace ONLY the first occurrence of the found placeholder
-    finalContent = originalContent.replace(foundPlaceholder, signatureBlock);
+    finalContent = originalContent.replace(foundPlaceholder, signatureBlockHtml);
+    
+    // CRITICAL: Verify that the placeholder was actually replaced
+    if (finalContent.includes(foundPlaceholder)) {
+      console.error('Signature placeholder replacement failed - placeholder still exists');
+      // Force replace all occurrences as fallback
+      finalContent = originalContent.split(foundPlaceholder).join(signatureBlockHtml);
+    }
   } else {
     // Append signature at the end if no placeholder found
-    finalContent = originalContent + signatureBlock;
+    finalContent = originalContent + signatureBlockHtml;
+  }
+
+  // Final verification: ensure NO placeholders remain in the final content
+  const allPlaceholders = ['{SIGNATURE_SECTION}', '{SIGNATURE}', '{{SIGNATURE}}'];
+  for (const placeholder of allPlaceholders) {
+    if (finalContent.includes(placeholder)) {
+      console.error(`Warning: Placeholder ${placeholder} still exists in final content after replacement`);
+      // Force remove any remaining placeholders
+      finalContent = finalContent.split(placeholder).join(signatureBlockHtml);
+    }
   }
 
   // Create HTML content for signed PDF with original content + signature
