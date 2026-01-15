@@ -141,6 +141,27 @@ export interface ClientProfiles {
 
 
 /**
+ * Collection ID: documenttemplates
+ * Interface for DocumentTemplates
+ */
+export interface DocumentTemplates {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  templateName?: string;
+  /** @wixFieldType text */
+  templateType?: string;
+  /** @wixFieldType text */
+  templateContent?: string;
+  /** @wixFieldType text */
+  createdBy?: string;
+  /** @wixFieldType boolean */
+  isActive?: boolean;
+}
+
+
+/**
  * Collection ID: fileassignments
  * Interface for FileAssignments
  */
@@ -162,6 +183,33 @@ export interface FileAssignments {
   fileStatus?: string;
   /** @wixFieldType text */
   caseType?: string;
+}
+
+
+/**
+ * Collection ID: generateddocuments
+ * Interface for GeneratedDocuments
+ */
+export interface GeneratedDocuments {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  documentName?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType datetime */
+  generationDate?: Date | string;
+  /** @wixFieldType datetime */
+  sentDate?: Date | string;
+  /** @wixFieldType datetime */
+  signedDate?: Date | string;
+  /** @wixFieldType boolean */
+  requiresSignature?: boolean;
+  /** @wixFieldType url */
+  documentUrl?: string;
+  /** @wixFieldType url */
+  signedDocumentUrl?: string;
 }
 
 

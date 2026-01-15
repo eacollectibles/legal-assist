@@ -1,0 +1,656 @@
+import { useState, useEffect } from 'react';
+import { BaseCrudService } from '@/integrations';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive } from 'lucide-react';
+import { format } from 'date-fns';
+
+interface DocumentTemplate {
+  _id: string;
+  templateName?: string;
+  templateType?: string;
+  templateContent?: string;
+  createdBy?: string;
+  isActive?: boolean;
+  _createdDate?: Date | string;
+}
+
+interface GeneratedDocument {
+  _id: string;
+  documentName?: string;
+  templateId?: string;
+  clientId?: string;
+  clientEmail?: string;
+  generatedBy?: string;
+  generationDate?: Date | string;
+  status?: string;
+  sentDate?: Date | string;
+  signedDate?: Date | string;
+  requiresSignature?: boolean;
+  documentUrl?: string;
+  signedDocumentUrl?: string;
+  _createdDate?: Date | string;
+}
+
+interface ClientProfile {
+  _id: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+}
+
+interface UserAccount {
+  _id: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+export default function DocumentWorkflowPage() {
+  const [templates, setTemplates] = useState<DocumentTemplate[]>([]);
+  const [generatedDocs, setGeneratedDocs] = useState<GeneratedDocument[]>([]);
+  const [clients, setClients] = useState<ClientProfile[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Template dialog state
+  const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
+  const [newTemplate, setNewTemplate] = useState({
+    templateName: '',
+    templateType: 'Authorization Letter',
+    templateContent: '',
+    isActive: true
+  });
+
+  // Generate document dialog state
+  const [isGenerateDialogOpen, setIsGenerateDialogOpen] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState('');
+  const [selectedClientId, setSelectedClientId] = useState('');
+  const [documentName, setDocumentName] = useState('');
+  const [requiresSignature, setRequiresSignature] = useState(true);
+
+  // Send document dialog state
+  const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+  const [selectedDocumentId, setSelectedDocumentId] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const [templatesRes, docsRes, clientsRes] = await Promise.all([
+        BaseCrudService.getAll<DocumentTemplate>('documenttemplates'),
+        BaseCrudService.getAll<GeneratedDocument>('generateddocuments'),
+        BaseCrudService.getAll<ClientProfile>('clientprofiles')
+      ]);
+
+      setTemplates(templatesRes.items);
+      setGeneratedDocs(docsRes.items);
+      setClients(clientsRes.items);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCreateTemplate = async () => {
+    try {
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+
+      await BaseCrudService.create('documenttemplates', {
+        _id: crypto.randomUUID(),
+        ...newTemplate,
+        createdBy: userEmail
+      });
+
+      setIsTemplateDialogOpen(false);
+      setNewTemplate({
+        templateName: '',
+        templateType: 'Authorization Letter',
+        templateContent: '',
+        isActive: true
+      });
+      loadData();
+    } catch (error) {
+      console.error('Error creating template:', error);
+    }
+  };
+
+  const handleGenerateDocument = async () => {
+    try {
+      const template = templates.find(t => t._id === selectedTemplateId);
+      const client = clients.find(c => c._id === selectedClientId);
+      
+      if (!template || !client) return;
+
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+
+      // Replace placeholders in template content
+      let documentContent = template.templateContent || '';
+      documentContent = documentContent.replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim());
+      documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '');
+      documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
+
+      await BaseCrudService.create('generateddocuments', {
+        _id: crypto.randomUUID(),
+        documentName: documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`,
+        templateId: selectedTemplateId,
+        clientId: selectedClientId,
+        clientEmail: client._id, // Using _id as email identifier
+        generatedBy: userEmail,
+        generationDate: new Date().toISOString(),
+        status: 'draft',
+        requiresSignature: requiresSignature,
+        documentUrl: `data:text/plain;base64,${btoa(documentContent)}`
+      });
+
+      setIsGenerateDialogOpen(false);
+      setSelectedTemplateId('');
+      setSelectedClientId('');
+      setDocumentName('');
+      setRequiresSignature(true);
+      loadData();
+    } catch (error) {
+      console.error('Error generating document:', error);
+    }
+  };
+
+  const handleSendDocument = async () => {
+    try {
+      const doc = generatedDocs.find(d => d._id === selectedDocumentId);
+      if (!doc) return;
+
+      // Update document status to 'sent'
+      await BaseCrudService.update('generateddocuments', {
+        _id: selectedDocumentId,
+        status: 'sent',
+        sentDate: new Date().toISOString()
+      });
+
+      // Create a message record for the client
+      await BaseCrudService.create('messages', {
+        _id: crypto.randomUUID(),
+        senderEmail: 'admin@legalservices.com',
+        senderName: 'Legal Services Team',
+        recipientEmail: doc.clientEmail || '',
+        messageContent: `Document Ready for Signature: ${doc.documentName}\n\n${emailMessage}\n\nPlease review and sign the document in your client portal.`,
+        sentDate: new Date().toISOString(),
+        isRead: false,
+        conversationId: crypto.randomUUID()
+      });
+
+      // Copy document to client's documents
+      await BaseCrudService.create('clientdocuments', {
+        _id: crypto.randomUUID(),
+        documentName: doc.documentName,
+        fileUrl: doc.documentUrl,
+        uploadDate: new Date().toISOString(),
+        clientEmail: doc.clientEmail,
+        fileType: 'application/pdf',
+        documentCategory: 'generated-document',
+        notes: `Generated from template. ${doc.requiresSignature ? 'Signature required.' : ''}`
+      });
+
+      setIsSendDialogOpen(false);
+      setSelectedDocumentId('');
+      setEmailMessage('');
+      loadData();
+      alert('Document sent successfully to client!');
+    } catch (error) {
+      console.error('Error sending document:', error);
+      alert('Failed to send document. Please try again.');
+    }
+  };
+
+  const handlePrintDocument = (documentUrl?: string) => {
+    if (!documentUrl) return;
+    
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print Document</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; }
+              @media print {
+                body { padding: 0; }
+              }
+            </style>
+          </head>
+          <body>
+            <iframe src="${documentUrl}" style="width: 100%; height: 100vh; border: none;"></iframe>
+            <script>
+              window.onload = function() {
+                setTimeout(function() {
+                  window.print();
+                }, 500);
+              };
+            </script>
+          </body>
+        </html>
+      `);
+    }
+  };
+
+  const handleMarkAsSigned = async (docId: string) => {
+    try {
+      await BaseCrudService.update('generateddocuments', {
+        _id: docId,
+        status: 'signed',
+        signedDate: new Date().toISOString()
+      });
+      loadData();
+    } catch (error) {
+      console.error('Error marking document as signed:', error);
+    }
+  };
+
+  const getStatusColor = (status?: string) => {
+    switch (status) {
+      case 'draft': return 'bg-gray-200 text-gray-800';
+      case 'sent': return 'bg-blue-100 text-blue-800';
+      case 'signed': return 'bg-green-100 text-green-800';
+      case 'archived': return 'bg-gray-400 text-white';
+      default: return 'bg-gray-200 text-gray-800';
+    }
+  };
+
+  const getStatusIcon = (status?: string) => {
+    switch (status) {
+      case 'draft': return <Edit className="w-4 h-4" />;
+      case 'sent': return <Send className="w-4 h-4" />;
+      case 'signed': return <CheckCircle className="w-4 h-4" />;
+      case 'archived': return <Archive className="w-4 h-4" />;
+      default: return <Clock className="w-4 h-4" />;
+    }
+  };
+
+  const getClientName = (clientId?: string) => {
+    const client = clients.find(c => c._id === clientId);
+    return client ? `${client.firstName || ''} ${client.lastName || ''}`.trim() : 'Unknown Client';
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
+      
+      <main className="flex-1 w-full max-w-[120rem] mx-auto px-6 py-12">
+        <div className="mb-8">
+          <h1 className="font-heading text-5xl font-bold text-foreground mb-4">
+            Document Workflow Management
+          </h1>
+          <p className="font-paragraph text-lg text-foreground/80">
+            Create templates, generate documents, and manage client signatures
+          </p>
+        </div>
+
+        <Tabs defaultValue="documents" className="w-full">
+          <TabsList className="mb-8">
+            <TabsTrigger value="documents">Generated Documents</TabsTrigger>
+            <TabsTrigger value="templates">Document Templates</TabsTrigger>
+          </TabsList>
+
+          {/* Generated Documents Tab */}
+          <TabsContent value="documents" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-heading text-3xl font-bold text-foreground">
+                Generated Documents
+              </h2>
+              <Dialog open={isGenerateDialogOpen} onOpenChange={setIsGenerateDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="gap-2">
+                    <Plus className="h-4 w-4" />
+                    Generate Document
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>Generate Document from Template</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="template">Select Template</Label>
+                      <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choose a template" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {templates.filter(t => t.isActive).map((template) => (
+                            <SelectItem key={template._id} value={template._id}>
+                              {template.templateName} ({template.templateType})
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="client">Select Client</Label>
+                      <Select value={selectedClientId} onValueChange={setSelectedClientId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choose a client" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {clients.map((client) => (
+                            <SelectItem key={client._id} value={client._id}>
+                              {client.firstName} {client.lastName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="docName">Document Name (Optional)</Label>
+                      <Input
+                        id="docName"
+                        value={documentName}
+                        onChange={(e) => setDocumentName(e.target.value)}
+                        placeholder="Auto-generated if left blank"
+                      />
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="requiresSignature"
+                        checked={requiresSignature}
+                        onChange={(e) => setRequiresSignature(e.target.checked)}
+                        className="w-4 h-4"
+                      />
+                      <Label htmlFor="requiresSignature">Requires Client Signature</Label>
+                    </div>
+
+                    <Button onClick={handleGenerateDocument} className="w-full" disabled={!selectedTemplateId || !selectedClientId}>
+                      Generate Document
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            <div className="grid gap-4" style={{ minHeight: '400px' }}>
+              {isLoading ? null : generatedDocs.length === 0 ? (
+                <Card>
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <FileText className="h-12 w-12 text-foreground/40 mb-4" />
+                    <p className="font-paragraph text-lg text-foreground/60">
+                      No generated documents yet
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                generatedDocs.map((doc) => (
+                  <Card key={doc._id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <CardTitle className="font-heading text-2xl mb-2">
+                            {doc.documentName}
+                          </CardTitle>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge className={getStatusColor(doc.status)}>
+                              <span className="flex items-center gap-1">
+                                {getStatusIcon(doc.status)}
+                                {doc.status?.toUpperCase()}
+                              </span>
+                            </Badge>
+                            {doc.requiresSignature && (
+                              <Badge variant="outline">Signature Required</Badge>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex items-center gap-2 text-foreground/80">
+                          <FileText className="h-4 w-4" />
+                          <span className="font-paragraph">
+                            Client: {getClientName(doc.clientId)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-foreground/80">
+                          <Clock className="h-4 w-4" />
+                          <span className="font-paragraph">
+                            Generated: {doc.generationDate ? format(new Date(doc.generationDate), 'MMM d, yyyy') : 'N/A'}
+                          </span>
+                        </div>
+                        {doc.sentDate && (
+                          <div className="flex items-center gap-2 text-foreground/80">
+                            <Send className="h-4 w-4" />
+                            <span className="font-paragraph">
+                              Sent: {format(new Date(doc.sentDate), 'MMM d, yyyy')}
+                            </span>
+                          </div>
+                        )}
+                        {doc.signedDate && (
+                          <div className="flex items-center gap-2 text-foreground/80">
+                            <CheckCircle className="h-4 w-4" />
+                            <span className="font-paragraph">
+                              Signed: {format(new Date(doc.signedDate), 'MMM d, yyyy')}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex gap-2 pt-2 flex-wrap">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            if (doc.documentUrl) {
+                              window.open(doc.documentUrl, '_blank');
+                            }
+                          }}
+                          className="gap-2"
+                        >
+                          <Eye className="h-4 w-4" />
+                          View
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handlePrintDocument(doc.documentUrl)}
+                          className="gap-2"
+                        >
+                          <Printer className="h-4 w-4" />
+                          Print
+                        </Button>
+                        {doc.status === 'draft' && (
+                          <Button
+                            size="sm"
+                            onClick={() => {
+                              setSelectedDocumentId(doc._id);
+                              setIsSendDialogOpen(true);
+                            }}
+                            className="gap-2"
+                          >
+                            <Mail className="h-4 w-4" />
+                            Send to Client
+                          </Button>
+                        )}
+                        {doc.status === 'sent' && doc.requiresSignature && (
+                          <Button
+                            size="sm"
+                            onClick={() => handleMarkAsSigned(doc._id)}
+                            className="gap-2 bg-green-600 hover:bg-green-700"
+                          >
+                            <CheckCircle className="h-4 w-4" />
+                            Mark as Signed
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
+
+          {/* Templates Tab */}
+          <TabsContent value="templates" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-heading text-3xl font-bold text-foreground">
+                Document Templates
+              </h2>
+              <Dialog open={isTemplateDialogOpen} onOpenChange={setIsTemplateDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="gap-2">
+                    <Plus className="h-4 w-4" />
+                    Create Template
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Create Document Template</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="templateName">Template Name</Label>
+                      <Input
+                        id="templateName"
+                        value={newTemplate.templateName}
+                        onChange={(e) => setNewTemplate({ ...newTemplate, templateName: e.target.value })}
+                        placeholder="e.g., Client Authorization Letter"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="templateType">Template Type</Label>
+                      <Select
+                        value={newTemplate.templateType}
+                        onValueChange={(value) => setNewTemplate({ ...newTemplate, templateType: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Authorization Letter">Authorization Letter</SelectItem>
+                          <SelectItem value="Direction Letter">Direction Letter</SelectItem>
+                          <SelectItem value="Retainer Agreement">Retainer Agreement</SelectItem>
+                          <SelectItem value="Consent Form">Consent Form</SelectItem>
+                          <SelectItem value="Notice">Notice</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="templateContent">Template Content</Label>
+                      <p className="text-sm text-foreground/60">
+                        Use placeholders: {'{CLIENT_NAME}'}, {'{CLIENT_PHONE}'}, {'{DATE}'}
+                      </p>
+                      <Textarea
+                        id="templateContent"
+                        value={newTemplate.templateContent}
+                        onChange={(e) => setNewTemplate({ ...newTemplate, templateContent: e.target.value })}
+                        placeholder="Enter the template content with placeholders..."
+                        rows={12}
+                      />
+                    </div>
+
+                    <Button onClick={handleCreateTemplate} className="w-full">
+                      Create Template
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            <div className="grid gap-4" style={{ minHeight: '400px' }}>
+              {isLoading ? null : templates.length === 0 ? (
+                <Card>
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <FileText className="h-12 w-12 text-foreground/40 mb-4" />
+                    <p className="font-paragraph text-lg text-foreground/60">
+                      No templates yet
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                templates.map((template) => (
+                  <Card key={template._id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <CardTitle className="font-heading text-2xl mb-2">
+                            {template.templateName}
+                          </CardTitle>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="outline">{template.templateType}</Badge>
+                            <Badge className={template.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}>
+                              {template.isActive ? 'Active' : 'Inactive'}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="font-paragraph text-sm text-foreground/80 whitespace-pre-wrap line-clamp-4">
+                          {template.templateContent}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-foreground/60">
+                        <span>Created by: {template.createdBy}</span>
+                        <span>•</span>
+                        <span>{template._createdDate ? format(new Date(template._createdDate), 'MMM d, yyyy') : 'N/A'}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Send Document Dialog */}
+        <Dialog open={isSendDialogOpen} onOpenChange={setIsSendDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Send Document to Client</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="emailMessage">Email Message (Optional)</Label>
+                <Textarea
+                  id="emailMessage"
+                  value={emailMessage}
+                  onChange={(e) => setEmailMessage(e.target.value)}
+                  placeholder="Add a personal message for the client..."
+                  rows={4}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsSendDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleSendDocument} className="gap-2">
+                <Send className="h-4 w-4" />
+                Send Document
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Appointment {
@@ -756,35 +756,49 @@ export default function ParalegalDashboardPage() {
               </Dialog>
             </div>
 
-            {/* Unassigned Clients Section */}
+            {/* Unassigned Clients Section - Highlighted */}
             {!isLoading && clients.length > 0 && (
-              <Card className="mb-6 bg-pastelbeige/10">
-                <CardHeader>
-                  <CardTitle className="font-heading text-xl">Unassigned Clients</CardTitle>
+              <Card className="mb-6 bg-primary/5 border-2 border-primary/30 shadow-lg">
+                <CardHeader className="bg-primary/10">
+                  <CardTitle className="font-heading text-2xl text-primary flex items-center gap-2">
+                    <User className="h-6 w-6" />
+                    Unassigned Clients - Self-Assignment Available
+                  </CardTitle>
+                  <p className="font-paragraph text-foreground/80 mt-2">
+                    Click "Assign to Me" to take ownership of a client file
+                  </p>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
+                <CardContent className="pt-6">
+                  <div className="space-y-3">
                     {clients
                       .filter(client => !fileAssignments.some(a => a.clientId === client._id))
                       .map(client => (
-                        <div key={client._id} className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
-                          <span className="font-paragraph text-foreground">
-                            {client.firstName} {client.lastName}
-                          </span>
+                        <div key={client._id} className="flex items-center justify-between p-4 bg-white rounded-lg border-2 border-primary/20 hover:border-primary/40 hover:shadow-md transition-all">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                              <User className="h-5 w-5 text-primary" />
+                            </div>
+                            <span className="font-paragraph text-lg font-semibold text-foreground">
+                              {client.firstName} {client.lastName}
+                            </span>
+                          </div>
                           <Button
-                            size="sm"
+                            size="lg"
                             onClick={() => handleSelfAssign(client._id)}
-                            className="gap-2"
+                            className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
                           >
-                            <User className="h-4 w-4" />
+                            <User className="h-5 w-5" />
                             Assign to Me
                           </Button>
                         </div>
                       ))}
                     {clients.filter(client => !fileAssignments.some(a => a.clientId === client._id)).length === 0 && (
-                      <p className="font-paragraph text-foreground/60 text-center py-4">
-                        All clients have been assigned
-                      </p>
+                      <div className="text-center py-8">
+                        <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-3" />
+                        <p className="font-paragraph text-lg text-foreground/80 font-semibold">
+                          All clients have been assigned
+                        </p>
+                      </div>
                     )}
                   </div>
                 </CardContent>
@@ -846,7 +860,7 @@ export default function ParalegalDashboardPage() {
                           <Button
                             size="sm"
                             onClick={() => handleSelfAssign(assignment.clientId || '')}
-                            className="gap-2"
+                            className="gap-2 bg-primary hover:bg-primary/90 text-white"
                           >
                             <User className="h-4 w-4" />
                             Assign to Me
