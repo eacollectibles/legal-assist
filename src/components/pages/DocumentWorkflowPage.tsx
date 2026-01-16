@@ -12,10 +12,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2, PenTool } from 'lucide-react';
+import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2, PenTool, Link2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generator';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
+import UploadLinkGenerator from '@/components/UploadLinkGenerator';
 
 interface DocumentTemplate {
   _id: string;
@@ -847,7 +848,31 @@ export default function DocumentWorkflowPage() {
                             className="gap-2 border-green-600 text-green-700 hover:bg-green-50"
                           >
                             <CheckCircle className="h-4 w-4" />
-                            View Signed PDF
+                            View Signed
+                          </Button>
+                        )}
+
+                        {doc.status === 'sent' && doc.clientId && doc.clientEmail && (
+                          <UploadLinkGenerator
+                            clientId={doc.clientId}
+                            clientName={getClientName(doc.clientId)}
+                            documentId={doc._id}
+                            paralegalId="current-paralegal-id"
+                            paralegalName="Current Paralegal"
+                            onLinkGenerated={(link, expiry) => {
+                              console.log('Upload link generated:', link, expiry);
+                            }}
+                          />
+                        )}
+
+                        {doc.requiresSignature && doc.status === 'sent' && (
+                          <Button
+                            size="sm"
+                            onClick={() => handleMarkAsSigned(doc._id)}
+                            className="gap-2"
+                          >
+                            <PenTool className="h-4 w-4" />
+                            Sign Document
                           </Button>
                         )}
                         <Button

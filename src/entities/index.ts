@@ -330,6 +330,57 @@ export interface PaymentRecords {
 
 
 /**
+ * Collection ID: uploadtokens
+ * Interface for UploadTokens
+ */
+export interface UploadTokens {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  token?: string;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  clientName?: string;
+  /** @wixFieldType text */
+  matterId?: string;
+  /** @wixFieldType text */
+  matterReference?: string;
+  /** @wixFieldType text */
+  documentId?: string;
+  /** @wixFieldType text */
+  createdByParalegalId?: string;
+  /** @wixFieldType text */
+  createdByParalegalName?: string;
+  /** @wixFieldType text */
+  allowedPurpose?: string;
+  /** @wixFieldType datetime */
+  expiryDate?: Date | string;
+  /** @wixFieldType boolean */
+  isActive?: boolean;
+  /** @wixFieldType number */
+  maxFileSize?: number;
+  /** @wixFieldType text */
+  allowedFileTypes?: string;
+  /** @wixFieldType number */
+  usageCount?: number;
+  /** @wixFieldType number */
+  maxUsageCount?: number;
+  /** @wixFieldType datetime */
+  createdDate?: Date | string;
+  /** @wixFieldType datetime */
+  lastUsedDate?: Date | string;
+  /** @wixFieldType datetime */
+  revokedDate?: Date | string;
+  /** @wixFieldType text */
+  revokedBy?: string;
+  /** @wixFieldType text */
+  notes?: string;
+}
+
+
+/**
  * Collection ID: useraccounts
  * Interface for UserAccounts
  */
