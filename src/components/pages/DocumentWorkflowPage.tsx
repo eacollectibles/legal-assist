@@ -17,6 +17,8 @@ import { format } from 'date-fns';
 import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generator';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 import UploadLinkGenerator from '@/components/UploadLinkGenerator';
+import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
+import { sendSignedDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 
 interface DocumentTemplate {
   _id: string;
@@ -42,6 +44,7 @@ interface GeneratedDocument {
   requiresSignature?: boolean;
   documentUrl?: string;
   signedDocumentUrl?: string;
+  uploadToken?: string; // CRITICAL FIX: Store upload token on document
   _createdDate?: Date | string;
 }
 
@@ -87,6 +90,10 @@ export default function DocumentWorkflowPage() {
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
+
+  // Email signed document states
+  const [emailingDocument, setEmailingDocument] = useState<GeneratedDocument | null>(null);
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
 
   // Signature dialog state
   const [isSignatureDialogOpen, setIsSignatureDialogOpen] = useState(false);
@@ -278,6 +285,28 @@ export default function DocumentWorkflowPage() {
       const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
       const clientAccount = userAccounts.find(u => u.email === doc.clientEmail);
 
+      // CRITICAL FIX: Generate upload token for client to upload additional documents
+      let uploadToken: string | undefined;
+      try {
+        const { createUploadToken } = await import('@/lib/upload-token-service');
+        const client = clients.find(c => c._id === doc.clientId);
+        const token = await createUploadToken({
+          clientId: doc.clientId || 'unknown',
+          clientName: client ? `${client.firstName || ''} ${client.lastName || ''}`.trim() : 'Client',
+          matterId: doc._id,
+          matterReference: doc.documentName || 'Document Response',
+          documentId: doc._id,
+          createdByParalegalId: userEmail,
+          createdByParalegalName: userName,
+          allowedPurpose: 'DOCUMENT_RESPONSE',
+          expiryHours: 168, // 1 week
+          maxUsageCount: 0, // Unlimited
+        });
+        uploadToken = token.token;
+      } catch (error) {
+        console.error('Failed to generate upload token:', error);
+      }
+
       // Copy document to client's documents collection
       const clientDocId = crypto.randomUUID();
       await BaseCrudService.create('clientdocuments', {
@@ -291,10 +320,10 @@ export default function DocumentWorkflowPage() {
         notes: `Generated from template. ${doc.requiresSignature ? 'Signature required.' : ''}`
       });
 
-      // Update generated document status to 'sent' and link to client document
+      // Update generated document status to 'sent' and store upload token
       const updatedDocs = generatedDocs.map(d => 
         d._id === selectedDocumentId 
-          ? { ...d, status: 'sent', sentDate: new Date().toISOString() }
+          ? { ...d, status: 'sent', sentDate: new Date().toISOString(), uploadToken }
           : d
       );
       setGeneratedDocs(updatedDocs);
@@ -302,7 +331,8 @@ export default function DocumentWorkflowPage() {
       await BaseCrudService.update('generateddocuments', {
         _id: selectedDocumentId,
         status: 'sent',
-        sentDate: new Date().toISOString()
+        sentDate: new Date().toISOString(),
+        uploadToken
       });
 
       // Create a message record for the client
@@ -354,7 +384,12 @@ export default function DocumentWorkflowPage() {
     }
   };
 
-  const handlePrintDocument = (documentUrl?: string) => {
+  const handlePrintDocument = (doc: GeneratedDocument) => {
+    // CRITICAL FIX: Use signed document URL if available, otherwise use original
+    const documentUrl = doc.status === 'signed' && doc.signedDocumentUrl 
+      ? doc.signedDocumentUrl 
+      : doc.documentUrl;
+    
     if (!documentUrl) return;
     
     const printWindow = window.open('', '_blank');
@@ -478,6 +513,73 @@ export default function DocumentWorkflowPage() {
       console.error('Error deleting document:', error);
       loadData();
     }
+  };
+
+  const handleEmailSignedDocument = async (emailData: EmailFormData) => {
+    if (!emailingDocument) return;
+
+    try {
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
+
+      const client = clients.find(c => c._id === emailingDocument.clientId);
+      const clientName = client ? `${client.firstName || ''} ${client.lastName || ''}`.trim() : 'Client';
+
+      // Send email and get activity log
+      const activityLog: EmailActivityLog = await sendSignedDocumentEmail({
+        to: emailData.to,
+        subject: emailData.subject,
+        body: emailData.body,
+        documentUrl: emailingDocument.signedDocumentUrl || emailingDocument.documentUrl || '',
+        documentName: emailingDocument.documentName || 'Document',
+        clientName,
+        paralegalName: userName,
+        documentId: emailingDocument._id,
+        clientId: emailingDocument.clientId,
+      });
+
+      // Save comprehensive activity log to database
+      await BaseCrudService.create('activitylogs', {
+        _id: activityLog._id,
+        userId: emailingDocument.clientId || '',
+        activityType: 'document_emailed',
+        activityDescription: `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"`,
+        performedBy: userEmail,
+        performedByName: userName,
+        timestamp: activityLog.timestamp,
+        relatedItemId: emailingDocument._id,
+      });
+
+      setIsEmailDialogOpen(false);
+      setEmailingDocument(null);
+      alert('Email sent successfully! Activity has been logged.');
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      
+      // Log failed attempt
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
+
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: emailingDocument.clientId || '',
+        activityType: 'document_email_failed',
+        activityDescription: `Failed to email document "${emailingDocument.documentName}" to ${emailData.to}. Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        performedBy: userEmail,
+        performedByName: userName,
+        timestamp: new Date().toISOString(),
+        relatedItemId: emailingDocument._id,
+      });
+
+      throw error;
+    }
+  };
+
+  const openEmailDialog = (doc: GeneratedDocument) => {
+    setEmailingDocument(doc);
+    setIsEmailDialogOpen(true);
   };
 
   const getStatusColor = (status?: string) => {
@@ -816,7 +918,7 @@ export default function DocumentWorkflowPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => handlePrintDocument(doc.documentUrl)}
+                          onClick={() => handlePrintDocument(doc)}
                           className="gap-2"
                         >
                           <Printer className="h-4 w-4" />
@@ -837,32 +939,46 @@ export default function DocumentWorkflowPage() {
                         )}
 
                         {doc.status === 'signed' && doc.signedDocumentUrl && (
+                          <>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                if (doc.signedDocumentUrl) {
+                                  window.open(doc.signedDocumentUrl, '_blank');
+                                }
+                              }}
+                              className="gap-2 border-green-600 text-green-700 hover:bg-green-50"
+                            >
+                              <CheckCircle className="h-4 w-4" />
+                              View Signed
+                            </Button>
+                            <Button
+                              size="sm"
+                              onClick={() => openEmailDialog(doc)}
+                              className="gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              <Mail className="h-4 w-4" />
+                              Email Signed Document
+                            </Button>
+                          </>
+                        )}
+
+                        {(doc.status === 'sent' || doc.status === 'signed') && doc.uploadToken && (
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => {
-                              if (doc.signedDocumentUrl) {
-                                window.open(doc.signedDocumentUrl, '_blank');
-                              }
+                              const { generateUploadLink } = require('@/lib/upload-token-service');
+                              const link = generateUploadLink(doc.uploadToken!);
+                              navigator.clipboard.writeText(link);
+                              alert('Upload link copied to clipboard!');
                             }}
-                            className="gap-2 border-green-600 text-green-700 hover:bg-green-50"
+                            className="gap-2"
                           >
-                            <CheckCircle className="h-4 w-4" />
-                            View Signed
+                            <Link2 className="h-4 w-4" />
+                            Copy Upload Link
                           </Button>
-                        )}
-
-                        {doc.status === 'sent' && doc.clientId && doc.clientEmail && (
-                          <UploadLinkGenerator
-                            clientId={doc.clientId}
-                            clientName={getClientName(doc.clientId)}
-                            documentId={doc._id}
-                            paralegalId="current-paralegal-id"
-                            paralegalName="Current Paralegal"
-                            onLinkGenerated={(link, expiry) => {
-                              console.log('Upload link generated:', link, expiry);
-                            }}
-                          />
                         )}
 
                         {doc.requiresSignature && doc.status === 'sent' && (
@@ -1318,6 +1434,28 @@ export default function DocumentWorkflowPage() {
             />
           </DialogContent>
         </Dialog>
+
+        {/* Email Signed Document Dialog */}
+        <EmailDocumentDialog
+          document={emailingDocument}
+          isOpen={isEmailDialogOpen}
+          onClose={() => {
+            setIsEmailDialogOpen(false);
+            setEmailingDocument(null);
+          }}
+          onSend={handleEmailSignedDocument}
+          paralegalName={
+            localStorage.getItem('currentUser')
+              ? JSON.parse(localStorage.getItem('currentUser')!).firstName + ' ' + JSON.parse(localStorage.getItem('currentUser')!).lastName
+              : 'Admin'
+          }
+          clientName={
+            emailingDocument && clients.find(c => c._id === emailingDocument.clientId)
+              ? `${clients.find(c => c._id === emailingDocument.clientId)?.firstName || ''} ${clients.find(c => c._id === emailingDocument.clientId)?.lastName || ''}`.trim()
+              : 'Client'
+          }
+          uploadToken={emailingDocument?.uploadToken}
+        />
       </main>
 
       <Footer />
