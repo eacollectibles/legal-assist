@@ -246,6 +246,9 @@ export async function embedSignatureInPDF(
     }
   }
 
+  // Get signer name from signature data (if available) or use a default
+  const signerName = 'Client'; // You can pass this as a parameter if needed
+  
   // Create verification details with preserved line breaks using <pre> tag
   const verificationDetails = `Date: ${escapeHtml(signatureData.signedDate)}
 Time: ${escapeHtml(signatureData.signedTime)}
@@ -258,20 +261,18 @@ Timestamp: ${signatureData.timestamp.toISOString()}`;
   // Build signature block with inline styles for rendering compatibility
   if (signatureData.signatureDataUrl && verificationDetails) {
     signatureBlockHtml = `
-    <div style="margin-top: 60px; border: 2px solid #000; padding: 30px; background: #f9f9f9; page-break-before: avoid;">
-      <h2 style="font-size: 14pt; font-weight: bold; margin: 0 0 20px 0; text-align: center; text-transform: uppercase;">Electronic Signature</h2>
-      
-      <div style="text-align: center; margin: 20px 0; padding: 20px; background: white; border: 1px solid #ccc;">
-        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" style="max-width: 300px; max-height: 100px; border-bottom: 2px solid #000;" />
-        <div style="margin-top: 10px; font-size: 10pt;">Electronically Signed</div>
+    <div style="margin-top: 40px; border: 2px solid #000; padding: 25px; background: #f9f9f9; page-break-before: avoid;">
+      <div style="text-align: center; margin: 0 0 20px 0; padding: 15px; background: white; border: 1px solid #ccc;">
+        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" style="max-width: 300px; max-height: 80px; border-bottom: 2px solid #000; display: block; margin: 0 auto;" />
+        <div style="margin-top: 8px; font-size: 10pt; font-weight: bold; color: #333;">Electronically signed by ${escapeHtml(signerName)}</div>
       </div>
 
-      <div style="margin-top: 30px; border: 1px solid #000; padding: 20px; background: white;">
-        <h3 style="font-size: 12pt; font-weight: bold; margin: 0 0 15px 0; text-align: center; background: #000; color: white; padding: 10px;">Signature Verification Details</h3>
-        <pre style="white-space: pre-wrap; font-family: monospace; font-size: 12px; line-height: 1.35; word-break: break-word; margin: 0; padding: 15px; background: white; border: 1px solid #ddd;">${verificationDetails}</pre>
+      <div style="margin-top: 20px; border: 1px solid #000; padding: 15px; background: white;">
+        <h3 style="font-size: 11pt; font-weight: bold; margin: 0 0 12px 0; text-align: center; background: #000; color: white; padding: 8px;">Signature Verification Details</h3>
+        <pre style="white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 10px; line-height: 1.4; word-break: break-word; margin: 0; padding: 12px; background: #fafafa; border: 1px solid #ddd;">${verificationDetails}</pre>
       </div>
 
-      <div style="margin-top: 30px; padding: 20px; background: #fffbcc; border: 2px solid #ffcc00; border-radius: 4px; font-size: 10pt; text-align: center;">
+      <div style="margin-top: 20px; padding: 15px; background: #fffbcc; border: 2px solid #ffcc00; border-radius: 4px; font-size: 9pt; text-align: center;">
         <strong>CERTIFICATION:</strong><br>
         This document has been electronically signed. The signature, date, time, and 
         IP address have been permanently affixed to this document and cannot be altered.
