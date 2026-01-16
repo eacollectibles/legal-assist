@@ -222,8 +222,13 @@ export default function DocumentWorkflowPage() {
 
       // Replace placeholders in template content
       let documentContent = template.templateContent || '';
-      documentContent = documentContent.replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim());
-      documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '');
+      documentContent = documentContent.replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim() || '—');
+      documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '—');
+      documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE1\}/g, client.streetAddress || '—');
+      documentContent = documentContent.replace(/\{CLIENT_CITY\}/g, client.city || '—');
+      documentContent = documentContent.replace(/\{CLIENT_PROVINCE\}/g, client.state || '—');
+      documentContent = documentContent.replace(/\{CLIENT_POSTAL_CODE\}/g, client.zipCode || '—');
+      documentContent = documentContent.replace(/\{MATTER_REFERENCE\}/g, '—'); // No matter reference field in current schema
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
 
       // Generate PDF from content
