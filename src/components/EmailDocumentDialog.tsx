@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Send, X } from 'lucide-react';
+import { Mail, Send, X, Link as LinkIcon, Copy, CheckCircle } from 'lucide-react';
 import { GeneratedDocuments } from '@/entities';
+import { generateUploadLink } from '@/lib/upload-token-service';
 
 interface EmailDocumentDialogProps {
   document: GeneratedDocuments | null;
@@ -14,6 +15,7 @@ interface EmailDocumentDialogProps {
   onSend: (emailData: EmailFormData) => Promise<void>;
   paralegalName: string;
   clientName: string;
+  uploadToken?: string; // Optional upload token for generating upload link
 }
 
 export interface EmailFormData {
@@ -29,6 +31,7 @@ export default function EmailDocumentDialog({
   onSend,
   paralegalName,
   clientName,
+  uploadToken,
 }: EmailDocumentDialogProps) {
   const [formData, setFormData] = useState<EmailFormData>({
     to: '',
@@ -37,6 +40,7 @@ export default function EmailDocumentDialog({
   });
   const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState<{ to?: string; subject?: string; body?: string }>({});
+  const [uploadLinkCopied, setUploadLinkCopied] = useState(false);
 
   // Auto-fill template when document changes
   useEffect(() => {
@@ -47,7 +51,12 @@ export default function EmailDocumentDialog({
         day: 'numeric',
       });
 
+      // CRITICAL FIX: Generate upload link if token is provided
+      const uploadLink = uploadToken ? generateUploadLink(uploadToken) : null;
+
       const defaultSubject = `Your Signed Document: ${document.documentName || 'Legal Document'}`;
+      
+      // CRITICAL FIX: Auto-insert upload link into email body
       const defaultBody = `Dear ${clientName},
 
 I hope this message finds you well.
@@ -62,6 +71,13 @@ Key Details:
 
 The attached PDF is the official signed version of your document. Please download and save it for your records.
 
+${uploadLink ? `
+📤 SECURE UPLOAD LINK
+If you need to upload additional documents related to this matter, please use this secure link:
+${uploadLink}
+
+This link is unique to you and allows you to securely upload files directly to your case file. The link will expire after use or after the designated time period.
+` : ''}
 If you have any questions or need any clarification regarding this document, please don't hesitate to reach out to me directly.
 
 Best regards,
@@ -74,8 +90,9 @@ LegalAssist`;
         body: defaultBody,
       });
       setErrors({});
+      setUploadLinkCopied(false);
     }
-  }, [document, isOpen, clientName, paralegalName]);
+  }, [document, isOpen, clientName, paralegalName, uploadToken]);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -123,6 +140,26 @@ LegalAssist`;
   const handleClose = () => {
     if (!isSending) {
       onClose();
+    }
+  };
+
+  const handleCopyUploadLink = () => {
+    if (uploadToken) {
+      const link = generateUploadLink(uploadToken);
+      navigator.clipboard.writeText(link);
+      setUploadLinkCopied(true);
+      setTimeout(() => setUploadLinkCopied(false), 3000);
+    }
+  };
+
+  const handleInsertUploadLink = () => {
+    if (uploadToken) {
+      const link = generateUploadLink(uploadToken);
+      const insertText = `\n\n📤 SECURE UPLOAD LINK\nIf you need to upload additional documents related to this matter, please use this secure link:\n${link}\n\nThis link is unique to you and allows you to securely upload files directly to your case file.\n`;
+      setFormData({
+        ...formData,
+        body: formData.body + insertText,
+      });
     }
   };
 
@@ -224,6 +261,53 @@ LegalAssist`;
               </p>
             </div>
           </div>
+
+          {/* Upload Link Section - CRITICAL FIX */}
+          {uploadToken && (
+            <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+              <h4 className="font-heading font-bold text-foreground text-sm mb-2 flex items-center gap-2">
+                <LinkIcon className="w-4 h-4 text-blue-600" />
+                Secure Upload Link
+              </h4>
+              <p className="text-xs text-foreground/80 mb-3">
+                A unique upload link has been auto-inserted into the email body. You can also copy it manually:
+              </p>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopyUploadLink}
+                  className="gap-2"
+                >
+                  {uploadLinkCopied ? (
+                    <>
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      Copy Link
+                    </>
+                  )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleInsertUploadLink}
+                  className="gap-2"
+                >
+                  <LinkIcon className="w-4 h-4" />
+                  Insert Link Again
+                </Button>
+              </div>
+              <p className="text-xs text-foreground/60 mt-2">
+                {generateUploadLink(uploadToken)}
+              </p>
+            </div>
+          )}
 
           {/* Template Variables Info */}
           <div className="bg-pastelgreen/20 rounded-lg p-4 border border-pastelgreen">

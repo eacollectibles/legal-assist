@@ -64,20 +64,38 @@ export default function PublicUploadPage() {
     setUploadError('');
 
     try {
-      // Create document record
+      // CRITICAL FIX: Extract clientId and matterId from token to bind document correctly
+      const clientId = uploadToken.clientId;
+      const matterId = uploadToken.matterId;
+      const documentId = uploadToken.documentId;
+
+      // Create document record bound to client's account and matter
       const document: ClientDocuments = {
-        _id: crypto.randomUUID(),
+        _id: documentId || crypto.randomUUID(), // Use documentId from token if provided
         documentName: selectedFile.name,
         fileUrl: `https://example.com/uploads/${selectedFile.name}`, // Placeholder - would be actual upload URL
         uploadDate: new Date().toISOString(),
-        clientEmail: uploadToken.clientName,
+        clientEmail: uploadToken.clientName || '', // Use clientName from token
         fileType: selectedFile.type || selectedFile.name.split('.').pop() || 'unknown',
         fileSize: selectedFile.size,
         documentCategory: uploadToken.matterReference || 'Client Upload',
-        notes: `Uploaded via secure link. Purpose: ${uploadToken.allowedPurpose}`,
+        notes: `Uploaded via secure link by ${uploadToken.clientName}. Purpose: ${uploadToken.allowedPurpose?.replace(/_/g, ' ')}. ${matterId ? `Matter ID: ${matterId}` : ''}${uploadToken.matterReference ? ` (${uploadToken.matterReference})` : ''}`,
       };
 
+      // Save document under client's document tree
       await BaseCrudService.create('clientdocuments', document);
+
+      // Log the upload activity
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: clientId || 'unknown',
+        activityType: 'document_uploaded',
+        activityDescription: `Client uploaded document "${selectedFile.name}" via secure upload link. ${matterId ? `Matter: ${uploadToken.matterReference || matterId}` : ''}`,
+        performedBy: uploadToken.clientName || 'Client',
+        performedByName: uploadToken.clientName || 'Client',
+        timestamp: new Date().toISOString(),
+        relatedItemId: document._id,
+      });
 
       // Increment token usage
       await incrementTokenUsage(uploadToken._id);

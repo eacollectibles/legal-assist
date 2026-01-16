@@ -110,6 +110,7 @@ export default function ParalegalDashboardPage() {
   const [emailingDocument, setEmailingDocument] = useState<GeneratedDocuments | null>(null);
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
   const [emailSuccess, setEmailSuccess] = useState(false);
+  const [emailUploadToken, setEmailUploadToken] = useState<string | undefined>(undefined);
 
   // Form states for new appointment
   const [newAppointment, setNewAppointment] = useState({
@@ -562,8 +563,38 @@ export default function ParalegalDashboardPage() {
     }
   };
 
-  const openEmailDialog = (doc: GeneratedDocuments) => {
+  const openEmailDialog = async (doc: GeneratedDocuments) => {
     setEmailingDocument(doc);
+    
+    // CRITICAL FIX: Generate or fetch upload token for this client/document
+    try {
+      const { createUploadToken } = await import('@/lib/upload-token-service');
+      
+      // Create a new upload token for the client to upload additional documents
+      const token = await createUploadToken({
+        clientId: doc.clientId || 'unknown',
+        clientName: clients.find(c => c._id === doc.clientId)
+          ? `${clients.find(c => c._id === doc.clientId)?.firstName || ''} ${clients.find(c => c._id === doc.clientId)?.lastName || ''}`.trim()
+          : 'Client',
+        matterId: doc._id, // Use document ID as matter ID for tracking
+        matterReference: doc.documentName || 'Document Response',
+        documentId: doc._id,
+        createdByParalegalId: currentParalegalId,
+        createdByParalegalName: paralegals.find(p => p._id === currentParalegalId)
+          ? `${paralegals.find(p => p._id === currentParalegalId)?.firstName || ''} ${paralegals.find(p => p._id === currentParalegalId)?.lastName || ''}`.trim()
+          : 'Paralegal',
+        allowedPurpose: 'DOCUMENT_RESPONSE',
+        expiryHours: 168, // 1 week
+        maxUsageCount: 0, // Unlimited
+      });
+      
+      setEmailUploadToken(token.token);
+    } catch (error) {
+      console.error('Failed to generate upload token:', error);
+      // Continue without token - email will still work
+      setEmailUploadToken(undefined);
+    }
+    
     setIsEmailDialogOpen(true);
   };
 
@@ -1549,6 +1580,7 @@ export default function ParalegalDashboardPage() {
           onClose={() => {
             setIsEmailDialogOpen(false);
             setEmailingDocument(null);
+            setEmailUploadToken(undefined);
           }}
           onSend={handleEmailDocument}
           paralegalName={
@@ -1561,6 +1593,7 @@ export default function ParalegalDashboardPage() {
               ? `${clients.find(c => c._id === emailingDocument.clientId)?.firstName || ''} ${clients.find(c => c._id === emailingDocument.clientId)?.lastName || ''}`.trim()
               : 'Client'
           }
+          uploadToken={emailUploadToken}
         />
 
         {/* Share Document Dialog */}
