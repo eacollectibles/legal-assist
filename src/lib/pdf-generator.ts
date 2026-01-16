@@ -249,33 +249,33 @@ export async function embedSignatureInPDF(
   // Get signer name from signature data (if available) or use a default
   const signerName = 'Client'; // You can pass this as a parameter if needed
   
-  // Create verification details with preserved line breaks using <pre> tag
-  const verificationDetails = `Date: ${escapeHtml(signatureData.signedDate)}
-Time: ${escapeHtml(signatureData.signedTime)}
-IP Address: ${escapeHtml(signatureData.ipAddress)}
-Timestamp: ${signatureData.timestamp.toISOString()}`;
-
-  // Create the signature HTML block with inline styles and <pre> for verification details
+  // Create the signature HTML block following traditional legal document layout
   let signatureBlockHtml = '';
   
-  // Build signature block with inline styles for rendering compatibility
-  if (signatureData.signatureDataUrl && verificationDetails) {
+  // Build signature block with traditional legal formatting
+  if (signatureData.signatureDataUrl) {
     signatureBlockHtml = `
-    <div style="margin-top: 40px; border: 2px solid #000; padding: 25px; background: #f9f9f9; page-break-before: avoid;">
-      <div style="text-align: center; margin: 0 0 20px 0; padding: 15px; background: white; border: 1px solid #ccc;">
-        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" style="max-width: 300px; max-height: 80px; border-bottom: 2px solid #000; display: block; margin: 0 auto;" />
-        <div style="margin-top: 8px; font-size: 10pt; font-weight: bold; color: #333;">Electronically signed by ${escapeHtml(signerName)}</div>
+    <div style="margin-top: 40px; page-break-before: avoid;">
+      <h2 style="font-size: 12pt; font-weight: bold; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px;">6. ELECTRONIC SIGNATURE</h2>
+      
+      <div style="border: 1px solid #000; padding: 12px; background: #ffffff; margin-bottom: 12px;">
+        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" style="max-width: 300px; max-height: 60px; display: block; margin: 0;" />
+        <div style="border-top: 1px solid #000; margin-top: 8px; padding-top: 4px; font-size: 10pt; line-height: 1.2;">Electronically signed by ${escapeHtml(signerName)}</div>
       </div>
 
-      <div style="margin-top: 20px; border: 1px solid #000; padding: 15px; background: white;">
-        <h3 style="font-size: 11pt; font-weight: bold; margin: 0 0 12px 0; text-align: center; background: #000; color: white; padding: 8px;">Signature Verification Details</h3>
-        <pre style="white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 10px; line-height: 1.4; word-break: break-word; margin: 0; padding: 12px; background: #fafafa; border: 1px solid #ddd;">${verificationDetails}</pre>
+      <div style="display: table; width: 100%; margin-bottom: 12px; font-size: 10pt; line-height: 1.2;">
+        <div style="display: table-row;">
+          <div style="display: table-cell; width: 50%; padding-right: 8px; padding-bottom: 6px;"><strong>Date:</strong> ${escapeHtml(signatureData.signedDate)}</div>
+          <div style="display: table-cell; width: 50%; padding-left: 8px; padding-bottom: 6px;"><strong>IP Address:</strong> ${escapeHtml(signatureData.ipAddress)}</div>
+        </div>
+        <div style="display: table-row;">
+          <div style="display: table-cell; width: 50%; padding-right: 8px;"><strong>Time:</strong> ${escapeHtml(signatureData.signedTime)}</div>
+          <div style="display: table-cell; width: 50%; padding-left: 8px;"><strong>Timestamp:</strong> ${signatureData.timestamp.toISOString()}</div>
+        </div>
       </div>
 
-      <div style="margin-top: 20px; padding: 15px; background: #fffbcc; border: 2px solid #ffcc00; border-radius: 4px; font-size: 9pt; text-align: center;">
-        <strong>CERTIFICATION:</strong><br>
-        This document has been electronically signed. The signature, date, time, and 
-        IP address have been permanently affixed to this document and cannot be altered.
+      <div style="padding: 12px; background: #ffff99; border: 1px solid #000; font-size: 9pt; line-height: 1.2;">
+        <strong>CERTIFICATION:</strong> This document has been electronically signed. The signature, date, time, and IP address have been permanently affixed to this document and cannot be altered.
       </div>
     </div>
   `;
