@@ -11,10 +11,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
+import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
+import { sendSignedDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 import { GeneratedDocuments } from '@/entities';
 
 interface Appointment {
@@ -103,6 +105,11 @@ export default function ParalegalDashboardPage() {
   const [isLoadingGeneratedDocs, setIsLoadingGeneratedDocs] = useState(true);
   const [signingDocument, setSigningDocument] = useState<GeneratedDocuments | null>(null);
   const [signatureSuccess, setSignatureSuccess] = useState(false);
+
+  // Email document states
+  const [emailingDocument, setEmailingDocument] = useState<GeneratedDocuments | null>(null);
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState(false);
 
   // Form states for new appointment
   const [newAppointment, setNewAppointment] = useState({
@@ -475,6 +482,91 @@ export default function ParalegalDashboardPage() {
     }
   };
 
+  const handleEmailDocument = async (emailData: EmailFormData) => {
+    if (!emailingDocument) return;
+
+    try {
+      const paralegal = paralegals.find(p => p._id === currentParalegalId);
+      const paralegalName = paralegal
+        ? `${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim()
+        : 'Paralegal';
+
+      const client = clients.find(c => c._id === emailingDocument.clientId);
+      const clientName = client
+        ? `${client.firstName || ''} ${client.lastName || ''}`.trim()
+        : 'Client';
+
+      // Send email and get activity log
+      const activityLog: EmailActivityLog = await sendSignedDocumentEmail({
+        to: emailData.to,
+        subject: emailData.subject,
+        body: emailData.body,
+        documentUrl: emailingDocument.signedDocumentUrl || emailingDocument.documentUrl || '',
+        documentName: emailingDocument.documentName || 'Document',
+        clientName,
+        paralegalName,
+        documentId: emailingDocument._id,
+        clientId: emailingDocument.clientId,
+      });
+
+      // Save comprehensive activity log to database
+      await BaseCrudService.create('activitylogs', {
+        _id: activityLog._id,
+        userId: currentParalegalId,
+        activityType: 'document_emailed',
+        activityDescription: `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"`,
+        performedBy: activityLog.senderEmail,
+        performedByName: activityLog.senderName,
+        timestamp: activityLog.timestamp,
+        relatedItemId: emailingDocument._id,
+      });
+
+      // Update document status if needed
+      if (emailingDocument.status !== 'Sent') {
+        await BaseCrudService.update('generateddocuments', {
+          _id: emailingDocument._id,
+          status: 'Sent',
+          sentDate: new Date().toISOString(),
+        });
+
+        // Update local state
+        setGeneratedDocuments(prev =>
+          prev.map(doc =>
+            doc._id === emailingDocument._id
+              ? { ...doc, status: 'Sent', sentDate: new Date().toISOString() }
+              : doc
+          )
+        );
+      }
+
+      setIsEmailDialogOpen(false);
+      setEmailingDocument(null);
+      setEmailSuccess(true);
+      setTimeout(() => setEmailSuccess(false), 5000);
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      
+      // Log failed attempt
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: currentParalegalId,
+        activityType: 'document_email_failed',
+        activityDescription: `Failed to email document "${emailingDocument.documentName}" to ${emailData.to}. Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        performedBy: 'paralegal@legalservices.com',
+        performedByName: 'Paralegal',
+        timestamp: new Date().toISOString(),
+        relatedItemId: emailingDocument._id,
+      });
+
+      throw error;
+    }
+  };
+
+  const openEmailDialog = (doc: GeneratedDocuments) => {
+    setEmailingDocument(doc);
+    setIsEmailDialogOpen(true);
+  };
+
   // Show signature modal if signing a document
   if (signingDocument) {
     return (
@@ -515,6 +607,16 @@ export default function ParalegalDashboardPage() {
             <div>
               <h3 className="font-heading font-bold text-green-900 mb-1">Document Signed Successfully!</h3>
               <p className="font-paragraph text-green-800">Your electronic signature has been recorded and attached to the document.</p>
+            </div>
+          </div>
+        )}
+
+        {emailSuccess && (
+          <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
+            <Mail className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-heading font-bold text-blue-900 mb-1">Email Sent Successfully!</h3>
+              <p className="font-paragraph text-blue-800">The signed document has been emailed to the recipient. Activity has been logged.</p>
             </div>
           </div>
         )}
@@ -1137,18 +1239,29 @@ export default function ParalegalDashboardPage() {
                                 </Button>
                               )}
                               {isSigned && doc.signedDocumentUrl && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  asChild
-                                  className="flex-1 md:flex-none border-green-300 text-green-700 hover:bg-green-50"
-                                >
-                                  <a href={doc.signedDocumentUrl} download>
-                                    <Download className="w-4 h-4 md:mr-2" />
-                                    <span className="hidden md:inline">Download Signed</span>
-                                    <span className="md:hidden">Download</span>
-                                  </a>
-                                </Button>
+                                <>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    asChild
+                                    className="flex-1 md:flex-none border-green-300 text-green-700 hover:bg-green-50"
+                                  >
+                                    <a href={doc.signedDocumentUrl} download>
+                                      <Download className="w-4 h-4 md:mr-2" />
+                                      <span className="hidden md:inline">Download Signed</span>
+                                      <span className="md:hidden">Download</span>
+                                    </a>
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    onClick={() => openEmailDialog(doc)}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white flex-1 md:flex-none"
+                                  >
+                                    <Mail className="w-4 h-4 md:mr-2" />
+                                    <span className="hidden md:inline">Email Document</span>
+                                    <span className="md:hidden">Email</span>
+                                  </Button>
+                                </>
                               )}
                             </div>
                           </div>
@@ -1428,6 +1541,27 @@ export default function ParalegalDashboardPage() {
             )}
           </DialogContent>
         </Dialog>
+
+        {/* Email Document Dialog */}
+        <EmailDocumentDialog
+          document={emailingDocument}
+          isOpen={isEmailDialogOpen}
+          onClose={() => {
+            setIsEmailDialogOpen(false);
+            setEmailingDocument(null);
+          }}
+          onSend={handleEmailDocument}
+          paralegalName={
+            paralegals.find(p => p._id === currentParalegalId)
+              ? `${paralegals.find(p => p._id === currentParalegalId)?.firstName || ''} ${paralegals.find(p => p._id === currentParalegalId)?.lastName || ''}`.trim()
+              : 'Paralegal'
+          }
+          clientName={
+            emailingDocument && clients.find(c => c._id === emailingDocument.clientId)
+              ? `${clients.find(c => c._id === emailingDocument.clientId)?.firstName || ''} ${clients.find(c => c._id === emailingDocument.clientId)?.lastName || ''}`.trim()
+              : 'Client'
+          }
+        />
 
         {/* Share Document Dialog */}
         <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>

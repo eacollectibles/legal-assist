@@ -26,6 +26,97 @@ export interface BookingConfirmationPayload {
 
 const BUSINESS_EMAIL = 'jeanfrancois@legalassist.london';
 
+export interface EmailDocumentPayload {
+  to: string;
+  subject: string;
+  body: string;
+  documentUrl: string;
+  documentName: string;
+  clientName: string;
+  paralegalName: string;
+  documentId: string;
+  clientId?: string;
+}
+
+export interface EmailActivityLog {
+  _id: string;
+  senderEmail: string;
+  senderName: string;
+  recipientEmails: string[];
+  subject: string;
+  body: string;
+  renderedSubject: string;
+  renderedBody: string;
+  documentId?: string;
+  documentName?: string;
+  attachmentUrl?: string;
+  timestamp: string;
+  deliveryStatus: 'sent' | 'failed' | 'pending';
+  errorMessage?: string;
+}
+
+/**
+ * Send signed document via email with comprehensive logging
+ */
+export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Promise<EmailActivityLog> => {
+  const timestamp = new Date().toISOString();
+  const activityLog: EmailActivityLog = {
+    _id: crypto.randomUUID(),
+    senderEmail: BUSINESS_EMAIL,
+    senderName: payload.paralegalName,
+    recipientEmails: [payload.to],
+    subject: payload.subject,
+    body: payload.body,
+    renderedSubject: payload.subject,
+    renderedBody: payload.body,
+    documentId: payload.documentId,
+    documentName: payload.documentName,
+    attachmentUrl: payload.documentUrl,
+    timestamp,
+    deliveryStatus: 'pending',
+  };
+
+  try {
+    // Validate recipient email
+    if (!isValidEmail(payload.to)) {
+      throw new Error('Invalid recipient email address');
+    }
+
+    // Generate stable filename
+    const date = new Date().toISOString().split('T')[0];
+    const stableFilename = `${payload.documentName} - ${payload.clientName} - Signed - ${date}.pdf`;
+
+    const htmlContent = getSignedDocumentEmailTemplate(
+      payload.clientName,
+      payload.paralegalName,
+      payload.body,
+      payload.documentUrl,
+      stableFilename
+    );
+
+    await sendEmail({
+      to: payload.to,
+      subject: payload.subject,
+      html: htmlContent,
+    });
+
+    activityLog.deliveryStatus = 'sent';
+    return activityLog;
+  } catch (error) {
+    activityLog.deliveryStatus = 'failed';
+    activityLog.errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw error;
+  }
+};
+
+/**
+ * Validate email address format
+ */
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 /**
  * Send booking confirmation email to client immediately after submission
  */
@@ -369,6 +460,83 @@ const getStatusColor = (status: string): string => {
     default:
       return '#ffc107'; // Yellow/Orange
   }
+};
+
+/**
+ * Get HTML email template for signed document delivery
+ */
+const getSignedDocumentEmailTemplate = (
+  clientName: string,
+  paralegalName: string,
+  customMessage: string,
+  documentUrl: string,
+  filename: string
+): string => {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #B94A1F; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { background-color: #f9f5f0; padding: 20px; border-radius: 0 0 8px 8px; }
+          .message-box { background-color: white; padding: 15px; border-radius: 4px; margin: 15px 0; border-left: 4px solid #B94A1F; white-space: pre-wrap; }
+          .document-box { background-color: #e8f5e9; border: 2px solid #4caf50; padding: 20px; border-radius: 4px; margin: 20px 0; text-align: center; }
+          .download-button { display: inline-block; background-color: #4caf50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold; margin: 10px 0; }
+          .download-button:hover { background-color: #45a049; }
+          .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+          .signature { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>LegalAssist</h1>
+            <p>Signed Document Delivery</p>
+          </div>
+          <div class="content">
+            <p>Dear ${clientName},</p>
+            
+            <p>Please find your signed document attached to this email. This document has been electronically signed and is ready for your records.</p>
+            
+            ${customMessage ? `
+              <div class="message-box">
+                ${customMessage}
+              </div>
+            ` : ''}
+            
+            <div class="document-box">
+              <h3 style="color: #2e7d32; margin-top: 0;">📄 Your Signed Document is Ready</h3>
+              <p style="margin: 15px 0;"><strong>Filename:</strong> ${filename}</p>
+              <a href="${documentUrl}" class="download-button" download="${filename}">
+                Download Signed Document
+              </a>
+              <p style="font-size: 12px; color: #666; margin-top: 15px;">
+                If the button doesn't work, copy and paste this link into your browser:<br>
+                <a href="${documentUrl}" style="color: #B94A1F; word-break: break-all;">${documentUrl}</a>
+              </p>
+            </div>
+            
+            <p><strong>Important:</strong> Please save this document for your records. If you have any questions about the document or need any clarification, please don't hesitate to contact us.</p>
+            
+            <div class="signature">
+              <p>Best regards,</p>
+              <p><strong>${paralegalName}</strong><br>
+              LegalAssist<br>
+              Phone: (555) 123-4567<br>
+              Email: ${BUSINESS_EMAIL}</p>
+            </div>
+          </div>
+          <div class="footer">
+            <p>This email contains a legally signed document. Please keep it for your records.</p>
+            <p>&copy; 2025 LegalAssist. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
 };
 
 /**
