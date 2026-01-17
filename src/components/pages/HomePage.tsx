@@ -33,17 +33,31 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
     const element = ref.current;
     if (!element) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          element.classList.add('is-visible');
-        }, delay);
-        observer.unobserve(element);
-      }
-    }, { threshold: 0.15 });
+    // Add a small delay to ensure element is fully mounted
+    const timeoutId = setTimeout(() => {
+      if (!element) return;
+      
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry && entry.isIntersecting) {
+          setTimeout(() => {
+            if (element) {
+              element.classList.add('is-visible');
+            }
+          }, delay);
+          observer.unobserve(element);
+        }
+      }, { threshold: 0.15 });
 
-    observer.observe(element);
-    return () => observer.disconnect();
+      observer.observe(element);
+      
+      return () => {
+        observer.disconnect();
+      };
+    }, 10);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [delay]);
 
   const getAnimationClass = () => {
@@ -79,6 +93,8 @@ const ParallaxContainer: React.FC<{ children: React.ReactNode; className?: strin
     if (!element) return;
 
     const handleScroll = () => {
+      if (!element) return;
+      
       const rect = element.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
@@ -90,10 +106,18 @@ const ParallaxContainer: React.FC<{ children: React.ReactNode; className?: strin
       element.style.setProperty('--scroll-progress', clamped.toString());
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial calc
+    // Delay initial setup to ensure element is mounted
+    const timeoutId = setTimeout(() => {
+      if (element) {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Initial calc
+      }
+    }, 10);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -305,47 +329,57 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <AnimatedElement key={index} delay={feature.delay} className="h-full">
-                <div className={cn(
-                  "group relative h-full p-8 lg:p-10 transition-all duration-500 hover:-translate-y-2 overflow-hidden flex flex-col",
-                  feature.color
-                )}>
-                  {/* Hover Effect Background */}
-                  <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/20" />
-                  
-                  {/* Icon */}
-                  <div className="relative z-10 w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                    <feature.icon className="w-7 h-7" />
-                  </div>
+            {features && features.length > 0 && features.map((feature, index) => {
+              if (!feature) return null;
+              
+              return (
+                <AnimatedElement key={index} delay={feature.delay || 0} className="h-full">
+                  <div className={cn(
+                    "group relative h-full p-8 lg:p-10 transition-all duration-500 hover:-translate-y-2 overflow-hidden flex flex-col",
+                    feature.color || "bg-pastelbeige"
+                  )}>
+                    {/* Hover Effect Background */}
+                    <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/20" />
+                    
+                    {/* Icon */}
+                    {feature.icon && (
+                      <div className="relative z-10 w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                        <feature.icon className="w-7 h-7" />
+                      </div>
+                    )}
 
-                  {/* Content */}
-                  <div className="relative z-10 flex-1 flex flex-col">
-                    <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:translate-x-1 transition-transform duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="font-paragraph text-secondary/80 leading-relaxed mb-6">
-                      {feature.description}
-                    </p>
+                    {/* Content */}
+                    <div className="relative z-10 flex-1 flex flex-col">
+                      <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:translate-x-1 transition-transform duration-300">
+                        {feature.title || ''}
+                      </h3>
+                      <p className="font-paragraph text-secondary/80 leading-relaxed mb-6">
+                        {feature.description || ''}
+                      </p>
 
-                    {/* Benefits List */}
-                    <div className="space-y-2 mt-auto">
-                      {feature.benefits.map((benefit, benefitIdx) => (
-                        <div key={benefitIdx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-secondary flex-shrink-0 mt-1" />
-                          <span className="font-paragraph text-sm text-secondary/75 leading-snug">
-                            {benefit}
-                          </span>
+                      {/* Benefits List */}
+                      {feature.benefits && feature.benefits.length > 0 && (
+                        <div className="space-y-2 mt-auto">
+                          {feature.benefits.map((benefit, benefitIdx) => (
+                            <div key={benefitIdx} className="flex items-start gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-secondary flex-shrink-0 mt-1" />
+                              <span className="font-paragraph text-sm text-secondary/75 leading-snug">
+                                {benefit}
+                              </span>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      )}
                     </div>
-                  </div>
 
-                  {/* Decorative Watermark Icon */}
-                  <feature.icon className="absolute -bottom-8 -right-8 w-48 h-48 text-secondary/5 rotate-12 group-hover:rotate-0 transition-transform duration-700 ease-out" />
-                </div>
-              </AnimatedElement>
-            ))}
+                    {/* Decorative Watermark Icon */}
+                    {feature.icon && (
+                      <feature.icon className="absolute -bottom-8 -right-8 w-48 h-48 text-secondary/5 rotate-12 group-hover:rotate-0 transition-transform duration-700 ease-out" />
+                    )}
+                  </div>
+                </AnimatedElement>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -110,9 +110,18 @@ export async function validateUploadToken(token: string): Promise<ValidateTokenR
   }
 
   const now = new Date();
-  const expiry = new Date(uploadToken.expiryDate!);
-  if (now > expiry) {
-    return { valid: false, error: 'Token has expired' };
+  const expiryDate = uploadToken.expiryDate;
+  
+  if (expiryDate) {
+    try {
+      const expiry = new Date(expiryDate);
+      if (!isNaN(expiry.getTime()) && now > expiry) {
+        return { valid: false, error: 'Token has expired' };
+      }
+    } catch (error) {
+      console.error('Error parsing expiry date:', error);
+      return { valid: false, error: 'Invalid expiry date' };
+    }
   }
 
   if (uploadToken.maxUsageCount && uploadToken.maxUsageCount > 0) {

@@ -53,16 +53,20 @@ export default function DocumentSignature({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    try {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    setIsDrawing(true);
-    const rect = canvas.getBoundingClientRect();
-    const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-    const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+      setIsDrawing(true);
+      const rect = canvas.getBoundingClientRect();
+      const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
+      const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
 
-    ctx.beginPath();
-    ctx.moveTo(x, y);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    } catch (error) {
+      console.error('Error starting drawing:', error);
+    }
   };
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
@@ -71,21 +75,25 @@ export default function DocumentSignature({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    try {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-    const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+      const rect = canvas.getBoundingClientRect();
+      const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
+      const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
 
-    ctx.lineTo(x, y);
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.stroke();
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
 
-    setHasSignature(true);
+      setHasSignature(true);
+    } catch (error) {
+      console.error('Error drawing:', error);
+    }
   };
 
   const stopDrawing = () => {
@@ -96,11 +104,15 @@ export default function DocumentSignature({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    try {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setHasSignature(false);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      setHasSignature(false);
+    } catch (error) {
+      console.error('Error clearing signature:', error);
+    }
   };
 
   const handleSubmit = async () => {

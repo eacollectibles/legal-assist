@@ -27,17 +27,31 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
     const element = ref.current;
     if (!element) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          element.classList.add('is-visible');
-        }, delay);
-        observer.unobserve(element);
-      }
-    }, { threshold: 0.15 });
+    // Add a small delay to ensure element is fully mounted
+    const timeoutId = setTimeout(() => {
+      if (!element) return;
+      
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry && entry.isIntersecting) {
+          setTimeout(() => {
+            if (element) {
+              element.classList.add('is-visible');
+            }
+          }, delay);
+          observer.unobserve(element);
+        }
+      }, { threshold: 0.15 });
 
-    observer.observe(element);
-    return () => observer.disconnect();
+      observer.observe(element);
+      
+      return () => {
+        observer.disconnect();
+      };
+    }, 10);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [delay]);
 
   const getAnimationClass = () => {
