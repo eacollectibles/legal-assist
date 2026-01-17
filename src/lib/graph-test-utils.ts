@@ -20,7 +20,7 @@ export interface GraphTestResult {
 export async function testGraphConnection(): Promise<GraphTestResult> {
   try {
     // Import backend web module
-    const { testGraphConnection: backendTest } = await import('@/backend/email.web');
+    const { testGraphConnection: backendTest } = await import('@/backend/email.jsw');
     
     // Call backend function (secrets accessed only on backend)
     const result = await backendTest();
@@ -39,7 +39,7 @@ export async function testGraphConnection(): Promise<GraphTestResult> {
  */
 export async function getBusinessEmailForDisplay(): Promise<string> {
   try {
-    const { getBusinessEmail } = await import('@/backend/email.web');
+    const { getBusinessEmail } = await import('@/backend/email.jsw');
     const result = await getBusinessEmail();
     return result.success ? result.email : 'Not configured';
   } catch (error) {
