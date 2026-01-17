@@ -93,6 +93,8 @@ export interface ClientDocuments {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
   documentName?: string;
   /** @wixFieldType url */
   fileUrl?: string;
