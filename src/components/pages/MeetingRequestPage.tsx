@@ -8,24 +8,7 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Lock } from 'lucide-react';
 import { generateMeetingLink, generateZoomUrl, generateConfirmationToken } from '@/lib/meeting-utils';
-
-interface MeetingRequests {
-  _id: string;
-  _createdDate?: Date;
-  _updatedDate?: Date;
-  clientName?: string;
-  clientEmail?: string;
-  clientPhone?: string;
-  preferredDate?: Date | string;
-  preferredTime?: any;
-  serviceType?: string;
-  clientNotes?: string;
-  status?: string;
-  approvalNotes?: string;
-  meetingLink?: string;
-  zoomUrl?: string;
-  confirmationToken?: string;
-}
+import { Bookings } from '@/entities';
 
 interface MeetingRequestFormData {
   clientName: string;
@@ -130,7 +113,7 @@ export default function MeetingRequestPage() {
       const zoomUrl = generateZoomUrl(requestId);
       const confirmationToken = generateConfirmationToken();
 
-      const meetingRequest: MeetingRequests = {
+      const meetingRequest: Bookings = {
         _id: requestId,
         clientName: formData.clientName,
         clientEmail: formData.clientEmail,
@@ -139,13 +122,9 @@ export default function MeetingRequestPage() {
         preferredTime: formData.preferredTime,
         serviceType: formData.serviceType,
         clientNotes: formData.clientNotes,
-        status: 'pending',
-        meetingLink,
-        zoomUrl,
-        confirmationToken,
       };
 
-      await BaseCrudService.create('meetingrequests', meetingRequest);
+      await BaseCrudService.create('bookings', meetingRequest);
 
       setSubmitStatus('success');
       setFormData({

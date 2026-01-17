@@ -7,33 +7,16 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Clock, X, Lock } from 'lucide-react';
 import { sendStatusNotificationEmails } from '@/lib/email-service';
-
-interface MeetingRequests {
-  _id: string;
-  _createdDate?: Date;
-  _updatedDate?: Date;
-  clientName?: string;
-  clientEmail?: string;
-  clientPhone?: string;
-  preferredDate?: Date | string;
-  preferredTime?: any;
-  serviceType?: string;
-  clientNotes?: string;
-  status?: string;
-  approvalNotes?: string;
-  meetingLink?: string;
-  zoomUrl?: string;
-  confirmationToken?: string;
-}
+import { Bookings } from '@/entities';
 
 export default function AdminMeetingRequestsPage() {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const [requests, setRequests] = useState<MeetingRequests[]>([]);
+  const [requests, setRequests] = useState<Bookings[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState<MeetingRequests | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<Bookings | null>(null);
   const [approvalNotes, setApprovalNotes] = useState('');
   const [actionInProgress, setActionInProgress] = useState(false);
 
@@ -56,7 +39,7 @@ export default function AdminMeetingRequestsPage() {
   const loadRequests = async () => {
     setIsLoading(true);
     try {
-      const { items } = await BaseCrudService.getAll<MeetingRequests>('meetingrequests');
+      const { items } = await BaseCrudService.getAll<Bookings>('bookings');
       setRequests(items || []);
     } catch (error) {
       console.error('Failed to load requests:', error);
@@ -71,12 +54,9 @@ export default function AdminMeetingRequestsPage() {
 
     setActionInProgress(true);
     try {
-      await BaseCrudService.update<MeetingRequests>('meetingrequests', {
-        _id: selectedRequest._id,
-        status: 'approved',
-        approvalNotes: approvalNotes,
-      });
-
+      // Note: bookings collection doesn't have status/approvalNotes fields
+      // This is a simplified approval - just send notification
+      
       // Send email notifications
       await sendStatusNotificationEmails({
         clientName: selectedRequest.clientName || '',
@@ -89,12 +69,8 @@ export default function AdminMeetingRequestsPage() {
         bookingId: selectedRequest._id,
       });
 
-      // Update local state
-      setRequests(requests.map(r =>
-        r._id === selectedRequest._id
-          ? { ...r, status: 'approved', approvalNotes }
-          : r
-      ));
+      // Remove from list after approval
+      setRequests(requests.filter(r => r._id !== selectedRequest._id));
 
       setSelectedRequest(null);
       setApprovalNotes('');
@@ -111,12 +87,6 @@ export default function AdminMeetingRequestsPage() {
 
     setActionInProgress(true);
     try {
-      await BaseCrudService.update<MeetingRequests>('meetingrequests', {
-        _id: selectedRequest._id,
-        status: 'rejected',
-        approvalNotes: approvalNotes,
-      });
-
       // Send email notifications
       await sendStatusNotificationEmails({
         clientName: selectedRequest.clientName || '',
@@ -129,12 +99,8 @@ export default function AdminMeetingRequestsPage() {
         bookingId: selectedRequest._id,
       });
 
-      // Update local state
-      setRequests(requests.map(r =>
-        r._id === selectedRequest._id
-          ? { ...r, status: 'rejected', approvalNotes }
-          : r
-      ));
+      // Remove from list after rejection
+      setRequests(requests.filter(r => r._id !== selectedRequest._id));
 
       setSelectedRequest(null);
       setApprovalNotes('');
@@ -151,7 +117,7 @@ export default function AdminMeetingRequestsPage() {
 
     setActionInProgress(true);
     try {
-      await BaseCrudService.delete('meetingrequests', requestId);
+      await BaseCrudService.delete('bookings', requestId);
       setRequests(requests.filter(r => r._id !== requestId));
       if (selectedRequest?._id === requestId) {
         setSelectedRequest(null);
@@ -283,14 +249,8 @@ export default function AdminMeetingRequestsPage() {
                               {request.clientEmail}
                             </p>
                           </div>
-                          <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            request.status === 'approved'
-                              ? 'bg-green-100 text-green-800'
-                              : request.status === 'rejected'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            {request.status?.toUpperCase() || 'PENDING'}
+                          <div className={`px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800`}>
+                            PENDING
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4 text-sm">
@@ -350,58 +310,45 @@ export default function AdminMeetingRequestsPage() {
                           <p className="font-paragraph text-foreground">{selectedRequest.clientNotes}</p>
                         </div>
                       )}
-                      {selectedRequest.approvalNotes && (
-                        <div>
-                          <p className="font-paragraph text-sm text-foreground/60">Approval Notes</p>
-                          <p className="font-paragraph text-foreground">{selectedRequest.approvalNotes}</p>
-                        </div>
-                      )}
                       <div>
                         <p className="font-paragraph text-sm text-foreground/60">Status</p>
-                        <p className={`font-paragraph font-semibold ${
-                          selectedRequest.status === 'approved'
-                            ? 'text-green-600'
-                            : selectedRequest.status === 'rejected'
-                            ? 'text-red-600'
-                            : 'text-yellow-600'
-                        }`}>
-                          {selectedRequest.status?.toUpperCase() || 'PENDING'}
+                        <p className="font-paragraph font-semibold text-yellow-600">
+                          PENDING
                         </p>
                       </div>
                     </div>
 
-                    {selectedRequest.status === 'pending' && (
-                      <>
-                        <div className="mb-4">
-                          <label className="block font-paragraph font-semibold text-foreground mb-2">
-                            Approval Notes
-                          </label>
-                          <Textarea
-                            value={approvalNotes}
-                            onChange={(e) => setApprovalNotes(e.target.value)}
-                            placeholder="Add notes for approval or rejection..."
-                            className="border-gray-300 min-h-[100px]"
-                          />
-                        </div>
+                    {/* Always show approval actions since bookings don't have status field */}
+                    <>
+                      <div className="mb-4">
+                        <label className="block font-paragraph font-semibold text-foreground mb-2">
+                          Approval Notes
+                        </label>
+                        <Textarea
+                          value={approvalNotes}
+                          onChange={(e) => setApprovalNotes(e.target.value)}
+                          placeholder="Add notes for approval or rejection..."
+                          className="border-gray-300 min-h-[100px]"
+                        />
+                      </div>
 
-                        <div className="space-y-2">
-                          <Button
-                            onClick={handleApprove}
-                            disabled={actionInProgress}
-                            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2"
-                          >
-                            {actionInProgress ? 'Processing...' : 'Approve Request'}
-                          </Button>
-                          <Button
-                            onClick={handleReject}
-                            disabled={actionInProgress}
-                            className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2"
-                          >
-                            {actionInProgress ? 'Processing...' : 'Reject Request'}
-                          </Button>
-                        </div>
-                      </>
-                    )}
+                      <div className="space-y-2">
+                        <Button
+                          onClick={handleApprove}
+                          disabled={actionInProgress}
+                          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2"
+                        >
+                          {actionInProgress ? 'Processing...' : 'Approve Request'}
+                        </Button>
+                        <Button
+                          onClick={handleReject}
+                          disabled={actionInProgress}
+                          className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2"
+                        >
+                          {actionInProgress ? 'Processing...' : 'Reject Request'}
+                        </Button>
+                      </div>
+                    </>
 
                     <Button
                       onClick={() => handleDelete(selectedRequest._id)}
