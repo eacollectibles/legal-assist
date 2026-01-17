@@ -18,6 +18,7 @@ import DocumentSignature, { SignatureData } from '@/components/DocumentSignature
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
 import { sendSignedDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 import { GeneratedDocuments } from '@/entities';
+import GraphConnectionTest from '@/components/GraphConnectionTest';
 
 interface Appointment {
   _id: string;
@@ -665,6 +666,7 @@ export default function ParalegalDashboardPage() {
               )}
             </TabsTrigger>
             <TabsTrigger value="filemanagement">File Management</TabsTrigger>
+            <TabsTrigger value="graph-test">Graph Connection</TabsTrigger>
           </TabsList>
 
           <TabsContent value="appointments" className="space-y-6">
@@ -1508,6 +1510,43 @@ export default function ParalegalDashboardPage() {
                 ))
               )}
             </div>
+          </TabsContent>
+
+          <TabsContent value="graph-test" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-heading text-3xl font-bold text-foreground">
+                Microsoft Graph Connection Test
+              </h2>
+            </div>
+
+            <div className="max-w-2xl mx-auto">
+              <GraphConnectionTest />
+            </div>
+
+            <Card className="max-w-4xl mx-auto">
+              <CardHeader>
+                <CardTitle className="font-heading text-2xl">About This Feature</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 font-paragraph">
+                <p className="text-foreground/80">
+                  This page allows you to test the Microsoft Graph API connection used for sending emails.
+                  All sensitive credentials (tenant ID, client ID, client secret, and business email) are
+                  securely stored in Wix Secrets Manager and accessed only in backend code.
+                </p>
+                <div className="bg-muted p-4 rounded-lg space-y-2">
+                  <p className="font-semibold text-foreground">Security Features:</p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
+                    <li>Secrets never exposed to frontend code</li>
+                    <li>Backend-only access via Wix Secrets Manager</li>
+                    <li>OAuth token caching for efficiency</li>
+                    <li>Comprehensive error handling</li>
+                  </ul>
+                </div>
+                <p className="text-sm text-foreground/60">
+                  For setup instructions, see <code className="bg-muted px-2 py-1 rounded">MICROSOFT_GRAPH_SECRETS_SETUP.md</code>
+                </p>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 

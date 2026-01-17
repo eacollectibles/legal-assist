@@ -24,7 +24,7 @@ export interface BookingConfirmationPayload {
   confirmationToken: string;
 }
 
-const BUSINESS_EMAIL = 'jeanfrancois@legalassist.london';
+// BUSINESS_EMAIL is now managed via Wix Secrets Manager and accessed only in backend code
 
 export interface EmailDocumentPayload {
   to: string;
@@ -58,12 +58,19 @@ export interface EmailActivityLog {
 /**
  * Send signed document via email with comprehensive logging
  * CRITICAL: Uses Microsoft Graph to send real emails with PDF attachments
+ * All secrets are managed via Wix Secrets Manager and accessed only in backend
  */
 export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Promise<EmailActivityLog> => {
   const timestamp = new Date().toISOString();
+  
+  // Get business email from backend (without exposing secret)
+  const { getBusinessEmail } = await import('@/backend/email.web');
+  const emailResult = await getBusinessEmail();
+  const businessEmail = emailResult.success ? emailResult.email : 'info@legalservices.com';
+  
   const activityLog: EmailActivityLog = {
     _id: crypto.randomUUID(),
-    senderEmail: BUSINESS_EMAIL,
+    senderEmail: businessEmail,
     senderName: payload.paralegalName,
     recipientEmails: [payload.to],
     subject: payload.subject,
@@ -92,7 +99,8 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
       payload.paralegalName,
       payload.body,
       payload.documentUrl,
-      stableFilename
+      stableFilename,
+      businessEmail
     );
 
     // CRITICAL: Attach the signed PDF to the email
@@ -186,11 +194,16 @@ const sendClientNotification = async (payload: EmailNotificationPayload): Promis
 const sendBusinessNotification = async (payload: EmailNotificationPayload): Promise<void> => {
   const { clientName, clientEmail, clientPhone, status, serviceType, preferredDate, preferredTime, approvalNotes, bookingId } = payload;
 
+  // Get business email from backend
+  const { getBusinessEmail } = await import('@/backend/email.web');
+  const emailResult = await getBusinessEmail();
+  const businessEmail = emailResult.success ? emailResult.email : 'info@legalservices.com';
+
   const subject = getBusinessEmailSubject(status, clientName);
   const htmlContent = getBusinessEmailTemplate(clientName, clientEmail, clientPhone, status, serviceType, preferredDate, preferredTime, approvalNotes, bookingId);
 
   await sendEmail({
-    to: BUSINESS_EMAIL,
+    to: businessEmail,
     subject,
     html: htmlContent,
   });
@@ -198,21 +211,20 @@ const sendBusinessNotification = async (payload: EmailNotificationPayload): Prom
 
 /**
  * Generic email sending function
- * Uses Microsoft Graph API for real email delivery
+ * Uses backend web module for Microsoft Graph API (secrets managed by Wix Secrets Manager)
  */
 const sendEmail = async (options: { to: string; subject: string; html: string; attachments?: Array<{ name: string; contentType: string; dataUrl: string }> }): Promise<void> => {
   try {
-    // Import Microsoft Graph service
-    const { sendEmailViaGraph } = await import('./microsoft-graph-service');
+    // Call backend web module (secrets are accessed only on backend)
+    const { sendEmail: backendSendEmail } = await import('@/backend/email.web');
     
-    // Send email via Microsoft Graph
-    const result = await sendEmailViaGraph(
-      BUSINESS_EMAIL,
-      options.to,
-      options.subject,
-      options.html,
-      options.attachments
-    );
+    // Send email via backend (Microsoft Graph with Wix Secrets)
+    const result = await backendSendEmail({
+      to: options.to,
+      subject: options.subject,
+      htmlBody: options.html,
+      attachments: options.attachments,
+    });
 
     if (!result.success) {
       throw new Error(result.error || 'Failed to send email via Microsoft Graph');
@@ -467,7 +479,8 @@ const getSignedDocumentEmailTemplate = (
   paralegalName: string,
   customMessage: string,
   documentUrl: string,
-  filename: string
+  filename: string,
+  businessEmail: string
 ): string => {
   return `
     <!DOCTYPE html>
@@ -523,7 +536,7 @@ const getSignedDocumentEmailTemplate = (
               <p><strong>${paralegalName}</strong><br>
               LegalAssist<br>
               Phone: (555) 123-4567<br>
-              Email: ${BUSINESS_EMAIL}</p>
+              Email: ${businessEmail}</p>
             </div>
           </div>
           <div class="footer">
