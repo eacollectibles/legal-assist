@@ -69,17 +69,18 @@ export default function PublicUploadPage() {
       const matterId = uploadToken.matterId;
       const documentId = uploadToken.documentId;
 
-      // Create document record bound to client's account and matter
+      // Create document record bound to client's account
       const document: ClientDocuments = {
-        _id: documentId || crypto.randomUUID(), // Use documentId from token if provided
+        _id: documentId || crypto.randomUUID(),
+        clientId: clientId || '', // Links document to client account
         documentName: selectedFile.name,
         fileUrl: `https://example.com/uploads/${selectedFile.name}`, // Placeholder - would be actual upload URL
         uploadDate: new Date().toISOString(),
-        clientEmail: uploadToken.clientName || '', // Use clientName from token
+        clientEmail: '', // Third party upload - not client's email
         fileType: selectedFile.type || selectedFile.name.split('.').pop() || 'unknown',
         fileSize: selectedFile.size,
-        documentCategory: uploadToken.matterReference || 'Client Upload',
-        notes: `Uploaded via secure link by ${uploadToken.clientName}. Purpose: ${uploadToken.allowedPurpose?.replace(/_/g, ' ')}. ${matterId ? `Matter ID: ${matterId}` : ''}${uploadToken.matterReference ? ` (${uploadToken.matterReference})` : ''}`,
+        documentCategory: uploadToken.matterReference || 'Third Party Upload',
+        notes: `Uploaded via secure link. Client: ${uploadToken.clientName}. Purpose: ${uploadToken.allowedPurpose?.replace(/_/g, ' ')}.${matterId ? ` Matter ID: ${matterId}` : ''}`,
       };
 
       // Save document under client's document tree
