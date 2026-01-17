@@ -67,7 +67,7 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
   const timestamp = new Date().toISOString();
   
   // Get business email from backend (without exposing secret)
-  const { getBusinessEmail } = await import('backend/email.jsw');
+  const { getBusinessEmail } = await import('@/backend/email.jsw');
   const emailResult = await getBusinessEmail();
   const businessEmail = emailResult.success ? emailResult.email : 'info@legalservices.com';
   
@@ -201,7 +201,7 @@ const sendBusinessNotification = async (payload: EmailNotificationPayload): Prom
   const { clientName, clientEmail, clientPhone, status, serviceType, preferredDate, preferredTime, approvalNotes, bookingId } = payload;
 
   // Get business email from backend
-  const { getBusinessEmail } = await import('backend/email.jsw');
+  const { getBusinessEmail } = await import('@/backend/email.jsw');
   const emailResult = await getBusinessEmail();
   const businessEmail = emailResult.success ? emailResult.email : 'info@legalservices.com';
 
@@ -222,7 +222,7 @@ const sendBusinessNotification = async (payload: EmailNotificationPayload): Prom
 const sendEmail = async (options: { to: string; subject: string; html: string; attachments?: Array<{ name: string; contentType: string; dataUrl: string }> }): Promise<{ messageId?: string; requestId?: string; clientRequestId?: string; agsDiagnostic?: string }> => {
   try {
     // Call backend web module (secrets are accessed only on backend)
-    const { sendEmail: backendSendEmail } = await import('backend/email.jsw');
+    const { sendEmail: backendSendEmail } = await import('@/backend/email.jsw');
     
     // Send email via backend (Microsoft Graph with Wix Secrets)
     const result = await backendSendEmail({
