@@ -93,8 +93,6 @@ export interface ClientDocuments {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
-  clientId?: string;
-  /** @wixFieldType text */
   documentName?: string;
   /** @wixFieldType url */
   fileUrl?: string;
@@ -110,6 +108,8 @@ export interface ClientDocuments {
   documentCategory?: string;
   /** @wixFieldType text */
   notes?: string;
+  /** @wixFieldType text */
+  clientId?: string;
 }
 
 
@@ -282,6 +282,14 @@ export interface Messages {
   isRead?: boolean;
   /** @wixFieldType text */
   conversationId?: string;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  matterId?: string;
+  /** @wixFieldType text */
+  priority?: string;
+  /** @wixFieldType url */
+  attachmentUrl?: string;
 }
 
 

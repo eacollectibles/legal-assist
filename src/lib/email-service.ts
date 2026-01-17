@@ -63,3 +63,13 @@ export const sendBookingConfirmationEmail = async (payload: BookingConfirmationP
 export const sendStatusNotificationEmails = async (payload: EmailNotificationPayload): Promise<void> => {
   console.log('Email disabled - status notification for:', payload.clientEmail);
 };
+
+export interface SimpleEmailPayload {
+  to: string;
+  subject: string;
+  body: string;
+}
+
+export const sendEmail = async (payload: SimpleEmailPayload): Promise<void> => {
+  console.log('Email disabled - would send to:', payload.to);
+};

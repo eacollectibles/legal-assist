@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User, Plus, Trash2 } from 'lucide-react';
+import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User, Plus, Trash2, Paperclip, Flag, FileText, Filter } from 'lucide-react';
 import { getCurrentUser } from '@/lib/auth-service';
+import { sendEmail } from '@/lib/email-service';
 
 interface Message {
   _id: string;
@@ -19,6 +22,10 @@ interface Message {
   sentDate?: Date | string;
   isRead?: boolean;
   conversationId?: string;
+  clientId?: string;
+  matterId?: string;
+  priority?: string;
+  attachmentUrl?: string;
 }
 
 interface Conversation {
@@ -28,6 +35,9 @@ interface Conversation {
   messages: Message[];
   unreadCount: number;
   lastMessageDate: Date;
+  clientId?: string;
+  matterId?: string;
+  matterReference?: string;
 }
 
 export default function AdminMessagesPage() {
@@ -41,11 +51,35 @@ export default function AdminMessagesPage() {
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sendError, setSendError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   
   // New message states
   const [showNewMessageForm, setShowNewMessageForm] = useState(false);
   const [newMessageEmail, setNewMessageEmail] = useState('');
   const [newMessageContent, setNewMessageContent] = useState('');
+  const [newMessageClientId, setNewMessageClientId] = useState('');
+  const [newMessageMatterId, setNewMessageMatterId] = useState('');
+  const [newMessagePriority, setNewMessagePriority] = useState('Normal');
+
+  // Reply states
+  const [replyPriority, setReplyPriority] = useState('Normal');
+  const [replyAttachment, setReplyAttachment] = useState('');
+
+  // Filter states
+  const [filterClientId, setFilterClientId] = useState('');
+  const [filterMatterId, setFilterMatterId] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Message templates
+  const messageTemplates = [
+    { label: 'Select a template...', value: '' },
+    { label: 'Thank you for contacting us', value: 'Thank you for contacting us. We have received your message and will respond within 24 hours.' },
+    { label: 'Request for more information', value: 'Thank you for your inquiry. To better assist you, could you please provide more details about your situation?' },
+    { label: 'Document received', value: 'We have received your documents. Our team is reviewing them and will get back to you shortly.' },
+    { label: 'Appointment confirmation', value: 'Your appointment has been confirmed. We look forward to meeting with you.' },
+    { label: 'Follow-up required', value: 'This matter requires follow-up. Please provide the requested information at your earliest convenience.' },
+    { label: 'Case update', value: 'We wanted to update you on the progress of your case. Please let us know if you have any questions.' },
+  ];
 
   useEffect(() => {
     loadMessages();
@@ -55,7 +89,14 @@ export default function AdminMessagesPage() {
     if (messages.length > 0) {
       organizeConversations();
     }
-  }, [messages]);
+  }, [messages, filterClientId, filterMatterId]);
+
+  // Auto-scroll to newest message when conversation changes or new message arrives
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedConversation, messages]);
 
   const loadMessages = async () => {
     setIsLoading(true);
@@ -78,7 +119,14 @@ export default function AdminMessagesPage() {
   const organizeConversations = () => {
     const conversationMap = new Map<string, Conversation>();
 
-    messages.forEach(msg => {
+    // Filter messages based on clientId and matterId filters
+    const filteredMessages = messages.filter(msg => {
+      if (filterClientId && msg.clientId !== filterClientId) return false;
+      if (filterMatterId && msg.matterId !== filterMatterId) return false;
+      return true;
+    });
+
+    filteredMessages.forEach(msg => {
       const convId = msg.conversationId || '';
       if (!convId) return;
 
@@ -90,6 +138,9 @@ export default function AdminMessagesPage() {
           messages: [],
           unreadCount: 0,
           lastMessageDate: new Date(msg.sentDate || 0),
+          clientId: msg.clientId,
+          matterId: msg.matterId,
+          matterReference: msg.matterId ? `Matter #${msg.matterId.slice(0, 8)}` : undefined,
         });
       }
 
@@ -149,12 +200,30 @@ export default function AdminMessagesPage() {
         sentDate: new Date(),
         isRead: false,
         conversationId: selectedConversation,
+        clientId: conversation.clientId,
+        matterId: conversation.matterId,
+        priority: replyPriority,
+        attachmentUrl: replyAttachment || undefined,
       };
 
       await BaseCrudService.create('messages', messageData);
 
+      // Send email notification to client
+      try {
+        await sendEmail({
+          to: conversation.clientEmail,
+          subject: `New message from ${senderName}`,
+          body: `You have received a new message:\n\n${replyText}\n\nPlease log in to your account to view and respond.`,
+        });
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Continue even if email fails
+      }
+
       setMessages(prev => [messageData, ...prev]);
       setReplyText('');
+      setReplyPriority('Normal');
+      setReplyAttachment('');
       setSendSuccess(true);
 
       setTimeout(() => setSendSuccess(false), 3000);
@@ -234,13 +303,31 @@ export default function AdminMessagesPage() {
         sentDate: new Date(),
         isRead: false,
         conversationId: conversationId,
+        clientId: newMessageClientId || undefined,
+        matterId: newMessageMatterId || undefined,
+        priority: newMessagePriority,
       };
 
       await BaseCrudService.create('messages', messageData);
 
+      // Send email notification to client
+      try {
+        await sendEmail({
+          to: newMessageEmail,
+          subject: `New message from ${senderName}`,
+          body: `You have received a new message:\n\n${newMessageContent}\n\nPlease log in to your account to view and respond.`,
+        });
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Continue even if email fails
+      }
+
       setMessages(prev => [messageData, ...prev]);
       setNewMessageEmail('');
       setNewMessageContent('');
+      setNewMessageClientId('');
+      setNewMessageMatterId('');
+      setNewMessagePriority('Normal');
       setShowNewMessageForm(false);
       setSendSuccess(true);
 
@@ -321,6 +408,46 @@ export default function AdminMessagesPage() {
                     />
                   </div>
 
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <Label htmlFor="newMessageClientId" className="font-paragraph">Client ID (Optional)</Label>
+                      <Input
+                        id="newMessageClientId"
+                        type="text"
+                        value={newMessageClientId}
+                        onChange={(e) => setNewMessageClientId(e.target.value)}
+                        placeholder="client-123"
+                        className="border-gray-300"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="newMessageMatterId" className="font-paragraph">Matter ID (Optional)</Label>
+                      <Input
+                        id="newMessageMatterId"
+                        type="text"
+                        value={newMessageMatterId}
+                        onChange={(e) => setNewMessageMatterId(e.target.value)}
+                        placeholder="matter-456"
+                        className="border-gray-300"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="newMessagePriority" className="font-paragraph">Priority</Label>
+                      <Select value={newMessagePriority} onValueChange={setNewMessagePriority}>
+                        <SelectTrigger className="border-gray-300">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Normal">Normal</SelectItem>
+                          <SelectItem value="Urgent">Urgent</SelectItem>
+                          <SelectItem value="Follow-up">Follow-up</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
                   <div>
                     <Label htmlFor="newMessageContent" className="font-paragraph">Message *</Label>
                     <textarea
@@ -385,7 +512,7 @@ export default function AdminMessagesPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="font-heading text-xl">Conversations</CardTitle>
-                    <div className="pt-4">
+                    <div className="pt-4 space-y-3">
                       <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <Input
@@ -395,6 +522,58 @@ export default function AdminMessagesPage() {
                           placeholder="Search clients..."
                           className="pl-10 border-gray-300"
                         />
+                      </div>
+
+                      {/* Filters */}
+                      <div>
+                        <Button
+                          onClick={() => setShowFilters(!showFilters)}
+                          variant="outline"
+                          className="w-full flex items-center justify-center gap-2"
+                        >
+                          <Filter className="w-4 h-4" />
+                          {showFilters ? 'Hide Filters' : 'Show Filters'}
+                        </Button>
+
+                        {showFilters && (
+                          <div className="mt-3 space-y-3 p-3 bg-gray-50 rounded-lg">
+                            <div>
+                              <Label htmlFor="filterClientId" className="font-paragraph text-xs">Filter by Client ID</Label>
+                              <Input
+                                id="filterClientId"
+                                type="text"
+                                value={filterClientId}
+                                onChange={(e) => setFilterClientId(e.target.value)}
+                                placeholder="client-123"
+                                className="border-gray-300 text-sm"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="filterMatterId" className="font-paragraph text-xs">Filter by Matter ID</Label>
+                              <Input
+                                id="filterMatterId"
+                                type="text"
+                                value={filterMatterId}
+                                onChange={(e) => setFilterMatterId(e.target.value)}
+                                placeholder="matter-456"
+                                className="border-gray-300 text-sm"
+                              />
+                            </div>
+                            {(filterClientId || filterMatterId) && (
+                              <Button
+                                onClick={() => {
+                                  setFilterClientId('');
+                                  setFilterMatterId('');
+                                }}
+                                variant="outline"
+                                size="sm"
+                                className="w-full"
+                              >
+                                Clear Filters
+                              </Button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </CardHeader>
@@ -421,6 +600,14 @@ export default function AdminMessagesPage() {
                               </span>
                             )}
                           </div>
+                          {conv.matterReference && (
+                            <div className="flex items-center gap-1 mb-1">
+                              <FileText className="w-3 h-3 text-gray-400" />
+                              <p className="font-paragraph text-xs text-foreground/60">
+                                {conv.matterReference}
+                              </p>
+                            </div>
+                          )}
                           <p className="font-paragraph text-sm text-foreground/60 truncate">
                             {conv.messages[0]?.messageContent}
                           </p>
@@ -439,12 +626,24 @@ export default function AdminMessagesPage() {
                 {selectedConv ? (
                   <Card>
                     <CardHeader>
-                      <CardTitle className="font-heading text-2xl">
-                        Conversation with {selectedConv.clientName}
-                      </CardTitle>
-                      <CardDescription className="font-paragraph">
-                        {selectedConv.clientEmail}
-                      </CardDescription>
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <CardTitle className="font-heading text-2xl">
+                            Conversation with {selectedConv.clientName}
+                          </CardTitle>
+                          <CardDescription className="font-paragraph">
+                            {selectedConv.clientEmail}
+                          </CardDescription>
+                          {selectedConv.matterReference && (
+                            <div className="flex items-center gap-2 mt-2">
+                              <Badge variant="outline" className="flex items-center gap-1">
+                                <FileText className="w-3 h-3" />
+                                {selectedConv.matterReference}
+                              </Badge>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </CardHeader>
                     <CardContent>
                       {/* Messages */}
@@ -462,9 +661,20 @@ export default function AdminMessagesPage() {
                             >
                               <div className="flex items-start justify-between mb-2">
                                 <div className="flex-1">
-                                  <p className="font-heading font-bold text-foreground text-sm">
-                                    {isFromAdmin ? (msg.senderName || 'Admin Team') : msg.senderName}
-                                  </p>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <p className="font-heading font-bold text-foreground text-sm">
+                                      {isFromAdmin ? (msg.senderName || 'Admin Team') : msg.senderName}
+                                    </p>
+                                    {msg.priority && msg.priority !== 'Normal' && (
+                                      <Badge 
+                                        variant={msg.priority === 'Urgent' ? 'destructive' : 'default'}
+                                        className="flex items-center gap-1 text-xs"
+                                      >
+                                        <Flag className="w-3 h-3" />
+                                        {msg.priority}
+                                      </Badge>
+                                    )}
+                                  </div>
                                   <p className="font-paragraph text-xs text-foreground/60">
                                     {msg.sentDate instanceof Date
                                       ? msg.sentDate.toLocaleString()
@@ -482,9 +692,23 @@ export default function AdminMessagesPage() {
                               <p className="font-paragraph text-foreground whitespace-pre-wrap">
                                 {msg.messageContent}
                               </p>
+                              {msg.attachmentUrl && (
+                                <div className="mt-3 pt-3 border-t border-gray-200">
+                                  <a
+                                    href={msg.attachmentUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 text-primary hover:text-primary/80 font-paragraph text-sm"
+                                  >
+                                    <Paperclip className="w-4 h-4" />
+                                    View Attachment
+                                  </a>
+                                </div>
+                              )}
                             </div>
                           );
                         })}
+                        <div ref={messagesEndRef} />
                       </div>
 
                       {/* Reply Form */}
@@ -499,6 +723,56 @@ export default function AdminMessagesPage() {
                         )}
 
                         <form onSubmit={handleSendReply} className="space-y-4">
+                          {/* Message Templates */}
+                          <div>
+                            <Label htmlFor="messageTemplate" className="font-paragraph">Quick Response Templates</Label>
+                            <Select 
+                              value="" 
+                              onValueChange={(value) => {
+                                if (value) setReplyText(value);
+                              }}
+                            >
+                              <SelectTrigger className="border-gray-300">
+                                <SelectValue placeholder="Select a template..." />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {messageTemplates.map((template, index) => (
+                                  <SelectItem key={index} value={template.value}>
+                                    {template.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <Label htmlFor="replyPriority" className="font-paragraph">Priority</Label>
+                              <Select value={replyPriority} onValueChange={setReplyPriority}>
+                                <SelectTrigger className="border-gray-300">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Normal">Normal</SelectItem>
+                                  <SelectItem value="Urgent">Urgent</SelectItem>
+                                  <SelectItem value="Follow-up">Follow-up</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <div>
+                              <Label htmlFor="replyAttachment" className="font-paragraph">Attachment URL (Optional)</Label>
+                              <Input
+                                id="replyAttachment"
+                                type="url"
+                                value={replyAttachment}
+                                onChange={(e) => setReplyAttachment(e.target.value)}
+                                placeholder="https://example.com/file.pdf"
+                                className="border-gray-300"
+                              />
+                            </div>
+                          </div>
+
                           <div>
                             <textarea
                               value={replyText}
