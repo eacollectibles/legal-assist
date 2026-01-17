@@ -5,6 +5,7 @@
  */
 
 import { getSecret } from 'wix-secrets-backend';
+import { fetch } from 'wix-fetch';
 
 /**
  * Token cache to avoid requesting new tokens for every email
@@ -202,4 +203,5 @@ export async function getBusinessEmail() {
     return { success: false, error: 'Failed to retrieve business email' };
   }
 }
+
 
