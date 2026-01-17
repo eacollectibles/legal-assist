@@ -57,6 +57,7 @@ export interface EmailActivityLog {
 
 /**
  * Send signed document via email with comprehensive logging
+ * CRITICAL: Uses Microsoft Graph to send real emails with PDF attachments
  */
 export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Promise<EmailActivityLog> => {
   const timestamp = new Date().toISOString();
@@ -94,10 +95,18 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
       stableFilename
     );
 
+    // CRITICAL: Attach the signed PDF to the email
     await sendEmail({
       to: payload.to,
       subject: payload.subject,
       html: htmlContent,
+      attachments: [
+        {
+          name: stableFilename,
+          contentType: 'application/pdf',
+          dataUrl: payload.documentUrl,
+        },
+      ],
     });
 
     activityLog.deliveryStatus = 'sent';
@@ -189,44 +198,32 @@ const sendBusinessNotification = async (payload: EmailNotificationPayload): Prom
 
 /**
  * Generic email sending function
- * In production, this would integrate with an email service like SendGrid, AWS SES, or Mailgun
+ * Uses Microsoft Graph API for real email delivery
  */
-const sendEmail = async (options: { to: string; subject: string; html: string }): Promise<void> => {
+const sendEmail = async (options: { to: string; subject: string; html: string; attachments?: Array<{ name: string; contentType: string; dataUrl: string }> }): Promise<void> => {
   try {
-    // For now, we'll log the email that would be sent
-    // In production, replace this with actual email service integration
-    console.log('Email would be sent:', {
-      to: options.to,
-      subject: options.subject,
-      timestamp: new Date().toISOString(),
-    });
-
-    // Placeholder for actual email sending
-    // Example integration with SendGrid:
-    /*
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    // Import Microsoft Graph service
+    const { sendEmailViaGraph } = await import('./microsoft-graph-service');
     
-    await sgMail.send({
-      to: options.to,
-      from: 'noreply@legalassist.london',
-      subject: options.subject,
-      html: options.html,
-    });
-    */
+    // Send email via Microsoft Graph
+    const result = await sendEmailViaGraph(
+      BUSINESS_EMAIL,
+      options.to,
+      options.subject,
+      options.html,
+      options.attachments
+    );
 
-    // Example integration with AWS SES:
-    /*
-    const ses = new AWS.SES();
-    await ses.sendEmail({
-      Source: 'noreply@legalassist.london',
-      Destination: { ToAddresses: [options.to] },
-      Message: {
-        Subject: { Data: options.subject },
-        Body: { Html: { Data: options.html } },
-      },
-    }).promise();
-    */
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to send email via Microsoft Graph');
+    }
+
+    console.log('Email sent successfully via Microsoft Graph:', {
+      to: options.to,
+      subject: options.subject,
+      timestamp: result.timestamp,
+      messageId: result.messageId,
+    });
   } catch (error) {
     console.error('Failed to send email:', error);
     throw error;
