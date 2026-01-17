@@ -166,10 +166,20 @@ export async function sendEmail(options: {
     }
 
     // Microsoft Graph sendMail returns 202 Accepted with no body on success
+    // Capture response headers for traceability
+    const requestId = response.headers.get('request-id') || undefined;
+    const clientRequestId = response.headers.get('client-request-id') || undefined;
+    const agsDiagnostic = response.headers.get('x-ms-ags-diagnostic') || undefined;
+    
     return {
       success: true,
-      messageId: response.headers.get('request-id') || undefined,
+      messageId: requestId,
       timestamp,
+      headers: {
+        requestId,
+        clientRequestId,
+        agsDiagnostic,
+      },
     };
   } catch (error) {
     console.error('Microsoft Graph sendMail error:', error);

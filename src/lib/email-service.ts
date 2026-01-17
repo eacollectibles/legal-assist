@@ -53,6 +53,9 @@ export interface EmailActivityLog {
   timestamp: string;
   deliveryStatus: 'sent' | 'failed' | 'pending';
   errorMessage?: string;
+  graphRequestId?: string;
+  graphClientRequestId?: string;
+  graphAgsDiagnostic?: string;
 }
 
 /**
@@ -104,7 +107,7 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
     );
 
     // CRITICAL: Attach the signed PDF to the email
-    await sendEmail({
+    const emailResult = await sendEmail({
       to: payload.to,
       subject: payload.subject,
       html: htmlContent,
@@ -118,6 +121,9 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
     });
 
     activityLog.deliveryStatus = 'sent';
+    activityLog.graphRequestId = emailResult.requestId;
+    activityLog.graphClientRequestId = emailResult.clientRequestId;
+    activityLog.graphAgsDiagnostic = emailResult.agsDiagnostic;
     return activityLog;
   } catch (error) {
     activityLog.deliveryStatus = 'failed';
@@ -213,7 +219,7 @@ const sendBusinessNotification = async (payload: EmailNotificationPayload): Prom
  * Generic email sending function
  * Uses backend web module for Microsoft Graph API (secrets managed by Wix Secrets Manager)
  */
-const sendEmail = async (options: { to: string; subject: string; html: string; attachments?: Array<{ name: string; contentType: string; dataUrl: string }> }): Promise<void> => {
+const sendEmail = async (options: { to: string; subject: string; html: string; attachments?: Array<{ name: string; contentType: string; dataUrl: string }> }): Promise<{ messageId?: string; requestId?: string; clientRequestId?: string; agsDiagnostic?: string }> => {
   try {
     // Call backend web module (secrets are accessed only on backend)
     const { sendEmail: backendSendEmail } = await import('@/backend/email.web');
@@ -235,7 +241,15 @@ const sendEmail = async (options: { to: string; subject: string; html: string; a
       subject: options.subject,
       timestamp: result.timestamp,
       messageId: result.messageId,
+      headers: result.headers,
     });
+
+    return {
+      messageId: result.messageId,
+      requestId: result.headers?.requestId,
+      clientRequestId: result.headers?.clientRequestId,
+      agsDiagnostic: result.headers?.agsDiagnostic,
+    };
   } catch (error) {
     console.error('Failed to send email:', error);
     throw error;

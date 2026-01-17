@@ -539,12 +539,18 @@ export default function DocumentWorkflowPage() {
         clientId: emailingDocument.clientId,
       });
 
-      // Save comprehensive activity log to database
+      // Save comprehensive activity log to database with Graph headers
+      const logDescription = `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"${
+        activityLog.graphRequestId ? `. Graph Request ID: ${activityLog.graphRequestId}` : ''
+      }${activityLog.graphClientRequestId ? `. Client Request ID: ${activityLog.graphClientRequestId}` : ''}${
+        activityLog.graphAgsDiagnostic ? `. AGS Diagnostic: ${activityLog.graphAgsDiagnostic}` : ''
+      }`;
+      
       await BaseCrudService.create('activitylogs', {
         _id: activityLog._id,
         userId: emailingDocument.clientId || '',
         activityType: 'document_emailed',
-        activityDescription: `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"`,
+        activityDescription: logDescription,
         performedBy: userEmail,
         performedByName: userName,
         timestamp: activityLog.timestamp,
