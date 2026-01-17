@@ -1,7 +1,7 @@
 /**
  * Backend Web Module for Microsoft Graph Email Operations
  * All Microsoft Graph operations happen here with secrets from Wix Secrets Manager
- * CRITICAL: This file runs on the backend only - secrets are never exposed to frontend
+ * CRITICAL: This file runs on the backend only - secrets are never exposed to frontend comments
  */
 
 import { getSecret } from 'wix-secrets-backend';
