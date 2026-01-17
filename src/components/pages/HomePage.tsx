@@ -1,5 +1,5 @@
 // HPI 1.6-V
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown } from 'lucide-react';
 import { Image } from '@/components/ui/image';
@@ -17,23 +17,22 @@ import { cn } from '@/lib/utils';
 type AnimatedElementProps = {
   children: React.ReactNode;
   className?: string;
-  delay?: number; // in ms
+  delay?: number;
   animation?: 'fade-up' | 'fade-in' | 'slide-in-right' | 'scale-up';
 };
 
-const AnimatedElement: React.FC<AnimatedElementProps> = ({ 
+const AnimatedElement = ({ 
   children, 
   className, 
   delay = 0,
   animation = 'fade-up' 
-}) => {
+}: AnimatedElementProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
 
-    // Add a small delay to ensure element is fully mounted
     const timeoutId = setTimeout(() => {
       if (!element) return;
       
@@ -85,7 +84,7 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
  * Uses IntersectionObserver to track scroll progress for performant parallax.
  * Updates a CSS variable --scroll-progress on the element.
  */
-const ParallaxContainer: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
+const ParallaxContainer = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -98,19 +97,15 @@ const ParallaxContainer: React.FC<{ children: React.ReactNode; className?: strin
       const rect = element.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Calculate progress: 0 when element enters bottom, 1 when it leaves top
       const progress = 1 - (rect.bottom / (rect.height + windowHeight));
-      
-      // Clamp between 0 and 1
       const clamped = Math.min(Math.max(progress, 0), 1);
       element.style.setProperty('--scroll-progress', clamped.toString());
     };
 
-    // Delay initial setup to ensure element is mounted
     const timeoutId = setTimeout(() => {
       if (element) {
         window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Initial calc
+        handleScroll();
       }
     }, 10);
 
