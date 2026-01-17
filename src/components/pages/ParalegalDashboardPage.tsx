@@ -70,13 +70,6 @@ interface ClientDocument {
   fileSize?: number;
   documentCategory?: string;
   notes?: string;
-  version?: number;
-  previousVersions?: Array<{
-    version: number;
-    fileUrl: string;
-    uploadDate: Date | string;
-    notes?: string;
-  }>;
 }
 
 export default function ParalegalDashboardPage() {
@@ -96,10 +89,10 @@ export default function ParalegalDashboardPage() {
   const [filterDateFrom, setFilterDateFrom] = useState('');
   const [filterDateTo, setFilterDateTo] = useState('');
   const [selectedDocument, setSelectedDocument] = useState<ClientDocument | null>(null);
-  const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [shareEmail, setShareEmail] = useState('');
   const [shareMessage, setShareMessage] = useState('');
+  const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
 
   // Document signing states
   const [generatedDocuments, setGeneratedDocuments] = useState<GeneratedDocuments[]>([]);
@@ -1477,18 +1470,7 @@ export default function ParalegalDashboardPage() {
                             Download
                           </a>
                         </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => {
-                            setSelectedDocument(doc);
-                            setIsVersionHistoryOpen(true);
-                          }}
-                          className="gap-2"
-                        >
-                          <History className="h-4 w-4" />
-                          Version History
-                        </Button>
+
                         <Button
                           size="sm"
                           variant="outline"
@@ -1556,69 +1538,7 @@ export default function ParalegalDashboardPage() {
           </TabsContent>
         </Tabs>
 
-        {/* Version History Dialog */}
-        <Dialog open={isVersionHistoryOpen} onOpenChange={setIsVersionHistoryOpen}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Document Version History</DialogTitle>
-            </DialogHeader>
-            {selectedDocument && (
-              <div className="space-y-4 py-4">
-                <div className="bg-pastelbeige/20 rounded-lg p-4">
-                  <h3 className="font-heading font-bold text-foreground mb-2">Current Version</h3>
-                  <p className="font-paragraph text-sm text-foreground/80 mb-2">
-                    <strong>Version:</strong> {selectedDocument.version || 1}
-                  </p>
-                  <p className="font-paragraph text-sm text-foreground/80 mb-2">
-                    <strong>Upload Date:</strong> {selectedDocument.uploadDate ? format(new Date(selectedDocument.uploadDate), 'MMM d, yyyy HH:mm') : 'N/A'}
-                  </p>
-                  {selectedDocument.notes && (
-                    <p className="font-paragraph text-sm text-foreground/80">
-                      <strong>Notes:</strong> {selectedDocument.notes}
-                    </p>
-                  )}
-                </div>
 
-                {selectedDocument.previousVersions && selectedDocument.previousVersions.length > 0 ? (
-                  <div className="space-y-3">
-                    <h3 className="font-heading font-bold text-foreground">Previous Versions</h3>
-                    {selectedDocument.previousVersions.map((version, index) => (
-                      <div key={index} className="border border-gray-200 rounded-lg p-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <p className="font-paragraph text-sm text-foreground/80 mb-1">
-                              <strong>Version:</strong> {version.version}
-                            </p>
-                            <p className="font-paragraph text-sm text-foreground/80 mb-1">
-                              <strong>Date:</strong> {format(new Date(version.uploadDate), 'MMM d, yyyy HH:mm')}
-                            </p>
-                            {version.notes && (
-                              <p className="font-paragraph text-sm text-foreground/80">
-                                <strong>Notes:</strong> {version.notes}
-                              </p>
-                            )}
-                          </div>
-                          <Button
-                            size="sm"
-                            onClick={() => handleRevertToVersion(selectedDocument._id, index)}
-                          >
-                            Revert
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="font-paragraph text-foreground/60 text-center py-4">
-                    No previous versions available
-                  </p>
-                )}
-              </div>
-            )}
-          </DialogContent>
-        </Dialog>
-
-        {/* Email Document Dialog */}
         <EmailDocumentDialog
           document={emailingDocument}
           isOpen={isEmailDialogOpen}
