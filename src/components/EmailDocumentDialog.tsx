@@ -54,35 +54,33 @@ export default function EmailDocumentDialog({
       // CRITICAL FIX: Generate upload link if token is provided
       const uploadLink = uploadToken ? generateUploadLink(uploadToken) : null;
 
-      const defaultSubject = `Your Signed Document: ${document.documentName || 'Legal Document'}`;
+      const defaultSubject = `Authorization and Direction - ${clientName}`;
       
-      // CRITICAL FIX: Auto-insert upload link into email body
-      const defaultBody = `Dear ${clientName},
+      // Template for sending Authorization and Direction to third parties
+      const defaultBody = `Dear Sir/Madam,
 
-I hope this message finds you well.
+RE: Authorization and Direction - ${clientName}
 
-Please find attached your signed document "${document.documentName || 'Legal Document'}". This document has been reviewed, processed, and electronically signed on ${today}.
+Please find attached a signed Authorization and Direction from our client, ${clientName}, authorizing the release of information to our office.
 
-Key Details:
-- Document: ${document.documentName || 'Legal Document'}
-- Client: ${clientName}
-- Date: ${today}
-- Signed by: ${paralegalName}
+We kindly request that you provide the requested documentation/information as outlined in the attached authorization at your earliest convenience.
 
-The attached PDF is the official signed version of your document. Please download and save it for your records.
-
-${uploadLink ? `
-📤 SECURE UPLOAD LINK
-If you need to upload additional documents related to this matter, please use this secure link:
+${uploadLink ? `📤 SECURE UPLOAD LINK
+For your convenience, you may upload the requested documents electronically using the secure link below:
 ${uploadLink}
 
-This link is unique to you and allows you to securely upload files directly to your case file. The link will expire after use or after the designated time period.
+This link is unique to this matter and allows you to securely upload files directly to our office.
 ` : ''}
-If you have any questions or need any clarification regarding this document, please don't hesitate to reach out to me directly.
+If you have any questions or require additional information, please do not hesitate to contact our office.
 
-Best regards,
+Thank you for your cooperation.
+
+Yours truly,
+
 ${paralegalName}
-LegalAssist`;
+LegalAssist Paralegal Services
+London, Ontario
+info@legalassist.london`;
 
       setFormData({
         to: document.clientEmail || '',
@@ -155,7 +153,7 @@ LegalAssist`;
   const handleInsertUploadLink = () => {
     if (uploadToken) {
       const link = generateUploadLink(uploadToken);
-      const insertText = `\n\n📤 SECURE UPLOAD LINK\nIf you need to upload additional documents related to this matter, please use this secure link:\n${link}\n\nThis link is unique to you and allows you to securely upload files directly to your case file.\n`;
+      const insertText = `\n\n📤 SECURE UPLOAD LINK\nFor your convenience, you may upload the requested documents electronically using the secure link below:\n${link}\n\nThis link is unique to this matter and allows you to securely upload files directly to our office.\n`;
       setFormData({
         ...formData,
         body: formData.body + insertText,
