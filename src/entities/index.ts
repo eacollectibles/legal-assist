@@ -269,6 +269,14 @@ export interface Messages {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  priority?: string;
+  /** @wixFieldType url */
+  attachmentUrl?: string;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  matterId?: string;
+  /** @wixFieldType text */
   senderEmail?: string;
   /** @wixFieldType text */
   senderName?: string;
@@ -282,14 +290,6 @@ export interface Messages {
   isRead?: boolean;
   /** @wixFieldType text */
   conversationId?: string;
-  /** @wixFieldType text */
-  clientId?: string;
-  /** @wixFieldType text */
-  matterId?: string;
-  /** @wixFieldType text */
-  priority?: string;
-  /** @wixFieldType url */
-  attachmentUrl?: string;
 }
 
 
