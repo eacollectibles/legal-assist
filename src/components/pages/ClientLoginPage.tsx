@@ -83,9 +83,13 @@ export default function ClientLoginPage() {
         rememberMe: false,
       });
 
-      // Redirect to dashboard after successful login
+      // Redirect to appropriate dashboard based on user role
       setTimeout(() => {
-        navigate('/client-dashboard');
+        if (result.user?.isAdmin) {
+          navigate('/paralegal-dashboard');
+        } else {
+          navigate('/client-dashboard');
+        }
       }, 1500);
     } catch (err) {
       setError('Failed to log in. Please check your email and password and try again.');
