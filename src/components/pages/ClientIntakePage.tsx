@@ -11,7 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { BaseCrudService } from '@/integrations';
-import { ClientProfiles } from '@/entities';
+import { ClientProfiles, ClientDocuments, FileAssignments } from '@/entities';
 import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -247,7 +247,7 @@ export default function ClientIntakePage() {
     if (!opposingRelationship) {
       toast({
         title: 'Missing Information',
-        description: 'Please select the relationship to opposing parties.',
+        description: 'Please select the relationship type.',
         variant: 'destructive',
       });
       return;
@@ -265,70 +265,114 @@ export default function ClientIntakePage() {
     setConflictCheckLoading(true);
 
     try {
-      // Fetch ALL clients from the database
-      const { items: allClients } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      // Fetch ALL data sources to search
+      const [clientsRes, documentsRes, assignmentsRes] = await Promise.all([
+        BaseCrudService.getAll<ClientProfiles>('clientprofiles'),
+        BaseCrudService.getAll<ClientDocuments>('clientdocuments'),
+        BaseCrudService.getAll<FileAssignments>('fileassignments'),
+      ]);
+
+      const allClients = clientsRes.items || [];
+      const allDocuments = documentsRes.items || [];
+      const allAssignments = assignmentsRes.items || [];
       
       const matches: Array<{
-        clientName: string;
-        clientId: string;
-        caseType: string;
+        matchType: 'client' | 'document' | 'file';
+        matchedName: string;
+        matchedIn: string;
         matchedAgainst: string;
       }> = [];
 
-      // Search for matches
-      partyNames.forEach(searchName => {
-        const searchTerms = searchName.trim().toLowerCase().split(' ').filter(t => t.length > 1);
+      // Helper function to check if search terms match a target string
+      const checkMatch = (searchName: string, targetString: string): boolean => {
+        if (!targetString) return false;
         
-        allClients.forEach(client => {
-          // Skip the current user
-          if (client._id === clientId) return;
-          
-          const clientFirstName = (client.firstName || '').toLowerCase();
-          const clientLastName = (client.lastName || '').toLowerCase();
-          const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
-          
-          const searchLower = searchName.trim().toLowerCase();
-          
-          let isMatch = false;
-          
-          // Exact full name match
-          if (clientFullName === searchLower) {
-            isMatch = true;
-          }
-          
-          // Partial match - search terms appear in client name
-          if (!isMatch && searchTerms.length > 0) {
-            const matchCount = searchTerms.filter(term => 
-              clientFirstName.includes(term) || clientLastName.includes(term)
-            ).length;
-            if (matchCount >= Math.ceil(searchTerms.length / 2)) {
-              isMatch = true;
-            }
-          }
-          
-          // Single word exact match
-          if (!isMatch && searchTerms.length === 1) {
-            if (clientFirstName === searchTerms[0] || clientLastName === searchTerms[0]) {
-              isMatch = true;
-            }
-          }
+        const searchLower = searchName.trim().toLowerCase();
+        const targetLower = targetString.toLowerCase();
+        const searchTerms = searchLower.split(' ').filter(t => t.length > 1);
+        
+        // Exact match
+        if (targetLower.includes(searchLower)) return true;
+        
+        // All search terms appear in target
+        if (searchTerms.length > 0) {
+          const matchCount = searchTerms.filter(term => targetLower.includes(term)).length;
+          if (matchCount >= Math.ceil(searchTerms.length / 2)) return true;
+        }
+        
+        return false;
+      };
 
-          if (isMatch) {
+      // Search each opposing party name
+      partyNames.forEach(searchName => {
+        
+        // 1. Search CLIENT PROFILES (names)
+        allClients.forEach(client => {
+          if (client._id === clientId) return; // Skip current user
+          
+          const clientFullName = `${client.firstName || ''} ${client.lastName || ''}`.trim();
+          
+          if (checkMatch(searchName, clientFullName)) {
             matches.push({
-              clientName: `${client.firstName || ''} ${client.lastName || ''}`.trim(),
-              clientId: client._id,
-              caseType: client.caseType || 'Not specified',
+              matchType: 'client',
+              matchedName: clientFullName,
+              matchedIn: 'Client Records',
+              matchedAgainst: searchName,
+            });
+          }
+        });
+
+        // 2. Search DOCUMENTS (document names, client names in notes)
+        allDocuments.forEach(doc => {
+          // Check document name
+          if (checkMatch(searchName, doc.documentName || '')) {
+            matches.push({
+              matchType: 'document',
+              matchedName: doc.documentName || 'Unknown Document',
+              matchedIn: 'Document: ' + (doc.documentName || 'Unnamed'),
+              matchedAgainst: searchName,
+            });
+          }
+          
+          // Check notes field
+          if (checkMatch(searchName, doc.notes || '')) {
+            matches.push({
+              matchType: 'document',
+              matchedName: searchName,
+              matchedIn: 'Document Notes',
+              matchedAgainst: searchName,
+            });
+          }
+        });
+
+        // 3. Search FILE ASSIGNMENTS (case notes)
+        allAssignments.forEach(assignment => {
+          if (checkMatch(searchName, assignment.notes || '')) {
+            matches.push({
+              matchType: 'file',
+              matchedName: searchName,
+              matchedIn: 'Case File Notes',
               matchedAgainst: searchName,
             });
           }
         });
       });
 
+      // Remove duplicate matches
+      const uniqueMatches = matches.filter((match, index, self) =>
+        index === self.findIndex(m => 
+          m.matchType === match.matchType && 
+          m.matchedName === match.matchedName && 
+          m.matchedAgainst === match.matchedAgainst
+        )
+      );
+
       // Determine status
-      const status: 'passed' | 'needs_verification' = matches.length > 0 ? 'needs_verification' : 'passed';
+      const hasConflict = uniqueMatches.length > 0;
+      const status: 'passed' | 'blocked' = hasConflict ? 'blocked' : 'passed';
       const checkedDate = new Date().toISOString();
 
-      // Save to database immediately (one-time only)
+      // Save to database
       await BaseCrudService.update('clientprofiles', {
         _id: clientId,
         conflictCheckCompleted: true,
@@ -337,13 +381,13 @@ export default function ClientIntakePage() {
         opposingPartyNames: partyNames.join(', '),
         opposingPartyRelationship: opposingRelationship,
         conflictMatterCity: matterCity.trim(),
-        conflictMatchesFound: JSON.stringify(matches),
+        conflictMatchesFound: JSON.stringify(uniqueMatches),
       });
 
       // Update local state
       setConflictCheckResult({
         status,
-        matches,
+        matches: uniqueMatches,
         checkedNames: partyNames,
         checkedDate,
       });
@@ -354,16 +398,23 @@ export default function ClientIntakePage() {
       handleInputChange('opposingPartyNames', partyNames.join(', '));
       handleInputChange('opposingPartyRelationship', opposingRelationship);
       handleInputChange('conflictMatterCity', matterCity.trim());
-      handleInputChange('conflictMatchesFound', JSON.stringify(matches));
+      handleInputChange('conflictMatchesFound', JSON.stringify(uniqueMatches));
 
-      toast({
-        title: 'Conflict Check Complete',
-        description: status === 'passed' 
-          ? 'No conflicts detected. You may proceed.' 
-          : 'Potential conflicts found. Please review and acknowledge.',
-      });
+      if (hasConflict) {
+        toast({
+          title: 'Potential Conflict Detected',
+          description: 'We found matching records. Please contact our office to proceed.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'No Conflicts Found ✓',
+          description: 'You may proceed with the intake form.',
+        });
+      }
+
     } catch (error) {
-      console.error('Error running conflict check:', error);
+      console.error('Conflict check error:', error);
       toast({
         title: 'Error',
         description: 'Failed to run conflict check. Please try again.',
@@ -379,6 +430,11 @@ export default function ClientIntakePage() {
     
     switch (section) {
       case 'conflict':
+        // Can only proceed if passed AND acknowledged
+        // BLOCKED status = cannot proceed at all
+        if (formData.conflictCheckStatus === 'blocked') {
+          return false; // Never valid, cannot proceed
+        }
         return formData.conflictCheckCompleted && formData.conflictAcknowledged;
       case 'personal':
         return !!(formData.firstName && formData.lastName);
@@ -599,91 +655,123 @@ export default function ClientIntakePage() {
                         <div className={`border-2 rounded-lg p-6 ${
                           formData.conflictCheckStatus === 'passed'
                             ? 'bg-green-50 border-green-400'
-                            : 'bg-amber-50 border-amber-400'
+                            : 'bg-red-50 border-red-400'
                         }`}>
-                          {/* Status Header */}
-                          <div className="flex items-center gap-3 mb-4">
-                            {formData.conflictCheckStatus === 'passed' ? (
-                              <>
+                          {/* PASSED */}
+                          {formData.conflictCheckStatus === 'passed' && (
+                            <>
+                              <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
                                   <CheckCircle2 className="w-7 h-7 text-white" />
                                 </div>
                                 <div>
-                                  <h4 className="font-heading font-bold text-xl text-green-800">PASSED</h4>
-                                  <p className="text-sm text-green-700">No conflicts of interest found — you may proceed</p>
+                                  <h4 className="font-heading font-bold text-xl text-green-800">NO CONFLICTS FOUND</h4>
+                                  <p className="text-sm text-green-700">You may proceed with the intake process</p>
                                 </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">
-                                  <AlertTriangle className="w-7 h-7 text-white" />
+                              </div>
+
+                              <div className="bg-white/50 rounded-lg p-4 space-y-2 text-sm mb-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div>
+                                    <p className="text-foreground/60">Opposing Parties Checked</p>
+                                    <p className="font-medium">{formData.opposingPartyNames}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-foreground/60">City/Location</p>
+                                    <p className="font-medium">{formData.conflictMatterCity}</p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Acknowledgment for passed */}
+                              {!formData.conflictAcknowledged && (
+                                <div className="flex items-start space-x-3 pt-4 border-t border-green-200">
+                                  <Checkbox
+                                    id="conflictAcknowledge"
+                                    checked={formData.conflictAcknowledged}
+                                    onCheckedChange={(checked) => handleInputChange('conflictAcknowledged', checked)}
+                                  />
+                                  <Label htmlFor="conflictAcknowledge" className="font-paragraph text-sm cursor-pointer leading-relaxed">
+                                    I confirm that I have provided accurate names for all opposing parties. I understand 
+                                    LegalAssist has checked for conflicts of interest and I may proceed.
+                                  </Label>
+                                </div>
+                              )}
+
+                              {formData.conflictAcknowledged && (
+                                <div className="flex items-center gap-2 pt-4 border-t border-green-200 text-green-700">
+                                  <CheckCircle2 className="w-5 h-5" />
+                                  <span className="font-medium">Acknowledged — Click "Save & Continue" to proceed</span>
+                                </div>
+                              )}
+                            </>
+                          )}
+
+                          {/* BLOCKED - CONFLICT FOUND */}
+                          {formData.conflictCheckStatus === 'blocked' && (
+                            <>
+                              <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center">
+                                  <XCircle className="w-7 h-7 text-white" />
                                 </div>
                                 <div>
-                                  <h4 className="font-heading font-bold text-xl text-amber-800">NEEDS MANUAL VERIFICATION</h4>
-                                  <p className="text-sm text-amber-700">Potential matches found — paralegal review required</p>
+                                  <h4 className="font-heading font-bold text-xl text-red-800">POTENTIAL CONFLICT DETECTED</h4>
+                                  <p className="text-sm text-red-700">Online registration is not available</p>
                                 </div>
-                              </>
-                            )}
-                          </div>
+                              </div>
 
-                          {/* Details */}
-                          <div className="bg-white/50 rounded-lg p-4 space-y-3 text-sm">
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <p className="text-foreground/60">Opposing Parties</p>
-                                <p className="font-medium">{formData.opposingPartyNames}</p>
-                              </div>
-                              <div>
-                                <p className="text-foreground/60">Relationship</p>
-                                <p className="font-medium">{formData.opposingPartyRelationship}</p>
-                              </div>
-                              <div>
-                                <p className="text-foreground/60">City/Location</p>
-                                <p className="font-medium">{formData.conflictMatterCity}</p>
-                              </div>
-                            </div>
-                            
-                            {/* Show matches if any */}
-                            {formData.conflictCheckStatus === 'needs_verification' && formData.conflictMatchesFound && (
-                              <div className="mt-3 pt-3 border-t">
-                                <p className="text-foreground/60 mb-2">Potential Matches:</p>
-                                <div className="space-y-1">
-                                  {JSON.parse(formData.conflictMatchesFound).map((match: any, i: number) => (
-                                    <div key={i} className="bg-amber-100 rounded p-2">
-                                      <span className="font-medium">{match.clientName}</span>
-                                      <span className="text-foreground/60"> — {match.caseType}</span>
+                              {/* Matches Found */}
+                              <div className="bg-white/70 rounded-lg p-4 mb-4">
+                                <p className="text-sm font-medium text-red-800 mb-3">The following matches were found in our records:</p>
+                                <div className="space-y-2">
+                                  {formData.conflictMatchesFound && JSON.parse(formData.conflictMatchesFound).map((match: any, i: number) => (
+                                    <div key={i} className="bg-red-100 rounded p-3 text-sm flex items-start gap-2">
+                                      <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                                      <div>
+                                        <span className="font-medium">"{match.matchedAgainst}"</span>
+                                        <span className="text-red-700"> found in {match.matchedIn}</span>
+                                      </div>
                                     </div>
                                   ))}
                                 </div>
                               </div>
-                            )}
-                          </div>
 
-                          <p className="text-xs text-foreground/60 mt-4">
-                            ✓ This check has been completed and recorded.
-                          </p>
+                              {/* Explanation */}
+                              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                                <p className="text-sm text-amber-800">
+                                  <strong>What does this mean?</strong> Our records contain information that may indicate 
+                                  a conflict of interest. This does not necessarily mean we cannot assist you, but it 
+                                  requires a manual review by our office before we can proceed.
+                                </p>
+                              </div>
 
-                          {/* Acknowledgment */}
-                          {!formData.conflictAcknowledged && (
-                            <div className="flex items-start space-x-3 mt-4 pt-4 border-t border-foreground/20">
-                              <Checkbox
-                                id="conflictAcknowledge"
-                                checked={formData.conflictAcknowledged}
-                                onCheckedChange={(checked) => handleInputChange('conflictAcknowledged', checked)}
-                              />
-                              <Label htmlFor="conflictAcknowledge" className="font-paragraph text-sm cursor-pointer leading-relaxed">
-                                {formData.conflictCheckStatus === 'passed'
-                                  ? 'I confirm that I have provided accurate names for all opposing parties. I understand LegalAssist has checked for conflicts of interest and I may now proceed with the intake process.'
-                                  : 'I understand that potential matches were found and a paralegal will contact me to review this before my file can proceed. I confirm the information I provided is accurate.'}
-                              </Label>
-                            </div>
-                          )}
+                              {/* Call to Action - Schedule Callback */}
+                              <div className="bg-primary/10 border-2 border-primary rounded-lg p-6 text-center">
+                                <h4 className="font-heading font-bold text-lg text-foreground mb-2">
+                                  Please Contact Our Office
+                                </h4>
+                                <p className="font-paragraph text-sm text-foreground/80 mb-4">
+                                  To proceed with your matter, please schedule a callback with our team. 
+                                  We will review the potential conflict and discuss your options.
+                                </p>
+                                <a 
+                                  href="/contact" 
+                                  className="inline-flex items-center justify-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+                                >
+                                  <Phone className="w-5 h-5" />
+                                  Schedule a Callback
+                                </a>
+                                <p className="text-xs text-foreground/60 mt-3">
+                                  Or call us directly at: <strong>(519) 123-4567</strong>
+                                </p>
+                              </div>
 
-                          {formData.conflictAcknowledged && (
-                            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-foreground/20 text-green-700">
-                              <CheckCircle2 className="w-5 h-5" />
-                              <span className="font-medium">Acknowledged — Click "Save & Continue" to proceed</span>
-                            </div>
+                              {/* Notice */}
+                              <p className="text-xs text-center text-foreground/60 mt-4">
+                                This conflict check has been recorded. Your information has been saved and our team 
+                                may contact you regarding this matter.
+                              </p>
+                            </>
                           )}
                         </div>
                       )}
@@ -1222,13 +1310,16 @@ export default function ClientIntakePage() {
 
               {/* Navigation Buttons */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-foreground/10">
-                <Button
-                  variant="outline"
-                  onClick={handleSkip}
-                  className="w-full sm:w-auto order-3 sm:order-1"
-                >
-                  Skip for Now
-                </Button>
+                {/* Only show Skip if NOT blocked */}
+                {!(currentSection === 0 && formData.conflictCheckStatus === 'blocked') && (
+                  <Button
+                    variant="outline"
+                    onClick={handleSkip}
+                    className="w-full sm:w-auto order-3 sm:order-1"
+                  >
+                    Skip for Now
+                  </Button>
+                )}
 
                 <div className="flex gap-3 w-full sm:w-auto order-1 sm:order-2">
                   {currentSection > 0 && (
@@ -1241,23 +1332,26 @@ export default function ClientIntakePage() {
                       Back
                     </Button>
                   )}
-                  <Button
-                    onClick={handleNext}
-                    disabled={isLoading}
-                    className="flex-1 sm:flex-none"
-                  >
-                    {currentSection === sections.length - 1 ? (
-                      <>
-                        {isLoading ? 'Submitting...' : 'Complete'}
-                        <Check className="w-4 h-4 ml-2" />
-                      </>
-                    ) : (
-                      <>
-                        Save & Continue
-                        <ChevronRight className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </Button>
+                  {/* Only show Save & Continue if NOT blocked */}
+                  {!(currentSection === 0 && formData.conflictCheckStatus === 'blocked') && (
+                    <Button
+                      onClick={handleNext}
+                      disabled={isLoading}
+                      className="flex-1 sm:flex-none"
+                    >
+                      {currentSection === sections.length - 1 ? (
+                        <>
+                          {isLoading ? 'Submitting...' : 'Complete'}
+                          <Check className="w-4 h-4 ml-2" />
+                        </>
+                      ) : (
+                        <>
+                          Save & Continue
+                          <ChevronRight className="w-4 h-4 ml-2" />
+                        </>
+                      )}
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardContent>
