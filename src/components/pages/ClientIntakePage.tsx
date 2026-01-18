@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { BaseCrudService } from '@/integrations';
 import { ClientProfiles, ClientDocuments, FileAssignments } from '@/entities';
-import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle, ExternalLink } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
