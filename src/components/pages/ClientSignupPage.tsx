@@ -116,9 +116,9 @@ export default function ClientSignupPage() {
         agreeToTerms: false,
       });
 
-      // Redirect to dashboard after successful signup (user is already logged in)
+      // Redirect to intake form after successful signup
       setTimeout(() => {
-        navigate('/client-dashboard');
+        navigate('/client-intake');
       }, 1500);
     } catch (err) {
       setError('Failed to create account. Please try again.');

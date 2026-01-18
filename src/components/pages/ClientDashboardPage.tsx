@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send, Bell, BellDot, Lock, Star, FileSignature } from 'lucide-react';
+import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader, User, CreditCard, Save, DollarSign, MessageSquare, Send, Bell, BellDot, Lock, Star, FileSignature, Info } from 'lucide-react';
 import { getCurrentUser, isAuthenticated, isAdmin, changePassword } from '@/lib/auth-service';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
-import { GeneratedDocuments } from '@/entities';
+import { GeneratedDocuments, ClientProfiles } from '@/entities';
 
 interface Notification {
   _id: string;
@@ -84,6 +85,25 @@ interface ClientProfile {
   phoneNumber?: string;
   emergencyContactName?: string;
   emergencyContactPhone?: string;
+  intakeCompleted?: boolean;
+  intakeCompletedDate?: Date | string;
+  dateOfBirth?: Date | string;
+  preferredName?: string;
+  preferredLanguage?: string;
+  howHeardAboutUs?: string;
+  alternatePhone?: string;
+  preferredContactMethod?: string;
+  bestTimeToContact?: string;
+  unitNumber?: string;
+  emergencyContactRelationship?: string;
+  caseType?: string;
+  caseDescription?: string;
+  hasCourtDocuments?: boolean;
+  courtDeadline?: Date | string;
+  consultedOther?: boolean;
+  additionalNotes?: string;
+  preferredDays?: string;
+  preferredTimes?: string;
 }
 
 interface PaymentRecord {
@@ -114,6 +134,7 @@ interface UserAccount {
 }
 
 function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
+  const navigate = useNavigate();
   const [documents, setDocuments] = useState<ClientDocument[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
@@ -135,6 +156,11 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [profileSuccess, setProfileSuccess] = useState(false);
   const [profileError, setProfileError] = useState('');
+
+  // Intake form state
+  const [intakeCompleted, setIntakeCompleted] = useState(false);
+  const [showIntakeBanner, setShowIntakeBanner] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Payment state
   const [payments, setPayments] = useState<PaymentRecord[]>([]);
@@ -197,6 +223,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     loadMessages();
     loadAssignedParalegal();
     loadGeneratedDocuments();
+    checkIntakeStatus();
   }, [currentUser?.email]);
 
   // Load notifications when userAccountId is available
@@ -264,7 +291,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadProfile = async () => {
     setIsLoadingProfile(true);
     try {
-      const { items } = await BaseCrudService.getAll<ClientProfile>('clientprofiles');
+      const { items } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
       // Find profile for current user - check both _id matching email and userAccountId
       let userProfile = items?.find(p => p._id === currentUser?.email);
       
@@ -274,11 +301,42 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       }
       
       setProfile(userProfile || null);
+      
+      // Check intake completion status
+      if (userProfile) {
+        setIntakeCompleted(userProfile.intakeCompleted || false);
+      }
     } catch (error) {
       console.error('Failed to load profile:', error);
     } finally {
       setIsLoadingProfile(false);
     }
+  };
+
+  const checkIntakeStatus = () => {
+    // Check if user just completed intake
+    const justCompleted = sessionStorage.getItem('intakeJustCompleted');
+    if (justCompleted === 'true') {
+      setShowSuccessMessage(true);
+      sessionStorage.removeItem('intakeJustCompleted');
+      setTimeout(() => setShowSuccessMessage(false), 5000);
+      return;
+    }
+
+    // Check if user skipped intake
+    const skipped = sessionStorage.getItem('intakeSkipped');
+    if (skipped === 'true') {
+      sessionStorage.removeItem('intakeSkipped');
+    }
+
+    // Show banner if intake not completed
+    if (!intakeCompleted) {
+      setShowIntakeBanner(true);
+    }
+  };
+
+  const dismissIntakeBanner = () => {
+    setShowIntakeBanner(false);
   };
 
   const loadPayments = async () => {
@@ -801,6 +859,53 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+
+      {/* Intake Completion Success Message */}
+      {showSuccessMessage && (
+        <div className="w-full bg-pastelgreen border-b-2 border-pastelgreen">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 py-4">
+            <Alert className="border-0 bg-transparent">
+              <CheckCircle className="h-5 w-5 text-foreground" />
+              <AlertTitle className="font-heading text-foreground">Intake Form Completed!</AlertTitle>
+              <AlertDescription className="font-paragraph text-foreground/80">
+                Thank you for completing your intake form. We will review your information and be in touch soon.
+              </AlertDescription>
+            </Alert>
+          </div>
+        </div>
+      )}
+
+      {/* Intake Form Reminder Banner */}
+      {showIntakeBanner && !intakeCompleted && (
+        <div className="w-full bg-pastelpeach border-b-2 border-primary/20">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 py-4">
+            <Alert className="border-0 bg-transparent">
+              <Info className="h-5 w-5 text-foreground" />
+              <AlertTitle className="font-heading text-foreground">Complete Your Intake Form</AlertTitle>
+              <AlertDescription className="font-paragraph text-foreground/80 flex items-center justify-between flex-wrap gap-4">
+                <span>
+                  Please complete your client intake form to help us serve you better. This will only take a few minutes.
+                </span>
+                <div className="flex gap-2">
+                  <Link to="/client-intake">
+                    <Button size="sm" className="bg-primary hover:bg-primary/90">
+                      Complete Now
+                    </Button>
+                  </Link>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={dismissIntakeBanner}
+                    className="border-foreground/20"
+                  >
+                    Dismiss
+                  </Button>
+                </div>
+              </AlertDescription>
+            </Alert>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
