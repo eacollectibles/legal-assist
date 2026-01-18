@@ -34,8 +34,15 @@ export default function ClientDashboardPage() {
   useEffect(() => {
     if (!isAuthenticated()) {
       navigate('/client-login');
+      return;
     }
-  }, [navigate]);
+    
+    // Redirect admins to paralegal dashboard
+    if (currentUser?.isAdmin) {
+      navigate('/paralegal-dashboard');
+      return;
+    }
+  }, [navigate, currentUser]);
 
   if (!currentUser) {
     return (
@@ -329,8 +336,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       sessionStorage.removeItem('intakeSkipped');
     }
 
-    // Show banner if intake not completed
-    if (!intakeCompleted) {
+    // Show banner if intake not completed AND user is NOT an admin
+    if (!intakeCompleted && !currentUser?.isAdmin) {
       setShowIntakeBanner(true);
     }
   };
@@ -876,7 +883,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       )}
 
       {/* Intake Form Reminder Banner */}
-      {showIntakeBanner && !intakeCompleted && (
+      {showIntakeBanner && !intakeCompleted && !currentUser?.isAdmin && (
         <div className="w-full bg-pastelpeach border-b-2 border-primary/20">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8 py-4">
             <Alert className="border-0 bg-transparent">

@@ -123,6 +123,20 @@ export interface ClientProfiles {
   _updatedDate?: Date;
   /** @wixFieldType date */
   courtDeadline?: Date | string;
+  /** @wixFieldType boolean */
+  conflictAcknowledged?: boolean;
+  /** @wixFieldType text */
+  conflictMatchesFound?: string;
+  /** @wixFieldType text */
+  opposingPartyRelationship?: string;
+  /** @wixFieldType text */
+  opposingPartyNames?: string;
+  /** @wixFieldType text */
+  conflictCheckStatus?: string;
+  /** @wixFieldType datetime */
+  conflictCheckDate?: Date | string;
+  /** @wixFieldType boolean */
+  conflictCheckCompleted?: boolean;
   /** @wixFieldType text */
   preferredTimes?: string;
   /** @wixFieldType text */
