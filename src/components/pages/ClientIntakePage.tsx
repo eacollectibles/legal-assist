@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { BaseCrudService } from '@/integrations';
 import { ClientProfiles } from '@/entities';
-import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -54,6 +54,15 @@ interface FormData {
   // Availability
   preferredDays: string[];
   preferredTimes: string[];
+  
+  // Conflict Check
+  conflictCheckCompleted: boolean;
+  conflictCheckDate: string;
+  conflictCheckStatus: string;
+  opposingPartyNames: string;
+  opposingPartyRelationship: string;
+  conflictMatchesFound: string;
+  conflictAcknowledged: boolean;
 }
 
 const sections = [
@@ -62,6 +71,7 @@ const sections = [
   { id: 'address', title: 'Address', icon: MapPin },
   { id: 'emergency', title: 'Emergency Contact', icon: Phone },
   { id: 'case', title: 'Case Information', icon: Briefcase },
+  { id: 'conflict', title: 'Conflict Check', icon: Shield },
   { id: 'availability', title: 'Availability', icon: Clock },
 ];
 
@@ -74,6 +84,14 @@ export default function ClientIntakePage() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [clientId, setClientId] = useState<string>('');
+  const [conflictCheckLoading, setConflictCheckLoading] = useState(false);
+  const [opposingParties, setOpposingParties] = useState('');
+  const [opposingRelationship, setOpposingRelationship] = useState('');
+  const [conflictCheckResult, setConflictCheckResult] = useState<{
+    status: string;
+    matches: string;
+    date: string;
+  } | null>(null);
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -101,6 +119,13 @@ export default function ClientIntakePage() {
     additionalNotes: '',
     preferredDays: [],
     preferredTimes: [],
+    conflictCheckCompleted: false,
+    conflictCheckDate: '',
+    conflictCheckStatus: '',
+    opposingPartyNames: '',
+    opposingPartyRelationship: '',
+    conflictMatchesFound: '',
+    conflictAcknowledged: false,
   });
 
   useEffect(() => {
@@ -161,7 +186,24 @@ export default function ClientIntakePage() {
           additionalNotes: profile.additionalNotes || '',
           preferredDays: profile.preferredDays ? profile.preferredDays.split(',').map(d => d.trim()) : [],
           preferredTimes: profile.preferredTimes ? profile.preferredTimes.split(',').map(t => t.trim()) : [],
+          conflictCheckCompleted: profile.conflictCheckCompleted || false,
+          conflictCheckDate: profile.conflictCheckDate ? new Date(profile.conflictCheckDate).toISOString() : '',
+          conflictCheckStatus: profile.conflictCheckStatus || '',
+          opposingPartyNames: profile.opposingPartyNames || '',
+          opposingPartyRelationship: profile.opposingPartyRelationship || '',
+          conflictMatchesFound: profile.conflictMatchesFound || '',
+          conflictAcknowledged: profile.conflictAcknowledged || false,
         });
+        
+        if (profile.conflictCheckCompleted) {
+          setConflictCheckResult({
+            status: profile.conflictCheckStatus || '',
+            matches: profile.conflictMatchesFound || '',
+            date: profile.conflictCheckDate ? new Date(profile.conflictCheckDate).toISOString() : '',
+          });
+          setOpposingParties(profile.opposingPartyNames || '');
+          setOpposingRelationship(profile.opposingPartyRelationship || '');
+        }
       }
     } catch (error) {
       console.error('Error loading profile:', error);
@@ -182,6 +224,89 @@ export default function ClientIntakePage() {
     });
   };
 
+  const handleConflictCheck = async () => {
+    if (!opposingParties.trim()) {
+      toast({
+        title: 'Missing Information',
+        description: 'Please enter opposing party names to run the conflict check.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setConflictCheckLoading(true);
+
+    try {
+      const { items: allClients } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      
+      const searchTerms = opposingParties.toLowerCase().split(',').map(name => name.trim());
+      const matches: string[] = [];
+      
+      allClients.forEach(client => {
+        const clientFullName = `${client.firstName || ''} ${client.lastName || ''}`.toLowerCase().trim();
+        const clientPreferredName = (client.preferredName || '').toLowerCase().trim();
+        
+        searchTerms.forEach(term => {
+          if (term && (clientFullName.includes(term) || clientPreferredName.includes(term))) {
+            matches.push(`${client.firstName} ${client.lastName}${client.preferredName ? ` (${client.preferredName})` : ''}`);
+          }
+        });
+      });
+
+      const uniqueMatches = [...new Set(matches)];
+      const status = uniqueMatches.length > 0 ? 'needs_verification' : 'passed';
+      const matchesText = uniqueMatches.length > 0 
+        ? `Potential matches found: ${uniqueMatches.join(', ')}` 
+        : 'No conflicts found';
+      
+      const checkDate = new Date().toISOString();
+
+      await BaseCrudService.update<ClientProfiles>('clientprofiles', {
+        _id: clientId,
+        conflictCheckCompleted: true,
+        conflictCheckDate: checkDate,
+        conflictCheckStatus: status,
+        opposingPartyNames: opposingParties,
+        opposingPartyRelationship: opposingRelationship,
+        conflictMatchesFound: matchesText,
+        conflictAcknowledged: false,
+      });
+
+      setConflictCheckResult({
+        status,
+        matches: matchesText,
+        date: checkDate,
+      });
+
+      setFormData(prev => ({
+        ...prev,
+        conflictCheckCompleted: true,
+        conflictCheckDate: checkDate,
+        conflictCheckStatus: status,
+        opposingPartyNames: opposingParties,
+        opposingPartyRelationship: opposingRelationship,
+        conflictMatchesFound: matchesText,
+        conflictAcknowledged: false,
+      }));
+
+      toast({
+        title: 'Conflict Check Complete',
+        description: status === 'passed' 
+          ? 'No conflicts detected.' 
+          : 'Potential conflicts found. Please review and acknowledge.',
+      });
+    } catch (error) {
+      console.error('Error running conflict check:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to run conflict check. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setConflictCheckLoading(false);
+    }
+  };
+
   const validateSection = (sectionIndex: number): boolean => {
     const section = sections[sectionIndex].id;
     
@@ -196,6 +321,8 @@ export default function ClientIntakePage() {
         return !!(formData.emergencyContactName && formData.emergencyContactPhone);
       case 'case':
         return !!(formData.caseType && formData.caseDescription);
+      case 'conflict':
+        return !!(formData.conflictCheckCompleted && formData.conflictAcknowledged);
       case 'availability':
         return formData.preferredDays.length > 0 && formData.preferredTimes.length > 0;
       default:
@@ -364,7 +491,8 @@ export default function ClientIntakePage() {
                     {currentSection === 2 && 'Where do you live?'}
                     {currentSection === 3 && 'Who should we contact in case of emergency?'}
                     {currentSection === 4 && 'Tell us about your legal matter'}
-                    {currentSection === 5 && 'When are you available for appointments?'}
+                    {currentSection === 5 && 'Conflict of Interest Check (LSO Compliance)'}
+                    {currentSection === 6 && 'When are you available for appointments?'}
                   </CardDescription>
                 </div>
               </div>
@@ -734,8 +862,156 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Availability */}
+                  {/* Conflict Check */}
                   {currentSection === 5 && (
+                    <div className="space-y-6">
+                      <div className="bg-pastelbeige/30 border border-foreground/10 rounded-lg p-6">
+                        <div className="flex items-start gap-3 mb-4">
+                          <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                          <div>
+                            <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
+                              Why We Need This
+                            </h3>
+                            <p className="font-paragraph text-sm text-foreground/80">
+                              The Law Society of Ontario requires us to check for conflicts of interest before taking on new clients. 
+                              This ensures we can represent you ethically and without any conflicts. Please provide the names of any 
+                              opposing parties in your legal matter.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {formData.conflictCheckCompleted && conflictCheckResult ? (
+                        <div className="space-y-4">
+                          <div className={`border-2 rounded-lg p-6 ${
+                            conflictCheckResult.status === 'passed' 
+                              ? 'bg-pastelgreen/30 border-pastelgreen' 
+                              : 'bg-pastelpeach/30 border-pastelpeach'
+                          }`}>
+                            <div className="flex items-start gap-3 mb-4">
+                              {conflictCheckResult.status === 'passed' ? (
+                                <CheckCircle className="w-6 h-6 text-green-700 flex-shrink-0" />
+                              ) : (
+                                <AlertTriangle className="w-6 h-6 text-orange-700 flex-shrink-0" />
+                              )}
+                              <div className="flex-1">
+                                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
+                                  {conflictCheckResult.status === 'passed' 
+                                    ? 'No Conflicts Detected' 
+                                    : 'Potential Conflicts Found'}
+                                </h3>
+                                <p className="font-paragraph text-sm text-foreground/80 mb-3">
+                                  {conflictCheckResult.matches}
+                                </p>
+                                <p className="font-paragraph text-xs text-foreground/60">
+                                  Check completed: {new Date(conflictCheckResult.date).toLocaleString()}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-background border border-foreground/10 rounded-lg p-4">
+                            <h4 className="font-heading text-sm font-semibold text-foreground mb-3">
+                              Search Details
+                            </h4>
+                            <div className="space-y-2 text-sm">
+                              <div>
+                                <span className="font-paragraph font-medium text-foreground/70">Opposing Parties:</span>
+                                <p className="font-paragraph text-foreground">{formData.opposingPartyNames}</p>
+                              </div>
+                              {formData.opposingPartyRelationship && (
+                                <div>
+                                  <span className="font-paragraph font-medium text-foreground/70">Relationship:</span>
+                                  <p className="font-paragraph text-foreground">{formData.opposingPartyRelationship}</p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex items-start space-x-3 p-4 bg-pastellavender/20 border border-foreground/10 rounded-lg">
+                            <Checkbox
+                              id="conflictAcknowledged"
+                              checked={formData.conflictAcknowledged}
+                              onCheckedChange={(checked) => handleInputChange('conflictAcknowledged', checked)}
+                              className="mt-1"
+                            />
+                            <Label htmlFor="conflictAcknowledged" className="font-paragraph text-sm cursor-pointer">
+                              <span className="text-destructive">*</span> I acknowledge that I have reviewed the conflict check results 
+                              and understand that {conflictCheckResult.status === 'passed' 
+                                ? 'no conflicts were found' 
+                                : 'potential conflicts were identified and will be reviewed by the paralegal'}. 
+                              I understand this is required for LSO compliance.
+                            </Label>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          <div>
+                            <Label htmlFor="opposingParties" className="font-paragraph">
+                              Opposing Party Names <span className="text-destructive">*</span>
+                            </Label>
+                            <Input
+                              id="opposingParties"
+                              value={opposingParties}
+                              onChange={(e) => setOpposingParties(e.target.value)}
+                              className="mt-1"
+                              placeholder="Enter names separated by commas (e.g., John Smith, Jane Doe)"
+                            />
+                            <p className="font-paragraph text-xs text-foreground/60 mt-1">
+                              Enter all parties opposing you in this legal matter
+                            </p>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="opposingRelationship" className="font-paragraph">
+                              Relationship to Opposing Parties
+                            </Label>
+                            <Select
+                              value={opposingRelationship}
+                              onValueChange={setOpposingRelationship}
+                            >
+                              <SelectTrigger className="mt-1">
+                                <SelectValue placeholder="Select relationship" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Landlord">Landlord</SelectItem>
+                                <SelectItem value="Tenant">Tenant</SelectItem>
+                                <SelectItem value="Employer">Employer</SelectItem>
+                                <SelectItem value="Former Employer">Former Employer</SelectItem>
+                                <SelectItem value="Business Partner">Business Partner</SelectItem>
+                                <SelectItem value="Creditor">Creditor</SelectItem>
+                                <SelectItem value="Debtor">Debtor</SelectItem>
+                                <SelectItem value="Family Member">Family Member</SelectItem>
+                                <SelectItem value="Neighbor">Neighbor</SelectItem>
+                                <SelectItem value="Other Party">Other Party</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <Button
+                            onClick={handleConflictCheck}
+                            disabled={conflictCheckLoading || !opposingParties.trim()}
+                            className="w-full"
+                          >
+                            {conflictCheckLoading ? (
+                              <>
+                                <Search className="w-4 h-4 mr-2 animate-spin" />
+                                Running Conflict Check...
+                              </>
+                            ) : (
+                              <>
+                                <Search className="w-4 h-4 mr-2" />
+                                Run Conflict Check
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Availability */}
+                  {currentSection === 6 && (
                     <div className="space-y-6">
                       <div>
                         <Label className="font-paragraph mb-3 block">

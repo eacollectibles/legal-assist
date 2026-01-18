@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail, MessageSquare, Send, UserPlus, ArrowRight, ArrowLeft, ClipboardList, Printer, X } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail, MessageSquare, Send, UserPlus, ArrowRight, ArrowLeft, ClipboardList, Printer, X, Shield, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
@@ -83,6 +83,13 @@ interface ClientProfile {
   preferredTimes?: string;
   intakeCompleted?: boolean;
   intakeCompletedDate?: Date | string;
+  conflictCheckCompleted?: boolean;
+  conflictCheckDate?: Date | string;
+  conflictCheckStatus?: string;
+  opposingPartyNames?: string;
+  opposingPartyRelationship?: string;
+  conflictMatchesFound?: string;
+  conflictAcknowledged?: boolean;
 }
 
 interface ClientDocument {
@@ -2964,6 +2971,77 @@ export default function ParalegalDashboardPage() {
                         </div>
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* Conflict of Interest Check Section */}
+                {viewingIntakeClient.conflictCheckCompleted && (
+                  <div className="space-y-4">
+                    <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2 flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-primary" />
+                      Conflict of Interest Check (LSO Compliance)
+                    </h3>
+                    <div className={`rounded-lg p-4 border-2 ${
+                      viewingIntakeClient.conflictCheckStatus === 'passed' 
+                        ? 'bg-green-50 border-green-300' 
+                        : 'bg-orange-50 border-orange-300'
+                    }`}>
+                      <div className="flex items-start gap-3 mb-3">
+                        {viewingIntakeClient.conflictCheckStatus === 'passed' ? (
+                          <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0" />
+                        ) : (
+                          <AlertTriangle className="h-6 w-6 text-orange-600 flex-shrink-0" />
+                        )}
+                        <div>
+                          <h4 className="font-heading font-bold text-lg">
+                            {viewingIntakeClient.conflictCheckStatus === 'passed' 
+                              ? 'No Conflicts Detected' 
+                              : 'Potential Conflicts Found - Requires Review'}
+                          </h4>
+                          {viewingIntakeClient.conflictCheckDate && (
+                            <p className="font-paragraph text-sm text-foreground/70">
+                              Check completed: {format(new Date(viewingIntakeClient.conflictCheckDate), 'MMMM d, yyyy \'at\' h:mm a')}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {viewingIntakeClient.conflictAcknowledged !== undefined && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Client Acknowledgment</p>
+                          <p className={`font-paragraph font-semibold ${
+                            viewingIntakeClient.conflictAcknowledged ? 'text-green-600' : 'text-orange-600'
+                          }`}>
+                            {viewingIntakeClient.conflictAcknowledged ? 'Acknowledged ✓' : 'Not Acknowledged'}
+                          </p>
+                        </div>
+                      )}
+                      {viewingIntakeClient.opposingPartyNames && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Opposing Parties Searched</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.opposingPartyNames}
+                          </p>
+                        </div>
+                      )}
+                      {viewingIntakeClient.opposingPartyRelationship && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Relationship Type</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.opposingPartyRelationship}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    {viewingIntakeClient.conflictMatchesFound && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Conflict Check Results</p>
+                        <p className="font-paragraph text-foreground whitespace-pre-wrap bg-gray-50 p-4 rounded-lg">
+                          {viewingIntakeClient.conflictMatchesFound}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 )}
 
