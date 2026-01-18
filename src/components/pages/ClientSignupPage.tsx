@@ -105,6 +105,11 @@ export default function ClientSignupPage() {
         return;
       }
 
+      // Store clientId in sessionStorage for intake form
+      if (result.user?.clientId) {
+        sessionStorage.setItem('clientId', result.user.clientId);
+      }
+
       // Account created successfully and user is authenticated
       setSuccess(true);
       setFormData({

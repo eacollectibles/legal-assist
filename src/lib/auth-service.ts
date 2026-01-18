@@ -90,6 +90,14 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
 
     await BaseCrudService.create('useraccounts', userData);
 
+    // Create matching clientprofiles record
+    await BaseCrudService.create('clientprofiles', {
+      _id: clientId,
+      firstName: credentials.firstName,
+      lastName: credentials.lastName,
+      intakeCompleted: false,
+    });
+
     const { items: verifyUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
     const userExists = verifyUsers?.some(u => u.email === credentials.email);
     

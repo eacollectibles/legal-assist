@@ -121,6 +121,44 @@ export interface ClientProfiles {
   _id: string;
   _createdDate?: Date;
   _updatedDate?: Date;
+  /** @wixFieldType date */
+  courtDeadline?: Date | string;
+  /** @wixFieldType text */
+  preferredTimes?: string;
+  /** @wixFieldType text */
+  preferredDays?: string;
+  /** @wixFieldType text */
+  additionalNotes?: string;
+  /** @wixFieldType boolean */
+  consultedOther?: boolean;
+  /** @wixFieldType text */
+  unitNumber?: string;
+  /** @wixFieldType boolean */
+  hasCourtDocuments?: boolean;
+  /** @wixFieldType text */
+  caseDescription?: string;
+  /** @wixFieldType text */
+  caseType?: string;
+  /** @wixFieldType text */
+  emergencyContactRelationship?: string;
+  /** @wixFieldType text */
+  howHeardAboutUs?: string;
+  /** @wixFieldType text */
+  bestTimeToContact?: string;
+  /** @wixFieldType text */
+  preferredContactMethod?: string;
+  /** @wixFieldType text */
+  alternatePhone?: string;
+  /** @wixFieldType date */
+  dateOfBirth?: Date | string;
+  /** @wixFieldType text */
+  preferredLanguage?: string;
+  /** @wixFieldType text */
+  preferredName?: string;
+  /** @wixFieldType boolean */
+  intakeCompleted?: boolean;
+  /** @wixFieldType datetime */
+  intakeCompletedDate?: Date | string;
   /** @wixFieldType text */
   firstName?: string;
   /** @wixFieldType text */
