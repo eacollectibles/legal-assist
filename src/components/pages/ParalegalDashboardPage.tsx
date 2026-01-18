@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail, MessageSquare, Send, UserPlus, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail, MessageSquare, Send, UserPlus, ArrowRight, ArrowLeft, ClipboardList, Printer, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
@@ -58,6 +58,31 @@ interface ClientProfile {
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;
+  streetAddress?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  unitNumber?: string;
+  dateOfBirth?: Date | string;
+  preferredName?: string;
+  preferredLanguage?: string;
+  alternatePhone?: string;
+  preferredContactMethod?: string;
+  bestTimeToContact?: string;
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  emergencyContactRelationship?: string;
+  howHeardAboutUs?: string;
+  caseType?: string;
+  caseDescription?: string;
+  hasCourtDocuments?: boolean;
+  courtDeadline?: Date | string;
+  consultedOther?: boolean;
+  additionalNotes?: string;
+  preferredDays?: string;
+  preferredTimes?: string;
+  intakeCompleted?: boolean;
+  intakeCompletedDate?: Date | string;
 }
 
 interface ClientDocument {
@@ -146,6 +171,10 @@ export default function ParalegalDashboardPage() {
   const [isSendingMessage, setIsSendingMessage] = useState(false);
   const [messageSearchTerm, setMessageSearchTerm] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Intake viewing states
+  const [viewingIntakeClient, setViewingIntakeClient] = useState<ClientProfile | null>(null);
+  const [isIntakeDialogOpen, setIsIntakeDialogOpen] = useState(false);
 
   // Form states for new appointment
   const [newAppointment, setNewAppointment] = useState({
@@ -983,6 +1012,18 @@ export default function ParalegalDashboardPage() {
       markConversationAsRead(selectedConversation);
     }
   }, [selectedConversation]);
+
+  const handleViewIntake = (clientId: string) => {
+    const client = clients.find(c => c._id === clientId);
+    if (client) {
+      setViewingIntakeClient(client);
+      setIsIntakeDialogOpen(true);
+    }
+  };
+
+  const handlePrintIntake = () => {
+    window.print();
+  };
 
   // Show signature modal if signing a document
   if (signingDocument) {
@@ -1851,14 +1892,25 @@ export default function ParalegalDashboardPage() {
                               {client.firstName} {client.lastName}
                             </span>
                           </div>
-                          <Button
-                            size="lg"
-                            onClick={() => handleSelfAssign(client._id)}
-                            className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
-                          >
-                            <User className="h-5 w-5" />
-                            Assign to Me
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleViewIntake(client._id)}
+                              className="gap-2"
+                            >
+                              <ClipboardList className="h-4 w-4" />
+                              View Intake
+                            </Button>
+                            <Button
+                              size="lg"
+                              onClick={() => handleSelfAssign(client._id)}
+                              className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6"
+                            >
+                              <User className="h-5 w-5" />
+                              Assign to Me
+                            </Button>
+                          </div>
                         </div>
                       ))}
                     {clients.filter(client => !fileAssignments.some(a => a.clientId === client._id)).length === 0 && (
@@ -2639,6 +2691,323 @@ export default function ParalegalDashboardPage() {
                     }}
                   >
                     Cancel
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* View Intake Dialog */}
+        <Dialog open={isIntakeDialogOpen} onOpenChange={setIsIntakeDialogOpen}>
+          <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="font-heading text-2xl flex items-center gap-2">
+                <ClipboardList className="h-6 w-6 text-primary" />
+                Client Intake Form
+              </DialogTitle>
+            </DialogHeader>
+            {viewingIntakeClient && (
+              <div className="space-y-6 py-4 print:py-0" id="intake-form-content">
+                {/* Status Banner */}
+                <div className={`rounded-lg p-4 border-2 ${
+                  viewingIntakeClient.intakeCompleted 
+                    ? 'bg-green-50 border-green-300' 
+                    : 'bg-yellow-50 border-yellow-300'
+                }`}>
+                  <div className="flex items-center gap-3">
+                    {viewingIntakeClient.intakeCompleted ? (
+                      <CheckCircle className="h-6 w-6 text-green-600" />
+                    ) : (
+                      <AlertCircle className="h-6 w-6 text-yellow-600" />
+                    )}
+                    <div>
+                      <h3 className="font-heading font-bold text-lg">
+                        {viewingIntakeClient.intakeCompleted ? 'Intake Completed' : 'Intake Pending'}
+                      </h3>
+                      {viewingIntakeClient.intakeCompletedDate && (
+                        <p className="font-paragraph text-sm text-foreground/80">
+                          Completed on {format(new Date(viewingIntakeClient.intakeCompletedDate), 'MMMM d, yyyy')}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Personal Information Section */}
+                <div className="space-y-4">
+                  <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                    Personal Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p className="font-paragraph text-sm text-foreground/60">Full Name</p>
+                      <p className="font-paragraph font-semibold text-foreground">
+                        {viewingIntakeClient.firstName} {viewingIntakeClient.lastName}
+                      </p>
+                    </div>
+                    {viewingIntakeClient.preferredName && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Preferred Name</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.preferredName}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.dateOfBirth && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Date of Birth</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {format(new Date(viewingIntakeClient.dateOfBirth), 'MMMM d, yyyy')}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.preferredLanguage && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Preferred Language</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.preferredLanguage}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Contact Information Section */}
+                <div className="space-y-4">
+                  <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                    Contact Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {viewingIntakeClient.phoneNumber && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Primary Phone</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.phoneNumber}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.alternatePhone && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Alternate Phone</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.alternatePhone}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.preferredContactMethod && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Preferred Contact Method</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.preferredContactMethod}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.bestTimeToContact && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Best Time to Contact</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.bestTimeToContact}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Address Section */}
+                <div className="space-y-4">
+                  <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                    Address
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {viewingIntakeClient.streetAddress && (
+                      <div className="md:col-span-2">
+                        <p className="font-paragraph text-sm text-foreground/60">Street Address</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.streetAddress}
+                          {viewingIntakeClient.unitNumber && `, Unit ${viewingIntakeClient.unitNumber}`}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.city && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">City</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.city}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.state && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Province/State</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.state}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.zipCode && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Postal/Zip Code</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.zipCode}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Emergency Contact Section */}
+                {(viewingIntakeClient.emergencyContactName || viewingIntakeClient.emergencyContactPhone) && (
+                  <div className="space-y-4">
+                    <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                      Emergency Contact
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {viewingIntakeClient.emergencyContactName && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Name</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.emergencyContactName}
+                          </p>
+                        </div>
+                      )}
+                      {viewingIntakeClient.emergencyContactPhone && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Phone</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.emergencyContactPhone}
+                          </p>
+                        </div>
+                      )}
+                      {viewingIntakeClient.emergencyContactRelationship && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Relationship</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.emergencyContactRelationship}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Case Information Section */}
+                <div className="space-y-4">
+                  <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                    Case Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {viewingIntakeClient.caseType && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Case Type</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.caseType}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.courtDeadline && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Court Deadline</p>
+                        <p className="font-paragraph font-semibold text-foreground text-destructive">
+                          {format(new Date(viewingIntakeClient.courtDeadline), 'MMMM d, yyyy')}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.hasCourtDocuments !== undefined && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Has Court Documents</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.hasCourtDocuments ? 'Yes' : 'No'}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.consultedOther !== undefined && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Consulted Other Legal Services</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.consultedOther ? 'Yes' : 'No'}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  {viewingIntakeClient.caseDescription && (
+                    <div>
+                      <p className="font-paragraph text-sm text-foreground/60">Case Description</p>
+                      <p className="font-paragraph text-foreground whitespace-pre-wrap bg-gray-50 p-4 rounded-lg">
+                        {viewingIntakeClient.caseDescription}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Availability Section */}
+                {(viewingIntakeClient.preferredDays || viewingIntakeClient.preferredTimes) && (
+                  <div className="space-y-4">
+                    <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                      Availability
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {viewingIntakeClient.preferredDays && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Preferred Days</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.preferredDays}
+                          </p>
+                        </div>
+                      )}
+                      {viewingIntakeClient.preferredTimes && (
+                        <div>
+                          <p className="font-paragraph text-sm text-foreground/60">Preferred Times</p>
+                          <p className="font-paragraph font-semibold text-foreground">
+                            {viewingIntakeClient.preferredTimes}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Additional Information Section */}
+                {(viewingIntakeClient.howHeardAboutUs || viewingIntakeClient.additionalNotes) && (
+                  <div className="space-y-4">
+                    <h3 className="font-heading text-xl font-bold text-foreground border-b-2 border-primary pb-2">
+                      Additional Information
+                    </h3>
+                    {viewingIntakeClient.howHeardAboutUs && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">How They Heard About Us</p>
+                        <p className="font-paragraph font-semibold text-foreground">
+                          {viewingIntakeClient.howHeardAboutUs}
+                        </p>
+                      </div>
+                    )}
+                    {viewingIntakeClient.additionalNotes && (
+                      <div>
+                        <p className="font-paragraph text-sm text-foreground/60">Additional Notes</p>
+                        <p className="font-paragraph text-foreground whitespace-pre-wrap bg-gray-50 p-4 rounded-lg">
+                          {viewingIntakeClient.additionalNotes}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4 border-t print:hidden">
+                  <Button
+                    onClick={handlePrintIntake}
+                    className="gap-2 bg-primary hover:bg-primary/90"
+                  >
+                    <Printer className="h-4 w-4" />
+                    Print
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsIntakeDialogOpen(false)}
+                    className="gap-2"
+                  >
+                    <X className="h-4 w-4" />
+                    Close
                   </Button>
                 </div>
               </div>
