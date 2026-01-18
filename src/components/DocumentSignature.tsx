@@ -36,6 +36,32 @@ export default function DocumentSignature({
     fetchIPAddress();
   }, []);
 
+  // Dynamic canvas sizing for better mobile experience
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resizeCanvas = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      
+      // Set internal resolution to match displayed size * device pixel ratio
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      // Scale context to account for device pixel ratio
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.scale(dpr, dpr);
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    return () => window.removeEventListener('resize', resizeCanvas);
+  }, []);
+
   const fetchIPAddress = async () => {
     try {
       // Try to get IP from a public API
@@ -53,14 +79,25 @@ export default function DocumentSignature({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Prevent page scrolling during touch events
+    if ('touches' in e) {
+      e.preventDefault();
+    }
+
     try {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       setIsDrawing(true);
       const rect = canvas.getBoundingClientRect();
-      const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-      const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+      
+      // Get raw coordinates
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      
+      // Calculate coordinates relative to canvas display
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
 
       ctx.beginPath();
       ctx.moveTo(x, y);
@@ -75,13 +112,24 @@ export default function DocumentSignature({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Prevent page scrolling during touch events
+    if ('touches' in e) {
+      e.preventDefault();
+    }
+
     try {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       const rect = canvas.getBoundingClientRect();
-      const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
-      const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+      
+      // Get raw coordinates
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      
+      // Calculate coordinates relative to canvas display
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
 
       ctx.lineTo(x, y);
       ctx.strokeStyle = '#000000';
@@ -207,7 +255,8 @@ export default function DocumentSignature({
               ref={canvasRef}
               width={700}
               height={200}
-              className="w-full touch-none cursor-crosshair"
+              style={{ touchAction: 'none' }}
+              className="w-full cursor-crosshair"
               onMouseDown={startDrawing}
               onMouseMove={draw}
               onMouseUp={stopDrawing}
