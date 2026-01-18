@@ -710,49 +710,34 @@ export default function ClientIntakePage() {
                           {/* BLOCKED - CONFLICT FOUND */}
                           {formData.conflictCheckStatus === 'blocked' && (
                             <>
+                              {/* Status Header */}
                               <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center">
-                                  <XCircle className="w-7 h-7 text-white" />
+                                <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">
+                                  <AlertTriangle className="w-7 h-7 text-white" />
                                 </div>
                                 <div>
-                                  <h4 className="font-heading font-bold text-xl text-red-800">POTENTIAL CONFLICT DETECTED</h4>
-                                  <p className="text-sm text-red-700">Online registration is not available</p>
+                                  <h4 className="font-heading font-bold text-xl text-amber-800">POTENTIAL CONFLICT DETECTED</h4>
+                                  <p className="text-sm text-amber-700">Additional review required before proceeding</p>
                                 </div>
                               </div>
 
-                              {/* Matches Found */}
-                              <div className="bg-white/70 rounded-lg p-4 mb-4">
-                                <p className="text-sm font-medium text-red-800 mb-3">The following matches were found in our records:</p>
-                                <div className="space-y-2">
-                                  {formData.conflictMatchesFound && JSON.parse(formData.conflictMatchesFound).map((match: any, i: number) => (
-                                    <div key={i} className="bg-red-100 rounded p-3 text-sm flex items-start gap-2">
-                                      <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
-                                      <div>
-                                        <span className="font-medium">"{match.matchedAgainst}"</span>
-                                        <span className="text-red-700"> found in {match.matchedIn}</span>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-
-                              {/* Explanation */}
-                              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                              {/* Simple Explanation - NO DETAILS */}
+                              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
                                 <p className="text-sm text-amber-800">
-                                  <strong>What does this mean?</strong> Our records contain information that may indicate 
-                                  a conflict of interest. This does not necessarily mean we cannot assist you, but it 
-                                  requires a manual review by our office before we can proceed.
+                                  Potential matching records exist in our system. To ensure compliance with the Law Society 
+                                  of Ontario's conflict of interest rules, we are unable to proceed with online registration 
+                                  at this time.
                                 </p>
                               </div>
 
-                              {/* Call to Action - Schedule Callback */}
-                              <div className="bg-primary/10 border-2 border-primary rounded-lg p-6 text-center">
+                              {/* Schedule Callback */}
+                              <div className="bg-primary/10 border-2 border-primary rounded-lg p-6 text-center mb-6">
                                 <h4 className="font-heading font-bold text-lg text-foreground mb-2">
-                                  Please Contact Our Office
+                                  Schedule a Callback
                                 </h4>
                                 <p className="font-paragraph text-sm text-foreground/80 mb-4">
-                                  To proceed with your matter, please schedule a callback with our team. 
-                                  We will review the potential conflict and discuss your options.
+                                  Please contact our office to discuss your matter. We will review the situation and 
+                                  advise you on next steps.
                                 </p>
                                 <a 
                                   href="/contact" 
@@ -766,10 +751,66 @@ export default function ClientIntakePage() {
                                 </p>
                               </div>
 
-                              {/* Notice */}
-                              <p className="text-xs text-center text-foreground/60 mt-4">
-                                This conflict check has been recorded. Your information has been saved and our team 
-                                may contact you regarding this matter.
+                              {/* Referral Resources - Required by LSO */}
+                              <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
+                                <h5 className="font-heading font-semibold text-foreground mb-3">
+                                  Alternative Legal Resources
+                                </h5>
+                                <p className="text-sm text-foreground/70 mb-4">
+                                  If we are unable to assist you, the following resources can help you find alternative representation:
+                                </p>
+                                
+                                <div className="space-y-3 text-sm">
+                                  <div className="flex items-start gap-3">
+                                    <ExternalLink className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <a 
+                                        href="https://lso.ca/public-resources/finding-a-lawyer-or-paralegal/law-society-referral-service"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-medium text-primary hover:underline"
+                                      >
+                                        Law Society of Ontario Referral Service
+                                      </a>
+                                      <p className="text-foreground/60">Free 30-minute consultation — 1-800-268-8326</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-start gap-3">
+                                    <ExternalLink className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <a 
+                                        href="https://www.legalaid.on.ca/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-medium text-primary hover:underline"
+                                      >
+                                        Legal Aid Ontario
+                                      </a>
+                                      <p className="text-foreground/60">Free legal help if you qualify — 1-800-668-8258</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-start gap-3">
+                                    <ExternalLink className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <a 
+                                        href="https://www.legalaid.on.ca/legal-clinics/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-medium text-primary hover:underline"
+                                      >
+                                        Community Legal Clinics
+                                      </a>
+                                      <p className="text-foreground/60">Free services for eligible individuals in your area</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Footer Notice */}
+                              <p className="text-xs text-center text-foreground/50 mt-4">
+                                This check has been recorded as required by the Law Society of Ontario.
                               </p>
                             </>
                           )}
