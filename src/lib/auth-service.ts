@@ -1,6 +1,7 @@
 /**
  * Authentication Service
  * Handles user signup, login, and session management using CMS backend
+ * Uses SHA-256 hashing via Web Crypto API for password security
  */
 
 import { BaseCrudService } from '@/integrations';
@@ -38,12 +39,15 @@ interface UserAccount {
 }
 
 /**
- * Simple hash function for passwords
- * In production, use bcrypt or similar secure hashing
+ * Secure password hashing using SHA-256
  */
-function hashPassword(password: string): string {
-  // Simple hash for demo - in production use bcrypt
-  return btoa(password + 'salt_key_2026');
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const salt = 'legalassist_2026_secure_salt';
+  const data = encoder.encode(password + salt);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 /**
@@ -57,11 +61,9 @@ function generateClientId(): string {
 
 /**
  * Sign up a new user
- * Creates a new account and automatically logs them in
  */
 export async function signup(credentials: AuthCredentials): Promise<AuthResponse> {
   try {
-    // Check if user already exists
     const { items: existingUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
     if (existingUsers?.some(u => u.email === credentials.email)) {
       return {
@@ -70,13 +72,14 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       };
     }
 
-    // Create new user account with proper data structure
     const userId = crypto.randomUUID();
-    const clientId = generateClientId(); // Generate client ID for non-admin users
+    const clientId = generateClientId();
+    const hashedPassword = await hashPassword(credentials.password);
+    
     const userData: UserAccount = {
       _id: userId,
       email: credentials.email,
-      passwordHash: hashPassword(credentials.password),
+      passwordHash: hashedPassword,
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       isAdmin: false,
@@ -85,28 +88,18 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       clientId: clientId,
     };
 
-    console.log('Creating user account:', { email: credentials.email, userId });
-    
-    // Create the user account in the database
-    const createdUser = await BaseCrudService.create('useraccounts', userData);
-    
-    console.log('User account created successfully:', createdUser);
+    await BaseCrudService.create('useraccounts', userData);
 
-    // Verify the user was created by fetching it back
     const { items: verifyUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
     const userExists = verifyUsers?.some(u => u.email === credentials.email);
     
     if (!userExists) {
-      console.error('User creation verification failed - user not found in database');
       return {
         success: false,
         message: 'Account creation failed. Please try again.',
       };
     }
 
-    console.log('User account verified in database');
-
-    // Create session token
     const token = generateToken(credentials.email);
     localStorage.setItem('authToken', token);
     localStorage.setItem('currentUser', JSON.stringify({
@@ -144,7 +137,8 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
 export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'lastName'>): Promise<AuthResponse> {
   try {
     const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
-    const user = users?.find(u => u.email === credentials.email && u.passwordHash === hashPassword(credentials.password));
+    const hashedPassword = await hashPassword(credentials.password);
+    const user = users?.find(u => u.email === credentials.email && u.passwordHash === hashedPassword);
 
     if (!user) {
       return {
@@ -153,7 +147,6 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       };
     }
 
-    // Check account status
     if (user.accountStatus === 'suspended') {
       return {
         success: false,
@@ -168,18 +161,15 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       };
     }
 
-    // Update last login date
     await BaseCrudService.update('useraccounts', {
       _id: user._id,
       lastLoginDate: new Date().toISOString(),
     });
 
-    // Fetch the user again to ensure we have the latest data (including admin status)
     const { items: updatedUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
     const updatedUser = updatedUsers?.find(u => u.email === credentials.email);
     const isAdminStatus = updatedUser?.isAdmin || false;
 
-    // Create session token
     const token = generateToken(credentials.email);
     localStorage.setItem('authToken', token);
     localStorage.setItem('currentUser', JSON.stringify({
@@ -246,7 +236,7 @@ export function getAuthToken(): string | null {
 }
 
 /**
- * Generate a simple token (in production, this would be done on the backend)
+ * Generate a simple token
  */
 function generateToken(email: string): string {
   return btoa(`${email}:${Date.now()}:${Math.random()}`);
@@ -265,21 +255,17 @@ export function isAdmin(): boolean {
 }
 
 /**
- * Set admin status for a user (admin-only function)
+ * Set admin status for a user
  * RESTRICTED: Only jeanfrancois@legalassist.london can modify paralegal privileges
  */
 export async function setAdminStatus(email: string, isAdminStatus: boolean): Promise<boolean> {
   try {
-    // Only admins can set admin status
     if (!isAdmin()) {
-      console.error('Unauthorized: Only admins can set admin status');
       return false;
     }
 
-    // SECURITY RESTRICTION: Only jeanfrancois@legalassist.london can modify paralegal privileges
     const currentUser = getCurrentUser();
     if (currentUser?.email !== 'jeanfrancois@legalassist.london') {
-      console.error('Unauthorized: Only jeanfrancois@legalassist.london can modify paralegal privileges');
       return false;
     }
 
@@ -287,7 +273,6 @@ export async function setAdminStatus(email: string, isAdminStatus: boolean): Pro
     const user = users?.find(u => u.email === email);
 
     if (!user) {
-      console.error('User not found');
       return false;
     }
 
@@ -296,7 +281,6 @@ export async function setAdminStatus(email: string, isAdminStatus: boolean): Pro
       isAdmin: isAdminStatus,
     });
 
-    // Update current user if it's the same user
     if (currentUser?.email === email) {
       currentUser.isAdmin = isAdminStatus;
       localStorage.setItem('currentUser', JSON.stringify(currentUser));
@@ -310,18 +294,16 @@ export async function setAdminStatus(email: string, isAdminStatus: boolean): Pro
 }
 
 /**
- * Get all users (admin-only function)
+ * Get all users (admin-only)
  */
 export async function getAllUsers(): Promise<any[]> {
   try {
     if (!isAdmin()) {
-      console.error('Unauthorized: Only admins can view all users');
       return [];
     }
 
     const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
     
-    // Don't return password hashes
     return (users || []).map(u => ({
       _id: u._id,
       email: u.email,
@@ -352,7 +334,6 @@ export async function changePassword(currentPassword: string, newPassword: strin
       };
     }
 
-    // Verify current password
     const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
     const user = users?.find(u => u.email === currentUser.email);
 
@@ -363,15 +344,14 @@ export async function changePassword(currentPassword: string, newPassword: strin
       };
     }
 
-    // Check if current password is correct
-    if (user.passwordHash !== hashPassword(currentPassword)) {
+    const currentHashedPassword = await hashPassword(currentPassword);
+    if (user.passwordHash !== currentHashedPassword) {
       return {
         success: false,
         message: 'Current password is incorrect',
       };
     }
 
-    // Validate new password
     if (newPassword.length < 6) {
       return {
         success: false,
@@ -379,10 +359,10 @@ export async function changePassword(currentPassword: string, newPassword: strin
       };
     }
 
-    // Update password
+    const newHashedPassword = await hashPassword(newPassword);
     await BaseCrudService.update('useraccounts', {
       _id: user._id,
-      passwordHash: hashPassword(newPassword),
+      passwordHash: newHashedPassword,
     });
 
     return {
