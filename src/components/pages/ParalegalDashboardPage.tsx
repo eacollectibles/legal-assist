@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail, MessageSquare, Send } from 'lucide-react';
+import { Calendar, Clock, User, FileText, Plus, AlertCircle, Search, Filter, Share2, History, Download, Eye, CheckCircle, Trash2, FileSignature, Mail, MessageSquare, Send, UserPlus, ArrowRight, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
@@ -109,6 +109,11 @@ export default function ParalegalDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAddAppointmentOpen, setIsAddAppointmentOpen] = useState(false);
   const [isAddAssignmentOpen, setIsAddAssignmentOpen] = useState(false);
+  const [isAddClientOpen, setIsAddClientOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isCreatingClient, setIsCreatingClient] = useState(false);
+  const [clientCreationSuccess, setClientCreationSuccess] = useState(false);
+  const [newClientId, setNewClientId] = useState<string | null>(null);
 
   // Document management states
   const [searchTerm, setSearchTerm] = useState('');
@@ -164,6 +169,30 @@ export default function ParalegalDashboardPage() {
     caseType: '',
     notes: ''
   });
+
+  // Form states for new client
+  const [newClient, setNewClient] = useState({
+    // User Account Info
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    // Client Profile Info
+    streetAddress: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    emergencyContactName: '',
+    emergencyContactPhone: '',
+    // Case/Matter Info
+    caseType: '',
+    fileStatus: 'Active',
+    initialNotes: ''
+  });
+
+  // Validation errors
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   // Current paralegal ID (in real app, get from auth context)
   const [currentParalegalId, setCurrentParalegalId] = useState<string>('');
@@ -275,6 +304,157 @@ export default function ParalegalDashboardPage() {
     } catch (error) {
       console.error('Error adding assignment:', error);
     }
+  };
+
+  const validateClientForm = (step: number): boolean => {
+    const errors: Record<string, string> = {};
+
+    if (step === 1) {
+      if (!newClient.firstName.trim()) errors.firstName = 'First name is required';
+      if (!newClient.lastName.trim()) errors.lastName = 'Last name is required';
+      if (!newClient.email.trim()) {
+        errors.email = 'Email is required';
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newClient.email)) {
+        errors.email = 'Invalid email format';
+      }
+      if (!newClient.phoneNumber.trim()) errors.phoneNumber = 'Phone number is required';
+      if (!newClient.password.trim()) {
+        errors.password = 'Password is required';
+      } else if (newClient.password.length < 6) {
+        errors.password = 'Password must be at least 6 characters';
+      }
+    } else if (step === 2) {
+      if (!newClient.streetAddress.trim()) errors.streetAddress = 'Street address is required';
+      if (!newClient.city.trim()) errors.city = 'City is required';
+      if (!newClient.state.trim()) errors.state = 'Province/State is required';
+      if (!newClient.zipCode.trim()) errors.zipCode = 'Postal/Zip code is required';
+    } else if (step === 3) {
+      if (!newClient.caseType.trim()) errors.caseType = 'Case type is required';
+      if (!newClient.fileStatus.trim()) errors.fileStatus = 'File status is required';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleNextStep = () => {
+    if (validateClientForm(currentStep)) {
+      setCurrentStep(prev => prev + 1);
+    }
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep(prev => prev - 1);
+    setValidationErrors({});
+  };
+
+  const handleAddClient = async () => {
+    if (!validateClientForm(3)) return;
+
+    setIsCreatingClient(true);
+    try {
+      // Create User Account
+      const userAccountId = crypto.randomUUID();
+      await BaseCrudService.create('useraccounts', {
+        _id: userAccountId,
+        clientId: userAccountId,
+        email: newClient.email,
+        passwordHash: newClient.password, // In production, this should be hashed
+        firstName: newClient.firstName,
+        lastName: newClient.lastName,
+        isAdmin: false,
+        accountStatus: 'Active',
+        lastLoginDate: new Date().toISOString()
+      });
+
+      // Create Client Profile
+      await BaseCrudService.create('clientprofiles', {
+        _id: userAccountId,
+        firstName: newClient.firstName,
+        lastName: newClient.lastName,
+        streetAddress: newClient.streetAddress,
+        city: newClient.city,
+        state: newClient.state,
+        zipCode: newClient.zipCode,
+        phoneNumber: newClient.phoneNumber,
+        emergencyContactName: newClient.emergencyContactName,
+        emergencyContactPhone: newClient.emergencyContactPhone
+      });
+
+      // Create File Assignment
+      await BaseCrudService.create('fileassignments', {
+        _id: crypto.randomUUID(),
+        clientId: userAccountId,
+        paralegalId: currentParalegalId,
+        assignedDate: new Date().toISOString(),
+        assignedBy: currentParalegalId,
+        fileStatus: newClient.fileStatus,
+        caseType: newClient.caseType,
+        notes: newClient.initialNotes
+      });
+
+      // Create Activity Log
+      await BaseCrudService.create('activitylogs', {
+        _id: crypto.randomUUID(),
+        userId: userAccountId,
+        activityType: 'client_created',
+        activityDescription: `New client "${newClient.firstName} ${newClient.lastName}" created with case type: ${newClient.caseType}`,
+        performedBy: 'paralegal@legalservices.com',
+        performedByName: paralegals.find(p => p._id === currentParalegalId)
+          ? `${paralegals.find(p => p._id === currentParalegalId)?.firstName || ''} ${paralegals.find(p => p._id === currentParalegalId)?.lastName || ''}`.trim()
+          : 'Paralegal',
+        timestamp: new Date().toISOString(),
+        relatedItemId: userAccountId
+      });
+
+      setNewClientId(userAccountId);
+      setClientCreationSuccess(true);
+      loadData();
+    } catch (error) {
+      console.error('Error creating client:', error);
+      alert('Failed to create client. Please try again.');
+    } finally {
+      setIsCreatingClient(false);
+    }
+  };
+
+  const resetClientForm = () => {
+    setNewClient({
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      emergencyContactName: '',
+      emergencyContactPhone: '',
+      caseType: '',
+      fileStatus: 'Active',
+      initialNotes: ''
+    });
+    setCurrentStep(1);
+    setValidationErrors({});
+    setClientCreationSuccess(false);
+    setNewClientId(null);
+    setIsAddClientOpen(false);
+  };
+
+  const handleEmailCredentials = () => {
+    // In production, this would send an email with login credentials
+    alert(`Email credentials functionality would send login details to ${newClient.email}`);
+  };
+
+  const handleStartNewDocument = () => {
+    resetClientForm();
+    navigate('/document-workflow');
+  };
+
+  const handleScheduleAppointment = () => {
+    resetClientForm();
+    setIsAddAppointmentOpen(true);
   };
 
   const handleSelfAssign = async (clientId: string) => {
@@ -1135,14 +1315,424 @@ export default function ParalegalDashboardPage() {
               <h2 className="font-heading text-3xl font-bold text-foreground">
                 File Assignments
               </h2>
-              <Dialog open={isAddAssignmentOpen} onOpenChange={setIsAddAssignmentOpen}>
-                <DialogTrigger asChild>
-                  <Button className="gap-2">
-                    <Plus className="h-4 w-4" />
-                    Assign File
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
+              <div className="flex gap-2">
+                <Dialog open={isAddClientOpen} onOpenChange={(open) => {
+                  if (!open) resetClientForm();
+                  setIsAddClientOpen(open);
+                }}>
+                  <DialogTrigger asChild>
+                    <Button className="gap-2 bg-primary hover:bg-primary/90">
+                      <UserPlus className="h-4 w-4" />
+                      New Client
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="font-heading text-2xl">
+                        {clientCreationSuccess ? 'Client Created Successfully!' : 'Add New Client'}
+                      </DialogTitle>
+                    </DialogHeader>
+
+                    {clientCreationSuccess ? (
+                      <div className="space-y-6 py-6">
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+                          <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+                          <h3 className="font-heading text-xl font-bold text-green-900 mb-2">
+                            Client Account Created!
+                          </h3>
+                          <p className="font-paragraph text-green-800 mb-4">
+                            {newClient.firstName} {newClient.lastName} has been successfully added to the system.
+                          </p>
+                          <div className="bg-white rounded-lg p-4 text-left space-y-2">
+                            <p className="font-paragraph text-sm">
+                              <strong>Email:</strong> {newClient.email}
+                            </p>
+                            <p className="font-paragraph text-sm">
+                              <strong>Case Type:</strong> {newClient.caseType}
+                            </p>
+                            <p className="font-paragraph text-sm">
+                              <strong>Status:</strong> {newClient.fileStatus}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <p className="font-paragraph text-foreground/80 text-center">
+                            What would you like to do next?
+                          </p>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <Button
+                              onClick={handleEmailCredentials}
+                              variant="outline"
+                              className="gap-2 h-auto py-4 flex-col"
+                            >
+                              <Mail className="h-6 w-6 text-primary" />
+                              <span className="font-paragraph font-semibold">Email Login Credentials</span>
+                              <span className="text-xs text-foreground/60">Send welcome email</span>
+                            </Button>
+                            <Button
+                              onClick={handleStartNewDocument}
+                              variant="outline"
+                              className="gap-2 h-auto py-4 flex-col"
+                            >
+                              <FileText className="h-6 w-6 text-primary" />
+                              <span className="font-paragraph font-semibold">Start New Document</span>
+                              <span className="text-xs text-foreground/60">Generate documents</span>
+                            </Button>
+                            <Button
+                              onClick={handleScheduleAppointment}
+                              variant="outline"
+                              className="gap-2 h-auto py-4 flex-col"
+                            >
+                              <Calendar className="h-6 w-6 text-primary" />
+                              <span className="font-paragraph font-semibold">Schedule Appointment</span>
+                              <span className="text-xs text-foreground/60">Book a meeting</span>
+                            </Button>
+                          </div>
+                          <Button
+                            onClick={resetClientForm}
+                            className="w-full bg-primary hover:bg-primary/90"
+                          >
+                            Done
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-6 py-4">
+                        {/* Step Indicator */}
+                        <div className="flex items-center justify-center gap-2 mb-6">
+                          {[1, 2, 3].map((step) => (
+                            <div key={step} className="flex items-center">
+                              <div
+                                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                                  currentStep === step
+                                    ? 'bg-primary text-white'
+                                    : currentStep > step
+                                    ? 'bg-green-500 text-white'
+                                    : 'bg-gray-200 text-gray-500'
+                                }`}
+                              >
+                                {currentStep > step ? <CheckCircle className="w-5 h-5" /> : step}
+                              </div>
+                              {step < 3 && (
+                                <div
+                                  className={`w-16 h-1 ${
+                                    currentStep > step ? 'bg-green-500' : 'bg-gray-200'
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="text-center mb-4">
+                          <h3 className="font-heading text-lg font-bold text-foreground">
+                            {currentStep === 1 && 'Step 1: Client Account Information'}
+                            {currentStep === 2 && 'Step 2: Client Profile Details'}
+                            {currentStep === 3 && 'Step 3: Case/Matter Information'}
+                          </h3>
+                        </div>
+
+                        {/* Step 1: Account Info */}
+                        {currentStep === 1 && (
+                          <div className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="firstName">
+                                  First Name <span className="text-destructive">*</span>
+                                </Label>
+                                <Input
+                                  id="firstName"
+                                  value={newClient.firstName}
+                                  onChange={(e) => setNewClient({ ...newClient, firstName: e.target.value })}
+                                  placeholder="John"
+                                  className={validationErrors.firstName ? 'border-destructive' : ''}
+                                />
+                                {validationErrors.firstName && (
+                                  <p className="text-xs text-destructive">{validationErrors.firstName}</p>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="lastName">
+                                  Last Name <span className="text-destructive">*</span>
+                                </Label>
+                                <Input
+                                  id="lastName"
+                                  value={newClient.lastName}
+                                  onChange={(e) => setNewClient({ ...newClient, lastName: e.target.value })}
+                                  placeholder="Doe"
+                                  className={validationErrors.lastName ? 'border-destructive' : ''}
+                                />
+                                {validationErrors.lastName && (
+                                  <p className="text-xs text-destructive">{validationErrors.lastName}</p>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="email">
+                                Email <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="email"
+                                type="email"
+                                value={newClient.email}
+                                onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
+                                placeholder="john.doe@example.com"
+                                className={validationErrors.email ? 'border-destructive' : ''}
+                              />
+                              {validationErrors.email && (
+                                <p className="text-xs text-destructive">{validationErrors.email}</p>
+                              )}
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="phoneNumber">
+                                Phone Number <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="phoneNumber"
+                                type="tel"
+                                value={newClient.phoneNumber}
+                                onChange={(e) => setNewClient({ ...newClient, phoneNumber: e.target.value })}
+                                placeholder="(555) 123-4567"
+                                className={validationErrors.phoneNumber ? 'border-destructive' : ''}
+                              />
+                              {validationErrors.phoneNumber && (
+                                <p className="text-xs text-destructive">{validationErrors.phoneNumber}</p>
+                              )}
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="password">
+                                Password <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="password"
+                                type="password"
+                                value={newClient.password}
+                                onChange={(e) => setNewClient({ ...newClient, password: e.target.value })}
+                                placeholder="Minimum 6 characters"
+                                className={validationErrors.password ? 'border-destructive' : ''}
+                              />
+                              {validationErrors.password && (
+                                <p className="text-xs text-destructive">{validationErrors.password}</p>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Step 2: Profile Info */}
+                        {currentStep === 2 && (
+                          <div className="space-y-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="streetAddress">
+                                Street Address <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="streetAddress"
+                                value={newClient.streetAddress}
+                                onChange={(e) => setNewClient({ ...newClient, streetAddress: e.target.value })}
+                                placeholder="123 Main Street"
+                                className={validationErrors.streetAddress ? 'border-destructive' : ''}
+                              />
+                              {validationErrors.streetAddress && (
+                                <p className="text-xs text-destructive">{validationErrors.streetAddress}</p>
+                              )}
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="city">
+                                  City <span className="text-destructive">*</span>
+                                </Label>
+                                <Input
+                                  id="city"
+                                  value={newClient.city}
+                                  onChange={(e) => setNewClient({ ...newClient, city: e.target.value })}
+                                  placeholder="Toronto"
+                                  className={validationErrors.city ? 'border-destructive' : ''}
+                                />
+                                {validationErrors.city && (
+                                  <p className="text-xs text-destructive">{validationErrors.city}</p>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="state">
+                                  Province/State <span className="text-destructive">*</span>
+                                </Label>
+                                <Input
+                                  id="state"
+                                  value={newClient.state}
+                                  onChange={(e) => setNewClient({ ...newClient, state: e.target.value })}
+                                  placeholder="Ontario"
+                                  className={validationErrors.state ? 'border-destructive' : ''}
+                                />
+                                {validationErrors.state && (
+                                  <p className="text-xs text-destructive">{validationErrors.state}</p>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="zipCode">
+                                Postal/Zip Code <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="zipCode"
+                                value={newClient.zipCode}
+                                onChange={(e) => setNewClient({ ...newClient, zipCode: e.target.value })}
+                                placeholder="M5H 2N2"
+                                className={validationErrors.zipCode ? 'border-destructive' : ''}
+                              />
+                              {validationErrors.zipCode && (
+                                <p className="text-xs text-destructive">{validationErrors.zipCode}</p>
+                              )}
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="emergencyContactName">Emergency Contact Name</Label>
+                              <Input
+                                id="emergencyContactName"
+                                value={newClient.emergencyContactName}
+                                onChange={(e) => setNewClient({ ...newClient, emergencyContactName: e.target.value })}
+                                placeholder="Jane Doe"
+                              />
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="emergencyContactPhone">Emergency Contact Phone</Label>
+                              <Input
+                                id="emergencyContactPhone"
+                                type="tel"
+                                value={newClient.emergencyContactPhone}
+                                onChange={(e) => setNewClient({ ...newClient, emergencyContactPhone: e.target.value })}
+                                placeholder="(555) 987-6543"
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Step 3: Case Info */}
+                        {currentStep === 3 && (
+                          <div className="space-y-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="caseType">
+                                Case Type <span className="text-destructive">*</span>
+                              </Label>
+                              <Select
+                                value={newClient.caseType}
+                                onValueChange={(value) => setNewClient({ ...newClient, caseType: value })}
+                              >
+                                <SelectTrigger className={validationErrors.caseType ? 'border-destructive' : ''}>
+                                  <SelectValue placeholder="Select case type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Small Claims Court">Small Claims Court</SelectItem>
+                                  <SelectItem value="Landlord and Tenant Board">Landlord and Tenant Board</SelectItem>
+                                  <SelectItem value="Human Rights Tribunal">Human Rights Tribunal</SelectItem>
+                                  <SelectItem value="Traffic Tickets">Traffic Tickets</SelectItem>
+                                  <SelectItem value="Criminal Matters">Criminal Matters</SelectItem>
+                                  <SelectItem value="Bail Hearings">Bail Hearings</SelectItem>
+                                  <SelectItem value="Employment Issues">Employment Issues</SelectItem>
+                                  <SelectItem value="Social Benefits Tribunal">Social Benefits Tribunal</SelectItem>
+                                  <SelectItem value="Mediation Services">Mediation Services</SelectItem>
+                                  <SelectItem value="Notary Public">Notary Public</SelectItem>
+                                  <SelectItem value="Commissioner of Oaths">Commissioner of Oaths</SelectItem>
+                                  <SelectItem value="Other">Other</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              {validationErrors.caseType && (
+                                <p className="text-xs text-destructive">{validationErrors.caseType}</p>
+                              )}
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="fileStatus">
+                                File Status <span className="text-destructive">*</span>
+                              </Label>
+                              <Select
+                                value={newClient.fileStatus}
+                                onValueChange={(value) => setNewClient({ ...newClient, fileStatus: value })}
+                              >
+                                <SelectTrigger className={validationErrors.fileStatus ? 'border-destructive' : ''}>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Active">Active</SelectItem>
+                                  <SelectItem value="Pending">Pending</SelectItem>
+                                  <SelectItem value="On Hold">On Hold</SelectItem>
+                                  <SelectItem value="Closed">Closed</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              {validationErrors.fileStatus && (
+                                <p className="text-xs text-destructive">{validationErrors.fileStatus}</p>
+                              )}
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="initialNotes">Initial Notes</Label>
+                              <Textarea
+                                id="initialNotes"
+                                value={newClient.initialNotes}
+                                onChange={(e) => setNewClient({ ...newClient, initialNotes: e.target.value })}
+                                placeholder="Add any initial notes about this case..."
+                                rows={4}
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Navigation Buttons */}
+                        <div className="flex justify-between pt-4 border-t">
+                          <Button
+                            variant="outline"
+                            onClick={handlePrevStep}
+                            disabled={currentStep === 1}
+                            className="gap-2"
+                          >
+                            <ArrowLeft className="h-4 w-4" />
+                            Previous
+                          </Button>
+
+                          {currentStep < 3 ? (
+                            <Button onClick={handleNextStep} className="gap-2 bg-primary hover:bg-primary/90">
+                              Next
+                              <ArrowRight className="h-4 w-4" />
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={handleAddClient}
+                              disabled={isCreatingClient}
+                              className="gap-2 bg-primary hover:bg-primary/90"
+                            >
+                              {isCreatingClient ? (
+                                <>
+                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                  Creating...
+                                </>
+                              ) : (
+                                <>
+                                  <CheckCircle className="h-4 w-4" />
+                                  Create Client
+                                </>
+                              )}
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={isAddAssignmentOpen} onOpenChange={setIsAddAssignmentOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="gap-2" variant="outline">
+                      <Plus className="h-4 w-4" />
+                      Assign File
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl">
                   <DialogHeader>
                     <DialogTitle>Assign File to Paralegal</DialogTitle>
                   </DialogHeader>
@@ -1232,6 +1822,7 @@ export default function ParalegalDashboardPage() {
                   </div>
                 </DialogContent>
               </Dialog>
+              </div>
             </div>
 
             {/* Unassigned Clients Section - Highlighted */}
