@@ -140,11 +140,12 @@ export default function HomePage() {
   const [showStickyBar, setShowStickyBar] = useState(true);
   const ctaSectionRef = useRef<HTMLElement>(null);
 
-  // Banner data
+  // Banner data with responsive image URLs
   const banners = [
     {
       id: 1,
-      image: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg',
+      image: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.jpeg',
+      imageMobile: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.jpeg',
       headline: 'Stopped by Police? Got a Traffic Ticket?',
       subheadline: 'Know your rights. Get professional representation.',
       cta: 'Get Legal Help',
@@ -153,7 +154,8 @@ export default function HomePage() {
     },
     {
       id: 2,
-      image: 'https://static.wixstatic.com/media/99571b_a29b6a3478fc4352b2eb8627773f2dd2~mv2.png',
+      image: 'https://static.wixstatic.com/media/99571b_a29b6a3478fc4352b2eb8627773f2dd2~mv2.png/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.png',
+      imageMobile: 'https://static.wixstatic.com/media/99571b_a29b6a3478fc4352b2eb8627773f2dd2~mv2.png/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.png',
       headline: 'Having a Bad Day?',
       subheadline: 'We might be able to help.',
       cta: 'Call Us Now',
@@ -162,7 +164,8 @@ export default function HomePage() {
     },
     {
       id: 4,
-      image: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png?originWidth=1600&originHeight=896',
+      image: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.png',
+      imageMobile: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.png',
       headline: 'Facing Eviction?',
       subheadline: 'Know your rights. We can help.',
       cta: 'Get Help Now',
@@ -171,7 +174,8 @@ export default function HomePage() {
     },
     {
       id: 5,
-      image: 'https://static.wixstatic.com/media/99571b_ede5f50259b44614b9cd2d2d4731928e~mv2.jpeg',
+      image: 'https://static.wixstatic.com/media/99571b_ede5f50259b44614b9cd2d2d4731928e~mv2.jpeg/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.jpeg',
+      imageMobile: 'https://static.wixstatic.com/media/99571b_ede5f50259b44614b9cd2d2d4731928e~mv2.jpeg/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.jpeg',
       headline: 'Owed Money?',
       subheadline: "Let us help you recover what's yours.",
       cta: 'Learn More',
@@ -291,15 +295,20 @@ export default function HomePage() {
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {/* Background Image */}
+            {/* Background Image with Responsive Sources */}
             <div className="absolute inset-0">
-              <Image 
-                src={banner.image}
-                alt={`${banner.headline} - Legal services banner`}
-                className="w-full h-full object-cover object-center"
-                style={{ objectPosition: 'center 35%' }}
-                width={1920}
-              />
+              <picture>
+                <source media="(min-width: 768px)" srcSet={banner.image} />
+                <source media="(max-width: 767px)" srcSet={banner.imageMobile} />
+                <Image 
+                  src={banner.image}
+                  alt={`${banner.headline} - Legal services banner`}
+                  className="w-full h-full object-cover object-center"
+                  style={{ objectPosition: 'center 35%' }}
+                  width={1920}
+                  height={600}
+                />
+              </picture>
             </div>
             
             {/* Dark Overlay */}
@@ -515,10 +524,12 @@ export default function HomePage() {
                 style={{ transform: 'translateY(calc(var(--scroll-progress) * 50px))' }}
               >
                 <Image 
-                  src="https://static.wixstatic.com/media/99571b_9954538ec5b24b4a8a245180de229f4b~mv2.png?originWidth=1152&originHeight=640"
+                  src="https://static.wixstatic.com/media/99571b_9954538ec5b24b4a8a245180de229f4b~mv2.png/v1/fill/w_1200,h_800,al_c,q_85,enc_auto/services.png"
                   alt="Legal consultation in progress"
                   className="w-full h-full object-cover opacity-80"
                   width={1200}
+                  height={800}
+                  loading="lazy"
                 />
               </div>
             </ParallaxContainer>
