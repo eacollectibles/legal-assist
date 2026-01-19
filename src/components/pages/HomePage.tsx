@@ -141,7 +141,7 @@ export default function HomePage() {
     },
     {
       id: 2,
-      image: 'https://static.wixstatic.com/media/99571b_006e3da88c3b4373b435301628ed965b~mv2.png?originWidth=1600&originHeight=896',
+      image: 'https://static.wixstatic.com/media/99571b_a29b6a3478fc4352b2eb8627773f2dd2~mv2.png',
       headline: 'Having a Bad Day?',
       subheadline: 'We might be able to help.',
       cta: 'Call Us Now',
