@@ -1,7 +1,7 @@
 // HPI 1.6-V
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown } from 'lucide-react';
+import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -125,6 +125,57 @@ const ParallaxContainer = ({ children, className }: { children: React.ReactNode;
 // --- Main Page Component ---
 
 export default function HomePage() {
+  // State for rotating banner
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Banner data
+  const banners = [
+    {
+      id: 1,
+      image: 'https://static.wixstatic.com/media/99571b_006e3da88c3b4373b435301628ed965b~mv2.png?originWidth=1600&originHeight=896',
+      headline: 'Having a Bad Day?',
+      subheadline: 'We might be able to help.',
+      cta: 'Call Us Now',
+      ctaLink: '/contact',
+      overlay: 'dark',
+    },
+    {
+      id: 2,
+      image: 'https://static.wixstatic.com/media/99571b_3591359ed7e94df8a53e94121ca62d5d~mv2.png?originWidth=1600&originHeight=896',
+      headline: 'Got a Traffic Ticket?',
+      subheadline: "Don't just pay it. Fight it.",
+      cta: 'Free Consultation',
+      ctaLink: '/booking',
+      overlay: 'dark',
+    },
+    {
+      id: 3,
+      image: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png?originWidth=1600&originHeight=896',
+      headline: 'Facing Eviction?',
+      subheadline: 'Know your rights. We can help.',
+      cta: 'Get Help Now',
+      ctaLink: '/services/landlord-tenant-board',
+      overlay: 'dark',
+    },
+    {
+      id: 4,
+      image: 'https://static.wixstatic.com/media/99571b_96ec297692ff4a7880c8fc9d1a6fd5d4~mv2.png?originWidth=1600&originHeight=896',
+      headline: 'Owed Money?',
+      subheadline: "Let us help you recover what's yours.",
+      cta: 'Learn More',
+      ctaLink: '/services/small-claims',
+      overlay: 'dark',
+    },
+  ];
+
+  // Auto-rotate every 7 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % banners.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [banners.length]);
+
   // Canonical Data Sources (Preserved from original)
   const features = [
     {
@@ -184,66 +235,85 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
-      {/* HERO SECTION */}
-      {/* Design Motif: Full-bleed image with overlapping, asymmetrical content card. 
-          Inspiration: Cassadi image structure. */}
-      <section className="relative w-full min-h-[90vh] flex flex-col justify-end pb-0 lg:pb-20 overflow-hidden">
-        {/* Parallax Background Image */}
-        <ParallaxContainer className="absolute inset-0 z-0">
-          <div 
-            className="w-full h-[120%] absolute top-0 left-0"
-            style={{ transform: 'translateY(calc(var(--scroll-progress) * 100px))' }}
+      
+      {/* ROTATING HERO BANNERS */}
+      <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
+        {/* Slides */}
+        {banners.map((banner, index) => (
+          <div
+            key={banner.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
           >
-            <Image 
-              src="https://static.wixstatic.com/media/99571b_116291d834424659a3dd7ba8988f92f3~mv2.png?originWidth=1920&originHeight=1024"
-              alt="Professional paralegal team in modern office, diverse lawyers and paralegals providing trusted legal consultation"
-              className="w-full h-full object-cover"
-              width={1920}
-            />
-            {/* Enhanced Dark Overlay for Better Text Contrast */}
-            <div className="absolute inset-0 bg-gradient-to-r from-secondary/60 via-secondary/50 to-secondary/40" />
-            <div className="absolute inset-0 bg-secondary/20" />
-          </div>
-        </ParallaxContainer>
-
-        {/* Content Overlay - Asymmetrical Placement */}
-        <div className="relative z-10 w-full max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 pointer-events-none">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <Image 
+                src={banner.image}
+                alt={`${banner.headline} - Legal services banner`}
+                className="w-full h-full object-cover"
+                width={1920}
+              />
+            </div>
             
-            {/* Main Headline Area */}
-            <div className="lg:col-span-8 lg:col-start-1 pb-12 lg:pb-24">
-               <AnimatedElement animation="fade-up" delay={200}>
-                <h1 className="font-heading text-6xl md:text-7xl lg:text-8xl text-white drop-shadow-lg leading-[0.9] tracking-tight mb-6">
-                  Accessible Legal <br/>
-                  <span className="text-pastelbeige italic">Solutions</span> for Everyone
-                </h1>
-              </AnimatedElement>
-            </div>
-
-            {/* Floating Content Card - Overlapping the image bottom */}
-            <div className="lg:col-span-5 lg:col-start-8 pointer-events-auto">
-              <AnimatedElement animation="fade-up" delay={500}>
-                <div className="bg-background p-8 md:p-12 shadow-2xl border-t-4 border-primary relative overflow-hidden group">
-                  {/* Decorative background element */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-pastelbeige/30 rounded-bl-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150" />
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/50" />
+            
+            {/* Content */}
+            <div className="relative z-10 h-full flex items-center">
+              <div className="max-w-[100rem] mx-auto px-4 md:px-8 w-full">
+                <div className="max-w-2xl">
+                  <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                    {banner.headline}
+                  </h1>
+                  <p className="font-paragraph text-xl md:text-2xl text-white/90 mb-8">
+                    {banner.subheadline}
+                  </p>
                   
-                  <p className="font-paragraph text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed relative z-10">{"Paralegal representation for individuals and small businesses across Ontario. We are accepting new clients."}</p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 relative z-10">
-                    <Link 
-                      to="/contact"
-                      className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground font-paragraph px-8 py-4 text-lg transition-all hover:bg-primary/90 hover:gap-4 group/btn"
-                    >
-                      Get Started
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
-                    </Link>
-                  </div>
+                  <Link
+                    to={banner.ctaLink}
+                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
+                  >
+                    {banner.cta}
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
                 </div>
-              </AnimatedElement>
+              </div>
             </div>
           </div>
+        ))}
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {banners.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === currentSlide ? 'bg-white' : 'bg-white/40'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
+
+        {/* Arrow Navigation */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length)}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-colors"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % banners.length)}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-colors"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
       </section>
+
       {/* EDITORIAL INTRO SECTION */}
       {/* Layout: Sticky side note with scrolling content */}
       <section className="py-24 lg:py-32 bg-pastelbeige/30 relative">
