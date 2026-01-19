@@ -260,7 +260,8 @@ export default function HomePage() {
               <Image 
                 src={banner.image}
                 alt={`${banner.headline} - Legal services banner`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
+                style={{ objectPosition: 'center 35%' }}
                 width={1920}
               />
             </div>
