@@ -67,6 +67,10 @@ export default function Footer() {
               <strong className="text-secondary-foreground/90">Disclaimer:</strong> This website provides general information about paralegal services and is not intended to constitute legal advice. The information contained on this website should not be relied upon as legal advice and does not create or imply a paralegal-client relationship. Contacting LegalAssist through this website, submitting an online form, or sending an email does not establish a paralegal-client relationship unless and until a written retainer agreement is executed. No confidentiality or privilege attaches to information submitted through this website prior to the formal establishment of a paralegal-client relationship. LegalAssist is operated by a Licensed Paralegal regulated by the Law Society of Ontario. For advice specific to your legal situation, please contact us to schedule a consultation.
             </p>
           </div>
+          <p className="text-xs text-foreground/50 mt-4 text-center">
+            Images on this website are for illustrative purposes only. All persons depicted are models 
+            or AI-generated and do not represent actual clients, cases, or outcomes.
+          </p>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
             © 2026 LegalAssist Paralegal Services. Operated by XXXXX XXXXX, Licensed Paralegal (Law Society of Ontario), Licence No. [LSO Licence #]. All rights reserved.
           </p>
