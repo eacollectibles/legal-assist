@@ -36,8 +36,8 @@ export default function HumanRightsTribunalPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_8eeb6e0cb3ea4bb783f3c8570051be7d~mv2.png?id=human-rights-hero"
-                alt="Human Rights Tribunal of Ontario"
+                src="https://static.wixstatic.com/media/99571b_dd992a5cea8d480083edf1f581620340~mv2.png?id=human-rights-hero"
+                alt="Human Rights Tribunal of Ontario hearing room with Canadian flag and Ontario coat of arms"
                 width={600}
                 height={400}
                 className="w-full h-auto"

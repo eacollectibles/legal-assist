@@ -36,8 +36,8 @@ export default function TrafficTicketsPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_0dccbb591a504451bfaf96024f5b2b24~mv2.png?id=traffic-tickets-hero"
-                alt="Traffic Tickets Defense"
+                src="https://static.wixstatic.com/media/99571b_6548a66107d74dd58e4c9db1af6e49bf~mv2.png?id=traffic-tickets-hero"
+                alt="Ontario traffic court with Canadian flag and Ontario Court of Justice signage"
                 width={600}
                 height={400}
                 className="w-full h-auto"

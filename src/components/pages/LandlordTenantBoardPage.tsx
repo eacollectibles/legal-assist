@@ -36,8 +36,8 @@ export default function LandlordTenantBoardPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_2ed4aa7fa2d2489cadb2a57634e4da85~mv2.png?id=landlord-tenant-hero"
-                alt="Landlord and Tenant Board"
+                src="https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=landlord-tenant-hero"
+                alt="Ontario Landlord and Tenant Board hearing room with Canadian flag"
                 width={600}
                 height={400}
                 className="w-full h-auto"

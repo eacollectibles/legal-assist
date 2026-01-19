@@ -36,8 +36,8 @@ export default function SmallClaimsPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_550f67d8225c4defa23bfe4f0a39d9aa~mv2.png?id=small-claims-hero"
-                alt="Small Claims Court"
+                src="https://static.wixstatic.com/media/99571b_4477a5a9ef4f48cc8e3416990393a421~mv2.png?id=small-claims-hero"
+                alt="Canadian Small Claims Court in Ontario with Canadian flag and coat of arms"
                 width={600}
                 height={400}
                 className="w-full h-auto"

@@ -28,7 +28,7 @@ const services: Service[] = [
     tribunal: 'Small Claims Court',
     shortDescription: 'Professional representation for civil disputes up to $50,000 in Ontario.',
     icon: <Scale className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_550f67d8225c4defa23bfe4f0a39d9aa~mv2.png?id=small-claims-court',
+    image: 'https://static.wixstatic.com/media/99571b_4477a5a9ef4f48cc8e3416990393a421~mv2.png?id=small-claims-court',
     learnMore: `Small Claims Court is designed for straightforward civil disputes involving amounts up to $50,000. Our licensed paralegals have extensive experience representing clients in these proceedings, helping you navigate the process from initial claim to judgment.
 
 Whether you're pursuing a debt recovery, property damage claim, or contract dispute, we provide comprehensive representation including:
@@ -57,7 +57,7 @@ We understand that small claims disputes can be stressful and time-consuming. Ou
     tribunal: 'Landlord and Tenant Board (LTB)',
     shortDescription: 'Expert representation for residential tenancy disputes and eviction proceedings.',
     icon: <Home className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_2ed4aa7fa2d2489cadb2a57634e4da85~mv2.png?id=landlord-tenant-board',
+    image: 'https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=landlord-tenant-board',
     learnMore: `The Landlord and Tenant Board (LTB) handles disputes between landlords and tenants in Ontario. Whether you're facing eviction, dealing with maintenance issues, or disputing rent increases, our paralegals provide skilled representation.
 
 We represent both landlords and tenants in matters including:
@@ -87,7 +87,7 @@ Our team understands the Residential Tenancies Act and LTB procedures thoroughly
     tribunal: 'Human Rights Tribunal of Ontario (HRTO)',
     shortDescription: 'Advocacy for discrimination and human rights violations in employment, housing, and services.',
     icon: <Users className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_8eeb6e0cb3ea4bb783f3c8570051be7d~mv2.png?id=human-rights-tribunal',
+    image: 'https://static.wixstatic.com/media/99571b_dd992a5cea8d480083edf1f581620340~mv2.png?id=human-rights-tribunal',
     learnMore: `The Human Rights Tribunal of Ontario (HRTO) addresses complaints of discrimination based on protected grounds including race, gender, disability, age, and more. These matters are serious and require experienced representation.
 
 We handle complaints involving:
@@ -117,7 +117,7 @@ Our paralegals work with you to build a strong case, gather evidence, and presen
     tribunal: 'Ontario Court of Justice',
     shortDescription: 'Defense representation for traffic violations, speeding, and driving-related offences.',
     icon: <AlertCircle className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_0dccbb591a504451bfaf96024f5b2b24~mv2.png?id=traffic-tickets',
+    image: 'https://static.wixstatic.com/media/99571b_6548a66107d74dd58e4c9db1af6e49bf~mv2.png?id=traffic-tickets',
     learnMore: `Traffic violations can result in fines, demerit points, and increased insurance premiums. Our paralegals provide skilled defense representation to help minimize these consequences.
 
 We defend against charges including:
