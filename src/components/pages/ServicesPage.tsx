@@ -336,38 +336,31 @@ We understand the emotional impact of being defamed and work to help you hold th
     id: 'employment-issues',
     name: 'Employment Issues',
     tribunal: 'Small Claims Court / Employment Standards Act',
-    shortDescription: 'Expert guidance on employment disputes including wrongful dismissal, constructive dismissal, severance reviews, and workplace rights violations.',
+    shortDescription: 'Representation for employment disputes within paralegal scope, including wrongful dismissal claims up to $50,000, severance reviews, and Employment Standards Act complaints.',
     icon: <Briefcase className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_9954538ec5b24b4a8a245180de229f4b~mv2.png?id=employment-issues',
-    learnMore: `Employment disputes can be complex and stressful. Whether you've been wrongfully dismissed, face constructive dismissal, need a severance package reviewed, or believe your workplace rights have been violated, our licensed paralegals provide expert guidance and support.
+    learnMore: `Employment disputes can be complex and stressful. Our licensed paralegals provide representation for employment matters that fall within the paralegal scope of practice, including Small Claims Court proceedings and pre-litigation support.
 
-We assist with a wide range of employment issues:
+We assist with employment issues including:
 
-• Wrongful Dismissal: Representation for employees terminated without just cause or proper notice
-• Constructive Dismissal: Guidance when working conditions become intolerable, forcing resignation
-• Severance Package Review: Expert analysis of severance offers to ensure fair compensation
-• Termination Without Cause: Negotiation of severance and benefits following job loss
-• Notice and Pay in Lieu: Ensuring compliance with Employment Standards Act requirements
-• Unpaid Wages and Overtime: Recovery of unpaid compensation and overtime pay
-• Workplace Rights Violations: Guidance on violations of employment standards and workplace laws
-• Human Rights Violations in Employment: Discrimination, harassment, and retaliation claims
-• Wrongful Termination Due to Illness or Disability: Protection against disability-based dismissal
-• Breach of Employment Contract: Enforcement of contractual rights and remedies
-• Workplace Harassment and Bullying: Documentation and response strategies
-• Retaliation Claims: Protection against retaliation for reporting violations or exercising rights
+- Wrongful Dismissal Claims: Representation in Small Claims Court for claims up to $50,000
+- Severance Package Review: Analysis of severance offers to help you understand your entitlements
+- Termination Without Cause: Negotiation of severance and benefits following job loss
+- Unpaid Wages and Overtime: Recovery of unpaid compensation through Small Claims Court or Ministry of Labour complaints
+- Employment Standards Act Complaints: Assistance with Ministry of Labour claims for unpaid wages, vacation pay, and other statutory entitlements
+- Pre-Litigation Support: Demand letters, negotiation, and settlement discussions before court proceedings
 
-Our paralegals understand Ontario's Employment Standards Act and common law employment principles. We work to protect your rights, negotiate fair settlements, and pursue claims through appropriate channels.`,
+IMPORTANT SCOPE LIMITATIONS: Paralegals can represent clients in Small Claims Court for employment-related monetary claims up to $50,000. For claims exceeding $50,000, complex wrongful dismissal matters in Superior Court, or matters involving significant legal complexity (such as constructive dismissal with multiple issues), you will need to retain a lawyer. We can provide a referral if your matter falls outside our scope.`,
     keyPoints: [
-      'Wrongful dismissal analysis',
+      'Small Claims Court representation (up to $50,000)',
       'Severance package review and negotiation',
-      'Constructive dismissal guidance',
-      'Employment Standards Act compliance',
-      'Workplace rights protection',
-      'Human rights violation support'
+      'Employment Standards Act complaints',
+      'Pre-litigation support and demand letters',
+      'Ministry of Labour complaint assistance'
     ],
-    costInfo: 'Hourly rates $150-250/hour or flat fees for specific services. Free initial consultation to assess your employment situation.',
+    costInfo: 'Hourly rates $150-250/hour or flat fees for specific services. Free initial consultation to assess your employment situation and confirm it falls within paralegal scope.',
     timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Small Claims Court proceedings (if necessary): 3-6 months.',
-    eligibility: 'Available to employees and employers in Ontario dealing with employment disputes, termination issues, or workplace rights violations. Paralegal representation available for Small Claims Court matters up to $50,000.'
+    eligibility: 'Available to employees in Ontario with employment disputes within paralegal scope of practice. Claims must fall within Small Claims Court jurisdiction (up to $50,000) for court representation. We will advise if your matter requires a lawyer.'
   }
 ];
 
