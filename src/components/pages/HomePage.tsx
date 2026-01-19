@@ -247,7 +247,7 @@ export default function HomePage() {
   ];
 
   useEffect(() => {
-    document.title = 'LegalAssist - Paralegal Services';
+    document.title = 'LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON';
   }, []);
 
   // Intersection Observer to hide sticky bar when CTA section is visible

@@ -3,7 +3,7 @@ export const Head = () => {
     <>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="description" content="Professional legal services provided by licensed paralegals across Ontario. Affordable, accessible legal representation for family law, real estate, employment, and more." />
+      <meta name="description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
       <meta name="keywords" content="legal services Ontario, paralegal services, affordable legal help, professional representation, family law, real estate law, employment law" />
       <meta name="author" content="LegalAssist" />
       <meta name="robots" content="index, follow" />
@@ -11,14 +11,16 @@ export const Head = () => {
       
       {/* Open Graph Tags for Social Sharing */}
       <meta property="og:type" content="website" />
-      <meta property="og:title" content="Professional Legal Services in Ontario | LegalAssist" />
-      <meta property="og:description" content="Licensed paralegals providing affordable, professional legal representation across Ontario." />
+      <meta property="og:title" content="LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON" />
+      <meta property="og:description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
       <meta property="og:site_name" content="LegalAssist" />
+      <meta property="og:url" content="https://www.legalassist.ca" />
+      <meta property="og:locale" content="en_CA" />
       
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Professional Legal Services in Ontario | LegalAssist" />
-      <meta name="twitter:description" content="Licensed paralegals providing affordable, professional legal representation across Ontario." />
+      <meta name="twitter:title" content="LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON" />
+      <meta name="twitter:description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
       
       {/* Additional SEO Tags */}
       <meta name="theme-color" content="#B94A1F" />
