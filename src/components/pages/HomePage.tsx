@@ -149,15 +149,6 @@ export default function HomePage() {
       overlay: 'dark',
     },
     {
-      id: 3,
-      image: 'https://static.wixstatic.com/media/99571b_3591359ed7e94df8a53e94121ca62d5d~mv2.png?originWidth=1600&originHeight=896',
-      headline: 'Got a Traffic Ticket?',
-      subheadline: "Don't just pay it. Fight it.",
-      cta: 'Free Consultation',
-      ctaLink: '/booking',
-      overlay: 'dark',
-    },
-    {
       id: 4,
       image: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png?originWidth=1600&originHeight=896',
       headline: 'Facing Eviction?',
