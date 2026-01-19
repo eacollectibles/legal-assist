@@ -307,6 +307,7 @@ export default function HomePage() {
                   style={{ objectPosition: 'center 35%' }}
                   width={1920}
                   height={600}
+                  loading={index === 0 ? "eager" : "lazy"}
                 />
               </picture>
             </div>
