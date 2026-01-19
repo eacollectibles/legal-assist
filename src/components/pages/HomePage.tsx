@@ -6,6 +6,12 @@ import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 // --- Utility Components for Motion & Interaction ---
 
@@ -532,6 +538,75 @@ export default function HomePage() {
 
         </div>
       </section>
+
+      {/* FAQ SECTION */}
+      <section className="py-24 lg:py-32 bg-pastellavender relative overflow-hidden">
+        <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl mx-auto">
+            <AnimatedElement>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-secondary mb-4 text-center">
+                Frequently Asked Questions
+              </h2>
+            </AnimatedElement>
+
+            <AnimatedElement delay={100}>
+              <p className="font-paragraph text-lg text-foreground/70 text-center mb-16">
+                Get answers to common questions about paralegal services in Ontario
+              </p>
+            </AnimatedElement>
+
+            <AnimatedElement delay={200}>
+              <Accordion type="single" collapsible className="w-full space-y-4">
+                <AccordionItem value="item-1" className="bg-white/50 backdrop-blur-sm rounded-lg px-6 border-none">
+                  <AccordionTrigger className="font-heading text-xl text-secondary hover:text-primary hover:no-underline py-6">
+                    What can a paralegal represent me for in Ontario?
+                  </AccordionTrigger>
+                  <AccordionContent className="font-paragraph text-base text-foreground/80 leading-relaxed pb-6">
+                    Licensed paralegals in Ontario can represent clients in Small Claims Court (claims up to $35,000), Provincial Offences Court (traffic tickets, bylaw violations), Landlord and Tenant Board matters, certain tribunal proceedings (HRTO, LAT), and summary conviction offences where the maximum penalty is up to 2 years less a day.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2" className="bg-white/50 backdrop-blur-sm rounded-lg px-6 border-none">
+                  <AccordionTrigger className="font-heading text-xl text-secondary hover:text-primary hover:no-underline py-6">
+                    How much do paralegal services cost?
+                  </AccordionTrigger>
+                  <AccordionContent className="font-paragraph text-base text-foreground/80 leading-relaxed pb-6">
+                    Our rates range from $150-250/hour depending on the complexity of your matter. We also offer flat-fee packages for common services like traffic ticket defence and simple Small Claims Court matters. Your initial 30-minute consultation is free.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3" className="bg-white/50 backdrop-blur-sm rounded-lg px-6 border-none">
+                  <AccordionTrigger className="font-heading text-xl text-secondary hover:text-primary hover:no-underline py-6">
+                    Do I need a lawyer or a paralegal?
+                  </AccordionTrigger>
+                  <AccordionContent className="font-paragraph text-base text-foreground/80 leading-relaxed pb-6">
+                    If your matter falls within the paralegal scope of practice (Small Claims Court, traffic tickets, landlord-tenant disputes, minor criminal charges), a licensed paralegal can provide the same quality representation at a lower cost. For matters outside this scope (family law, criminal indictable offences, real estate), you would need a lawyer.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-4" className="bg-white/50 backdrop-blur-sm rounded-lg px-6 border-none">
+                  <AccordionTrigger className="font-heading text-xl text-secondary hover:text-primary hover:no-underline py-6">
+                    What areas do you serve?
+                  </AccordionTrigger>
+                  <AccordionContent className="font-paragraph text-base text-foreground/80 leading-relaxed pb-6">
+                    We serve clients throughout Ontario with a primary focus on London and Southwestern Ontario. Many matters can be handled remotely through virtual consultations and electronic filings.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-5" className="bg-white/50 backdrop-blur-sm rounded-lg px-6 border-none">
+                  <AccordionTrigger className="font-heading text-xl text-secondary hover:text-primary hover:no-underline py-6">
+                    How long will my case take?
+                  </AccordionTrigger>
+                  <AccordionContent className="font-paragraph text-base text-foreground/80 leading-relaxed pb-6">
+                    Timelines vary by matter type. Traffic tickets typically resolve in 2-6 months. Small Claims Court matters can take 6-12 months. Landlord and Tenant Board hearings are usually scheduled within 1-3 months. We'll provide a realistic timeline estimate during your free consultation.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </AnimatedElement>
+          </div>
+        </div>
+      </section>
+
       {/* CTA SECTION */}
       <section id="contact" className="py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
         {/* Decorative Background Elements */}
