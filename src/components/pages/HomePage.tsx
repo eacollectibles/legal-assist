@@ -601,7 +601,7 @@ export default function HomePage() {
                     What can a paralegal represent me for in Ontario?
                   </AccordionTrigger>
                   <AccordionContent className="font-paragraph text-base text-foreground/80 leading-relaxed pb-6">
-                    Licensed paralegals in Ontario can represent clients in Small Claims Court (claims up to $35,000), Provincial Offences Court (traffic tickets, bylaw violations), Landlord and Tenant Board matters, certain tribunal proceedings (HRTO, LAT), and summary conviction offences where the maximum penalty is up to 2 years less a day.
+                    Licensed paralegals in Ontario can represent clients in Small Claims Court (claims up to $50,000), Provincial Offences Court (traffic tickets, bylaw violations), Landlord and Tenant Board matters, certain tribunal proceedings (HRTO, LAT), and summary conviction offences where the maximum penalty is up to 2 years less a day.
                   </AccordionContent>
                 </AccordionItem>
 
