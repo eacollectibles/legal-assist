@@ -132,6 +132,15 @@ export default function HomePage() {
   const banners = [
     {
       id: 1,
+      image: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg',
+      headline: 'Stopped by Police?',
+      subheadline: 'Know your rights. Get professional representation.',
+      cta: 'Get Legal Help',
+      ctaLink: '/services/traffic-tickets',
+      overlay: 'dark',
+    },
+    {
+      id: 2,
       image: 'https://static.wixstatic.com/media/99571b_006e3da88c3b4373b435301628ed965b~mv2.png?originWidth=1600&originHeight=896',
       headline: 'Having a Bad Day?',
       subheadline: 'We might be able to help.',
@@ -140,7 +149,7 @@ export default function HomePage() {
       overlay: 'dark',
     },
     {
-      id: 2,
+      id: 3,
       image: 'https://static.wixstatic.com/media/99571b_3591359ed7e94df8a53e94121ca62d5d~mv2.png?originWidth=1600&originHeight=896',
       headline: 'Got a Traffic Ticket?',
       subheadline: "Don't just pay it. Fight it.",
@@ -149,7 +158,7 @@ export default function HomePage() {
       overlay: 'dark',
     },
     {
-      id: 3,
+      id: 4,
       image: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png?originWidth=1600&originHeight=896',
       headline: 'Facing Eviction?',
       subheadline: 'Know your rights. We can help.',
@@ -158,7 +167,7 @@ export default function HomePage() {
       overlay: 'dark',
     },
     {
-      id: 4,
+      id: 5,
       image: 'https://static.wixstatic.com/media/99571b_96ec297692ff4a7880c8fc9d1a6fd5d4~mv2.png?originWidth=1600&originHeight=896',
       headline: 'Owed Money?',
       subheadline: "Let us help you recover what's yours.",
