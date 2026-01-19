@@ -88,25 +88,28 @@ export default function MediationServicesPage() {
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
               <div className="flex gap-4 mb-4">
                 <Users className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <h3 className="font-heading text-xl font-bold text-foreground">Family Mediation</h3>
+                <h3 className="font-heading text-xl font-bold text-foreground">Workplace & Employment Mediation</h3>
               </div>
               <p className="font-paragraph text-foreground/80 mb-4">
-                Mediation for family disputes including separation, divorce, custody arrangements, child support, spousal support, and property division. We help families navigate these sensitive matters with dignity and respect.
+                Mediation for workplace disputes including employment termination discussions, severance negotiations, workplace harassment complaints, and employer-employee conflicts within the paralegal scope of practice.
               </p>
               <ul className="space-y-2">
                 <li className="flex gap-2">
                   <span className="text-primary font-bold">•</span>
-                  <span className="font-paragraph text-sm text-foreground/70">Separation and divorce agreements</span>
+                  <span className="font-paragraph text-sm text-foreground/70">Termination and severance discussions</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-primary font-bold">•</span>
-                  <span className="font-paragraph text-sm text-foreground/70">Custody and access arrangements</span>
+                  <span className="font-paragraph text-sm text-foreground/70">Workplace conflict resolution</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-primary font-bold">•</span>
-                  <span className="font-paragraph text-sm text-foreground/70">Support calculations and modifications</span>
+                  <span className="font-paragraph text-sm text-foreground/70">Employment Standards Act disputes</span>
                 </li>
               </ul>
+              <p className="font-paragraph text-xs text-foreground/60 mt-4 italic">
+                Note: For family law matters (divorce, custody, support), please consult a family lawyer or Family Legal Services Provider.
+              </p>
             </div>
 
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
