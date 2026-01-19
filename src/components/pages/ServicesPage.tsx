@@ -147,21 +147,23 @@ Our approach includes reviewing evidence, identifying procedural issues, negotia
     id: 'mediation',
     name: 'Mediation Services',
     tribunal: 'Mediation & Dispute Resolution',
-    shortDescription: 'Professional mediation to resolve disputes collaboratively and cost-effectively.',
+    shortDescription: 'Professional mediation to resolve disputes collaboratively and cost-effectively within paralegal scope of practice.',
     icon: <Handshake className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_45e4ddef1b79494a92d7e0856a1601a0~mv2.png?id=mediation-services',
     learnMore: `Mediation is a voluntary, confidential process where a neutral third party helps disputing parties communicate effectively and reach a mutually acceptable resolution. Unlike litigation, mediation empowers the parties to control the outcome.
 
-We offer mediation for:
+We offer mediation for matters within paralegal scope:
 
-• Family disputes (separation, divorce, custody)
 • Commercial and business conflicts
 • Civil disputes (property, landlord-tenant)
-• Community and interpersonal conflicts
 • Employment and workplace disputes
 • Contract and payment disagreements
+• Community and interpersonal conflicts
+• Small Claims Court settlement conferences
 
-Our certified mediators create a safe, neutral environment where both parties can express their concerns and work toward creative solutions. Mediation typically costs 50-70% less than litigation and resolves in weeks or months rather than years.`,
+Our mediators create a safe, neutral environment where both parties can express their concerns and work toward creative solutions. Mediation typically costs 50-70% less than litigation and resolves in weeks or months rather than years.
+
+Note: For family law mediation (divorce, custody, support), please consult a family lawyer or certified family mediator. Paralegal scope of practice does not include family law matters unless the paralegal holds a Family Legal Services Provider (FLSP) license.`,
     keyPoints: [
       'Cost-effective dispute resolution',
       'Faster resolution than litigation',
@@ -171,7 +173,7 @@ Our certified mediators create a safe, neutral environment where both parties ca
     ],
     costInfo: 'Hourly rates $150-250/hour, typically split between parties. Flat fees available for straightforward mediations.',
     timeline: 'Most mediations complete within 4-12 weeks, compared to years for court proceedings.',
-    eligibility: 'Available for any dispute where both parties are willing to participate in good faith negotiation.'
+    eligibility: 'Available for civil, commercial, employment, and community disputes where both parties are willing to participate. Family law mediation requires a family lawyer or FLSP-licensed paralegal.'
   },
   {
     id: 'criminal-matters',
