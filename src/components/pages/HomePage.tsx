@@ -232,6 +232,10 @@ export default function HomePage() {
     }
   ];
 
+  useEffect(() => {
+    document.title = 'LegalAssist - Paralegal Services';
+  }, []);
+
   return (
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
