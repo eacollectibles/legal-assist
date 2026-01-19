@@ -5,6 +5,7 @@ import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown, Chevr
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import StickyContactBar from '@/components/StickyContactBar';
 import { cn } from '@/lib/utils';
 import {
   Accordion,
@@ -134,6 +135,10 @@ export default function HomePage() {
   // State for rotating banner
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  
+  // State for sticky contact bar visibility
+  const [showStickyBar, setShowStickyBar] = useState(true);
+  const ctaSectionRef = useRef<HTMLElement>(null);
 
   // Banner data
   const banners = [
@@ -243,6 +248,29 @@ export default function HomePage() {
 
   useEffect(() => {
     document.title = 'LegalAssist - Paralegal Services';
+  }, []);
+
+  // Intersection Observer to hide sticky bar when CTA section is visible
+  useEffect(() => {
+    const ctaSection = ctaSectionRef.current;
+    if (!ctaSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Hide sticky bar when CTA section is visible
+        setShowStickyBar(!entry.isIntersecting);
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of CTA section is visible
+        rootMargin: '0px 0px -100px 0px', // Offset from bottom
+      }
+    );
+
+    observer.observe(ctaSection);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -608,7 +636,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section id="contact" className="py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
+      <section ref={ctaSectionRef} id="contact" className="py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">{/* ... keep existing code (decorative background elements and content) */}
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -645,6 +673,7 @@ export default function HomePage() {
         </div>
       </section>
       <Footer />
+      <StickyContactBar isVisible={showStickyBar} />
     </div>
   );
 }
