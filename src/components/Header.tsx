@@ -23,9 +23,9 @@ export default function Header() {
             <div className="w-9 sm:w-10 h-9 sm:h-10 bg-primary rounded-sm flex items-center justify-center">
               <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">LA</span>
             </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-heading text-xl sm:text-2xl text-secondary font-bold leading-tight">LegalAssist</span>
-              <span className="font-paragraph text-xs sm:text-sm text-secondary/60 font-normal leading-tight">Paralegal Services</span>
+            <div className="flex flex-col">
+              <span className="font-heading text-lg sm:text-2xl text-secondary font-bold leading-tight">LegalAssist</span>
+              <span className="font-paragraph text-[10px] sm:text-sm text-secondary/60 font-normal leading-tight">Paralegal Services</span>
             </div>
           </Link>
           
