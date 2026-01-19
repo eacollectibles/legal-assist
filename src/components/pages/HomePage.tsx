@@ -127,6 +127,7 @@ const ParallaxContainer = ({ children, className }: { children: React.ReactNode;
 export default function HomePage() {
   // State for rotating banner
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Banner data
   const banners = [
@@ -168,13 +169,15 @@ export default function HomePage() {
     },
   ];
 
-  // Auto-rotate every 7 seconds
+  // Auto-rotate every 10 seconds (pauses on hover)
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % banners.length);
-    }, 7000);
+      if (!isPaused) {
+        setCurrentSlide((prev) => (prev + 1) % banners.length);
+      }
+    }, 10000);
     return () => clearInterval(timer);
-  }, [banners.length]);
+  }, [banners.length, isPaused]);
 
   // Canonical Data Sources (Preserved from original)
   const features = [
@@ -241,7 +244,11 @@ export default function HomePage() {
       <Header />
       
       {/* ROTATING HERO BANNERS */}
-      <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
+      <section 
+        className="relative w-full h-[500px] md:h-[600px] overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {/* Slides */}
         {banners.map((banner, index) => (
           <div
@@ -275,13 +282,21 @@ export default function HomePage() {
                     {banner.subheadline}
                   </p>
                   
-                  <Link
-                    to={banner.ctaLink}
-                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
-                  >
-                    {banner.cta}
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Link
+                      to={banner.ctaLink}
+                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
+                    >
+                      {banner.cta}
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
+                    <Link
+                      to={banner.ctaLink}
+                      className="text-white underline underline-offset-4 hover:text-primary transition-colors text-lg"
+                    >
+                      Learn More →
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
