@@ -159,7 +159,7 @@ export default function HomePage() {
     },
     {
       id: 5,
-      image: 'https://static.wixstatic.com/media/99571b_96ec297692ff4a7880c8fc9d1a6fd5d4~mv2.png?originWidth=1600&originHeight=896',
+      image: 'https://static.wixstatic.com/media/99571b_ede5f50259b44614b9cd2d2d4731928e~mv2.jpeg',
       headline: 'Owed Money?',
       subheadline: "Let us help you recover what's yours.",
       cta: 'Learn More',
