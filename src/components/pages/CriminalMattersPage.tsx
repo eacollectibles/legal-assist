@@ -36,8 +36,8 @@ export default function CriminalMattersPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_967c0331818f46028ebf68e309549013~mv2.png?id=canadian-courtroom-hero"
-                alt="Professional Canadian courtroom interior with judge's bench, witness stand, and Canadian flags representing Canadian legal proceedings"
+                src="https://static.wixstatic.com/media/99571b_435bddb0469946d3a00f5601e7879951~mv2.png?originWidth=1152&originHeight=768"
+                alt="Professional Canadian courtroom interior with wooden judge's bench, witness stand, and Canadian maple leaf flags representing Ontario Provincial Court proceedings"
                 width={600}
                 height={400}
                 className="w-full h-auto"
