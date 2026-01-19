@@ -133,7 +133,7 @@ export default function HomePage() {
     {
       id: 1,
       image: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg',
-      headline: 'Stopped by Police?',
+      headline: 'Stopped by Police? Got a Traffic Ticket?',
       subheadline: 'Know your rights. Get professional representation.',
       cta: 'Get Legal Help',
       ctaLink: '/services/traffic-tickets',
