@@ -71,6 +71,17 @@ export default function BailHearingsPage() {
                 </div>
               </div>
             </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mt-4">
+              <div className="flex gap-4">
+                <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-heading text-lg font-bold text-amber-800 mb-2">Important Scope Limitation</h3>
+                  <p className="font-paragraph text-foreground/80">
+                    Licensed paralegals can only represent clients in bail hearings for <strong>summary conviction offences</strong> in Provincial Court. For indictable offences, hybrid offences where the Crown proceeds by indictment, or bail hearings in Superior Court, you will need to retain a lawyer. If you are unsure which type of offence you have been charged with, contact us for a free assessment and we will advise you on the appropriate representation.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Key Statistics */}
