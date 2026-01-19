@@ -36,6 +36,7 @@ import DocumentWorkflowPage from '@/components/pages/DocumentWorkflowPage';
 import PublicUploadPage from '@/components/pages/PublicUploadPage';
 import UploadTokenManagementPage from '@/components/pages/UploadTokenManagementPage';
 import ClientIntakePage from '@/components/pages/ClientIntakePage';
+import ParalegalVsLawyerPage from '@/components/pages/ParalegalVsLawyerPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -185,6 +186,10 @@ const router = createBrowserRouter([
       {
         path: "upload-token-management",
         element: <UploadTokenManagementPage />,
+      },
+      {
+        path: "paralegal-vs-lawyer",
+        element: <ParalegalVsLawyerPage />,
       },
       {
         path: "*",
