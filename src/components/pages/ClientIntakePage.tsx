@@ -1221,6 +1221,17 @@ export default function ClientIntakePage() {
                   {/* Case Information - NOW SECTION 5 */}
                   {currentSection === 5 && (
                     <div className="space-y-6">
+                      {/* LSO Compliance Disclaimer */}
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <p className="text-sm text-foreground/80">
+                          <strong>Please Note:</strong> Completing this form does not create a paralegal-client 
+                          relationship. The information provided will be kept confidential and used solely to 
+                          determine if we can assist with your matter. A paralegal-client relationship is only 
+                          formed upon signing a written retainer agreement.
+                        </p>
+                      </div>
+
+                      {/* Type of Legal Matter */}
                       <div>
                         <Label htmlFor="caseType" className="font-paragraph">
                           Type of Legal Matter <span className="text-destructive">*</span>
@@ -1230,32 +1241,45 @@ export default function ClientIntakePage() {
                           onValueChange={(value) => handleInputChange('caseType', value)}
                         >
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select case type" />
+                            <SelectValue placeholder="Select the type of matter" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Small Claims">Small Claims</SelectItem>
-                            <SelectItem value="Landlord Tenant">Landlord Tenant</SelectItem>
-                            <SelectItem value="Human Rights">Human Rights</SelectItem>
-                            <SelectItem value="Traffic Tickets">Traffic Tickets</SelectItem>
-                            <SelectItem value="Criminal Matters">Criminal Matters</SelectItem>
-                            <SelectItem value="Employment Issues">Employment Issues</SelectItem>
+                            <SelectItem value="Small Claims Court">Small Claims Court</SelectItem>
+                            <SelectItem value="Landlord and Tenant Board">Landlord and Tenant Board</SelectItem>
+                            <SelectItem value="Human Rights Tribunal">Human Rights Tribunal</SelectItem>
+                            <SelectItem value="Traffic Ticket">Traffic Ticket</SelectItem>
+                            <SelectItem value="Provincial Offences">Provincial Offences</SelectItem>
+                            <SelectItem value="Criminal Summary Conviction">Criminal Summary Conviction</SelectItem>
+                            <SelectItem value="Employment Matter">Employment Matter</SelectItem>
+                            <SelectItem value="WSIB Appeal">WSIB Appeal</SelectItem>
+                            <SelectItem value="Social Benefits Tribunal">Social Benefits Tribunal</SelectItem>
                             <SelectItem value="Other">Other</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
+
+                      {/* Brief Summary */}
                       <div>
                         <Label htmlFor="caseDescription" className="font-paragraph">
-                          Case Description <span className="text-destructive">*</span>
+                          Brief Summary of Your Matter <span className="text-destructive">*</span>
                         </Label>
+                        <p className="text-sm text-foreground/60 mb-2">
+                          Please describe your situation in 2-3 sentences. We will gather more details during our consultation.
+                        </p>
                         <Textarea
                           id="caseDescription"
                           value={formData.caseDescription}
                           onChange={(e) => handleInputChange('caseDescription', e.target.value)}
-                          className="mt-1 min-h-32"
-                          placeholder="Please provide a brief description of your legal matter..."
-                          required
+                          className="mt-1 min-h-24"
+                          placeholder="Example: I received an eviction notice from my landlord on January 10th. I believe the notice is invalid because..."
+                          maxLength={500}
                         />
+                        <p className="text-xs text-foreground/50 mt-1 text-right">
+                          {formData.caseDescription.length}/500 characters
+                        </p>
                       </div>
+
+                      {/* Court Documents */}
                       <div className="flex items-center space-x-2">
                         <Checkbox
                           id="hasCourtDocuments"
@@ -1263,13 +1287,18 @@ export default function ClientIntakePage() {
                           onCheckedChange={(checked) => handleInputChange('hasCourtDocuments', checked)}
                         />
                         <Label htmlFor="hasCourtDocuments" className="font-paragraph cursor-pointer">
-                          I have existing court documents related to this matter
+                          I have received court documents or forms related to this matter
                         </Label>
                       </div>
+
+                      {/* Court Deadline */}
                       <div>
                         <Label htmlFor="courtDeadline" className="font-paragraph">
-                          Court Deadline (if applicable)
+                          Upcoming Deadline or Court Date (if any)
                         </Label>
+                        <p className="text-sm text-foreground/60 mb-2">
+                          If you have a deadline to respond or a scheduled court/tribunal date, please provide it below.
+                        </p>
                         <Input
                           id="courtDeadline"
                           type="date"
@@ -1278,6 +1307,8 @@ export default function ClientIntakePage() {
                           className="mt-1"
                         />
                       </div>
+
+                      {/* Prior Consultations */}
                       <div className="flex items-center space-x-2">
                         <Checkbox
                           id="consultedOther"
@@ -1285,20 +1316,29 @@ export default function ClientIntakePage() {
                           onCheckedChange={(checked) => handleInputChange('consultedOther', checked)}
                         />
                         <Label htmlFor="consultedOther" className="font-paragraph cursor-pointer">
-                          I have consulted other legal services for this matter
+                          I have previously consulted with a lawyer or paralegal about this matter
                         </Label>
                       </div>
+
+                      {/* How can we help - replaces Additional Notes */}
                       <div>
                         <Label htmlFor="additionalNotes" className="font-paragraph">
-                          Additional Notes
+                          How can we help you? (Optional)
                         </Label>
+                        <p className="text-sm text-foreground/60 mb-2">
+                          Briefly tell us what outcome you are hoping to achieve.
+                        </p>
                         <Textarea
                           id="additionalNotes"
                           value={formData.additionalNotes}
                           onChange={(e) => handleInputChange('additionalNotes', e.target.value)}
-                          className="mt-1 min-h-24"
-                          placeholder="Any other information you'd like us to know..."
+                          className="mt-1 min-h-20"
+                          placeholder="Example: I want to fight the eviction and stay in my apartment."
+                          maxLength={300}
                         />
+                        <p className="text-xs text-foreground/50 mt-1 text-right">
+                          {formData.additionalNotes.length}/300 characters
+                        </p>
                       </div>
                     </div>
                   )}
