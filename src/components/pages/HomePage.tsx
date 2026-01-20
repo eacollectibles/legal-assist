@@ -668,16 +668,16 @@ export default function HomePage() {
             </AnimatedElement>
 
             <AnimatedElement delay={300}>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md sm:max-w-none mx-auto">
                 <Link 
                   to="/contact"
-                  className="min-w-[200px] bg-primary text-primary-foreground font-paragraph px-8 py-5 text-lg transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
+                  className="w-full sm:w-auto sm:min-w-[200px] bg-primary text-primary-foreground font-paragraph px-8 py-5 text-lg transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
                 >
                   Get Started
                 </Link>
                 <a 
                   href="tel:4165550123"
-                  className="min-w-[200px] bg-white text-secondary border border-secondary/10 font-paragraph px-8 py-5 text-lg transition-all hover:bg-secondary hover:text-white hover:shadow-lg hover:-translate-y-1 rounded-sm"
+                  className="w-full sm:w-auto sm:min-w-[200px] bg-white text-secondary border border-secondary/10 font-paragraph px-8 py-5 text-lg transition-all hover:bg-secondary hover:text-white hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
                 >{"Call (000) 000-0000"}</a>
               </div>
             </AnimatedElement>
