@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu, X, LogOut } from 'lucide-react';
+import { Menu, X, LogOut, ChevronDown } from 'lucide-react';
 import { useMember } from '@/integrations';
 import { useAuth } from '@/hooks/use-auth';
 
@@ -8,6 +8,7 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const { isAuthenticated, member, actions, isLoading } = useMember();
   const { user, isAuthenticated: isAuthenticatedLocal, isAdmin: userIsAdmin, logout: logoutLocal } = useAuth();
   
@@ -41,16 +42,59 @@ export default function Header() {
             >
               Home
             </Link>
-            <Link 
-              to="/about" 
-              className={`font-paragraph text-base transition-colors ${
-                isActive('/about') 
-                  ? 'text-primary font-semibold' 
-                  : 'text-secondary hover:text-primary'
-              }`}
+            <div 
+              className="relative"
+              onMouseEnter={() => setAboutDropdownOpen(true)}
+              onMouseLeave={() => setAboutDropdownOpen(false)}
             >
-              About
-            </Link>
+              <button 
+                className={`font-paragraph text-base transition-colors flex items-center gap-1 ${
+                  isActive('/about') || isActive('/what-is-a-paralegal') || isActive('/paralegal-vs-lawyer')
+                    ? 'text-primary font-semibold' 
+                    : 'text-secondary hover:text-primary'
+                }`}
+              >
+                About
+                <ChevronDown className={`w-4 h-4 transition-transform ${aboutDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {aboutDropdownOpen && (
+                <div className="absolute top-full left-0 pt-2 w-56">
+                  <div className="bg-background border border-secondary/10 rounded-lg shadow-lg py-2">
+                    <Link
+                      to="/about"
+                      className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                        isActive('/about')
+                          ? 'text-primary font-semibold bg-primary/5'
+                          : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                      }`}
+                    >
+                      About Us
+                    </Link>
+                    <Link
+                      to="/what-is-a-paralegal"
+                      className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                        isActive('/what-is-a-paralegal')
+                          ? 'text-primary font-semibold bg-primary/5'
+                          : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                      }`}
+                    >
+                      What Is a Paralegal?
+                    </Link>
+                    <Link
+                      to="/paralegal-vs-lawyer"
+                      className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                        isActive('/paralegal-vs-lawyer')
+                          ? 'text-primary font-semibold bg-primary/5'
+                          : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                      }`}
+                    >
+                      Paralegal vs. Lawyer
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link 
               to="/services" 
               className={`font-paragraph text-base transition-colors ${
@@ -161,17 +205,44 @@ export default function Header() {
             >
               Home
             </Link>
-            <Link 
-              to="/about" 
-              onClick={() => setMobileMenuOpen(false)}
-              className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                isActive('/about') 
-                  ? 'bg-primary text-primary-foreground font-semibold' 
-                  : 'text-secondary hover:bg-pastelbeige'
-              }`}
-            >
-              About
-            </Link>
+            <div className="flex flex-col">
+              <span className="font-paragraph text-xs uppercase tracking-wider text-secondary/50 px-3 py-1">
+                About
+              </span>
+              <Link 
+                to="/about" 
+                onClick={() => setMobileMenuOpen(false)}
+                className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                  isActive('/about') 
+                    ? 'bg-primary text-primary-foreground font-semibold' 
+                    : 'text-secondary hover:bg-pastelbeige'
+                }`}
+              >
+                About Us
+              </Link>
+              <Link 
+                to="/what-is-a-paralegal" 
+                onClick={() => setMobileMenuOpen(false)}
+                className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                  isActive('/what-is-a-paralegal') 
+                    ? 'bg-primary text-primary-foreground font-semibold' 
+                    : 'text-secondary hover:bg-pastelbeige'
+                }`}
+              >
+                What Is a Paralegal?
+              </Link>
+              <Link 
+                to="/paralegal-vs-lawyer" 
+                onClick={() => setMobileMenuOpen(false)}
+                className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                  isActive('/paralegal-vs-lawyer') 
+                    ? 'bg-primary text-primary-foreground font-semibold' 
+                    : 'text-secondary hover:bg-pastelbeige'
+                }`}
+              >
+                Paralegal vs. Lawyer
+              </Link>
+            </div>
             <Link 
               to="/services" 
               onClick={() => setMobileMenuOpen(false)}
