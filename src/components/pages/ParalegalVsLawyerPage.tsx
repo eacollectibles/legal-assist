@@ -39,8 +39,8 @@ export default function ParalegalVsLawyerPage() {
             </p>
           </div>
 
-          {/* Comparison Table */}
-          <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden mb-12">
+          {/* Comparison Table - Desktop */}
+          <div className="hidden md:block bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden mb-12">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -134,6 +134,88 @@ export default function ParalegalVsLawyerPage() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          {/* Comparison Cards - Mobile */}
+          <div className="md:hidden space-y-4 mb-12">
+            <div className="bg-white rounded-lg border border-gray-200 p-5">
+              <h3 className="font-heading font-bold text-base text-foreground mb-3">Education & Training</h3>
+              <div className="space-y-3">
+                <div className="bg-pastelgreen/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-primary">Paralegal</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">2-year diploma; LSO licensing exam</p>
+                </div>
+                <div className="bg-pastelpeach/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-secondary">Lawyer</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">3-year law degree (JD); Bar exam</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-5">
+              <h3 className="font-heading font-bold text-base text-foreground mb-3">Scope of Practice</h3>
+              <div className="space-y-3">
+                <div className="bg-pastelgreen/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-primary">Paralegal</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">Provincial Court, Small Claims (up to $50K), LTB, HRTO, specified tribunals</p>
+                </div>
+                <div className="bg-pastelpeach/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-secondary">Lawyer</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">All courts including Superior Court, Court of Appeal, family law, real estate, corporate</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-5">
+              <h3 className="font-heading font-bold text-base text-foreground mb-3">Court Representation</h3>
+              <div className="space-y-3">
+                <div className="bg-pastelgreen/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-primary">Paralegal</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">Provincial Court and Small Claims Court only</p>
+                </div>
+                <div className="bg-pastelpeach/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-secondary">Lawyer</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">All courts including Superior Court, Court of Appeal, Supreme Court</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-5">
+              <h3 className="font-heading font-bold text-base text-foreground mb-3">Criminal Matters</h3>
+              <div className="space-y-3">
+                <div className="bg-pastelgreen/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-primary">Paralegal</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">Summary conviction and provincial offences only</p>
+                </div>
+                <div className="bg-pastelpeach/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-secondary">Lawyer</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">All criminal matters including indictable offences</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-5">
+              <h3 className="font-heading font-bold text-base text-foreground mb-3">Cost</h3>
+              <div className="space-y-3">
+                <div className="bg-pastelgreen/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-primary">Paralegal</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">$100-250/hour typically</p>
+                </div>
+                <div className="bg-pastelpeach/20 rounded p-3">
+                  <span className="text-xs font-semibold uppercase text-secondary">Lawyer</span>
+                  <p className="font-paragraph text-sm text-foreground/80 mt-1">$200-500+/hour typically</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 p-5">
+              <h3 className="font-heading font-bold text-base text-foreground mb-3">Regulation</h3>
+              <div className="bg-pastellavender/20 rounded p-3">
+                <p className="font-paragraph text-sm text-foreground/80">
+                  <strong>Both</strong> are licensed and regulated by the Law Society of Ontario, bound by professional conduct rules, maintain liability insurance, and protect solicitor-client privilege.
+                </p>
+              </div>
             </div>
           </div>
 
