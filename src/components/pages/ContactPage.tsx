@@ -468,7 +468,7 @@ export default function ContactPage() {
       <Header />
 
       {/* CONTACT METHODS SECTION */}
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <AnimatedElement>
@@ -508,7 +508,7 @@ export default function ContactPage() {
       </section>
 
       {/* CONTACT INFORMATION SECTION */}
-      <section className="py-24 lg:py-32 bg-secondary text-secondary-foreground">
+      <section className="py-16 md:py-24 lg:py-32 bg-secondary text-secondary-foreground">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
             <AnimatedElement delay={0}>
@@ -564,7 +564,7 @@ export default function ContactPage() {
       </section>
 
       {/* FORMS SECTION */}
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl mx-auto">
             <AnimatedElement>

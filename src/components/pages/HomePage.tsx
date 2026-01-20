@@ -380,7 +380,7 @@ export default function HomePage() {
 
       {/* EDITORIAL INTRO SECTION */}
       {/* Layout: Sticky side note with scrolling content */}
-      <section className="py-24 lg:py-32 bg-pastelbeige/30 relative">
+      <section className="py-16 md:py-24 lg:py-32 bg-pastelbeige/30 relative">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
             
@@ -448,7 +448,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* FEATURES SECTION - "Bento Box" Style Grid */}
-      <section className="py-24 lg:py-32 bg-background">
+      <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <AnimatedElement>
@@ -580,7 +580,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ SECTION */}
-      <section className="py-24 lg:py-32 bg-pastellavender relative overflow-hidden">
+      <section className="py-16 md:py-24 lg:py-32 bg-pastellavender relative overflow-hidden">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl mx-auto">
             <AnimatedElement>
@@ -648,7 +648,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section ref={ctaSectionRef} id="contact" className="py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">{/* ... keep existing code (decorative background elements and content) */}
+      <section ref={ctaSectionRef} id="contact" className="py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">{/* ... keep existing code (decorative background elements and content) */}
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
