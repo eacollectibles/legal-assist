@@ -6,8 +6,6 @@ import { MemberProvider } from '@/integrations';
 import HomePage from '@/components/pages/HomePage';
 import ContactPage from '@/components/pages/ContactPage';
 import AboutPage from '@/components/pages/AboutPage';
-import ServicesPage from '@/components/pages/ServicesPage';
-import ClientSignupPage from '@/components/pages/ClientSignupPage';
 
 // Service Pages
 import SmallClaimsPage from '@/components/pages/SmallClaimsPage';
@@ -103,6 +101,18 @@ import RentReductionPage from '@/components/pages/RentReductionPage';
 import MobileHomeParkPage from '@/components/pages/MobileHomeParkPage';
 import SuperintendentIssuesPage from '@/components/pages/SuperintendentIssuesPage';
 
+// Phase 3 Step 4 - Traffic Ticket Expansion Cluster
+import CommercialVehicleViolationsPage from '@/components/pages/CommercialVehicleViolationsPage';
+import HOVLaneViolationsPage from '@/components/pages/HOVLaneViolationsPage';
+import StopSignTicketPage from '@/components/pages/StopSignTicketPage';
+import StreetRacingPage from '@/components/pages/StreetRacingPage';
+import FailToYieldPage from '@/components/pages/FailToYieldPage';
+import UnsafeLaneChangePage from '@/components/pages/UnsafeLaneChangePage';
+import FollowingTooCloselyPage from '@/components/pages/FollowingTooCloselyPage';
+import DrivingWhileSuspendedPage from '@/components/pages/DrivingWhileSuspendedPage';
+import SchoolZoneSpeedingPage from '@/components/pages/SchoolZoneSpeedingPage';
+import SeatbeltViolationsPage from '@/components/pages/SeatbeltViolationsPage';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -123,8 +133,6 @@ export default function Router() {
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/client-signup" element={<ClientSignupPage />} />
 
           {/* Core Service Pages */}
           <Route path="/services/small-claims-court" element={<SmallClaimsPage />} />
@@ -219,6 +227,18 @@ export default function Router() {
           <Route path="/services/rent-reduction-applications" element={<RentReductionPage />} />
           <Route path="/services/mobile-home-park-disputes" element={<MobileHomeParkPage />} />
           <Route path="/services/superintendent-housing-rights" element={<SuperintendentIssuesPage />} />
+
+          {/* Phase 3 Step 4 - Traffic Ticket Expansion Cluster (10 NEW PAGES) */}
+          <Route path="/services/commercial-vehicle-violations" element={<CommercialVehicleViolationsPage />} />
+          <Route path="/services/hov-lane-violations" element={<HOVLaneViolationsPage />} />
+          <Route path="/services/stop-sign-ticket" element={<StopSignTicketPage />} />
+          <Route path="/services/street-racing" element={<StreetRacingPage />} />
+          <Route path="/services/fail-to-yield" element={<FailToYieldPage />} />
+          <Route path="/services/unsafe-lane-change" element={<UnsafeLaneChangePage />} />
+          <Route path="/services/following-too-closely" element={<FollowingTooCloselyPage />} />
+          <Route path="/services/driving-while-suspended" element={<DrivingWhileSuspendedPage />} />
+          <Route path="/services/school-zone-speeding" element={<SchoolZoneSpeedingPage />} />
+          <Route path="/services/seatbelt-violations" element={<SeatbeltViolationsPage />} />
 
           {/* 404 Catch-all */}
           <Route path="*" element={<HomePage />} />
