@@ -8,6 +8,10 @@ import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 export default function CarelessDrivingDefencePage() {
   useEffect(() => {
     document.title = 'Careless Driving Defence in Ontario | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Expert careless driving defence in Ontario. Licensed paralegal representation to fight careless driving charges, reduce penalties, and protect your driving record.');
+    }
   }, []);
 
   return (

@@ -7,6 +7,10 @@ import Footer from '@/components/Footer';
 export default function TenantServicesPage() {
   useEffect(() => {
     document.title = 'Tenant Legal Services in Ontario | Eviction Defence | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Professional tenant legal services in Ontario. Licensed paralegal for eviction defence, rent disputes, maintenance issues, and LTB representation.');
+    }
   }, []);
 
   const services = [

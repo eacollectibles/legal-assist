@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -7,6 +8,14 @@ import { ChevronRight, CheckCircle, AlertCircle, FileText, Clock, DollarSign } f
 import { Link } from 'react-router-dom';
 
 export default function TrafficTicketsPage() {
+  useEffect(() => {
+    document.title = 'Traffic Ticket Paralegal | Fight Speeding Tickets | London Ontario';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Fight your traffic ticket with a licensed paralegal in London, Ontario. Speeding, careless driving, stunt driving defence. Reduce fines & demerit points.');
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <SEO 

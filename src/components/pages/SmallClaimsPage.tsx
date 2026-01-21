@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -7,6 +8,14 @@ import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'l
 import { Link } from 'react-router-dom';
 
 export default function SmallClaimsPage() {
+  useEffect(() => {
+    document.title = 'Small Claims Court Paralegal | Claims up to $50,000 | London Ontario';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Expert Small Claims Court representation in London, Ontario. Licensed paralegal for debt recovery, contract disputes & property damage claims up to $50,000. Free consultation.');
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <SEO 

@@ -7,6 +7,10 @@ import Footer from '@/components/Footer';
 export default function EvictionNonPaymentPage() {
   useEffect(() => {
     document.title = 'Eviction for Non-Payment of Rent in Ontario | N4 Notice | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Expert representation for eviction non-payment cases in Ontario. Licensed paralegal for N4 notices, rent arrears, and LTB applications. Landlord and tenant services.');
+    }
   }, []);
 
   return (

@@ -132,6 +132,15 @@ const ParallaxContainer = ({ children, className }: { children: React.ReactNode;
 // --- Main Page Component ---
 
 export default function HomePage() {
+  // Set page title and meta description
+  useEffect(() => {
+    document.title = 'LegalAssist Paralegal | Affordable Legal Services in Ontario';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Professional paralegal services in Ontario. Expert representation for traffic tickets, landlord-tenant disputes, small claims court, and more. Affordable legal help when you need it.');
+    }
+  }, []);
+
   // State for rotating banner
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);

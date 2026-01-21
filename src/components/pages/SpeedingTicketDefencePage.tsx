@@ -8,6 +8,10 @@ import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 export default function SpeedingTicketDefencePage() {
   useEffect(() => {
     document.title = 'Speeding Ticket Defence in Ontario | Fight Your Ticket | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Professional speeding ticket defence in Ontario. Licensed paralegal representation to fight speeding tickets, reduce fines, and protect your insurance rates.');
+    }
   }, []);
 
   return (

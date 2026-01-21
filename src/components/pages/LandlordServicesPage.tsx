@@ -7,6 +7,10 @@ import Footer from '@/components/Footer';
 export default function LandlordServicesPage() {
   useEffect(() => {
     document.title = 'Landlord Legal Services in Ontario | Evictions & LTB | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Professional landlord legal services in Ontario. Licensed paralegal for evictions, LTB applications, rent disputes, and property management legal matters.');
+    }
   }, []);
 
   const services = [

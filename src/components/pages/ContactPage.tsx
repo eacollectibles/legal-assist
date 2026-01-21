@@ -419,6 +419,14 @@ const FeedbackForm: React.FC = () => {
 
 // Main Contact Page Component
 export default function ContactPage() {
+  useEffect(() => {
+    document.title = 'Contact LegalAssist | Get Legal Help Today';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Contact LegalAssist Paralegal Services. Call, text, email, or request a callback. Professional legal assistance across Ontario. Get help with your legal matter today.');
+    }
+  }, []);
+
   const [activeTab, setActiveTab] = useState<'callback' | 'feedback'>('callback');
 
   const contactMethods = [

@@ -7,6 +7,10 @@ import Footer from '@/components/Footer';
 export default function StuntDrivingDefencePage() {
   useEffect(() => {
     document.title = 'Stunt Driving Defence in Ontario | 50 Over | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Expert stunt driving defence in Ontario. Licensed paralegal representation for racing, 50 over charges. Protect your licence and fight serious driving penalties.');
+    }
   }, []);
 
   return (

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -7,6 +8,14 @@ import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'l
 import { Link } from 'react-router-dom';
 
 export default function LandlordTenantBoardPage() {
+  useEffect(() => {
+    document.title = 'Landlord Tenant Board Paralegal | LTB Representation | London Ontario';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Licensed paralegal for Landlord and Tenant Board matters in London, Ontario. Eviction defence, rent disputes, N4/N12 applications & LTB hearings. Free consultation.');
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <SEO 
