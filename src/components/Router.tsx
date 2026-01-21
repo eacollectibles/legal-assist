@@ -77,7 +77,7 @@ import ConsumerDisputesPage from '@/components/pages/ConsumerDisputesPage';
 import WorkplaceDiscriminationPage from '@/components/pages/WorkplaceDiscriminationPage';
 import HousingDiscriminationPage from '@/components/pages/HousingDiscriminationPage';
 
-// Phase 3 Step 2 - Small Claims Domination Cluster (NEW)
+// Phase 3 Step 2 - Small Claims Domination Cluster
 import PersonalInjuryClaimsPage from '@/components/pages/PersonalInjuryClaimsPage';
 import HomeImprovementDisputesPage from '@/components/pages/HomeImprovementDisputesPage';
 import VehiclePurchaseDisputesPage from '@/components/pages/VehiclePurchaseDisputesPage';
@@ -88,6 +88,18 @@ import LoanRecoveryPage from '@/components/pages/LoanRecoveryPage';
 import TenantDamageClaimsPage from '@/components/pages/TenantDamageClaimsPage';
 import WrongfulDismissalClaimsPage from '@/components/pages/WrongfulDismissalClaimsPage';
 import ProfessionalNegligencePage from '@/components/pages/ProfessionalNegligencePage';
+
+// Phase 3 Step 3 - LTB Expansion Cluster (NEW)
+import RentArrearsDefencePage from '@/components/pages/RentArrearsDefencePage';
+import SubsidizedHousingPage from '@/components/pages/SubsidizedHousingPage';
+import RoommateDisputesPage from '@/components/pages/RoommateDisputesPage';
+import LeaseBreakingPage from '@/components/pages/LeaseBreakingPage';
+import PetDisputesPage from '@/components/pages/PetDisputesPage';
+import NoiseComplaintsPage from '@/components/pages/NoiseComplaintsPage';
+import LTBHearingPrepPage from '@/components/pages/LTBHearingPrepPage';
+import RentReductionPage from '@/components/pages/RentReductionPage';
+import MobileHomeParkPage from '@/components/pages/MobileHomeParkPage';
+import SuperintendentIssuesPage from '@/components/pages/SuperintendentIssuesPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -180,7 +192,7 @@ export default function Router() {
           <Route path="/services/workplace-discrimination" element={<WorkplaceDiscriminationPage />} />
           <Route path="/services/housing-discrimination" element={<HousingDiscriminationPage />} />
 
-          {/* Phase 3 Step 2 - Small Claims Domination Cluster (10 NEW PAGES) */}
+          {/* Phase 3 Step 2 - Small Claims Domination Cluster */}
           <Route path="/services/personal-injury-claims" element={<PersonalInjuryClaimsPage />} />
           <Route path="/services/home-improvement-disputes" element={<HomeImprovementDisputesPage />} />
           <Route path="/services/vehicle-purchase-disputes" element={<VehiclePurchaseDisputesPage />} />
@@ -191,6 +203,18 @@ export default function Router() {
           <Route path="/services/tenant-damage-claims" element={<TenantDamageClaimsPage />} />
           <Route path="/services/wrongful-dismissal-claims" element={<WrongfulDismissalClaimsPage />} />
           <Route path="/services/professional-negligence" element={<ProfessionalNegligencePage />} />
+
+          {/* Phase 3 Step 3 - LTB Expansion Cluster (10 NEW PAGES) */}
+          <Route path="/services/rent-arrears-defence" element={<RentArrearsDefencePage />} />
+          <Route path="/services/subsidized-housing-eviction" element={<SubsidizedHousingPage />} />
+          <Route path="/services/roommate-disputes" element={<RoommateDisputesPage />} />
+          <Route path="/services/breaking-lease-early" element={<LeaseBreakingPage />} />
+          <Route path="/services/pet-disputes" element={<PetDisputesPage />} />
+          <Route path="/services/noise-complaints-defence" element={<NoiseComplaintsPage />} />
+          <Route path="/services/ltb-hearing-preparation" element={<LTBHearingPrepPage />} />
+          <Route path="/services/rent-reduction-applications" element={<RentReductionPage />} />
+          <Route path="/services/mobile-home-park-disputes" element={<MobileHomeParkPage />} />
+          <Route path="/services/superintendent-housing-rights" element={<SuperintendentIssuesPage />} />
 
           {/* 404 Catch-all */}
           <Route path="*" element={<HomePage />} />
