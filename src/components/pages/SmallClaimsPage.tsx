@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function SmallClaimsPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Small Claims Court Paralegal | Claims up to $50,000 | London Ontario"
+        description="Expert Small Claims Court representation in London, Ontario. Licensed paralegal for debt recovery, contract disputes & property damage claims up to $50,000. Free consultation."
+        canonical="https://www.legalassist.ca/services/small-claims"
+      />
       <Header />
 
       {/* Hero Section */}
