@@ -290,6 +290,10 @@ const CallbackForm: React.FC = () => {
           </>
         )}
       </button>
+      
+      <p className="text-sm text-center text-secondary/60 -mt-2">
+        No obligation. Confidential review by a licensed Ontario paralegal.
+      </p>
     </form>
   );
 };
@@ -570,10 +574,10 @@ export default function ContactPage() {
           <div className="max-w-4xl mx-auto">
             <AnimatedElement>
               <h2 className="font-heading text-4xl md:text-5xl text-secondary mb-4 text-center">
-                Get in Touch
+                Find Out Where You Stand
               </h2>
-              <p className="font-paragraph text-lg text-secondary/70 text-center mb-12">
-                Fill out the form below and we'll be in touch shortly.
+              <p className="font-paragraph text-lg text-secondary/70 text-center mb-3">
+                This takes about 2 minutes. We'll review your situation and explain your options.
               </p>
             </AnimatedElement>
 

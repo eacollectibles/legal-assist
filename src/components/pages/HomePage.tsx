@@ -648,7 +648,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section ref={ctaSectionRef} id="contact" className="py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">{/* ... keep existing code (decorative background elements and content) */}
+      <section ref={ctaSectionRef} id="contact" className="py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -659,27 +659,28 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto text-center">
             <AnimatedElement animation="scale-up">
               <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-secondary mb-8">
-                Ready to Get Started?
+                Unsure where you stand legally in Ontario?
               </h2>
             </AnimatedElement>
             
             <AnimatedElement delay={200}>
-              <p className="font-paragraph text-xl text-secondary/70 mb-12 leading-relaxed max-w-2xl mx-auto">{"Schedule a free 30-minute consultation with our Licensed Paralegals. During this initial consultation, we will review your matter, explain the available options within the paralegal scope of practice, and discuss possible next steps."}</p>
+              <div className="flex flex-col gap-4 items-center mb-6">
+                <Link 
+                  to="/contact"
+                  className="inline-block bg-primary text-primary-foreground font-paragraph font-semibold px-10 py-5 text-xl transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-lg"
+                >
+                  Find Out Where You Stand
+                </Link>
+                <p className="font-paragraph text-base text-secondary/70 max-w-xl">
+                  Get a clear explanation of your rights and options under Ontario law.
+                </p>
+              </div>
             </AnimatedElement>
 
             <AnimatedElement delay={300}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md sm:max-w-none mx-auto">
-                <Link 
-                  to="/contact"
-                  className="w-full sm:w-auto sm:min-w-[200px] bg-primary text-primary-foreground font-paragraph px-8 py-5 text-lg transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
-                >
-                  Get Started
-                </Link>
-                <a 
-                  href="tel:4165550123"
-                  className="w-full sm:w-auto sm:min-w-[200px] bg-white text-secondary border border-secondary/10 font-paragraph px-8 py-5 text-lg transition-all hover:bg-secondary hover:text-white hover:shadow-lg hover:-translate-y-1 rounded-sm text-center"
-                >{"Call (000) 000-0000"}</a>
-              </div>
+              <p className="font-paragraph text-sm text-secondary/60 italic">
+                Licensed Ontario paralegal • No obligation
+              </p>
             </AnimatedElement>
           </div>
         </div>

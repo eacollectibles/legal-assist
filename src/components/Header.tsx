@@ -168,7 +168,7 @@ export default function Header() {
                       to="/contact" 
                       className="bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90 active:scale-95"
                     >
-                      Get Started
+                      Find Out Where You Stand
                     </Link>
                   </>
                 )}
@@ -317,7 +317,7 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="bg-primary text-primary-foreground font-paragraph px-3 py-2 rounded-lg transition-all hover:bg-primary/90 active:scale-95 text-center"
                     >
-                      Get Started
+                      Find Out Where You Stand
                     </Link>
                   </>
                 )}

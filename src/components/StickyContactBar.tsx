@@ -13,26 +13,19 @@ export default function StickyContactBar({ isVisible = true }: StickyContactBarP
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
       <div className="backdrop-blur-lg bg-background/95 border-t border-primary/20 shadow-lg">
-        <div className="flex gap-3 p-4 pb-safe max-w-[100rem] mx-auto">
+        <div className="flex flex-col gap-2 p-4 pb-safe max-w-[100rem] mx-auto">
           <Button
             asChild
-            className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-          >
-            <a href={PHONE_HREF} className="flex items-center justify-center gap-2">
-              <Phone className="w-5 h-5" />
-              <span>Call Now</span>
-            </a>
-          </Button>
-          
-          <Button
-            asChild
-            className="flex-1 h-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold"
+            className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
           >
             <Link to="/contact" className="flex items-center justify-center gap-2">
               <Calendar className="w-5 h-5" />
-              <span>Book Consultation</span>
+              <span>Find Out Where You Stand</span>
             </Link>
           </Button>
+          <p className="text-xs text-center text-secondary/60 px-2">
+            Get a clear explanation of your rights and options under Ontario law.
+          </p>
         </div>
       </div>
     </div>
