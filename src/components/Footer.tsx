@@ -157,5 +157,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-export { Footer as default };
