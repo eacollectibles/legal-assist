@@ -6,6 +6,8 @@ import { MemberProvider } from '@/integrations';
 import HomePage from '@/components/pages/HomePage';
 import ContactPage from '@/components/pages/ContactPage';
 import AboutPage from '@/components/pages/AboutPage';
+import ServicesPage from '@/components/pages/ServicesPage';
+import ClientSignupPage from '@/components/pages/ClientSignupPage';
 
 // Service Pages
 import SmallClaimsPage from '@/components/pages/SmallClaimsPage';
@@ -121,6 +123,8 @@ export default function Router() {
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/client-signup" element={<ClientSignupPage />} />
 
           {/* Core Service Pages */}
           <Route path="/services/small-claims-court" element={<SmallClaimsPage />} />
