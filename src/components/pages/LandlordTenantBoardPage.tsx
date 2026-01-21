@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -6,16 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSection } from '@/components/FAQSection';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function LandlordTenantBoardPage() {
-  useEffect(() => {
-    document.title = 'Landlord Tenant Board Paralegal | LTB Representation | London Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal for Landlord and Tenant Board matters in London, Ontario. Eviction defence, rent disputes, N4/N12 applications & LTB hearings. Free consultation.');
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <SEO 
@@ -24,6 +18,9 @@ export default function LandlordTenantBoardPage() {
         canonical="https://www.legalassist.london/services/landlord-tenant-board"
       />
       <Header />
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+        <Breadcrumbs />
+      </div>
 
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
@@ -510,51 +507,9 @@ export default function LandlordTenantBoardPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
-            Frequently Asked Questions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                q: 'What types of disputes does the LTB handle?',
-                a: 'The LTB handles disputes under the Residential Tenancies Act, including evictions, rent increases, maintenance issues, lease violations, deposit disputes, and illegal lockouts.'
-              },
-              {
-                q: 'How long does an LTB hearing take?',
-                a: 'Hearings typically take 30-60 days to schedule from the application date. The hearing itself may last from 30 minutes to several hours depending on complexity.'
-              },
-              {
-                q: 'Can I represent myself at the LTB?',
-                a: 'Yes, self-representation is allowed, but having experienced representation significantly improves your chances of a favorable outcome.'
-              },
-              {
-                q: 'What is the cost of filing at the LTB?',
-                a: 'Filing fees vary based on the type of application, typically ranging from $45 to $170. We can advise you on the specific fee for your situation.'
-              },
-              {
-                q: 'Can I appeal an LTB decision?',
-                a: 'Limited appeals are available on questions of law or procedural errors. We can assess whether your case qualifies for appeal.'
-              },
-              {
-                q: 'What happens if the other party doesn\'t show up to the hearing?',
-                a: 'The LTB may proceed with the hearing in the absence of the other party, though they may request a postponement. We can advise on the implications for your case.'
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-pastelbeige/10 rounded-lg p-6 border border-pastelbeige/30">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-3">
-                  {item.q}
-                </h3>
-                <p className="font-paragraph text-foreground/80">
-                  {item.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FAQSection />
+
+      <RelatedServices services={relatedServicesConfig.landlordTenant} />
 
       {/* CTA Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-r from-primary/10 to-pastelbeige/30">

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -6,16 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSection } from '@/components/FAQSection';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function SmallClaimsPage() {
-  useEffect(() => {
-    document.title = 'Small Claims Court Paralegal | Claims up to $50,000 | London Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Expert Small Claims Court representation in London, Ontario. Licensed paralegal for debt recovery, contract disputes & property damage claims up to $50,000. Free consultation.');
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <SEO 
@@ -24,6 +18,9 @@ export default function SmallClaimsPage() {
         canonical="https://www.legalassist.london/services/small-claims"
       />
       <Header />
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+        <Breadcrumbs />
+      </div>
 
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
@@ -719,51 +716,9 @@ export default function SmallClaimsPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
-            Frequently Asked Questions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                q: 'What types of claims can be filed in Small Claims Court?',
-                a: 'Small Claims Court handles various civil disputes including contract breaches, property damage, unpaid debts, personal injury claims, and landlord-tenant disputes (up to the monetary limit).'
-              },
-              {
-                q: 'What is the filing fee?',
-                a: 'Filing fees vary based on the claim amount, typically ranging from $50 to $500. We can provide specific fee information during your consultation.'
-              },
-              {
-                q: 'How long does a Small Claims case typically take?',
-                a: 'Most cases take 6-12 months from filing to resolution, though some may be resolved faster through settlement negotiations.'
-              },
-              {
-                q: 'Can I appeal a Small Claims judgment?',
-                a: 'Yes, appeals are possible on questions of law or if there was a procedural error. We can advise you on the merits of an appeal.'
-              },
-              {
-                q: 'Do I need a lawyer for Small Claims Court?',
-                a: 'While not required, having legal representation significantly improves your chances of success and ensures proper case management.'
-              },
-              {
-                q: 'What if the defendant doesn\'t pay the judgment?',
-                a: 'We assist with post-judgment enforcement procedures to help collect the awarded amount through various legal mechanisms.'
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-pastelbeige/10 rounded-lg p-6 border border-pastelbeige/30">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-3">
-                  {item.q}
-                </h3>
-                <p className="font-paragraph text-foreground/80">
-                  {item.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FAQSection />
+
+      <RelatedServices services={relatedServicesConfig.smallClaims} />
 
       {/* CTA Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-r from-primary/10 to-pastelbeige/30">

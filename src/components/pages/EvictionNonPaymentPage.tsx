@@ -1,21 +1,18 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { ArrowRight, Phone, Home, CheckCircle, AlertTriangle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSection } from '@/components/FAQSection';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function EvictionNonPaymentPage() {
-  useEffect(() => {
-    document.title = 'Eviction for Non-Payment of Rent in Ontario | N4 Notice | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Expert representation for eviction non-payment cases in Ontario. Licensed paralegal for N4 notices, rent arrears, and LTB applications. Landlord and tenant services.');
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+        <Breadcrumbs />
+      </div>
       
       <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -183,6 +180,10 @@ export default function EvictionNonPaymentPage() {
           </div>
         </div>
       </section>
+
+      <FAQSection />
+
+      <RelatedServices services={relatedServicesConfig.landlordTenant} />
 
       <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">

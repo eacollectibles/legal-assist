@@ -1,21 +1,18 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, Clock, CheckCircle, AlertTriangle, FileText, Calendar, Gavel, HelpCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSection } from '@/components/FAQSection';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function HowToFightTrafficTicketPage() {
-  useEffect(() => {
-    document.title = 'How to Fight a Traffic Ticket in Ontario | Step-by-Step Guide | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to fighting a traffic ticket in Ontario. Learn your options, deadlines, what to expect at court, and when to hire a paralegal. Free information.');
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+        <Breadcrumbs />
+      </div>
       
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
@@ -197,6 +194,10 @@ export default function HowToFightTrafficTicketPage() {
           </div>
         </div>
       </section>
+
+      <FAQSection />
+
+      <RelatedServices services={relatedServicesConfig.trafficTickets} />
 
       {/* CTA */}
       <section className="py-16 md:py-20 bg-primary text-primary-foreground">

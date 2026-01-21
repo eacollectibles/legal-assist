@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -6,16 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, AlertCircle, FileText, Clock, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSection } from '@/components/FAQSection';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function TrafficTicketsPage() {
-  useEffect(() => {
-    document.title = 'Traffic Ticket Paralegal | Fight Speeding Tickets | London Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Fight your traffic ticket with a licensed paralegal in London, Ontario. Speeding, careless driving, stunt driving defence. Reduce fines & demerit points.');
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <SEO 
@@ -24,6 +18,9 @@ export default function TrafficTicketsPage() {
         canonical="https://www.legalassist.london/services/traffic-tickets"
       />
       <Header />
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+        <Breadcrumbs />
+      </div>
 
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
@@ -407,51 +404,9 @@ export default function TrafficTicketsPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
-            Frequently Asked Questions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                q: 'What are demerit points and how do they affect me?',
-                a: 'Demerit points are recorded on your driving record for traffic violations. Accumulating 15 or more points within 2 years can result in license suspension. Points also increase insurance premiums significantly.'
-              },
-              {
-                q: 'How much will a traffic ticket cost?',
-                a: 'Fines vary by violation type, ranging from $40 for minor violations to $500+ for serious charges. We can provide an estimate based on your specific ticket.'
-              },
-              {
-                q: 'Can I fight a traffic ticket?',
-                a: 'Yes, you have the right to contest any traffic charge. We review the evidence and identify defenses such as procedural errors, equipment calibration issues, or Charter violations.'
-              },
-              {
-                q: 'What happens if I just pay the ticket?',
-                a: 'Paying the ticket is an admission of guilt, resulting in a conviction, demerit points, and increased insurance rates. It\'s often better to fight the charge.'
-              },
-              {
-                q: 'How long does a traffic case take?',
-                a: 'Most traffic cases are resolved within 4-8 weeks from ticket to court date. Some cases may be resolved sooner through negotiation with prosecutors.'
-              },
-              {
-                q: 'What if I was speeding in a school zone?',
-                a: 'School zone speeding carries double demerit points. We focus on challenging the evidence or negotiating reduced charges to minimize the impact on your record.'
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-pastelbeige/10 rounded-lg p-6 border border-pastelbeige/30">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-3">
-                  {item.q}
-                </h3>
-                <p className="font-paragraph text-foreground/80">
-                  {item.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FAQSection />
+
+      <RelatedServices services={relatedServicesConfig.trafficTickets} />
 
       {/* CTA Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-r from-primary/10 to-pastelbeige/30">
