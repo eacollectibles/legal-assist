@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, AlertCircle, FileText, Clock, DollarSign, Users, Shield, Briefcase, TrendingDown } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function EmploymentIssuesPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Employment Issues & Workplace Disputes | London Ontario"
+        description="Employment law paralegal in London, Ontario. Wrongful dismissal, workplace harassment, employment standards & severance disputes. Protect your workplace rights."
+        canonical="https://www.legalassist.ca/services/employment-issues"
+      />
       <Header />
 
       {/* Hero Section */}

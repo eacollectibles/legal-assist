@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { CheckCircle, AlertCircle, Users, Handshake, Clock, DollarSign, MessageSquare } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function MediationServicesPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Mediation Services | Dispute Resolution | London Ontario"
+        description="Professional mediation services in London, Ontario. Resolve disputes efficiently through alternative dispute resolution. Family, workplace & civil mediation."
+        canonical="https://www.legalassist.ca/services/mediation"
+      />
       <Header />
 
       {/* Hero Section */}

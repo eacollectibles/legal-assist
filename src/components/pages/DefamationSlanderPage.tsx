@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, AlertCircle, FileText, Clock, DollarSign, Users, Shield, Gavel, TrendingUp } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function DefamationSlanderPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Defamation & Slander Legal Services | London Ontario"
+        description="Defamation and slander legal assistance in London, Ontario. Protect your reputation from false statements. Libel claims, online defamation & reputation damage."
+        canonical="https://www.legalassist.ca/services/defamation-slander"
+      />
       <Header />
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">

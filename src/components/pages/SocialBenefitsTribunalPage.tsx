@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { CheckCircle, AlertCircle, Users, FileText, Clock, DollarSign, HelpCircle, Scale } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function SocialBenefitsTribunalPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Social Benefits Tribunal | ODSP & OW Appeals | London Ontario"
+        description="Expert representation at Social Benefits Tribunal in London, Ontario. ODSP appeals, Ontario Works disputes & disability benefit hearings. Protect your rights."
+        canonical="https://www.legalassist.ca/services/social-benefits-tribunal"
+      />
       <Header />
 
       {/* Hero Section */}

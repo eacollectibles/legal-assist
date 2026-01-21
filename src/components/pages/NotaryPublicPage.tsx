@@ -1,6 +1,7 @@
 import { ArrowRight, Stamp, CheckCircle, Clock, DollarSign, Users } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { Image } from '@/components/ui/image';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function NotaryPublicPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Notary Public Services | Document Notarization | London Ontario"
+        description="Certified notary public in London, Ontario. Notarize affidavits, statutory declarations, certified true copies & international documents. Same-day service."
+        canonical="https://www.legalassist.ca/services/notary-public"
+      />
       <Header />
       
       <main className="w-full">

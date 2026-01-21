@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, AlertCircle, FileText, Clock, DollarSign } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function CriminalMattersPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Criminal Defence Paralegal | Summary Offences | London Ontario"
+        description="Licensed paralegal for summary conviction criminal matters in London, Ontario. Theft, assault, mischief & provincial offences defence. Protect your record."
+        canonical="https://www.legalassist.ca/services/criminal-matters"
+      />
       <Header />
 
       {/* Hero Section */}

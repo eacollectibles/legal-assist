@@ -1,6 +1,7 @@
 import { ArrowRight, CheckCircle, Clock, DollarSign, Users, Gavel } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { Image } from '@/components/ui/image';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function CommissionerOfOathsPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Commissioner of Oaths | Affidavit Services | London Ontario"
+        description="Licensed Commissioner of Oaths in London, Ontario. Administer oaths, affirmations & statutory declarations. Fast, professional service for legal documents."
+        canonical="https://www.legalassist.ca/services/commissioner-of-oaths"
+      />
       <Header />
       
       <main className="w-full">

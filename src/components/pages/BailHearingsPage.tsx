@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, AlertCircle, Clock, DollarSign, Shield, Gavel } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function BailHearingsPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Bail Hearings Paralegal | Release Proceedings | London Ontario"
+        description="Expert bail hearing representation in London, Ontario. Licensed paralegal for show cause hearings, release conditions & bail reviews. Available 24/7."
+        canonical="https://www.legalassist.ca/services/bail-hearings"
+      />
       <Header />
 
       {/* Hero Section */}
