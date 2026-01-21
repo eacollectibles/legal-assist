@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.legalassist.london/sitemap.xml
+Sitemap: https://legalassist.london/sitemap.xml
+
+Crawl-delay: 1
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_astro/
