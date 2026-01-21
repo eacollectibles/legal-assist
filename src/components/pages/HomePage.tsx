@@ -14,6 +14,17 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
+// SEO Meta Tags
+const setMetaDescription = (description: string) => {
+  let metaDescription = document.querySelector('meta[name="description"]');
+  if (!metaDescription) {
+    metaDescription = document.createElement('meta');
+    metaDescription.setAttribute('name', 'description');
+    document.head.appendChild(metaDescription);
+  }
+  metaDescription.setAttribute('content', description);
+};
+
 // --- Utility Components for Motion & Interaction ---
 
 /**

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,14 @@ interface LoginFormData {
 }
 
 export default function ClientLoginPage() {
+  useEffect(() => {
+    document.title = 'Client Login | LegalAssist Portal';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'Login to your LegalAssist client portal to access your case information, documents, and communicate with your paralegal team securely.');
+    }
+  }, []);
+
   const navigate = useNavigate();
   const { actions } = useMember();
   const [formData, setFormData] = useState<LoginFormData>({

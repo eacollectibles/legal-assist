@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import Header from '@/components/Header';
@@ -5,6 +6,14 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 
 export default function NotFoundPage() {
+  useEffect(() => {
+    document.title = '404 - Page Not Found | LegalAssist';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', 'The page you are looking for could not be found. Browse our legal services or contact us for assistance.');
+    }
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
