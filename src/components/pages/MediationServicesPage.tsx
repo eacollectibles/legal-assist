@@ -12,7 +12,7 @@ export default function MediationServicesPage() {
       <SEO 
         title="Mediation Services | Dispute Resolution | London Ontario"
         description="Professional mediation services in London, Ontario. Resolve disputes efficiently through alternative dispute resolution. Family, workplace & civil mediation."
-        canonical="https://www.legalassist.ca/services/mediation"
+        canonical="https://www.legalassist.london/services/mediation"
       />
       <Header />
 

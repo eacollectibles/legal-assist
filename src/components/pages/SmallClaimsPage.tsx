@@ -12,7 +12,7 @@ export default function SmallClaimsPage() {
       <SEO 
         title="Small Claims Court Paralegal | Claims up to $50,000 | London Ontario"
         description="Expert Small Claims Court representation in London, Ontario. Licensed paralegal for debt recovery, contract disputes & property damage claims up to $50,000. Free consultation."
-        canonical="https://www.legalassist.ca/services/small-claims"
+        canonical="https://www.legalassist.london/services/small-claims"
       />
       <Header />
 

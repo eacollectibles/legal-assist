@@ -12,7 +12,7 @@ export default function CriminalMattersPage() {
       <SEO 
         title="Criminal Defence Paralegal | Summary Offences | London Ontario"
         description="Licensed paralegal for summary conviction criminal matters in London, Ontario. Theft, assault, mischief & provincial offences defence. Protect your record."
-        canonical="https://www.legalassist.ca/services/criminal-matters"
+        canonical="https://www.legalassist.london/services/criminal-matters"
       />
       <Header />
 

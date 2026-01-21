@@ -12,7 +12,7 @@ export default function DefamationSlanderPage() {
       <SEO 
         title="Defamation & Slander Legal Services | London Ontario"
         description="Defamation and slander legal assistance in London, Ontario. Protect your reputation from false statements. Libel claims, online defamation & reputation damage."
-        canonical="https://www.legalassist.ca/services/defamation-slander"
+        canonical="https://www.legalassist.london/services/defamation-slander"
       />
       <Header />
       {/* Hero Section */}

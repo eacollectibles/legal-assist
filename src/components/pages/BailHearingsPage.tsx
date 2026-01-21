@@ -12,7 +12,7 @@ export default function BailHearingsPage() {
       <SEO 
         title="Bail Hearings Paralegal | Release Proceedings | London Ontario"
         description="Expert bail hearing representation in London, Ontario. Licensed paralegal for show cause hearings, release conditions & bail reviews. Available 24/7."
-        canonical="https://www.legalassist.ca/services/bail-hearings"
+        canonical="https://www.legalassist.london/services/bail-hearings"
       />
       <Header />
 

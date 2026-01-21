@@ -12,7 +12,7 @@ export default function CommissionerOfOathsPage() {
       <SEO 
         title="Commissioner of Oaths | Affidavit Services | London Ontario"
         description="Licensed Commissioner of Oaths in London, Ontario. Administer oaths, affirmations & statutory declarations. Fast, professional service for legal documents."
-        canonical="https://www.legalassist.ca/services/commissioner-of-oaths"
+        canonical="https://www.legalassist.london/services/commissioner-of-oaths"
       />
       <Header />
       

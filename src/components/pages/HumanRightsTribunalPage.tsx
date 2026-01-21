@@ -12,7 +12,7 @@ export default function HumanRightsTribunalPage() {
       <SEO 
         title="Human Rights Tribunal Paralegal | HRTO Representation | London Ontario"
         description="Expert Human Rights Tribunal of Ontario representation. Discrimination complaints, workplace harassment & accommodation issues. Licensed paralegal in London, ON."
-        canonical="https://www.legalassist.ca/services/human-rights-tribunal"
+        canonical="https://www.legalassist.london/services/human-rights-tribunal"
       />
       <Header />
 

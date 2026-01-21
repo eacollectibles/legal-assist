@@ -12,7 +12,7 @@ export default function LandlordTenantBoardPage() {
       <SEO 
         title="Landlord Tenant Board Paralegal | LTB Representation | London Ontario"
         description="Licensed paralegal for Landlord and Tenant Board matters in London, Ontario. Eviction defence, rent disputes, N4/N12 applications & LTB hearings. Free consultation."
-        canonical="https://www.legalassist.ca/services/landlord-tenant-board"
+        canonical="https://www.legalassist.london/services/landlord-tenant-board"
       />
       <Header />
 

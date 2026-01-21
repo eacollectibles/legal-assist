@@ -12,7 +12,7 @@ export default function TrafficTicketsPage() {
       <SEO 
         title="Traffic Ticket Paralegal | Fight Speeding Tickets | London Ontario"
         description="Fight your traffic ticket with a licensed paralegal in London, Ontario. Speeding, careless driving, stunt driving defence. Reduce fines & demerit points."
-        canonical="https://www.legalassist.ca/services/traffic-tickets"
+        canonical="https://www.legalassist.london/services/traffic-tickets"
       />
       <Header />
 

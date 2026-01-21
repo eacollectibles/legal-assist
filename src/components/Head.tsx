@@ -4,10 +4,10 @@ export const Head = () => {
     "@graph": [
       {
         "@type": "LegalService",
-        "@id": "https://www.legalassist.ca/#business",
+        "@id": "https://www.legalassist.london/#business",
         "name": "LegalAssist Paralegal Services",
         "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court, Landlord Tenant Board, traffic tickets, criminal matters and more.",
-        "url": "https://www.legalassist.ca",
+        "url": "https://www.legalassist.london",
         "telephone": "+13658829515",
         "email": "info@legalassist.london",
         "address": {
@@ -103,15 +103,15 @@ export const Head = () => {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.legalassist.ca/#website",
-        "url": "https://www.legalassist.ca",
+        "@id": "https://www.legalassist.london/#website",
+        "url": "https://www.legalassist.london",
         "name": "LegalAssist Paralegal Services",
         "publisher": {
-          "@id": "https://www.legalassist.ca/#business"
+          "@id": "https://www.legalassist.london/#business"
         },
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://www.legalassist.ca/search?q={search_term_string}",
+          "target": "https://www.legalassist.london/search?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       }
@@ -138,7 +138,7 @@ export const Head = () => {
       <meta property="og:title" content="LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON" />
       <meta property="og:description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
       <meta property="og:site_name" content="LegalAssist Paralegal Services" />
-      <meta property="og:url" content="https://www.legalassist.ca" />
+      <meta property="og:url" content="https://www.legalassist.london" />
       <meta property="og:locale" content="en_CA" />
       
       {/* Twitter Card Tags */}
@@ -152,7 +152,7 @@ export const Head = () => {
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       
       {/* Canonical URL */}
-      <link rel="canonical" href="https://www.legalassist.ca" />
+      <link rel="canonical" href="https://www.legalassist.london" />
       
       {/* Schema.org Structured Data */}
       <script type="application/ld+json">

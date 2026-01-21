@@ -12,7 +12,7 @@ export default function NotaryPublicPage() {
       <SEO 
         title="Notary Public Services | Document Notarization | London Ontario"
         description="Certified notary public in London, Ontario. Notarize affidavits, statutory declarations, certified true copies & international documents. Same-day service."
-        canonical="https://www.legalassist.ca/services/notary-public"
+        canonical="https://www.legalassist.london/services/notary-public"
       />
       <Header />
       

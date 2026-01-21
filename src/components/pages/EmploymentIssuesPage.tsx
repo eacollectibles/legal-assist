@@ -12,7 +12,7 @@ export default function EmploymentIssuesPage() {
       <SEO 
         title="Employment Issues & Workplace Disputes | London Ontario"
         description="Employment law paralegal in London, Ontario. Wrongful dismissal, workplace harassment, employment standards & severance disputes. Protect your workplace rights."
-        canonical="https://www.legalassist.ca/services/employment-issues"
+        canonical="https://www.legalassist.london/services/employment-issues"
       />
       <Header />
 
