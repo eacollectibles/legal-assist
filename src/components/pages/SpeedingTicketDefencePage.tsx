@@ -1,22 +1,19 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { ArrowRight, Phone, AlertTriangle, CheckCircle, DollarSign, Shield, Clock, Scale } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FAQSection } from '@/components/FAQSection';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function SpeedingTicketDefencePage() {
-  useEffect(() => {
-    document.title = 'Speeding Ticket Defence in Ontario | Fight Your Ticket | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Professional speeding ticket defence in Ontario. Licensed paralegal representation to fight speeding tickets, reduce fines, and protect your insurance rates.');
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+        <Breadcrumbs />
+      </div>
       
       <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -194,6 +191,10 @@ export default function SpeedingTicketDefencePage() {
           </div>
         </div>
       </section>
+
+      <FAQSection />
+
+      <RelatedServices services={relatedServicesConfig.trafficTickets} />
 
       <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
