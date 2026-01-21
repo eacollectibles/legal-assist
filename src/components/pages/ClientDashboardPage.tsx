@@ -1095,48 +1095,48 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
           </div>
 
           <Tabs defaultValue="documents" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-2 mb-8 h-auto">
-              <TabsTrigger value="documents" className="flex items-center gap-2 py-3">
-                <FileText className="w-4 h-4" />
-                <span className="hidden sm:inline">Documents</span>
-                <span className="sm:hidden">Docs</span>
-              </TabsTrigger>
-              <TabsTrigger value="signatures" className="flex items-center gap-2 py-3 relative">
-                <FileSignature className="w-4 h-4" />
-                <span className="hidden sm:inline">Sign Documents</span>
-                <span className="sm:hidden">Sign</span>
-                {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length}
-                  </span>
-                )}
-              </TabsTrigger>
-              <TabsTrigger value="profile" className="flex items-center gap-2 py-3">
-                <User className="w-4 h-4" />
-                <span className="hidden sm:inline">Personal Details</span>
-                <span className="sm:hidden">Profile</span>
-              </TabsTrigger>
-              <TabsTrigger value="payments" className="flex items-center gap-2 py-3">
-                <CreditCard className="w-4 h-4" />
-                <span className="hidden sm:inline">Payments</span>
-                <span className="sm:hidden">Pay</span>
-              </TabsTrigger>
-              <TabsTrigger value="messages" className="flex items-center gap-2 py-3">
-                <MessageSquare className="w-4 h-4" />
-                <span className="hidden sm:inline">Messages</span>
-                <span className="sm:hidden">Msgs</span>
-              </TabsTrigger>
-              <TabsTrigger value="notifications" className="flex items-center gap-2 py-3 relative">
-                {unreadCount > 0 ? <BellDot className="w-4 h-4" /> : <Bell className="w-4 h-4" />}
-                <span className="hidden sm:inline">Notifications</span>
-                <span className="sm:hidden">Alerts</span>
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {unreadCount}
-                  </span>
-                )}
-              </TabsTrigger>
-            </TabsList>
+            <div className="relative mb-8">
+              {/* Scroll shadow indicators */}
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none z-10 md:hidden" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none z-10 md:hidden" />
+              
+              <TabsList className="flex w-full overflow-x-auto scrollbar-hide md:grid md:grid-cols-6 gap-2 h-auto pb-2 md:pb-0">
+                <TabsTrigger value="documents" className="flex items-center gap-2 py-3 px-4 min-w-[120px] md:min-w-0 flex-shrink-0 md:flex-shrink">
+                  <FileText className="w-4 h-4" />
+                  <span>Documents</span>
+                </TabsTrigger>
+                <TabsTrigger value="signatures" className="flex items-center gap-2 py-3 px-4 min-w-[120px] md:min-w-0 flex-shrink-0 md:flex-shrink relative">
+                  <FileSignature className="w-4 h-4" />
+                  <span>Signatures</span>
+                  {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {generatedDocuments.filter(d => d.requiresSignature && d.status?.toLowerCase() !== 'signed').length}
+                    </span>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger value="profile" className="flex items-center gap-2 py-3 px-4 min-w-[100px] md:min-w-0 flex-shrink-0 md:flex-shrink">
+                  <User className="w-4 h-4" />
+                  <span>Profile</span>
+                </TabsTrigger>
+                <TabsTrigger value="payments" className="flex items-center gap-2 py-3 px-4 min-w-[110px] md:min-w-0 flex-shrink-0 md:flex-shrink">
+                  <CreditCard className="w-4 h-4" />
+                  <span>Payments</span>
+                </TabsTrigger>
+                <TabsTrigger value="messages" className="flex items-center gap-2 py-3 px-4 min-w-[110px] md:min-w-0 flex-shrink-0 md:flex-shrink">
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Messages</span>
+                </TabsTrigger>
+                <TabsTrigger value="notifications" className="flex items-center gap-2 py-3 px-4 min-w-[130px] md:min-w-0 flex-shrink-0 md:flex-shrink relative">
+                  {unreadCount > 0 ? <BellDot className="w-4 h-4" /> : <Bell className="w-4 h-4" />}
+                  <span>Notifications</span>
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-destructive text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {unreadCount}
+                    </span>
+                  )}
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             {/* Signatures Tab */}
             <TabsContent value="signatures">
