@@ -405,7 +405,7 @@ export default function ServicesPage() {
                 >
                   <div className="h-full bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-primary/20 flex flex-col">
                     {/* Service Image */}
-                    <div className="w-full h-48 overflow-hidden bg-gray-200">
+                    <div className="w-full h-56 sm:h-48 overflow-hidden bg-gray-200">
                       <Image src={service.image} alt={service.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
 
