@@ -39,6 +39,16 @@ import ClientIntakePage from '@/components/pages/ClientIntakePage';
 import ParalegalVsLawyerPage from '@/components/pages/ParalegalVsLawyerPage';
 import WhatIsAParalegalPage from '@/components/pages/WhatIsAParalegalPage';
 
+// SEO Landing Pages
+import LondonParalegalPage from '@/components/pages/LondonParalegalPage';
+import SpeedingTicketDefencePage from '@/components/pages/SpeedingTicketDefencePage';
+import CarelessDrivingDefencePage from '@/components/pages/CarelessDrivingDefencePage';
+import StuntDrivingDefencePage from '@/components/pages/StuntDrivingDefencePage';
+import LandlordServicesPage from '@/components/pages/LandlordServicesPage';
+import TenantServicesPage from '@/components/pages/TenantServicesPage';
+import EvictionNonPaymentPage from '@/components/pages/EvictionNonPaymentPage';
+import SmallClaimsProcessPage from '@/components/pages/SmallClaimsProcessPage';
+
 // Layout component that includes ScrollToTop
 function Layout() {
   return (
@@ -195,6 +205,39 @@ const router = createBrowserRouter([
       {
         path: "what-is-a-paralegal",
         element: <WhatIsAParalegalPage />,
+      },
+      // SEO Landing Pages
+      {
+        path: "london-paralegal",
+        element: <LondonParalegalPage />,
+      },
+      {
+        path: "services/speeding-ticket-defence",
+        element: <SpeedingTicketDefencePage />,
+      },
+      {
+        path: "services/careless-driving-defence",
+        element: <CarelessDrivingDefencePage />,
+      },
+      {
+        path: "services/stunt-driving-defence",
+        element: <StuntDrivingDefencePage />,
+      },
+      {
+        path: "services/landlord-services",
+        element: <LandlordServicesPage />,
+      },
+      {
+        path: "services/tenant-services",
+        element: <TenantServicesPage />,
+      },
+      {
+        path: "services/eviction-non-payment",
+        element: <EvictionNonPaymentPage />,
+      },
+      {
+        path: "services/small-claims-process",
+        element: <SmallClaimsProcessPage />,
       },
       {
         path: "*",
