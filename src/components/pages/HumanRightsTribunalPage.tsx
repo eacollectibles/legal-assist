@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function HumanRightsTribunalPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Human Rights Tribunal Paralegal | HRTO Representation | London Ontario"
+        description="Expert Human Rights Tribunal of Ontario representation. Discrimination complaints, workplace harassment & accommodation issues. Licensed paralegal in London, ON."
+        canonical="https://www.legalassist.ca/services/human-rights-tribunal"
+      />
       <Header />
 
       {/* Hero Section */}
