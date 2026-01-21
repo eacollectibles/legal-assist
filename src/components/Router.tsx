@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { MemberProvider } from '@/integrations';
 
 // Main Pages
 import HomePage from '@/components/pages/HomePage';
@@ -64,63 +65,65 @@ function ScrollToTop() {
 
 export default function Router() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <ScrollToTop />
-      <Routes>
-        {/* Main Pages */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/about" element={<AboutPage />} />
+    <BrowserRouter>
+      <MemberProvider>
+        <ScrollToTop />
+        <Routes>
+          {/* Main Pages */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
 
-        {/* Service Pages */}
-        <Route path="/services/small-claims" element={<SmallClaimsPage />} />
-        <Route path="/services/landlord-tenant-board" element={<LandlordTenantBoardPage />} />
-        <Route path="/services/traffic-tickets" element={<TrafficTicketsPage />} />
-        <Route path="/services/human-rights-tribunal" element={<HumanRightsTribunalPage />} />
-        <Route path="/services/employment-issues" element={<EmploymentIssuesPage />} />
-        <Route path="/services/criminal-matters" element={<CriminalMattersPage />} />
+          {/* Service Pages */}
+          <Route path="/services/small-claims" element={<SmallClaimsPage />} />
+          <Route path="/services/landlord-tenant-board" element={<LandlordTenantBoardPage />} />
+          <Route path="/services/traffic-tickets" element={<TrafficTicketsPage />} />
+          <Route path="/services/human-rights-tribunal" element={<HumanRightsTribunalPage />} />
+          <Route path="/services/employment-issues" element={<EmploymentIssuesPage />} />
+          <Route path="/services/criminal-matters" element={<CriminalMattersPage />} />
 
-        {/* Phase 1 SEO Landing Pages */}
-        <Route path="/london-paralegal" element={<LondonParalegalPage />} />
-        <Route path="/services/speeding-ticket-defence" element={<SpeedingTicketDefencePage />} />
-        <Route path="/services/careless-driving-defence" element={<CarelessDrivingDefencePage />} />
-        <Route path="/services/stunt-driving-defence" element={<StuntDrivingDefencePage />} />
-        <Route path="/services/landlord-services" element={<LandlordServicesPage />} />
-        <Route path="/services/tenant-services" element={<TenantServicesPage />} />
-        <Route path="/services/eviction-non-payment" element={<EvictionNonPaymentPage />} />
-        <Route path="/services/small-claims-process" element={<SmallClaimsProcessPage />} />
+          {/* Phase 1 SEO Landing Pages */}
+          <Route path="/london-paralegal" element={<LondonParalegalPage />} />
+          <Route path="/services/speeding-ticket-defence" element={<SpeedingTicketDefencePage />} />
+          <Route path="/services/careless-driving-defence" element={<CarelessDrivingDefencePage />} />
+          <Route path="/services/stunt-driving-defence" element={<StuntDrivingDefencePage />} />
+          <Route path="/services/landlord-services" element={<LandlordServicesPage />} />
+          <Route path="/services/tenant-services" element={<TenantServicesPage />} />
+          <Route path="/services/eviction-non-payment" element={<EvictionNonPaymentPage />} />
+          <Route path="/services/small-claims-process" element={<SmallClaimsProcessPage />} />
 
-        {/* Phase 2 SEO - Traffic Tickets */}
-        <Route path="/services/distracted-driving-defence" element={<DistractedDrivingDefencePage />} />
-        <Route path="/services/red-light-ticket-defence" element={<RedLightDefencePage />} />
-        <Route path="/services/no-insurance-defence" element={<NoInsuranceDefencePage />} />
-        <Route path="/services/demerit-points-guide" element={<DemeritPointsGuidePage />} />
-        <Route path="/services/g1-g2-violations" element={<G1G2ViolationsPage />} />
+          {/* Phase 2 SEO - Traffic Tickets */}
+          <Route path="/services/distracted-driving-defence" element={<DistractedDrivingDefencePage />} />
+          <Route path="/services/red-light-ticket-defence" element={<RedLightDefencePage />} />
+          <Route path="/services/no-insurance-defence" element={<NoInsuranceDefencePage />} />
+          <Route path="/services/demerit-points-guide" element={<DemeritPointsGuidePage />} />
+          <Route path="/services/g1-g2-violations" element={<G1G2ViolationsPage />} />
 
-        {/* Phase 2 SEO - Landlord Tenant Board */}
-        <Route path="/services/n12-personal-use-eviction" element={<N12PersonalUsePage />} />
-        <Route path="/services/n13-renovation-eviction" element={<N13RenovationEvictionPage />} />
-        <Route path="/services/above-guideline-increase" element={<AboveGuidelineIncreasePage />} />
-        <Route path="/services/maintenance-repairs" element={<MaintenanceRepairsPage />} />
-        <Route path="/services/bad-faith-eviction" element={<BadFaithEvictionPage />} />
-        <Route path="/services/rent-increase-guide" element={<RentIncreaseGuidePage />} />
-        <Route path="/services/illegal-lockout" element={<IllegalLockoutPage />} />
-        <Route path="/services/landlord-harassment" element={<HarassmentByLandlordPage />} />
+          {/* Phase 2 SEO - Landlord Tenant Board */}
+          <Route path="/services/n12-personal-use-eviction" element={<N12PersonalUsePage />} />
+          <Route path="/services/n13-renovation-eviction" element={<N13RenovationEvictionPage />} />
+          <Route path="/services/above-guideline-increase" element={<AboveGuidelineIncreasePage />} />
+          <Route path="/services/maintenance-repairs" element={<MaintenanceRepairsPage />} />
+          <Route path="/services/bad-faith-eviction" element={<BadFaithEvictionPage />} />
+          <Route path="/services/rent-increase-guide" element={<RentIncreaseGuidePage />} />
+          <Route path="/services/illegal-lockout" element={<IllegalLockoutPage />} />
+          <Route path="/services/landlord-harassment" element={<HarassmentByLandlordPage />} />
 
-        {/* Phase 2 SEO - Small Claims Court */}
-        <Route path="/services/debt-collection" element={<DebtCollectionPage />} />
-        <Route path="/services/contract-disputes" element={<ContractDisputesPage />} />
-        <Route path="/services/judgement-enforcement" element={<JudgementEnforcementPage />} />
-        <Route path="/services/property-damage-claims" element={<PropertyDamageClaimsPage />} />
+          {/* Phase 2 SEO - Small Claims Court */}
+          <Route path="/services/debt-collection" element={<DebtCollectionPage />} />
+          <Route path="/services/contract-disputes" element={<ContractDisputesPage />} />
+          <Route path="/services/judgement-enforcement" element={<JudgementEnforcementPage />} />
+          <Route path="/services/property-damage-claims" element={<PropertyDamageClaimsPage />} />
 
-        {/* Phase 2 SEO - Location Pages */}
-        <Route path="/st-thomas-paralegal" element={<StThomasParalegalPage />} />
-        <Route path="/woodstock-paralegal" element={<WoodstockParalegalPage />} />
-        <Route path="/strathroy-chatham-paralegal" element={<StrathroyChathamParalegalPage />} />
+          {/* Phase 2 SEO - Location Pages */}
+          <Route path="/st-thomas-paralegal" element={<StThomasParalegalPage />} />
+          <Route path="/woodstock-paralegal" element={<WoodstockParalegalPage />} />
+          <Route path="/strathroy-chatham-paralegal" element={<StrathroyChathamParalegalPage />} />
 
-        {/* 404 Catch-all */}
-        <Route path="*" element={<HomePage />} />
-      </Routes>
+          {/* 404 Catch-all */}
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      </MemberProvider>
     </BrowserRouter>
   );
 }
