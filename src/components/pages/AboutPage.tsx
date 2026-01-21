@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, Users, Briefcase, Shield, Award, BookOpen, Gavel, DollarSign, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Briefcase, Shield, Award, Gavel, DollarSign, Zap } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 
 export default function AboutPage() {
