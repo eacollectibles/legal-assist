@@ -12,3 +12,32 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
+
+/* Prevent iOS auto-zoom on form inputs */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  input[type="url"] {
+    font-size: 16px !important;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-width: 768px) {
+  select,
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  input[type="url"] {
+    font-size: inherit !important;
+  }
+}
