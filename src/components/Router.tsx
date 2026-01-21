@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
+import { AutoSEO } from '@/components/AutoSEO';
 
 // Main Pages - Keep HomePage and ContactPage as static imports
 import HomePage from '@/components/pages/HomePage';
@@ -194,6 +195,7 @@ export default function Router() {
     <BrowserRouter>
       <MemberProvider>
         <ScrollToTop />
+        <AutoSEO />
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
             {/* Core Pages */}
@@ -378,3 +380,4 @@ export default function Router() {
     </BrowserRouter>
   );
 }
+
