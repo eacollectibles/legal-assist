@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, CheckCircle, AlertTriangle, Car, DollarSign, ArrowLeftRight, Eye } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function UnsafeLaneChangePage() {
   useEffect(() => {
@@ -35,8 +36,8 @@ export default function UnsafeLaneChangePage() {
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
                 Free Consultation <ArrowRight className="w-5 h-5" />
               </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
+              <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
+                Call {PHONE_DISPLAY}
               </a>
             </div>
           </div>
@@ -204,8 +205,8 @@ export default function UnsafeLaneChangePage() {
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
               Book Free Consultation <ArrowRight className="w-5 h-5" />
             </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
+            <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
+              Call {PHONE_DISPLAY}
             </a>
           </div>
         </div>

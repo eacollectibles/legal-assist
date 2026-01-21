@@ -8,7 +8,7 @@ export const Head = () => {
         "name": "LegalAssist Paralegal Services",
         "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court, Landlord Tenant Board, traffic tickets, criminal matters and more.",
         "url": "https://www.legalassist.ca",
-        "telephone": "+1-519-555-0123",
+        "telephone": "+13658829515",
         "email": "info@legalassist.london",
         "address": {
           "@type": "PostalAddress",

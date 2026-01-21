@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, CheckCircle, AlertTriangle, Octagon, DollarSign, Eye, Camera } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function StopSignTicketPage() {
   useEffect(() => {

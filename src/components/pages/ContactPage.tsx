@@ -5,6 +5,7 @@ import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 // --- Utility Components for Motion & Interaction ---
 
@@ -422,7 +423,7 @@ export default function ContactPage() {
       title: 'Call Us',
       description: 'Speak directly with our team. Call us during business hours for immediate assistance.',
       action: 'Call Now',
-      actionHref: 'tel:1-800-555-0199',
+      actionHref: PHONE_HREF,
       color: 'bg-pastelgreen',
       delay: 0
     },
@@ -431,7 +432,7 @@ export default function ContactPage() {
       title: 'Text Us',
       description: 'Send us a text message and we\'ll respond as soon as possible.',
       action: 'Text Now',
-      actionHref: 'sms:1-800-555-0199',
+      actionHref: `sms:${PHONE_DISPLAY}`,
       color: 'bg-pastellavender',
       delay: 100
     },
@@ -521,8 +522,8 @@ export default function ContactPage() {
                   <p className="font-paragraph text-secondary-foreground/80 mb-2">
                     Call us during business hours
                   </p>
-                  <a href="tel:1-800-555-0199" className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
-                    1-800-555-0199
+                  <a href={PHONE_HREF} className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
+                    {PHONE_DISPLAY}
                   </a>
                 </div>
               </div>

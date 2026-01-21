@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function Footer() {
   return (
@@ -80,12 +81,12 @@ export default function Footer() {
               
               {/* Phone - clickable */}
               <a 
-                href="tel:+14165550123" 
+                href={PHONE_HREF} 
                 className="flex items-center gap-3 py-2 px-3 -mx-3 rounded-lg hover:bg-secondary-foreground/10 transition-colors group"
               >
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
                 <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 group-hover:text-primary-foreground transition-colors">
-                  (416) 555-0123
+                  {PHONE_DISPLAY}
                 </span>
               </a>
               

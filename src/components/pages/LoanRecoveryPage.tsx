@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, Clock, CheckCircle, FileText, DollarSign, AlertTriangle, Users, Handshake, CreditCard } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function LoanRecoveryPage() {
   useEffect(() => {
@@ -35,8 +36,8 @@ export default function LoanRecoveryPage() {
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
                 Free Consultation <ArrowRight className="w-5 h-5" />
               </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
+              <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
+                Call {PHONE_DISPLAY}
               </a>
             </div>
           </div>

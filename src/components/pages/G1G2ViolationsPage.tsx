@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Phone, AlertTriangle, CheckCircle, Car } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function G1G2ViolationsPage() {
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function G1G2ViolationsPage() {
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Novice drivers face stricter rules and harsher penalties. A single mistake can result in immediate licence suspension and delay your progression to a full licence. We can help protect your driving future.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Free Case Review <ArrowRight className="w-5 h-5" /></Link>
-              <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+              <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
             </div>
           </div>
         </div>
@@ -88,7 +89,7 @@ export default function G1G2ViolationsPage() {
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-8 max-w-2xl mx-auto">Do not let one mistake derail your driving future. Contact us for a free consultation.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Free Case Review <ArrowRight className="w-5 h-5" /></Link>
-            <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+            <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
           </div>
         </div>
       </section>

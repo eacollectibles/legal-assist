@@ -1,6 +1,7 @@
 import { Phone, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 interface StickyContactBarProps {
   isVisible?: boolean;
@@ -17,7 +18,7 @@ export default function StickyContactBar({ isVisible = true }: StickyContactBarP
             asChild
             className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
           >
-            <a href="tel:+1234567890" className="flex items-center justify-center gap-2">
+            <a href={PHONE_HREF} className="flex items-center justify-center gap-2">
               <Phone className="w-5 h-5" />
               <span>Call Now</span>
             </a>
