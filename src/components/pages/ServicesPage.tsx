@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Image } from '@/components/ui/image';
 import { Link } from 'react-router-dom';
+import { PHONE_HREF } from '@/lib/contact';
 
 interface Service {
   id: string;
@@ -381,11 +382,14 @@ export default function ServicesPage() {
               transition={{ duration: 0.6 }}
               className="text-center"
             >
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4">
-                Our Legal Services
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
+                Paralegal Services
               </h1>
-              <p className="font-paragraph text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-                Professional paralegal representation that gets results across all authorized practice areas in Ontario.
+              <p className="font-paragraph text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-4">
+                Serving London, Ontario and communities across Southwestern Ontario with professional paralegal representation in Small Claims Court, Landlord Tenant Board, Provincial Offences, and more.
+              </p>
+              <p className="font-paragraph text-base md:text-lg text-primary-foreground/80 max-w-2xl mx-auto">
+                Licensed by the Law Society of Ontario, we deliver accessible and affordable legal support that gets results.
               </p>
             </motion.div>
           </div>
@@ -441,7 +445,7 @@ export default function ServicesPage() {
                     {/* Learn More Button */}
                     <div className="px-6 py-4 border-t border-gray-100 mt-auto">
                       {service.id === 'small-claims' ? (
-                        <Link to="/services/small-claims" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                        <Link to="/services/small-claims-court" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
@@ -561,18 +565,27 @@ export default function ServicesPage() {
               className="text-center"
             >
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Need Legal Assistance?
+                Ready to Get Started?
               </h2>
               <p className="font-paragraph text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
                 Contact us today to discuss your legal needs with our experienced paralegal team.
               </p>
-              <a
-                href="tel:4165550123"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-paragraph px-8 py-4 rounded-lg transition-all"
-              >
-                Get in Touch
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a
+                  href={PHONE_HREF}
+                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-paragraph px-8 py-4 rounded-lg transition-all"
+                >
+                  Call Now
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-primary border-2 border-primary font-paragraph px-8 py-4 rounded-lg transition-all"
+                >
+                  Book Consultation
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </motion.div>
           </div>
         </section>
