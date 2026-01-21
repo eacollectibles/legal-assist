@@ -118,6 +118,9 @@ const DrivingWhileSuspendedPage = lazy(() => import('@/components/pages/DrivingW
 const SchoolZoneSpeedingPage = lazy(() => import('@/components/pages/SchoolZoneSpeedingPage'));
 const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltViolationsPage'));
 
+// 404 Page
+const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -250,7 +253,7 @@ export default function Router() {
             <Route path="/services/seatbelt-violations" element={<SeatbeltViolationsPage />} />
 
             {/* 404 Catch-all */}
-            <Route path="*" element={<HomePage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </MemberProvider>
