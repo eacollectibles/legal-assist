@@ -64,7 +64,7 @@ function ScrollToTop() {
 
 export default function Router() {
   return (
-    <>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <Routes>
         {/* Main Pages */}
@@ -121,6 +121,6 @@ export default function Router() {
         {/* 404 Catch-all */}
         <Route path="*" element={<HomePage />} />
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }
