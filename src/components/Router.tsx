@@ -26,8 +26,8 @@ import EvictionNonPaymentPage from '@/components/pages/EvictionNonPaymentPage';
 import SmallClaimsProcessPage from '@/components/pages/SmallClaimsProcessPage';
 
 // Phase 2 SEO - Traffic Defence
-import DistractedDrivingPage from '@/components/pages/DistractedDrivingPage';
-import RedLightTicketsPage from '@/components/pages/RedLightTicketsPage';
+import DistractedDrivingDefencePage from '@/components/pages/DistractedDrivingDefencePage';
+import RedLightDefencePage from '@/components/pages/RedLightDefencePage';
 import NoInsuranceDefencePage from '@/components/pages/NoInsuranceDefencePage';
 import DemeritPointsGuidePage from '@/components/pages/DemeritPointsGuidePage';
 import G1G2ViolationsPage from '@/components/pages/G1G2ViolationsPage';
@@ -56,7 +56,7 @@ import StrathroyChathamParalegalPage from '@/components/pages/StrathroyChathamPa
 // Phase 3 - Previously Unrouted Pages
 import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
 import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
-import MediationPage from '@/components/pages/MediationPage';
+import MediationServicesPage from '@/components/pages/MediationServicesPage';
 import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
 import DefamationSlanderPage from '@/components/pages/DefamationSlanderPage';
 import BailHearingsPage from '@/components/pages/BailHearingsPage';
@@ -129,8 +129,8 @@ export default function Router() {
           <Route path="/services/small-claims-process" element={<SmallClaimsProcessPage />} />
 
           {/* Phase 2 SEO - Traffic Defence */}
-          <Route path="/services/distracted-driving" element={<DistractedDrivingPage />} />
-          <Route path="/services/red-light-tickets" element={<RedLightTicketsPage />} />
+          <Route path="/services/distracted-driving" element={<DistractedDrivingDefencePage />} />
+          <Route path="/services/red-light-tickets" element={<RedLightDefencePage />} />
           <Route path="/services/no-insurance-defence" element={<NoInsuranceDefencePage />} />
           <Route path="/services/demerit-points-guide" element={<DemeritPointsGuidePage />} />
           <Route path="/services/g1-g2-violations" element={<G1G2ViolationsPage />} />
@@ -159,7 +159,7 @@ export default function Router() {
           {/* Phase 3 - Previously Unrouted Pages */}
           <Route path="/services/notary-public" element={<NotaryPublicPage />} />
           <Route path="/services/commissioner-of-oaths" element={<CommissionerOfOathsPage />} />
-          <Route path="/services/mediation" element={<MediationPage />} />
+          <Route path="/services/mediation" element={<MediationServicesPage />} />
           <Route path="/services/social-benefits-tribunal" element={<SocialBenefitsTribunalPage />} />
           <Route path="/services/defamation-slander" element={<DefamationSlanderPage />} />
           <Route path="/services/bail-hearings" element={<BailHearingsPage />} />
