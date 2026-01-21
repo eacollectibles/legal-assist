@@ -1,20 +1,18 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import Index from '@/pages/Index';
-import NotFound from '@/pages/NotFound';
-import Contact from '@/pages/Contact';
-import About from '@/pages/About';
-import SmallClaimsCourt from '@/pages/SmallClaimsCourt';
-import LandlordTenantBoard from '@/pages/LandlordTenantBoard';
-import TrafficTickets from '@/pages/TrafficTickets';
-import HumanRightsTribunal from '@/pages/HumanRightsTribunal';
-import EmploymentIssues from '@/pages/EmploymentIssues';
-import CriminalMatters from '@/pages/CriminalMatters';
-import ConferenceRoom from '@/pages/ConferenceRoom';
-import LSOCompliance from '@/pages/LSOCompliance';
-import Terms from '@/pages/Terms';
-import Privacy from '@/pages/Privacy';
-import Portal from '@/pages/Portal';
+
+// Main Pages
+import HomePage from '@/components/pages/HomePage';
+import ContactPage from '@/components/pages/ContactPage';
+import AboutPage from '@/components/pages/AboutPage';
+
+// Service Pages
+import SmallClaimsPage from '@/components/pages/SmallClaimsPage';
+import LandlordTenantBoardPage from '@/components/pages/LandlordTenantBoardPage';
+import TrafficTicketsPage from '@/components/pages/TrafficTicketsPage';
+import HumanRightsTribunalPage from '@/components/pages/HumanRightsTribunalPage';
+import EmploymentIssuesPage from '@/components/pages/EmploymentIssuesPage';
+import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
 
 // Phase 1 SEO Pages
 import LondonParalegalPage from '@/components/pages/LondonParalegalPage';
@@ -70,22 +68,17 @@ export default function Router() {
       <ScrollToTop />
       <Routes>
         {/* Main Pages */}
-        <Route path="/" element={<Index />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/lso-compliance" element={<LSOCompliance />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/portal" element={<Portal />} />
-        <Route path="/conference-room" element={<ConferenceRoom />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
 
         {/* Service Pages */}
-        <Route path="/services/small-claims" element={<SmallClaimsCourt />} />
-        <Route path="/services/landlord-tenant-board" element={<LandlordTenantBoard />} />
-        <Route path="/services/traffic-tickets" element={<TrafficTickets />} />
-        <Route path="/services/human-rights-tribunal" element={<HumanRightsTribunal />} />
-        <Route path="/services/employment-issues" element={<EmploymentIssues />} />
-        <Route path="/services/criminal-matters" element={<CriminalMatters />} />
+        <Route path="/services/small-claims" element={<SmallClaimsPage />} />
+        <Route path="/services/landlord-tenant-board" element={<LandlordTenantBoardPage />} />
+        <Route path="/services/traffic-tickets" element={<TrafficTicketsPage />} />
+        <Route path="/services/human-rights-tribunal" element={<HumanRightsTribunalPage />} />
+        <Route path="/services/employment-issues" element={<EmploymentIssuesPage />} />
+        <Route path="/services/criminal-matters" element={<CriminalMattersPage />} />
 
         {/* Phase 1 SEO Landing Pages */}
         <Route path="/london-paralegal" element={<LondonParalegalPage />} />
@@ -126,7 +119,7 @@ export default function Router() {
         <Route path="/strathroy-chatham-paralegal" element={<StrathroyChathamParalegalPage />} />
 
         {/* 404 Catch-all */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<HomePage />} />
       </Routes>
     </>
   );
