@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { ArrowRight, Phone, AlertTriangle, CheckCircle, DollarSign, Shield, Scale, XCircle, Car } from 'lucide-react';
+import { ArrowRight, Phone, AlertTriangle, CheckCircle, DollarSign, XCircle, Car } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -13,7 +13,6 @@ export default function StuntDrivingDefencePage() {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-red-100 via-background to-pastelbeige/20 py-16 md:py-24">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="max-w-4xl">
@@ -21,41 +20,20 @@ export default function StuntDrivingDefencePage() {
               <AlertTriangle className="w-5 h-5" />
               <span className="font-paragraph text-sm font-medium">CRITICAL - Immediate Action Required</span>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Stunt Driving &amp; Street Racing Defence
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Charged with stunt driving or going 50+ km/h over the limit? Your vehicle was impounded and licence suspended on the spot. You need immediate legal help to fight these charges.
-            </p>
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">Stunt Driving &amp; Street Racing Defence</h1>
+            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Charged with stunt driving or going 50+ km/h over the limit? Your vehicle was impounded and licence suspended on the spot. You need immediate legal help to fight these charges.</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link 
-                to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-red-600 text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-700"
-              >
-                Get Urgent Help Now
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a 
-                href="tel:+14165550123"
-                className="inline-flex items-center justify-center gap-2 border-2 border-red-600 text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-50"
-              >
-                <Phone className="w-5 h-5" />
-                Call Now
-              </a>
+              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-red-600 text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-700">Get Urgent Help Now <ArrowRight className="w-5 h-5" /></Link>
+              <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-red-600 text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-50"><Phone className="w-5 h-5" /> (519) 601-1127</a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Immediate Consequences */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">
-            Immediate Roadside Consequences
-          </h2>
-          <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">
-            Unlike regular speeding tickets, stunt driving triggers immediate penalties at roadside.
-          </p>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Immediate Roadside Consequences</h2>
+          <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">Unlike regular speeding tickets, stunt driving triggers immediate penalties at roadside.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-center">
@@ -79,12 +57,9 @@ export default function StuntDrivingDefencePage() {
         </div>
       </section>
 
-      {/* Conviction Penalties */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
-            Penalties If Convicted
-          </h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Penalties If Convicted</h2>
           
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg border border-red-200 overflow-hidden">
@@ -124,69 +99,40 @@ export default function StuntDrivingDefencePage() {
         </div>
       </section>
 
-      {/* What Counts as Stunt Driving */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
-            What Counts as Stunt Driving?
-          </h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">What Counts as Stunt Driving?</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige">
               <h3 className="font-heading text-lg font-bold text-foreground mb-4">Speed-Based:</h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">40+ km/h over limit in zones under 80 km/h</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">50+ km/h over limit in zones 80 km/h or higher</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">150+ km/h regardless of posted limit</span>
-                </li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">40+ km/h over limit in zones under 80 km/h</span></li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">50+ km/h over limit in zones 80 km/h or higher</span></li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">150+ km/h regardless of posted limit</span></li>
               </ul>
             </div>
             
             <div className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige">
               <h3 className="font-heading text-lg font-bold text-foreground mb-4">Behaviour-Based:</h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">Street racing or contest</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">Burnouts, doughnuts, drifting</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">Driving with someone in trunk or outside vehicle</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/70">Intentionally cutting off another vehicle</span>
-                </li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Street racing or contest</span></li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Burnouts, doughnuts, drifting</span></li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Driving with someone in trunk or outside vehicle</span></li>
+                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Intentionally cutting off another vehicle</span></li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Defence Strategies */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">
-            Our Defence Strategies
-          </h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Our Defence Strategies</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-5 h-5 text-primary" />
-              </div>
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
               <div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Challenge Speed Evidence</h3>
                 <p className="font-paragraph text-foreground/70">Was the radar/laser properly calibrated? Was there visual confirmation? Were there other vehicles in the area?</p>
@@ -194,9 +140,7 @@ export default function StuntDrivingDefencePage() {
             </div>
             
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-5 h-5 text-primary" />
-              </div>
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
               <div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Negotiate Charge Reduction</h3>
                 <p className="font-paragraph text-foreground/70">In some cases, we can negotiate reduction to a lesser speeding offence that avoids the severe stunt driving penalties.</p>
@@ -204,9 +148,7 @@ export default function StuntDrivingDefencePage() {
             </div>
             
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-5 h-5 text-primary" />
-              </div>
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
               <div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Challenge Signage</h3>
                 <p className="font-paragraph text-foreground/70">Were speed limit signs properly posted and visible? Speed zone changes must be properly marked.</p>
@@ -214,9 +156,7 @@ export default function StuntDrivingDefencePage() {
             </div>
             
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-5 h-5 text-primary" />
-              </div>
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
               <div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Officer Cross-Examination</h3>
                 <p className="font-paragraph text-foreground/70">We thoroughly cross-examine the officer on their training, procedures, and observations.</p>
@@ -226,30 +166,13 @@ export default function StuntDrivingDefencePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 md:py-24 bg-red-600 text-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            Time is Critical
-          </h2>
-          <p className="font-paragraph text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-            Stunt driving charges have strict court deadlines. Contact us immediately for a free consultation. We will review your case and explain your options.
-          </p>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Time is Critical</h2>
+          <p className="font-paragraph text-lg text-white/90 mb-8 max-w-2xl mx-auto">Stunt driving charges have strict court deadlines. Contact us immediately for a free consultation. We will review your case and explain your options.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-white text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-gray-100"
-            >
-              Get Free Case Review
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a 
-              href="tel:+14165550123"
-              className="inline-flex items-center justify-center gap-2 border-2 border-white text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-white/10"
-            >
-              <Phone className="w-5 h-5" />
-              Call Now
-            </a>
+            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-gray-100">Get Free Case Review <ArrowRight className="w-5 h-5" /></Link>
+            <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-white/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
           </div>
         </div>
       </section>
