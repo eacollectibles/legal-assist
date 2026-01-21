@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, AlertCircle, FileText, Clock, DollarSign } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function TrafficTicketsPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Traffic Ticket Paralegal | Fight Speeding Tickets | London Ontario"
+        description="Fight your traffic ticket with a licensed paralegal in London, Ontario. Speeding, careless driving, stunt driving defence. Reduce fines & demerit points."
+        canonical="https://www.legalassist.ca/services/traffic-tickets"
+      />
       <Header />
 
       {/* Hero Section */}
