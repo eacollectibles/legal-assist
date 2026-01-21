@@ -1,45 +1,22 @@
-import { MemberProvider } from '@/integrations';
-import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
-import { ScrollToTop } from '@/lib/scroll-to-top';
-import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
-import HomePage from '@/components/pages/HomePage';
-import AboutPage from '@/components/pages/AboutPage';
-import ServicesPage from '@/components/pages/ServicesPage';
-import SmallClaimsPage from '@/components/pages/SmallClaimsPage';
-import LandlordTenantBoardPage from '@/components/pages/LandlordTenantBoardPage';
-import HumanRightsTribunalPage from '@/components/pages/HumanRightsTribunalPage';
-import TrafficTicketsPage from '@/components/pages/TrafficTicketsPage';
-import BookingPage from '@/components/pages/BookingPage';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import Index from '@/pages/Index';
+import NotFound from '@/pages/NotFound';
+import Contact from '@/pages/Contact';
+import About from '@/pages/About';
+import SmallClaimsCourt from '@/pages/SmallClaimsCourt';
+import LandlordTenantBoard from '@/pages/LandlordTenantBoard';
+import TrafficTickets from '@/pages/TrafficTickets';
+import HumanRightsTribunal from '@/pages/HumanRightsTribunal';
+import EmploymentIssues from '@/pages/EmploymentIssues';
+import CriminalMatters from '@/pages/CriminalMatters';
+import ConferenceRoom from '@/pages/ConferenceRoom';
+import LSOCompliance from '@/pages/LSOCompliance';
+import Terms from '@/pages/Terms';
+import Privacy from '@/pages/Privacy';
+import Portal from '@/pages/Portal';
 
-import MediationServicesPage from '@/components/pages/MediationServicesPage';
-import CriminalMattersPage from '@/components/pages/CriminalMattersPage';
-import BailHearingsPage from '@/components/pages/BailHearingsPage';
-import NotaryPublicPage from '@/components/pages/NotaryPublicPage';
-import CommissionerOfOathsPage from '@/components/pages/CommissionerOfOathsPage';
-import SocialBenefitsTribunalPage from '@/components/pages/SocialBenefitsTribunalPage';
-import DefamationSlanderPage from '@/components/pages/DefamationSlanderPage';
-import EmploymentIssuesPage from '@/components/pages/EmploymentIssuesPage';
-import ContactPage from '@/components/pages/ContactPage';
-import MeetingDashboardPage from '@/components/pages/MeetingDashboardPage';
-import MeetingRequestPage from '@/components/pages/MeetingRequestPage';
-import AdminMeetingRequestsPage from '@/components/pages/AdminMeetingRequestsPage';
-import AdminBookingsPage from '@/components/pages/AdminBookingsPage';
-import ClientSignupPage from '@/components/pages/ClientSignupPage';
-import ClientLoginPage from '@/components/pages/ClientLoginPage';
-import ClientDashboardPage from '@/components/pages/ClientDashboardPage';
-import AdminMessagesPage from '@/components/pages/AdminMessagesPage';
-import AdminUserManagementPage from '@/components/pages/AdminUserManagementPage';
-import AdminUserDetailPage from '@/components/pages/AdminUserDetailPage';
-import GrantAdminPage from '@/components/pages/GrantAdminPage';
-import ParalegalDashboardPage from '@/components/pages/ParalegalDashboardPage';
-import DocumentWorkflowPage from '@/components/pages/DocumentWorkflowPage';
-import PublicUploadPage from '@/components/pages/PublicUploadPage';
-import UploadTokenManagementPage from '@/components/pages/UploadTokenManagementPage';
-import ClientIntakePage from '@/components/pages/ClientIntakePage';
-import ParalegalVsLawyerPage from '@/components/pages/ParalegalVsLawyerPage';
-import WhatIsAParalegalPage from '@/components/pages/WhatIsAParalegalPage';
-
-// SEO Landing Pages
+// Phase 1 SEO Pages
 import LondonParalegalPage from '@/components/pages/LondonParalegalPage';
 import SpeedingTicketDefencePage from '@/components/pages/SpeedingTicketDefencePage';
 import CarelessDrivingDefencePage from '@/components/pages/CarelessDrivingDefencePage';
@@ -49,210 +26,108 @@ import TenantServicesPage from '@/components/pages/TenantServicesPage';
 import EvictionNonPaymentPage from '@/components/pages/EvictionNonPaymentPage';
 import SmallClaimsProcessPage from '@/components/pages/SmallClaimsProcessPage';
 
-// Layout component that includes ScrollToTop
-function Layout() {
+// Phase 2 SEO Pages - Traffic
+import DistractedDrivingDefencePage from '@/components/pages/DistractedDrivingDefencePage';
+import RedLightDefencePage from '@/components/pages/RedLightDefencePage';
+import NoInsuranceDefencePage from '@/components/pages/NoInsuranceDefencePage';
+import DemeritPointsGuidePage from '@/components/pages/DemeritPointsGuidePage';
+import G1G2ViolationsPage from '@/components/pages/G1G2ViolationsPage';
+
+// Phase 2 SEO Pages - LTB
+import N12PersonalUsePage from '@/components/pages/N12PersonalUsePage';
+import N13RenovationEvictionPage from '@/components/pages/N13RenovationEvictionPage';
+import AboveGuidelineIncreasePage from '@/components/pages/AboveGuidelineIncreasePage';
+import MaintenanceRepairsPage from '@/components/pages/MaintenanceRepairsPage';
+import BadFaithEvictionPage from '@/components/pages/BadFaithEvictionPage';
+import RentIncreaseGuidePage from '@/components/pages/RentIncreaseGuidePage';
+import IllegalLockoutPage from '@/components/pages/IllegalLockoutPage';
+import HarassmentByLandlordPage from '@/components/pages/HarassmentByLandlordPage';
+
+// Phase 2 SEO Pages - Small Claims
+import DebtCollectionPage from '@/components/pages/DebtCollectionPage';
+import ContractDisputesPage from '@/components/pages/ContractDisputesPage';
+import JudgementEnforcementPage from '@/components/pages/JudgementEnforcementPage';
+import PropertyDamageClaimsPage from '@/components/pages/PropertyDamageClaimsPage';
+
+// Phase 2 SEO Pages - Location
+import StThomasParalegalPage from '@/components/pages/StThomasParalegalPage';
+import WoodstockParalegalPage from '@/components/pages/WoodstockParalegalPage';
+import StrathroyChathamParalegalPage from '@/components/pages/StrathroyChathamParalegalPage';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
+export default function Router() {
   return (
     <>
       <ScrollToTop />
-      <Outlet />
+      <Routes>
+        {/* Main Pages */}
+        <Route path="/" element={<Index />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/lso-compliance" element={<LSOCompliance />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/portal" element={<Portal />} />
+        <Route path="/conference-room" element={<ConferenceRoom />} />
+
+        {/* Service Pages */}
+        <Route path="/services/small-claims" element={<SmallClaimsCourt />} />
+        <Route path="/services/landlord-tenant-board" element={<LandlordTenantBoard />} />
+        <Route path="/services/traffic-tickets" element={<TrafficTickets />} />
+        <Route path="/services/human-rights-tribunal" element={<HumanRightsTribunal />} />
+        <Route path="/services/employment-issues" element={<EmploymentIssues />} />
+        <Route path="/services/criminal-matters" element={<CriminalMatters />} />
+
+        {/* Phase 1 SEO Landing Pages */}
+        <Route path="/london-paralegal" element={<LondonParalegalPage />} />
+        <Route path="/services/speeding-ticket-defence" element={<SpeedingTicketDefencePage />} />
+        <Route path="/services/careless-driving-defence" element={<CarelessDrivingDefencePage />} />
+        <Route path="/services/stunt-driving-defence" element={<StuntDrivingDefencePage />} />
+        <Route path="/services/landlord-services" element={<LandlordServicesPage />} />
+        <Route path="/services/tenant-services" element={<TenantServicesPage />} />
+        <Route path="/services/eviction-non-payment" element={<EvictionNonPaymentPage />} />
+        <Route path="/services/small-claims-process" element={<SmallClaimsProcessPage />} />
+
+        {/* Phase 2 SEO - Traffic Tickets */}
+        <Route path="/services/distracted-driving-defence" element={<DistractedDrivingDefencePage />} />
+        <Route path="/services/red-light-ticket-defence" element={<RedLightDefencePage />} />
+        <Route path="/services/no-insurance-defence" element={<NoInsuranceDefencePage />} />
+        <Route path="/services/demerit-points-guide" element={<DemeritPointsGuidePage />} />
+        <Route path="/services/g1-g2-violations" element={<G1G2ViolationsPage />} />
+
+        {/* Phase 2 SEO - Landlord Tenant Board */}
+        <Route path="/services/n12-personal-use-eviction" element={<N12PersonalUsePage />} />
+        <Route path="/services/n13-renovation-eviction" element={<N13RenovationEvictionPage />} />
+        <Route path="/services/above-guideline-increase" element={<AboveGuidelineIncreasePage />} />
+        <Route path="/services/maintenance-repairs" element={<MaintenanceRepairsPage />} />
+        <Route path="/services/bad-faith-eviction" element={<BadFaithEvictionPage />} />
+        <Route path="/services/rent-increase-guide" element={<RentIncreaseGuidePage />} />
+        <Route path="/services/illegal-lockout" element={<IllegalLockoutPage />} />
+        <Route path="/services/landlord-harassment" element={<HarassmentByLandlordPage />} />
+
+        {/* Phase 2 SEO - Small Claims Court */}
+        <Route path="/services/debt-collection" element={<DebtCollectionPage />} />
+        <Route path="/services/contract-disputes" element={<ContractDisputesPage />} />
+        <Route path="/services/judgement-enforcement" element={<JudgementEnforcementPage />} />
+        <Route path="/services/property-damage-claims" element={<PropertyDamageClaimsPage />} />
+
+        {/* Phase 2 SEO - Location Pages */}
+        <Route path="/st-thomas-paralegal" element={<StThomasParalegalPage />} />
+        <Route path="/woodstock-paralegal" element={<WoodstockParalegalPage />} />
+        <Route path="/strathroy-chatham-paralegal" element={<StrathroyChathamParalegalPage />} />
+
+        {/* 404 Catch-all */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
-  );
-}
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "about",
-        element: <AboutPage />,
-      },
-      {
-        path: "services",
-        element: <ServicesPage />,
-      },
-      {
-        path: "services/small-claims",
-        element: <SmallClaimsPage />,
-      },
-      {
-        path: "services/landlord-tenant-board",
-        element: <LandlordTenantBoardPage />,
-      },
-      {
-        path: "services/human-rights-tribunal",
-        element: <HumanRightsTribunalPage />,
-      },
-      {
-        path: "services/traffic-tickets",
-        element: <TrafficTicketsPage />,
-      },
-
-      {
-        path: "services/mediation",
-        element: <MediationServicesPage />,
-      },
-      {
-        path: "services/criminal-matters",
-        element: <CriminalMattersPage />,
-      },
-      {
-        path: "services/bail-hearings",
-        element: <BailHearingsPage />,
-      },
-      {
-        path: "services/notary-public",
-        element: <NotaryPublicPage />,
-      },
-      {
-        path: "services/commissioner-of-oaths",
-        element: <CommissionerOfOathsPage />,
-      },
-      {
-        path: "services/social-benefits-tribunal",
-        element: <SocialBenefitsTribunalPage />,
-      },
-      {
-        path: "services/defamation-slander",
-        element: <DefamationSlanderPage />,
-      },
-      {
-        path: "services/employment-issues",
-        element: <EmploymentIssuesPage />,
-      },
-      {
-        path: "booking",
-        element: <BookingPage />,
-      },
-      {
-        path: "contact",
-        element: <ContactPage />,
-      },
-      {
-        path: "dashboard",
-        element: <MeetingDashboardPage />,
-      },
-      {
-        path: "meeting-request",
-        element: <MeetingRequestPage />,
-      },
-      {
-        path: "admin/meeting-requests",
-        element: <AdminMeetingRequestsPage />,
-      },
-      {
-        path: "admin/bookings",
-        element: <AdminBookingsPage />,
-      },
-      {
-        path: "admin/messages",
-        element: <AdminMessagesPage />,
-      },
-      {
-        path: "admin/users",
-        element: <AdminUserManagementPage />,
-      },
-      {
-        path: "admin/users/:userId",
-        element: <AdminUserDetailPage />,
-      },
-      {
-        path: "client-signup",
-        element: <ClientSignupPage />,
-      },
-      {
-        path: "client-login",
-        element: <ClientLoginPage />,
-      },
-      {
-        path: "client-dashboard",
-        element: <ClientDashboardPage />,
-      },
-      {
-        path: "client-intake",
-        element: <ClientIntakePage />,
-      },
-      {
-        path: "grant-admin",
-        element: <GrantAdminPage />,
-      },
-      {
-        path: "paralegal-dashboard",
-        element: <ParalegalDashboardPage />,
-      },
-      {
-        path: "document-workflow",
-        element: <DocumentWorkflowPage />,
-      },
-      {
-        path: "upload/:token",
-        element: <PublicUploadPage />,
-      },
-      {
-        path: "upload-token-management",
-        element: <UploadTokenManagementPage />,
-      },
-      {
-        path: "paralegal-vs-lawyer",
-        element: <ParalegalVsLawyerPage />,
-      },
-      {
-        path: "what-is-a-paralegal",
-        element: <WhatIsAParalegalPage />,
-      },
-      // SEO Landing Pages
-      {
-        path: "london-paralegal",
-        element: <LondonParalegalPage />,
-      },
-      {
-        path: "services/speeding-ticket-defence",
-        element: <SpeedingTicketDefencePage />,
-      },
-      {
-        path: "services/careless-driving-defence",
-        element: <CarelessDrivingDefencePage />,
-      },
-      {
-        path: "services/stunt-driving-defence",
-        element: <StuntDrivingDefencePage />,
-      },
-      {
-        path: "services/landlord-services",
-        element: <LandlordServicesPage />,
-      },
-      {
-        path: "services/tenant-services",
-        element: <TenantServicesPage />,
-      },
-      {
-        path: "services/eviction-non-payment",
-        element: <EvictionNonPaymentPage />,
-      },
-      {
-        path: "services/small-claims-process",
-        element: <SmallClaimsProcessPage />,
-      },
-      {
-        path: "*",
-        element: <Navigate to="/" replace />,
-      },
-    ],
-  },
-], {
-  basename: import.meta.env.BASE_NAME,
-});
-
-export default function AppRouter() {
-  return (
-    <MemberProvider>
-      <RouterProvider router={router} />
-    </MemberProvider>
   );
 }
