@@ -130,6 +130,9 @@ export const Head = () => {
       <meta name="geo.region" content="CA-ON" />
       <meta name="geo.placename" content="London" />
       
+      {/* Google Search Console Verification */}
+      <meta name="google-site-verification" content="88t7djZ30uDHKlJfhoAD5kkD7PZimfJmVxGriDB8Yyk" />
+      
       {/* Open Graph Tags for Social Sharing */}
       <meta property="og:type" content="website" />
       <meta property="og:title" content="LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON" />
