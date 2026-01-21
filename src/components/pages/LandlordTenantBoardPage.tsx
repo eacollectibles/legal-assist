@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
@@ -8,6 +9,11 @@ import { Link } from 'react-router-dom';
 export default function LandlordTenantBoardPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Landlord Tenant Board Paralegal | LTB Representation | London Ontario"
+        description="Licensed paralegal for Landlord and Tenant Board matters in London, Ontario. Eviction defence, rent disputes, N4/N12 applications & LTB hearings. Free consultation."
+        canonical="https://www.legalassist.ca/services/landlord-tenant-board"
+      />
       <Header />
 
       {/* Hero Section */}
