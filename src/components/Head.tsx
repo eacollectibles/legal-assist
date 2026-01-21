@@ -1,14 +1,25 @@
+/**
+ * Head.tsx - Global Head Elements
+ * 
+ * Contains ONLY static/global elements that don't change per page:
+ * - Structured data (Schema.org)
+ * - Font preloading
+ * - Theme color
+ * - Google verification
+ * 
+ * Per-page SEO (title, description, canonical) is handled by AutoSEO.tsx
+ */
 export const Head = () => {
   const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "LegalService",
-        "@id": "https://www.legalassist.london/#business",
+        "@id": "https://legalassist.london/#business",
         "name": "LegalAssist Paralegal Services",
         "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court, Landlord Tenant Board, traffic tickets, criminal matters and more.",
-        "url": "https://www.legalassist.london",
-        "telephone": "+13658829515",
+        "url": "https://legalassist.london",
+        "telephone": "+15196011110",
         "email": "info@legalassist.london",
         "address": {
           "@type": "PostalAddress",
@@ -67,7 +78,7 @@ export const Head = () => {
               "itemOffered": {
                 "@type": "Service",
                 "name": "Small Claims Court Representation",
-                "description": "Legal representation for civil disputes up to $50,000"
+                "description": "Legal representation for civil disputes up to $35,000"
               }
             },
             {
@@ -103,16 +114,11 @@ export const Head = () => {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.legalassist.london/#website",
-        "url": "https://www.legalassist.london",
+        "@id": "https://legalassist.london/#website",
+        "url": "https://legalassist.london",
         "name": "LegalAssist Paralegal Services",
         "publisher": {
-          "@id": "https://www.legalassist.london/#business"
-        },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://www.legalassist.london/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
+          "@id": "https://legalassist.london/#business"
         }
       }
     ]
@@ -120,49 +126,45 @@ export const Head = () => {
 
   return (
     <>
+      {/* Basic charset and viewport - required */}
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
-      <meta name="keywords" content="paralegal London Ontario, Small Claims Court, Landlord Tenant Board, traffic ticket paralegal, licensed paralegal, LTB representation, HRTO" />
+      
+      {/* Static meta tags that don't change per page */}
       <meta name="author" content="LegalAssist Paralegal Services" />
-      <meta name="robots" content="index, follow" />
       <meta name="language" content="English" />
-      <meta name="geo.region" content="CA-ON" />
-      <meta name="geo.placename" content="London" />
       
       {/* Google Search Console Verification */}
       <meta name="google-site-verification" content="88t7djZ30uDHKlJfhoAD5kkD7PZimfJmVxGriDB8Yyk" />
       
-      {/* Open Graph Tags for Social Sharing */}
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content="LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON" />
-      <meta property="og:description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
-      <meta property="og:site_name" content="LegalAssist Paralegal Services" />
-      <meta property="og:url" content="https://www.legalassist.london" />
-      <meta property="og:locale" content="en_CA" />
-      
-      {/* Twitter Card Tags */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON" />
-      <meta name="twitter:description" content="Licensed paralegal services in London, Ontario. Affordable representation for traffic tickets, Small Claims Court, landlord-tenant disputes & more. Free consultation." />
-      
-      {/* Additional SEO Tags */}
+      {/* Theme and PWA */}
       <meta name="theme-color" content="#B94A1F" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       
-      {/* Canonical URL */}
-      <link rel="canonical" href="https://www.legalassist.london" />
+      {/* 
+        NOTE: The following are now handled dynamically by AutoSEO.tsx:
+        - <title>
+        - meta description
+        - meta keywords  
+        - meta robots
+        - canonical URL
+        - og:title, og:description, og:url
+        - twitter:title, twitter:description
+        - geo.region, geo.placename
+      */}
       
-      {/* Schema.org Structured Data */}
+      {/* Schema.org Structured Data - global business info */}
       <script type="application/ld+json">
         {JSON.stringify(schemaData)}
       </script>
       
-      {/* Fonts */}
+      {/* Font Preloading */}
       <link rel="preconnect" href="https://static.parastorage.com" />
       <link rel="preload" as="font" href="https://static.parastorage.com/fonts/bitter" type="font/woff2" crossOrigin="anonymous" />
       <link rel="preload" as="font" href="https://static.parastorage.com/fonts/raleway" type="font/woff2" crossOrigin="anonymous" />
     </> 
   );
 };
+
+export default Head;
