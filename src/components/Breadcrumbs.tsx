@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
-import { getSEOConfig } from './seoConfig';
+import { getSEOConfig } from '@/components/seoConfig';
 
 /**
  * Breadcrumb Component

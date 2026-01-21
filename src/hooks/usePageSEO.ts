@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getSEOConfig, SEOConfig } from '../components/seoConfig';
+import { getSEOConfig, SEOConfig } from '@/components/seoConfig';
 
 /**
  * usePageSEO Hook

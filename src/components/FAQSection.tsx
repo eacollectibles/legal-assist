@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
-import { getSEOConfig, FAQ } from './seoConfig';
+import { getSEOConfig, FAQ } from '@/components/seoConfig';
 
 /**
  * FAQ Section Component
