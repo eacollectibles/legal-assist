@@ -315,6 +315,41 @@ export interface LegalServiceCategories {
 
 
 /**
+ * Collection ID: locations
+ * Interface for Locations
+ */
+export interface Locations {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  name?: string;
+  /** @wixFieldType text */
+  slug?: string;
+  /** @wixFieldType text */
+  region?: string;
+  /** @wixFieldType text */
+  type?: string;
+  /** @wixFieldType number */
+  population?: number;
+  /** @wixFieldType text */
+  nearestCourt?: string;
+  /** @wixFieldType number */
+  distanceFromLondon?: number;
+  /** @wixFieldType text */
+  serviceAreas?: string;
+  /** @wixFieldType text */
+  highways?: string;
+  /** @wixFieldType text */
+  description?: string;
+  /** @wixFieldType text */
+  metaTitle?: string;
+  /** @wixFieldType text */
+  metaDescription?: string;
+}
+
+
+/**
  * Collection ID: messages
  * Interface for Messages
  */
