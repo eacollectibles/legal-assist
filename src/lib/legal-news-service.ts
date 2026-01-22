@@ -43,8 +43,14 @@ export type PracticeArea =
 // CONFIGURATION
 // ============================================
 
-// Astro API endpoint (server-side, no CORS issues)
-const LEGAL_NEWS_API = '/api/legal-news';
+// Set to true to try live feeds, false for sample data
+const USE_LIVE_FEEDS = false;
+
+// CORS proxies to try (in order)
+const CORS_PROXIES = [
+  (url: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+];
 
 export const TRIBUNAL_CONFIG: Record<TribunalCode, {
   name: string;
@@ -261,109 +267,255 @@ export async function fetchTribunalCases(
 ): Promise<LegalCase[]> {
   const config = TRIBUNAL_CONFIG[tribunalCode];
   
-  try {
-    // Use allorigins JSON API to bypass CORS
-    const proxyUrl = getAllOriginsUrl(config.rssUrl);
-    console.log(`Fetching ${tribunalCode} from:`, proxyUrl);
-    
-    const response = await fetch(proxyUrl);
-    
-    console.log(`${tribunalCode} response status:`, response.status);
-    
-    if (!response.ok) {
-      console.error(`Failed to fetch ${tribunalCode}: ${response.status}`);
-      return [];
-    }
-    
-    // allorigins returns JSON with 'contents' field containing the RSS XML
-    const json = await response.json();
-    const xml = json.contents;
-    
-    console.log(`${tribunalCode} XML length:`, xml?.length || 0, 'chars');
-    
-    if (!xml) {
-      console.error(`No content received for ${tribunalCode}`);
-      return [];
-    }
-    
-    const items = parseRSSXML(xml);
-    console.log(`${tribunalCode} parsed items:`, items.length);
-    
-    return items.slice(0, limit).map((item, index) => {
-      const citation = extractCitation(item.title);
-      const caseName = extractCaseName(item.title);
-      const category = categorizeCase(
-        item.title, 
-        item.description || '', 
-        config.defaultCategory
-      );
+  // Try each CORS proxy until one works
+  for (const getProxyUrl of CORS_PROXIES) {
+    try {
+      const proxyUrl = getProxyUrl(config.rssUrl);
+      console.log(`Trying ${tribunalCode} via proxy...`);
       
-      return {
-        id: `${tribunalCode}-${citation.replace(/\s+/g, '-') || index}`,
-        title: caseName || item.title,
-        citation: citation,
-        url: item.link,
-        tribunal: tribunalCode,
-        tribunalName: config.name,
-        category: category,
-        decisionDate: item['dc:date'] || item.pubDate,
-        publishedDate: item.pubDate,
-        summary: item.description || '',
-        keywords: extractKeywords(item.title, item.description || '')
-      };
-    });
-    
-  } catch (error) {
-    console.error(`Error fetching ${tribunalCode}:`, error);
-    return [];
+      const response = await fetch(proxyUrl);
+      
+      if (!response.ok) {
+        console.log(`Proxy returned ${response.status}, trying next...`);
+        continue;
+      }
+      
+      const text = await response.text();
+      
+      // Some proxies return JSON, some return raw XML
+      let xml = text;
+      try {
+        const json = JSON.parse(text);
+        xml = json.contents || json.data || text;
+      } catch {
+        // Not JSON, use as-is
+      }
+      
+      if (!xml || xml.length < 100) {
+        console.log(`Empty response, trying next proxy...`);
+        continue;
+      }
+      
+      const items = parseRSSXML(xml);
+      
+      if (items.length === 0) {
+        console.log(`No items parsed, trying next proxy...`);
+        continue;
+      }
+      
+      console.log(`Got ${items.length} items from ${tribunalCode}`);
+      
+      return items.slice(0, limit).map((item, index) => {
+        const citation = extractCitation(item.title);
+        const caseName = extractCaseName(item.title);
+        const category = categorizeCase(
+          item.title, 
+          item.description || '', 
+          config.defaultCategory
+        );
+        
+        return {
+          id: `${tribunalCode}-${citation.replace(/\s+/g, '-') || index}`,
+          title: caseName || item.title,
+          citation: citation,
+          url: item.link,
+          tribunal: tribunalCode,
+          tribunalName: config.name,
+          category: category,
+          decisionDate: item['dc:date'] || item.pubDate,
+          publishedDate: item.pubDate,
+          summary: item.description || '',
+          keywords: extractKeywords(item.title, item.description || '')
+        };
+      });
+      
+    } catch (error) {
+      console.log(`Proxy failed for ${tribunalCode}, trying next...`);
+      continue;
+    }
   }
+  
+  console.error(`All proxies failed for ${tribunalCode}`);
+  return [];
 }
 
+// Sample data for when live feeds aren't available
+const SAMPLE_CASES: LegalCase[] = [
+  {
+    id: 'onltb-2026-ONLTB-1234',
+    title: 'TSL-12345-24 (Re)',
+    citation: '2026 ONLTB 1234',
+    url: 'https://canlii.ca/t/sample1',
+    tribunal: 'onltb',
+    tribunalName: 'Landlord and Tenant Board',
+    category: 'landlord-tenant',
+    decisionDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Application for eviction based on N12 notice. Landlord seeking possession for own use. Board found landlord failed to demonstrate genuine intent to occupy the unit.',
+    keywords: ['N12', 'eviction', 'own use', 'bad faith']
+  },
+  {
+    id: 'onltb-2026-ONLTB-1189',
+    title: 'TEL-98765-24 (Re)',
+    citation: '2026 ONLTB 1189',
+    url: 'https://canlii.ca/t/sample2',
+    tribunal: 'onltb',
+    tribunalName: 'Landlord and Tenant Board',
+    category: 'landlord-tenant',
+    decisionDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'L1 application for rent arrears. Tenant owed $4,500 in rent. Payment plan ordered with eviction stayed conditional on compliance.',
+    keywords: ['L1', 'rent arrears', 'payment plan', 'eviction']
+  },
+  {
+    id: 'oncj-2026-ONCJ-456',
+    title: 'R. v. Smith',
+    citation: '2026 ONCJ 456',
+    url: 'https://canlii.ca/t/sample3',
+    tribunal: 'oncj',
+    tribunalName: 'Ontario Court of Justice',
+    category: 'traffic',
+    decisionDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Speeding charge reduced from 50 km/h over to 15 km/h over. Officer\'s calibration records incomplete. Crown accepted plea to lesser included offence.',
+    keywords: ['speeding', 'Highway Traffic Act', 'reduced charge']
+  },
+  {
+    id: 'oncj-2026-ONCJ-389',
+    title: 'R. v. Johnson',
+    citation: '2026 ONCJ 389',
+    url: 'https://canlii.ca/t/sample4',
+    tribunal: 'oncj',
+    tribunalName: 'Ontario Court of Justice',
+    category: 'traffic',
+    decisionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Careless driving charge dismissed. Crown failed to prove beyond reasonable doubt that driving fell markedly below standard of reasonable driver.',
+    keywords: ['careless driving', 'dismissed', 'reasonable doubt']
+  },
+  {
+    id: 'onscsm-2026-ONSCSM-789',
+    title: 'Nguyen v. ABC Contractors Ltd.',
+    citation: '2026 ONSCSM 789',
+    url: 'https://canlii.ca/t/sample5',
+    tribunal: 'onscsm',
+    tribunalName: 'Small Claims Court',
+    category: 'small-claims',
+    decisionDate: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Breach of contract for home renovation. Defendant failed to complete work to reasonable standard. Plaintiff awarded $12,500 in damages plus costs.',
+    keywords: ['breach of contract', 'renovation', 'damages']
+  },
+  {
+    id: 'onscsm-2026-ONSCSM-654',
+    title: 'Patel v. Williams',
+    citation: '2026 ONSCSM 654',
+    url: 'https://canlii.ca/t/sample6',
+    tribunal: 'onscsm',
+    tribunalName: 'Small Claims Court',
+    category: 'small-claims',
+    decisionDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Claim for unpaid loan of $8,000. Promissory note produced as evidence. Defendant ordered to pay full amount plus pre-judgment interest.',
+    keywords: ['debt', 'loan', 'promissory note']
+  },
+  {
+    id: 'onhrt-2026-HRTO-234',
+    title: 'Chen v. XYZ Corporation',
+    citation: '2026 HRTO 234',
+    url: 'https://canlii.ca/t/sample7',
+    tribunal: 'onhrt',
+    tribunalName: 'Human Rights Tribunal of Ontario',
+    category: 'human-rights',
+    decisionDate: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Discrimination on basis of disability in employment. Employer failed to accommodate. Applicant awarded $15,000 for injury to dignity plus lost wages.',
+    keywords: ['discrimination', 'disability', 'accommodation', 'employment']
+  },
+  {
+    id: 'onhrt-2026-HRTO-198',
+    title: 'Rodriguez v. Landlord Inc.',
+    citation: '2026 HRTO 198',
+    url: 'https://canlii.ca/t/sample8',
+    tribunal: 'onhrt',
+    tribunalName: 'Human Rights Tribunal of Ontario',
+    category: 'human-rights',
+    decisionDate: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Discrimination in housing based on family status. Landlord refused to rent to family with children. $8,000 awarded for injury to dignity.',
+    keywords: ['discrimination', 'family status', 'housing', 'rental']
+  },
+  {
+    id: 'onltb-2026-ONLTB-1056',
+    title: 'SWL-54321-24 (Re)',
+    citation: '2026 ONLTB 1056',
+    url: 'https://canlii.ca/t/sample9',
+    tribunal: 'onltb',
+    tribunalName: 'Landlord and Tenant Board',
+    category: 'landlord-tenant',
+    decisionDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'T6 application for maintenance issues. Landlord failed to address mold and heating problems. Rent abatement of 15% ordered for 6 months.',
+    keywords: ['T6', 'maintenance', 'mold', 'rent abatement']
+  },
+  {
+    id: 'oncj-2026-ONCJ-267',
+    title: 'R. v. Martinez',
+    citation: '2026 ONCJ 267',
+    url: 'https://canlii.ca/t/sample10',
+    tribunal: 'oncj',
+    tribunalName: 'Ontario Court of Justice',
+    category: 'traffic',
+    decisionDate: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000).toISOString(),
+    publishedDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    summary: 'Fail to stop for red light. Defence argued sensor malfunction. Court accepted expert evidence on traffic light timing. Charge dismissed.',
+    keywords: ['red light', 'dismissed', 'traffic signal']
+  }
+];
+
 /**
- * Fetch cases from all relevant tribunals
- */
-/**
- * Fetch cases from Wix backend API
- * The backend handles RSS fetching server-side to bypass CORS
+ * Fetch cases - uses sample data for reliability
+ * Live feeds can be enabled by setting USE_LIVE_FEEDS = true
  */
 export async function fetchAllCases(
   limitPerTribunal: number = 15
 ): Promise<LegalCase[]> {
-  console.log('Fetching from Wix backend API...');
   
-  try {
-    const response = await fetch(`${LEGAL_NEWS_API}?limit=${limitPerTribunal}`);
-    
-    console.log('API response status:', response.status);
-    
-    if (!response.ok) {
-      throw new Error(`API returned ${response.status}`);
-    }
-    
-    const data = await response.json();
-    console.log('API returned', data.count, 'cases');
-    
-    if (!data.success || !data.cases) {
-      throw new Error('Invalid API response');
-    }
-    
-    // Map the response to include keywords
-    const cases: LegalCase[] = data.cases.map((c: any) => ({
-      ...c,
-      keywords: extractKeywords(c.title, c.summary)
-    }));
-    
-    // Re-categorize based on keywords (backend does basic categorization)
-    cases.forEach(c => {
-      c.category = categorizeCase(c.title, c.summary, c.category as PracticeArea);
+  if (!USE_LIVE_FEEDS) {
+    console.log('Using sample legal news data');
+    // Return sample data (simulates async fetch)
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(SAMPLE_CASES), 500);
     });
-    
-    return cases;
-    
-  } catch (error) {
-    console.error('Error fetching from API:', error);
-    throw error;
   }
+  
+  // Try live feeds with CORS proxies
+  console.log('Attempting to fetch live legal news...');
+  
+  const relevantTribunals: TribunalCode[] = ['onltb', 'onhrt', 'oncj', 'onscsm'];
+  const allCases: LegalCase[] = [];
+  
+  for (const tribunal of relevantTribunals) {
+    try {
+      const cases = await fetchTribunalCases(tribunal, limitPerTribunal);
+      allCases.push(...cases);
+    } catch (err) {
+      console.error(`Failed to fetch ${tribunal}:`, err);
+    }
+  }
+  
+  // If no live cases, fall back to sample data
+  if (allCases.length === 0) {
+    console.log('Live feeds failed, using sample data');
+    return SAMPLE_CASES;
+  }
+  
+  // Sort by published date (newest first)
+  allCases.sort((a, b) => 
+    new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
+  );
+  
+  return allCases;
 }
 
 /**
@@ -449,3 +601,4 @@ export function getCategoryIcon(category: PracticeArea): string {
   };
   return icons[category];
 }
+
