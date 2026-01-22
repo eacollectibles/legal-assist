@@ -43,9 +43,9 @@ export type PracticeArea =
 // CONFIGURATION
 // ============================================
 
-// CORS proxy to bypass browser restrictions
-// Options: 'https://corsproxy.io/?' or 'https://api.allorigins.win/raw?url='
-const CORS_PROXY = 'https://corsproxy.io/?';
+// Use allorigins JSON API for better CORS handling
+const getAllOriginsUrl = (url: string) => 
+  `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 
 export const TRIBUNAL_CONFIG: Record<TribunalCode, {
   name: string;
@@ -263,17 +263,32 @@ export async function fetchTribunalCases(
   const config = TRIBUNAL_CONFIG[tribunalCode];
   
   try {
-    // Use CORS proxy to bypass browser restrictions
-    const proxyUrl = `${CORS_PROXY}${encodeURIComponent(config.rssUrl)}`;
+    // Use allorigins JSON API to bypass CORS
+    const proxyUrl = getAllOriginsUrl(config.rssUrl);
+    console.log(`Fetching ${tribunalCode} from:`, proxyUrl);
+    
     const response = await fetch(proxyUrl);
+    
+    console.log(`${tribunalCode} response status:`, response.status);
     
     if (!response.ok) {
       console.error(`Failed to fetch ${tribunalCode}: ${response.status}`);
       return [];
     }
     
-    const xml = await response.text();
+    // allorigins returns JSON with 'contents' field containing the RSS XML
+    const json = await response.json();
+    const xml = json.contents;
+    
+    console.log(`${tribunalCode} XML length:`, xml?.length || 0, 'chars');
+    
+    if (!xml) {
+      console.error(`No content received for ${tribunalCode}`);
+      return [];
+    }
+    
     const items = parseRSSXML(xml);
+    console.log(`${tribunalCode} parsed items:`, items.length);
     
     return items.slice(0, limit).map((item, index) => {
       const citation = extractCitation(item.title);
@@ -320,10 +335,19 @@ export async function fetchAllCases(
   
   const allCases: LegalCase[] = [];
   
+  console.log('Starting to fetch from tribunals:', relevantTribunals);
+  
   for (const tribunal of relevantTribunals) {
-    const cases = await fetchTribunalCases(tribunal, limitPerTribunal);
-    allCases.push(...cases);
+    try {
+      const cases = await fetchTribunalCases(tribunal, limitPerTribunal);
+      console.log(`Got ${cases.length} cases from ${tribunal}`);
+      allCases.push(...cases);
+    } catch (err) {
+      console.error(`Error fetching ${tribunal}:`, err);
+    }
   }
+  
+  console.log('Total cases fetched:', allCases.length);
   
   // Sort by published date (newest first)
   allCases.sort((a, b) => 
@@ -416,4 +440,3 @@ export function getCategoryIcon(category: PracticeArea): string {
   };
   return icons[category];
 }
-
