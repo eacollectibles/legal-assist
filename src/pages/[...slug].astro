@@ -1,15 +1,103 @@
 ---
+/**
+ * [...slug].astro - Dynamic page handler with SERVER-SIDE SEO
+ * 
+ * This file renders SEO meta tags on the server so Google sees them
+ * when crawling. AutoSEO.tsx still runs client-side for SPA navigation.
+ */
 import { Head } from "@/components/Head";
 import AppRouter from "@/components/Router";
+import { seoConfig, businessInfo, generateFAQSchema, generateBreadcrumbSchema } from "@/components/seoConfig";
 import "@wix/wix-vibe-plugins/plugins-vars.css";
 import "@wix/wix-vibe-plugins/plugins-theme.css";
 import "@/styles/global.css";
+
+// Get the current path from Astro
+const pathname = Astro.url.pathname;
+
+// Normalize path (remove trailing slash except for root)
+const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+
+// Check if this is a private route (noindex)
+const isPrivateRoute = /^\/(admin|dashboard|login|signup|intake|booking|upload)/.test(normalizedPath);
+
+// Get SEO config for this path, or use defaults
+const pageConfig = seoConfig[normalizedPath] || {
+  title: 'LegalAssist Paralegal Services | London Ontario',
+  description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call (519) 601-1110.',
+  keywords: 'paralegal london ontario, legal services, traffic ticket lawyer, LTB paralegal, small claims court'
+};
+
+// Build canonical URL
+const canonicalUrl = `${businessInfo.url}${normalizedPath === '/' ? '' : normalizedPath}`;
+
+// Generate JSON-LD for FAQs if present
+const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0 
+  ? generateFAQSchema(pageConfig.faqs) 
+  : null;
+
+// Generate JSON-LD for breadcrumbs if present
+const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0 
+  ? generateBreadcrumbSchema(pageConfig.breadcrumbs) 
+  : null;
 ---
 
 <html lang="en" class="w-full h-full">
   <head>
+    <!-- Basic charset and viewport -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SERVER-SIDE SEO: Title -->
+    <title>{pageConfig.title}</title>
+    
+    <!-- SERVER-SIDE SEO: Description -->
+    <meta name="description" content={pageConfig.description} />
+    
+    <!-- SERVER-SIDE SEO: Keywords -->
+    {pageConfig.keywords && <meta name="keywords" content={pageConfig.keywords} />}
+    
+    <!-- SERVER-SIDE SEO: Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- SERVER-SIDE SEO: Robots directive -->
+    <meta name="robots" content={isPrivateRoute ? 'noindex, nofollow' : 'index, follow'} />
+    
+    <!-- SERVER-SIDE SEO: Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LegalAssist Paralegal Services" />
+    <meta property="og:title" content={pageConfig.title} />
+    <meta property="og:description" content={pageConfig.description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:image" content={`${businessInfo.url}/og-image.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- SERVER-SIDE SEO: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageConfig.title} />
+    <meta name="twitter:description" content={pageConfig.description} />
+    <meta name="twitter:image" content={`${businessInfo.url}/og-image.jpg`} />
+    
+    <!-- SERVER-SIDE SEO: Geo tags -->
+    <meta name="geo.region" content="CA-ON" />
+    <meta name="geo.placename" content="London, Ontario" />
+    <meta name="geo.position" content="42.9849;-81.2453" />
+    <meta name="ICBM" content="42.9849, -81.2453" />
+    
+    <!-- Global Head elements (schema, fonts, verification) -->
     <Head />
-    <title>Professional Legal Services in Ontario | LegalAssist</title>
+    
+    <!-- SERVER-SIDE SEO: FAQ Schema if present -->
+    {faqSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    )}
+    
+    <!-- SERVER-SIDE SEO: Breadcrumb Schema if present -->
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
   </head>
   <body class="w-full h-full">
     <div id="root" class="w-full h-full">
