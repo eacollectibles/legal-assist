@@ -8,22 +8,6 @@ import {
   businessInfo 
 } from './seoConfig';
 
-/**
- * Enhanced AutoSEO Component
- * 
- * Automatically applies:
- * - Meta tags (title, description, keywords, canonical)
- * - Open Graph tags
- * - Twitter Card tags
- * - Schema.org structured data (Service, FAQ, Breadcrumb)
- * 
- * Usage in Router.tsx:
- * <BrowserRouter>
- *   <ScrollToTop />
- *   <AutoSEO />
- *   <Routes>...</Routes>
- * </BrowserRouter>
- */
 export function AutoSEO() {
   const location = useLocation();
   const baseUrl = 'https://legalassist.london';
@@ -32,10 +16,10 @@ export function AutoSEO() {
     const seo = getSEOConfig(location.pathname);
     const canonicalUrl = `${baseUrl}${location.pathname}`;
     
-    // === DOCUMENT TITLE ===
+    // Document title
     document.title = seo.title;
     
-    // === HELPER FUNCTIONS ===
+    // Helper: Set meta tag
     const setMeta = (name: string, content: string, isProperty = false) => {
       const attr = isProperty ? 'property' : 'name';
       let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement;
@@ -47,24 +31,26 @@ export function AutoSEO() {
       el.content = content;
     };
     
-    const setLink = (rel: string, href: string) => {
-      let el = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
+    // Helper: Set link tag
+    const setLink = (rel: string, href: string, hreflang?: string) => {
+      const selector = hreflang 
+        ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+        : `link[rel="${rel}"]:not([hreflang])`;
+      let el = document.querySelector(selector) as HTMLLinkElement;
       if (!el) {
         el = document.createElement('link');
         el.rel = rel;
+        if (hreflang) el.hreflang = hreflang;
         document.head.appendChild(el);
       }
       el.href = href;
     };
     
+    // Helper: Set JSON-LD script
     const setJsonLd = (id: string, data: object | null) => {
-      // Remove existing script with this ID
       const existing = document.getElementById(id);
-      if (existing) {
-        existing.remove();
-      }
+      if (existing) existing.remove();
       
-      // Add new script if data exists
       if (data) {
         const script = document.createElement('script');
         script.id = id;
@@ -74,20 +60,24 @@ export function AutoSEO() {
       }
     };
     
-    // === CORE META TAGS ===
+    // Core meta tags
     setMeta('description', seo.description);
     if (seo.keywords) {
       setMeta('keywords', seo.keywords);
     }
     
-    // === ROBOTS DIRECTIVE ===
-    const isPrivate = /^\/(admin|dashboard|login|signup|intake|booking|upload)/.test(location.pathname);
-    setMeta('robots', isPrivate ? 'noindex, nofollow' : 'index, follow');
+    // Robots - block private pages
+    const isPrivate = /^\/(admin|dashboard|client-dashboard|login|signup|client-login|client-signup|intake|booking|upload|paralegal-dashboard|meeting-request)/.test(location.pathname);
+    setMeta('robots', isPrivate ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1');
     
-    // === CANONICAL URL ===
+    // Canonical URL
     setLink('canonical', canonicalUrl);
     
-    // === OPEN GRAPH TAGS ===
+    // Language alternates
+    setLink('alternate', canonicalUrl, 'en-CA');
+    setLink('alternate', canonicalUrl, 'x-default');
+    
+    // Open Graph
     setMeta('og:title', seo.title, true);
     setMeta('og:description', seo.description, true);
     setMeta('og:url', canonicalUrl, true);
@@ -95,37 +85,32 @@ export function AutoSEO() {
     setMeta('og:site_name', businessInfo.name, true);
     setMeta('og:locale', 'en_CA', true);
     
-    // === TWITTER CARD TAGS ===
+    // Twitter Card
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', seo.title);
     setMeta('twitter:description', seo.description);
     
-    // === GEO TAGS ===
+    // Geo
     setMeta('geo.region', 'CA-ON');
     setMeta('geo.placename', 'London');
     
-    // === SCHEMA.ORG STRUCTURED DATA ===
-    
-    // Service Schema (for service pages)
+    // Schema: Service
     if (seo.schema) {
-      const serviceSchema = generateServiceSchema(seo, canonicalUrl);
-      setJsonLd('schema-service', serviceSchema);
+      setJsonLd('schema-service', generateServiceSchema(seo, canonicalUrl));
     } else {
       setJsonLd('schema-service', null);
     }
     
-    // FAQ Schema (for pages with FAQs)
+    // Schema: FAQ
     if (seo.faqs && seo.faqs.length > 0) {
-      const faqSchema = generateFAQSchema(seo.faqs);
-      setJsonLd('schema-faq', faqSchema);
+      setJsonLd('schema-faq', generateFAQSchema(seo.faqs));
     } else {
       setJsonLd('schema-faq', null);
     }
     
-    // Breadcrumb Schema
+    // Schema: Breadcrumb
     if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
-      const breadcrumbSchema = generateBreadcrumbSchema(seo.breadcrumbs, baseUrl);
-      setJsonLd('schema-breadcrumb', breadcrumbSchema);
+      setJsonLd('schema-breadcrumb', generateBreadcrumbSchema(seo.breadcrumbs, baseUrl));
     } else {
       setJsonLd('schema-breadcrumb', null);
     }
