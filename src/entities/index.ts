@@ -346,6 +346,10 @@ export interface Locations {
   metaTitle?: string;
   /** @wixFieldType text */
   metaDescription?: string;
+  /** @wixFieldType text */
+  title?: string;
+  /** @wixFieldType text */
+  locationType?: string;
 }
 
 
