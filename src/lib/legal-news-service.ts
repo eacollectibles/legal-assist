@@ -43,6 +43,10 @@ export type PracticeArea =
 // CONFIGURATION
 // ============================================
 
+// CORS proxy to bypass browser restrictions
+// Options: 'https://corsproxy.io/?' or 'https://api.allorigins.win/raw?url='
+const CORS_PROXY = 'https://corsproxy.io/?';
+
 export const TRIBUNAL_CONFIG: Record<TribunalCode, {
   name: string;
   rssUrl: string;
@@ -259,7 +263,9 @@ export async function fetchTribunalCases(
   const config = TRIBUNAL_CONFIG[tribunalCode];
   
   try {
-    const response = await fetch(config.rssUrl);
+    // Use CORS proxy to bypass browser restrictions
+    const proxyUrl = `${CORS_PROXY}${encodeURIComponent(config.rssUrl)}`;
+    const response = await fetch(proxyUrl);
     
     if (!response.ok) {
       console.error(`Failed to fetch ${tribunalCode}: ${response.status}`);
@@ -410,3 +416,4 @@ export function getCategoryIcon(category: PracticeArea): string {
   };
   return icons[category];
 }
+
