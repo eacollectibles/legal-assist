@@ -59,6 +59,12 @@ export default function Footer() {
                 Services
               </Link>
               <Link 
+                to="/legal-news" 
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground hover:bg-secondary-foreground/10 transition-colors py-2 px-3 -mx-3 rounded-lg"
+              >
+                Recent Decisions
+              </Link>
+              <Link 
                 to="/contact" 
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground hover:bg-secondary-foreground/10 transition-colors py-2 px-3 -mx-3 rounded-lg"
               >

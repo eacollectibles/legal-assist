@@ -3135,6 +3135,37 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What if I\'m nervous about court?', answer: 'Arrive early and observe other proceedings. Prepare your key points in writing. Speak slowly and clearly. Address the judge as "Your Honour." It\'s okay to ask to repeat a question.' }
     ]
   },
+
+  // ============================================
+  // LEGAL NEWS PAGE
+  // ============================================
+  '/legal-news': {
+    title: 'Recent Ontario Legal Decisions | LTB, HRTO, Traffic, Small Claims | LegalAssist',
+    description: 'Stay informed with the latest Ontario tribunal and court decisions. Recent cases from the Landlord Tenant Board, Human Rights Tribunal, traffic courts, and Small Claims Court.',
+    keywords: 'ontario legal news, recent LTB decisions, HRTO decisions, traffic court cases, small claims court ontario, canlii ontario',
+    schema: { type: 'Article', name: 'Recent Ontario Legal Decisions' },
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Legal News', url: '/legal-news' }
+    ],
+    faqs: [
+      { question: 'Where do these decisions come from?', answer: 'All decisions are sourced from CanLII (Canadian Legal Information Institute), a non-profit organization that makes Canadian law accessible for free. We pull recent decisions from the LTB, HRTO, Ontario Court of Justice, and Small Claims Court.' },
+      { question: 'How often is this page updated?', answer: 'The page fetches the latest decisions automatically when you visit. CanLII typically publishes new decisions within days of being issued by the tribunal or court.' },
+      { question: 'Can I use these decisions in my own case?', answer: 'While past decisions can provide insight into how tribunals and courts handle similar issues, each case depends on its specific facts. A paralegal can help you understand how case law applies to your situation.' },
+      { question: 'Why are some decisions marked as "Highly Relevant"?', answer: 'Decisions are marked as highly relevant when they contain key terms commonly encountered in paralegal practice, such as specific form numbers (N12, L1), common issues (eviction, speeding), or procedural matters.' }
+    ]
+  },
+
+  '/recent-decisions': {
+    title: 'Recent Ontario Legal Decisions | LTB, HRTO, Traffic, Small Claims | LegalAssist',
+    description: 'Stay informed with the latest Ontario tribunal and court decisions. Recent cases from the Landlord Tenant Board, Human Rights Tribunal, traffic courts, and Small Claims Court.',
+    keywords: 'ontario legal news, recent LTB decisions, HRTO decisions, traffic court cases, small claims court ontario',
+    schema: { type: 'Article', name: 'Recent Ontario Legal Decisions' },
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Recent Decisions', url: '/recent-decisions' }
+    ]
+  },
 };
 
 // ============================================

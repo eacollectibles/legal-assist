@@ -154,6 +154,7 @@ const BeingSuedGuidePage = lazy(() => import('@/components/pages/BeingSuedGuideP
 const LTBHearingGuidePage = lazy(() => import('@/components/pages/LTBHearingGuidePage'));
 const HumanRightsComplaintGuidePage = lazy(() => import('@/components/pages/HumanRightsComplaintGuidePage'));
 const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadlinesGuidePage'));
+const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
 
 // Admin & Dashboard Pages
 const AdminBookingsPage = lazy(() => import('@/components/pages/AdminBookingsPage'));
@@ -350,6 +351,10 @@ export default function Router() {
             <Route path="/guides/ltb-hearing-preparation" element={<LTBHearingGuidePage />} />
             <Route path="/guides/filing-human-rights-complaint" element={<HumanRightsComplaintGuidePage />} />
             <Route path="/guides/legal-deadlines-ontario" element={<LegalDeadlinesGuidePage />} />
+
+            {/* Legal News */}
+            <Route path="/legal-news" element={<LegalNewsPage />} />
+            <Route path="/recent-decisions" element={<LegalNewsPage />} />
 
             {/* Admin Pages */}
             <Route path="/admin/bookings" element={<AdminBookingsPage />} />
