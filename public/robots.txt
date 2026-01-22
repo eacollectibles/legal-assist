@@ -1,23 +1,54 @@
-# robots.txt for legalassist.london
 User-agent: *
 Allow: /
 
-# Block admin and dashboard areas
+# Block private areas
 Disallow: /admin/
 Disallow: /dashboard/
+Disallow: /client-dashboard
 Disallow: /login
 Disallow: /signup
+Disallow: /client-login
+Disallow: /client-signup
 Disallow: /intake
 Disallow: /booking
 Disallow: /meeting-request
 Disallow: /upload/
+Disallow: /paralegal-dashboard
 
-# Block Astro internals and API
+# Block system files
 Disallow: /_astro/
 Disallow: /api/
 
 # Crawl delay
 Crawl-delay: 1
 
-# Sitemap location
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /upload/
+
+# Bingbot
+User-agent: bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Crawl-delay: 2
+
+# Block aggressive SEO bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap
 Sitemap: https://legalassist.london/sitemap.xml
