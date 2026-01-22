@@ -26,7 +26,7 @@ export default function ProvincialOffencesPage() {
               <span className="font-paragraph text-sm font-medium">Provincial Offences</span>
             </div>
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Provincial Offences Act Defence
+              Provincial Offences Paralegal in Ontario
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
               The Provincial Offences Act (POA) governs prosecutions for provincial law violations—from traffic tickets to regulatory offences. We provide experienced representation for all types of POA matters.

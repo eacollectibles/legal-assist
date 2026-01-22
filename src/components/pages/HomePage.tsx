@@ -301,6 +301,11 @@ export default function HomePage() {
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
       
+      {/* Primary SEO H1 - Screen reader accessible, visually minimal */}
+      <h1 className="sr-only">
+        Licensed Paralegal Services in Ontario - Small Claims Court, Landlord-Tenant, Traffic Tickets & Provincial Offences
+      </h1>
+      
       {/* ROTATING HERO BANNERS */}
       <section 
         className="relative w-full h-[500px] md:h-[600px] overflow-hidden"
@@ -339,9 +344,9 @@ export default function HomePage() {
             <div className="relative z-10 h-full flex items-end pb-20 md:items-center md:pb-0">
               <div className="max-w-[100rem] mx-auto px-4 md:px-8 w-full">
                 <div className="max-w-2xl">
-                  <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                  <h2 className="font-heading text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                     {banner.headline}
-                  </h1>
+                  </h2>
                   <p className="font-paragraph text-base sm:text-lg md:text-2xl text-white/90 mb-8">
                     {banner.subheadline}
                   </p>

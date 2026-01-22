@@ -22,7 +22,7 @@ export default function HumanRightsTribunalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Human Rights Tribunal of Ontario Services
+                Human Rights Tribunal Paralegal in Ontario
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 Expert representation for discrimination and human rights violations in employment, housing, and services. We advocate for your rights and help you seek justice through the HRTO process.

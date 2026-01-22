@@ -28,7 +28,7 @@ export default function SmallClaimsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Small Claims Court Services
+                Small Claims Court Paralegal in Ontario
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 Expert legal representation for civil disputes up to $50,000 in Ontario. Whether you're an applicant seeking compensation or a defendant protecting your interests, we provide comprehensive support throughout the entire process.

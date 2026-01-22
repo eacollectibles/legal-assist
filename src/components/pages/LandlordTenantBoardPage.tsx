@@ -28,7 +28,7 @@ export default function LandlordTenantBoardPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Landlord and Tenant Board Services
+                Landlord Tenant Paralegal in Ontario
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 Expert legal representation for residential tenancy disputes in Ontario. Whether you're a landlord seeking eviction or a tenant defending your rights, we provide comprehensive support throughout the LTB process.
