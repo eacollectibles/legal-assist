@@ -43,9 +43,8 @@ export type PracticeArea =
 // CONFIGURATION
 // ============================================
 
-// Use allorigins JSON API for better CORS handling
-const getAllOriginsUrl = (url: string) => 
-  `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+// Astro API endpoint (server-side, no CORS issues)
+const LEGAL_NEWS_API = '/api/legal-news';
 
 export const TRIBUNAL_CONFIG: Record<TribunalCode, {
   name: string;
@@ -323,38 +322,48 @@ export async function fetchTribunalCases(
 /**
  * Fetch cases from all relevant tribunals
  */
+/**
+ * Fetch cases from Wix backend API
+ * The backend handles RSS fetching server-side to bypass CORS
+ */
 export async function fetchAllCases(
-  limitPerTribunal: number = 10
+  limitPerTribunal: number = 15
 ): Promise<LegalCase[]> {
-  const relevantTribunals: TribunalCode[] = [
-    'onltb',   // LTB - most relevant
-    'onhrt',   // HRTO
-    'oncj',    // Traffic/POA
-    'onscsm',  // Small Claims
-  ];
+  console.log('Fetching from Wix backend API...');
   
-  const allCases: LegalCase[] = [];
-  
-  console.log('Starting to fetch from tribunals:', relevantTribunals);
-  
-  for (const tribunal of relevantTribunals) {
-    try {
-      const cases = await fetchTribunalCases(tribunal, limitPerTribunal);
-      console.log(`Got ${cases.length} cases from ${tribunal}`);
-      allCases.push(...cases);
-    } catch (err) {
-      console.error(`Error fetching ${tribunal}:`, err);
+  try {
+    const response = await fetch(`${LEGAL_NEWS_API}?limit=${limitPerTribunal}`);
+    
+    console.log('API response status:', response.status);
+    
+    if (!response.ok) {
+      throw new Error(`API returned ${response.status}`);
     }
+    
+    const data = await response.json();
+    console.log('API returned', data.count, 'cases');
+    
+    if (!data.success || !data.cases) {
+      throw new Error('Invalid API response');
+    }
+    
+    // Map the response to include keywords
+    const cases: LegalCase[] = data.cases.map((c: any) => ({
+      ...c,
+      keywords: extractKeywords(c.title, c.summary)
+    }));
+    
+    // Re-categorize based on keywords (backend does basic categorization)
+    cases.forEach(c => {
+      c.category = categorizeCase(c.title, c.summary, c.category as PracticeArea);
+    });
+    
+    return cases;
+    
+  } catch (error) {
+    console.error('Error fetching from API:', error);
+    throw error;
   }
-  
-  console.log('Total cases fetched:', allCases.length);
-  
-  // Sort by published date (newest first)
-  allCases.sort((a, b) => 
-    new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
-  );
-  
-  return allCases;
 }
 
 /**
