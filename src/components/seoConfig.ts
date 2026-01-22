@@ -56,9 +56,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // CORE PAGES (6 pages)
   // ============================================
   '/': {
-    title: 'LegalAssist Paralegal Services | London Ontario | Affordable Legal Help',
-    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call (519) 601-1110.',
-    keywords: 'paralegal london ontario, legal services london, traffic ticket lawyer london, LTB paralegal, small claims court london',
+    title: 'Licensed Paralegal Ontario | Small Claims, LTB, Traffic | LegalAssist',
+    description: 'Licensed Ontario paralegal providing professional representation for Small Claims Court, Landlord Tenant Board, traffic tickets, and provincial offences. Free consultation.',
+    keywords: 'licensed paralegal ontario, paralegal london ontario, traffic ticket paralegal, LTB paralegal, small claims court paralegal',
     schema: {
       type: 'LocalBusiness',
       name: 'LegalAssist Paralegal Services',
@@ -167,9 +167,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // TRAFFIC TICKETS - MAIN & SUB-PAGES (18 pages)
   // ============================================
   '/services/traffic-tickets': {
-    title: 'Traffic Ticket Defence | Fight Your Ticket | London Ontario Paralegal',
-    description: 'Fight your traffic ticket in London, Ontario. Speeding, careless driving, stunt driving, red lights. Protect your licence and insurance rates. Free consultation.',
-    keywords: 'traffic ticket lawyer london, fight speeding ticket ontario, traffic court paralegal, demerit points defence',
+    title: 'Traffic Ticket Paralegal Ontario | LegalAssist',
+    description: 'Licensed Ontario paralegal fighting traffic tickets. Speeding, careless driving, stunt driving, red lights. Protect your licence and insurance rates.',
+    keywords: 'traffic ticket paralegal ontario, fight speeding ticket ontario, traffic court paralegal, demerit points defence',
     schema: {
       type: 'LegalService',
       name: 'Traffic Ticket Defence Services',
@@ -777,9 +777,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // LANDLORD TENANT BOARD - MAIN & SUB-PAGES (21 pages)
   // ============================================
   '/services/landlord-tenant': {
-    title: 'Landlord Tenant Board | LTB Representation | London Ontario Paralegal',
-    description: 'LTB representation for landlords and tenants in London, Ontario. Evictions, rent disputes, maintenance issues, N12/N13 notices. Free consultation.',
-    keywords: 'landlord tenant board london, LTB paralegal, eviction defence ontario, tenant rights london',
+    title: 'Landlord Tenant Paralegal Ontario | LegalAssist',
+    description: 'Licensed Ontario paralegal for LTB matters. Evictions, rent disputes, N12 hearings, maintenance issues. Professional representation for landlords and tenants.',
+    keywords: 'landlord tenant paralegal ontario, LTB paralegal, eviction paralegal ontario, tenant rights paralegal',
     schema: {
       type: 'LegalService',
       name: 'Landlord Tenant Board Services',
@@ -1483,9 +1483,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // SMALL CLAIMS COURT - MAIN & SUB-PAGES (19 pages)
   // ============================================
   '/services/small-claims': {
-    title: 'Small Claims Court | Sue or Defend Up to $35,000 | London Ontario',
-    description: 'Small Claims Court representation in London, Ontario. Debt collection, contract disputes, property damage claims. Claims up to $35,000. Free consultation.',
-    keywords: 'small claims court london, sue someone ontario, debt collection paralegal, contract dispute lawyer',
+    title: 'Small Claims Court Paralegal Ontario | LegalAssist',
+    description: 'Licensed Ontario paralegal representing clients in Small Claims Court. Claims up to $35,000. Clear advice, professional representation, and compliant legal services.',
+    keywords: 'small claims court paralegal ontario, sue someone ontario, debt collection paralegal, small claims lawyer ontario',
     schema: {
       type: 'LegalService',
       name: 'Small Claims Court Services',
@@ -1745,9 +1745,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // HUMAN RIGHTS TRIBUNAL - MAIN & SUB-PAGES (8 pages)
   // ============================================
   '/services/human-rights': {
-    title: 'Human Rights Tribunal | HRTO Applications | London Ontario',
-    description: 'Human Rights Tribunal representation in London, Ontario. Discrimination complaints, workplace harassment, housing discrimination. Free consultation.',
-    keywords: 'human rights tribunal ontario, HRTO application, discrimination complaint, harassment claim',
+    title: 'Human Rights Tribunal Paralegal Ontario | LegalAssist',
+    description: 'Licensed Ontario paralegal for HRTO matters. Discrimination claims, workplace harassment, housing discrimination, accommodation issues. Compassionate representation.',
+    keywords: 'human rights tribunal paralegal ontario, HRTO paralegal, discrimination paralegal, harassment claim paralegal',
     schema: { type: 'LegalService', name: 'Human Rights Services', serviceType: 'HRTO Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }],
     faqs: [
@@ -1932,9 +1932,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/provincial-offences': {
-    title: 'Provincial Offences | POA Matters | London Ontario',
-    description: 'Provincial Offences Act defence in London, Ontario. Regulatory violations, municipal bylaws, provincial regulations.',
-    keywords: 'provincial offence defence, POA matters london, regulatory violation, provincial court',
+    title: 'Provincial Offences Paralegal Ontario | LegalAssist',
+    description: 'Licensed Ontario paralegal defending provincial offences. POA tickets, regulatory charges, municipal bylaws. Professional representation.',
+    keywords: 'provincial offences paralegal ontario, POA paralegal, regulatory offence defence, provincial court paralegal',
     schema: { type: 'LegalService', name: 'Provincial Offences', serviceType: 'POA Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }],
     faqs: [
@@ -2594,10 +2594,10 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   // CRIMINAL & PROVINCIAL OFFENCES (10 pages)
   // ============================================
-  '/services/provincial-offences': {
-    title: 'Provincial Offences | POA Tickets | London Ontario Paralegal',
-    description: 'Provincial offences defence in London, Ontario. Bylaw tickets, regulatory violations, POA matters. Expert representation.',
-    keywords: 'provincial offences ontario, POA ticket, bylaw violation, regulatory offence defence',
+  '/services/provincial-offences-alt': {
+    title: 'Provincial Offences Paralegal Ontario | LegalAssist',
+    description: 'Licensed Ontario paralegal defending provincial offences. POA tickets, regulatory charges, municipal bylaws. Professional representation.',
+    keywords: 'provincial offences paralegal ontario, POA paralegal, regulatory offence defence, provincial court paralegal',
     schema: { type: 'LegalService', name: 'Provincial Offences Services', serviceType: 'POA Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }],
     faqs: [
