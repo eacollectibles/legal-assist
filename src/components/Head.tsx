@@ -1,31 +1,49 @@
 /**
- * Head.tsx - Global Head Elements
+ * Head.tsx - Enhanced Global Head Elements
  * 
- * Contains ONLY static/global elements that don't change per page:
- * - Structured data (Schema.org)
- * - Font preloading
- * - Theme color
- * - Google verification
+ * Contains:
+ * - Schema.org structured data (LocalBusiness, LegalService, WebSite)
+ * - PWA meta tags
+ * - Geo location meta
+ * - Performance preloading
+ * - Security meta
  * 
  * Per-page SEO (title, description, canonical) is handled by AutoSEO.tsx
+ * 
+ * Updated: January 2026
  */
+
+import { PHONE_TEL } from '@/lib/contact';
+
 export const Head = () => {
+  const currentYear = new Date().getFullYear();
+  
+  // Schema.org structured data
   const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
+      // Organization / Legal Service
       {
-        "@type": "LegalService",
-        "@id": "https://legalassist.london/#business",
+        "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
+        "@id": "https://legalassist.london/#organization",
         "name": "LegalAssist Paralegal Services",
-        "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court, Landlord Tenant Board, traffic tickets, criminal matters and more.",
+        "alternateName": "LegalAssist",
+        "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
         "url": "https://legalassist.london",
-        "telephone": "+15196011110",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://legalassist.london/logo.png",
+          "width": 512,
+          "height": 512
+        },
+        "image": "https://legalassist.london/og-image.jpg",
+        "telephone": PHONE_TEL,
         "email": "info@legalassist.london",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "P.O Box 1000",
           "addressLocality": "London",
-          "addressRegion": "Ontario",
+          "addressRegion": "ON",
           "postalCode": "N6A 2L1",
           "addressCountry": "CA"
         },
@@ -35,22 +53,12 @@ export const Head = () => {
           "longitude": -81.2453
         },
         "areaServed": [
-          {
-            "@type": "City",
-            "name": "London",
-            "containedInPlace": {
-              "@type": "AdministrativeArea",
-              "name": "Ontario"
-            }
-          },
-          {
-            "@type": "AdministrativeArea",
-            "name": "Middlesex County"
-          },
-          {
-            "@type": "AdministrativeArea",
-            "name": "Southwestern Ontario"
-          }
+          { "@type": "City", "name": "London" },
+          { "@type": "AdministrativeArea", "name": "Middlesex County" },
+          { "@type": "AdministrativeArea", "name": "Elgin County" },
+          { "@type": "AdministrativeArea", "name": "Oxford County" },
+          { "@type": "AdministrativeArea", "name": "Southwestern Ontario" },
+          { "@type": "AdministrativeArea", "name": "Ontario" }
         ],
         "openingHoursSpecification": [
           {
@@ -63,12 +71,25 @@ export const Head = () => {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": "Saturday",
             "opens": "10:00",
-            "closes": "16:00"
+            "closes": "14:00"
           }
         ],
         "priceRange": "$$",
         "currenciesAccepted": "CAD",
-        "paymentAccepted": "Cash, Credit Card, Debit, E-Transfer",
+        "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Interac e-Transfer"],
+        "knowsLanguage": ["en", "English"],
+        "slogan": "Affordable Legal Help When You Need It Most",
+        "foundingDate": "2024",
+        "legalName": "LegalAssist Paralegal Services",
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional License",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Law Society of Ontario",
+            "url": "https://lso.ca"
+          }
+        },
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Paralegal Services",
@@ -77,92 +98,135 @@ export const Head = () => {
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Small Claims Court Representation",
-                "description": "Legal representation for civil disputes up to $35,000"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Landlord and Tenant Board",
-                "description": "Representation for residential tenancy disputes"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
                 "name": "Traffic Ticket Defence",
-                "description": "Defence for speeding, careless driving and other traffic violations"
+                "url": "https://legalassist.london/services/traffic-tickets"
               }
             },
             {
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Human Rights Tribunal",
-                "description": "Representation for discrimination and human rights complaints"
+                "name": "Small Claims Court Representation",
+                "url": "https://legalassist.london/services/small-claims"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Landlord and Tenant Board Representation",
+                "url": "https://legalassist.london/services/landlord-tenant-board"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Human Rights Tribunal Representation",
+                "url": "https://legalassist.london/services/human-rights-tribunal"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Provincial Offences Defence",
+                "url": "https://legalassist.london/services/provincial-offences"
               }
             }
           ]
         },
         "sameAs": [
-          "https://www.facebook.com/legalassist",
-          "https://www.linkedin.com/company/legalassist"
+          "https://www.facebook.com/legalassistparalegal",
+          "https://www.linkedin.com/company/legalassist-paralegal"
         ]
       },
+      
+      // WebSite
       {
         "@type": "WebSite",
         "@id": "https://legalassist.london/#website",
         "url": "https://legalassist.london",
         "name": "LegalAssist Paralegal Services",
+        "description": "Licensed paralegal services in London, Ontario",
         "publisher": {
-          "@id": "https://legalassist.london/#business"
-        }
+          "@id": "https://legalassist.london/#organization"
+        },
+        "inLanguage": "en-CA"
+      },
+      
+      // ContactPoint
+      {
+        "@type": "ContactPoint",
+        "@id": "https://legalassist.london/#contact",
+        "telephone": PHONE_TEL,
+        "contactType": "customer service",
+        "availableLanguage": "English",
+        "areaServed": "CA-ON"
       }
     ]
   };
 
   return (
     <>
-      {/* Basic charset and viewport - required */}
+      {/* Essential Meta */}
       <meta charSet="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       
-      {/* Static meta tags that don't change per page */}
+      {/* Business Meta */}
       <meta name="author" content="LegalAssist Paralegal Services" />
-      <meta name="language" content="English" />
+      <meta name="publisher" content="LegalAssist Paralegal Services" />
+      <meta name="copyright" content={`© ${currentYear} LegalAssist Paralegal Services`} />
+      <meta name="language" content="en-CA" />
       
-      {/* Google Search Console Verification */}
-      <meta name="google-site-verification" content="88t7djZ30uDHKlJfhoAD5kkD7PZimfJmVxGriDB8Yyk" />
+      {/* Verification - Update with your codes */}
+      <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
+      {/* <meta name="msvalidate.01" content="YOUR_BING_CODE" /> */}
+      
+      {/* Geo Location */}
+      <meta name="geo.region" content="CA-ON" />
+      <meta name="geo.placename" content="London, Ontario" />
+      <meta name="geo.position" content="42.9849;-81.2453" />
+      <meta name="ICBM" content="42.9849, -81.2453" />
       
       {/* Theme and PWA */}
       <meta name="theme-color" content="#B94A1F" />
+      <meta name="msapplication-TileColor" content="#B94A1F" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="apple-mobile-web-app-title" content="LegalAssist" />
+      <meta name="application-name" content="LegalAssist" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <link rel="manifest" href="/site.webmanifest" />
       
-      {/* 
-        NOTE: The following are now handled dynamically by AutoSEO.tsx:
-        - <title>
-        - meta description
-        - meta keywords  
-        - meta robots
-        - canonical URL
-        - og:title, og:description, og:url
-        - twitter:title, twitter:description
-        - geo.region, geo.placename
-      */}
+      {/* Favicon and Icons */}
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       
-      {/* Schema.org Structured Data - global business info */}
+      {/* Default OG Image (overridden by AutoSEO per page) */}
+      <meta property="og:image" content="https://legalassist.london/og-image.jpg" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="LegalAssist Paralegal Services - London, Ontario" />
+      <meta name="twitter:image" content="https://legalassist.london/og-image.jpg" />
+      
+      {/* Security */}
+      <meta name="referrer" content="strict-origin-when-cross-origin" />
+      
+      {/* Performance - Preconnect */}
+      <link rel="dns-prefetch" href="https://static.wixstatic.com" />
+      <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      <link rel="preconnect" href="https://static.parastorage.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      
+      {/* Schema.org Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify(schemaData)}
       </script>
-      
-      {/* Font Preloading */}
-      <link rel="preconnect" href="https://static.parastorage.com" />
-      <link rel="preload" as="font" href="https://static.parastorage.com/fonts/bitter" type="font/woff2" crossOrigin="anonymous" />
-      <link rel="preload" as="font" href="https://static.parastorage.com/fonts/raleway" type="font/woff2" crossOrigin="anonymous" />
     </> 
   );
 };
