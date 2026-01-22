@@ -1,4 +1,4 @@
-json{
+{
   "name": "LegalAssist Paralegal Services",
   "short_name": "LegalAssist",
   "description": "Licensed paralegal services in London, Ontario. Traffic tickets, Small Claims Court, Landlord Tenant Board.",
@@ -12,19 +12,16 @@ json{
   "categories": ["business", "legal"],
   "icons": [
     {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon-192.png",
+      "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
