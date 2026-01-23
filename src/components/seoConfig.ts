@@ -100,6 +100,15 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How quickly will you respond to my inquiry?',
         answer: 'We typically respond to all inquiries within 24 hours on business days. For urgent matters, please call us directly at (519) 601-1110.'
       }
+    ,
+      {
+        question: 'Do you offer payment plans?',
+        answer: 'Yes, we offer flexible payment arrangements for most services. We understand legal issues arise unexpectedly. Contact us to discuss options that fit your budget.'
+      },
+      {
+        question: 'Can I meet with you virtually?',
+        answer: 'Yes, we offer virtual consultations via video call. Many clients prefer this. In-person meetings are also available by appointment.'
+      }
     ]
   },
 
@@ -119,6 +128,15 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What areas do you serve?',
         answer: 'We serve London and all of Southwestern Ontario including St. Thomas, Woodstock, Kitchener-Waterloo, Windsor, Sarnia, Stratford, Guelph, Brantford, and surrounding communities.'
+      }
+    ,
+      {
+        question: 'Are you licensed by the Law Society of Ontario?',
+        answer: 'Yes, LegalAssist Paralegal Services is fully licensed and regulated by the Law Society of Ontario. We maintain professional liability insurance and follow all LSO rules of professional conduct.'
+      },
+      {
+        question: 'How long have you been in practice?',
+        answer: 'We have been serving Southwestern Ontario with professional paralegal services for several years. Our team stays current through continuing professional development.'
       }
     ]
   },
@@ -140,10 +158,19 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Do I need a lawyer or a paralegal for my case?',
         answer: 'For traffic tickets, LTB matters, Small Claims Court under $35,000, and HRTO applications, a paralegal can provide the same representation as a lawyer at a lower cost. You need a lawyer for criminal indictable offences, family law, real estate, and claims over $35,000.'
       }
+    ,
+      {
+        question: 'How do I know if I need a paralegal or a lawyer?',
+        answer: 'Paralegals handle Small Claims Court (up to $35,000), LTB, traffic tickets, provincial offences, human rights tribunal, and minor criminal matters. For criminal charges, family law, real estate, or claims over $35,000, you need a lawyer.'
+      },
+      {
+        question: 'Do you offer free consultations?',
+        answer: 'Yes, we offer free initial consultations for all practice areas. This allows us to assess your situation, explain your options, and provide a clear quote with no obligation.'
+      }
     ]
   },
 
-  // ... keep existing code (traffic tickets and other service pages) ...
+  // ... keep existing code (signup and login removed - private routes) ...
 
   // ============================================
   // TRAFFIC TICKETS - MAIN & SUB-PAGES (18 pages)
@@ -175,6 +202,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Do I have to go to court for my traffic ticket?',
         answer: 'No. When you hire us, we appear in court on your behalf. You do not need to take time off work or deal with the stress of traffic court. We handle everything from start to finish.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -208,6 +240,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How much will my insurance go up for a speeding ticket?',
         answer: 'A speeding conviction typically increases auto insurance by 15-25% for 3 years. For someone paying $200/month, that could be $1,080-$1,800 in extra premiums over 3 years - far more than the cost of fighting the ticket.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -239,6 +276,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What is considered careless driving in Ontario?',
         answer: 'Careless driving under HTA Section 130 is driving without due care and attention or without reasonable consideration for others. It includes distracted driving causing an accident, running stop signs, unsafe lane changes, and following too closely that leads to a collision.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -272,6 +314,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can stunt driving charges be reduced?',
         answer: 'Yes, with proper defence, stunt driving charges can sometimes be reduced to regular speeding or other lesser offences. The key is challenging the speed measurement, officer observations, and procedural compliance. We have successfully defended many stunt driving cases.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -303,6 +350,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Does holding a phone count as distracted driving even if not using it?',
         answer: 'Yes, simply holding a cell phone or other electronic device while driving is enough for a distracted driving charge in Ontario, even if you were not actively using it. The device must be mounted or completely put away.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -336,6 +388,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What is the fine for running a red light in Ontario?',
         answer: 'Red light camera tickets are a set fine of $325. Officer-issued red light tickets range from $260-$500 plus 3 demerit points. The insurance impact of an officer-issued ticket far exceeds the fine itself.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -367,6 +424,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What if I didn\'t know my insurance had lapsed?',
         answer: 'Unfortunately, not knowing your insurance lapsed is not a valid defence. However, we can often negotiate with prosecutors to reduce the fine significantly, especially for first offences where insurance was quickly obtained afterward.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -400,6 +462,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I remove demerit points from my licence?',
         answer: 'You cannot remove demerit points early - they automatically expire after 2 years. However, fighting the underlying ticket can prevent points from being added in the first place, which is why it\'s important to contest tickets before conviction.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -431,6 +498,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Do G1/G2 tickets affect my ability to get a full G licence?',
         answer: 'Certain convictions can delay your progression to a full G licence. Serious convictions may require you to restart the graduated licensing program entirely. Fighting tickets becomes even more important for novice drivers.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -464,6 +536,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I lose my commercial licence (AZ/DZ) for a traffic ticket?',
         answer: 'Yes, accumulating too many demerit points or receiving certain serious convictions can result in suspension of your commercial licence class. This makes defending even minor tickets critical for professional drivers whose livelihood depends on their licence.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -495,6 +572,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How many people do you need for HOV lanes in Ontario?',
         answer: 'Most HOV lanes in Ontario require 2+ occupants (driver plus at least one passenger). Some highways during peak hours require 3+ occupants. Check the posted signs as requirements vary by highway and time of day.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -528,6 +610,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I fight a stop sign ticket if I did stop?',
         answer: 'Yes. If you believe you made a complete stop, we can challenge the officer\'s observations, their vantage point, visibility conditions, or any other factors that may have affected their ability to accurately observe whether you stopped completely.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -559,6 +646,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Can street racing charges be reduced?',
         answer: 'Yes, with proper defence. We examine whether the charge meets the legal definition of racing, challenge speed measurement methods, review officer observations, and negotiate with prosecutors to potentially reduce charges to lesser speeding offences.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -592,6 +684,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I contest a fail to yield ticket after an accident?',
         answer: 'Yes, being involved in an accident doesn\'t automatically mean you failed to yield. We examine the evidence, witness statements, road conditions, and other factors to build your defence. The other driver may have contributed to the collision.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -623,6 +720,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Can I fight an unsafe lane change ticket?',
         answer: 'Yes. Defences include challenging the officer\'s ability to observe the lane change, proving you signaled appropriately, demonstrating the other vehicle was speeding or driving unpredictably, or showing road conditions required the maneuver.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -656,6 +758,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I fight a following too closely ticket after a rear-end collision?',
         answer: 'Yes. While rear-end collisions often result in following too closely charges, we can examine whether the lead vehicle stopped suddenly without cause, brake lights were functioning, or other factors contributed. The charge is not automatic even after a collision.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -687,6 +794,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Is driving while suspended a criminal offence?',
         answer: 'Driving while suspended under the HTA is a provincial offence, not criminal. However, driving while prohibited under a Criminal Code order (like an impaired driving ban) is a criminal offence with more severe penalties.'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -720,6 +832,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I fight a school zone speeding ticket?',
         answer: 'Yes. In addition to standard speeding defences, we can challenge whether proper signage was in place, if the Community Safety Zone was properly designated, whether school was in session, and if the timing fell within posted hours.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -751,6 +868,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What are valid defences for seatbelt tickets?',
         answer: 'Defences include medical exemptions (with documentation), the seatbelt was worn but became undone momentarily, the officer\'s view was obstructed, or you were engaged in an activity exempt from seatbelt requirements (like certain delivery drivers).'
+      }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
     ]
   },
@@ -786,6 +908,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How much does LTB representation cost?',
         answer: 'Our LTB representation fees start at $500 for straightforward matters and vary based on complexity. We offer flat-rate pricing for most services so you know the cost upfront. Free consultations are available.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -817,6 +944,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What if my tenant won\'t leave after eviction order?',
         answer: 'If a tenant refuses to leave after an eviction order takes effect, you must file the order with the Court Enforcement Office (Sheriff). The Sheriff will schedule and enforce the eviction. Never attempt self-help eviction - it\'s illegal.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -850,6 +982,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I withhold rent if my landlord won\'t do repairs?',
         answer: 'No, withholding rent is not recommended and can result in eviction for non-payment. Instead, file a T6 application with the LTB for maintenance issues. You may be awarded rent abatement and orders for the landlord to complete repairs.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -881,6 +1018,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How long does an L1 eviction take?',
         answer: 'From filing to hearing is typically 4-8 weeks. If eviction is ordered and the tenant doesn\'t leave, Sheriff enforcement adds another 2-4 weeks. Total timeline is usually 2-4 months, though delays are common with current LTB backlogs.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -914,6 +1056,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What happens if a landlord doesn\'t move in after N12?',
         answer: 'If the landlord doesn\'t occupy the unit for at least 12 months, the tenant can file a T5 application claiming bad faith. The LTB can order the landlord to pay compensation equal to 12 months rent or the difference between old and new rent.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -945,6 +1092,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How can tenants fight an N13 eviction?',
         answer: 'Tenants can challenge N13s by arguing: the renovations don\'t require vacant possession, required permits weren\'t obtained, the landlord is using N13 to circumvent rent control, or the landlord has a history of bad faith renovictions.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -978,6 +1130,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How much can rent increase with an AGI?',
         answer: 'AGIs are capped at 3% above the guideline per year for capital expenditures and utilities. There\'s no cap for municipal tax increases. The total AGI can be phased in over up to 3 years if it exceeds the annual cap.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -1009,6 +1166,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Can I get a rent reduction for maintenance issues?',
         answer: 'Yes, the LTB can order rent abatement (reduction) to compensate for living with disrepair. The amount depends on severity and duration. Major issues like no heat or water can result in significant abatement; minor issues receive smaller awards.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1042,6 +1204,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What compensation can I get for bad faith eviction?',
         answer: 'The LTB can order the landlord to pay: 12 months rent, the difference between your old rent and new rent for up to 12 months, moving expenses, and general damages for distress. Bad faith findings can result in significant awards.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -1073,6 +1240,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Can I refuse a rent increase?',
         answer: 'If the increase is illegal (above guideline, improper notice, too soon), you can refuse it and continue paying your current rent. If the landlord persists, they may file with the LTB, where you can defend against the improper increase.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1106,6 +1278,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What penalties do landlords face for illegal lockouts?',
         answer: 'The LTB can order landlords to pay: compensation for out-of-pocket expenses, general damages up to $35,000, and the landlord may face fines up to $50,000 under the RTA. Repeat offenders face even harsher penalties.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -1137,6 +1314,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What can the LTB do about landlord harassment?',
         answer: 'The LTB can order: the landlord to stop the harassing behavior, compensation for damages you suffered, rent abatement, and in serious cases, fines against the landlord. You may also be able to terminate your tenancy if conditions are intolerable.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1170,6 +1352,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I offset rent arrears with maintenance issues?',
         answer: 'Yes, if your landlord has failed to maintain the unit, you can raise this at the L1 hearing to reduce the amount owed. Bring evidence of maintenance issues and how long they\'ve existed. The arrears may be reduced by rent abatement.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -1201,6 +1388,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Do I have the same rights in subsidized housing?',
         answer: 'Yes, tenants in subsidized housing have all rights under the RTA plus additional protections under the Housing Services Act. You cannot be evicted without proper LTB process, and you can request reviews of subsidy calculations.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1234,6 +1426,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What if my roommate stops paying their share of rent?',
         answer: 'If you\'re all on the lease, you\'re jointly responsible for full rent regardless of roommate arrangements. You may need to cover their share to avoid eviction and then pursue them in Small Claims Court for their portion.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -1265,6 +1462,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Can my landlord refuse to let me assign my lease?',
         answer: 'Landlords can only refuse assignment for reasonable grounds (like poor references). If they refuse all assignments without reason, you can give 30 days notice to terminate early. Get refusals in writing and document your assignment efforts.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1298,6 +1500,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What if my pet disturbs other tenants?',
         answer: 'If your pet causes substantial interference with reasonable enjoyment (constant barking, aggressive behavior, smells), the landlord can issue an N5 notice. You have 7 days to correct the issue. Repeated problems can lead to eviction.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -1329,6 +1536,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How can I defend against noise complaint eviction?',
         answer: 'Defences include: the noise was reasonable living sounds, the complainant is overly sensitive, poor sound insulation is the real problem, the complaints are retaliatory or discriminatory, or the landlord didn\'t give proper notice or follow procedures.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1362,6 +1574,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Can I have someone represent me at the LTB?',
         answer: 'Yes, you can have a licensed paralegal, lawyer, or unpaid friend/family member represent you. Paralegals offer expert representation at lower cost than lawyers. We handle all aspects from preparation through hearing and can often achieve better outcomes.'
       }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -1393,6 +1610,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Can I get a rent reduction for building under construction?',
         answer: 'Possibly, if the construction significantly impacts your enjoyment (noise, dust, lost amenities, reduced access). Document the disruption carefully. However, necessary maintenance doesn\'t automatically entitle you to reduction if done reasonably.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1426,6 +1648,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What if the park owner wants me to remove my mobile home?',
         answer: 'The park owner must obtain an eviction order from the LTB. Even then, they cannot remove your home - you own it. If evicted, you have the right to sell the home in place or remove it yourself. The park cannot seize your home for unpaid rent.'
       }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -1457,6 +1684,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How much notice before a superintendent must vacate?',
         answer: 'There\'s no set rule. Courts have found 1-3 months reasonable depending on length of service and circumstances. If you dispute the notice period or whether RTA applies, seek legal help immediately to protect your rights.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
       }
     ]
   },
@@ -1492,6 +1724,11 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How long does Small Claims Court take?',
         answer: 'Simple cases may settle within 2-3 months. Contested cases going to trial typically take 6-12 months. Settlement conferences resolve many cases before trial.'
       }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
     ]
   },
 
@@ -1504,6 +1741,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are the steps in Small Claims Court?', answer: 'File claim, serve defendant (20 days to respond), defence or default judgment, mandatory settlement conference, trial if not settled, judgment, enforcement if needed.' },
       { question: 'Do I have to go to court?', answer: 'You must attend Settlement Conference and Trial. If you hire us, we can attend most proceedings on your behalf.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'What happens at a settlement conference?',
+        answer: 'A deputy judge reviews both sides and encourages settlement. Many cases resolve here. If not, trial is scheduled. We prepare you thoroughly for both outcomes.'
+      }
     ]
   },
 
@@ -1516,6 +1764,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How do I collect a debt through court?', answer: 'File a claim with evidence (contracts, invoices). Serve the debtor. If they don\'t defend, get default judgment. If defended, proceed to settlement and trial.' },
       { question: 'How long do I have to sue for a debt?', answer: 'The limitation period is 2 years from when the debt became due or was last acknowledged.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'Can I sue someone who lives in another province?',
+        answer: 'Yes, if the contract was formed in Ontario or the incident occurred here. Service and enforcement across provinces can be more complex. We advise on your options.'
+      }
     ]
   },
 
@@ -1528,6 +1787,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is breach of contract?', answer: 'Breach occurs when one party fails to fulfill their contractual obligations: not delivering goods/services, not paying as agreed, or violating contract terms.' },
       { question: 'Do I need a written contract to sue?', answer: 'Not necessarily. Oral contracts are enforceable, though harder to prove. Emails, texts, and witnesses can support your case.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'How do I serve documents on the other party?',
+        answer: 'Documents can be served by mail, courier, personal service, or alternative methods approved by the court. Proper service is essential - we ensure it is done correctly.'
+      }
     ]
   },
 
@@ -1540,6 +1810,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How do I enforce a judgment?', answer: 'Options include: garnishing wages or bank accounts, examining debtor about assets, seizing property, or placing liens on real estate.' },
       { question: 'How long is a judgment valid?', answer: 'Small Claims judgments are valid for 6 years and can be renewed. Interest accrues on unpaid amounts.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'What happens at a settlement conference?',
+        answer: 'A deputy judge reviews both sides and encourages settlement. Many cases resolve here. If not, trial is scheduled. We prepare you thoroughly for both outcomes.'
+      }
     ]
   },
 
@@ -1552,6 +1833,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can I sue for property damage?', answer: 'Yes, for negligent or intentional damage up to $35,000. Document damage with photos and get repair estimates.' },
       { question: 'What damages can I recover?', answer: 'Repair costs or fair market value, diminished value, loss of use, and related expenses.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'Can I sue someone who lives in another province?',
+        answer: 'Yes, if the contract was formed in Ontario or the incident occurred here. Service and enforcement across provinces can be more complex. We advise on your options.'
+      }
     ]
   },
 
@@ -1564,6 +1856,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How do I collect unpaid invoices?', answer: 'Start with a demand letter. If unpaid, file in Small Claims Court with invoices, contracts, and communications.' },
       { question: 'Can I add interest?', answer: 'Yes, if your contract or invoice specifies interest. Otherwise, claim pre-judgment interest at the court rate.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'How do I serve documents on the other party?',
+        answer: 'Documents can be served by mail, courier, personal service, or alternative methods approved by the court. Proper service is essential - we ensure it is done correctly.'
+      }
     ]
   },
 
@@ -1576,6 +1879,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can landlords keep security deposits?', answer: 'In Ontario, security deposits are illegal. Landlords can only collect last month\'s rent and cannot deduct for damages.' },
       { question: 'How do I get my deposit back?', answer: 'Send written demand citing RTA provisions. File with LTB or Small Claims Court if refused.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'What happens at a settlement conference?',
+        answer: 'A deputy judge reviews both sides and encourages settlement. Many cases resolve here. If not, trial is scheduled. We prepare you thoroughly for both outcomes.'
+      }
     ]
   },
 
@@ -1588,6 +1902,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is an unfair business practice?', answer: 'Under Consumer Protection Act: false representations, unconscionable conduct, negative option billing, failure to deliver.' },
       { question: 'Can I return defective products?', answer: 'Yes, you have rights under Sale of Goods Act for products that don\'t match descriptions or aren\'t fit for purpose.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'Can I sue someone who lives in another province?',
+        answer: 'Yes, if the contract was formed in Ontario or the incident occurred here. Service and enforcement across provinces can be more complex. We advise on your options.'
+      }
     ]
   },
 
@@ -1600,6 +1925,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can I claim injury in Small Claims?', answer: 'Yes, for injuries with damages under $35,000. Serious injuries may need Superior Court.' },
       { question: 'What can I recover?', answer: 'Medical expenses, lost wages, out-of-pocket costs, and general damages for pain and suffering.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'How do I serve documents on the other party?',
+        answer: 'Documents can be served by mail, courier, personal service, or alternative methods approved by the court. Proper service is essential - we ensure it is done correctly.'
+      }
     ]
   },
 
@@ -1612,6 +1948,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What if my contractor did poor work?', answer: 'Document defects with photos, get repair estimates. Send written complaint. Sue for repair costs if unresolved.' },
       { question: 'Can I sue for incomplete work?', answer: 'Yes. Recover amounts paid for work not done, cost to complete, and delay damages.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'What happens at a settlement conference?',
+        answer: 'A deputy judge reviews both sides and encourages settlement. Many cases resolve here. If not, trial is scheduled. We prepare you thoroughly for both outcomes.'
+      }
     ]
   },
 
@@ -1624,6 +1971,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What if I bought a lemon?', answer: 'Document problems. OMVIC dealers have disclosure obligations. You may be entitled to rescission or damages.' },
       { question: 'Must dealers disclose damage?', answer: 'Yes, registered dealers must disclose accident history, salvage titles, previous taxi/rental use, odometer issues.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'Can I sue someone who lives in another province?',
+        answer: 'Yes, if the contract was formed in Ontario or the incident occurred here. Service and enforcement across provinces can be more complex. We advise on your options.'
+      }
     ]
   },
 
@@ -1636,6 +1994,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can I sue for tree damage?', answer: 'Yes, if a neighbour\'s tree damages your property. You can recover repair costs.' },
       { question: 'Who pays for boundary fences?', answer: 'Costs are generally split equally under the Line Fences Act. Municipal fence-viewing resolves disputes.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'How do I serve documents on the other party?',
+        answer: 'Documents can be served by mail, courier, personal service, or alternative methods approved by the court. Proper service is essential - we ensure it is done correctly.'
+      }
     ]
   },
 
@@ -1648,6 +2017,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can I sue to get property back?', answer: 'Yes, a claim for conversion or detinue can recover property wrongfully held by others.' },
       { question: 'My ex won\'t return belongings?', answer: 'Send written demand. File in Small Claims Court listing items and values. Court can order return or compensation.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
     ]
   },
 
@@ -1660,6 +2039,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What if warranty isn\'t honored?', answer: 'Document the defect and claim attempts. Send formal demand. File in Small Claims with warranty and proof of defect.' },
       { question: 'Are there implied warranties?', answer: 'Yes. Sale of Goods Act implies warranties for merchantable quality and fitness for purpose even without written guarantees.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'What happens at a settlement conference?',
+        answer: 'A deputy judge reviews both sides and encourages settlement. Many cases resolve here. If not, trial is scheduled. We prepare you thoroughly for both outcomes.'
+      }
     ]
   },
 
@@ -1672,6 +2062,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can I sue to recover a personal loan?', answer: 'Yes, even without written agreement. Prove: money transferred, it was a loan, repayment terms, and failure to repay.' },
       { question: 'How do I prove it was a loan?', answer: 'Any agreement or IOU, texts about repayment, partial payments, and the amount and relationship all help prove it wasn\'t a gift.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'Can I sue someone who lives in another province?',
+        answer: 'Yes, if the contract was formed in Ontario or the incident occurred here. Service and enforcement across provinces can be more complex. We advise on your options.'
+      }
     ]
   },
 
@@ -1684,6 +2085,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How do I sue a tenant for damages?', answer: 'Document damage with photos immediately. Get repair estimates. File in Small Claims Court (not LTB for former tenants).' },
       { question: 'Can I deduct from last month\'s rent?', answer: 'No. In Ontario, you cannot deduct damages from rent deposit. You must sue in Small Claims Court separately.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
+    
+    ,
+      {
+        question: 'Can I bring a lawyer to my LTB hearing?',
+        answer: 'You can bring a lawyer or licensed paralegal. Paralegals are often more cost-effective for LTB matters and have the same rights of representation as lawyers at this tribunal.'
+      }
     ]
   },
 
@@ -1696,6 +2108,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is wrongful dismissal?', answer: 'Termination without proper notice or pay in lieu. Employees are entitled to reasonable notice based on age, service, position.' },
       { question: 'How much notice am I entitled to?', answer: 'ESA minimums: 1 week per year up to 8 weeks. Common law is often more - roughly 1 month per year of service.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Can I be fired without cause in Ontario?',
+        answer: 'Yes, but you are entitled to notice or pay in lieu. The amount depends on length of service, age, position, and other factors. We assess your full entitlement.'
+      }
     ]
   },
 
@@ -1708,6 +2130,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is professional negligence?', answer: 'When a professional fails to meet the standard of care expected in their profession, causing financial loss.' },
       { question: 'Can I sue my accountant?', answer: 'Yes, if their errors caused financial loss - missed deductions, penalties, bad advice leading to losses.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'How do I serve documents on the other party?',
+        answer: 'Documents can be served by mail, courier, personal service, or alternative methods approved by the court. Proper service is essential - we ensure it is done correctly.'
+      }
     ]
   },
 
@@ -1720,6 +2153,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is defamation?', answer: 'A false statement of fact harming reputation. Libel is written; slander is spoken. Must be false, communicated to others, and cause damage.' },
       { question: 'Can I sue for social media posts?', answer: 'Yes. False statements online are defamation. Screenshot and preserve evidence. Opinions and true statements are protected.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'What happens at a settlement conference?',
+        answer: 'A deputy judge reviews both sides and encourages settlement. Many cases resolve here. If not, trial is scheduled. We prepare you thoroughly for both outcomes.'
+      }
     ]
   },
 
@@ -1736,6 +2180,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What is the Human Rights Tribunal of Ontario?', answer: 'The HRTO hears complaints about discrimination under the Ontario Human Rights Code in employment, housing, services, contracts, and unions based on protected grounds.' },
       { question: 'How long do I have to file an HRTO complaint?', answer: 'You must file within 1 year of the last incident of discrimination. In exceptional circumstances, late applications may be accepted.' },
       { question: 'What compensation can I get from HRTO?', answer: 'HRTO can award: monetary compensation for injury to dignity, lost wages, out-of-pocket expenses, and order policy changes or training.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
     ]
   },
 
@@ -1748,6 +2197,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is workplace discrimination?', answer: 'Unfair treatment at work based on protected grounds: race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity, age, disability, family status, or marital status.' },
       { question: 'Can I file HRTO while still employed?', answer: 'Yes. Your employer cannot retaliate against you for filing. Reprisal for human rights complaints is itself a violation of the Code.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
+    ,
+      {
+        question: 'How long do HRTO cases take?',
+        answer: 'Process typically takes 1-2 years from filing to hearing. Mediation offered and can resolve faster. We work for best outcome in shortest time.'
+      }
     ]
   },
 
@@ -1760,6 +2219,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can a landlord refuse to rent to families with children?', answer: 'No. Discrimination based on family status (having children) is prohibited. Landlords cannot refuse families, require higher deposits, or impose different terms.' },
       { question: 'Is refusing tenants on social assistance discrimination?', answer: 'Yes. Receipt of public assistance is a protected ground under the Code. Landlords cannot refuse applicants simply because they receive Ontario Works or ODSP.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
+    
+    ,
+      {
+        question: 'What if my landlord or tenant does not follow the LTB order?',
+        answer: 'You can file a motion to enforce the order or contact the Sheriff for eviction enforcement. Continued violations may result in contempt proceedings or additional compensation.'
+      }
     ]
   },
 
@@ -1772,6 +2242,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is duty to accommodate?', answer: 'Employers, landlords, and service providers must accommodate disabilities to the point of undue hardship. This includes modified duties, equipment, schedules, or physical accessibility.' },
       { question: 'What if my employer refuses accommodations?', answer: 'If your employer refuses reasonable accommodation without demonstrating undue hardship, you may have grounds for an HRTO complaint.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
     ]
   },
 
@@ -1784,6 +2264,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What constitutes sexual harassment?', answer: 'Unwelcome conduct of a sexual nature: comments, jokes, touching, requests for sexual favors, displaying sexual material, or any conduct creating a hostile environment based on sex.' },
       { question: 'Can I file if the harasser wasn\'t my boss?', answer: 'Yes. Employers are responsible for harassment by co-workers, supervisors, clients, or customers if they knew or should have known and failed to address it.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -1796,6 +2286,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can employers discriminate based on age?', answer: 'No. Age is a protected ground for persons 18 and over. Employers cannot refuse to hire, terminate, or treat employees differently because of age.' },
       { question: 'Is mandatory retirement legal in Ontario?', answer: 'Generally no. Mandatory retirement was abolished in Ontario in 2006 with limited exceptions for certain professions like firefighters and police.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
+    
+    ,
+      {
+        question: 'Can I file anonymously with the HRTO?',
+        answer: 'No, applications are not anonymous. However, the Tribunal can order publication bans or use initials in certain circumstances to protect privacy.'
+      }
     ]
   },
 
@@ -1808,6 +2309,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can I be fired for being pregnant?', answer: 'No. Terminating employment due to pregnancy is discrimination based on sex. Employers must accommodate pregnancy-related needs and cannot penalize pregnant employees.' },
       { question: 'What if I was fired right before maternity leave?', answer: 'Termination shortly before planned leave may indicate discrimination. Employers must have legitimate, non-discriminatory reasons documented before any termination.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
+    
+    ,
+      {
+        question: 'Do I need witnesses for my HRTO hearing?',
+        answer: 'Witness testimony strengthens your case but is not always required. Documents, emails, and your own testimony can be sufficient. We advise on evidence strategy.'
+      }
     ]
   },
 
@@ -1820,6 +2332,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Can a business refuse to serve me?', answer: 'Businesses cannot refuse service based on protected grounds: race, disability, religion, sexual orientation, etc. They can refuse for legitimate reasons like dress codes applied equally.' },
       { question: 'What if a store follows me because of my race?', answer: 'Racial profiling by retail staff is discrimination in services. Document incidents, note witnesses, and consider filing an HRTO application.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
+    
+    ,
+      {
+        question: 'What if my employer offers to settle?',
+        answer: 'Settlement offers should be carefully evaluated. Consider the amount, terms, confidentiality requirements, and tax implications. We help negotiate fair settlements.'
+      }
     ]
   },
 
@@ -1832,6 +2355,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is reprisal under the Human Rights Code?', answer: 'Reprisal is any negative action against someone for claiming rights, refusing to violate the Code, or participating in human rights proceedings. It\'s a separate violation.' },
       { question: 'Can I be fired for filing an HRTO complaint?', answer: 'No. Terminating someone for filing a complaint is reprisal and a separate Code violation. You can add a reprisal claim to your application or file a new one.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -1847,6 +2380,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What employment issues can a paralegal help with?', answer: 'Paralegals can assist with: Small Claims Court employment claims under $35,000, HRTO discrimination complaints, Ministry of Labour complaints, and employment standards issues.' },
       { question: 'When should I contact an employment lawyer instead?', answer: 'For wrongful dismissal claims over $35,000, complex contract disputes, or senior executive packages, a lawyer may be more appropriate. We can refer you if needed.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Can I be fired without cause in Ontario?',
+        answer: 'Yes, but you are entitled to notice or pay in lieu. The amount depends on length of service, age, position, and other factors. We assess your full entitlement.'
+      }
     ]
   },
 
@@ -1859,6 +2402,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is wrongful termination?', answer: 'Termination without proper notice or pay in lieu, or for illegal reasons (discrimination, reprisal). Employees are entitled to reasonable notice based on service, age, and position.' },
       { question: 'Can I be fired without cause in Ontario?', answer: 'Yes, but the employer must provide proper notice or pay. The amount depends on ESA minimums (up to 8 weeks) and common law entitlements (often much more).' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    
+    ,
+      {
+        question: 'Can I record conversations with my employer?',
+        answer: 'In Ontario, one-party consent allows you to record conversations you participate in. However, company policies and strategic considerations apply. We advise on best practices.'
+      }
     ]
   },
 
@@ -1871,6 +2425,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How do I recover unpaid wages?', answer: 'File a Ministry of Labour complaint (free) for ESA violations, or sue in Small Claims Court for larger claims or matters outside ESA. We can help with either.' },
       { question: 'How long do I have to claim unpaid wages?', answer: 'Ministry of Labour claims must be filed within 2 years. Small Claims Court has a 2-year limitation. Act quickly to preserve your rights.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Can I be fired without cause in Ontario?',
+        answer: 'Yes, but you are entitled to notice or pay in lieu. The amount depends on length of service, age, position, and other factors. We assess your full entitlement.'
+      }
     ]
   },
 
@@ -1883,6 +2447,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How is severance pay calculated?', answer: 'ESA severance: 1 week per year of service (if employed 5+ years and employer has $2.5M+ payroll). Common law notice is separate and often much higher based on multiple factors.' },
       { question: 'Should I sign my severance package?', answer: 'Never sign immediately. You typically have time to review. Many initial offers are below entitlements. Get advice before signing away your rights.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -1895,6 +2469,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is constructive dismissal?', answer: 'When an employer makes fundamental changes to your job (pay cut, demotion, location change, hostile environment) that breach your contract, you may be entitled to treat it as termination.' },
       { question: 'Should I quit if I think I\'ve been constructively dismissed?', answer: 'Be careful. Consult us first. If you quit and the changes don\'t legally qualify, you may lose entitlements. We can assess whether the changes constitute constructive dismissal.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Can I be fired without cause in Ontario?',
+        answer: 'Yes, but you are entitled to notice or pay in lieu. The amount depends on length of service, age, position, and other factors. We assess your full entitlement.'
+      }
     ]
   },
 
@@ -1910,6 +2494,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What criminal matters can a paralegal handle?', answer: 'Paralegals can defend summary conviction offences with maximum 6 months jail: theft under $5000, simple assault, mischief under $5000, causing a disturbance, and some drug offences.' },
       { question: 'Should I use a paralegal or lawyer for criminal charges?', answer: 'For summary offences, paralegals offer the same court representation at lower cost. For indictable or hybrid offences with potential jail over 6 months, you need a lawyer.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Will I get a criminal record?',
+        answer: 'Not necessarily. Many first offences qualify for diversion, discharges, or peace bonds that avoid a criminal record. We pursue the best outcome for your situation.'
+      }
     ]
   },
 
@@ -1922,6 +2516,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are provincial offences?', answer: 'Non-criminal violations of provincial laws: Highway Traffic Act, Liquor Licence Act, Trespass to Property, Fish and Wildlife Conservation Act, municipal bylaws, and regulatory statutes.' },
       { question: 'Can provincial offences go on my criminal record?', answer: 'No, provincial offences are not criminal and don\'t create a criminal record. However, they may appear on other records (driving abstract, regulatory databases) depending on the offence.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -1934,6 +2538,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is the penalty for theft under $5000?', answer: 'As a summary offence: up to 6 months jail and/or $5,000 fine. First-time offenders rarely get jail. Diversion or conditional discharge may keep it off your record.' },
       { question: 'Can I avoid a criminal record for shoplifting?', answer: 'Often yes. Options include: diversion programs (charges withdrawn after completing conditions), absolute/conditional discharge, or acquittal at trial. We work to protect your record.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Will I get a criminal record?',
+        answer: 'Not necessarily. Many first offences qualify for diversion, discharges, or peace bonds that avoid a criminal record. We pursue the best outcome for your situation.'
+      }
     ]
   },
 
@@ -1946,6 +2560,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is simple assault?', answer: 'Intentionally applying force to another person without consent, or attempting/threatening to do so. Does not require injury. Pushing, slapping, spitting, or threatening violence can all be assault.' },
       { question: 'What are defences to assault charges?', answer: 'Common defences: self-defence, defence of others, consent (some situations), accident, mistaken identity, or that the complainant\'s account is unreliable.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -1958,6 +2582,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is mischief under $5000?', answer: 'Willfully destroying, damaging, or interfering with property where damage is under $5000. Includes vandalism, graffiti, keying cars, breaking windows.' },
       { question: 'What are the penalties for mischief?', answer: 'Summary conviction: up to 6 months jail and/or $5,000 fine. Restitution to the victim is commonly ordered. Diversion may be available for first offenders.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Will I get a criminal record?',
+        answer: 'Not necessarily. Many first offences qualify for diversion, discharges, or peace bonds that avoid a criminal record. We pursue the best outcome for your situation.'
+      }
     ]
   },
 
@@ -1970,6 +2604,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is a peace bond?', answer: 'A court order requiring someone to keep the peace and be of good behaviour, often with conditions like no contact, staying away from locations, or no weapons. Usually lasts 12 months.' },
       { question: 'Is a peace bond a criminal conviction?', answer: 'No. A peace bond is not a criminal conviction and doesn\'t create a criminal record. However, breaching peace bond conditions is a criminal offence.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -1982,6 +2626,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What happens at a bail hearing?', answer: 'Crown explains why detention is justified. Defence argues for release with appropriate conditions. Justice decides on release, conditions, surety requirements, or detention.' },
       { question: 'What is a surety?', answer: 'Someone who pledges to supervise you and ensure you follow bail conditions. They may need to pledge money. Suitable sureties are usually family or close friends with no criminal record.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Will I get a criminal record?',
+        answer: 'Not necessarily. Many first offences qualify for diversion, discharges, or peace bonds that avoid a criminal record. We pursue the best outcome for your situation.'
+      }
     ]
   },
 
@@ -1994,6 +2648,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is trespass to property?', answer: 'Entering premises when entry is prohibited, engaging in prohibited activities on premises, or failing to leave when directed. Includes being on property after being banned.' },
       { question: 'What are the penalties for trespassing?', answer: 'Fine up to $10,000. Not a criminal offence - it\'s provincial. However, repeated violations or trespass combined with other offences can have serious consequences.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2006,6 +2670,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are common Liquor Licence Act charges?', answer: 'Having open liquor in public, being intoxicated in public, underage possession/consumption, supplying to minors, and over-service by licensed establishments.' },
       { question: 'Can I get a record for alcohol offences?', answer: 'LLA offences are provincial, not criminal. No criminal record. However, convictions may affect liquor licence applications and some employment.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    
+    ,
+      {
+        question: 'Can I fight a ticket from another city?',
+        answer: 'Yes, we handle tickets from courts across Southwestern Ontario. We appear on your behalf so you do not need to travel or take time off work.'
+      }
     ]
   },
 
@@ -2018,6 +2693,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are municipal bylaw offences?', answer: 'Violations of local rules: noise complaints, property maintenance, zoning violations, sign bylaws, animal control, business licensing, and parking.' },
       { question: 'Should I fight a bylaw ticket?', answer: 'Depends on the fine, circumstances, and defences available. Some violations carry ongoing compliance orders. We can assess whether fighting makes sense for your situation.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2030,6 +2715,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are regulatory offences?', answer: 'Violations of administrative regulations: occupational health and safety, environmental protection, employment standards, consumer protection, and professional licensing regulations.' },
       { question: 'Are regulatory offences serious?', answer: 'Yes. Unlike traffic tickets, many carry large fines ($50,000+), can affect professional licences, and some allow imprisonment. Defence is often critical.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2042,6 +2737,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is fail to comply?', answer: 'Breaching conditions of bail, probation, conditional sentence, or court order. Even minor breaches can result in new criminal charges and detention.' },
       { question: 'What happens if I breach bail conditions?', answer: 'You can be arrested, charged with failure to comply (new criminal charge), and held for bail review. The new charge makes future release harder to obtain.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2057,6 +2762,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Where is LegalAssist located in London?', answer: 'We serve all of London and Middlesex County. We handle matters at London courts including the Ontario Court of Justice at 80 Dundas Street and Superior Court at 80 Dundas Street.' },
       { question: 'What courts do you cover in London?', answer: 'We appear at London Provincial Offences Court, Ontario Court of Justice, Superior Court of Justice, Small Claims Court, and Landlord and Tenant Board hearings for the London region.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2069,6 +2785,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve St. Thomas court?', answer: 'Yes, we regularly appear at St. Thomas courts for traffic tickets, provincial offences, and small claims matters serving all of Elgin County.' },
       { question: 'What areas near St. Thomas do you cover?', answer: 'We serve St. Thomas, Aylmer, Port Stanley, Central Elgin, and all surrounding communities in Elgin County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2081,6 +2808,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle Woodstock court matters?', answer: 'Yes, we appear at Woodstock courthouse for traffic tickets, provincial offences, small claims, and other matters serving Oxford County.' },
       { question: 'What communities in Oxford County do you serve?', answer: 'We serve Woodstock, Ingersoll, Tillsonburg, Norwich, and all of Oxford County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2093,6 +2831,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Where are Ingersoll court matters heard?', answer: 'Most Ingersoll matters are heard at Woodstock courthouse. We handle all matters for Ingersoll residents throughout Oxford County courts.' },
       { question: 'Do you offer free consultations in Ingersoll?', answer: 'Yes, we offer free phone and video consultations for Ingersoll and area residents. In-person meetings available by appointment.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2105,6 +2854,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Tillsonburg residents?', answer: 'Yes, we serve Tillsonburg and surrounding areas including parts of Oxford and Norfolk counties for all paralegal services.' },
       { question: 'Which court handles Tillsonburg matters?', answer: 'Tillsonburg matters are typically heard at Woodstock or Simcoe courthouses depending on the matter. We appear at both.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2117,6 +2877,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle Aylmer area legal matters?', answer: 'Yes, we serve Aylmer and surrounding East Elgin communities for traffic tickets, LTB matters, small claims, and provincial offences.' },
       { question: 'Where are Aylmer court matters heard?', answer: 'Aylmer matters are typically heard at St. Thomas courthouse. We regularly appear there for Elgin County matters.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2129,6 +2900,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Strathroy and Chatham?', answer: 'Yes, we serve both Strathroy (Middlesex County) and Chatham-Kent for all paralegal services including traffic, LTB, and small claims.' },
       { question: 'Which courts handle these areas?', answer: 'Strathroy matters go to London or Sarnia courts. Chatham has its own courthouse where we regularly appear.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2141,6 +2923,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you appear at Kitchener court?', answer: 'Yes, we appear at Kitchener courthouse at 200 Frederick Street for traffic, provincial offences, small claims, and LTB matters.' },
       { question: 'What areas in Waterloo Region do you serve?', answer: 'We serve Kitchener, Waterloo, Cambridge, and all Waterloo Region communities including Elmira, New Hamburg, and Wellesley.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2153,6 +2946,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Where are Cambridge court matters heard?', answer: 'Cambridge matters are typically heard at Kitchener courthouse. We handle all paralegal matters for Cambridge residents.' },
       { question: 'Do you serve Galt, Preston, and Hespeler?', answer: 'Yes, we serve all Cambridge communities including the former municipalities of Galt, Preston, and Hespeler.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2165,6 +2969,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you appear at Guelph courthouse?', answer: 'Yes, we appear at Guelph courthouse at 74 Woolwich Street for traffic, small claims, LTB, and provincial offence matters.' },
       { question: 'What Wellington County areas do you serve?', answer: 'We serve Guelph, Fergus, Elora, Mount Forest, and all of Wellington County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2177,6 +2992,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle Brantford court matters?', answer: 'Yes, we appear at Brantford courthouse at 70 Wellington Street for traffic tickets, small claims, LTB, and provincial offences.' },
       { question: 'What areas around Brantford do you serve?', answer: 'We serve Brantford, Paris, Burford, and all of Brant County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2189,6 +3015,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Stratford courthouse?', answer: 'Yes, we appear at Stratford courthouse for traffic, provincial offences, small claims, and LTB matters covering Perth County.' },
       { question: 'What Perth County communities do you serve?', answer: 'We serve Stratford, St. Marys, Mitchell, Listowel, and all of Perth County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2201,6 +3038,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you appear at Sarnia court?', answer: 'Yes, we appear at Sarnia courthouse at 700 Christina Street North for traffic, small claims, LTB, and provincial offence matters.' },
       { question: 'What Lambton County areas do you serve?', answer: 'We serve Sarnia, Point Edward, Petrolia, Forest, and all of Lambton County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2213,6 +3061,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Windsor courthouse?', answer: 'Yes, we appear at Windsor courthouse at 245 Windsor Avenue for traffic, small claims, LTB, and provincial offence matters.' },
       { question: 'What Essex County communities do you cover?', answer: 'We serve Windsor, LaSalle, Tecumseh, Lakeshore, Amherstburg, Leamington, and all of Essex County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2225,6 +3084,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you appear at Chatham court?', answer: 'Yes, we appear at Chatham courthouse for traffic, provincial offences, small claims, and LTB matters serving Chatham-Kent.' },
       { question: 'What areas of Chatham-Kent do you serve?', answer: 'We serve Chatham, Wallaceburg, Tilbury, Ridgetown, Blenheim, and all of Chatham-Kent municipality.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2237,6 +3107,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Where are Leamington court matters heard?', answer: 'Leamington matters are typically heard at Windsor courthouse. We handle all paralegal matters for Leamington area residents.' },
       { question: 'Do you serve Kingsville and Wheatley?', answer: 'Yes, we serve Leamington, Kingsville, Wheatley, and surrounding Essex County communities.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2249,6 +3130,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you appear at Simcoe court?', answer: 'Yes, we appear at Simcoe courthouse for traffic, provincial offences, small claims, and LTB matters serving Norfolk County.' },
       { question: 'What Norfolk County communities do you serve?', answer: 'We serve Simcoe, Port Dover, Delhi, Port Rowan, Waterford, and all of Norfolk County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2261,6 +3153,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle Huron County court matters?', answer: 'Yes, we appear at Goderich courthouse for traffic, provincial offences, small claims, and LTB matters serving Huron County.' },
       { question: 'What communities in Huron County do you serve?', answer: 'We serve Goderich, Clinton, Seaforth, Exeter, Wingham, and all of Huron County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2276,6 +3179,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What is a paralegal in Ontario?', answer: 'A licensed legal professional regulated by the Law Society of Ontario who can represent clients in specific matters: Small Claims Court, LTB, traffic tickets, HRTO, and summary criminal offences.' },
       { question: 'Are paralegals licensed?', answer: 'Yes, Ontario paralegals must be licensed by the Law Society of Ontario, complete approved education, pass exams, and maintain insurance and continuing education.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2288,6 +3202,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'When should I use a paralegal instead of a lawyer?', answer: 'Use a paralegal for: traffic tickets, LTB matters, Small Claims Court (under $35,000), HRTO, and minor criminal matters. Use a lawyer for: serious criminal charges, family law, real estate, and claims over $35,000.' },
       { question: 'Are paralegals cheaper than lawyers?', answer: 'Generally yes. Paralegals typically charge $150-300/hour vs $300-600+ for lawyers. For matters within paralegal scope, you get equivalent representation at lower cost.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2300,6 +3225,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Should I fight my traffic ticket?', answer: 'Usually yes. Paying admits guilt, adds demerit points, and raises insurance. Fighting often results in reduced charges, dismissed tickets, or lower fines - often worth more than representation cost.' },
       { question: 'What are my options for a traffic ticket?', answer: 'Pay the fine (pleads guilty), request early resolution (meeting with prosecutor), or request trial. Option 2 or 3 gives opportunity to reduce or eliminate the charge.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    
+    ,
+      {
+        question: 'What are the chances of winning my case?',
+        answer: 'Success rates vary by offence and circumstances. Many traffic tickets have technical defences or negotiation opportunities. We assess your specific case during your free consultation.'
+      }
     ]
   },
 
@@ -2312,6 +3248,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are my basic rights as a tenant in Ontario?', answer: 'Key rights include: protection from illegal eviction, maintenance of habitable conditions, privacy (24-hour notice for entry), limits on rent increases, and protection from discrimination and harassment.' },
       { question: 'Can my landlord increase rent anytime?', answer: 'No. For rent-controlled units, increases are limited to the annual guideline, once per year, with 90 days notice on proper form. Newer buildings (after Nov 15, 2018) are exempt from rent control.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
+    
+    ,
+      {
+        question: 'What evidence is most important for LTB hearings?',
+        answer: 'Photos, videos, written communications, receipts, and bank records are crucial. Organize everything chronologically and bring multiple copies for the adjudicator and other party.'
+      }
     ]
   },
 
@@ -2324,6 +3271,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are my rights as a landlord in Ontario?', answer: 'Key rights include: collecting rent on time, evicting for cause through proper process, reasonable access with notice, screening tenants, and being compensated for damage beyond normal wear.' },
       { question: 'How do I legally evict a tenant?', answer: 'Serve proper notice (N4, N5, N7, N12, etc.), wait required notice period, file with LTB if tenant doesn\'t comply, attend hearing, obtain order, enforce through Sheriff if needed.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
+    
+    ,
+      {
+        question: 'Can I bring a lawyer to my LTB hearing?',
+        answer: 'You can bring a lawyer or licensed paralegal. Paralegals are often more cost-effective for LTB matters and have the same rights of representation as lawyers at this tribunal.'
+      }
     ]
   },
 
@@ -2336,6 +3294,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are the steps in Small Claims Court?', answer: '1) File claim ($102-273), 2) Serve defendant (20 days to respond), 3) Defence filed or default judgment, 4) Settlement conference, 5) Trial if not settled, 6) Judgment, 7) Enforcement if needed.' },
       { question: 'How long does Small Claims Court take?', answer: 'Simple cases settle in 2-3 months. Contested cases going to trial take 6-12 months. Settlement conferences resolve many cases and are mandatory before trial.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
+    
+    ,
+      {
+        question: 'Can I sue someone who lives in another province?',
+        answer: 'Yes, if the contract was formed in Ontario or the incident occurred here. Service and enforcement across provinces can be more complex. We advise on your options.'
+      }
     ]
   },
 
@@ -2348,6 +3317,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What should I bring to an LTB hearing?', answer: 'Bring: lease agreement, all relevant notices, photos/videos, repair requests and responses, payment records, text/email communications, witness contact info, and documents organized chronologically.' },
       { question: 'How do LTB hearings work?', answer: 'Most are video conferences. Adjudicator identifies parties, explains procedure. Applicant presents first, then respondent. Each can question the other. Decisions may be immediate or reserved.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
+    
+    ,
+      {
+        question: 'What if my landlord or tenant does not follow the LTB order?',
+        answer: 'You can file a motion to enforce the order or contact the Sheriff for eviction enforcement. Continued violations may result in contempt proceedings or additional compensation.'
+      }
     ]
   },
 
@@ -2360,6 +3340,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How do I file an HRTO complaint?', answer: 'Complete Form 1 (Application) online or by mail within 1 year of the incident. Describe the discrimination, identify protected ground, name respondents, and describe remedies sought.' },
       { question: 'What happens after filing an HRTO application?', answer: 'HRTO serves respondent (35 days to respond), then mediation is offered. If not resolved, the case proceeds to hearing. Many cases settle through mediation.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
+    
+    ,
+      {
+        question: 'Can I file anonymously with the HRTO?',
+        answer: 'No, applications are not anonymous. However, the Tribunal can order publication bans or use initials in certain circumstances to protect privacy.'
+      }
     ]
   },
 
@@ -2372,6 +3363,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What are my basic employment rights in Ontario?', answer: 'Key rights include: minimum wage, overtime pay after 44 hours, vacation (2 weeks after 1 year), public holidays, pregnancy/parental leave, and protection from termination without notice or pay.' },
       { question: 'What notice am I entitled to if terminated?', answer: 'ESA minimum: 1 week per year of service up to 8 weeks. Common law may entitle you to more based on age, position, and other factors. Never sign a severance package without review.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'Can I be fired without cause in Ontario?',
+        answer: 'Yes, but you are entitled to notice or pay in lieu. The amount depends on length of service, age, position, and other factors. We assess your full entitlement.'
+      }
     ]
   },
 
@@ -2384,6 +3385,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'How long do I have to sue in Ontario?', answer: 'General limitation: 2 years from when you knew or should have known about the claim. Some exceptions exist for minors, incapacitated persons, and certain types of claims.' },
       { question: 'What are common legal deadlines?', answer: 'Traffic tickets: 15 days to request trial. HRTO: 1 year. LTB applications: varies. Small Claims: 2 years. Employment complaints: varies by type. Don\'t wait - deadlines are strict.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2396,6 +3407,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Where can I get free legal help in Ontario?', answer: 'Options include: Legal Aid Ontario (income-tested), community legal clinics, law school clinics, Pro Bono Ontario, duty counsel at courts, and self-help resources at court websites.' },
       { question: 'Do I qualify for Legal Aid?', answer: 'Legal Aid eligibility depends on income, family size, and case type. Generally covers criminal, family, refugee, and some civil matters for low-income individuals. Apply through Legal Aid Ontario.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2408,29 +3429,22 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'What should I do if I\'m served with a lawsuit?', answer: 'Don\'t ignore it! Note the deadline (usually 20 days in Small Claims). Read carefully. Gather relevant documents. Consider getting legal help. File a Defence before the deadline.' },
       { question: 'What happens if I don\'t respond to a lawsuit?', answer: 'The plaintiff can get default judgment against you without a hearing. This means they win automatically and can enforce the judgment against your assets, wages, and bank accounts.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
   // ============================================
   // HUMAN RIGHTS TRIBUNAL - MAIN & SUB-PAGES (8 pages)
   // ============================================
-
-  '/services/workplace-discrimination': {
-    title: 'Workplace Discrimination | Employment Human Rights | London Ontario',
-    description: 'Workplace discrimination claims in London, Ontario. Race, gender, disability, age discrimination at work. HRTO representation.',
-    keywords: 'workplace discrimination ontario, employment discrimination, work harassment claim',
-    schema: { type: 'LegalService', name: 'Workplace Discrimination', serviceType: 'Employment Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights-tribunal' }, { name: 'Workplace Discrimination', url: '/services/workplace-discrimination' }],
-    faqs: [
-      { question: 'What is workplace discrimination?', answer: 'Unfair treatment at work based on protected grounds: race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity, age, disability, family status, or marital status.' },
-      { question: 'Can I file HRTO while still employed?', answer: 'Yes. Your employer cannot retaliate against you for filing. Reprisal for human rights complaints is itself a violation of the Code.' }
-    ]
-  },
-
-
-
-
-
 
   '/services/hrto-process': {
     title: 'HRTO Process | How to File Human Rights Complaint | London Ontario',
@@ -2442,6 +3456,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'How do I file an HRTO complaint?', answer: 'Complete Form 1 (Application) within 1 year of the incident. File online or by mail. The respondent has 35 days to respond. Mediation is offered, then hearing if unresolved.' },
       { question: 'How long does the HRTO process take?', answer: 'From filing to hearing typically takes 12-18 months. Many cases settle at mediation (scheduled within a few months of filing). Complex cases may take longer.' },
       { question: 'Do I need a paralegal for HRTO?', answer: 'You can self-represent, but professional representation significantly improves outcomes. We handle evidence gathering, legal arguments, mediation negotiations, and hearing advocacy.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
     ]
   },
 
@@ -2458,6 +3477,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What employment matters can a paralegal handle?', answer: 'Paralegals handle: wrongful dismissal claims under $35,000 in Small Claims Court, Employment Standards Act complaints, and certain workplace tribunal matters. Larger claims require a lawyer.' },
       { question: 'What are my rights when terminated?', answer: 'You\'re entitled to notice or pay in lieu based on length of service. ESA minimums are 1 week per year (max 8 weeks). Common law may entitle you to more. Severance pay applies for 5+ years with large employers.' },
       { question: 'Can my employer change my job duties?', answer: 'Minor changes are usually permitted. Significant changes to duties, pay, hours, or location without consent may be constructive dismissal, entitling you to severance as if you were fired.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2471,6 +3495,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What does the Employment Standards Act cover?', answer: 'The ESA sets minimum standards for: wages, overtime, vacation, public holidays, leaves of absence, termination notice, and severance pay. It applies to most Ontario employees.' },
       { question: 'How do I file an ESA complaint?', answer: 'File with the Ministry of Labour within 2 years of the violation. The Ministry investigates and can order the employer to pay. You can also pursue civil claims for amounts above ESA minimums.' },
       { question: 'Can I get overtime pay?', answer: 'Most employees are entitled to 1.5x pay after 44 hours per week. Some jobs are exempt (managers, certain professionals). Employers can average hours over periods or offer time off instead in some cases.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2485,6 +3514,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'How much severance should I get?', answer: 'Depends on: length of service, age, position, and job market. ESA provides minimums (1 week/year up to 8). Common law often awards 1 month per year. Senior employees may get 18-24 months.' },
       { question: 'Should I sign my severance package right away?', answer: 'No. Most packages have a deadline (often 1-2 weeks) but you should have it reviewed first. Initial offers are often negotiable. Once signed, you typically can\'t claim more.' },
       { question: 'Can I negotiate my severance?', answer: 'Usually yes. Employers often offer ESA minimums initially but may increase to avoid litigation. We can assess what you\'re likely entitled to and negotiate on your behalf.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2502,6 +3536,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What are common bylaw violations?', answer: 'Common violations include: noise complaints, property standards (unkempt yard, building issues), parking violations, zoning violations, business licensing, sign bylaws, and animal control issues.' },
       { question: 'Can I fight a bylaw ticket?', answer: 'Yes. Request a trial by the deadline on the ticket. Common defences include: the bylaw doesn\'t apply, you weren\'t the responsible party, the measurement was improper, or there are constitutional issues.' },
       { question: 'What happens if I ignore a bylaw ticket?', answer: 'You\'ll be convicted in absence with possible increased fines. For ongoing violations, the municipality can do the work and bill you, place a lien on your property, or seek court orders.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2515,6 +3554,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Is trespass a criminal offence?', answer: 'Simple trespass under the Trespass to Property Act is a provincial offence, not criminal. However, Criminal Code trespass (break and enter, trespassing at night) is criminal. The charge type matters significantly.' },
       { question: 'What are the penalties for trespass?', answer: 'Provincial trespass: fines up to $10,000 for first offence, $25,000 for subsequent. No jail time for provincial charges. Criminal trespass carries potential imprisonment.' },
       { question: 'What are defences to trespass charges?', answer: 'Common defences: you had permission or implied consent, no proper notice was posted, you were exercising a legal right (protest, necessity), or the property isn\'t covered by the Act.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2528,6 +3572,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What happens if caught serving a minor?', answer: 'Serving alcohol to minors carries fines of $500-$500,000, potential licence suspension, and personal liability for servers. Due diligence (checking ID) is your defence.' },
       { question: 'Can my liquor licence be suspended?', answer: 'Yes. The AGCO can suspend or revoke licences for violations including: serving minors, over-serving, after-hours sales, violence on premises, or other licence conditions breaches.' },
       { question: 'What is an AGCO hearing?', answer: 'The Alcohol and Gaming Commission holds hearings on licence matters. You can present evidence and arguments. Professional representation helps navigate procedures and protect your licence.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2541,6 +3590,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What are common fire code violations?', answer: 'Common violations: blocked exits, missing/expired fire extinguishers, disabled fire alarms, overcrowding, improper storage of flammables, inadequate emergency lighting, and exit sign issues.' },
       { question: 'What are the penalties for fire code violations?', answer: 'Fines up to $50,000 for individuals, $100,000 for corporations per offence. Repeat violations increase penalties. Serious violations causing injury can lead to imprisonment.' },
       { question: 'Can I appeal a fire marshall order?', answer: 'Yes. You can request a review of orders to the Fire Safety Commission. Time limits apply. Meanwhile, you may need to comply or seek a stay while appealing.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2554,6 +3608,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What criminal charges can a paralegal handle?', answer: 'Paralegals can represent clients on summary conviction offences with maximum penalties of 6 months jail and/or $5,000 fine. This includes: theft under $5,000, mischief under $5,000, causing a disturbance, and certain assault charges.' },
       { question: 'Will I get a criminal record?', answer: 'A conviction for any Criminal Code offence creates a criminal record. Even minor charges have serious consequences for employment, travel, and immigration. Fighting charges or seeking alternative dispositions is important.' },
       { question: 'What is a diversion program?', answer: 'Alternative to prosecution where charges may be withdrawn after completing conditions (counselling, community service, donation). Not available for all offences. We can advocate for diversion where appropriate.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2568,6 +3627,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What is criminal mischief?', answer: 'Willfully destroying or damaging property, rendering property useless or inoperative, or interfering with the lawful use of property. Mischief under $5,000 is a summary offence.' },
       { question: 'What are the penalties for mischief?', answer: 'Mischief under $5,000: up to 6 months jail and/or $5,000 fine. Over $5,000 can proceed as indictable with up to 10 years. Restitution to victims is usually ordered.' },
       { question: 'What are defences to mischief charges?', answer: 'Common defences: you had consent or right to alter the property, no willful intent, mistaken identity, or the damage alleged didn\'t actually occur or wasn\'t caused by you.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2581,6 +3645,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can a paralegal defend assault charges?', answer: 'Paralegals can defend summary conviction assault charges. Simple assault (no weapon, no bodily harm) often proceeds summarily. More serious assaults require a lawyer.' },
       { question: 'What is simple assault?', answer: 'Intentionally applying force to another person without consent, or threatening to do so while having the ability. Includes pushing, punching, spitting - any unwanted physical contact.' },
       { question: 'What are defences to assault?', answer: 'Common defences: self-defence, defence of others, consent (in certain contexts), accident, mistaken identity, or the contact was so minor it doesn\'t warrant criminal sanction.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2594,6 +3663,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What is causing a disturbance?', answer: 'A Criminal Code offence for: fighting, screaming, shouting, swearing, singing, or using insulting language in a public place, or impeding/molesting other persons. Summary conviction offence.' },
       { question: 'What are the penalties?', answer: 'Maximum 6 months jail and/or $5,000 fine for summary conviction. Most first offenders don\'t receive jail but do get a criminal record unless charges are withdrawn or discharge granted.' },
       { question: 'Can I fight a causing disturbance charge?', answer: 'Yes. Defences include: the location wasn\'t truly public, your conduct didn\'t actually cause a disturbance, freedom of expression arguments, or the disturbance was provoked by others.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2609,6 +3683,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Where are you located in London?', answer: 'We serve all of London, Ontario and can meet clients throughout the city. We handle matters at the London courthouse and all local tribunals.' },
       { question: 'What areas of London do you serve?', answer: 'All London neighbourhoods including downtown, Old North, Old South, Byron, Westmount, White Oaks, and surrounding areas.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2621,6 +3706,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve St. Thomas?', answer: 'Yes, we provide full paralegal services to St. Thomas and Elgin County clients. We handle matters at local courthouses and tribunals.' },
       { question: 'How far is St. Thomas from your office?', answer: 'St. Thomas is approximately 25 km south of London, about a 20-minute drive. We regularly serve clients throughout Elgin County.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2633,6 +3729,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle cases at Woodstock courthouse?', answer: 'Yes, we represent clients at the Woodstock courthouse and handle all Oxford County legal matters within paralegal scope.' },
       { question: 'What services do you offer in Woodstock?', answer: 'All our services: traffic tickets, LTB matters, small claims court, human rights, and provincial offences for Woodstock residents.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2647,6 +3754,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve the City of Waterloo?', answer: 'Yes, we serve Waterloo residents for all paralegal matters. Waterloo Region has excellent transit connections to our office.' },
       { question: 'Can you help UW or Laurier students?', answer: 'Absolutely. We help many university students with traffic tickets, tenancy issues, and other legal matters.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2664,6 +3782,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Chatham-Kent?', answer: 'Yes, we provide paralegal services to Chatham-Kent residents for all matters within paralegal scope.' },
       { question: 'Where is the Chatham courthouse?', answer: 'The Chatham courthouse handles local matters. We appear there for clients and handle tribunal matters remotely.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2676,6 +3805,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Ingersoll?', answer: 'Yes, Ingersoll is close to London and we regularly serve Oxford County residents.' },
       { question: 'Where do Ingersoll court matters go?', answer: 'Most matters go to Woodstock courthouse. We handle appearances for Oxford County clients.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2688,6 +3828,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle Tillsonburg legal matters?', answer: 'Yes, we serve Tillsonburg and surrounding areas. Court matters typically go to Woodstock courthouse.' },
       { question: 'Can you come to Tillsonburg?', answer: 'We offer video and phone consultations, and travel to local courthouses for hearings and trials.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2700,6 +3851,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Aylmer?', answer: 'Yes, we serve Aylmer and Elgin County. Local matters typically go to St. Thomas courthouse.' },
       { question: 'How far is Aylmer from London?', answer: 'Aylmer is about 35 km east of London, approximately 30 minutes drive.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2712,6 +3874,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Strathroy?', answer: 'Yes, Strathroy is in Middlesex County and matters are handled at London courthouse. We serve all of Middlesex.' },
       { question: 'What services are available for Strathroy?', answer: 'All paralegal services: traffic tickets, LTB, small claims, HRTO, and provincial offences.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2724,6 +3897,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Dorchester?', answer: 'Yes, Dorchester is very close to London and we serve all Middlesex County communities.' },
       { question: 'Where do Dorchester matters go?', answer: 'Court matters go to London courthouse. Easy commute for clients.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2736,6 +3920,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Komoka?', answer: 'Yes, Komoka is just west of London. All Middlesex County matters handled at London courthouse.' },
       { question: 'Can I meet in person?', answer: 'Yes, we can meet clients from Komoka at our office or arrange video consultations.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2748,6 +3943,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Lucan?', answer: 'Yes, Lucan is in Middlesex County. All services available, courthouse is in London.' },
       { question: 'How far is Lucan from London?', answer: 'Lucan is about 25 km north of London, approximately 20 minutes drive.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'What should I bring to my first consultation?',
+        answer: 'Bring all relevant documents: tickets, notices, leases, contracts, correspondence, photos, and a timeline of events. The more information, the better we can assess your case.'
+      }
     ]
   },
 
@@ -2760,6 +3966,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Exeter?', answer: 'Yes, we serve Exeter and South Huron. Local court matters handled at appropriate courthouse.' },
       { question: 'What services for Exeter residents?', answer: 'Full paralegal services: traffic tickets, LTB, small claims, and provincial offences.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'Do you offer services in languages other than English?',
+        answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
+      }
     ]
   },
 
@@ -2772,6 +3989,17 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you handle Grand Bend legal matters?', answer: 'Yes, we serve Grand Bend and Lambton Shores area. Popular summer destination - we handle seasonal rental and traffic issues.' },
       { question: 'Many tourists get tickets at Grand Bend - can you help?', answer: 'Yes, we defend traffic tickets for visitors who don\'t want to return to court. We handle everything for you.' }
+    ,
+      {
+        question: 'Do you offer evening or weekend appointments?',
+        answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.'
+      }
+    
+    ,
+      {
+        question: 'How far in advance should I contact you?',
+        answer: 'Contact us as soon as possible. Many matters have strict deadlines. For traffic tickets, contact us immediately upon receiving the ticket to preserve all options.'
+      }
     ]
   },
 
@@ -2786,6 +4014,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Are your legal guides free?', answer: 'Yes, all our guides are free. We believe in empowering people with legal knowledge. For personalized advice, book a free consultation.' },
       { question: 'Can I rely on these guides as legal advice?', answer: 'Our guides provide general information only, not legal advice. Every situation is unique. For advice on your specific case, consult with us directly.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ,
+      {
+        question: 'How much does this service cost?',
+        answer: 'Fees vary by service complexity. We offer free consultations to assess your matter and provide transparent, upfront pricing with no hidden costs.'
+      }
     ]
   },
 
@@ -2799,6 +4037,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Should I just pay my traffic ticket?', answer: 'Usually no. Paying admits guilt, adds points, and raises insurance. Fighting often results in reduced charges or dismissal - even if you were speeding.' },
       { question: 'What are my options when I get a ticket?', answer: 'Three options: pay and plead guilty, request a meeting with the prosecutor (Option 2), or request a trial (Option 3). We typically recommend Option 3 or representation.' },
       { question: 'How long do I have to respond to a ticket?', answer: 'You have 15 days from the date on the ticket to respond. Missing this deadline can result in a conviction in absence.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2812,6 +4055,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'How do I file with the LTB?', answer: 'File online through the Tribunals Ontario portal. Choose the correct form (L1 for rent arrears, T2 for tenant rights, etc.). Pay the filing fee. The LTB schedules a hearing.' },
       { question: 'How long does the LTB process take?', answer: 'Currently 2-6 months for most matters due to backlogs. Non-payment cases may be faster. Complex cases take longer. Urgent matters can request expedited hearings.' },
       { question: 'Do I need representation at the LTB?', answer: 'Not required, but strongly recommended. The other side often has representation. Professional help significantly improves outcomes and reduces stress.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -2825,6 +4073,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'How much does Small Claims Court cost?', answer: 'Filing fees: $102 (claims up to $500) or $273 (over $500). Additional fees for serving documents, trial requests, and enforcement. Most costs recoverable if you win.' },
       { question: 'What\'s the process for Small Claims Court?', answer: 'File claim, serve defendant, wait for defence, attend mandatory settlement conference, trial if not settled, enforcement if needed. Takes 6-12 months typically.' },
       { question: 'Can I sue for any amount?', answer: 'Small Claims maximum is $35,000 plus interest and costs. Larger claims need Superior Court (requires a lawyer). You can reduce your claim to fit Small Claims.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
     ]
   },
 
@@ -2838,6 +4091,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What is the time limit for HRTO complaints?', answer: 'One year from the last discriminatory incident. Extensions are rarely granted. If discrimination is ongoing, file while it continues.' },
       { question: 'What can I get from an HRTO complaint?', answer: 'Remedies include: monetary compensation for lost income and injury to dignity, reinstatement, policy changes, and public interest remedies.' },
       { question: 'Is the HRTO process free?', answer: 'Yes, there are no filing fees at the HRTO. However, legal representation costs money. We offer competitive rates for HRTO matters.' }
+    ,
+      {
+        question: 'What remedies can the HRTO award?',
+        answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
     ]
   },
 
@@ -2851,6 +4109,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'How long does eviction take in Ontario?', answer: 'For non-payment: 2-4 months typically. For cause evictions: 3-6 months. N12 personal use: 3-6 months. Complex cases or appeals take longer.' },
       { question: 'Can a landlord just change the locks?', answer: 'Never. Illegal lockouts violate the RTA. Only the Sheriff can enforce an eviction order. Landlords face significant penalties for self-help evictions.' },
       { question: 'Can I stop an eviction for non-payment?', answer: 'Often yes. Pay arrears before or at the hearing. Request a payment plan. Raise maintenance issues as offset. Request relief from eviction based on circumstances.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -2864,6 +4127,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can my landlord enter my unit whenever they want?', answer: 'No. Landlords must give 24 hours written notice for most entries, entering only between 8am-8pm. Emergency entries are an exception. You can refuse improper entries.' },
       { question: 'Can my landlord raise rent whenever they want?', answer: 'No. Rent can only increase once per 12 months, with 90 days notice, by the guideline amount (2.5% in 2024) unless AGI approved. Exceptions for post-2018 units.' },
       { question: 'What if my landlord won\'t do repairs?', answer: 'Document requests in writing. Give reasonable time. File T6 application with LTB for orders and rent abatement. Don\'t withhold rent - it can lead to eviction.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -2877,6 +4145,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can I evict a tenant for any reason?', answer: 'No. Ontario only allows eviction for specific reasons: non-payment, persistent late payment, illegal activity, damage, interference with others, or landlord/purchaser own use.' },
       { question: 'How do I screen tenants legally?', answer: 'You can request: rental history, references, credit check (with consent), income verification. You cannot discriminate based on protected grounds like race, family status, or income source.' },
       { question: 'Can I charge security deposits?', answer: 'No. Ontario prohibits security/damage deposits. You can only collect first and last month\'s rent. Last month\'s rent must be applied to the final month, not damages.' }
+    ,
+      {
+        question: 'How long will my LTB case take?',
+        answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
     ]
   },
 
@@ -2890,6 +4163,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can I be fired without cause in Ontario?', answer: 'Yes, but you\'re entitled to reasonable notice or pay in lieu. ESA sets minimums; common law often provides more. "Just cause" (serious misconduct) eliminates notice entitlement.' },
       { question: 'What are minimum wage and overtime rules?', answer: 'Minimum wage is $16.55/hour (2024). Overtime (1.5x) after 44 hours/week for most employees. Some jobs are exempt from overtime provisions.' },
       { question: 'What if I\'m harassed at work?', answer: 'Report to HR/management. If not resolved, file with HRTO (for human rights harassment) or Ministry of Labour (for workplace harassment). Document everything.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 
@@ -2903,6 +4181,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can I return something I bought?', answer: 'Store return policies are discretionary - no automatic right to return. However, defective goods and misrepresented goods must be refunded or replaced under law.' },
       { question: 'What are cooling-off periods?', answer: 'Certain contracts have cancellation periods: door-to-door sales (10 days), gym memberships (10 days), timeshares (10 days). Regular purchases don\'t have cooling-off.' },
       { question: 'What if a business won\'t honor a warranty?', answer: 'Document the defect and attempts to claim. File complaint with Ministry of Consumer Services. Sue in Small Claims Court for breach of warranty.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
     ]
   },
 
@@ -2916,6 +4199,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'How do I collect a debt someone owes me?', answer: 'Start with a demand letter. If ignored, file in Small Claims Court. If you win and they don\'t pay, use enforcement tools: garnishment, examination, seizure.' },
       { question: 'How long do I have to collect a debt?', answer: 'Two year limitation period from when debt was due or last acknowledged. After 2 years, you cannot sue. However, judgments last 6 years and can be renewed.' },
       { question: 'What if the debtor has no money?', answer: 'Get your judgment and renew it before it expires. Situations change - they may get a job (garnishment), buy property (lien), or receive inheritance. Persist.' }
+    ,
+      {
+        question: 'What costs can I recover if I win?',
+        answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
+      }
     ]
   },
 
@@ -2929,6 +4217,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What should I bring to court?', answer: 'Bring: all documents related to your case (organized chronologically), photos/evidence, witness contact info, notepad, pen, government ID, and patience.' },
       { question: 'How should I dress for court?', answer: 'Dress professionally - business casual at minimum. No hats, shorts, flip-flops, or offensive clothing. First impressions matter to judges and adjudicators.' },
       { question: 'What if I\'m nervous about court?', answer: 'Arrive early and observe other proceedings. Prepare your key points in writing. Speak slowly and clearly. Address the judge as "Your Honour." It\'s okay to ask to repeat a question.' }
+    ,
+      {
+        question: 'How long will this affect my insurance?',
+        answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
     ]
   },
 };
