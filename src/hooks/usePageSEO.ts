@@ -70,7 +70,6 @@ export function usePageSEO(overrides?: Partial<SEOConfig>) {
                           location.pathname === '/login' ||
                           location.pathname === '/signup' ||
                           location.pathname === '/intake' ||
-                          location.pathname === '/booking' ||
                           location.pathname.startsWith('/upload');
     
     setMetaTag('robots', isPrivatePage ? 'noindex, nofollow' : 'index, follow');
