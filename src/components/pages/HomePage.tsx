@@ -251,7 +251,7 @@ export default function HomePage() {
       {/* HERO SECTION */}
       <section className="min-h-[85vh] grid lg:grid-cols-2">
         {/* Left: Text Side */}
-        <div className="bg-secondary flex items-center p-8 lg:p-16 xl:p-24 order-2 lg:order-1">
+        <div className="bg-secondary texture-noise flex items-center p-8 lg:p-16 xl:p-24 order-2 lg:order-1">
           <div className="max-w-xl">
             <span className="text-primary font-paragraph text-sm tracking-[0.2em] uppercase mb-6 block">
               Licensed Ontario Paralegal
@@ -633,7 +633,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ SECTION */}
-      <section className="py-16 md:py-24 lg:py-32 bg-pastellavender relative overflow-hidden">
+      <section className="texture-noise py-16 md:py-24 lg:py-32 bg-pastellavender relative overflow-hidden">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl mx-auto">
             <AnimatedElement>
@@ -701,7 +701,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section ref={ctaSectionRef} id="contact" className="diagonal-accent py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
+      <section ref={ctaSectionRef} id="contact" className="diagonal-accent texture-noise py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
