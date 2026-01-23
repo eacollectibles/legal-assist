@@ -9,6 +9,11 @@ import sourceAttrsPlugin from "@wix/babel-plugin-jsx-source-attrs";
 import dynamicDataPlugin from "@wix/babel-plugin-jsx-dynamic-data";
 import customErrorOverlayPlugin from "./vite-error-overlay-plugin.js";
 import postcssPseudoToData from "@wix/postcss-pseudo-to-data";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const isBuild = process.env.NODE_ENV == "production";
 
@@ -40,6 +45,13 @@ export default defineConfig({
   ],
   vite: {
     plugins: [customErrorOverlayPlugin()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+        '@/components': path.resolve(__dirname, './src/components'),
+        '@/integrations': path.resolve(__dirname, './integrations'),
+      }
+    },
     css: !isBuild ? {
       postcss: {
         plugins: [
