@@ -38,7 +38,7 @@ const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0
 
 // Generate JSON-LD for breadcrumbs if present
 const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0 
-  ? generateBreadcrumbSchema(pageConfig.breadcrumbs) 
+  ? generateBreadcrumbSchema(pageConfig.breadcrumbs, businessInfo.url) 
   : null;
 
 // Schema.org structured data
