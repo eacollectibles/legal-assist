@@ -157,11 +157,6 @@ const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadl
 const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
 
 // Answer Pages (SEO-focused) - TEMPORARILY DISABLED FOR TESTING
-// const SmallClaimsWhatToExpectPage = lazy(() => import('@/components/pages/SmallClaimsWhatToExpectPage'));
-// const EnforceJudgmentOntarioPage = lazy(() => import('@/components/pages/EnforceJudgmentOntarioPage'));
-// const LTBFormsExplainedPage = lazy(() => import('@/components/pages/LTBFormsExplainedPage'));
-// const POAFightVsEarlyResolutionPage = lazy(() => import('@/components/pages/POAFightVsEarlyResolutionPage'));
-// const LawyerVsParalegalPage = lazy(() => import('@/components/pages/LawyerVsParalegalPage'));
 
 // Admin & Dashboard Pages
 const AdminBookingsPage = lazy(() => import('@/components/pages/AdminBookingsPage'));
@@ -364,11 +359,6 @@ export default function Router() {
             <Route path="/recent-decisions" element={<LegalNewsPage />} />
 
             {/* Answer Pages - TEMPORARILY DISABLED FOR TESTING */}
-            {/* <Route path="/guides/small-claims-what-to-expect" element={<SmallClaimsWhatToExpectPage />} /> */}
-            {/* <Route path="/guides/enforce-judgment-ontario" element={<EnforceJudgmentOntarioPage />} /> */}
-            {/* <Route path="/guides/ltb-forms-explained" element={<LTBFormsExplainedPage />} /> */}
-            {/* <Route path="/guides/poa-fight-vs-early-resolution" element={<POAFightVsEarlyResolutionPage />} /> */}
-            {/* <Route path="/guides/lawyer-vs-paralegal" element={<LawyerVsParalegalPage />} /> */}
 
             {/* Admin Pages */}
             <Route path="/admin/bookings" element={<AdminBookingsPage />} />
