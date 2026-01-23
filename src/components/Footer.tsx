@@ -41,13 +41,13 @@ export default function Footer() {
                 About Us
               </Link>
               <Link 
-                to="/guides/what-is-a-paralegal" 
+                to="/what-is-a-paralegal" 
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground hover:bg-secondary-foreground/10 transition-colors py-2 px-3 -mx-3 rounded-lg"
               >
                 What Is a Paralegal?
               </Link>
               <Link 
-                to="/guides/paralegal-vs-lawyer" 
+                to="/paralegal-vs-lawyer" 
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground hover:bg-secondary-foreground/10 transition-colors py-2 px-3 -mx-3 rounded-lg"
               >
                 Paralegal vs. Lawyer

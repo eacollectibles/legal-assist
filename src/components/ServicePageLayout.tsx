@@ -2,10 +2,11 @@ import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Image } from '@/components/ui/image';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 interface AuthorityItem {
   title: string;
@@ -112,17 +113,34 @@ export default function ServicePageLayout({
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 {problemDescription}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
-                  <Button className="bg-primary hover:bg-primary/90 text-white w-full">
-                    Schedule Consultation
+              {/* Mobile: Single primary CTA + text link for call */}
+              <div className="flex flex-col gap-3 sm:hidden">
+                <Link to="/contact" className="w-full">
+                  <Button className="bg-primary hover:bg-primary/90 text-white w-full h-12">
+                    Find Out Where You Stand
                   </Button>
                 </Link>
+                <a 
+                  href={PHONE_HREF}
+                  className="text-primary font-medium text-center flex items-center justify-center gap-2 py-2"
+                >
+                  <Phone className="w-4 h-4" />
+                  Call {PHONE_DISPLAY}
+                </a>
+              </div>
+              {/* Desktop: Two buttons side by side */}
+              <div className="hidden sm:flex flex-row gap-4">
                 <Link to="/contact">
-                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
-                    Contact Us
+                  <Button className="bg-primary hover:bg-primary/90 text-white">
+                    Find Out Where You Stand
                   </Button>
                 </Link>
+                <a href={PHONE_HREF}>
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">
+                    <Phone className="w-4 h-4 mr-2" />
+                    Call {PHONE_DISPLAY}
+                  </Button>
+                </a>
               </div>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
@@ -222,14 +240,30 @@ export default function ServicePageLayout({
           <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
             Schedule a consultation with our experienced team to discuss your case and learn about your options.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/booking">
-              <Button className="bg-primary hover:bg-primary/90 text-white w-full">
+          {/* Mobile: Single primary CTA + text link */}
+          <div className="flex flex-col gap-3 sm:hidden max-w-sm mx-auto">
+            <Link to="/contact" className="w-full">
+              <Button className="bg-primary hover:bg-primary/90 text-white w-full h-12">
+                Find Out Where You Stand
+              </Button>
+            </Link>
+            <a 
+              href={PHONE_HREF}
+              className="text-primary font-medium text-center flex items-center justify-center gap-2 py-2"
+            >
+              <Phone className="w-4 h-4" />
+              Call {PHONE_DISPLAY}
+            </a>
+          </div>
+          {/* Desktop: Two buttons side by side */}
+          <div className="hidden sm:flex flex-row gap-4 justify-center">
+            <Link to="/contact">
+              <Button className="bg-primary hover:bg-primary/90 text-white">
                 Find Out Where You Stand
               </Button>
             </Link>
             <Link to="/services">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
+              <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">
                 Back to Services
               </Button>
             </Link>

@@ -23,9 +23,16 @@ export default function StickyContactBar({ isVisible = true }: StickyContactBarP
               <span>Find Out Where You Stand</span>
             </Link>
           </Button>
-          <p className="text-xs text-center text-secondary/60 px-2">
-            Get a clear explanation of your rights and options under Ontario law.
-          </p>
+          <div className="flex items-center justify-center gap-1 text-sm">
+            <span className="text-secondary/60">or</span>
+            <a 
+              href={PHONE_HREF}
+              className="text-primary font-medium hover:underline flex items-center gap-1"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              Call {PHONE_DISPLAY}
+            </a>
+          </div>
         </div>
       </div>
     </div>
