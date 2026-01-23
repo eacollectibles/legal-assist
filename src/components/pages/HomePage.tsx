@@ -496,12 +496,15 @@ export default function HomePage() {
       </section>
 
       {/* SERVICES CARDS SECTION */}
-      <section className="py-16 md:py-24 lg:py-32 bg-background">
+      <section className="py-16 md:py-24 lg:py-32 bg-dark relative overflow-hidden">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <AnimatedElement>
-              <h2 className="font-heading text-4xl md:text-5xl text-secondary mb-6">Our Practice Areas</h2>
-              <p className="font-paragraph text-lg text-secondary/70">Comprehensive legal representation across Ontario's key tribunals and courts</p>
+              <span className="text-primary font-paragraph text-sm tracking-[0.2em] uppercase mb-6 block">
+                Our Services
+              </span>
+              <h2 className="font-heading text-4xl md:text-5xl text-white mb-6">Our Practice Areas</h2>
+              <p className="font-paragraph text-lg text-white/70">Comprehensive legal representation across Ontario's key tribunals and courts</p>
             </AnimatedElement>
           </div>
 
@@ -509,16 +512,16 @@ export default function HomePage() {
             <AnimatedElement delay={0}>
               <Link 
                 to="/services/small-claims-court" 
-                className="card-hover bg-background rounded-xl p-8 border border-secondary/10 group"
+                className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Scale className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary text-white rounded-lg group-hover:bg-primary/80 transition-colors">
+                    <Scale className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-secondary/40 group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">Small Claims Court</h3>
-                <p className="font-paragraph text-secondary/70 mb-4">Professional representation for civil disputes up to $50,000 in Ontario.</p>
+                <h3 className="font-heading text-2xl text-white group-hover:text-primary mb-3 transition-colors">Small Claims Court</h3>
+                <p className="font-paragraph text-white/70 mb-4">Professional representation for civil disputes up to $50,000 in Ontario.</p>
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold">
                   Learn More
                   <ArrowRight className="w-4 h-4" />
@@ -529,16 +532,16 @@ export default function HomePage() {
             <AnimatedElement delay={100}>
               <Link 
                 to="/services/landlord-tenant-board" 
-                className="card-hover bg-background rounded-xl p-8 border border-secondary/10 group"
+                className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Home className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary text-white rounded-lg group-hover:bg-primary/80 transition-colors">
+                    <Home className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-secondary/40 group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">Landlord & Tenant Board</h3>
-                <p className="font-paragraph text-secondary/70 mb-4">Expert representation for residential tenancy disputes and eviction proceedings.</p>
+                <h3 className="font-heading text-2xl text-white group-hover:text-primary mb-3 transition-colors">Landlord & Tenant Board</h3>
+                <p className="font-paragraph text-white/70 mb-4">Expert representation for residential tenancy disputes and eviction proceedings.</p>
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold">
                   Learn More
                   <ArrowRight className="w-4 h-4" />
@@ -549,16 +552,16 @@ export default function HomePage() {
             <AnimatedElement delay={200}>
               <Link 
                 to="/services/traffic-tickets" 
-                className="card-hover bg-background rounded-xl p-8 border border-secondary/10 group"
+                className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <AlertCircle className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary text-white rounded-lg group-hover:bg-primary/80 transition-colors">
+                    <AlertCircle className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-secondary/40 group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">Traffic Tickets</h3>
-                <p className="font-paragraph text-secondary/70 mb-4">Effective defence strategies for speeding, careless driving, and other traffic violations.</p>
+                <h3 className="font-heading text-2xl text-white group-hover:text-primary mb-3 transition-colors">Traffic Tickets</h3>
+                <p className="font-paragraph text-white/70 mb-4">Effective defence strategies for speeding, careless driving, and other traffic violations.</p>
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold">
                   Learn More
                   <ArrowRight className="w-4 h-4" />
@@ -569,16 +572,16 @@ export default function HomePage() {
             <AnimatedElement delay={300}>
               <Link 
                 to="/services/human-rights-tribunal" 
-                className="card-hover bg-background rounded-xl p-8 border border-secondary/10 group"
+                className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Users className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary text-white rounded-lg group-hover:bg-primary/80 transition-colors">
+                    <Users className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-secondary/40 group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">Human Rights Tribunal</h3>
-                <p className="font-paragraph text-secondary/70 mb-4">Advocacy for discrimination and human rights violations in employment and housing.</p>
+                <h3 className="font-heading text-2xl text-white group-hover:text-primary mb-3 transition-colors">Human Rights Tribunal</h3>
+                <p className="font-paragraph text-white/70 mb-4">Advocacy for discrimination and human rights violations in employment and housing.</p>
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold">
                   Learn More
                   <ArrowRight className="w-4 h-4" />
@@ -589,16 +592,16 @@ export default function HomePage() {
             <AnimatedElement delay={400}>
               <Link 
                 to="/services/employment-issues" 
-                className="card-hover bg-background rounded-xl p-8 border border-secondary/10 group"
+                className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Briefcase className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary text-white rounded-lg group-hover:bg-primary/80 transition-colors">
+                    <Briefcase className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-secondary/40 group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">Employment Issues</h3>
-                <p className="font-paragraph text-secondary/70 mb-4">Representation for wrongful dismissal, workplace disputes, and employment standards matters.</p>
+                <h3 className="font-heading text-2xl text-white group-hover:text-primary mb-3 transition-colors">Employment Issues</h3>
+                <p className="font-paragraph text-white/70 mb-4">Representation for wrongful dismissal, workplace disputes, and employment standards matters.</p>
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold">
                   Learn More
                   <ArrowRight className="w-4 h-4" />
@@ -609,16 +612,16 @@ export default function HomePage() {
             <AnimatedElement delay={500}>
               <Link 
                 to="/services/criminal-matters" 
-                className="card-hover bg-background rounded-xl p-8 border border-secondary/10 group"
+                className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Gavel className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary text-white rounded-lg group-hover:bg-primary/80 transition-colors">
+                    <Gavel className="w-6 h-6" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-secondary/40 group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="font-heading text-2xl text-secondary mb-3 group-hover:text-primary transition-colors">Criminal Matters</h3>
-                <p className="font-paragraph text-secondary/70 mb-4">Defence representation for summary conviction offences and provincial court matters.</p>
+                <h3 className="font-heading text-2xl text-white group-hover:text-primary mb-3 transition-colors">Criminal Matters</h3>
+                <p className="font-paragraph text-white/70 mb-4">Defence representation for summary conviction offences and provincial court matters.</p>
                 <div className="flex items-center gap-2 text-sm text-primary font-semibold">
                   Learn More
                   <ArrowRight className="w-4 h-4" />
