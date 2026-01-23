@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
 import { AutoSEO } from '@/components/AutoSEO';
@@ -198,7 +198,7 @@ export default function Router() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <MemberProvider>
         <ScrollToTop />
         <AutoSEO />
@@ -387,6 +387,6 @@ export default function Router() {
           </Routes>
         </Suspense>
       </MemberProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
