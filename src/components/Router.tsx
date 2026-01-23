@@ -25,22 +25,28 @@ function ScrollToTop() {
   return null;
 }
 
-// Pre-define all page imports for Vite to statically analyze
-const pageModules = import.meta.glob('@/components/pages/*.tsx') as Record<string, () => Promise<{ default: ComponentType }>>;
+// Dynamic page imports with relative path for runtime resolution
+const pageModules = import.meta.glob('./pages/*.tsx') as Record<string, () => Promise<{ default: ComponentType }>>;
 
 // Cache for lazy components
 const componentCache = new Map<string, React.LazyExoticComponent<ComponentType>>();
 
 function getPageComponent(pageName: string): React.LazyExoticComponent<ComponentType> {
   if (!componentCache.has(pageName)) {
-    const modulePath = `/src/components/pages/${pageName}.tsx`;
-    const importer = pageModules[modulePath];
-    if (importer) {
-      componentCache.set(pageName, lazy(importer));
+    // Find module using partial key match (relative path)
+    const moduleKey = Object.keys(pageModules).find(key => key.includes(`/${pageName}.tsx`));
+    
+    if (moduleKey) {
+      componentCache.set(pageName, lazy(pageModules[moduleKey]));
     } else {
       console.error(`Page not found: ${pageName}`);
       // Return NotFoundPage as fallback
-      componentCache.set(pageName, lazy(() => import('@/components/pages/NotFoundPage')));
+      const notFoundKey = Object.keys(pageModules).find(key => key.includes('/NotFoundPage.tsx'));
+      if (notFoundKey) {
+        componentCache.set(pageName, lazy(pageModules[notFoundKey]));
+      } else {
+        componentCache.set(pageName, lazy(() => import('./pages/NotFoundPage')));
+      }
     }
   }
   return componentCache.get(pageName)!;
