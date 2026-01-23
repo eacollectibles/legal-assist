@@ -133,3 +133,46 @@ html.hydrated body {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px -5px rgba(185, 74, 31, 0.3);
 }
+
+/* Signature diagonal accent */
+.diagonal-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.diagonal-accent::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -5rem;
+  width: 10rem;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(185, 74, 31, 0.08) 100%);
+  transform: skewX(-12deg);
+  pointer-events: none;
+}
+
+/* Animated underline for headings */
+.heading-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #B94A1F;
+}
+
+/* Expanding underline on hover */
+.heading-underline-grow::after {
+  transition: width 0.4s ease;
+}
+
+.heading-underline-grow:hover::after {
+  width: 100%;
+}
