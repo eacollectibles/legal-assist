@@ -129,7 +129,7 @@ const schemaData = {
 const currentYear = new Date().getFullYear();
 ---
 
-<html lang="en" class="w-full h-full" is:raw>
+<html lang="en" class="w-full h-full">
   <head>
     <!-- Basic charset and viewport -->
     <meta charset="UTF-8" />
@@ -213,14 +213,10 @@ const currentYear = new Date().getFullYear();
     </script>
     
     <!-- SERVER-SIDE SEO: FAQ Schema if present -->
-    {faqSchema && (
-      <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-    )}
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
     
     <!-- SERVER-SIDE SEO: Breadcrumb Schema if present -->
-    {breadcrumbSchema && (
-      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-    )}
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
   </head>
   <body class="w-full h-full">
     <div id="root" class="w-full h-full">
