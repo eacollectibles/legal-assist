@@ -2446,11 +2446,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-
-
-
-
-
   '/services/hrto-process': {
     title: 'HRTO Process | How to File Human Rights Complaint | London Ontario',
     description: 'Understanding the HRTO process in Ontario. How to file, what to expect, timelines. Human rights application guidance.',
@@ -2492,7 +2487,6 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can I get overtime pay?', answer: 'Most employees are entitled to 1.5x pay after 44 hours per week. Some jobs are exempt (managers, certain professionals). Employers can average hours over periods or offer time off instead in some cases.' }
     ]
   },
-
 
   '/services/severance-review': {
     title: 'Severance Review | Termination Package Review | London Ontario',
@@ -2588,7 +2582,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-
   '/services/mischief-charges': {
     title: 'Mischief Charges | Property Damage Criminal | London Ontario',
     description: 'Mischief charge defence in London, Ontario. Criminal property damage, vandalism charges. Paralegal representation.',
@@ -2667,8 +2660,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-
-
   '/locations/waterloo': {
     title: 'Paralegal Services Waterloo Ontario | LegalAssist',
     description: 'Licensed paralegal services in Waterloo, Ontario. Traffic tickets, landlord-tenant, small claims court representation.',
@@ -2680,11 +2671,6 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can you help UW or Laurier students?', answer: 'Absolutely. We help many university students with traffic tickets, tenancy issues, and other legal matters.' }
     ]
   },
-
-
-
-
-
 
   '/locations/chatham': {
     title: 'Paralegal Services Chatham Ontario | LegalAssist',
