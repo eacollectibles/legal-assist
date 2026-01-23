@@ -27,33 +27,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Answer Pages / Guides -->
-  <url>
-    <loc>https://legalassist.london/guides/small-claims-what-to-expect</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://legalassist.london/guides/enforce-judgment-ontario</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://legalassist.london/guides/ltb-forms-explained</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://legalassist.london/guides/poa-fight-vs-early-resolution</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://legalassist.london/guides/lawyer-vs-paralegal</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
   <!-- Main Service Category Pages -->
   <url>
     <loc>https://legalassist.london/services/traffic-tickets</loc>
