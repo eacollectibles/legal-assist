@@ -34,7 +34,10 @@ export default {
                 secondary: '#4A2C23',
                 'secondary-foreground': '#F9F5F0',
                 'primary-foreground': '#FFFFFF',
-                primary: '#B94A1F'
+                primary: '#B94A1F',
+                accent: '#D4612A',
+                dark: '#1A1512',
+                'dark-foreground': '#F9F5F0'
             },
         },
     },
