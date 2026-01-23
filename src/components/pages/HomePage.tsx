@@ -1,7 +1,7 @@
 // HPI 1.6-V
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -152,67 +152,9 @@ export default function HomePage() {
     }
   }, []);
 
-  // State for rotating banner
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  
   // State for sticky contact bar visibility
   const [showStickyBar, setShowStickyBar] = useState(true);
   const ctaSectionRef = useRef<HTMLElement>(null);
-
-  // Banner data with responsive image URLs
-  const banners = [
-    {
-      id: 1,
-      image: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.jpeg',
-      imageMobile: 'https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.jpeg',
-      headline: 'Stopped by Police? Got a Traffic Ticket?',
-      subheadline: 'Know your rights. Get professional representation.',
-      cta: 'Find out where you stand',
-      ctaLink: '/contact',
-      overlay: 'dark',
-    },
-    {
-      id: 2,
-      image: 'https://static.wixstatic.com/media/99571b_a29b6a3478fc4352b2eb8627773f2dd2~mv2.png/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.png',
-      imageMobile: 'https://static.wixstatic.com/media/99571b_a29b6a3478fc4352b2eb8627773f2dd2~mv2.png/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.png',
-      headline: 'Having a Bad Day?',
-      subheadline: 'We might be able to help.',
-      cta: 'Find out where you stand',
-      ctaLink: '/contact',
-      overlay: 'dark',
-    },
-    {
-      id: 4,
-      image: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.png',
-      imageMobile: 'https://static.wixstatic.com/media/99571b_b20dadcb806943b4afa145bea458f952~mv2.png/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.png',
-      headline: 'Facing Eviction?',
-      subheadline: 'Know your rights. We can help.',
-      cta: 'Find out where you stand',
-      ctaLink: '/contact',
-      overlay: 'dark',
-    },
-    {
-      id: 5,
-      image: 'https://static.wixstatic.com/media/99571b_ede5f50259b44614b9cd2d2d4731928e~mv2.jpeg/v1/fill/w_1920,h_600,al_c,q_80,enc_auto/banner.jpeg',
-      imageMobile: 'https://static.wixstatic.com/media/99571b_ede5f50259b44614b9cd2d2d4731928e~mv2.jpeg/v1/fill/w_768,h_500,al_c,q_75,enc_auto/banner.jpeg',
-      headline: 'Owed Money?',
-      subheadline: "Let us help you recover what's yours.",
-      cta: 'Find out where you stand',
-      ctaLink: '/contact',
-      overlay: 'dark',
-    },
-  ];
-
-  // Auto-rotate every 10 seconds (pauses on hover)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (!isPaused) {
-        setCurrentSlide((prev) => (prev + 1) % banners.length);
-      }
-    }, 10000);
-    return () => clearInterval(timer);
-  }, [banners.length, isPaused]);
 
   // Canonical Data Sources (Preserved from original)
   const features = [
@@ -306,101 +248,50 @@ export default function HomePage() {
         Licensed Paralegal Services in Ontario - Small Claims Court, Landlord-Tenant, Traffic Tickets & Provincial Offences
       </h1>
       
-      {/* ROTATING HERO BANNERS */}
-      <section 
-        className="relative w-full h-[500px] md:h-[600px] overflow-hidden"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        {/* Slides */}
-        {banners.map((banner, index) => (
-          <div
-            key={banner.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {/* Background Image with Responsive Sources */}
-            <div className="absolute inset-0">
-              <picture>
-                <source media="(min-width: 768px)" srcSet={banner.image} />
-                <source media="(max-width: 767px)" srcSet={banner.imageMobile} />
-                <Image 
-                  src={banner.image}
-                  alt={`${banner.headline} - Legal services banner`}
-                  className="w-full h-full object-cover object-center"
-                  style={{ objectPosition: 'center 35%' }}
-                  width={1920}
-                  height={600}
-                  loading={index === 0 ? "eager" : "lazy"}
-                />
-              </picture>
-            </div>
-            
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/50" />
-            
-            {/* Content */}
-            <div className="relative z-10 h-full flex items-end pb-20 md:items-center md:pb-0">
-              <div className="max-w-[100rem] mx-auto px-4 md:px-8 w-full">
-                <div className="max-w-2xl">
-                  <h2 className="font-heading text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-                    {banner.headline}
-                  </h2>
-                  <p className="font-paragraph text-base sm:text-lg md:text-2xl text-white/90 mb-8">
-                    {banner.subheadline}
-                  </p>
-                  
-                  <div className="flex flex-wrap items-center gap-4">
-                    <Link
-                      to={banner.ctaLink}
-                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
-                    >
-                      {banner.cta}
-                      <ArrowRight className="w-5 h-5" />
-                    </Link>
-                    <Link
-                      to={banner.ctaLink}
-                      className="text-white underline underline-offset-4 hover:text-primary transition-colors text-lg"
-                    >
-                      Learn More →
-                    </Link>
-                  </div>
-                </div>
-              </div>
+      {/* HERO SECTION */}
+      <section className="min-h-[85vh] grid lg:grid-cols-2">
+        {/* Left: Text Side */}
+        <div className="bg-secondary flex items-center p-8 lg:p-16 xl:p-24 order-2 lg:order-1">
+          <div className="max-w-xl">
+            <span className="text-primary font-paragraph text-sm tracking-[0.2em] uppercase mb-6 block">
+              Licensed Ontario Paralegal
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-heading leading-[1.1] mb-8">
+              Legal help<br/>
+              <span className="text-primary">without</span> the<br/>
+              lawyer price tag.
+            </h1>
+            <p className="text-white/70 font-paragraph text-lg mb-10 max-w-md">
+              Traffic tickets. Landlord disputes. Small claims. Get professional representation at a fraction of the cost.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link 
+                to="/contact"
+                className="bg-primary text-white font-paragraph font-semibold px-8 py-4 text-lg rounded-lg hover:bg-accent transition-colors inline-block text-center"
+              >
+                Free Consultation
+              </Link>
+              <Link 
+                to="/services"
+                className="border border-white/30 text-white font-paragraph px-8 py-4 text-lg rounded-lg hover:bg-white/10 transition-colors inline-block text-center"
+              >
+                View Services
+              </Link>
             </div>
           </div>
-        ))}
-
-        {/* Slide Indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-          {banners.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentSlide ? 'bg-white' : 'bg-white/40'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
         </div>
-
-        {/* Arrow Navigation */}
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length)}
-          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition-colors"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev + 1) % banners.length)}
-          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition-colors"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
+        
+        {/* Right: Image Side */}
+        <div className="relative min-h-[50vh] lg:min-h-full order-1 lg:order-2">
+          <Image 
+            src="https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1200,h_900,al_c,q_85/banner.jpeg"
+            alt="Professional paralegal consultation"
+            className="absolute inset-0 w-full h-full object-cover"
+            width={1200}
+            height={900}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent lg:bg-gradient-to-r lg:from-secondary/30 lg:to-transparent" />
+        </div>
       </section>
 
       {/* EDITORIAL INTRO SECTION */}
