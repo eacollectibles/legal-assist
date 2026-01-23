@@ -25,7 +25,7 @@ export default function DefamationSlanderPage() {
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">{"In Ontario, to establish defamation, a plaintiff must show that the impugned statement was published to at least one third party, referred to the plaintiff, and would lower the plaintiff’s reputation in the eyes of a reasonable person. In cases of libel, harm to reputation is presumed. Truth, fair comment, privilege, and responsible communication may be raised as defences. We assist clients in organizing evidence relevant to these legal requirements."}</p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -757,7 +757,7 @@ export default function DefamationSlanderPage() {
           <p className="font-paragraph text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             If you have been defamed, don't wait. The 2-year limitation period is critical. Contact us for a free consultation to discuss your situation and explore your legal options.
           </p>
-          <Link to="/booking">
+          <Link to="/contact">
             <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">
               Schedule Your Free Consultation
             </Button>

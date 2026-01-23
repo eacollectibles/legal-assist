@@ -28,7 +28,7 @@ export default function SocialBenefitsTribunalPage() {
                 Expert representation for social assistance and disability support appeals. We help you navigate the Social Benefits Tribunal to secure the benefits you deserve.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -590,7 +590,7 @@ export default function SocialBenefitsTribunalPage() {
           <p className="font-paragraph text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Contact us today for a free consultation. We'll review your decision and help you understand your options.
           </p>
-          <Link to="/booking">
+          <Link to="/contact">
             <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">
               Schedule Your Free Consultation
             </Button>

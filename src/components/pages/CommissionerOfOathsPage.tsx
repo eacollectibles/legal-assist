@@ -60,7 +60,7 @@ export default function CommissionerOfOathsPage() {
                 </p>
                 <div className="flex gap-4">
                   <Link
-                    to="/booking"
+                    to="/contact"
                     className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-paragraph px-8 py-4 rounded-lg transition-all"
                   >
                     Book an Appointment
@@ -519,7 +519,7 @@ export default function CommissionerOfOathsPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/booking"
+                  to="/contact"
                   className="inline-flex items-center justify-center gap-2 bg-primary-foreground hover:bg-primary-foreground/90 text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all"
                 >
                   Book Now

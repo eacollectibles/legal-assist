@@ -28,7 +28,7 @@ export default function CriminalMattersPage() {
                 Expert paralegal representation for summary conviction offences in Ontario. Our licensed paralegals provide skilled defense for criminal charges within our scope of practice, helping you navigate the criminal justice system with confidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -417,7 +417,7 @@ export default function CriminalMattersPage() {
             Don't face the criminal justice system alone. Our experienced paralegals are here to protect your rights and fight for the best possible outcome in your case.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/booking">
+            <Link to="/contact">
               <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                 Schedule Your Consultation
               </Button>

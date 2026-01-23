@@ -28,12 +28,12 @@ export default function BailHearingsPage() {
                 Expert paralegal representation to secure your release on reasonable bail conditions. When you're arrested, getting out of custody quickly is critical. Our licensed paralegals fight for your freedom with experienced bail hearing advocacy.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Bail Hearing
                   </Button>
                 </Link>
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 w-full">
                     Emergency Consultation
                   </Button>
@@ -311,7 +311,7 @@ export default function BailHearingsPage() {
             If you or a loved one has been arrested, contact us immediately. We offer 24/7 emergency consultations and can often appear in court the same day.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/booking">
+            <Link to="/contact">
               <Button className="bg-primary hover:bg-primary/90 text-white">
                 Schedule Emergency Consultation
               </Button>

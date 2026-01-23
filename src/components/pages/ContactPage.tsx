@@ -470,7 +470,6 @@ export default function ContactPage() {
       title: 'Schedule an Appointment',
       description: 'Book a consultation with our Licensed Paralegals. Choose your preferred date and time.',
       action: 'Book Now',
-      actionHref: '/booking',
       color: 'bg-pastelbeige',
       delay: 400
     }
@@ -504,7 +503,7 @@ export default function ContactPage() {
                 action={method.action}
                 actionHref={method.actionHref}
                 actionOnClick={() => {
-                  if (method.title === 'Request a Callback') {
+                  if (method.title === 'Request a Callback' || method.title === 'Schedule an Appointment') {
                     setActiveTab('callback');
                     document.getElementById('callback-form')?.scrollIntoView({ behavior: 'smooth' });
                   } else if (method.title === 'Send Feedback') {

@@ -28,7 +28,7 @@ export default function HumanRightsTribunalPage() {
                 Expert representation for discrimination and human rights violations in employment, housing, and services. We advocate for your rights and help you seek justice through the HRTO process.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/booking">
+                <Link to="/contact">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -557,7 +557,7 @@ export default function HumanRightsTribunalPage() {
             Whether you've experienced discrimination or need to defend against a complaint, our experienced team is here to guide you through the HRTO process with compassion and expertise.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/booking">
+            <Link to="/contact">
               <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                 Schedule Your Consultation
               </Button>
