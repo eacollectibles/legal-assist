@@ -3,29 +3,9 @@ import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
 import { AutoSEO } from '@/components/AutoSEO';
 
-// Main Pages - Keep HomePage and ContactPage as static imports
+// Static imports for critical pages (fastest load)
 import HomePage from '@/components/pages/HomePage';
 import ContactPage from '@/components/pages/ContactPage';
-
-// Lazy load critical pages only
-const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
-const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
-const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
-const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
-const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
-
-// Dynamic page loader - loads pages on demand to reduce initial bundle
-const pageCache = new Map();
-
-function lazyLoadPage(pageName: string) {
-  if (!pageCache.has(pageName)) {
-    pageCache.set(
-      pageName,
-      lazy(() => import(`@/components/pages/${pageName}.tsx`))
-    );
-  }
-  return pageCache.get(pageName);
-}
 
 // Loading component for Suspense
 function LoadingSpinner() {
@@ -45,188 +25,190 @@ function ScrollToTop() {
   return null;
 }
 
-// Route mapping for dynamic loading
-const routeMap = [
-  // Core Pages
-  { path: '/', component: HomePage, static: true },
-  { path: '/contact', component: ContactPage, static: true },
-  { path: '/about', component: AboutPage },
-  { path: '/services', component: ServicesPage },
-  
-  // Auth Pages
-  { path: '/signup', component: ClientSignupPage },
-  { path: '/login', component: ClientLoginPage },
+// ============================================================================
+// LAZY IMPORTS - Explicit imports so Wix/Vite can bundle correctly
+// ============================================================================
 
-  // Main Service Categories
-  { path: '/services/small-claims', pageName: 'SmallClaimsPage' },
-  { path: '/services/landlord-tenant', pageName: 'LandlordTenantBoardPage' },
-  { path: '/services/traffic-tickets', pageName: 'TrafficTicketsPage' },
-  { path: '/services/human-rights', pageName: 'HumanRightsTribunalPage' },
-  { path: '/services/employment-issues', pageName: 'EmploymentIssuesPage' },
-  { path: '/services/criminal-matters', pageName: 'CriminalMattersPage' },
-  { path: '/services/provincial-offences', pageName: 'ProvincialOffencesPage' },
+// Core Pages
+const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
+const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
+const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
 
-  // Traffic Ticket Sub-pages
-  { path: '/services/speeding-ticket-defence', pageName: 'SpeedingTicketDefencePage' },
-  { path: '/services/careless-driving-defence', pageName: 'CarelessDrivingDefencePage' },
-  { path: '/services/stunt-driving-defence', pageName: 'StuntDrivingDefencePage' },
-  { path: '/services/distracted-driving', pageName: 'DistractedDrivingDefencePage' },
-  { path: '/services/red-light-tickets', pageName: 'RedLightDefencePage' },
-  { path: '/services/no-insurance-defence', pageName: 'NoInsuranceDefencePage' },
-  { path: '/services/demerit-points-guide', pageName: 'DemeritPointsGuidePage' },
-  { path: '/services/g1-g2-violations', pageName: 'G1G2ViolationsPage' },
-  { path: '/services/commercial-vehicle-violations', pageName: 'CommercialVehicleViolationsPage' },
-  { path: '/services/hov-lane-violations', pageName: 'HOVLaneViolationsPage' },
-  { path: '/services/stop-sign-ticket', pageName: 'StopSignTicketPage' },
-  { path: '/services/street-racing', pageName: 'StreetRacingPage' },
-  { path: '/services/fail-to-yield', pageName: 'FailToYieldPage' },
-  { path: '/services/unsafe-lane-change', pageName: 'UnsafeLaneChangePage' },
-  { path: '/services/following-too-closely', pageName: 'FollowingTooCloselyPage' },
-  { path: '/services/driving-while-suspended', pageName: 'DrivingWhileSuspendedPage' },
-  { path: '/services/school-zone-speeding', pageName: 'SchoolZoneSpeedingPage' },
-  { path: '/services/seatbelt-violations', pageName: 'SeatbeltViolationsPage' },
+// Auth Pages
+const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
+const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
 
-  // Landlord & Tenant Board Sub-pages
-  { path: '/services/landlord-services', pageName: 'LandlordServicesPage' },
-  { path: '/services/tenant-services', pageName: 'TenantServicesPage' },
-  { path: '/services/eviction-non-payment', pageName: 'EvictionNonPaymentPage' },
-  { path: '/services/n12-personal-use-eviction', pageName: 'N12PersonalUsePage' },
-  { path: '/services/n13-renovation-eviction', pageName: 'N13RenovationEvictionPage' },
-  { path: '/services/above-guideline-increase', pageName: 'AboveGuidelineIncreasePage' },
-  { path: '/services/maintenance-repairs', pageName: 'MaintenanceRepairsPage' },
-  { path: '/services/bad-faith-eviction', pageName: 'BadFaithEvictionPage' },
-  { path: '/services/rent-increase-guide', pageName: 'RentIncreaseGuidePage' },
-  { path: '/services/illegal-lockout', pageName: 'IllegalLockoutPage' },
-  { path: '/services/landlord-harassment', pageName: 'HarassmentByLandlordPage' },
-  { path: '/services/rent-arrears-defence', pageName: 'RentArrearsDefencePage' },
-  { path: '/services/subsidized-housing-eviction', pageName: 'SubsidizedHousingPage' },
-  { path: '/services/roommate-disputes', pageName: 'RoommateDisputesPage' },
-  { path: '/services/breaking-lease-early', pageName: 'LeaseBreakingPage' },
-  { path: '/services/pet-disputes', pageName: 'PetDisputesPage' },
-  { path: '/services/noise-complaints-defence', pageName: 'NoiseComplaintsPage' },
-  { path: '/services/ltb-hearing-preparation', pageName: 'LTBHearingPrepPage' },
-  { path: '/services/rent-reduction-applications', pageName: 'RentReductionPage' },
-  { path: '/services/mobile-home-park-disputes', pageName: 'MobileHomeParkPage' },
-  { path: '/services/superintendent-housing-rights', pageName: 'SuperintendentIssuesPage' },
+// Main Service Categories
+const SmallClaimsPage = lazy(() => import('@/components/pages/SmallClaimsPage'));
+const LandlordTenantBoardPage = lazy(() => import('@/components/pages/LandlordTenantBoardPage'));
+const TrafficTicketsPage = lazy(() => import('@/components/pages/TrafficTicketsPage'));
+const HumanRightsTribunalPage = lazy(() => import('@/components/pages/HumanRightsTribunalPage'));
+const EmploymentIssuesPage = lazy(() => import('@/components/pages/EmploymentIssuesPage'));
+const CriminalMattersPage = lazy(() => import('@/components/pages/CriminalMattersPage'));
+const ProvincialOffencesPage = lazy(() => import('@/components/pages/ProvincialOffencesPage'));
 
-  // Small Claims Court Sub-pages
-  { path: '/services/small-claims-process', pageName: 'SmallClaimsProcessPage' },
-  { path: '/services/debt-collection', pageName: 'DebtCollectionPage' },
-  { path: '/services/contract-disputes', pageName: 'ContractDisputesPage' },
-  { path: '/services/judgement-enforcement', pageName: 'JudgementEnforcementPage' },
-  { path: '/services/property-damage-claims', pageName: 'PropertyDamageClaimsPage' },
-  { path: '/services/unpaid-invoices', pageName: 'UnpaidInvoicesPage' },
-  { path: '/services/security-deposits', pageName: 'SecurityDepositsPage' },
-  { path: '/services/consumer-disputes', pageName: 'ConsumerDisputesPage' },
-  { path: '/services/personal-injury-claims', pageName: 'PersonalInjuryClaimsPage' },
-  { path: '/services/home-improvement-disputes', pageName: 'HomeImprovementDisputesPage' },
-  { path: '/services/vehicle-purchase-disputes', pageName: 'VehiclePurchaseDisputesPage' },
-  { path: '/services/neighbour-disputes', pageName: 'NeighbourDisputesPage' },
-  { path: '/services/return-of-property', pageName: 'ReturnOfPropertyPage' },
-  { path: '/services/breach-of-warranty', pageName: 'BreachOfWarrantyPage' },
-  { path: '/services/loan-recovery', pageName: 'LoanRecoveryPage' },
-  { path: '/services/tenant-damage-claims', pageName: 'TenantDamageClaimsPage' },
-  { path: '/services/wrongful-dismissal-claims', pageName: 'WrongfulDismissalClaimsPage' },
-  { path: '/services/professional-negligence', pageName: 'ProfessionalNegligencePage' },
-  { path: '/services/defamation-slander', pageName: 'DefamationSlanderPage' },
+// Traffic Ticket Sub-pages
+const SpeedingTicketDefencePage = lazy(() => import('@/components/pages/SpeedingTicketDefencePage'));
+const CarelessDrivingDefencePage = lazy(() => import('@/components/pages/CarelessDrivingDefencePage'));
+const StuntDrivingDefencePage = lazy(() => import('@/components/pages/StuntDrivingDefencePage'));
+const DistractedDrivingDefencePage = lazy(() => import('@/components/pages/DistractedDrivingDefencePage'));
+const RedLightDefencePage = lazy(() => import('@/components/pages/RedLightDefencePage'));
+const NoInsuranceDefencePage = lazy(() => import('@/components/pages/NoInsuranceDefencePage'));
+const DemeritPointsGuidePage = lazy(() => import('@/components/pages/DemeritPointsGuidePage'));
+const G1G2ViolationsPage = lazy(() => import('@/components/pages/G1G2ViolationsPage'));
+const CommercialVehicleViolationsPage = lazy(() => import('@/components/pages/CommercialVehicleViolationsPage'));
+const HOVLaneViolationsPage = lazy(() => import('@/components/pages/HOVLaneViolationsPage'));
+const StopSignTicketPage = lazy(() => import('@/components/pages/StopSignTicketPage'));
+const StreetRacingPage = lazy(() => import('@/components/pages/StreetRacingPage'));
+const FailToYieldPage = lazy(() => import('@/components/pages/FailToYieldPage'));
+const UnsafeLaneChangePage = lazy(() => import('@/components/pages/UnsafeLaneChangePage'));
+const FollowingTooCloselyPage = lazy(() => import('@/components/pages/FollowingTooCloselyPage'));
+const DrivingWhileSuspendedPage = lazy(() => import('@/components/pages/DrivingWhileSuspendedPage'));
+const SchoolZoneSpeedingPage = lazy(() => import('@/components/pages/SchoolZoneSpeedingPage'));
+const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltViolationsPage'));
 
-  // Human Rights Tribunal Sub-pages
-  { path: '/services/workplace-discrimination', pageName: 'WorkplaceDiscriminationPage' },
-  { path: '/services/housing-discrimination', pageName: 'HousingDiscriminationPage' },
-  { path: '/services/disability-accommodation', pageName: 'DisabilityAccommodationPage' },
-  { path: '/services/age-discrimination', pageName: 'AgeDiscriminationPage' },
-  { path: '/services/sexual-harassment', pageName: 'SexualHarassmentPage' },
-  { path: '/services/reprisal-claims', pageName: 'ReprisalClaimsPage' },
-  { path: '/services/service-discrimination', pageName: 'ServiceDiscriminationPage' },
-  { path: '/services/pregnancy-discrimination', pageName: 'PregnancyDiscriminationPage' },
+// Landlord & Tenant Board Sub-pages
+const LandlordServicesPage = lazy(() => import('@/components/pages/LandlordServicesPage'));
+const TenantServicesPage = lazy(() => import('@/components/pages/TenantServicesPage'));
+const EvictionNonPaymentPage = lazy(() => import('@/components/pages/EvictionNonPaymentPage'));
+const N12PersonalUsePage = lazy(() => import('@/components/pages/N12PersonalUsePage'));
+const N13RenovationEvictionPage = lazy(() => import('@/components/pages/N13RenovationEvictionPage'));
+const AboveGuidelineIncreasePage = lazy(() => import('@/components/pages/AboveGuidelineIncreasePage'));
+const MaintenanceRepairsPage = lazy(() => import('@/components/pages/MaintenanceRepairsPage'));
+const BadFaithEvictionPage = lazy(() => import('@/components/pages/BadFaithEvictionPage'));
+const RentIncreaseGuidePage = lazy(() => import('@/components/pages/RentIncreaseGuidePage'));
+const IllegalLockoutPage = lazy(() => import('@/components/pages/IllegalLockoutPage'));
+const HarassmentByLandlordPage = lazy(() => import('@/components/pages/HarassmentByLandlordPage'));
+const RentArrearsDefencePage = lazy(() => import('@/components/pages/RentArrearsDefencePage'));
+const SubsidizedHousingPage = lazy(() => import('@/components/pages/SubsidizedHousingPage'));
+const RoommateDisputesPage = lazy(() => import('@/components/pages/RoommateDisputesPage'));
+const LeaseBreakingPage = lazy(() => import('@/components/pages/LeaseBreakingPage'));
+const PetDisputesPage = lazy(() => import('@/components/pages/PetDisputesPage'));
+const NoiseComplaintsPage = lazy(() => import('@/components/pages/NoiseComplaintsPage'));
+const LTBHearingPrepPage = lazy(() => import('@/components/pages/LTBHearingPrepPage'));
+const RentReductionPage = lazy(() => import('@/components/pages/RentReductionPage'));
+const MobileHomeParkPage = lazy(() => import('@/components/pages/MobileHomeParkPage'));
+const SuperintendentIssuesPage = lazy(() => import('@/components/pages/SuperintendentIssuesPage'));
 
-  // Employment Sub-pages
-  { path: '/services/wrongful-termination', pageName: 'WrongfulTerminationPage' },
-  { path: '/services/severance-pay', pageName: 'SeverancePayPage' },
-  { path: '/services/unpaid-wages', pageName: 'UnpaidWagesPage' },
-  { path: '/services/constructive-dismissal', pageName: 'ConstructiveDismissalPage' },
+// Small Claims Court Sub-pages
+const SmallClaimsProcessPage = lazy(() => import('@/components/pages/SmallClaimsProcessPage'));
+const DebtCollectionPage = lazy(() => import('@/components/pages/DebtCollectionPage'));
+const ContractDisputesPage = lazy(() => import('@/components/pages/ContractDisputesPage'));
+const JudgementEnforcementPage = lazy(() => import('@/components/pages/JudgementEnforcementPage'));
+const PropertyDamageClaimsPage = lazy(() => import('@/components/pages/PropertyDamageClaimsPage'));
+const UnpaidInvoicesPage = lazy(() => import('@/components/pages/UnpaidInvoicesPage'));
+const SecurityDepositsPage = lazy(() => import('@/components/pages/SecurityDepositsPage'));
+const ConsumerDisputesPage = lazy(() => import('@/components/pages/ConsumerDisputesPage'));
+const PersonalInjuryClaimsPage = lazy(() => import('@/components/pages/PersonalInjuryClaimsPage'));
+const HomeImprovementDisputesPage = lazy(() => import('@/components/pages/HomeImprovementDisputesPage'));
+const VehiclePurchaseDisputesPage = lazy(() => import('@/components/pages/VehiclePurchaseDisputesPage'));
+const NeighbourDisputesPage = lazy(() => import('@/components/pages/NeighbourDisputesPage'));
+const ReturnOfPropertyPage = lazy(() => import('@/components/pages/ReturnOfPropertyPage'));
+const BreachOfWarrantyPage = lazy(() => import('@/components/pages/BreachOfWarrantyPage'));
+const LoanRecoveryPage = lazy(() => import('@/components/pages/LoanRecoveryPage'));
+const TenantDamageClaimsPage = lazy(() => import('@/components/pages/TenantDamageClaimsPage'));
+const WrongfulDismissalClaimsPage = lazy(() => import('@/components/pages/WrongfulDismissalClaimsPage'));
+const ProfessionalNegligencePage = lazy(() => import('@/components/pages/ProfessionalNegligencePage'));
+const DefamationSlanderPage = lazy(() => import('@/components/pages/DefamationSlanderPage'));
 
-  // Criminal/POA Sub-pages
-  { path: '/services/theft-under-5000', pageName: 'TheftUnderPage' },
-  { path: '/services/mischief-under-5000', pageName: 'MischiefUnderPage' },
-  { path: '/services/simple-assault', pageName: 'SimpleAssaultPage' },
-  { path: '/services/trespass-property', pageName: 'TrespassPropertyPage' },
-  { path: '/services/fail-to-comply', pageName: 'FailToComplyPage' },
-  { path: '/services/peace-bond', pageName: 'PeaceBondPage' },
-  { path: '/services/liquor-licence-act', pageName: 'LiquorLicenceActPage' },
-  { path: '/services/municipal-bylaw', pageName: 'MunicipalBylawPage' },
-  { path: '/services/regulatory-offences', pageName: 'RegulatoryOffencesPage' },
-  { path: '/services/bail-hearings', pageName: 'BailHearingsPage' },
+// Human Rights Tribunal Sub-pages
+const WorkplaceDiscriminationPage = lazy(() => import('@/components/pages/WorkplaceDiscriminationPage'));
+const HousingDiscriminationPage = lazy(() => import('@/components/pages/HousingDiscriminationPage'));
+const DisabilityAccommodationPage = lazy(() => import('@/components/pages/DisabilityAccommodationPage'));
+const AgeDiscriminationPage = lazy(() => import('@/components/pages/AgeDiscriminationPage'));
+const SexualHarassmentPage = lazy(() => import('@/components/pages/SexualHarassmentPage'));
+const ReprisalClaimsPage = lazy(() => import('@/components/pages/ReprisalClaimsPage'));
+const ServiceDiscriminationPage = lazy(() => import('@/components/pages/ServiceDiscriminationPage'));
+const PregnancyDiscriminationPage = lazy(() => import('@/components/pages/PregnancyDiscriminationPage'));
 
-  // Other Services
-  { path: '/services/notary-public', pageName: 'NotaryPublicPage' },
-  { path: '/services/commissioner-of-oaths', pageName: 'CommissionerOfOathsPage' },
-  { path: '/services/mediation', pageName: 'MediationServicesPage' },
-  { path: '/services/social-benefits-tribunal', pageName: 'SocialBenefitsTribunalPage' },
+// Employment Sub-pages
+const WrongfulTerminationPage = lazy(() => import('@/components/pages/WrongfulTerminationPage'));
+const SeverancePayPage = lazy(() => import('@/components/pages/SeverancePayPage'));
+const UnpaidWagesPage = lazy(() => import('@/components/pages/UnpaidWagesPage'));
+const ConstructiveDismissalPage = lazy(() => import('@/components/pages/ConstructiveDismissalPage'));
 
-  // Location Pages
-  { path: '/london-paralegal', pageName: 'LondonParalegalPage' },
-  { path: '/st-thomas-paralegal', pageName: 'StThomasParalegalPage' },
-  { path: '/woodstock-paralegal', pageName: 'WoodstockParalegalPage' },
-  { path: '/strathroy-chatham-paralegal', pageName: 'StrathroyChathamParalegalPage' },
-  { path: '/ingersoll-paralegal', pageName: 'IngersollParalegalPage' },
-  { path: '/tillsonburg-paralegal', pageName: 'TillsonburgParalegalPage' },
-  { path: '/aylmer-paralegal', pageName: 'AylmerParalegalPage' },
-  { path: '/locations/kitchener', pageName: 'KitchenerParalegalPage' },
-  { path: '/locations/cambridge', pageName: 'CambridgeParalegalPage' },
-  { path: '/locations/windsor', pageName: 'WindsorParalegalPage' },
-  { path: '/locations/sarnia', pageName: 'SarniaParalegalPage' },
-  { path: '/locations/chatham-kent', pageName: 'ChathamKentParalegalPage' },
-  { path: '/locations/stratford', pageName: 'StratfordParalegalPage' },
-  { path: '/locations/guelph', pageName: 'GuelphParalegalPage' },
-  { path: '/locations/brantford', pageName: 'BrantfordParalegalPage' },
-  { path: '/locations/norfolk-county', pageName: 'NorfolkCountyParalegalPage' },
-  { path: '/locations/leamington', pageName: 'LeamingtonParalegalPage' },
-  { path: '/locations/huron-county', pageName: 'HuronCountyParalegalPage' },
+// Criminal/POA Sub-pages
+const TheftUnderPage = lazy(() => import('@/components/pages/TheftUnderPage'));
+const MischiefUnderPage = lazy(() => import('@/components/pages/MischiefUnderPage'));
+const SimpleAssaultPage = lazy(() => import('@/components/pages/SimpleAssaultPage'));
+const TrespassPropertyPage = lazy(() => import('@/components/pages/TrespassPropertyPage'));
+const FailToComplyPage = lazy(() => import('@/components/pages/FailToComplyPage'));
+const PeaceBondPage = lazy(() => import('@/components/pages/PeaceBondPage'));
+const LiquorLicenceActPage = lazy(() => import('@/components/pages/LiquorLicenceActPage'));
+const MunicipalBylawPage = lazy(() => import('@/components/pages/MunicipalBylawPage'));
+const RegulatoryOffencesPage = lazy(() => import('@/components/pages/RegulatoryOffencesPage'));
+const BailHearingsPage = lazy(() => import('@/components/pages/BailHearingsPage'));
 
-  // Educational Guide Pages
-  { path: '/guides/how-to-fight-traffic-ticket', pageName: 'HowToFightTrafficTicketPage' },
-  { path: '/guides/ontario-tenant-rights', pageName: 'TenantRightsGuidePage' },
-  { path: '/guides/ontario-landlord-rights', pageName: 'LandlordRightsGuidePage' },
-  { path: '/guides/small-claims-court-process', pageName: 'SmallClaimsCourtGuidePage' },
-  { path: '/guides/paralegal-vs-lawyer', pageName: 'ParalegalVsLawyerPage' },
-  { path: '/guides/what-is-a-paralegal', pageName: 'WhatIsAParalegalPage' },
-  { path: '/guides/ontario-employment-rights', pageName: 'EmploymentRightsGuidePage' },
-  { path: '/guides/free-legal-resources', pageName: 'FreeLegalResourcesPage' },
-  { path: '/guides/what-to-do-when-sued', pageName: 'BeingSuedGuidePage' },
-  { path: '/guides/ltb-hearing-preparation', pageName: 'LTBHearingGuidePage' },
-  { path: '/guides/filing-human-rights-complaint', pageName: 'HumanRightsComplaintGuidePage' },
-  { path: '/guides/legal-deadlines-ontario', pageName: 'LegalDeadlinesGuidePage' },
+// Other Services
+const NotaryPublicPage = lazy(() => import('@/components/pages/NotaryPublicPage'));
+const CommissionerOfOathsPage = lazy(() => import('@/components/pages/CommissionerOfOathsPage'));
+const MediationServicesPage = lazy(() => import('@/components/pages/MediationServicesPage'));
+const SocialBenefitsTribunalPage = lazy(() => import('@/components/pages/SocialBenefitsTribunalPage'));
 
-  // Legal News
-  { path: '/legal-news', pageName: 'LegalNewsPage' },
-  { path: '/recent-decisions', pageName: 'LegalNewsPage' },
+// Location Pages
+const LondonParalegalPage = lazy(() => import('@/components/pages/LondonParalegalPage'));
+const StThomasParalegalPage = lazy(() => import('@/components/pages/StThomasParalegalPage'));
+const WoodstockParalegalPage = lazy(() => import('@/components/pages/WoodstockParalegalPage'));
+const StrathroyChathamParalegalPage = lazy(() => import('@/components/pages/StrathroyChathamParalegalPage'));
+const IngersollParalegalPage = lazy(() => import('@/components/pages/IngersollParalegalPage'));
+const TillsonburgParalegalPage = lazy(() => import('@/components/pages/TillsonburgParalegalPage'));
+const AylmerParalegalPage = lazy(() => import('@/components/pages/AylmerParalegalPage'));
+const KitchenerParalegalPage = lazy(() => import('@/components/pages/KitchenerParalegalPage'));
+const CambridgeParalegalPage = lazy(() => import('@/components/pages/CambridgeParalegalPage'));
+const WindsorParalegalPage = lazy(() => import('@/components/pages/WindsorParalegalPage'));
+const SarniaParalegalPage = lazy(() => import('@/components/pages/SarniaParalegalPage'));
+const ChathamKentParalegalPage = lazy(() => import('@/components/pages/ChathamKentParalegalPage'));
+const StratfordParalegalPage = lazy(() => import('@/components/pages/StratfordParalegalPage'));
+const GuelphParalegalPage = lazy(() => import('@/components/pages/GuelphParalegalPage'));
+const BrantfordParalegalPage = lazy(() => import('@/components/pages/BrantfordParalegalPage'));
+const NorfolkCountyParalegalPage = lazy(() => import('@/components/pages/NorfolkCountyParalegalPage'));
+const LeamingtonParalegalPage = lazy(() => import('@/components/pages/LeamingtonParalegalPage'));
+const HuronCountyParalegalPage = lazy(() => import('@/components/pages/HuronCountyParalegalPage'));
 
-  // Admin Pages
-  { path: '/admin/bookings', pageName: 'AdminBookingsPage' },
-  { path: '/admin/meeting-requests', pageName: 'AdminMeetingRequestsPage' },
-  { path: '/admin/messages', pageName: 'AdminMessagesPage' },
-  { path: '/admin/users', pageName: 'AdminUserManagementPage' },
-  { path: '/admin/users/:id', pageName: 'AdminUserDetailPage' },
-  { path: '/admin/grant', pageName: 'GrantAdminPage' },
-  { path: '/admin/upload-tokens', pageName: 'UploadTokenManagementPage' },
+// Educational Guide Pages
+const HowToFightTrafficTicketPage = lazy(() => import('@/components/pages/HowToFightTrafficTicketPage'));
+const TenantRightsGuidePage = lazy(() => import('@/components/pages/TenantRightsGuidePage'));
+const LandlordRightsGuidePage = lazy(() => import('@/components/pages/LandlordRightsGuidePage'));
+const SmallClaimsCourtGuidePage = lazy(() => import('@/components/pages/SmallClaimsCourtGuidePage'));
+const ParalegalVsLawyerPage = lazy(() => import('@/components/pages/ParalegalVsLawyerPage'));
+const WhatIsAParalegalPage = lazy(() => import('@/components/pages/WhatIsAParalegalPage'));
+const EmploymentRightsGuidePage = lazy(() => import('@/components/pages/EmploymentRightsGuidePage'));
+const FreeLegalResourcesPage = lazy(() => import('@/components/pages/FreeLegalResourcesPage'));
+const BeingSuedGuidePage = lazy(() => import('@/components/pages/BeingSuedGuidePage'));
+const LTBHearingGuidePage = lazy(() => import('@/components/pages/LTBHearingGuidePage'));
+const HumanRightsComplaintGuidePage = lazy(() => import('@/components/pages/HumanRightsComplaintGuidePage'));
+const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadlinesGuidePage'));
 
-  // Dashboard Pages
-  { path: '/dashboard', pageName: 'ClientDashboardPage' },
-  { path: '/dashboard/paralegal', pageName: 'ParalegalDashboardPage' },
-  { path: '/dashboard/meetings', pageName: 'MeetingDashboardPage' },
-  { path: '/dashboard/documents', pageName: 'DocumentWorkflowPage' },
+// Legal News
+const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
 
-  // Client Portal Pages
-  { path: '/booking', pageName: 'BookingPage' },
-  { path: '/intake', pageName: 'ClientIntakePage' },
-  { path: '/meeting-request', pageName: 'MeetingRequestPage' },
-  { path: '/upload/:token', pageName: 'PublicUploadPage' },
-];
+// Admin Pages
+const AdminBookingsPage = lazy(() => import('@/components/pages/AdminBookingsPage'));
+const AdminMeetingRequestsPage = lazy(() => import('@/components/pages/AdminMeetingRequestsPage'));
+const AdminMessagesPage = lazy(() => import('@/components/pages/AdminMessagesPage'));
+const AdminUserManagementPage = lazy(() => import('@/components/pages/AdminUserManagementPage'));
+const AdminUserDetailPage = lazy(() => import('@/components/pages/AdminUserDetailPage'));
+const GrantAdminPage = lazy(() => import('@/components/pages/GrantAdminPage'));
+const UploadTokenManagementPage = lazy(() => import('@/components/pages/UploadTokenManagementPage'));
+
+// Dashboard Pages
+const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
+const ParalegalDashboardPage = lazy(() => import('@/components/pages/ParalegalDashboardPage'));
+const MeetingDashboardPage = lazy(() => import('@/components/pages/MeetingDashboardPage'));
+const DocumentWorkflowPage = lazy(() => import('@/components/pages/DocumentWorkflowPage'));
+
+// Client Portal Pages
+const BookingPage = lazy(() => import('@/components/pages/BookingPage'));
+const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
+const MeetingRequestPage = lazy(() => import('@/components/pages/MeetingRequestPage'));
+const PublicUploadPage = lazy(() => import('@/components/pages/PublicUploadPage'));
+
+// ============================================================================
+// ROUTER COMPONENT
+// ============================================================================
 
 export default function Router() {
   useEffect(() => {
-    // Mark page as hydrated once Router mounts
     document.documentElement.classList.add('hydrated');
     document.body.classList.add('hydrated');
     console.log('[Router] Hydration markers added');
@@ -239,11 +221,181 @@ export default function Router() {
         <AutoSEO />
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            {/* Render all routes dynamically */}
-            {routeMap.map((route) => {
-              const Component = route.component || lazyLoadPage(route.pageName!);
-              return <Route key={route.path} path={route.path} element={<Component />} />;
-            })}
+            {/* Core Pages */}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            
+            {/* Auth Pages */}
+            <Route path="/signup" element={<ClientSignupPage />} />
+            <Route path="/login" element={<ClientLoginPage />} />
+
+            {/* Main Service Categories */}
+            <Route path="/services/small-claims" element={<SmallClaimsPage />} />
+            <Route path="/services/landlord-tenant" element={<LandlordTenantBoardPage />} />
+            <Route path="/services/traffic-tickets" element={<TrafficTicketsPage />} />
+            <Route path="/services/human-rights" element={<HumanRightsTribunalPage />} />
+            <Route path="/services/employment-issues" element={<EmploymentIssuesPage />} />
+            <Route path="/services/criminal-matters" element={<CriminalMattersPage />} />
+            <Route path="/services/provincial-offences" element={<ProvincialOffencesPage />} />
+
+            {/* Traffic Ticket Sub-pages */}
+            <Route path="/services/speeding-ticket-defence" element={<SpeedingTicketDefencePage />} />
+            <Route path="/services/careless-driving-defence" element={<CarelessDrivingDefencePage />} />
+            <Route path="/services/stunt-driving-defence" element={<StuntDrivingDefencePage />} />
+            <Route path="/services/distracted-driving" element={<DistractedDrivingDefencePage />} />
+            <Route path="/services/red-light-tickets" element={<RedLightDefencePage />} />
+            <Route path="/services/no-insurance-defence" element={<NoInsuranceDefencePage />} />
+            <Route path="/services/demerit-points-guide" element={<DemeritPointsGuidePage />} />
+            <Route path="/services/g1-g2-violations" element={<G1G2ViolationsPage />} />
+            <Route path="/services/commercial-vehicle-violations" element={<CommercialVehicleViolationsPage />} />
+            <Route path="/services/hov-lane-violations" element={<HOVLaneViolationsPage />} />
+            <Route path="/services/stop-sign-ticket" element={<StopSignTicketPage />} />
+            <Route path="/services/street-racing" element={<StreetRacingPage />} />
+            <Route path="/services/fail-to-yield" element={<FailToYieldPage />} />
+            <Route path="/services/unsafe-lane-change" element={<UnsafeLaneChangePage />} />
+            <Route path="/services/following-too-closely" element={<FollowingTooCloselyPage />} />
+            <Route path="/services/driving-while-suspended" element={<DrivingWhileSuspendedPage />} />
+            <Route path="/services/school-zone-speeding" element={<SchoolZoneSpeedingPage />} />
+            <Route path="/services/seatbelt-violations" element={<SeatbeltViolationsPage />} />
+
+            {/* Landlord & Tenant Board Sub-pages */}
+            <Route path="/services/landlord-services" element={<LandlordServicesPage />} />
+            <Route path="/services/tenant-services" element={<TenantServicesPage />} />
+            <Route path="/services/eviction-non-payment" element={<EvictionNonPaymentPage />} />
+            <Route path="/services/n12-personal-use-eviction" element={<N12PersonalUsePage />} />
+            <Route path="/services/n13-renovation-eviction" element={<N13RenovationEvictionPage />} />
+            <Route path="/services/above-guideline-increase" element={<AboveGuidelineIncreasePage />} />
+            <Route path="/services/maintenance-repairs" element={<MaintenanceRepairsPage />} />
+            <Route path="/services/bad-faith-eviction" element={<BadFaithEvictionPage />} />
+            <Route path="/services/rent-increase-guide" element={<RentIncreaseGuidePage />} />
+            <Route path="/services/illegal-lockout" element={<IllegalLockoutPage />} />
+            <Route path="/services/landlord-harassment" element={<HarassmentByLandlordPage />} />
+            <Route path="/services/rent-arrears-defence" element={<RentArrearsDefencePage />} />
+            <Route path="/services/subsidized-housing-eviction" element={<SubsidizedHousingPage />} />
+            <Route path="/services/roommate-disputes" element={<RoommateDisputesPage />} />
+            <Route path="/services/breaking-lease-early" element={<LeaseBreakingPage />} />
+            <Route path="/services/pet-disputes" element={<PetDisputesPage />} />
+            <Route path="/services/noise-complaints-defence" element={<NoiseComplaintsPage />} />
+            <Route path="/services/ltb-hearing-preparation" element={<LTBHearingPrepPage />} />
+            <Route path="/services/rent-reduction-applications" element={<RentReductionPage />} />
+            <Route path="/services/mobile-home-park-disputes" element={<MobileHomeParkPage />} />
+            <Route path="/services/superintendent-housing-rights" element={<SuperintendentIssuesPage />} />
+
+            {/* Small Claims Court Sub-pages */}
+            <Route path="/services/small-claims-process" element={<SmallClaimsProcessPage />} />
+            <Route path="/services/debt-collection" element={<DebtCollectionPage />} />
+            <Route path="/services/contract-disputes" element={<ContractDisputesPage />} />
+            <Route path="/services/judgement-enforcement" element={<JudgementEnforcementPage />} />
+            <Route path="/services/property-damage-claims" element={<PropertyDamageClaimsPage />} />
+            <Route path="/services/unpaid-invoices" element={<UnpaidInvoicesPage />} />
+            <Route path="/services/security-deposits" element={<SecurityDepositsPage />} />
+            <Route path="/services/consumer-disputes" element={<ConsumerDisputesPage />} />
+            <Route path="/services/personal-injury-claims" element={<PersonalInjuryClaimsPage />} />
+            <Route path="/services/home-improvement-disputes" element={<HomeImprovementDisputesPage />} />
+            <Route path="/services/vehicle-purchase-disputes" element={<VehiclePurchaseDisputesPage />} />
+            <Route path="/services/neighbour-disputes" element={<NeighbourDisputesPage />} />
+            <Route path="/services/return-of-property" element={<ReturnOfPropertyPage />} />
+            <Route path="/services/breach-of-warranty" element={<BreachOfWarrantyPage />} />
+            <Route path="/services/loan-recovery" element={<LoanRecoveryPage />} />
+            <Route path="/services/tenant-damage-claims" element={<TenantDamageClaimsPage />} />
+            <Route path="/services/wrongful-dismissal-claims" element={<WrongfulDismissalClaimsPage />} />
+            <Route path="/services/professional-negligence" element={<ProfessionalNegligencePage />} />
+            <Route path="/services/defamation-slander" element={<DefamationSlanderPage />} />
+
+            {/* Human Rights Tribunal Sub-pages */}
+            <Route path="/services/workplace-discrimination" element={<WorkplaceDiscriminationPage />} />
+            <Route path="/services/housing-discrimination" element={<HousingDiscriminationPage />} />
+            <Route path="/services/disability-accommodation" element={<DisabilityAccommodationPage />} />
+            <Route path="/services/age-discrimination" element={<AgeDiscriminationPage />} />
+            <Route path="/services/sexual-harassment" element={<SexualHarassmentPage />} />
+            <Route path="/services/reprisal-claims" element={<ReprisalClaimsPage />} />
+            <Route path="/services/service-discrimination" element={<ServiceDiscriminationPage />} />
+            <Route path="/services/pregnancy-discrimination" element={<PregnancyDiscriminationPage />} />
+
+            {/* Employment Sub-pages */}
+            <Route path="/services/wrongful-termination" element={<WrongfulTerminationPage />} />
+            <Route path="/services/severance-pay" element={<SeverancePayPage />} />
+            <Route path="/services/unpaid-wages" element={<UnpaidWagesPage />} />
+            <Route path="/services/constructive-dismissal" element={<ConstructiveDismissalPage />} />
+
+            {/* Criminal/POA Sub-pages */}
+            <Route path="/services/theft-under-5000" element={<TheftUnderPage />} />
+            <Route path="/services/mischief-under-5000" element={<MischiefUnderPage />} />
+            <Route path="/services/simple-assault" element={<SimpleAssaultPage />} />
+            <Route path="/services/trespass-property" element={<TrespassPropertyPage />} />
+            <Route path="/services/fail-to-comply" element={<FailToComplyPage />} />
+            <Route path="/services/peace-bond" element={<PeaceBondPage />} />
+            <Route path="/services/liquor-licence-act" element={<LiquorLicenceActPage />} />
+            <Route path="/services/municipal-bylaw" element={<MunicipalBylawPage />} />
+            <Route path="/services/regulatory-offences" element={<RegulatoryOffencesPage />} />
+            <Route path="/services/bail-hearings" element={<BailHearingsPage />} />
+
+            {/* Other Services */}
+            <Route path="/services/notary-public" element={<NotaryPublicPage />} />
+            <Route path="/services/commissioner-of-oaths" element={<CommissionerOfOathsPage />} />
+            <Route path="/services/mediation" element={<MediationServicesPage />} />
+            <Route path="/services/social-benefits-tribunal" element={<SocialBenefitsTribunalPage />} />
+
+            {/* Location Pages */}
+            <Route path="/london-paralegal" element={<LondonParalegalPage />} />
+            <Route path="/st-thomas-paralegal" element={<StThomasParalegalPage />} />
+            <Route path="/woodstock-paralegal" element={<WoodstockParalegalPage />} />
+            <Route path="/strathroy-chatham-paralegal" element={<StrathroyChathamParalegalPage />} />
+            <Route path="/ingersoll-paralegal" element={<IngersollParalegalPage />} />
+            <Route path="/tillsonburg-paralegal" element={<TillsonburgParalegalPage />} />
+            <Route path="/aylmer-paralegal" element={<AylmerParalegalPage />} />
+            <Route path="/locations/kitchener" element={<KitchenerParalegalPage />} />
+            <Route path="/locations/cambridge" element={<CambridgeParalegalPage />} />
+            <Route path="/locations/windsor" element={<WindsorParalegalPage />} />
+            <Route path="/locations/sarnia" element={<SarniaParalegalPage />} />
+            <Route path="/locations/chatham-kent" element={<ChathamKentParalegalPage />} />
+            <Route path="/locations/stratford" element={<StratfordParalegalPage />} />
+            <Route path="/locations/guelph" element={<GuelphParalegalPage />} />
+            <Route path="/locations/brantford" element={<BrantfordParalegalPage />} />
+            <Route path="/locations/norfolk-county" element={<NorfolkCountyParalegalPage />} />
+            <Route path="/locations/leamington" element={<LeamingtonParalegalPage />} />
+            <Route path="/locations/huron-county" element={<HuronCountyParalegalPage />} />
+
+            {/* Educational Guide Pages */}
+            <Route path="/guides/how-to-fight-traffic-ticket" element={<HowToFightTrafficTicketPage />} />
+            <Route path="/guides/ontario-tenant-rights" element={<TenantRightsGuidePage />} />
+            <Route path="/guides/ontario-landlord-rights" element={<LandlordRightsGuidePage />} />
+            <Route path="/guides/small-claims-court-process" element={<SmallClaimsCourtGuidePage />} />
+            <Route path="/guides/paralegal-vs-lawyer" element={<ParalegalVsLawyerPage />} />
+            <Route path="/guides/what-is-a-paralegal" element={<WhatIsAParalegalPage />} />
+            <Route path="/guides/ontario-employment-rights" element={<EmploymentRightsGuidePage />} />
+            <Route path="/guides/free-legal-resources" element={<FreeLegalResourcesPage />} />
+            <Route path="/guides/what-to-do-when-sued" element={<BeingSuedGuidePage />} />
+            <Route path="/guides/ltb-hearing-preparation" element={<LTBHearingGuidePage />} />
+            <Route path="/guides/filing-human-rights-complaint" element={<HumanRightsComplaintGuidePage />} />
+            <Route path="/guides/legal-deadlines-ontario" element={<LegalDeadlinesGuidePage />} />
+
+            {/* Legal News */}
+            <Route path="/legal-news" element={<LegalNewsPage />} />
+            <Route path="/recent-decisions" element={<LegalNewsPage />} />
+
+            {/* Admin Pages */}
+            <Route path="/admin/bookings" element={<AdminBookingsPage />} />
+            <Route path="/admin/meeting-requests" element={<AdminMeetingRequestsPage />} />
+            <Route path="/admin/messages" element={<AdminMessagesPage />} />
+            <Route path="/admin/users" element={<AdminUserManagementPage />} />
+            <Route path="/admin/users/:id" element={<AdminUserDetailPage />} />
+            <Route path="/admin/grant" element={<GrantAdminPage />} />
+            <Route path="/admin/upload-tokens" element={<UploadTokenManagementPage />} />
+
+            {/* Dashboard Pages */}
+            <Route path="/dashboard" element={<ClientDashboardPage />} />
+            <Route path="/dashboard/paralegal" element={<ParalegalDashboardPage />} />
+            <Route path="/dashboard/meetings" element={<MeetingDashboardPage />} />
+            <Route path="/dashboard/documents" element={<DocumentWorkflowPage />} />
+
+            {/* Client Portal Pages */}
+            <Route path="/booking" element={<BookingPage />} />
+            <Route path="/intake" element={<ClientIntakePage />} />
+            <Route path="/meeting-request" element={<MeetingRequestPage />} />
+            <Route path="/upload/:token" element={<PublicUploadPage />} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFoundPage />} />

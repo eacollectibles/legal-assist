@@ -111,9 +111,9 @@ export default function Header() {
                 {isAuthenticated || isAuthenticatedLocal ? (
                   <>
                     <Link 
-                      to="/client-dashboard" 
+                      to="/dashboard" 
                       className={`font-paragraph text-base transition-colors ${
-                        isActive('/client-dashboard') 
+                        isActive('/dashboard') 
                           ? 'text-primary font-semibold' 
                           : 'text-secondary hover:text-primary'
                       }`}
@@ -155,9 +155,9 @@ export default function Header() {
                 ) : (
                   <>
                     <Link 
-                      to="/client-signup" 
+                      to="/signup" 
                       className={`font-paragraph text-base transition-colors ${
-                        isActive('/client-signup') 
+                        isActive('/signup') 
                           ? 'text-primary font-semibold' 
                           : 'text-secondary hover:text-primary'
                       }`}
@@ -260,10 +260,10 @@ export default function Header() {
                 {isAuthenticated || isAuthenticatedLocal ? (
                   <>
                     <Link 
-                      to="/client-dashboard" 
+                      to="/dashboard" 
                       onClick={() => setMobileMenuOpen(false)}
                       className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                        isActive('/client-dashboard') 
+                        isActive('/dashboard') 
                           ? 'bg-primary text-primary-foreground font-semibold' 
                           : 'text-secondary hover:bg-pastelbeige'
                       }`}
@@ -302,10 +302,10 @@ export default function Header() {
                 ) : (
                   <>
                     <Link 
-                      to="/client-signup" 
+                      to="/signup" 
                       onClick={() => setMobileMenuOpen(false)}
                       className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                        isActive('/client-signup') 
+                        isActive('/signup') 
                           ? 'bg-primary text-primary-foreground font-semibold' 
                           : 'text-secondary hover:bg-pastelbeige'
                       }`}
