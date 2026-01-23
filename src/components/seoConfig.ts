@@ -3063,103 +3063,12 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   // ============================================
-  // ANSWER PAGES (SEO-FOCUSED INFORMATIONAL)
   // ============================================
   
-  '/guides/small-claims-what-to-expect': {
-    title: 'Small Claims Court Ontario: What to Expect | Step-by-Step Guide',
-    description: 'Complete guide to Small Claims Court in Ontario. Learn the process from filing to trial, what evidence you need, timelines, and costs. Free consultation with a licensed paralegal.',
-    keywords: 'small claims court ontario, what to expect small claims, small claims court process, ontario small claims guide',
-    schema: { type: 'Article', name: 'Small Claims Court in Ontario: What to Expect' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Guides', url: '/guides' },
-      { name: 'Small Claims Court: What to Expect', url: '/guides/small-claims-what-to-expect' }
-    ],
-    faqs: [
-      { question: 'How long does a Small Claims Court case take in Ontario?', answer: 'Most Small Claims Court cases take 6-12 months from filing to trial. Simple cases may resolve in 3-4 months, while complex cases can take 12-18 months.' },
-      { question: 'Do I need a lawyer for Small Claims Court?', answer: 'No, you can represent yourself or hire a licensed paralegal. Paralegals can represent clients in Small Claims Court for claims up to $35,000 (or $50,000 with consent).' },
-      { question: 'What is the maximum claim in Small Claims Court Ontario?', answer: 'The limit is $35,000, or $50,000 if the defendant consents to the higher jurisdiction.' },
-      { question: 'What happens at a Small Claims Court settlement conference?', answer: 'A mandatory meeting with a judge to explore settlement. Many cases settle here. The judge identifies issues and may give an opinion on the likely outcome.' },
-      { question: 'Can I appeal a Small Claims Court decision?', answer: 'Yes, you can appeal to Divisional Court within 30 days, but only on questions of law, not findings of fact.' }
-    ]
-  },
 
-  '/guides/enforce-judgment-ontario': {
-    title: 'How to Enforce a Judgment in Ontario | Garnishment, Seizure & Collection',
-    description: 'Step-by-step guide to collecting on a court judgment in Ontario. Learn about wage garnishment, bank account seizure, property liens, and examination hearings.',
-    keywords: 'enforce judgment ontario, garnishment ontario, judgment collection, writ of seizure, debtor examination',
-    schema: { type: 'Article', name: 'How to Enforce a Judgment in Ontario' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Guides', url: '/guides' },
-      { name: 'Enforce a Judgment', url: '/guides/enforce-judgment-ontario' }
-    ],
-    faqs: [
-      { question: 'How long is a judgment valid in Ontario?', answer: 'A Small Claims Court judgment is valid for 6 years (renewable). A Superior Court judgment is valid for 20 years. Interest continues to accrue on unpaid judgments.' },
-      { question: 'Can I garnish wages in Ontario?', answer: 'Yes, you can garnish up to 20% of gross wages (50% for family support). File a Notice of Garnishment and serve it on the employer.' },
-      { question: 'What if the debtor has no money?', answer: 'If the debtor is judgment proof, you may need to wait. The judgment remains valid and you can periodically check their financial status through examination hearings.' },
-      { question: 'How much does it cost to enforce a judgment?', answer: 'Court fees range from $25-$35 per filing. Bailiff fees for seizure can range from $200-$500+. These costs can be added to the judgment amount.' },
-      { question: 'Can I seize a debtor\'s house?', answer: 'You can register a Writ on the property title, preventing sale or refinancing without paying you. Forced sale is possible but complex.' }
-    ]
-  },
 
-  '/guides/ltb-forms-explained': {
-    title: 'LTB Forms Explained: N4, N5, L1, L2 | Ontario Landlord Tenant Board',
-    description: 'Simple explanation of Ontario LTB forms. Learn what N4, N5, L1, and L2 notices mean, your rights, timelines, and how to respond. Free consultation.',
-    keywords: 'N4 notice ontario, N5 notice, L1 application, L2 application, LTB forms explained, landlord tenant board forms',
-    schema: { type: 'Article', name: 'LTB Forms Explained: N4, N5, L1, L2' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Guides', url: '/guides' },
-      { name: 'LTB Forms Explained', url: '/guides/ltb-forms-explained' }
-    ],
-    faqs: [
-      { question: 'What is an N4 notice?', answer: 'An N4 is a Notice to End Tenancy for Non-Payment of Rent. It gives tenants 14 days to pay the rent owed and "void" the notice, stopping the eviction process.' },
-      { question: 'Can a landlord evict me with just an N4?', answer: 'No. An N4 is only a warning. The landlord must then file an L1 application with the LTB and wait for a hearing. Only an LTB order can lead to eviction.' },
-      { question: 'What is the difference between N4 and N5?', answer: 'N4 is for non-payment of rent. N5 is for other issues like damage or disturbing other tenants. N4 can be voided by paying. First N5 can be voided by stopping the behaviour.' },
-      { question: 'How long does an L1 eviction take?', answer: 'Currently 3-6 months due to LTB backlogs. If you pay rent owed before or at the hearing, the application can be dismissed.' },
-      { question: 'What defences can I raise to an L1?', answer: 'Common defences include improper service, calculation errors, already paid rent, landlord owes money for maintenance (set-off), or issues with how previous payments were applied.' }
-    ]
-  },
 
-  '/guides/poa-fight-vs-early-resolution': {
-    title: 'Provincial Offences: Fighting a Ticket vs Early Resolution | Ontario',
-    description: 'Should you fight your Ontario ticket at trial or take early resolution? Compare both options, understand the process, and learn which is right for your situation.',
-    keywords: 'early resolution ontario, fight traffic ticket, POA ticket options, provincial offences trial, ticket defence ontario',
-    schema: { type: 'Article', name: 'Provincial Offences: Fighting vs Early Resolution' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Guides', url: '/guides' },
-      { name: 'Fight vs Early Resolution', url: '/guides/poa-fight-vs-early-resolution' }
-    ],
-    faqs: [
-      { question: 'What is early resolution for a POA ticket?', answer: 'A meeting with a prosecutor before trial to negotiate. You can discuss reducing the charge, lowering the fine, or having it withdrawn. Most courts offer this option.' },
-      { question: 'Will a reduced charge go on my driving record?', answer: 'It depends. If reduced to a non-moving violation, it may not affect your record. If reduced to lesser speeding, it still appears but with fewer points.' },
-      { question: 'What happens if I fight and lose?', answer: 'You pay the original fine (sometimes increased), court costs, and receive full demerit points. The conviction appears on your record.' },
-      { question: 'How long to get a trial date?', answer: 'Typically 6-18 months depending on court location. During this time, your ticket remains pending with no conviction or insurance impact.' },
-      { question: 'Can I negotiate after requesting trial?', answer: 'Yes, most prosecutors will discuss resolution on the trial date. Many cases settle before trial begins.' }
-    ]
-  },
 
-  '/guides/lawyer-vs-paralegal': {
-    title: 'Lawyer vs Paralegal: Who Can Represent Me in Ontario?',
-    description: 'Understand the difference between lawyers and paralegals in Ontario. Learn what paralegals can do, when you need a lawyer, and how to choose the right legal professional.',
-    keywords: 'paralegal vs lawyer ontario, can paralegal represent me, what can paralegal do, licensed paralegal ontario, paralegal scope of practice',
-    schema: { type: 'Article', name: 'Lawyer vs Paralegal: Who Can Represent Me?' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Guides', url: '/guides' },
-      { name: 'Lawyer vs Paralegal', url: '/guides/lawyer-vs-paralegal' }
-    ],
-    faqs: [
-      { question: 'What is a paralegal in Ontario?', answer: 'A licensed legal professional regulated by the Law Society of Ontario who can represent clients in Small Claims Court, LTB, traffic court, and tribunals.' },
-      { question: 'Is a paralegal as good as a lawyer?', answer: 'Within their scope of practice, yes. Paralegals often have more experience in Small Claims, LTB, and traffic matters than general practice lawyers.' },
-      { question: 'How much cheaper is a paralegal?', answer: 'Typically 30-50% less than lawyers for comparable services. Traffic tickets: $300-500 vs $600-1000+. Small Claims: $750-1500 vs $2000-5000+.' },
-      { question: 'Can a paralegal represent me in criminal court?', answer: 'Only for minor regulatory offences under the Provincial Offences Act. True Criminal Code charges (theft, assault, impaired) require a lawyer.' },
-      { question: 'How do I verify a paralegal is licensed?', answer: 'Check the Law Society of Ontario directory at lso.ca. Enter their name to verify active license and good standing.' }
-    ]
-  },
 };
 
 // ============================================
