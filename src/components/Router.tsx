@@ -1,13 +1,13 @@
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, lazy, Suspense, ComponentType } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
 import { AutoSEO } from '@/components/AutoSEO';
 
-// Static imports for critical pages (fastest load)
+// Static imports for critical pages
 import HomePage from '@/components/pages/HomePage';
 import ContactPage from '@/components/pages/ContactPage';
 
-// Loading component for Suspense
+// Loading component
 function LoadingSpinner() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -16,7 +16,7 @@ function LoadingSpinner() {
   );
 }
 
-// Scroll to top on route change
+// Scroll to top
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -25,48 +25,27 @@ function ScrollToTop() {
   return null;
 }
 
-// Dynamic page imports with relative path for runtime resolution
-const pageModules = import.meta.glob('./pages/*.tsx') as Record<string, () => Promise<{ default: ComponentType }>>;
+// Simple dynamic loader with relative path
+const pageCache = new Map();
 
-// Cache for lazy components
-const componentCache = new Map<string, React.LazyExoticComponent<ComponentType>>();
-
-function getPageComponent(pageName: string): React.LazyExoticComponent<ComponentType> {
-  if (!componentCache.has(pageName)) {
-    // Find module using partial key match (relative path)
-    const moduleKey = Object.keys(pageModules).find(key => key.includes(`/${pageName}.tsx`));
-    
-    if (moduleKey) {
-      componentCache.set(pageName, lazy(pageModules[moduleKey]));
-    } else {
-      console.error(`Page not found: ${pageName}`);
-      // Return NotFoundPage as fallback
-      const notFoundKey = Object.keys(pageModules).find(key => key.includes('/NotFoundPage.tsx'));
-      if (notFoundKey) {
-        componentCache.set(pageName, lazy(pageModules[notFoundKey]));
-      } else {
-        componentCache.set(pageName, lazy(() => import('./pages/NotFoundPage')));
-      }
-    }
+function lazyLoadPage(pageName: string) {
+  if (!pageCache.has(pageName)) {
+    pageCache.set(
+      pageName,
+      lazy(() => import(`./pages/${pageName}.tsx`))
+    );
   }
-  return componentCache.get(pageName)!;
+  return pageCache.get(pageName);
 }
 
 // Route definitions
 const routes = [
-  // Core Pages (static)
   { path: '/', element: <HomePage /> },
   { path: '/contact', element: <ContactPage /> },
-  
-  // Core Pages (lazy)
   { path: '/about', page: 'AboutPage' },
   { path: '/services', page: 'ServicesPage' },
-  
-  // Auth Pages
   { path: '/signup', page: 'ClientSignupPage' },
   { path: '/login', page: 'ClientLoginPage' },
-
-  // Main Service Categories
   { path: '/services/small-claims', page: 'SmallClaimsPage' },
   { path: '/services/landlord-tenant', page: 'LandlordTenantBoardPage' },
   { path: '/services/traffic-tickets', page: 'TrafficTicketsPage' },
@@ -74,8 +53,6 @@ const routes = [
   { path: '/services/employment-issues', page: 'EmploymentIssuesPage' },
   { path: '/services/criminal-matters', page: 'CriminalMattersPage' },
   { path: '/services/provincial-offences', page: 'ProvincialOffencesPage' },
-
-  // Traffic Ticket Sub-pages
   { path: '/services/speeding-ticket-defence', page: 'SpeedingTicketDefencePage' },
   { path: '/services/careless-driving-defence', page: 'CarelessDrivingDefencePage' },
   { path: '/services/stunt-driving-defence', page: 'StuntDrivingDefencePage' },
@@ -94,8 +71,6 @@ const routes = [
   { path: '/services/driving-while-suspended', page: 'DrivingWhileSuspendedPage' },
   { path: '/services/school-zone-speeding', page: 'SchoolZoneSpeedingPage' },
   { path: '/services/seatbelt-violations', page: 'SeatbeltViolationsPage' },
-
-  // Landlord & Tenant Board Sub-pages
   { path: '/services/landlord-services', page: 'LandlordServicesPage' },
   { path: '/services/tenant-services', page: 'TenantServicesPage' },
   { path: '/services/eviction-non-payment', page: 'EvictionNonPaymentPage' },
@@ -117,8 +92,6 @@ const routes = [
   { path: '/services/rent-reduction-applications', page: 'RentReductionPage' },
   { path: '/services/mobile-home-park-disputes', page: 'MobileHomeParkPage' },
   { path: '/services/superintendent-housing-rights', page: 'SuperintendentIssuesPage' },
-
-  // Small Claims Court Sub-pages
   { path: '/services/small-claims-process', page: 'SmallClaimsProcessPage' },
   { path: '/services/debt-collection', page: 'DebtCollectionPage' },
   { path: '/services/contract-disputes', page: 'ContractDisputesPage' },
@@ -138,8 +111,6 @@ const routes = [
   { path: '/services/wrongful-dismissal-claims', page: 'WrongfulDismissalClaimsPage' },
   { path: '/services/professional-negligence', page: 'ProfessionalNegligencePage' },
   { path: '/services/defamation-slander', page: 'DefamationSlanderPage' },
-
-  // Human Rights Tribunal Sub-pages
   { path: '/services/workplace-discrimination', page: 'WorkplaceDiscriminationPage' },
   { path: '/services/housing-discrimination', page: 'HousingDiscriminationPage' },
   { path: '/services/disability-accommodation', page: 'DisabilityAccommodationPage' },
@@ -148,14 +119,10 @@ const routes = [
   { path: '/services/reprisal-claims', page: 'ReprisalClaimsPage' },
   { path: '/services/service-discrimination', page: 'ServiceDiscriminationPage' },
   { path: '/services/pregnancy-discrimination', page: 'PregnancyDiscriminationPage' },
-
-  // Employment Sub-pages
   { path: '/services/wrongful-termination', page: 'WrongfulTerminationPage' },
   { path: '/services/severance-pay', page: 'SeverancePayPage' },
   { path: '/services/unpaid-wages', page: 'UnpaidWagesPage' },
   { path: '/services/constructive-dismissal', page: 'ConstructiveDismissalPage' },
-
-  // Criminal/POA Sub-pages
   { path: '/services/theft-under-5000', page: 'TheftUnderPage' },
   { path: '/services/mischief-under-5000', page: 'MischiefUnderPage' },
   { path: '/services/simple-assault', page: 'SimpleAssaultPage' },
@@ -166,14 +133,10 @@ const routes = [
   { path: '/services/municipal-bylaw', page: 'MunicipalBylawPage' },
   { path: '/services/regulatory-offences', page: 'RegulatoryOffencesPage' },
   { path: '/services/bail-hearings', page: 'BailHearingsPage' },
-
-  // Other Services
   { path: '/services/notary-public', page: 'NotaryPublicPage' },
   { path: '/services/commissioner-of-oaths', page: 'CommissionerOfOathsPage' },
   { path: '/services/mediation', page: 'MediationServicesPage' },
   { path: '/services/social-benefits-tribunal', page: 'SocialBenefitsTribunalPage' },
-
-  // Location Pages
   { path: '/london-paralegal', page: 'LondonParalegalPage' },
   { path: '/st-thomas-paralegal', page: 'StThomasParalegalPage' },
   { path: '/woodstock-paralegal', page: 'WoodstockParalegalPage' },
@@ -192,8 +155,6 @@ const routes = [
   { path: '/locations/norfolk-county', page: 'NorfolkCountyParalegalPage' },
   { path: '/locations/leamington', page: 'LeamingtonParalegalPage' },
   { path: '/locations/huron-county', page: 'HuronCountyParalegalPage' },
-
-  // Educational Guide Pages
   { path: '/guides/how-to-fight-traffic-ticket', page: 'HowToFightTrafficTicketPage' },
   { path: '/guides/ontario-tenant-rights', page: 'TenantRightsGuidePage' },
   { path: '/guides/ontario-landlord-rights', page: 'LandlordRightsGuidePage' },
@@ -206,12 +167,8 @@ const routes = [
   { path: '/guides/ltb-hearing-preparation', page: 'LTBHearingGuidePage' },
   { path: '/guides/filing-human-rights-complaint', page: 'HumanRightsComplaintGuidePage' },
   { path: '/guides/legal-deadlines-ontario', page: 'LegalDeadlinesGuidePage' },
-
-  // Legal News
   { path: '/legal-news', page: 'LegalNewsPage' },
   { path: '/recent-decisions', page: 'LegalNewsPage' },
-
-  // Admin Pages
   { path: '/admin/bookings', page: 'AdminBookingsPage' },
   { path: '/admin/meeting-requests', page: 'AdminMeetingRequestsPage' },
   { path: '/admin/messages', page: 'AdminMessagesPage' },
@@ -219,14 +176,10 @@ const routes = [
   { path: '/admin/users/:id', page: 'AdminUserDetailPage' },
   { path: '/admin/grant', page: 'GrantAdminPage' },
   { path: '/admin/upload-tokens', page: 'UploadTokenManagementPage' },
-
-  // Dashboard Pages
   { path: '/dashboard', page: 'ClientDashboardPage' },
   { path: '/dashboard/paralegal', page: 'ParalegalDashboardPage' },
   { path: '/dashboard/meetings', page: 'MeetingDashboardPage' },
   { path: '/dashboard/documents', page: 'DocumentWorkflowPage' },
-
-  // Client Portal Pages
   { path: '/booking', page: 'BookingPage' },
   { path: '/intake', page: 'ClientIntakePage' },
   { path: '/meeting-request', page: 'MeetingRequestPage' },
@@ -237,7 +190,6 @@ export default function Router() {
   useEffect(() => {
     document.documentElement.classList.add('hydrated');
     document.body.classList.add('hydrated');
-    console.log('[Router] Hydration markers added');
   }, []);
 
   return (
@@ -251,11 +203,10 @@ export default function Router() {
               if (route.element) {
                 return <Route key={route.path} path={route.path} element={route.element} />;
               }
-              const PageComponent = getPageComponent(route.page!);
+              const PageComponent = lazyLoadPage(route.page!);
               return <Route key={route.path} path={route.path} element={<PageComponent />} />;
             })}
-            {/* 404 Catch-all */}
-            <Route path="*" element={(() => { const NotFound = getPageComponent('NotFoundPage'); return <NotFound />; })()} />
+            <Route path="*" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-2xl">Page Not Found</h1></div>} />
           </Routes>
         </Suspense>
       </MemberProvider>
