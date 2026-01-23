@@ -210,7 +210,7 @@ export default function ClientLoginPage() {
                       Remember me
                     </label>
                   </div>
-                  <a href="#" className="font-paragraph text-primary hover:underline text-sm">
+                  <a href="/contact" className="font-paragraph text-primary hover:underline text-sm">
                     Forgot password?
                   </a>
                 </div>
