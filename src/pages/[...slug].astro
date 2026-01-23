@@ -5,9 +5,9 @@
  * This file renders SEO meta tags on the server so Google sees them
  * when crawling. AutoSEO.tsx still runs client-side for SPA navigation.
  */
-import { Head } from "@/components/Head";
 import AppRouter from "@/components/Router";
 import { seoConfig, businessInfo, generateFAQSchema, generateBreadcrumbSchema } from "@/components/seoConfig";
+import { PHONE_TEL } from "@/lib/contact";
 import "@wix/wix-vibe-plugins/plugins-vars.css";
 import "@wix/wix-vibe-plugins/plugins-theme.css";
 import "@/styles/global.css";
@@ -40,6 +40,93 @@ const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0
 const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0 
   ? generateBreadcrumbSchema(pageConfig.breadcrumbs) 
   : null;
+
+// Schema.org structured data
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
+      "@id": "https://legalassist.london/#organization",
+      "name": "LegalAssist Paralegal Services",
+      "alternateName": "LegalAssist",
+      "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
+      "url": "https://legalassist.london",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://legalassist.london/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://legalassist.london/og-image.jpg",
+      "telephone": PHONE_TEL,
+      "email": "info@legalassist.london",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "P.O Box 1000",
+        "addressLocality": "London",
+        "addressRegion": "ON",
+        "postalCode": "N6A 2L1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 42.9849,
+        "longitude": -81.2453
+      },
+      "areaServed": [
+        { "@type": "City", "name": "London" },
+        { "@type": "AdministrativeArea", "name": "Middlesex County" },
+        { "@type": "AdministrativeArea", "name": "Elgin County" },
+        { "@type": "AdministrativeArea", "name": "Oxford County" },
+        { "@type": "AdministrativeArea", "name": "Southwestern Ontario" },
+        { "@type": "AdministrativeArea", "name": "Ontario" }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:00",
+          "closes": "14:00"
+        }
+      ],
+      "priceRange": "$",
+      "currenciesAccepted": "CAD",
+      "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Interac e-Transfer"],
+      "knowsLanguage": ["en", "English"],
+      "slogan": "Affordable Legal Help When You Need It Most",
+      "foundingDate": "2024",
+      "legalName": "LegalAssist Paralegal Services"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://legalassist.london/#website",
+      "url": "https://legalassist.london",
+      "name": "LegalAssist Paralegal Services",
+      "description": "Licensed paralegal services in London, Ontario",
+      "publisher": {
+        "@id": "https://legalassist.london/#organization"
+      },
+      "inLanguage": "en-CA"
+    },
+    {
+      "@type": "ContactPoint",
+      "@id": "https://legalassist.london/#contact",
+      "telephone": PHONE_TEL,
+      "contactType": "customer service",
+      "availableLanguage": "English",
+      "areaServed": "CA-ON"
+    }
+  ]
+};
+
+const currentYear = new Date().getFullYear();
 ---
 
 <html lang="en" class="w-full h-full">
@@ -47,6 +134,7 @@ const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length
     <!-- Basic charset and viewport -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     
     <!-- SERVER-SIDE SEO: Title -->
     <title>{pageConfig.title}</title>
@@ -63,6 +151,12 @@ const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length
     <!-- SERVER-SIDE SEO: Robots directive -->
     <meta name="robots" content={isPrivateRoute ? 'noindex, nofollow' : 'index, follow'} />
     
+    <!-- Business Meta -->
+    <meta name="author" content="LegalAssist Paralegal Services" />
+    <meta name="publisher" content="LegalAssist Paralegal Services" />
+    <meta name="copyright" content={`© ${currentYear} LegalAssist Paralegal Services`} />
+    <meta name="language" content="en-CA" />
+    
     <!-- SERVER-SIDE SEO: Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="LegalAssist Paralegal Services" />
@@ -73,6 +167,7 @@ const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length
     <meta property="og:image" content={`${businessInfo.url}/og-image.jpg`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="LegalAssist Paralegal Services - London, Ontario" />
     
     <!-- SERVER-SIDE SEO: Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -86,8 +181,36 @@ const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length
     <meta name="geo.position" content="42.9849;-81.2453" />
     <meta name="ICBM" content="42.9849, -81.2453" />
     
-    <!-- Global Head elements (schema, fonts, verification) -->
-    <Head />
+    <!-- Theme and PWA -->
+    <meta name="theme-color" content="#B94A1F" />
+    <meta name="msapplication-TileColor" content="#B94A1F" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LegalAssist" />
+    <meta name="application-name" content="LegalAssist" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Security -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    <!-- Performance - Preconnect -->
+    <link rel="dns-prefetch" href="https://static.wixstatic.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://static.parastorage.com" crossOrigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+      {JSON.stringify(schemaData)}
+    </script>
     
     <!-- SERVER-SIDE SEO: FAQ Schema if present -->
     {faqSchema && (
