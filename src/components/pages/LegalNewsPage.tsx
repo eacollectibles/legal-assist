@@ -38,8 +38,8 @@ const FILTER_OPTIONS: { value: PracticeArea | 'all'; label: string }[] = [
 
 // Internal link mapping for practice areas
 const PRACTICE_AREA_LINKS: Record<PracticeArea, string> = {
-  'landlord-tenant': '/services/landlord-tenant-board',
-  'human-rights': '/services/human-rights-tribunal',
+  'landlord-tenant': '/services/landlord-tenant',
+  'human-rights': '/services/human-rights',
   'traffic': '/services/traffic-tickets',
   'small-claims': '/services/small-claims',
   'provincial-offences': '/services/provincial-offences',

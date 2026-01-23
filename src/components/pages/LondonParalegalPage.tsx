@@ -52,7 +52,7 @@ export default function LondonParalegalPage() {
               <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </Link>
 
-            <Link to="/services/landlord-tenant-board" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
+            <Link to="/services/landlord-tenant" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Home className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Landlord &amp; Tenant Board</h3>
               <p className="font-paragraph text-foreground/70 mb-4">Evictions, rent disputes, maintenance issues, and LTB hearings for London landlords and tenants.</p>
@@ -66,7 +66,7 @@ export default function LondonParalegalPage() {
               <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </Link>
 
-            <Link to="/services/human-rights-tribunal" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
+            <Link to="/services/human-rights" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Users className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Human Rights Tribunal</h3>
               <p className="font-paragraph text-foreground/70 mb-4">Discrimination complaints for employment, housing, and services under the Ontario Human Rights Code.</p>

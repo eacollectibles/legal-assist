@@ -14,12 +14,12 @@ export default function TenantServicesPage() {
   }, []);
 
   const services = [
-    { title: 'Eviction Defence', description: 'Fight wrongful eviction notices and applications. We represent you at LTB hearings.', link: '/services/landlord-tenant-board' },
-    { title: 'Illegal Rent Increases', description: 'Challenge rent increases above the guideline or improper rent increase notices.', link: '/services/landlord-tenant-board' },
-    { title: 'Maintenance & Repairs (T6)', description: 'Applications for rent reduction when landlords fail to maintain the property.', link: '/services/landlord-tenant-board' },
-    { title: 'Harassment & Privacy', description: 'Protection from landlord harassment, illegal entry, and privacy violations.', link: '/services/landlord-tenant-board' },
-    { title: 'Bad Faith Evictions', description: 'Compensation claims when landlords evict in bad faith (N12/N13 abuse).', link: '/services/landlord-tenant-board' },
-    { title: 'Ending Your Tenancy', description: 'Proper procedures for ending your tenancy and recovering your deposit.', link: '/services/landlord-tenant-board' },
+    { title: 'Eviction Defence', description: 'Fight wrongful eviction notices and applications. We represent you at LTB hearings.', link: '/services/landlord-tenant' },
+    { title: 'Illegal Rent Increases', description: 'Challenge rent increases above the guideline or improper rent increase notices.', link: '/services/landlord-tenant' },
+    { title: 'Maintenance & Repairs (T6)', description: 'Applications for rent reduction when landlords fail to maintain the property.', link: '/services/landlord-tenant' },
+    { title: 'Harassment & Privacy', description: 'Protection from landlord harassment, illegal entry, and privacy violations.', link: '/services/landlord-tenant' },
+    { title: 'Bad Faith Evictions', description: 'Compensation claims when landlords evict in bad faith (N12/N13 abuse).', link: '/services/landlord-tenant' },
+    { title: 'Ending Your Tenancy', description: 'Proper procedures for ending your tenancy and recovering your deposit.', link: '/services/landlord-tenant' },
   ];
 
   return (

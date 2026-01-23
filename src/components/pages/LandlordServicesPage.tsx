@@ -15,11 +15,11 @@ export default function LandlordServicesPage() {
 
   const services = [
     { title: 'Non-Payment of Rent (N4)', description: 'Eviction applications when tenants fail to pay rent. We handle the entire process from notice to enforcement.', link: '/services/eviction-non-payment' },
-    { title: 'Property Damage & Disturbance (N5)', description: 'Applications for substantial interference, damage to property, or safety concerns.', link: '/services/landlord-tenant-board' },
-    { title: 'Illegal Activity (N6/N7)', description: 'Evictions for illegal acts, misrepresentation, or serious safety issues.', link: '/services/landlord-tenant-board' },
-    { title: 'End of Tenancy (N12/N13)', description: 'Personal use, purchaser use, or renovation/demolition evictions.', link: '/services/landlord-tenant-board' },
-    { title: 'Above Guideline Increases', description: 'Applications for rent increases above the annual guideline for capital expenditures.', link: '/services/landlord-tenant-board' },
-    { title: 'LTB Hearing Representation', description: 'Full representation at Landlord and Tenant Board hearings in person or virtual.', link: '/services/landlord-tenant-board' },
+    { title: 'Property Damage & Disturbance (N5)', description: 'Applications for substantial interference, damage to property, or safety concerns.', link: '/services/landlord-tenant' },
+    { title: 'Illegal Activity (N6/N7)', description: 'Evictions for illegal acts, misrepresentation, or serious safety issues.', link: '/services/landlord-tenant' },
+    { title: 'End of Tenancy (N12/N13)', description: 'Personal use, purchaser use, or renovation/demolition evictions.', link: '/services/landlord-tenant' },
+    { title: 'Above Guideline Increases', description: 'Applications for rent increases above the annual guideline for capital expenditures.', link: '/services/landlord-tenant' },
+    { title: 'LTB Hearing Representation', description: 'Full representation at Landlord and Tenant Board hearings in person or virtual.', link: '/services/landlord-tenant' },
   ];
 
   return (

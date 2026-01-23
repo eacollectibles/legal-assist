@@ -41,7 +41,7 @@ export default function StrathroyChathamParalegalPage() {
               <p className="font-paragraph text-foreground/70">Claims up to $50,000 for debt recovery, contract disputes, and property damage.</p>
             </Link>
 
-            <Link to="/services/landlord-tenant-board" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
+            <Link to="/services/landlord-tenant" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
               <Home className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-2">Landlord &amp; Tenant Board</h3>
               <p className="font-paragraph text-foreground/70">Evictions, rent disputes, maintenance issues, and LTB hearings.</p>

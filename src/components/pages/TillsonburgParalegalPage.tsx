@@ -41,9 +41,9 @@ export default function TillsonburgParalegalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: Scale, title: 'Small Claims Court', desc: 'Claims up to $50,000 for debt recovery, contract disputes, and property damage.', link: '/services/small-claims' },
-              { icon: Home, title: 'Landlord & Tenant Board', desc: 'Evictions, rent disputes, maintenance issues, and LTB hearings.', link: '/services/landlord-tenant-board' },
+              { icon: Home, title: 'Landlord & Tenant Board', desc: 'Evictions, rent disputes, maintenance issues, and LTB hearings.', link: '/services/landlord-tenant' },
               { icon: Car, title: 'Traffic Tickets', desc: 'Speeding, careless driving, stunt driving, and Highway Traffic Act offences.', link: '/services/traffic-tickets' },
-              { icon: Users, title: 'Human Rights Tribunal', desc: 'Discrimination complaints for employment, housing, and services.', link: '/services/human-rights-tribunal' },
+              { icon: Users, title: 'Human Rights Tribunal', desc: 'Discrimination complaints for employment, housing, and services.', link: '/services/human-rights' },
             ].map((service, index) => (
               <Link key={index} to={service.link} className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
                 <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><service.icon className="w-6 h-6" /></div>
