@@ -3,11 +3,31 @@ import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
 import { AutoSEO } from '@/components/AutoSEO';
 
-// Static imports for critical pages
+// Main Pages - Keep HomePage and ContactPage as static imports
 import HomePage from '@/components/pages/HomePage';
 import ContactPage from '@/components/pages/ContactPage';
 
-// Loading component
+// Lazy load critical pages only
+const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
+const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
+const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
+const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
+const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
+
+// Dynamic page loader - loads pages on demand to reduce initial bundle
+const pageCache = new Map();
+
+function lazyLoadPage(pageName: string) {
+  if (!pageCache.has(pageName)) {
+    pageCache.set(
+      pageName,
+      lazy(() => import(`@/components/pages/${pageName}.tsx`))
+    );
+  }
+  return pageCache.get(pageName);
+}
+
+// Loading component for Suspense
 function LoadingSpinner() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -16,7 +36,7 @@ function LoadingSpinner() {
   );
 }
 
-// Scroll to top
+// Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -25,171 +45,191 @@ function ScrollToTop() {
   return null;
 }
 
-// Simple dynamic loader with relative path
-const pageCache = new Map();
+// Route mapping for dynamic loading
+const routeMap = [
+  // Core Pages
+  { path: '/', component: HomePage, static: true },
+  { path: '/contact', component: ContactPage, static: true },
+  { path: '/about', component: AboutPage },
+  { path: '/services', component: ServicesPage },
+  
+  // Auth Pages
+  { path: '/signup', component: ClientSignupPage },
+  { path: '/login', component: ClientLoginPage },
 
-function lazyLoadPage(pageName: string) {
-  if (!pageCache.has(pageName)) {
-    pageCache.set(
-      pageName,
-      lazy(() => import(`./pages/${pageName}.tsx`))
-    );
-  }
-  return pageCache.get(pageName);
-}
+  // Main Service Categories
+  { path: '/services/small-claims', pageName: 'SmallClaimsPage' },
+  { path: '/services/landlord-tenant', pageName: 'LandlordTenantBoardPage' },
+  { path: '/services/traffic-tickets', pageName: 'TrafficTicketsPage' },
+  { path: '/services/human-rights', pageName: 'HumanRightsTribunalPage' },
+  { path: '/services/employment-issues', pageName: 'EmploymentIssuesPage' },
+  { path: '/services/criminal-matters', pageName: 'CriminalMattersPage' },
+  { path: '/services/provincial-offences', pageName: 'ProvincialOffencesPage' },
 
-// Route definitions
-const routes = [
-  { path: '/', element: <HomePage /> },
-  { path: '/contact', element: <ContactPage /> },
-  { path: '/about', page: 'AboutPage' },
-  { path: '/services', page: 'ServicesPage' },
-  { path: '/signup', page: 'ClientSignupPage' },
-  { path: '/login', page: 'ClientLoginPage' },
-  { path: '/services/small-claims', page: 'SmallClaimsPage' },
-  { path: '/services/landlord-tenant', page: 'LandlordTenantBoardPage' },
-  { path: '/services/traffic-tickets', page: 'TrafficTicketsPage' },
-  { path: '/services/human-rights', page: 'HumanRightsTribunalPage' },
-  { path: '/services/employment-issues', page: 'EmploymentIssuesPage' },
-  { path: '/services/criminal-matters', page: 'CriminalMattersPage' },
-  { path: '/services/provincial-offences', page: 'ProvincialOffencesPage' },
-  { path: '/services/speeding-ticket-defence', page: 'SpeedingTicketDefencePage' },
-  { path: '/services/careless-driving-defence', page: 'CarelessDrivingDefencePage' },
-  { path: '/services/stunt-driving-defence', page: 'StuntDrivingDefencePage' },
-  { path: '/services/distracted-driving', page: 'DistractedDrivingDefencePage' },
-  { path: '/services/red-light-tickets', page: 'RedLightDefencePage' },
-  { path: '/services/no-insurance-defence', page: 'NoInsuranceDefencePage' },
-  { path: '/services/demerit-points-guide', page: 'DemeritPointsGuidePage' },
-  { path: '/services/g1-g2-violations', page: 'G1G2ViolationsPage' },
-  { path: '/services/commercial-vehicle-violations', page: 'CommercialVehicleViolationsPage' },
-  { path: '/services/hov-lane-violations', page: 'HOVLaneViolationsPage' },
-  { path: '/services/stop-sign-ticket', page: 'StopSignTicketPage' },
-  { path: '/services/street-racing', page: 'StreetRacingPage' },
-  { path: '/services/fail-to-yield', page: 'FailToYieldPage' },
-  { path: '/services/unsafe-lane-change', page: 'UnsafeLaneChangePage' },
-  { path: '/services/following-too-closely', page: 'FollowingTooCloselyPage' },
-  { path: '/services/driving-while-suspended', page: 'DrivingWhileSuspendedPage' },
-  { path: '/services/school-zone-speeding', page: 'SchoolZoneSpeedingPage' },
-  { path: '/services/seatbelt-violations', page: 'SeatbeltViolationsPage' },
-  { path: '/services/landlord-services', page: 'LandlordServicesPage' },
-  { path: '/services/tenant-services', page: 'TenantServicesPage' },
-  { path: '/services/eviction-non-payment', page: 'EvictionNonPaymentPage' },
-  { path: '/services/n12-personal-use-eviction', page: 'N12PersonalUsePage' },
-  { path: '/services/n13-renovation-eviction', page: 'N13RenovationEvictionPage' },
-  { path: '/services/above-guideline-increase', page: 'AboveGuidelineIncreasePage' },
-  { path: '/services/maintenance-repairs', page: 'MaintenanceRepairsPage' },
-  { path: '/services/bad-faith-eviction', page: 'BadFaithEvictionPage' },
-  { path: '/services/rent-increase-guide', page: 'RentIncreaseGuidePage' },
-  { path: '/services/illegal-lockout', page: 'IllegalLockoutPage' },
-  { path: '/services/landlord-harassment', page: 'HarassmentByLandlordPage' },
-  { path: '/services/rent-arrears-defence', page: 'RentArrearsDefencePage' },
-  { path: '/services/subsidized-housing-eviction', page: 'SubsidizedHousingPage' },
-  { path: '/services/roommate-disputes', page: 'RoommateDisputesPage' },
-  { path: '/services/breaking-lease-early', page: 'LeaseBreakingPage' },
-  { path: '/services/pet-disputes', page: 'PetDisputesPage' },
-  { path: '/services/noise-complaints-defence', page: 'NoiseComplaintsPage' },
-  { path: '/services/ltb-hearing-preparation', page: 'LTBHearingPrepPage' },
-  { path: '/services/rent-reduction-applications', page: 'RentReductionPage' },
-  { path: '/services/mobile-home-park-disputes', page: 'MobileHomeParkPage' },
-  { path: '/services/superintendent-housing-rights', page: 'SuperintendentIssuesPage' },
-  { path: '/services/small-claims-process', page: 'SmallClaimsProcessPage' },
-  { path: '/services/debt-collection', page: 'DebtCollectionPage' },
-  { path: '/services/contract-disputes', page: 'ContractDisputesPage' },
-  { path: '/services/judgement-enforcement', page: 'JudgementEnforcementPage' },
-  { path: '/services/property-damage-claims', page: 'PropertyDamageClaimsPage' },
-  { path: '/services/unpaid-invoices', page: 'UnpaidInvoicesPage' },
-  { path: '/services/security-deposits', page: 'SecurityDepositsPage' },
-  { path: '/services/consumer-disputes', page: 'ConsumerDisputesPage' },
-  { path: '/services/personal-injury-claims', page: 'PersonalInjuryClaimsPage' },
-  { path: '/services/home-improvement-disputes', page: 'HomeImprovementDisputesPage' },
-  { path: '/services/vehicle-purchase-disputes', page: 'VehiclePurchaseDisputesPage' },
-  { path: '/services/neighbour-disputes', page: 'NeighbourDisputesPage' },
-  { path: '/services/return-of-property', page: 'ReturnOfPropertyPage' },
-  { path: '/services/breach-of-warranty', page: 'BreachOfWarrantyPage' },
-  { path: '/services/loan-recovery', page: 'LoanRecoveryPage' },
-  { path: '/services/tenant-damage-claims', page: 'TenantDamageClaimsPage' },
-  { path: '/services/wrongful-dismissal-claims', page: 'WrongfulDismissalClaimsPage' },
-  { path: '/services/professional-negligence', page: 'ProfessionalNegligencePage' },
-  { path: '/services/defamation-slander', page: 'DefamationSlanderPage' },
-  { path: '/services/workplace-discrimination', page: 'WorkplaceDiscriminationPage' },
-  { path: '/services/housing-discrimination', page: 'HousingDiscriminationPage' },
-  { path: '/services/disability-accommodation', page: 'DisabilityAccommodationPage' },
-  { path: '/services/age-discrimination', page: 'AgeDiscriminationPage' },
-  { path: '/services/sexual-harassment', page: 'SexualHarassmentPage' },
-  { path: '/services/reprisal-claims', page: 'ReprisalClaimsPage' },
-  { path: '/services/service-discrimination', page: 'ServiceDiscriminationPage' },
-  { path: '/services/pregnancy-discrimination', page: 'PregnancyDiscriminationPage' },
-  { path: '/services/wrongful-termination', page: 'WrongfulTerminationPage' },
-  { path: '/services/severance-pay', page: 'SeverancePayPage' },
-  { path: '/services/unpaid-wages', page: 'UnpaidWagesPage' },
-  { path: '/services/constructive-dismissal', page: 'ConstructiveDismissalPage' },
-  { path: '/services/theft-under-5000', page: 'TheftUnderPage' },
-  { path: '/services/mischief-under-5000', page: 'MischiefUnderPage' },
-  { path: '/services/simple-assault', page: 'SimpleAssaultPage' },
-  { path: '/services/trespass-property', page: 'TrespassPropertyPage' },
-  { path: '/services/fail-to-comply', page: 'FailToComplyPage' },
-  { path: '/services/peace-bond', page: 'PeaceBondPage' },
-  { path: '/services/liquor-licence-act', page: 'LiquorLicenceActPage' },
-  { path: '/services/municipal-bylaw', page: 'MunicipalBylawPage' },
-  { path: '/services/regulatory-offences', page: 'RegulatoryOffencesPage' },
-  { path: '/services/bail-hearings', page: 'BailHearingsPage' },
-  { path: '/services/notary-public', page: 'NotaryPublicPage' },
-  { path: '/services/commissioner-of-oaths', page: 'CommissionerOfOathsPage' },
-  { path: '/services/mediation', page: 'MediationServicesPage' },
-  { path: '/services/social-benefits-tribunal', page: 'SocialBenefitsTribunalPage' },
-  { path: '/london-paralegal', page: 'LondonParalegalPage' },
-  { path: '/st-thomas-paralegal', page: 'StThomasParalegalPage' },
-  { path: '/woodstock-paralegal', page: 'WoodstockParalegalPage' },
-  { path: '/strathroy-chatham-paralegal', page: 'StrathroyChathamParalegalPage' },
-  { path: '/ingersoll-paralegal', page: 'IngersollParalegalPage' },
-  { path: '/tillsonburg-paralegal', page: 'TillsonburgParalegalPage' },
-  { path: '/aylmer-paralegal', page: 'AylmerParalegalPage' },
-  { path: '/locations/kitchener', page: 'KitchenerParalegalPage' },
-  { path: '/locations/cambridge', page: 'CambridgeParalegalPage' },
-  { path: '/locations/windsor', page: 'WindsorParalegalPage' },
-  { path: '/locations/sarnia', page: 'SarniaParalegalPage' },
-  { path: '/locations/chatham-kent', page: 'ChathamKentParalegalPage' },
-  { path: '/locations/stratford', page: 'StratfordParalegalPage' },
-  { path: '/locations/guelph', page: 'GuelphParalegalPage' },
-  { path: '/locations/brantford', page: 'BrantfordParalegalPage' },
-  { path: '/locations/norfolk-county', page: 'NorfolkCountyParalegalPage' },
-  { path: '/locations/leamington', page: 'LeamingtonParalegalPage' },
-  { path: '/locations/huron-county', page: 'HuronCountyParalegalPage' },
-  { path: '/guides/how-to-fight-traffic-ticket', page: 'HowToFightTrafficTicketPage' },
-  { path: '/guides/ontario-tenant-rights', page: 'TenantRightsGuidePage' },
-  { path: '/guides/ontario-landlord-rights', page: 'LandlordRightsGuidePage' },
-  { path: '/guides/small-claims-court-process', page: 'SmallClaimsCourtGuidePage' },
-  { path: '/guides/paralegal-vs-lawyer', page: 'ParalegalVsLawyerPage' },
-  { path: '/guides/what-is-a-paralegal', page: 'WhatIsAParalegalPage' },
-  { path: '/guides/ontario-employment-rights', page: 'EmploymentRightsGuidePage' },
-  { path: '/guides/free-legal-resources', page: 'FreeLegalResourcesPage' },
-  { path: '/guides/what-to-do-when-sued', page: 'BeingSuedGuidePage' },
-  { path: '/guides/ltb-hearing-preparation', page: 'LTBHearingGuidePage' },
-  { path: '/guides/filing-human-rights-complaint', page: 'HumanRightsComplaintGuidePage' },
-  { path: '/guides/legal-deadlines-ontario', page: 'LegalDeadlinesGuidePage' },
-  { path: '/legal-news', page: 'LegalNewsPage' },
-  { path: '/recent-decisions', page: 'LegalNewsPage' },
-  { path: '/admin/bookings', page: 'AdminBookingsPage' },
-  { path: '/admin/meeting-requests', page: 'AdminMeetingRequestsPage' },
-  { path: '/admin/messages', page: 'AdminMessagesPage' },
-  { path: '/admin/users', page: 'AdminUserManagementPage' },
-  { path: '/admin/users/:id', page: 'AdminUserDetailPage' },
-  { path: '/admin/grant', page: 'GrantAdminPage' },
-  { path: '/admin/upload-tokens', page: 'UploadTokenManagementPage' },
-  { path: '/dashboard', page: 'ClientDashboardPage' },
-  { path: '/dashboard/paralegal', page: 'ParalegalDashboardPage' },
-  { path: '/dashboard/meetings', page: 'MeetingDashboardPage' },
-  { path: '/dashboard/documents', page: 'DocumentWorkflowPage' },
-  { path: '/booking', page: 'BookingPage' },
-  { path: '/intake', page: 'ClientIntakePage' },
-  { path: '/meeting-request', page: 'MeetingRequestPage' },
-  { path: '/upload/:token', page: 'PublicUploadPage' },
+  // Traffic Ticket Sub-pages
+  { path: '/services/speeding-ticket-defence', pageName: 'SpeedingTicketDefencePage' },
+  { path: '/services/careless-driving-defence', pageName: 'CarelessDrivingDefencePage' },
+  { path: '/services/stunt-driving-defence', pageName: 'StuntDrivingDefencePage' },
+  { path: '/services/distracted-driving', pageName: 'DistractedDrivingDefencePage' },
+  { path: '/services/red-light-tickets', pageName: 'RedLightDefencePage' },
+  { path: '/services/no-insurance-defence', pageName: 'NoInsuranceDefencePage' },
+  { path: '/services/demerit-points-guide', pageName: 'DemeritPointsGuidePage' },
+  { path: '/services/g1-g2-violations', pageName: 'G1G2ViolationsPage' },
+  { path: '/services/commercial-vehicle-violations', pageName: 'CommercialVehicleViolationsPage' },
+  { path: '/services/hov-lane-violations', pageName: 'HOVLaneViolationsPage' },
+  { path: '/services/stop-sign-ticket', pageName: 'StopSignTicketPage' },
+  { path: '/services/street-racing', pageName: 'StreetRacingPage' },
+  { path: '/services/fail-to-yield', pageName: 'FailToYieldPage' },
+  { path: '/services/unsafe-lane-change', pageName: 'UnsafeLaneChangePage' },
+  { path: '/services/following-too-closely', pageName: 'FollowingTooCloselyPage' },
+  { path: '/services/driving-while-suspended', pageName: 'DrivingWhileSuspendedPage' },
+  { path: '/services/school-zone-speeding', pageName: 'SchoolZoneSpeedingPage' },
+  { path: '/services/seatbelt-violations', pageName: 'SeatbeltViolationsPage' },
+
+  // Landlord & Tenant Board Sub-pages
+  { path: '/services/landlord-services', pageName: 'LandlordServicesPage' },
+  { path: '/services/tenant-services', pageName: 'TenantServicesPage' },
+  { path: '/services/eviction-non-payment', pageName: 'EvictionNonPaymentPage' },
+  { path: '/services/n12-personal-use-eviction', pageName: 'N12PersonalUsePage' },
+  { path: '/services/n13-renovation-eviction', pageName: 'N13RenovationEvictionPage' },
+  { path: '/services/above-guideline-increase', pageName: 'AboveGuidelineIncreasePage' },
+  { path: '/services/maintenance-repairs', pageName: 'MaintenanceRepairsPage' },
+  { path: '/services/bad-faith-eviction', pageName: 'BadFaithEvictionPage' },
+  { path: '/services/rent-increase-guide', pageName: 'RentIncreaseGuidePage' },
+  { path: '/services/illegal-lockout', pageName: 'IllegalLockoutPage' },
+  { path: '/services/landlord-harassment', pageName: 'HarassmentByLandlordPage' },
+  { path: '/services/rent-arrears-defence', pageName: 'RentArrearsDefencePage' },
+  { path: '/services/subsidized-housing-eviction', pageName: 'SubsidizedHousingPage' },
+  { path: '/services/roommate-disputes', pageName: 'RoommateDisputesPage' },
+  { path: '/services/breaking-lease-early', pageName: 'LeaseBreakingPage' },
+  { path: '/services/pet-disputes', pageName: 'PetDisputesPage' },
+  { path: '/services/noise-complaints-defence', pageName: 'NoiseComplaintsPage' },
+  { path: '/services/ltb-hearing-preparation', pageName: 'LTBHearingPrepPage' },
+  { path: '/services/rent-reduction-applications', pageName: 'RentReductionPage' },
+  { path: '/services/mobile-home-park-disputes', pageName: 'MobileHomeParkPage' },
+  { path: '/services/superintendent-housing-rights', pageName: 'SuperintendentIssuesPage' },
+
+  // Small Claims Court Sub-pages
+  { path: '/services/small-claims-process', pageName: 'SmallClaimsProcessPage' },
+  { path: '/services/debt-collection', pageName: 'DebtCollectionPage' },
+  { path: '/services/contract-disputes', pageName: 'ContractDisputesPage' },
+  { path: '/services/judgement-enforcement', pageName: 'JudgementEnforcementPage' },
+  { path: '/services/property-damage-claims', pageName: 'PropertyDamageClaimsPage' },
+  { path: '/services/unpaid-invoices', pageName: 'UnpaidInvoicesPage' },
+  { path: '/services/security-deposits', pageName: 'SecurityDepositsPage' },
+  { path: '/services/consumer-disputes', pageName: 'ConsumerDisputesPage' },
+  { path: '/services/personal-injury-claims', pageName: 'PersonalInjuryClaimsPage' },
+  { path: '/services/home-improvement-disputes', pageName: 'HomeImprovementDisputesPage' },
+  { path: '/services/vehicle-purchase-disputes', pageName: 'VehiclePurchaseDisputesPage' },
+  { path: '/services/neighbour-disputes', pageName: 'NeighbourDisputesPage' },
+  { path: '/services/return-of-property', pageName: 'ReturnOfPropertyPage' },
+  { path: '/services/breach-of-warranty', pageName: 'BreachOfWarrantyPage' },
+  { path: '/services/loan-recovery', pageName: 'LoanRecoveryPage' },
+  { path: '/services/tenant-damage-claims', pageName: 'TenantDamageClaimsPage' },
+  { path: '/services/wrongful-dismissal-claims', pageName: 'WrongfulDismissalClaimsPage' },
+  { path: '/services/professional-negligence', pageName: 'ProfessionalNegligencePage' },
+  { path: '/services/defamation-slander', pageName: 'DefamationSlanderPage' },
+
+  // Human Rights Tribunal Sub-pages
+  { path: '/services/workplace-discrimination', pageName: 'WorkplaceDiscriminationPage' },
+  { path: '/services/housing-discrimination', pageName: 'HousingDiscriminationPage' },
+  { path: '/services/disability-accommodation', pageName: 'DisabilityAccommodationPage' },
+  { path: '/services/age-discrimination', pageName: 'AgeDiscriminationPage' },
+  { path: '/services/sexual-harassment', pageName: 'SexualHarassmentPage' },
+  { path: '/services/reprisal-claims', pageName: 'ReprisalClaimsPage' },
+  { path: '/services/service-discrimination', pageName: 'ServiceDiscriminationPage' },
+  { path: '/services/pregnancy-discrimination', pageName: 'PregnancyDiscriminationPage' },
+
+  // Employment Sub-pages
+  { path: '/services/wrongful-termination', pageName: 'WrongfulTerminationPage' },
+  { path: '/services/severance-pay', pageName: 'SeverancePayPage' },
+  { path: '/services/unpaid-wages', pageName: 'UnpaidWagesPage' },
+  { path: '/services/constructive-dismissal', pageName: 'ConstructiveDismissalPage' },
+
+  // Criminal/POA Sub-pages
+  { path: '/services/theft-under-5000', pageName: 'TheftUnderPage' },
+  { path: '/services/mischief-under-5000', pageName: 'MischiefUnderPage' },
+  { path: '/services/simple-assault', pageName: 'SimpleAssaultPage' },
+  { path: '/services/trespass-property', pageName: 'TrespassPropertyPage' },
+  { path: '/services/fail-to-comply', pageName: 'FailToComplyPage' },
+  { path: '/services/peace-bond', pageName: 'PeaceBondPage' },
+  { path: '/services/liquor-licence-act', pageName: 'LiquorLicenceActPage' },
+  { path: '/services/municipal-bylaw', pageName: 'MunicipalBylawPage' },
+  { path: '/services/regulatory-offences', pageName: 'RegulatoryOffencesPage' },
+  { path: '/services/bail-hearings', pageName: 'BailHearingsPage' },
+
+  // Other Services
+  { path: '/services/notary-public', pageName: 'NotaryPublicPage' },
+  { path: '/services/commissioner-of-oaths', pageName: 'CommissionerOfOathsPage' },
+  { path: '/services/mediation', pageName: 'MediationServicesPage' },
+  { path: '/services/social-benefits-tribunal', pageName: 'SocialBenefitsTribunalPage' },
+
+  // Location Pages
+  { path: '/london-paralegal', pageName: 'LondonParalegalPage' },
+  { path: '/st-thomas-paralegal', pageName: 'StThomasParalegalPage' },
+  { path: '/woodstock-paralegal', pageName: 'WoodstockParalegalPage' },
+  { path: '/strathroy-chatham-paralegal', pageName: 'StrathroyChathamParalegalPage' },
+  { path: '/ingersoll-paralegal', pageName: 'IngersollParalegalPage' },
+  { path: '/tillsonburg-paralegal', pageName: 'TillsonburgParalegalPage' },
+  { path: '/aylmer-paralegal', pageName: 'AylmerParalegalPage' },
+  { path: '/locations/kitchener', pageName: 'KitchenerParalegalPage' },
+  { path: '/locations/cambridge', pageName: 'CambridgeParalegalPage' },
+  { path: '/locations/windsor', pageName: 'WindsorParalegalPage' },
+  { path: '/locations/sarnia', pageName: 'SarniaParalegalPage' },
+  { path: '/locations/chatham-kent', pageName: 'ChathamKentParalegalPage' },
+  { path: '/locations/stratford', pageName: 'StratfordParalegalPage' },
+  { path: '/locations/guelph', pageName: 'GuelphParalegalPage' },
+  { path: '/locations/brantford', pageName: 'BrantfordParalegalPage' },
+  { path: '/locations/norfolk-county', pageName: 'NorfolkCountyParalegalPage' },
+  { path: '/locations/leamington', pageName: 'LeamingtonParalegalPage' },
+  { path: '/locations/huron-county', pageName: 'HuronCountyParalegalPage' },
+
+  // Educational Guide Pages
+  { path: '/guides/how-to-fight-traffic-ticket', pageName: 'HowToFightTrafficTicketPage' },
+  { path: '/guides/ontario-tenant-rights', pageName: 'TenantRightsGuidePage' },
+  { path: '/guides/ontario-landlord-rights', pageName: 'LandlordRightsGuidePage' },
+  { path: '/guides/small-claims-court-process', pageName: 'SmallClaimsCourtGuidePage' },
+  { path: '/guides/paralegal-vs-lawyer', pageName: 'ParalegalVsLawyerPage' },
+  { path: '/guides/what-is-a-paralegal', pageName: 'WhatIsAParalegalPage' },
+  { path: '/guides/ontario-employment-rights', pageName: 'EmploymentRightsGuidePage' },
+  { path: '/guides/free-legal-resources', pageName: 'FreeLegalResourcesPage' },
+  { path: '/guides/what-to-do-when-sued', pageName: 'BeingSuedGuidePage' },
+  { path: '/guides/ltb-hearing-preparation', pageName: 'LTBHearingGuidePage' },
+  { path: '/guides/filing-human-rights-complaint', pageName: 'HumanRightsComplaintGuidePage' },
+  { path: '/guides/legal-deadlines-ontario', pageName: 'LegalDeadlinesGuidePage' },
+
+  // Legal News
+  { path: '/legal-news', pageName: 'LegalNewsPage' },
+  { path: '/recent-decisions', pageName: 'LegalNewsPage' },
+
+  // Admin Pages
+  { path: '/admin/bookings', pageName: 'AdminBookingsPage' },
+  { path: '/admin/meeting-requests', pageName: 'AdminMeetingRequestsPage' },
+  { path: '/admin/messages', pageName: 'AdminMessagesPage' },
+  { path: '/admin/users', pageName: 'AdminUserManagementPage' },
+  { path: '/admin/users/:id', pageName: 'AdminUserDetailPage' },
+  { path: '/admin/grant', pageName: 'GrantAdminPage' },
+  { path: '/admin/upload-tokens', pageName: 'UploadTokenManagementPage' },
+
+  // Dashboard Pages
+  { path: '/dashboard', pageName: 'ClientDashboardPage' },
+  { path: '/dashboard/paralegal', pageName: 'ParalegalDashboardPage' },
+  { path: '/dashboard/meetings', pageName: 'MeetingDashboardPage' },
+  { path: '/dashboard/documents', pageName: 'DocumentWorkflowPage' },
+
+  // Client Portal Pages
+  { path: '/booking', pageName: 'BookingPage' },
+  { path: '/intake', pageName: 'ClientIntakePage' },
+  { path: '/meeting-request', pageName: 'MeetingRequestPage' },
+  { path: '/upload/:token', pageName: 'PublicUploadPage' },
 ];
 
 export default function Router() {
   useEffect(() => {
+    // Mark page as hydrated once Router mounts
     document.documentElement.classList.add('hydrated');
     document.body.classList.add('hydrated');
+    console.log('[Router] Hydration markers added');
   }, []);
 
   return (
@@ -199,14 +239,14 @@ export default function Router() {
         <AutoSEO />
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            {routes.map((route) => {
-              if (route.element) {
-                return <Route key={route.path} path={route.path} element={route.element} />;
-              }
-              const PageComponent = lazyLoadPage(route.page!);
-              return <Route key={route.path} path={route.path} element={<PageComponent />} />;
+            {/* Render all routes dynamically */}
+            {routeMap.map((route) => {
+              const Component = route.component || lazyLoadPage(route.pageName!);
+              return <Route key={route.path} path={route.path} element={<Component />} />;
             })}
-            <Route path="*" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-2xl">Page Not Found</h1></div>} />
+
+            {/* 404 Catch-all */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </MemberProvider>
