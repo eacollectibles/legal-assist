@@ -223,25 +223,31 @@ const currentYear = new Date().getFullYear();
       <AppRouter client:only="react" />
     </div>
     <script>
-      // Mark page as hydrated once React mounts
+      // CRITICAL: Ensure hydration is marked ASAP
       const markHydrated = () => {
         document.documentElement.classList.add('hydrated');
+        console.log('[Hydration] Page marked as hydrated');
       };
       
-      // Try to mark as hydrated on React's next tick
+      // Mark immediately on script execution
+      markHydrated();
+      
+      // Redundant fallbacks for safety
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          setTimeout(markHydrated, 50);
-        });
-      } else {
-        setTimeout(markHydrated, 50);
+        document.addEventListener('DOMContentLoaded', markHydrated);
       }
-      
-      // Fallback: mark as hydrated after 2 seconds
+      setTimeout(markHydrated, 100);
+      setTimeout(markHydrated, 500);
       setTimeout(markHydrated, 2000);
-      
-      // Also mark on window load
       window.addEventListener('load', markHydrated);
+      
+      // Emergency fallback: if not marked after 3 seconds, force it
+      setTimeout(() => {
+        if (!document.documentElement.classList.contains('hydrated')) {
+          console.warn('[Hydration] Emergency fallback: forcing hydration marker');
+          markHydrated();
+        }
+      }, 3000);
     </script>
   </body>
 </html>

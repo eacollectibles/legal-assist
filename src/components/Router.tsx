@@ -195,6 +195,8 @@ export default function Router() {
   useEffect(() => {
     // Mark page as hydrated once Router mounts
     document.documentElement.classList.add('hydrated');
+    document.body.classList.add('hydrated');
+    console.log('[Router] Hydration markers added');
   }, []);
 
   return (
