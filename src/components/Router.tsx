@@ -19,7 +19,6 @@ const TrafficTicketsPage = lazy(() => import('@/components/pages/TrafficTicketsP
 const HumanRightsTribunalPage = lazy(() => import('@/components/pages/HumanRightsTribunalPage'));
 const EmploymentIssuesPage = lazy(() => import('@/components/pages/EmploymentIssuesPage'));
 const CriminalMattersPage = lazy(() => import('@/components/pages/CriminalMattersPage'));
-const ProvincialOffencesPage = lazy(() => import('@/components/pages/ProvincialOffencesPage'));
 
 // Phase 1 SEO Pages
 const LondonParalegalPage = lazy(() => import('@/components/pages/LondonParalegalPage'));
@@ -119,50 +118,17 @@ const DrivingWhileSuspendedPage = lazy(() => import('@/components/pages/DrivingW
 const SchoolZoneSpeedingPage = lazy(() => import('@/components/pages/SchoolZoneSpeedingPage'));
 const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltViolationsPage'));
 
-// NEW ADDITIONS - High Priority Pages
-// Client Portal
-const BookingPage = lazy(() => import('@/components/pages/BookingPage'));
-const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
-
-// Guide Pages
-const HowToFightTrafficTicketPage = lazy(() => import('@/components/pages/HowToFightTrafficTicketPage'));
-const TenantRightsGuidePage = lazy(() => import('@/components/pages/TenantRightsGuidePage'));
-const LandlordRightsGuidePage = lazy(() => import('@/components/pages/LandlordRightsGuidePage'));
-const SmallClaimsCourtGuidePage = lazy(() => import('@/components/pages/SmallClaimsCourtGuidePage'));
-const BeingSuedGuidePage = lazy(() => import('@/components/pages/BeingSuedGuidePage'));
-const EmploymentRightsGuidePage = lazy(() => import('@/components/pages/EmploymentRightsGuidePage'));
-
-// Location Pages
-const KitchenerParalegalPage = lazy(() => import('@/components/pages/KitchenerParalegalPage'));
-const WindsorParalegalPage = lazy(() => import('@/components/pages/WindsorParalegalPage'));
-
-// HRTO Expansion
-const AgeDiscriminationPage = lazy(() => import('@/components/pages/AgeDiscriminationPage'));
-const DisabilityAccommodationPage = lazy(() => import('@/components/pages/DisabilityAccommodationPage'));
-const SexualHarassmentPage = lazy(() => import('@/components/pages/SexualHarassmentPage'));
-
-// Employment Expansion
-const WrongfulTerminationPage = lazy(() => import('@/components/pages/WrongfulTerminationPage'));
-
 // 404 Page
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
 
-// Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-  return null;
-}
 
-// Loading component
-function LoadingSpinner() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-    </div>
-  );
+  return null;
 }
 
 export default function Router() {
@@ -170,24 +136,23 @@ export default function Router() {
     <BrowserRouter>
       <MemberProvider>
         <ScrollToTop />
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            {/* Core Pages */}
+            {/* Main Pages */}
             <Route path="/" element={<HomePage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
-            <Route path="/signup" element={<ClientSignupPage />} />
-            <Route path="/login" element={<ClientLoginPage />} />
+            <Route path="/client-signup" element={<ClientSignupPage />} />
+            <Route path="/client-login" element={<ClientLoginPage />} />
 
-            {/* Main Service Categories */}
-            <Route path="/services/small-claims" element={<SmallClaimsPage />} />
-            <Route path="/services/landlord-tenant" element={<LandlordTenantBoardPage />} />
+            {/* Core Service Pages */}
+            <Route path="/services/small-claims-court" element={<SmallClaimsPage />} />
+            <Route path="/services/landlord-tenant-board" element={<LandlordTenantBoardPage />} />
             <Route path="/services/traffic-tickets" element={<TrafficTicketsPage />} />
-            <Route path="/services/human-rights" element={<HumanRightsTribunalPage />} />
+            <Route path="/services/human-rights-tribunal" element={<HumanRightsTribunalPage />} />
             <Route path="/services/employment-issues" element={<EmploymentIssuesPage />} />
             <Route path="/services/criminal-matters" element={<CriminalMattersPage />} />
-            <Route path="/services/provincial-offences" element={<ProvincialOffencesPage />} />
 
             {/* Phase 1 SEO Pages */}
             <Route path="/london-paralegal" element={<LondonParalegalPage />} />
@@ -234,8 +199,8 @@ export default function Router() {
             <Route path="/services/social-benefits-tribunal" element={<SocialBenefitsTribunalPage />} />
             <Route path="/services/defamation-slander" element={<DefamationSlanderPage />} />
             <Route path="/services/bail-hearings" element={<BailHearingsPage />} />
-            <Route path="/guides/paralegal-vs-lawyer" element={<ParalegalVsLawyerPage />} />
-            <Route path="/guides/what-is-a-paralegal" element={<WhatIsAParalegalPage />} />
+            <Route path="/paralegal-vs-lawyer" element={<ParalegalVsLawyerPage />} />
+            <Route path="/what-is-a-paralegal" element={<WhatIsAParalegalPage />} />
 
             {/* Phase 3 - New Location Pages */}
             <Route path="/ingersoll-paralegal" element={<IngersollParalegalPage />} />
@@ -263,7 +228,7 @@ export default function Router() {
             <Route path="/services/wrongful-dismissal-claims" element={<WrongfulDismissalClaimsPage />} />
             <Route path="/services/professional-negligence" element={<ProfessionalNegligencePage />} />
 
-            {/* Phase 3 Step 3 - LTB Expansion Cluster */}
+            {/* Phase 3 Step 3 - LTB Expansion Cluster (10 NEW PAGES) */}
             <Route path="/services/rent-arrears-defence" element={<RentArrearsDefencePage />} />
             <Route path="/services/subsidized-housing-eviction" element={<SubsidizedHousingPage />} />
             <Route path="/services/roommate-disputes" element={<RoommateDisputesPage />} />
@@ -275,7 +240,7 @@ export default function Router() {
             <Route path="/services/mobile-home-park-disputes" element={<MobileHomeParkPage />} />
             <Route path="/services/superintendent-housing-rights" element={<SuperintendentIssuesPage />} />
 
-            {/* Phase 3 Step 4 - Traffic Ticket Expansion Cluster */}
+            {/* Phase 3 Step 4 - Traffic Ticket Expansion Cluster (10 NEW PAGES) */}
             <Route path="/services/commercial-vehicle-violations" element={<CommercialVehicleViolationsPage />} />
             <Route path="/services/hov-lane-violations" element={<HOVLaneViolationsPage />} />
             <Route path="/services/stop-sign-ticket" element={<StopSignTicketPage />} />
@@ -286,30 +251,6 @@ export default function Router() {
             <Route path="/services/driving-while-suspended" element={<DrivingWhileSuspendedPage />} />
             <Route path="/services/school-zone-speeding" element={<SchoolZoneSpeedingPage />} />
             <Route path="/services/seatbelt-violations" element={<SeatbeltViolationsPage />} />
-
-            {/* NEW - Client Portal */}
-            <Route path="/booking" element={<BookingPage />} />
-            <Route path="/dashboard" element={<ClientDashboardPage />} />
-
-            {/* NEW - Guide Pages */}
-            <Route path="/guides/how-to-fight-traffic-ticket" element={<HowToFightTrafficTicketPage />} />
-            <Route path="/guides/ontario-tenant-rights" element={<TenantRightsGuidePage />} />
-            <Route path="/guides/ontario-landlord-rights" element={<LandlordRightsGuidePage />} />
-            <Route path="/guides/small-claims-court-process" element={<SmallClaimsCourtGuidePage />} />
-            <Route path="/guides/what-to-do-when-sued" element={<BeingSuedGuidePage />} />
-            <Route path="/guides/ontario-employment-rights" element={<EmploymentRightsGuidePage />} />
-
-            {/* NEW - Location Pages */}
-            <Route path="/locations/kitchener" element={<KitchenerParalegalPage />} />
-            <Route path="/locations/windsor" element={<WindsorParalegalPage />} />
-
-            {/* NEW - HRTO Expansion */}
-            <Route path="/services/age-discrimination" element={<AgeDiscriminationPage />} />
-            <Route path="/services/disability-accommodation" element={<DisabilityAccommodationPage />} />
-            <Route path="/services/sexual-harassment" element={<SexualHarassmentPage />} />
-
-            {/* NEW - Employment Expansion */}
-            <Route path="/services/wrongful-termination" element={<WrongfulTerminationPage />} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
