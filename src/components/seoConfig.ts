@@ -56,9 +56,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // CORE PAGES (6 pages)
   // ============================================
   '/': {
-    title: 'Licensed Paralegal Ontario | Small Claims, LTB, Traffic | LegalAssist',
-    description: 'Licensed Ontario paralegal providing professional representation for Small Claims Court, Landlord Tenant Board, traffic tickets, and provincial offences. Free consultation.',
-    keywords: 'licensed paralegal ontario, paralegal london ontario, traffic ticket paralegal, LTB paralegal, small claims court paralegal',
+    title: 'LegalAssist Paralegal Services | London Ontario | Affordable Legal Help',
+    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call (519) 601-1110.',
+    keywords: 'paralegal london ontario, legal services london, traffic ticket lawyer london, LTB paralegal, small claims court london',
     schema: {
       type: 'LocalBusiness',
       name: 'LegalAssist Paralegal Services',
@@ -167,9 +167,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // TRAFFIC TICKETS - MAIN & SUB-PAGES (18 pages)
   // ============================================
   '/services/traffic-tickets': {
-    title: 'Traffic Ticket Paralegal Ontario | LegalAssist',
-    description: 'Licensed Ontario paralegal fighting traffic tickets. Speeding, careless driving, stunt driving, red lights. Protect your licence and insurance rates.',
-    keywords: 'traffic ticket paralegal ontario, fight speeding ticket ontario, traffic court paralegal, demerit points defence',
+    title: 'Traffic Ticket Defence | Fight Your Ticket | London Ontario Paralegal',
+    description: 'Fight your traffic ticket in London, Ontario. Speeding, careless driving, stunt driving, red lights. Protect your licence and insurance rates. Free consultation.',
+    keywords: 'traffic ticket lawyer london, fight speeding ticket ontario, traffic court paralegal, demerit points defence',
     schema: {
       type: 'LegalService',
       name: 'Traffic Ticket Defence Services',
@@ -777,9 +777,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // LANDLORD TENANT BOARD - MAIN & SUB-PAGES (21 pages)
   // ============================================
   '/services/landlord-tenant': {
-    title: 'Landlord Tenant Paralegal Ontario | LegalAssist',
-    description: 'Licensed Ontario paralegal for LTB matters. Evictions, rent disputes, N12 hearings, maintenance issues. Professional representation for landlords and tenants.',
-    keywords: 'landlord tenant paralegal ontario, LTB paralegal, eviction paralegal ontario, tenant rights paralegal',
+    title: 'Landlord Tenant Board | LTB Representation | London Ontario Paralegal',
+    description: 'LTB representation for landlords and tenants in London, Ontario. Evictions, rent disputes, maintenance issues, N12/N13 notices. Free consultation.',
+    keywords: 'landlord tenant board london, LTB paralegal, eviction defence ontario, tenant rights london',
     schema: {
       type: 'LegalService',
       name: 'Landlord Tenant Board Services',
@@ -1483,9 +1483,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // SMALL CLAIMS COURT - MAIN & SUB-PAGES (19 pages)
   // ============================================
   '/services/small-claims': {
-    title: 'Small Claims Court Paralegal Ontario | LegalAssist',
-    description: 'Licensed Ontario paralegal representing clients in Small Claims Court. Claims up to $35,000. Clear advice, professional representation, and compliant legal services.',
-    keywords: 'small claims court paralegal ontario, sue someone ontario, debt collection paralegal, small claims lawyer ontario',
+    title: 'Small Claims Court | Sue or Defend Up to $35,000 | London Ontario',
+    description: 'Small Claims Court representation in London, Ontario. Debt collection, contract disputes, property damage claims. Claims up to $35,000. Free consultation.',
+    keywords: 'small claims court london, sue someone ontario, debt collection paralegal, contract dispute lawyer',
     schema: {
       type: 'LegalService',
       name: 'Small Claims Court Services',
@@ -1745,9 +1745,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   // HUMAN RIGHTS TRIBUNAL - MAIN & SUB-PAGES (8 pages)
   // ============================================
   '/services/human-rights': {
-    title: 'Human Rights Tribunal Paralegal Ontario | LegalAssist',
-    description: 'Licensed Ontario paralegal for HRTO matters. Discrimination claims, workplace harassment, housing discrimination, accommodation issues. Compassionate representation.',
-    keywords: 'human rights tribunal paralegal ontario, HRTO paralegal, discrimination paralegal, harassment claim paralegal',
+    title: 'Human Rights Tribunal | HRTO Applications | London Ontario',
+    description: 'Human Rights Tribunal representation in London, Ontario. Discrimination complaints, workplace harassment, housing discrimination. Free consultation.',
+    keywords: 'human rights tribunal ontario, HRTO application, discrimination complaint, harassment claim',
     schema: { type: 'LegalService', name: 'Human Rights Services', serviceType: 'HRTO Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }],
     faqs: [
@@ -1932,9 +1932,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/provincial-offences': {
-    title: 'Provincial Offences Paralegal Ontario | LegalAssist',
-    description: 'Licensed Ontario paralegal defending provincial offences. POA tickets, regulatory charges, municipal bylaws. Professional representation.',
-    keywords: 'provincial offences paralegal ontario, POA paralegal, regulatory offence defence, provincial court paralegal',
+    title: 'Provincial Offences | POA Matters | London Ontario',
+    description: 'Provincial Offences Act defence in London, Ontario. Regulatory violations, municipal bylaws, provincial regulations.',
+    keywords: 'provincial offence defence, POA matters london, regulatory violation, provincial court',
     schema: { type: 'LegalService', name: 'Provincial Offences', serviceType: 'POA Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }],
     faqs: [
@@ -2446,6 +2446,11 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+
+
+
+
+
   '/services/hrto-process': {
     title: 'HRTO Process | How to File Human Rights Complaint | London Ontario',
     description: 'Understanding the HRTO process in Ontario. How to file, what to expect, timelines. Human rights application guidance.',
@@ -2488,6 +2493,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+
   '/services/severance-review': {
     title: 'Severance Review | Termination Package Review | London Ontario',
     description: 'Severance package review in London, Ontario. Is your termination package fair? Get a professional assessment.',
@@ -2504,18 +2510,6 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   // CRIMINAL & PROVINCIAL OFFENCES (10 pages)
   // ============================================
-  '/services/provincial-offences-alt': {
-    title: 'Provincial Offences Paralegal Ontario | LegalAssist',
-    description: 'Licensed Ontario paralegal defending provincial offences. POA tickets, regulatory charges, municipal bylaws. Professional representation.',
-    keywords: 'provincial offences paralegal ontario, POA paralegal, regulatory offence defence, provincial court paralegal',
-    schema: { type: 'LegalService', name: 'Provincial Offences Services', serviceType: 'POA Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }],
-    faqs: [
-      { question: 'What are provincial offences?', answer: 'Non-criminal offences under Ontario statutes: traffic tickets, bylaw violations, environmental offences, workplace safety, and regulatory matters. Handled under the Provincial Offences Act (POA).' },
-      { question: 'What happens if I don\'t pay a provincial offence ticket?', answer: 'Fines go into default. Consequences include: licence plate denial, driver\'s licence suspension, collection action, and additional fees. The fine doesn\'t disappear - it\'s better to fight or resolve it.' },
-      { question: 'Can provincial offences go on my criminal record?', answer: 'No. Provincial offences are not criminal and don\'t create a criminal record. However, some (like traffic convictions) do appear on your driving record and can affect insurance and employment.' }
-    ]
-  },
 
   '/services/bylaw-violations': {
     title: 'Bylaw Violations | Municipal Bylaw Defence | London Ontario',
@@ -2581,6 +2575,7 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What is a diversion program?', answer: 'Alternative to prosecution where charges may be withdrawn after completing conditions (counselling, community service, donation). Not available for all offences. We can advocate for diversion where appropriate.' }
     ]
   },
+
 
   '/services/mischief-charges': {
     title: 'Mischief Charges | Property Damage Criminal | London Ontario',
@@ -2660,6 +2655,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+
+
   '/locations/waterloo': {
     title: 'Paralegal Services Waterloo Ontario | LegalAssist',
     description: 'Licensed paralegal services in Waterloo, Ontario. Traffic tickets, landlord-tenant, small claims court representation.',
@@ -2671,6 +2668,11 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'Can you help UW or Laurier students?', answer: 'Absolutely. We help many university students with traffic tickets, tenancy issues, and other legal matters.' }
     ]
   },
+
+
+
+
+
 
   '/locations/chatham': {
     title: 'Paralegal Services Chatham Ontario | LegalAssist',
@@ -2946,37 +2948,6 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What should I bring to court?', answer: 'Bring: all documents related to your case (organized chronologically), photos/evidence, witness contact info, notepad, pen, government ID, and patience.' },
       { question: 'How should I dress for court?', answer: 'Dress professionally - business casual at minimum. No hats, shorts, flip-flops, or offensive clothing. First impressions matter to judges and adjudicators.' },
       { question: 'What if I\'m nervous about court?', answer: 'Arrive early and observe other proceedings. Prepare your key points in writing. Speak slowly and clearly. Address the judge as "Your Honour." It\'s okay to ask to repeat a question.' }
-    ]
-  },
-
-  // ============================================
-  // LEGAL NEWS PAGE
-  // ============================================
-  '/legal-news': {
-    title: 'Recent Ontario Legal Decisions | LTB, HRTO, Traffic, Small Claims | LegalAssist',
-    description: 'Stay informed with the latest Ontario tribunal and court decisions. Recent cases from the Landlord Tenant Board, Human Rights Tribunal, traffic courts, and Small Claims Court.',
-    keywords: 'ontario legal news, recent LTB decisions, HRTO decisions, traffic court cases, small claims court ontario, canlii ontario',
-    schema: { type: 'Article', name: 'Recent Ontario Legal Decisions' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Legal News', url: '/legal-news' }
-    ],
-    faqs: [
-      { question: 'Where do these decisions come from?', answer: 'All decisions are sourced from CanLII (Canadian Legal Information Institute), a non-profit organization that makes Canadian law accessible for free. We pull recent decisions from the LTB, HRTO, Ontario Court of Justice, and Small Claims Court.' },
-      { question: 'How often is this page updated?', answer: 'The page fetches the latest decisions automatically when you visit. CanLII typically publishes new decisions within days of being issued by the tribunal or court.' },
-      { question: 'Can I use these decisions in my own case?', answer: 'While past decisions can provide insight into how tribunals and courts handle similar issues, each case depends on its specific facts. A paralegal can help you understand how case law applies to your situation.' },
-      { question: 'Why are some decisions marked as "Highly Relevant"?', answer: 'Decisions are marked as highly relevant when they contain key terms commonly encountered in paralegal practice, such as specific form numbers (N12, L1), common issues (eviction, speeding), or procedural matters.' }
-    ]
-  },
-
-  '/recent-decisions': {
-    title: 'Recent Ontario Legal Decisions | LTB, HRTO, Traffic, Small Claims | LegalAssist',
-    description: 'Stay informed with the latest Ontario tribunal and court decisions. Recent cases from the Landlord Tenant Board, Human Rights Tribunal, traffic courts, and Small Claims Court.',
-    keywords: 'ontario legal news, recent LTB decisions, HRTO decisions, traffic court cases, small claims court ontario',
-    schema: { type: 'Article', name: 'Recent Ontario Legal Decisions' },
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Recent Decisions', url: '/recent-decisions' }
     ]
   },
 };
