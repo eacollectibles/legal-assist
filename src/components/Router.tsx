@@ -156,6 +156,13 @@ const HumanRightsComplaintGuidePage = lazy(() => import('@/components/pages/Huma
 const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadlinesGuidePage'));
 const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
 
+// Answer Pages (SEO-focused informational content)
+const SmallClaimsWhatToExpectPage = lazy(() => import('@/components/pages/SmallClaimsWhatToExpectPage'));
+const EnforceJudgmentOntarioPage = lazy(() => import('@/components/pages/EnforceJudgmentOntarioPage'));
+const LTBFormsExplainedPage = lazy(() => import('@/components/pages/LTBFormsExplainedPage'));
+const POAFightVsEarlyResolutionPage = lazy(() => import('@/components/pages/POAFightVsEarlyResolutionPage'));
+const LawyerVsParalegalPage = lazy(() => import('@/components/pages/LawyerVsParalegalPage'));
+
 // Admin & Dashboard Pages
 const AdminBookingsPage = lazy(() => import('@/components/pages/AdminBookingsPage'));
 const AdminMeetingRequestsPage = lazy(() => import('@/components/pages/AdminMeetingRequestsPage'));
@@ -355,6 +362,13 @@ export default function Router() {
             {/* Legal News */}
             <Route path="/legal-news" element={<LegalNewsPage />} />
             <Route path="/recent-decisions" element={<LegalNewsPage />} />
+
+            {/* Answer Pages / Guides */}
+            <Route path="/guides/small-claims-what-to-expect" element={<SmallClaimsWhatToExpectPage />} />
+            <Route path="/guides/enforce-judgment-ontario" element={<EnforceJudgmentOntarioPage />} />
+            <Route path="/guides/ltb-forms-explained" element={<LTBFormsExplainedPage />} />
+            <Route path="/guides/poa-fight-vs-early-resolution" element={<POAFightVsEarlyResolutionPage />} />
+            <Route path="/guides/lawyer-vs-paralegal" element={<LawyerVsParalegalPage />} />
 
             {/* Admin Pages */}
             <Route path="/admin/bookings" element={<AdminBookingsPage />} />
