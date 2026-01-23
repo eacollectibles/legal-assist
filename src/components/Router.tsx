@@ -1,5 +1,5 @@
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense, ComponentType } from 'react';
 import { MemberProvider } from '@/integrations';
 import { AutoSEO } from '@/components/AutoSEO';
 
@@ -14,15 +14,24 @@ const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
 
+// Tell Vite to pre-bundle all page components for dynamic imports
+const pageModules = import.meta.glob('@/components/pages/*.tsx');
+
 // Dynamic page loader - loads pages on demand to reduce initial bundle
 const pageCache = new Map();
 
 function lazyLoadPage(pageName: string) {
   if (!pageCache.has(pageName)) {
-    pageCache.set(
-      pageName,
-      lazy(() => import(`@/components/pages/${pageName}.tsx`))
-    );
+    const path = `/src/components/pages/${pageName}.tsx`;
+    if (pageModules[path]) {
+      pageCache.set(
+        pageName,
+        lazy(pageModules[path] as () => Promise<{ default: ComponentType<unknown> }>)
+      );
+    } else {
+      console.error(`Page not found: ${pageName}`);
+      return NotFoundPage;
+    }
   }
   return pageCache.get(pageName);
 }
