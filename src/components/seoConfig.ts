@@ -1943,6 +1943,18 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+  '/services/theft-under-5000': {
+    title: 'Theft Under $5000 Defence | Shoplifting | London Ontario',
+    description: 'Theft under $5000 defence in London, Ontario. Shoplifting charges, petty theft, first-time offenders. Protect your record.',
+    keywords: 'theft under 5000 defence, shoplifting lawyer london, petty theft charge, first time theft',
+    schema: { type: 'LegalService', name: 'Theft Defence', serviceType: 'Theft Under $5000 Defence', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Theft Under $5000', url: '/services/theft-under-5000' }],
+    faqs: [
+      { question: 'What is the penalty for theft under $5000?', answer: 'As a summary offence: up to 6 months jail and/or $5,000 fine. First-time offenders rarely get jail. Diversion or conditional discharge may keep it off your record.' },
+      { question: 'Can I avoid a criminal record for shoplifting?', answer: 'Often yes. Options include: diversion programs (charges withdrawn after completing conditions), absolute/conditional discharge, or acquittal at trial. We work to protect your record.' }
+    ]
+  },
+
   '/services/simple-assault': {
     title: 'Simple Assault Defence | Assault Charges | London Ontario',
     description: 'Simple assault defence in London, Ontario. Assault charges, self-defence claims, bar fights, domestic disputes.',
@@ -2417,7 +2429,99 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+  // ============================================
+  // HUMAN RIGHTS TRIBUNAL - MAIN & SUB-PAGES (8 pages)
+  // ============================================
+  '/services/human-rights': {
+    title: 'Human Rights Tribunal | HRTO Applications | London Ontario Paralegal',
+    description: 'Human Rights Tribunal representation in London, Ontario. Discrimination complaints for employment, housing, services. File HRTO applications.',
+    keywords: 'human rights tribunal ontario, HRTO application, discrimination complaint, employment discrimination',
+    schema: { type: 'LegalService', name: 'Human Rights Tribunal Services', serviceType: 'HRTO Legal Representation', areaServed: ['London', 'Middlesex County', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights Tribunal', url: '/services/human-rights' }],
+    faqs: [
+      { question: 'What is the Human Rights Tribunal of Ontario?', answer: 'The HRTO handles discrimination complaints under the Ontario Human Rights Code. It covers discrimination in employment, housing, services, contracts, and unions based on protected grounds like race, disability, sex, and age.' },
+      { question: 'How long do I have to file an HRTO complaint?', answer: 'You must file within 1 year of the last discriminatory incident. Extensions are rarely granted, so act quickly if you believe you\'ve experienced discrimination.' },
+      { question: 'What remedies can the HRTO order?', answer: 'The HRTO can order: monetary compensation for lost wages and injury to dignity, reinstatement to employment, policy changes, training requirements, and public interest remedies.' }
+    ]
+  },
 
+  '/services/employment-discrimination': {
+    title: 'Employment Discrimination | Workplace Human Rights | London Ontario',
+    description: 'Employment discrimination claims in London, Ontario. Fired, demoted, or harassed based on protected grounds. HRTO representation.',
+    keywords: 'employment discrimination ontario, workplace discrimination, fired for disability, age discrimination work',
+    schema: { type: 'LegalService', name: 'Employment Discrimination Services', serviceType: 'Employment Human Rights', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Employment Discrimination', url: '/services/employment-discrimination' }],
+    faqs: [
+      { question: 'What is employment discrimination?', answer: 'Treating an employee or applicant unfairly based on: race, ancestry, disability, age, sex, sexual orientation, gender identity, religion, family status, or marital status. Includes hiring, firing, promotion, pay, and working conditions.' },
+      { question: 'Can I be fired for a disability?', answer: 'No. Employers must accommodate disabilities to the point of undue hardship. Firing someone because of disability, or failing to accommodate, is discrimination. Document accommodation requests and employer responses.' },
+      { question: 'What if I was passed over for promotion due to my age?', answer: 'Age discrimination in employment is illegal in Ontario. If you can show younger, less qualified candidates were promoted, you may have an HRTO claim. Document the decision-making process and your qualifications.' }
+    ]
+  },
+
+  '/services/housing-discrimination': {
+    title: 'Housing Discrimination | Rental Human Rights | London Ontario',
+    description: 'Housing discrimination claims in London, Ontario. Denied rental due to race, family status, disability, income source. HRTO representation.',
+    keywords: 'housing discrimination ontario, rental discrimination, denied rental, landlord discrimination',
+    schema: { type: 'LegalService', name: 'Housing Discrimination Services', serviceType: 'Housing Human Rights', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Housing Discrimination', url: '/services/housing-discrimination' }],
+    faqs: [
+      { question: 'Can a landlord refuse to rent to families with children?', answer: 'No. Discrimination based on family status is illegal. Landlords cannot refuse families, require extra deposits, or restrict children to certain floors or units. "Adults only" buildings are generally illegal.' },
+      { question: 'Can I be denied housing because I receive social assistance?', answer: 'No. Receipt of public assistance is a protected ground in Ontario. Landlords cannot refuse to rent to you solely because your income comes from ODSP, Ontario Works, or other benefits.' },
+      { question: 'What if a landlord won\'t accommodate my disability?', answer: 'Landlords must accommodate disabilities to the point of undue hardship. This may include allowing service animals, permitting modifications, providing accessible parking, or adjusting rules. Document all requests and refusals.' }
+    ]
+  },
+
+  '/services/service-discrimination': {
+    title: 'Service Discrimination | Public Services Human Rights | London Ontario',
+    description: 'Discrimination in services, goods, and facilities in London, Ontario. Denied service based on protected grounds. HRTO applications.',
+    keywords: 'service discrimination ontario, denied service discrimination, public accommodation discrimination',
+    schema: { type: 'LegalService', name: 'Service Discrimination Services', serviceType: 'Service Human Rights', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Service Discrimination', url: '/services/service-discrimination' }],
+    faqs: [
+      { question: 'What services are covered by human rights law?', answer: 'Virtually all services offered to the public: stores, restaurants, hospitals, schools, insurance, banking, government services, transportation, and recreation facilities. Both public and private services are covered.' },
+      { question: 'Can a business refuse to serve me?', answer: 'Businesses can refuse service for legitimate reasons (no shirt/shoes, disruptive behavior) but not based on protected grounds like race, disability, religion, or sexual orientation.' },
+      { question: 'What if a store isn\'t accessible?', answer: 'Service providers must accommodate disabilities. While older buildings may have some exemptions, they must still provide service through alternative means and work toward accessibility.' }
+    ]
+  },
+
+  '/services/disability-accommodation': {
+    title: 'Disability Accommodation | Duty to Accommodate | London Ontario',
+    description: 'Disability accommodation in employment, housing, and services. Duty to accommodate claims in London, Ontario.',
+    keywords: 'disability accommodation ontario, duty to accommodate, accommodation request denied, undue hardship',
+    schema: { type: 'LegalService', name: 'Disability Accommodation Services', serviceType: 'Accommodation Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Disability Accommodation', url: '/services/disability-accommodation' }],
+    faqs: [
+      { question: 'What is the duty to accommodate?', answer: 'Employers, landlords, and service providers must adjust rules, policies, or physical spaces to allow people with disabilities to participate equally. This duty extends to the point of undue hardship.' },
+      { question: 'What is undue hardship?', answer: 'The limit of accommodation duty. Factors include: cost relative to organization size, health and safety concerns, and impact on others. Mere inconvenience or preference doesn\'t constitute undue hardship.' },
+      { question: 'Do I need to disclose my entire medical history?', answer: 'No. You only need to provide enough information to explain your limitations and needs. Employers can request documentation but cannot demand your full diagnosis or medical records unrelated to accommodation.' }
+    ]
+  },
+
+  '/services/sexual-harassment': {
+    title: 'Sexual Harassment | Workplace Harassment | London Ontario Paralegal',
+    description: 'Sexual harassment claims in London, Ontario. Workplace harassment, hostile environment, quid pro quo. HRTO and civil remedies.',
+    keywords: 'sexual harassment ontario, workplace harassment claim, hostile work environment, harassment complaint',
+    schema: { type: 'LegalService', name: 'Sexual Harassment Services', serviceType: 'Harassment Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Sexual Harassment', url: '/services/sexual-harassment' }],
+    faqs: [
+      { question: 'What is sexual harassment?', answer: 'Unwelcome conduct of a sexual nature that affects employment or creates a hostile environment. Includes: unwanted advances, inappropriate comments, sexual jokes, touching, requests for sexual favors, and displaying offensive material.' },
+      { question: 'What should I do if I\'m being sexually harassed at work?', answer: 'Document incidents with dates, times, witnesses. Report through internal channels if safe. If the employer doesn\'t address it or the harasser is senior management, you can file with HRTO directly. Keep copies of all reports.' },
+      { question: 'Can I claim harassment from a coworker?', answer: 'Yes. Employers are responsible for providing harassment-free workplaces. If they knew or should have known about harassment and failed to address it, they can be held liable along with the individual harasser.' }
+    ]
+  },
+
+  '/services/reprisal-claims': {
+    title: 'Reprisal Claims | Retaliation for Human Rights Complaint | London Ontario',
+    description: 'Reprisal claims in London, Ontario. Retaliated against for making a human rights complaint. HRTO protection.',
+    keywords: 'reprisal claim ontario, retaliation human rights, fired for complaining, workplace retaliation',
+    schema: { type: 'LegalService', name: 'Reprisal Claim Services', serviceType: 'Retaliation Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Reprisal Claims', url: '/services/reprisal-claims' }],
+    faqs: [
+      { question: 'What is reprisal in human rights?', answer: 'Punishing someone for making a human rights complaint, participating in a proceeding, or refusing to violate the Code. Includes firing, demotion, harassment, negative references, or any adverse treatment.' },
+      { question: 'Can I be fired for filing an HRTO complaint?', answer: 'No. Firing someone for making a human rights complaint is illegal reprisal. If termination follows shortly after a complaint, you may have a strong reprisal claim in addition to your original complaint.' },
+      { question: 'How do I prove reprisal?', answer: 'Show: you engaged in protected activity (complaint, refused to discriminate), you suffered adverse treatment, and there\'s a connection between the two. Timing is important - retaliation soon after complaint suggests causation.' }
+    ]
+  },
 
   '/services/hrto-process': {
     title: 'HRTO Process | How to File Human Rights Complaint | London Ontario',
@@ -2458,6 +2562,19 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What does the Employment Standards Act cover?', answer: 'The ESA sets minimum standards for: wages, overtime, vacation, public holidays, leaves of absence, termination notice, and severance pay. It applies to most Ontario employees.' },
       { question: 'How do I file an ESA complaint?', answer: 'File with the Ministry of Labour within 2 years of the violation. The Ministry investigates and can order the employer to pay. You can also pursue civil claims for amounts above ESA minimums.' },
       { question: 'Can I get overtime pay?', answer: 'Most employees are entitled to 1.5x pay after 44 hours per week. Some jobs are exempt (managers, certain professionals). Employers can average hours over periods or offer time off instead in some cases.' }
+    ]
+  },
+
+  '/services/constructive-dismissal': {
+    title: 'Constructive Dismissal | Forced Resignation | London Ontario',
+    description: 'Constructive dismissal claims in London, Ontario. Forced to resign due to workplace changes. Employment representation.',
+    keywords: 'constructive dismissal ontario, forced to resign, workplace changes, demotion',
+    schema: { type: 'LegalService', name: 'Constructive Dismissal Services', serviceType: 'Constructive Dismissal Claims', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment', url: '/services/employment' }, { name: 'Constructive Dismissal', url: '/services/constructive-dismissal' }],
+    faqs: [
+      { question: 'What is constructive dismissal?', answer: 'When an employer makes fundamental changes to your employment without consent - significant pay cuts, demotions, relocations, or creating intolerable conditions. You can treat this as termination and claim severance.' },
+      { question: 'What changes count as constructive dismissal?', answer: 'Substantial changes include: major pay reduction (typically 10%+), significant demotion, relocation requiring a move, drastic schedule changes, or creating a hostile/toxic work environment.' },
+      { question: 'What should I do if I think I\'m being constructively dismissed?', answer: 'Document changes in writing. Object to the changes promptly. Don\'t just resign - seek legal advice first. You may need to choose between accepting changes, working under protest, or treating it as dismissal.' }
     ]
   },
 
@@ -2646,7 +2763,101 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+  '/locations/stratford': {
+    title: 'Paralegal Services Stratford Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Stratford, Ontario. Traffic tickets, landlord-tenant, small claims court. Serving Perth County.',
+    keywords: 'paralegal stratford ontario, lawyer stratford, legal services perth county',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Stratford', areaServed: ['Stratford', 'Perth County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Stratford', url: '/locations/stratford' }],
+    faqs: [
+      { question: 'Do you serve Stratford clients?', answer: 'Yes, we provide paralegal services to Stratford and Perth County. We handle court matters locally and tribunal matters province-wide.' },
+      { question: 'How do I meet with you from Stratford?', answer: 'We offer in-person meetings, video consultations, and phone appointments. Many matters can be handled remotely for your convenience.' }
+    ]
+  },
 
+  '/locations/kitchener': {
+    title: 'Paralegal Services Kitchener Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Kitchener, Ontario. Traffic tickets, landlord-tenant, small claims court. Serving Waterloo Region.',
+    keywords: 'paralegal kitchener ontario, lawyer kitchener, legal services waterloo region',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kitchener', areaServed: ['Kitchener', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kitchener', url: '/locations/kitchener' }],
+    faqs: [
+      { question: 'Do you handle Kitchener traffic tickets?', answer: 'Yes, we defend traffic tickets issued anywhere in Waterloo Region including Kitchener, Waterloo, and Cambridge.' },
+      { question: 'Can you represent me at Kitchener Small Claims Court?', answer: 'Absolutely. We represent clients at the Kitchener courthouse for all Small Claims matters up to $35,000.' }
+    ]
+  },
+
+  '/locations/waterloo': {
+    title: 'Paralegal Services Waterloo Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Waterloo, Ontario. Traffic tickets, landlord-tenant, small claims court representation.',
+    keywords: 'paralegal waterloo ontario, lawyer waterloo, legal services waterloo',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Waterloo', areaServed: ['Waterloo', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Waterloo', url: '/locations/waterloo' }],
+    faqs: [
+      { question: 'Do you serve the City of Waterloo?', answer: 'Yes, we serve Waterloo residents for all paralegal matters. Waterloo Region has excellent transit connections to our office.' },
+      { question: 'Can you help UW or Laurier students?', answer: 'Absolutely. We help many university students with traffic tickets, tenancy issues, and other legal matters.' }
+    ]
+  },
+
+  '/locations/cambridge': {
+    title: 'Paralegal Services Cambridge Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Cambridge, Ontario. Traffic tickets, landlord-tenant, small claims court. Waterloo Region.',
+    keywords: 'paralegal cambridge ontario, lawyer cambridge, legal services cambridge on',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Cambridge', areaServed: ['Cambridge', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Cambridge', url: '/locations/cambridge' }],
+    faqs: [
+      { question: 'Do you handle Cambridge legal matters?', answer: 'Yes, we serve Cambridge and all of Waterloo Region. Court matters are handled at the Kitchener courthouse.' },
+      { question: 'What services are available for Cambridge residents?', answer: 'Full paralegal services: traffic defence, LTB representation, small claims, human rights, and provincial offences.' }
+    ]
+  },
+
+  '/locations/guelph': {
+    title: 'Paralegal Services Guelph Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Guelph, Ontario. Traffic tickets, landlord-tenant, small claims court. Wellington County.',
+    keywords: 'paralegal guelph ontario, lawyer guelph, legal services wellington county',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Guelph', areaServed: ['Guelph', 'Wellington County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Guelph', url: '/locations/guelph' }],
+    faqs: [
+      { question: 'Can you represent me at Guelph courthouse?', answer: 'Yes, we handle matters at the Guelph courthouse for Wellington County clients. All paralegal services available.' },
+      { question: 'Do you help University of Guelph students?', answer: 'Yes, we frequently help students with tenancy issues, traffic tickets, and other legal matters within paralegal scope.' }
+    ]
+  },
+
+  '/locations/brantford': {
+    title: 'Paralegal Services Brantford Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Brantford, Ontario. Traffic tickets, landlord-tenant, small claims court. Brant County.',
+    keywords: 'paralegal brantford ontario, lawyer brantford, legal services brant county',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Brantford', areaServed: ['Brantford', 'Brant County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brantford', url: '/locations/brantford' }],
+    faqs: [
+      { question: 'Do you serve Brantford?', answer: 'Yes, we provide paralegal services to Brantford and Brant County residents. About 40 minutes from London.' },
+      { question: 'Where do Brantford court matters go?', answer: 'We handle matters at the Brantford courthouse. LTB and HRTO matters are handled via videoconference province-wide.' }
+    ]
+  },
+
+  '/locations/windsor': {
+    title: 'Paralegal Services Windsor Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Windsor, Ontario. Traffic tickets, landlord-tenant, small claims court. Essex County.',
+    keywords: 'paralegal windsor ontario, lawyer windsor, legal services essex county',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Windsor', areaServed: ['Windsor', 'Essex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Windsor', url: '/locations/windsor' }],
+    faqs: [
+      { question: 'Do you serve Windsor clients?', answer: 'Yes, we serve Windsor and Essex County. Many tribunal matters can be handled remotely via videoconference.' },
+      { question: 'Can you help with Ambassador Bridge traffic tickets?', answer: 'We can help with Ontario-issued traffic tickets. US-issued violations require a US attorney.' }
+    ]
+  },
+
+  '/locations/sarnia': {
+    title: 'Paralegal Services Sarnia Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Sarnia, Ontario. Traffic tickets, landlord-tenant, small claims court. Lambton County.',
+    keywords: 'paralegal sarnia ontario, lawyer sarnia, legal services lambton county',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Sarnia', areaServed: ['Sarnia', 'Lambton County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Sarnia', url: '/locations/sarnia' }],
+    faqs: [
+      { question: 'Do you handle Sarnia legal matters?', answer: 'Yes, we serve Sarnia and Lambton County clients. Court matters at local courthouse, tribunals via videoconference.' },
+      { question: 'How do I meet with you from Sarnia?', answer: 'We offer video consultations and phone appointments. For court matters, we travel to Sarnia courthouse as needed.' }
+    ]
+  },
 
   '/locations/chatham': {
     title: 'Paralegal Services Chatham Ontario | LegalAssist',
