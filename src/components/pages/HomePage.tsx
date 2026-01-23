@@ -267,13 +267,13 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link 
                 to="/contact"
-                className="bg-primary text-white font-paragraph font-semibold px-8 py-4 text-lg rounded-lg hover:bg-accent transition-colors inline-block text-center"
+                className="btn-shine btn-lift bg-primary text-white font-paragraph font-semibold px-8 py-4 text-lg rounded-lg inline-block text-center"
               >
                 Free Consultation
               </Link>
               <Link 
                 to="/services"
-                className="border border-white/30 text-white font-paragraph px-8 py-4 text-lg rounded-lg hover:bg-white/10 transition-colors inline-block text-center"
+                className="btn-shine btn-lift border border-white/30 text-white font-paragraph px-8 py-4 text-lg rounded-lg inline-block text-center"
               >
                 View Services
               </Link>
@@ -717,7 +717,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-4 items-center mb-6">
                 <Link 
                   to="/contact"
-                  className="inline-block bg-primary text-primary-foreground font-paragraph font-semibold px-10 py-5 text-xl transition-all hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1 rounded-lg"
+                  className="btn-shine btn-lift inline-block bg-primary text-primary-foreground font-paragraph font-semibold px-10 py-5 text-xl rounded-lg"
                 >
                   Find Out Where You Stand
                 </Link>
