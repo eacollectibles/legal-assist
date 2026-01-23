@@ -192,6 +192,11 @@ function ScrollToTop() {
 }
 
 export default function Router() {
+  useEffect(() => {
+    // Mark page as hydrated once Router mounts
+    document.documentElement.classList.add('hydrated');
+  }, []);
+
   return (
     <BrowserRouter>
       <MemberProvider>

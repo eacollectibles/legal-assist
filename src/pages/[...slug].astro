@@ -219,8 +219,29 @@ const currentYear = new Date().getFullYear();
     {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
   </head>
   <body class="w-full h-full">
-    <div id="root" class="w-full h-full">
+    <div id="root" class="w-full h-full bg-background">
       <AppRouter client:only="react" />
     </div>
+    <script>
+      // Mark page as hydrated once React mounts
+      const markHydrated = () => {
+        document.documentElement.classList.add('hydrated');
+      };
+      
+      // Try to mark as hydrated on React's next tick
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(markHydrated, 50);
+        });
+      } else {
+        setTimeout(markHydrated, 50);
+      }
+      
+      // Fallback: mark as hydrated after 2 seconds
+      setTimeout(markHydrated, 2000);
+      
+      // Also mark on window load
+      window.addEventListener('load', markHydrated);
+    </script>
   </body>
 </html>

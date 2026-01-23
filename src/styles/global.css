@@ -4,6 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent FOUC and raw template strings during hydration */
+html {
+  opacity: 0;
+  visibility: hidden;
+}
+
+html.hydrated {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
 /* Hide scrollbar for horizontal scroll tabs */
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
