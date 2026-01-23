@@ -19,8 +19,8 @@ export default {
                 '9xl': ['8rem', { lineHeight: '1', letterSpacing: '0.05em', fontWeight: '700' }],
             },
             fontFamily: {
-                heading: "bitter",
-                paragraph: "raleway"
+                heading: "'Playfair Display', serif",
+                paragraph: "'DM Sans', sans-serif"
             },
             colors: {
                 pastellavender: '#D6D0DD',
