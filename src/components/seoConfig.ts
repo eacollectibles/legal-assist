@@ -143,25 +143,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-  '/signup': {
-    title: 'Client Portal Sign Up | LegalAssist London Ontario',
-    description: 'Create your LegalAssist client portal account. Access your case documents, communicate with your paralegal, and track case progress online.',
-    keywords: 'client portal signup, legal client account, case management login',
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Sign Up', url: '/signup' }
-    ]
-  },
-
-  '/login': {
-    title: 'Client Portal Login | LegalAssist London Ontario',
-    description: 'Log in to your LegalAssist client portal. Access case documents, messages, and updates from your paralegal.',
-    keywords: 'client portal login, legal case access, paralegal portal',
-    breadcrumbs: [
-      { name: 'Home', url: '/' },
-      { name: 'Login', url: '/login' }
-    ]
-  },
+  // ... keep existing code (signup and login removed - private routes) ...
 
   // ============================================
   // TRAFFIC TICKETS - MAIN & SUB-PAGES (18 pages)
@@ -776,7 +758,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   // LANDLORD TENANT BOARD - MAIN & SUB-PAGES (21 pages)
   // ============================================
-  '/services/landlord-tenant': {
+  '/services/landlord-tenant-board': {
     title: 'Landlord Tenant Board | LTB Representation | London Ontario Paralegal',
     description: 'LTB representation for landlords and tenants in London, Ontario. Evictions, rent disputes, maintenance issues, N12/N13 notices. Free consultation.',
     keywords: 'landlord tenant board london, LTB paralegal, eviction defence ontario, tenant rights london',
@@ -789,7 +771,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Services', url: '/services' },
-      { name: 'Landlord Tenant Board', url: '/services/landlord-tenant' }
+      { name: 'Landlord Tenant Board', url: '/services/landlord-tenant-board' }
     ],
     faqs: [
       {
@@ -1482,7 +1464,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   // SMALL CLAIMS COURT - MAIN & SUB-PAGES (19 pages)
   // ============================================
-  '/services/small-claims': {
+  '/services/small-claims-court': {
     title: 'Small Claims Court | Sue or Defend Up to $35,000 | London Ontario',
     description: 'Small Claims Court representation in London, Ontario. Debt collection, contract disputes, property damage claims. Claims up to $35,000. Free consultation.',
     keywords: 'small claims court london, sue someone ontario, debt collection paralegal, contract dispute lawyer',
@@ -1495,7 +1477,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Services', url: '/services' },
-      { name: 'Small Claims Court', url: '/services/small-claims' }
+      { name: 'Small Claims Court', url: '/services/small-claims-court' }
     ],
     faqs: [
       {
@@ -1744,12 +1726,12 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   // HUMAN RIGHTS TRIBUNAL - MAIN & SUB-PAGES (8 pages)
   // ============================================
-  '/services/human-rights': {
+  '/services/human-rights-tribunal': {
     title: 'Human Rights Tribunal | HRTO Applications | London Ontario',
     description: 'Human Rights Tribunal representation in London, Ontario. Discrimination complaints, workplace harassment, housing discrimination. Free consultation.',
     keywords: 'human rights tribunal ontario, HRTO application, discrimination complaint, harassment claim',
     schema: { type: 'LegalService', name: 'Human Rights Services', serviceType: 'HRTO Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }],
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights-tribunal' }],
     faqs: [
       { question: 'What is the Human Rights Tribunal of Ontario?', answer: 'The HRTO hears complaints about discrimination under the Ontario Human Rights Code in employment, housing, services, contracts, and unions based on protected grounds.' },
       { question: 'How long do I have to file an HRTO complaint?', answer: 'You must file within 1 year of the last incident of discrimination. In exceptional circumstances, late applications may be accepted.' },
@@ -2433,16 +2415,15 @@ export const seoConfig: Record<string, SEOConfig> = {
   // HUMAN RIGHTS TRIBUNAL - MAIN & SUB-PAGES (8 pages)
   // ============================================
 
-  '/services/employment-discrimination': {
-    title: 'Employment Discrimination | Workplace Human Rights | London Ontario',
-    description: 'Employment discrimination claims in London, Ontario. Fired, demoted, or harassed based on protected grounds. HRTO representation.',
-    keywords: 'employment discrimination ontario, workplace discrimination, fired for disability, age discrimination work',
-    schema: { type: 'LegalService', name: 'Employment Discrimination Services', serviceType: 'Employment Human Rights', areaServed: ['London', 'Southwestern Ontario'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Employment Discrimination', url: '/services/employment-discrimination' }],
+  '/services/workplace-discrimination': {
+    title: 'Workplace Discrimination | Employment Human Rights | London Ontario',
+    description: 'Workplace discrimination claims in London, Ontario. Race, gender, disability, age discrimination at work. HRTO representation.',
+    keywords: 'workplace discrimination ontario, employment discrimination, work harassment claim',
+    schema: { type: 'LegalService', name: 'Workplace Discrimination', serviceType: 'Employment Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights-tribunal' }, { name: 'Workplace Discrimination', url: '/services/workplace-discrimination' }],
     faqs: [
-      { question: 'What is employment discrimination?', answer: 'Treating an employee or applicant unfairly based on: race, ancestry, disability, age, sex, sexual orientation, gender identity, religion, family status, or marital status. Includes hiring, firing, promotion, pay, and working conditions.' },
-      { question: 'Can I be fired for a disability?', answer: 'No. Employers must accommodate disabilities to the point of undue hardship. Firing someone because of disability, or failing to accommodate, is discrimination. Document accommodation requests and employer responses.' },
-      { question: 'What if I was passed over for promotion due to my age?', answer: 'Age discrimination in employment is illegal in Ontario. If you can show younger, less qualified candidates were promoted, you may have an HRTO claim. Document the decision-making process and your qualifications.' }
+      { question: 'What is workplace discrimination?', answer: 'Unfair treatment at work based on protected grounds: race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity, age, disability, family status, or marital status.' },
+      { question: 'Can I file HRTO while still employed?', answer: 'Yes. Your employer cannot retaliate against you for filing. Reprisal for human rights complaints is itself a violation of the Code.' }
     ]
   },
 

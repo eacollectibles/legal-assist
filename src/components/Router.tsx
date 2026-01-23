@@ -118,6 +118,19 @@ const DrivingWhileSuspendedPage = lazy(() => import('@/components/pages/DrivingW
 const SchoolZoneSpeedingPage = lazy(() => import('@/components/pages/SchoolZoneSpeedingPage'));
 const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltViolationsPage'));
 
+// Additional Service Pages
+const KitchenerParalegalPage = lazy(() => import('@/components/pages/KitchenerParalegalPage'));
+const CambridgeParalegalPage = lazy(() => import('@/components/pages/CambridgeParalegalPage'));
+const GuelphParalegalPage = lazy(() => import('@/components/pages/GuelphParalegalPage'));
+const BrantfordParalegalPage = lazy(() => import('@/components/pages/BrantfordParalegalPage'));
+const StratfordParalegalPage = lazy(() => import('@/components/pages/StratfordParalegalPage'));
+const SarniaParalegalPage = lazy(() => import('@/components/pages/SarniaParalegalPage'));
+const WindsorParalegalPage = lazy(() => import('@/components/pages/WindsorParalegalPage'));
+const ChathamKentParalegalPage = lazy(() => import('@/components/pages/ChathamKentParalegalPage'));
+const LeamingtonParalegalPage = lazy(() => import('@/components/pages/LeamingtonParalegalPage'));
+const NorfolkCountyParalegalPage = lazy(() => import('@/components/pages/NorfolkCountyParalegalPage'));
+const HuronCountyParalegalPage = lazy(() => import('@/components/pages/HuronCountyParalegalPage'));
+
 // 404 Page
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
 
@@ -251,6 +264,19 @@ export default function Router() {
             <Route path="/services/driving-while-suspended" element={<DrivingWhileSuspendedPage />} />
             <Route path="/services/school-zone-speeding" element={<SchoolZoneSpeedingPage />} />
             <Route path="/services/seatbelt-violations" element={<SeatbeltViolationsPage />} />
+
+            {/* Additional Location Pages */}
+            <Route path="/locations/kitchener" element={<KitchenerParalegalPage />} />
+            <Route path="/locations/cambridge" element={<CambridgeParalegalPage />} />
+            <Route path="/locations/guelph" element={<GuelphParalegalPage />} />
+            <Route path="/locations/brantford" element={<BrantfordParalegalPage />} />
+            <Route path="/locations/stratford" element={<StratfordParalegalPage />} />
+            <Route path="/locations/sarnia" element={<SarniaParalegalPage />} />
+            <Route path="/locations/windsor" element={<WindsorParalegalPage />} />
+            <Route path="/locations/chatham-kent" element={<ChathamKentParalegalPage />} />
+            <Route path="/locations/leamington" element={<LeamingtonParalegalPage />} />
+            <Route path="/locations/norfolk-county" element={<NorfolkCountyParalegalPage />} />
+            <Route path="/locations/huron-county" element={<HuronCountyParalegalPage />} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
