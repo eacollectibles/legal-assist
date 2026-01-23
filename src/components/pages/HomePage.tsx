@@ -469,7 +469,7 @@ export default function HomePage() {
                   Our Expertise
                 </span>
                 <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl mb-8 text-white">
-                  Comprehensive Legal Services
+                  <span className="heading-underline">Comprehensive</span> Legal Services
                 </h2>
               </AnimatedElement>
 
@@ -638,7 +638,7 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto">
             <AnimatedElement>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-secondary mb-4 text-center">
-                Frequently Asked Questions
+                <span className="heading-underline">Frequently Asked</span> Questions
               </h2>
             </AnimatedElement>
 
@@ -701,7 +701,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section ref={ctaSectionRef} id="contact" className="py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
+      <section ref={ctaSectionRef} id="contact" className="diagonal-accent py-16 md:py-24 lg:py-32 bg-pastelbeige relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
