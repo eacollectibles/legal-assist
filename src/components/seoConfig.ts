@@ -1943,18 +1943,6 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-  '/services/theft-under-5000': {
-    title: 'Theft Under $5000 Defence | Shoplifting | London Ontario',
-    description: 'Theft under $5000 defence in London, Ontario. Shoplifting charges, petty theft, first-time offenders. Protect your record.',
-    keywords: 'theft under 5000 defence, shoplifting lawyer london, petty theft charge, first time theft',
-    schema: { type: 'LegalService', name: 'Theft Defence', serviceType: 'Theft Under $5000 Defence', areaServed: ['London', 'Southwestern Ontario'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Theft Under $5000', url: '/services/theft-under-5000' }],
-    faqs: [
-      { question: 'What is the penalty for theft under $5000?', answer: 'As a summary offence: up to 6 months jail and/or $5,000 fine. First-time offenders rarely get jail. Diversion or conditional discharge may keep it off your record.' },
-      { question: 'Can I avoid a criminal record for shoplifting?', answer: 'Often yes. Options include: diversion programs (charges withdrawn after completing conditions), absolute/conditional discharge, or acquittal at trial. We work to protect your record.' }
-    ]
-  },
-
   '/services/simple-assault': {
     title: 'Simple Assault Defence | Assault Charges | London Ontario',
     description: 'Simple assault defence in London, Ontario. Assault charges, self-defence claims, bar fights, domestic disputes.',
@@ -2431,6 +2419,19 @@ export const seoConfig: Record<string, SEOConfig> = {
 
 
 
+  '/services/hrto-process': {
+    title: 'HRTO Process | How to File Human Rights Complaint | London Ontario',
+    description: 'Understanding the HRTO process in Ontario. How to file, what to expect, timelines. Human rights application guidance.',
+    keywords: 'HRTO process ontario, file human rights complaint, HRTO application how to, human rights tribunal process',
+    schema: { type: 'LegalService', name: 'HRTO Process Guidance', serviceType: 'HRTO Application Assistance', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'HRTO Process', url: '/services/hrto-process' }],
+    faqs: [
+      { question: 'How do I file an HRTO complaint?', answer: 'Complete Form 1 (Application) within 1 year of the incident. File online or by mail. The respondent has 35 days to respond. Mediation is offered, then hearing if unresolved.' },
+      { question: 'How long does the HRTO process take?', answer: 'From filing to hearing typically takes 12-18 months. Many cases settle at mediation (scheduled within a few months of filing). Complex cases may take longer.' },
+      { question: 'Do I need a paralegal for HRTO?', answer: 'You can self-represent, but professional representation significantly improves outcomes. We handle evidence gathering, legal arguments, mediation negotiations, and hearing advocacy.' }
+    ]
+  },
+
   // ============================================
   // EMPLOYMENT LAW - SUB-PAGES (4 pages)
   // ============================================
@@ -2457,19 +2458,6 @@ export const seoConfig: Record<string, SEOConfig> = {
       { question: 'What does the Employment Standards Act cover?', answer: 'The ESA sets minimum standards for: wages, overtime, vacation, public holidays, leaves of absence, termination notice, and severance pay. It applies to most Ontario employees.' },
       { question: 'How do I file an ESA complaint?', answer: 'File with the Ministry of Labour within 2 years of the violation. The Ministry investigates and can order the employer to pay. You can also pursue civil claims for amounts above ESA minimums.' },
       { question: 'Can I get overtime pay?', answer: 'Most employees are entitled to 1.5x pay after 44 hours per week. Some jobs are exempt (managers, certain professionals). Employers can average hours over periods or offer time off instead in some cases.' }
-    ]
-  },
-
-  '/services/constructive-dismissal': {
-    title: 'Constructive Dismissal | Forced Resignation | London Ontario',
-    description: 'Constructive dismissal claims in London, Ontario. Forced to resign due to workplace changes. Employment representation.',
-    keywords: 'constructive dismissal ontario, forced to resign, workplace changes, demotion',
-    schema: { type: 'LegalService', name: 'Constructive Dismissal Services', serviceType: 'Constructive Dismissal Claims', areaServed: ['London', 'Southwestern Ontario'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment', url: '/services/employment' }, { name: 'Constructive Dismissal', url: '/services/constructive-dismissal' }],
-    faqs: [
-      { question: 'What is constructive dismissal?', answer: 'When an employer makes fundamental changes to your employment without consent - significant pay cuts, demotions, relocations, or creating intolerable conditions. You can treat this as termination and claim severance.' },
-      { question: 'What changes count as constructive dismissal?', answer: 'Substantial changes include: major pay reduction (typically 10%+), significant demotion, relocation requiring a move, drastic schedule changes, or creating a hostile/toxic work environment.' },
-      { question: 'What should I do if I think I\'m being constructively dismissed?', answer: 'Document changes in writing. Object to the changes promptly. Don\'t just resign - seek legal advice first. You may need to choose between accepting changes, working under protest, or treating it as dismissal.' }
     ]
   },
 
@@ -2658,101 +2646,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-  '/locations/stratford': {
-    title: 'Paralegal Services Stratford Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Stratford, Ontario. Traffic tickets, landlord-tenant, small claims court. Serving Perth County.',
-    keywords: 'paralegal stratford ontario, lawyer stratford, legal services perth county',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Stratford', areaServed: ['Stratford', 'Perth County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Stratford', url: '/locations/stratford' }],
-    faqs: [
-      { question: 'Do you serve Stratford clients?', answer: 'Yes, we provide paralegal services to Stratford and Perth County. We handle court matters locally and tribunal matters province-wide.' },
-      { question: 'How do I meet with you from Stratford?', answer: 'We offer in-person meetings, video consultations, and phone appointments. Many matters can be handled remotely for your convenience.' }
-    ]
-  },
 
-  '/locations/kitchener': {
-    title: 'Paralegal Services Kitchener Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Kitchener, Ontario. Traffic tickets, landlord-tenant, small claims court. Serving Waterloo Region.',
-    keywords: 'paralegal kitchener ontario, lawyer kitchener, legal services waterloo region',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Kitchener', areaServed: ['Kitchener', 'Waterloo Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kitchener', url: '/locations/kitchener' }],
-    faqs: [
-      { question: 'Do you handle Kitchener traffic tickets?', answer: 'Yes, we defend traffic tickets issued anywhere in Waterloo Region including Kitchener, Waterloo, and Cambridge.' },
-      { question: 'Can you represent me at Kitchener Small Claims Court?', answer: 'Absolutely. We represent clients at the Kitchener courthouse for all Small Claims matters up to $35,000.' }
-    ]
-  },
-
-  '/locations/waterloo': {
-    title: 'Paralegal Services Waterloo Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Waterloo, Ontario. Traffic tickets, landlord-tenant, small claims court representation.',
-    keywords: 'paralegal waterloo ontario, lawyer waterloo, legal services waterloo',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Waterloo', areaServed: ['Waterloo', 'Waterloo Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Waterloo', url: '/locations/waterloo' }],
-    faqs: [
-      { question: 'Do you serve the City of Waterloo?', answer: 'Yes, we serve Waterloo residents for all paralegal matters. Waterloo Region has excellent transit connections to our office.' },
-      { question: 'Can you help UW or Laurier students?', answer: 'Absolutely. We help many university students with traffic tickets, tenancy issues, and other legal matters.' }
-    ]
-  },
-
-  '/locations/cambridge': {
-    title: 'Paralegal Services Cambridge Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Cambridge, Ontario. Traffic tickets, landlord-tenant, small claims court. Waterloo Region.',
-    keywords: 'paralegal cambridge ontario, lawyer cambridge, legal services cambridge on',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Cambridge', areaServed: ['Cambridge', 'Waterloo Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Cambridge', url: '/locations/cambridge' }],
-    faqs: [
-      { question: 'Do you handle Cambridge legal matters?', answer: 'Yes, we serve Cambridge and all of Waterloo Region. Court matters are handled at the Kitchener courthouse.' },
-      { question: 'What services are available for Cambridge residents?', answer: 'Full paralegal services: traffic defence, LTB representation, small claims, human rights, and provincial offences.' }
-    ]
-  },
-
-  '/locations/guelph': {
-    title: 'Paralegal Services Guelph Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Guelph, Ontario. Traffic tickets, landlord-tenant, small claims court. Wellington County.',
-    keywords: 'paralegal guelph ontario, lawyer guelph, legal services wellington county',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Guelph', areaServed: ['Guelph', 'Wellington County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Guelph', url: '/locations/guelph' }],
-    faqs: [
-      { question: 'Can you represent me at Guelph courthouse?', answer: 'Yes, we handle matters at the Guelph courthouse for Wellington County clients. All paralegal services available.' },
-      { question: 'Do you help University of Guelph students?', answer: 'Yes, we frequently help students with tenancy issues, traffic tickets, and other legal matters within paralegal scope.' }
-    ]
-  },
-
-  '/locations/brantford': {
-    title: 'Paralegal Services Brantford Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Brantford, Ontario. Traffic tickets, landlord-tenant, small claims court. Brant County.',
-    keywords: 'paralegal brantford ontario, lawyer brantford, legal services brant county',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Brantford', areaServed: ['Brantford', 'Brant County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brantford', url: '/locations/brantford' }],
-    faqs: [
-      { question: 'Do you serve Brantford?', answer: 'Yes, we provide paralegal services to Brantford and Brant County residents. About 40 minutes from London.' },
-      { question: 'Where do Brantford court matters go?', answer: 'We handle matters at the Brantford courthouse. LTB and HRTO matters are handled via videoconference province-wide.' }
-    ]
-  },
-
-  '/locations/windsor': {
-    title: 'Paralegal Services Windsor Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Windsor, Ontario. Traffic tickets, landlord-tenant, small claims court. Essex County.',
-    keywords: 'paralegal windsor ontario, lawyer windsor, legal services essex county',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Windsor', areaServed: ['Windsor', 'Essex County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Windsor', url: '/locations/windsor' }],
-    faqs: [
-      { question: 'Do you serve Windsor clients?', answer: 'Yes, we serve Windsor and Essex County. Many tribunal matters can be handled remotely via videoconference.' },
-      { question: 'Can you help with Ambassador Bridge traffic tickets?', answer: 'We can help with Ontario-issued traffic tickets. US-issued violations require a US attorney.' }
-    ]
-  },
-
-  '/locations/sarnia': {
-    title: 'Paralegal Services Sarnia Ontario | LegalAssist',
-    description: 'Licensed paralegal services in Sarnia, Ontario. Traffic tickets, landlord-tenant, small claims court. Lambton County.',
-    keywords: 'paralegal sarnia ontario, lawyer sarnia, legal services lambton county',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist Sarnia', areaServed: ['Sarnia', 'Lambton County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Sarnia', url: '/locations/sarnia' }],
-    faqs: [
-      { question: 'Do you handle Sarnia legal matters?', answer: 'Yes, we serve Sarnia and Lambton County clients. Court matters at local courthouse, tribunals via videoconference.' },
-      { question: 'How do I meet with you from Sarnia?', answer: 'We offer video consultations and phone appointments. For court matters, we travel to Sarnia courthouse as needed.' }
-    ]
-  },
 
   '/locations/chatham': {
     title: 'Paralegal Services Chatham Ontario | LegalAssist',
@@ -3061,14 +2955,6 @@ export const seoConfig: Record<string, SEOConfig> = {
       { name: 'Recent Decisions', url: '/recent-decisions' }
     ]
   },
-
-  // ============================================
-  // ============================================
-  
-
-
-
-
 };
 
 // ============================================

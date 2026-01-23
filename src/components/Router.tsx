@@ -156,8 +156,6 @@ const HumanRightsComplaintGuidePage = lazy(() => import('@/components/pages/Huma
 const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadlinesGuidePage'));
 const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
 
-// Answer Pages (SEO-focused) - TEMPORARILY DISABLED FOR TESTING
-
 // Admin & Dashboard Pages
 const AdminBookingsPage = lazy(() => import('@/components/pages/AdminBookingsPage'));
 const AdminMeetingRequestsPage = lazy(() => import('@/components/pages/AdminMeetingRequestsPage'));
@@ -357,8 +355,6 @@ export default function Router() {
             {/* Legal News */}
             <Route path="/legal-news" element={<LegalNewsPage />} />
             <Route path="/recent-decisions" element={<LegalNewsPage />} />
-
-            {/* Answer Pages - TEMPORARILY DISABLED FOR TESTING */}
 
             {/* Admin Pages */}
             <Route path="/admin/bookings" element={<AdminBookingsPage />} />

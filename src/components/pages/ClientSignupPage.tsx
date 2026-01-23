@@ -316,7 +316,7 @@ export default function ClientSignupPage() {
                     required
                   />
                   <label htmlFor="agreeToTerms" className="font-paragraph text-foreground/80 cursor-pointer">
-                    I agree to the <a href="/contact" className="text-primary hover:underline">Terms and Conditions</a> and <a href="/contact" className="text-primary hover:underline">Privacy Policy</a> *
+                    I agree to the <a href="#" className="text-primary hover:underline">Terms and Conditions</a> and <a href="#" className="text-primary hover:underline">Privacy Policy</a> *
                   </label>
                 </div>
 
