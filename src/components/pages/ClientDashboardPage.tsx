@@ -894,7 +894,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
                   Please complete your client intake form to help us serve you better. This will only take a few minutes.
                 </span>
                 <div className="flex gap-2">
-                  <Link to="/client-intake">
+                  <Link to="/intake">
                     <Button size="sm" className="bg-primary hover:bg-primary/90">
                       Complete Now
                     </Button>

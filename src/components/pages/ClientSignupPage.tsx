@@ -164,7 +164,7 @@ export default function ClientSignupPage() {
                 >
                   Create an Account
                 </Button>
-                <Link to="/client-login" className="w-full sm:w-auto">
+                <Link to="/login" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
                     className="w-full border-primary text-primary hover:bg-primary/5 font-semibold py-3 px-8"
@@ -330,7 +330,7 @@ export default function ClientSignupPage() {
                 </Button>
 
                 <p className="font-paragraph text-sm text-foreground/60 text-center">
-                  Already have an account? <Link to="/client-login" className="text-primary hover:underline">Sign in here</Link>
+                  Already have an account? <Link to="/login" className="text-primary hover:underline">Sign in here</Link>
                 </p>
               </form>
               </div>
