@@ -23,7 +23,7 @@ export default function MaintenanceRepairsPage() {
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">Maintenance & Repair Issues in Ontario</h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Landlords are legally required to maintain rental units in good repair. If your landlord is not addressing issues, you have legal remedies including rent reduction.</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Book Free Consultation <ArrowRight className="w-5 h-5" /></Link>
+              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Find out where you stand <ArrowRight className="w-5 h-5" /></Link>
               <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> (519) 601-1127</a>
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function MaintenanceRepairsPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Landlord Not Fixing Things?</h2>
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-8 max-w-2xl mx-auto">You do not have to live with maintenance problems. Contact us to discuss your options including T6 applications.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Book Free Consultation <ArrowRight className="w-5 h-5" /></Link>
+            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Find out where you stand <ArrowRight className="w-5 h-5" /></Link>
             <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
           </div>
         </div>
