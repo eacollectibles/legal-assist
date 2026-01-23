@@ -143,7 +143,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
-  // ... keep existing code (signup and login removed - private routes) ...
+  // ... keep existing code (traffic tickets and other service pages) ...
 
   // ============================================
   // TRAFFIC TICKETS - MAIN & SUB-PAGES (18 pages)

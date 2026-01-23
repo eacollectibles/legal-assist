@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
 
@@ -277,6 +277,13 @@ export default function Router() {
             <Route path="/locations/leamington" element={<LeamingtonParalegalPage />} />
             <Route path="/locations/norfolk-county" element={<NorfolkCountyParalegalPage />} />
             <Route path="/locations/huron-county" element={<HuronCountyParalegalPage />} />
+
+            {/* Legacy URL Redirects - BEFORE wildcard */}
+            <Route path="/services/small-claims" element={<Navigate to="/services/small-claims-court" replace />} />
+            <Route path="/services/landlord-tenant" element={<Navigate to="/services/landlord-tenant-board" replace />} />
+            <Route path="/services/human-rights" element={<Navigate to="/services/human-rights-tribunal" replace />} />
+            <Route path="/signup" element={<Navigate to="/client-signup" replace />} />
+            <Route path="/login" element={<Navigate to="/client-login" replace />} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
