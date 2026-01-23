@@ -19,9 +19,10 @@ const pageCache = new Map();
 
 function lazyLoadPage(pageName: string) {
   if (!pageCache.has(pageName)) {
+    // Use relative path for dynamic imports to ensure proper resolution
     pageCache.set(
       pageName,
-      lazy(() => import(`@/components/pages/${pageName}.tsx`))
+      lazy(() => import(`../pages/${pageName}.tsx`))
     );
   }
   return pageCache.get(pageName);
