@@ -60,6 +60,8 @@ const StrathroyChathamParalegalPage = lazy(() => import('@/components/pages/Stra
 
 // Phase 3 - Previously Unrouted Pages
 const NotaryPublicPage = lazy(() => import('@/components/pages/NotaryPublicPage'));
+const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
+const ProvincialOffencesPage = lazy(() => import('@/components/pages/ProvincialOffencesPage'));
 const CommissionerOfOathsPage = lazy(() => import('@/components/pages/CommissionerOfOathsPage'));
 const MediationServicesPage = lazy(() => import('@/components/pages/MediationServicesPage'));
 const SocialBenefitsTribunalPage = lazy(() => import('@/components/pages/SocialBenefitsTribunalPage'));
@@ -67,6 +69,16 @@ const DefamationSlanderPage = lazy(() => import('@/components/pages/DefamationSl
 const BailHearingsPage = lazy(() => import('@/components/pages/BailHearingsPage'));
 const ParalegalVsLawyerPage = lazy(() => import('@/components/pages/ParalegalVsLawyerPage'));
 const WhatIsAParalegalPage = lazy(() => import('@/components/pages/WhatIsAParalegalPage'));
+
+// Guide Pages
+const TenantRightsGuidePage = lazy(() => import('@/components/pages/TenantRightsGuidePage'));
+const LandlordRightsGuidePage = lazy(() => import('@/components/pages/LandlordRightsGuidePage'));
+const SmallClaimsCourtGuidePage = lazy(() => import('@/components/pages/SmallClaimsCourtGuidePage'));
+const LTBHearingGuidePage = lazy(() => import('@/components/pages/LTBHearingGuidePage'));
+const HumanRightsComplaintGuidePage = lazy(() => import('@/components/pages/HumanRightsComplaintGuidePage'));
+const EmploymentRightsGuidePage = lazy(() => import('@/components/pages/EmploymentRightsGuidePage'));
+const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadlinesGuidePage'));
+const BeingSuedGuidePage = lazy(() => import('@/components/pages/BeingSuedGuidePage'));
 
 // Phase 3 - New Location Pages
 const IngersollParalegalPage = lazy(() => import('@/components/pages/IngersollParalegalPage'));
@@ -278,12 +290,29 @@ export default function Router() {
             <Route path="/locations/norfolk-county" element={<NorfolkCountyParalegalPage />} />
             <Route path="/locations/huron-county" element={<HuronCountyParalegalPage />} />
 
+            {/* Other Pages */}
+            <Route path="/legal-news" element={<LegalNewsPage />} />
+            <Route path="/services/provincial-offences" element={<ProvincialOffencesPage />} />
+
+            {/* Guide Pages */}
+            <Route path="/guides/ontario-tenant-rights" element={<TenantRightsGuidePage />} />
+            <Route path="/guides/ontario-landlord-rights" element={<LandlordRightsGuidePage />} />
+            <Route path="/guides/small-claims-court-process" element={<SmallClaimsCourtGuidePage />} />
+            <Route path="/guides/ltb-hearing-preparation" element={<LTBHearingGuidePage />} />
+            <Route path="/guides/filing-human-rights-complaint" element={<HumanRightsComplaintGuidePage />} />
+            <Route path="/guides/ontario-employment-rights" element={<EmploymentRightsGuidePage />} />
+            <Route path="/guides/legal-deadlines-ontario" element={<LegalDeadlinesGuidePage />} />
+            <Route path="/guides/what-to-do-when-sued" element={<BeingSuedGuidePage />} />
+            <Route path="/guides/what-is-a-paralegal" element={<WhatIsAParalegalPage />} />
+            <Route path="/guides/paralegal-vs-lawyer" element={<ParalegalVsLawyerPage />} />
+
             {/* Legacy URL Redirects - BEFORE wildcard */}
             <Route path="/services/small-claims" element={<Navigate to="/services/small-claims-court" replace />} />
             <Route path="/services/landlord-tenant" element={<Navigate to="/services/landlord-tenant-board" replace />} />
             <Route path="/services/human-rights" element={<Navigate to="/services/human-rights-tribunal" replace />} />
             <Route path="/signup" element={<Navigate to="/client-signup" replace />} />
             <Route path="/login" element={<Navigate to="/client-login" replace />} />
+            <Route path="/booking" element={<Navigate to="/contact" replace />} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFoundPage />} />

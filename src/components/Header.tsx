@@ -3,14 +3,9 @@ import { useState } from 'react';
 import { Menu, X, LogOut, ChevronDown } from 'lucide-react';
 import { useMember } from '@/integrations';
 import { useAuth } from '@/hooks/use-auth';
-import StickyContactBar from '@/components/StickyContactBar';
 
 export default function Header() {
   const location = useLocation();
-  
-  // Hide sticky CTA on auth pages and dashboard/admin routes
-  const hideStickyRoutes = ['/client-login', '/client-signup', '/dashboard', '/admin'];
-  const hideSticky = hideStickyRoutes.some(route => location.pathname.startsWith(route));
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
@@ -54,7 +49,7 @@ export default function Header() {
             >
               <button 
                 className={`font-paragraph text-base transition-colors flex items-center gap-1 ${
-                  isActive('/about') || isActive('/what-is-a-paralegal') || isActive('/paralegal-vs-lawyer')
+                  isActive('/about') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
                     ? 'text-primary font-semibold' 
                     : 'text-secondary hover:text-primary'
                 }`}
@@ -77,9 +72,9 @@ export default function Header() {
                       About Us
                     </Link>
                     <Link
-                      to="/what-is-a-paralegal"
+                      to="/guides/what-is-a-paralegal"
                       className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
-                        isActive('/what-is-a-paralegal')
+                        isActive('/guides/what-is-a-paralegal')
                           ? 'text-primary font-semibold bg-primary/5'
                           : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
                       }`}
@@ -87,9 +82,9 @@ export default function Header() {
                       What Is a Paralegal?
                     </Link>
                     <Link
-                      to="/paralegal-vs-lawyer"
+                      to="/guides/paralegal-vs-lawyer"
                       className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
-                        isActive('/paralegal-vs-lawyer')
+                        isActive('/guides/paralegal-vs-lawyer')
                           ? 'text-primary font-semibold bg-primary/5'
                           : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
                       }`}
@@ -160,9 +155,9 @@ export default function Header() {
                 ) : (
                   <>
                     <Link 
-                      to="/signup" 
+                      to="/client-signup" 
                       className={`font-paragraph text-base transition-colors ${
-                        isActive('/signup') 
+                        isActive('/client-signup') 
                           ? 'text-primary font-semibold' 
                           : 'text-secondary hover:text-primary'
                       }`}
@@ -226,10 +221,10 @@ export default function Header() {
                 About Us
               </Link>
               <Link 
-                to="/what-is-a-paralegal" 
+                to="/guides/what-is-a-paralegal" 
                 onClick={() => setMobileMenuOpen(false)}
                 className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                  isActive('/what-is-a-paralegal') 
+                  isActive('/guides/what-is-a-paralegal') 
                     ? 'bg-primary text-primary-foreground font-semibold' 
                     : 'text-secondary hover:bg-pastelbeige'
                 }`}
@@ -237,10 +232,10 @@ export default function Header() {
                 What Is a Paralegal?
               </Link>
               <Link 
-                to="/paralegal-vs-lawyer" 
+                to="/guides/paralegal-vs-lawyer" 
                 onClick={() => setMobileMenuOpen(false)}
                 className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                  isActive('/paralegal-vs-lawyer') 
+                  isActive('/guides/paralegal-vs-lawyer') 
                     ? 'bg-primary text-primary-foreground font-semibold' 
                     : 'text-secondary hover:bg-pastelbeige'
                 }`}
@@ -307,10 +302,10 @@ export default function Header() {
                 ) : (
                   <>
                     <Link 
-                      to="/signup" 
+                      to="/client-signup" 
                       onClick={() => setMobileMenuOpen(false)}
                       className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                        isActive('/signup') 
+                        isActive('/client-signup') 
                           ? 'bg-primary text-primary-foreground font-semibold' 
                           : 'text-secondary hover:bg-pastelbeige'
                       }`}
@@ -331,9 +326,6 @@ export default function Header() {
           </nav>
         )}
       </div>
-      
-      {/* Global Sticky Contact Bar - Mobile Only */}
-      <StickyContactBar isVisible={!hideSticky} />
     </header>
   );
 }
