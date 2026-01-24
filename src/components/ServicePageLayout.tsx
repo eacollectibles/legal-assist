@@ -40,6 +40,7 @@ interface ServicePageLayoutProps {
   processSteps: ProcessStep[];
   reassuranceItems?: ReassuranceItem[];
   children?: React.ReactNode;
+  faqSection?: React.ReactNode;
 }
 
 // Default authority items
@@ -87,7 +88,8 @@ export default function ServicePageLayout({
   authorityItems = defaultAuthorityItems,
   processSteps,
   reassuranceItems = defaultReassuranceItems,
-  children
+  children,
+  faqSection
 }: ServicePageLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
@@ -236,10 +238,13 @@ export default function ServicePageLayout({
         </div>
       </section>
 
-      {/* Additional Content (FAQs, Related Services, etc.) */}
+      {/* Section 5: Pricing/Next Step */}
       {children}
 
-      {/* Section 5: Action CTA */}
+      {/* Section 6: FAQ */}
+      {faqSection}
+
+      {/* Section 7: Action CTA */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-r from-primary/10 to-pastelbeige/30">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-4xl font-bold text-foreground mb-6">

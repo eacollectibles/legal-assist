@@ -57,6 +57,51 @@ export default function SmallClaimsPage() {
     }
   ];
 
+  const pricingAndNextStepSection = (
+    <div className="w-full py-16 md:py-24 bg-white">
+      <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+        <div className="mb-12">
+          <h2 className="font-heading text-4xl font-bold text-foreground mb-6">
+            What is Small Claims Court?
+          </h2>
+          <p className="font-paragraph text-lg text-foreground/80 mb-6">
+            Small Claims Court is an accessible division of the Ontario Court of Justice designed to resolve civil disputes efficiently and affordably. It handles claims up to $50,000, making it ideal for individuals and small businesses seeking compensation for various disputes.
+          </p>
+          <p className="font-paragraph text-lg text-foreground/80">
+            Our firm specializes in representing both applicants and defendants, ensuring your rights are protected and your case is presented effectively before the court.
+          </p>
+        </div>
+
+        {/* Key Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
+            <div className="text-4xl font-bold text-primary mb-2">$50,000</div>
+            <p className="font-paragraph text-foreground/80">Maximum Claim Amount</p>
+          </div>
+          <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
+            <div className="text-4xl font-bold text-primary mb-2">6-12</div>
+            <p className="font-paragraph text-foreground/80">Months Average Timeline</p>
+          </div>
+          <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
+            <div className="text-4xl font-bold text-primary mb-2">Lower</div>
+            <p className="font-paragraph text-foreground/80">Court Fees vs. Superior Court</p>
+          </div>
+          <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
+            <div className="text-4xl font-bold text-primary mb-2">Accessible</div>
+            <p className="font-paragraph text-foreground/80">Self-Representation Friendly</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const faqAndRelatedSection = (
+    <>
+      <FAQSection />
+      <RelatedServices services={relatedServicesConfig.smallClaims} />
+    </>
+  );
+
   return (
     <>
       <SEO 
@@ -77,53 +122,9 @@ export default function SmallClaimsPage() {
         authorityItems={authorityItems}
         processSteps={processSteps}
         reassuranceItems={reassuranceItems}
+        faqSection={faqAndRelatedSection}
       >
-        {/* Additional Content */}
-        <div className="w-full py-16 md:py-24 bg-white">
-          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-            <CallProcessBox />
-          </div>
-        </div>
-
-        <div className="w-full py-16 md:py-24 bg-white">
-          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-            <div className="mb-12">
-              <h2 className="font-heading text-4xl font-bold text-foreground mb-6">
-                What is Small Claims Court?
-              </h2>
-              <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                Small Claims Court is an accessible division of the Ontario Court of Justice designed to resolve civil disputes efficiently and affordably. It handles claims up to $50,000, making it ideal for individuals and small businesses seeking compensation for various disputes.
-              </p>
-              <p className="font-paragraph text-lg text-foreground/80">
-                Our firm specializes in representing both applicants and defendants, ensuring your rights are protected and your case is presented effectively before the court.
-              </p>
-            </div>
-
-            {/* Key Statistics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-                <div className="text-4xl font-bold text-primary mb-2">$50,000</div>
-                <p className="font-paragraph text-foreground/80">Maximum Claim Amount</p>
-              </div>
-              <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-                <div className="text-4xl font-bold text-primary mb-2">6-12</div>
-                <p className="font-paragraph text-foreground/80">Months Average Timeline</p>
-              </div>
-              <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-                <div className="text-4xl font-bold text-primary mb-2">Lower</div>
-                <p className="font-paragraph text-foreground/80">Court Fees vs. Superior Court</p>
-              </div>
-              <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-                <div className="text-4xl font-bold text-primary mb-2">Accessible</div>
-                <p className="font-paragraph text-foreground/80">Self-Representation Friendly</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <FAQSection />
-
-        <RelatedServices services={relatedServicesConfig.smallClaims} />
+        {pricingAndNextStepSection}
       </ServicePageLayout>
     </>
   );
