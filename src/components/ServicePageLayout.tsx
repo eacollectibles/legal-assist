@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Image } from '@/components/ui/image';
 import ConversionStrip from '@/components/ConversionStrip';
+import PrimaryCTA from '@/components/PrimaryCTA';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 interface AuthorityItem {
