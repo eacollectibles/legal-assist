@@ -272,10 +272,30 @@ export default function HomePage() {
               <PrimaryCTA variant="button" size="lg" />
               <Link 
                 to="/services"
-                className="btn-shine btn-lift border border-white/30 text-white font-paragraph px-8 py-4 text-lg rounded-lg inline-block text-center"
+                className="btn-lift border border-white/25 text-white/90 hover:text-white font-paragraph rounded-lg inline-block text-center
+                           px-6 py-3 text-base opacity-85 hover:opacity-100
+                           lg:px-8 lg:py-4 lg:text-lg"
               >
                 View Services
               </Link>
+            </div>
+
+            {/* Micro "What happens next" (desktop/tablet) */}
+            <div className="hidden sm:block mt-6">
+              <ul className="flex flex-wrap gap-x-6 gap-y-2 text-white/75 text-sm font-paragraph">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span>Send your details</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span>Speak with a licensed paralegal</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span>Decide next steps — no retainer required</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
