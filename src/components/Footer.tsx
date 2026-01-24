@@ -153,8 +153,11 @@ export default function Footer() {
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
               <strong className="text-secondary-foreground/90">Immigration Services Notice:</strong> Immigration services are provided exclusively by licensed Regulated Canadian Immigration Consultants (RCICs). LegalAssist Paralegal Services does not provide immigration advice or representation except where permitted by the Law Society of Ontario in relation to advocacy before the Immigration and Refugee Board (IRB).
             </p>
-            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
               <strong className="text-secondary-foreground/90">Insolvency Services Notice:</strong> Insolvency and bankruptcy services referenced on this website are provided exclusively by Licensed Insolvency Trustees (LITs) licensed by the Office of the Superintendent of Bankruptcy. LegalAssist Paralegal Services does not provide insolvency advice or representation.
+            </p>
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+              <strong className="text-secondary-foreground/90">Referral Fee Disclosure:</strong> LegalAssist Paralegal Services may receive a referral or administrative fee when connecting clients with third-party licensed professionals, including Regulated Canadian Immigration Consultants (RCICs) and Licensed Insolvency Trustees (LITs). Any such referrals do not affect the independence of the licensed professional or the fees charged to the client.
             </p>
           </div>
           <p className="text-xs text-secondary-foreground/50 text-center mb-2">
