@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, CheckCircle, AlertTriangle, FileText, Gavel, Car, Building } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import CallProcessBox from '@/components/CallProcessBox';
 
 export default function ProvincialOffencesPage() {
   useEffect(() => {
@@ -140,6 +141,13 @@ export default function ProvincialOffencesPage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CALL PROCESS BOX SECTION */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          <CallProcessBox />
         </div>
       </section>
 

@@ -6,6 +6,7 @@ import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyContactBar from '@/components/StickyContactBar';
+import CallProcessBox from '@/components/CallProcessBox';
 import { cn } from '@/lib/utils';
 import {
   Accordion,
@@ -363,6 +364,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* CALL PROCESS BOX SECTION */}
+      <section className="py-16 md:py-24 lg:py-32 bg-background">
+        <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+          <AnimatedElement>
+            <CallProcessBox />
+          </AnimatedElement>
+        </div>
+      </section>
+
       {/* FEATURES SECTION - "Bento Box" Style Grid */}
       <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">

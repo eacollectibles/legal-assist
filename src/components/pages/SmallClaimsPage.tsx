@@ -3,6 +3,7 @@ import SEO from '@/components/SEO';
 import { CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
 import { FAQSection } from '@/components/FAQSection';
 import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import CallProcessBox from '@/components/CallProcessBox';
 
 export default function SmallClaimsPage() {
   const authorityItems = [
@@ -78,6 +79,12 @@ export default function SmallClaimsPage() {
         reassuranceItems={reassuranceItems}
       >
         {/* Additional Content */}
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <CallProcessBox />
+          </div>
+        </div>
+
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
             <div className="mb-12">
