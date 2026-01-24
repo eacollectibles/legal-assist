@@ -63,7 +63,7 @@ export default function ComingSoonModal() {
 
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
               <p className="font-paragraph text-amber-800 text-sm">
-                <strong>Please note:</strong> The information on this website is for informational purposes only and does not constitute legal advice. No solicitor-client relationship is formed by visiting this website.
+                <strong>Please note:</strong> The information on this website is for informational purposes only and does not constitute legal advice. No paralegal-client relationship is formed by visiting this website.
               </p>
             </div>
 
