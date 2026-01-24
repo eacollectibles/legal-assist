@@ -1,148 +1,157 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, AlertTriangle, Clock, CheckCircle, FileText, Scale, Calendar, Ban } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, HelpCircle, Clock, FileText, Scale, AlertCircle } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function BeingSuedGuidePage() {
-  useEffect(() => {
-    document.title = 'What to Do When You\'re Sued in Ontario | Step-by-Step Guide | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Received a Small Claims Court claim? Don\'t panic. This guide explains your options, deadlines, and how to defend yourself. Free information.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Defence Representation', description: 'I help people respond to Small Claims Court claims and defend against lawsuits up to $35,000.' },
+    { title: 'Deadline Protection', description: 'You have limited time to respond. Missing deadlines can result in automatic judgment against you.' },
+    { title: 'Strategic Options', description: 'Dispute the claim, counterclaim, negotiate settlement, or challenge jurisdiction.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Don\'t Panic', description: 'Being sued is stressful but you have rights and options.' },
+    { step: '2', title: 'Note Deadlines', description: 'You have 20 days to file a Defence (30 if outside Ontario).' },
+    { step: '3', title: 'Get Help', description: 'Contact a paralegal to assess the claim and prepare your response.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'You Have Rights', description: 'Plaintiffs must prove their case—you\'re presumed not liable.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Defence Options', description: 'Deny the claim, raise defences, or file your own claim.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Settlement Possible', description: 'Many cases settle before trial.' }
+  ];
+
+  const honestFAQs = [
+    { question: "I just got served with a claim. What do I do?", answer: "First: note the date you were served—your deadline runs from this date. Second: read the claim carefully to understand what's being alleged. Third: contact a paralegal immediately. You have 20 days to file a Defence." },
+    { question: "What happens if I don't respond?", answer: "The plaintiff can get a default judgment against you without a trial. You'll owe the full amount claimed plus costs, and they can enforce through garnishment, property liens, etc. ALWAYS respond." },
+    { question: "What if the claim is wrong or unfair?", answer: "File a Defence disputing the allegations. Just because someone sues you doesn't mean they're right. They have to prove their case—and many claims have weaknesses you can exploit." },
+    { question: "Can I sue them back?", answer: "Yes—you can file a Defendant's Claim (counterclaim) if you have your own claims against the plaintiff arising from the same situation or related matters." },
+    { question: "What are my realistic options?", answer: "Defend vigorously if the claim is weak, negotiate settlement if there's exposure, admit liability and dispute amount if appropriate, or challenge jurisdiction/limitation period if applicable." },
+    { question: "How much will this cost me?", answer: "Defending is generally less expensive than suing. Filing a Defence costs $73. My fees depend on complexity. Often settling early is cheaper than fighting—I'll give you an honest cost-benefit analysis." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <FileText className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Free Guide</span>
+    <>
+      <SEO title="Being Sued in Small Claims Court Ontario | What To Do Guide" description="Guide to being sued in Ontario Small Claims Court. Deadlines, defence options, what to expect. Don't miss your 20-day deadline. Free consultation." canonical="https://www.legalassist.london/guides/being-sued" />
+      <ServicePageLayout seoTitle="Being Sued: What To Do | Ontario" seoDescription="Guide to being sued in Small Claims Court." canonical="https://www.legalassist.london/guides/being-sued" problemHeadline="Being Sued in Small Claims Court?" problemDescription="Don't panic, but don't ignore it either. You have 20 days to respond. Missing this deadline means automatic judgment against you." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Being sued guide" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">What To Do When You're Sued</h2>
+            
+            <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-red-800 mb-3 flex items-center gap-2">
+                <AlertCircle className="w-6 h-6" />
+                Critical: 20-Day Deadline
+              </h3>
+              <p className="text-red-900">You have 20 days from being served to file a Defence. Miss this deadline and the plaintiff can get judgment against you automatically—no trial needed. Don't wait.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              What to Do When You're Sued
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Getting served with a lawsuit is stressful, but you have rights and options. This guide explains exactly what to do.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Don't Panic */}
-      <section className="py-16 md:py-20 bg-red-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <AlertTriangle className="w-12 h-12 text-red-600 mx-auto mb-4" />
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">First: Don't Panic, Don't Ignore It</h2>
-            <p className="font-paragraph text-foreground/80 mb-6">
-              The worst thing you can do is ignore a lawsuit. If you don't respond, the plaintiff can get a <strong>default judgment</strong> against you—meaning they win automatically and can start collecting.
-            </p>
-            <div className="bg-white p-4 rounded-xl shadow-sm">
-              <p className="font-paragraph text-red-700 font-medium">
-                ⏰ You have only <strong>20 days</strong> to file your Defence (or 40 days if served outside Ontario).
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Steps to Take */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Steps to Take Immediately</h2>
-          <div className="max-w-3xl mx-auto space-y-6">
-            {[
-              { step: 1, title: 'Note the Deadline', desc: 'Calculate 20 days from when you were served. Mark it on your calendar. This is your absolute deadline to respond.' },
-              { step: 2, title: 'Read Everything Carefully', desc: 'Read the Plaintiff\'s Claim completely. Understand exactly what they\'re claiming and how much.' },
-              { step: 3, title: 'Gather Your Documents', desc: 'Collect any contracts, emails, receipts, or evidence related to the dispute. These will be crucial.' },
-              { step: 4, title: 'Decide Your Response', desc: 'You can: (a) File a Defence, (b) Try to settle, (c) Admit part and dispute part, (d) Make your own claim against them.' },
-              { step: 5, title: 'File Your Defence', desc: 'Complete the Defence form and file it with the court. Pay the filing fee ($73). Serve a copy on the plaintiff.' },
-              { step: 6, title: 'Consider Getting Help', desc: 'If the amount is significant or the case is complex, consult a paralegal or lawyer.' },
-            ].map((item) => (
-              <div key={item.step} className="bg-white p-6 rounded-xl shadow-sm flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold text-lg">
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="font-heading text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="font-paragraph text-foreground/70">{item.desc}</p>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Step-by-Step Guide</h3>
+            <div className="space-y-6 mb-12">
+              <div className="bg-primary/5 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                  <div>
+                    <h4 className="font-bold text-foreground mb-2">Note the Date You Were Served</h4>
+                    <p className="text-foreground/80 text-sm">This starts your 20-day clock. Write it down. If served by mail, add 5 days.</p>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Your Options */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Your Response Options</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: 'File a Defence', desc: 'Dispute the claim entirely or in part. Explain why you don\'t owe what they\'re claiming.', best: 'Best if you believe you don\'t owe the money' },
-              { title: 'Make a Defendant\'s Claim', desc: 'If the plaintiff actually owes YOU money, you can counter-sue in the same proceeding.', best: 'Best if you have your own claim against them' },
-              { title: 'Propose a Settlement', desc: 'Contact the plaintiff to negotiate. Many cases settle before trial.', best: 'Best if you want to avoid court and can negotiate' },
-              { title: 'Admit and Pay', desc: 'If you owe the money, admitting can avoid additional costs and interest.', best: 'Best if you clearly owe and want to resolve it' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70 text-sm mb-3">{item.desc}</p>
-                <p className="font-paragraph text-primary text-sm font-medium">{item.best}</p>
+              <div className="bg-primary/5 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                  <div>
+                    <h4 className="font-bold text-foreground mb-2">Read the Claim Carefully</h4>
+                    <p className="text-foreground/80 text-sm">Understand what they're claiming, how much, and what evidence they mention. Look for weaknesses.</p>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Common Defences */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Common Defences</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { defence: 'You Don\'t Owe the Amount', desc: 'The debt has been paid, or the amount is wrong.' },
-              { defence: 'No Contract Exists', desc: 'There was no valid agreement.' },
-              { defence: 'Contract Was Breached', desc: 'The plaintiff didn\'t fulfill their end.' },
-              { defence: 'Limitation Period Expired', desc: 'In Ontario, most claims must be brought within 2 years.' },
-              { defence: 'Wrong Person', desc: 'You\'re not the person who owes the debt.' },
-              { defence: 'Set-Off', desc: 'The plaintiff owes you money that offsets their claim.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-5 rounded-xl shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.defence}</h3>
-                <p className="font-paragraph text-foreground/70 text-sm">{item.desc}</p>
+              <div className="bg-primary/5 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                  <div>
+                    <h4 className="font-bold text-foreground mb-2">Gather Your Evidence</h4>
+                    <p className="text-foreground/80 text-sm">Contracts, emails, texts, photos, receipts—anything relevant to your defence.</p>
+                  </div>
+                </div>
               </div>
-            ))}
+              <div className="bg-primary/5 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                  <div>
+                    <h4 className="font-bold text-foreground mb-2">Contact a Paralegal</h4>
+                    <p className="text-foreground/80 text-sm">Get professional assessment of the claim and help preparing your Defence. Time is limited.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Your Defence Options</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <CheckCircle className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Full Defence</h4>
+                <p className="text-green-900 text-sm">Deny the claim entirely. Plaintiff must prove their case. If their evidence is weak, you may win.</p>
+              </div>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <Scale className="w-6 h-6 text-blue-600 mb-2" />
+                <h4 className="font-bold text-blue-800 mb-2">Partial Defence</h4>
+                <p className="text-blue-900 text-sm">Admit some facts but dispute amount or liability. Often the honest approach when there's partial exposure.</p>
+              </div>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <FileText className="w-6 h-6 text-yellow-600 mb-2" />
+                <h4 className="font-bold text-yellow-800 mb-2">Counterclaim</h4>
+                <p className="text-yellow-900 text-sm">Sue them back for your own claims. Can be same incident or related matters.</p>
+              </div>
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                <AlertTriangle className="w-6 h-6 text-purple-600 mb-2" />
+                <h4 className="font-bold text-purple-800 mb-2">Technical Defences</h4>
+                <p className="text-purple-900 text-sm">Limitation period expired, wrong jurisdiction, improper service, lack of standing.</p>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">What NOT To Do</h3>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+              <ul className="text-red-900 space-y-2">
+                <li className="flex items-start gap-2"><XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" /> <span>Don't ignore the claim hoping it goes away</span></li>
+                <li className="flex items-start gap-2"><XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" /> <span>Don't wait until the last day to act</span></li>
+                <li className="flex items-start gap-2"><XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" /> <span>Don't contact the plaintiff to argue without legal advice</span></li>
+                <li className="flex items-start gap-2"><XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" /> <span>Don't destroy evidence that might be relevant</span></li>
+                <li className="flex items-start gap-2"><XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" /> <span>Don't assume the claim is correct just because it's in court documents</span></li>
+              </ul>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <Shield className="w-12 h-12 mx-auto mb-4 opacity-90" />
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Being Sued? Get Help Fast.</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your claim and discuss your defence options.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link to="/services/small-claims" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Defence Services
-            </Link>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Being Sued FAQs</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      <Footer />
-    </div>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Being Sued? Act Now.</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Your deadline is running. Let me review the claim and help you respond.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get Help Today</a>
+          </div>
+        </div>
+        <RelatedServices services={relatedServicesConfig.smallClaims} />
+      </ServicePageLayout>
+    </>
   );
 }

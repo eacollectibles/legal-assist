@@ -1,205 +1,135 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, Clock, CheckCircle, Home, FileText, DollarSign, Hammer, AlertTriangle, Users } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, HelpCircle, Hammer, Home, DollarSign, FileText } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function HomeImprovementDisputesPage() {
-  useEffect(() => {
-    document.title = 'Contractor & Home Renovation Disputes | Small Claims Court Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for contractor disputes in Ontario Small Claims Court. Bad renovations, incomplete work, contractor fraud. Recover up to $50,000. Free consultation London.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Contractor Disputes', description: 'I help homeowners recover money and damages when contractors don\'t deliver what they promised.' },
+    { title: 'Both Sides', description: 'I also represent contractors pursuing payment for completed work when customers don\'t pay.' },
+    { title: 'Consumer Protections', description: 'Ontario\'s Consumer Protection Act provides additional remedies for home renovation contracts.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Document Issues', description: 'Photos of defects, contracts, communications, cost of repairs.' },
+    { step: '2', title: 'Formal Demand', description: 'Demand completion, repairs, or refund with deadline.' },
+    { step: '3', title: 'Legal Action', description: 'Small Claims Court claim if demand not satisfied.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Strong Protections', description: 'CPA provides cooling-off and cancellation rights.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Cost of Repair', description: 'Recover what it costs to fix poor work.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Return of Deposit', description: 'Deposits recoverable for non-performance.' }
+  ];
+
+  const honestFAQs = [
+    { question: "Contractor took deposit and disappeared. What can I do?", answer: "This may be fraud (police report) and civil breach of contract (Small Claims). Recover: deposit paid, cost difference if new contractor charges more, potentially CPA remedies. Act quickly—contractors who do this often do it to many people." },
+    { question: "Work is poor quality. What are my options?", answer: "Don't pay remaining balance until resolved. Document with photos. Get independent quotes for cost to repair/complete. You can recover: cost of repair, diminished value, sometimes loss of use damages." },
+    { question: "Do I have to pay for work I'm not happy with?", answer: "You must pay for work that's reasonably completed to contract specifications. You don't have to pay for defective work. But 'not happy' isn't the same as 'defective'—there must be objective problems, not just preference." },
+    { question: "There's no written contract. Do I have a case?", answer: "Oral contracts are enforceable but harder to prove. Texts, emails, and quotes can establish terms. Get multiple quotes now to establish what reasonable cost should have been." },
+    { question: "Contractor is threatening to lien my house. What do I do?", answer: "Construction liens are serious—they attach to your property. If you have valid defences (defective work, incomplete work), you can dispute the lien. Don't ignore lien threats—get legal advice quickly." },
+    { question: "I'm a contractor and the customer won't pay. What can I do?", answer: "Send demand letter. File Small Claims claim. Consider construction lien (strict time limits—45 days to preserve, 90 days to perfect). Document completion with photos and get signed completion acknowledgments." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Hammer className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Small Claims Court Services</span>
-            </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Contractor & Home Renovation Disputes
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Bad contractor? Incomplete renovation? Shoddy workmanship? Pursue compensation in Small Claims Court for home improvement disputes up to $50,000.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Common Disputes */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Common Contractor Disputes We Handle</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { icon: AlertTriangle, title: 'Abandoned Projects', desc: 'Contractor took your deposit and disappeared, or stopped work mid-project without completing the job.' },
-              { icon: Hammer, title: 'Defective Workmanship', desc: 'Poor quality work that doesn\'t meet building codes, industry standards, or contract specifications.' },
-              { icon: Clock, title: 'Excessive Delays', desc: 'Project significantly delayed beyond agreed timeline causing you financial loss or inconvenience.' },
-              { icon: DollarSign, title: 'Cost Overruns', desc: 'Final bill far exceeds the quote without valid justification or proper change order documentation.' },
-              { icon: FileText, title: 'Contract Breaches', desc: 'Contractor failed to deliver what was promised in the written agreement or didn\'t follow specs.' },
-              { icon: Home, title: 'Property Damage', desc: 'Contractor or their workers damaged your home, belongings, or neighbouring property during work.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <item.icon className="w-10 h-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
+    <>
+      <SEO title="Home Improvement Disputes Paralegal Ontario | Contractor Problems" description="Licensed paralegal for home improvement disputes in Ontario. Contractor didn't finish, poor quality work, deposit recovery. Free consultation." canonical="https://www.legalassist.london/services/home-improvement-disputes" />
+      <ServicePageLayout seoTitle="Home Improvement Disputes | Ontario" seoDescription="Home improvement dispute help in Ontario." canonical="https://www.legalassist.london/services/home-improvement-disputes" problemHeadline="Home Improvement Disputes" problemDescription="Contractor took your money and didn't deliver? Poor quality work? I help homeowners recover their money—and contractors get paid for honest work." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Home improvement disputes" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Common Contractor Disputes</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <Hammer className="w-8 h-8 text-red-600 mb-3" />
+                <h4 className="font-bold text-red-800 mb-3">For Homeowners:</h4>
+                <ul className="text-red-900 text-sm space-y-2">
+                  <li>• Contractor took deposit, never started</li>
+                  <li>• Work incomplete or abandoned</li>
+                  <li>• Poor quality workmanship</li>
+                  <li>• Work not to code/permit issues</li>
+                  <li>• Massive cost overruns</li>
+                  <li>• Contractor damaged property</li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What You Can Recover */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What Compensation Can You Recover?</h2>
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {[
-                { title: 'Deposit Recovery', desc: 'Get back deposits paid for work never started or completed' },
-                { title: 'Cost to Complete', desc: 'Funds to hire another contractor to finish the abandoned project' },
-                { title: 'Repair Costs', desc: 'Cost to fix defective or substandard work' },
-                { title: 'Material Costs', desc: 'Reimbursement for materials paid for but not delivered or used' },
-                { title: 'Additional Expenses', desc: 'Hotel stays, storage, rental equipment during extended delays' },
-                { title: 'Lost Rental Income', desc: 'If renovation delays prevented you from renting the property' },
-              ].map((item, index) => (
-                <div key={index} className={`p-6 flex items-start gap-4 ${index !== 5 ? 'border-b border-gray-100' : ''}`}>
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
-                    <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Building Your Case */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Evidence We'll Gather for Your Case</h2>
-          <div className="max-w-3xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                'Written contract or agreement',
-                'Payment receipts and invoices',
-                'Photos of defective work',
-                'Text messages and emails',
-                'Building inspector reports',
-                'Quotes from other contractors',
-                'Permits and inspection records',
-                'Witness statements',
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
-                  <FileText className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="font-paragraph text-foreground">{item}</span>
-                </div>
-              ))}
-            </div>
-            <p className="font-paragraph text-foreground/70 text-center mt-8">
-              Don't have all of this? That's okay. We'll help you gather what you need and work with what you have.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Case Against Unlicensed Contractors */}
-      <section className="py-16 md:py-20 bg-amber-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="flex items-start gap-4">
-              <Shield className="w-10 h-10 text-amber-600 flex-shrink-0" />
-              <div>
-                <h2 className="font-heading text-2xl font-bold text-foreground mb-4">Unlicensed Contractors? You Still Have Rights</h2>
-                <p className="font-paragraph text-foreground/80 mb-4">
-                  In Ontario, most home renovation contractors don't require a license (except for specific trades like electricians and plumbers). However, even if your contractor was unlicensed, you can still sue them for:
-                </p>
-                <ul className="space-y-2">
-                  {['Breach of contract', 'Negligent work', 'Consumer Protection Act violations', 'Fraud or misrepresentation'].map((item, index) => (
-                    <li key={index} className="flex items-center gap-2 font-paragraph text-foreground/80">
-                      <CheckCircle className="w-5 h-5 text-green-600" /> {item}
-                    </li>
-                  ))}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <DollarSign className="w-8 h-8 text-blue-600 mb-3" />
+                <h4 className="font-bold text-blue-800 mb-3">For Contractors:</h4>
+                <ul className="text-blue-900 text-sm space-y-2">
+                  <li>• Customer refuses to pay</li>
+                  <li>• Customer claims defects that don't exist</li>
+                  <li>• Extra work performed, customer won't pay</li>
+                  <li>• Customer's changes delayed project</li>
+                  <li>• Customer interfered with work</li>
                 </ul>
               </div>
             </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">What Homeowners Can Recover</h3>
+            <div className="overflow-x-auto mb-12">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                  <tr className="bg-primary text-white">
+                    <th className="px-6 py-4 text-left font-heading">Situation</th>
+                    <th className="px-6 py-4 text-left font-heading">Recoverable Damages</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr><td className="px-6 py-4 font-medium">Contractor abandoned job</td><td className="px-6 py-4 text-sm">Deposit + cost to complete with new contractor - original price</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Defective work</td><td className="px-6 py-4 text-sm">Cost to repair/redo the work properly</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Incomplete work</td><td className="px-6 py-4 text-sm">Cost to complete + any damage from delay</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Property damage</td><td className="px-6 py-4 text-sm">Repair costs for damage caused by contractor</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Consumer Protection Act Rights</h3>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+              <h4 className="font-bold text-green-800 mb-3">For Home Renovation Contracts:</h4>
+              <ul className="text-green-900 text-sm space-y-2">
+                <li>✓ 10-day cooling-off period for contracts signed at your home</li>
+                <li>✓ Written contract required for contracts over $50</li>
+                <li>✓ Cannot require more than 10% deposit before work starts</li>
+                <li>✓ Cancellation rights if work not started within 30 days of agreed date</li>
+                <li>✓ Additional remedies for unfair practices</li>
+              </ul>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg">
+              <h4 className="font-bold text-yellow-800 mb-2">Before Paying More</h4>
+              <p className="text-yellow-900 text-sm">If you're unhappy with work, don't pay remaining balance until issues are resolved. Once paid, your leverage disappears. But also don't refuse to pay valid invoices—this can hurt your position.</p>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Process */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">How We Handle Your Contractor Dispute</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            {[
-              { step: '1', title: 'Case Review', desc: 'We review your contract, communications, photos, and calculate your total damages.' },
-              { step: '2', title: 'Demand Letter', desc: 'Formal letter to the contractor demanding payment. Many disputes settle at this stage.' },
-              { step: '3', title: 'File Claim', desc: 'If no response, we file your Plaintiff\'s Claim in Small Claims Court.' },
-              { step: '4', title: 'Court Representation', desc: 'We represent you at settlement conference and trial if needed.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold">
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="font-heading text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                </div>
-              </div>
-            ))}
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Contractor Dispute FAQs</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Bad Contractor? Fight Back</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your renovation dispute and discuss your options.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Contractor Problem?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Gather your contract and documents. Let's discuss recovering your money.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.smallClaims} />
+      </ServicePageLayout>
+    </>
   );
 }

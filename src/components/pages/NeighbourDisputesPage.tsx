@@ -1,205 +1,141 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, Clock, CheckCircle, Home, FileText, DollarSign, Trees, AlertTriangle, Fence } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, HelpCircle, Home, TreePine, Volume2, Fence } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function NeighbourDisputesPage() {
-  useEffect(() => {
-    document.title = 'Neighbour Disputes | Tree Damage, Fences, Boundaries | Small Claims Court Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for neighbour disputes in Ontario Small Claims Court. Tree damage, fence disputes, property line issues, water drainage. Recover up to $50,000. London Ontario.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Neighbour Disputes', description: 'Property damage, boundary issues, trees, noise—I help resolve disputes that affect your home and property.' },
+    { title: 'Multiple Options', description: 'Small Claims Court, municipal bylaw enforcement, or negotiated resolution depending on the situation.' },
+    { title: 'Practical Solutions', description: 'You have to live next to these people. I help find solutions that work long-term.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Document Everything', description: 'Photos, dates, communications, damage estimates.' },
+    { step: '2', title: 'Attempt Resolution', description: 'Formal demand letter often resolves disputes.' },
+    { step: '3', title: 'Legal Action', description: 'Small Claims Court or bylaw enforcement if needed.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Property Rights', description: 'You have legal rights to use and enjoy your property.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Recoverable Damages', description: 'Property damage, diminished value, repair costs.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Injunctive Relief', description: 'Court orders to stop ongoing problems.' }
+  ];
+
+  const honestFAQs = [
+    { question: "My neighbour's tree damaged my property. Who pays?", answer: "Generally, if their tree falls on your property, they may be liable if they knew or should have known the tree was hazardous. If it was a healthy tree that fell in a storm, liability is less clear. Your own insurance may cover it regardless—then your insurer can pursue the neighbour." },
+    { question: "Can I cut branches that hang over my property?", answer: "Yes—you can trim branches up to your property line (but not beyond). However, you generally can't kill the tree by excessive cutting. Consider giving notice first to avoid escalation." },
+    { question: "My neighbour is violating noise bylaws. What can I do?", answer: "First: document (dates, times, recordings if legal). Report to municipal bylaw enforcement—they can issue fines. If it's extreme and ongoing, you may have a civil nuisance claim, but bylaw enforcement is usually more effective." },
+    { question: "There's a fence dispute. Who owns the fence?", answer: "If it's directly on the property line, it's likely shared. If entirely on one property, that owner owns it. Survey may be needed to determine line location. Neighbours generally share fence costs under the Line Fences Act." },
+    { question: "Is it worth suing my neighbour?", answer: "Consider: you'll still live next to them after. Small Claims makes sense for significant damage ($1,000+). For ongoing issues, bylaw enforcement or injunctions may be more practical than damage claims." },
+    { question: "What damages can I recover?", answer: "Repair costs, property damage, diminished property value, sometimes cost of alternative arrangements while damage is repaired. Document everything with photos, estimates, and receipts." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Home className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Small Claims Court Services</span>
-            </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Neighbour Disputes & Property Damage
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Neighbour's tree damaged your property? Fence dispute? Boundary issues? When friendly conversation fails, you have legal options in Small Claims Court.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Common Disputes */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Common Neighbour Disputes We Handle</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { icon: Trees, title: 'Tree & Branch Damage', desc: 'Neighbour\'s tree fell on your property, roots damaged foundation, or overhanging branches caused damage.' },
-              { icon: Fence, title: 'Fence Disputes', desc: 'Disagreements over fence installation, repair costs, height, style, or who owns the fence on property line.' },
-              { icon: Home, title: 'Property Line Issues', desc: 'Encroachment disputes, structures built over property line, or disagreements about boundary location.' },
-              { icon: AlertTriangle, title: 'Water & Drainage', desc: 'Neighbour altered grading causing water to flood your property, or drainage issues affecting your land.' },
-              { icon: DollarSign, title: 'Shared Costs Recovery', desc: 'Neighbour refuses to pay their share of shared fence, driveway, or retaining wall repairs.' },
-              { icon: Shield, title: 'Property Damage', desc: 'Damage from construction, landscaping, or other activities on neighbour\'s property.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <item.icon className="w-10 h-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
+    <>
+      <SEO title="Neighbour Disputes Paralegal Ontario | Property Damage Trees Fences" description="Licensed paralegal for neighbour disputes in Ontario. Tree damage, fence disputes, property damage, noise. Small Claims Court. Free consultation." canonical="https://www.legalassist.london/services/neighbour-disputes" />
+      <ServicePageLayout seoTitle="Neighbour Disputes | Ontario" seoDescription="Neighbour dispute help in Ontario." canonical="https://www.legalassist.london/services/neighbour-disputes" problemHeadline="Neighbour Disputes" problemDescription="Tree damage, fence fights, property damage, noise? Neighbour disputes affect your daily life. I help resolve them—in court if needed." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Neighbour disputes" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Common Neighbour Disputes</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-primary/5 rounded-lg p-6">
+                <TreePine className="w-8 h-8 text-primary mb-3" />
+                <h4 className="font-bold text-foreground mb-3">Trees & Vegetation:</h4>
+                <ul className="text-foreground/80 text-sm space-y-2">
+                  <li>• Tree falls and damages property</li>
+                  <li>• Branches overhang property line</li>
+                  <li>• Roots damaging foundation/pipes</li>
+                  <li>• Hedge blocking light/views</li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tree Law in Ontario */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Tree Law in Ontario: Know Your Rights</h2>
-            <div className="space-y-6">
-              <div className="bg-white p-6 rounded-xl">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Overhanging Branches</h3>
-                <p className="font-paragraph text-foreground/70">You can trim branches that hang over your property line, but only up to the property line. You're responsible for disposal costs and must not damage the tree itself.</p>
+              <div className="bg-primary/5 rounded-lg p-6">
+                <Fence className="w-8 h-8 text-primary mb-3" />
+                <h4 className="font-bold text-foreground mb-3">Boundaries & Fences:</h4>
+                <ul className="text-foreground/80 text-sm space-y-2">
+                  <li>• Fence location disputes</li>
+                  <li>• Encroachment on property</li>
+                  <li>• Fence repair cost sharing</li>
+                  <li>• Structures built over property line</li>
+                </ul>
               </div>
-              <div className="bg-white p-6 rounded-xl">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Fallen Trees & Storm Damage</h3>
-                <p className="font-paragraph text-foreground/70">If a healthy tree falls due to storm, it's typically "act of God" - no liability. But if the tree was dead, dying, or the owner knew it was hazardous, they can be liable for damages.</p>
+              <div className="bg-primary/5 rounded-lg p-6">
+                <Volume2 className="w-8 h-8 text-primary mb-3" />
+                <h4 className="font-bold text-foreground mb-3">Noise & Nuisance:</h4>
+                <ul className="text-foreground/80 text-sm space-y-2">
+                  <li>• Excessive noise (parties, music, dogs)</li>
+                  <li>• Construction noise/hours</li>
+                  <li>• Smoke, odours, pollution</li>
+                  <li>• Light pollution</li>
+                </ul>
               </div>
-              <div className="bg-white p-6 rounded-xl">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Root Damage</h3>
-                <p className="font-paragraph text-foreground/70">Tree owners can be liable if roots from their tree damage your foundation, driveway, sewer lines, or other structures - especially if they knew about the problem.</p>
+              <div className="bg-primary/5 rounded-lg p-6">
+                <Home className="w-8 h-8 text-primary mb-3" />
+                <h4 className="font-bold text-foreground mb-3">Property Damage:</h4>
+                <ul className="text-foreground/80 text-sm space-y-2">
+                  <li>• Water runoff/drainage issues</li>
+                  <li>• Construction damage</li>
+                  <li>• Vehicle damage on property</li>
+                  <li>• Pet damage</li>
+                </ul>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Fence Law */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Ontario Line Fences Act</h2>
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <p className="font-paragraph text-foreground/80 mb-6">
-                Under Ontario's Line Fences Act, neighbours generally share the cost of building and maintaining a fence on the property line equally. However, there are important nuances:
-              </p>
-              <ul className="space-y-4">
-                {[
-                  { title: 'Cost Sharing', desc: 'Both property owners typically split the cost 50/50 for a line fence' },
-                  { title: 'Municipal Process', desc: 'If you can\'t agree, your municipality can appoint a fence-viewer to make a binding decision' },
-                  { title: 'Urban vs Rural', desc: 'Rules may differ based on whether the property is in an urban or rural area' },
-                  { title: 'Existing Fences', desc: 'Repair and maintenance of existing line fences is also shared' },
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                    <div>
-                      <span className="font-heading font-bold text-foreground">{item.title}:</span>
-                      <span className="font-paragraph text-foreground/70"> {item.desc}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Your Options</h3>
+            <div className="overflow-x-auto mb-12">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                  <tr className="bg-primary text-white">
+                    <th className="px-6 py-4 text-left font-heading">Option</th>
+                    <th className="px-6 py-4 text-left font-heading">Best For</th>
+                    <th className="px-6 py-4 text-left font-heading">Outcome</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr><td className="px-6 py-4 font-medium">Demand Letter</td><td className="px-6 py-4 text-sm">Initial attempt, reasonable neighbours</td><td className="px-6 py-4 text-sm">Often resolves without court</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Bylaw Enforcement</td><td className="px-6 py-4 text-sm">Noise, property standards violations</td><td className="px-6 py-4 text-sm">Fines, orders to comply</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Small Claims Court</td><td className="px-6 py-4 text-sm">Property damage, money claims</td><td className="px-6 py-4 text-sm">Damages up to $35,000</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Superior Court</td><td className="px-6 py-4 text-sm">Injunctions, over $35,000</td><td className="px-6 py-4 text-sm">Court orders to stop conduct</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg">
+              <h4 className="font-bold text-yellow-800 mb-2">Practical Consideration</h4>
+              <p className="text-yellow-900 text-sm">You still have to live next to your neighbour after any dispute resolution. I help find solutions that address the problem while minimizing long-term relationship damage where possible.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* What You Can Recover */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What Damages Can You Recover?</h2>
-          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              'Repair costs for damaged structures',
-              'Tree/stump removal expenses',
-              'Foundation repair costs',
-              'Landscaping restoration',
-              'Fence construction or repair',
-              'Driveway/walkway repairs',
-              'Sewer/drainage repairs',
-              'Diminished property value',
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
-                <DollarSign className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="font-paragraph text-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Before Going to Court */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Steps Before Going to Court</h2>
-          <div className="max-w-3xl mx-auto">
-            <div className="space-y-4">
-              {[
-                { step: '1', title: 'Document Everything', desc: 'Take photos, get repair estimates, save all communications with your neighbour.' },
-                { step: '2', title: 'Try to Resolve Directly', desc: 'Courts prefer parties attempt resolution first. Send a written request for payment.' },
-                { step: '3', title: 'Consider Mediation', desc: 'Community mediation services can help resolve disputes without court.' },
-                { step: '4', title: 'Send Demand Letter', desc: 'Formal letter outlining damages and requesting payment. We can draft this for you.' },
-                { step: '5', title: 'File Court Claim', desc: 'If no resolution, file Plaintiff\'s Claim in Small Claims Court.' },
-              ].map((item, index) => (
-                <div key={index} className="flex gap-4 items-start bg-white p-5 rounded-xl shadow-sm">
-                  <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold">
-                    {item.step}
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
-                    <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                  </div>
-                </div>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Neighbour Dispute FAQs</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Neighbour Won't Pay? We Can Help</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your neighbour dispute and discuss the best path forward.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Neighbour Problem?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Document the issue and let's discuss your options.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.smallClaims} />
+      </ServicePageLayout>
+    </>
   );
 }

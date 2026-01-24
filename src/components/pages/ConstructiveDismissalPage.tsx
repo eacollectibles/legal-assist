@@ -1,195 +1,131 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, Clock, CheckCircle, AlertTriangle, Briefcase, TrendingDown, UserMinus, Ban } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, Briefcase, AlertCircle, Scale } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function ConstructiveDismissalPage() {
-  useEffect(() => {
-    document.title = 'Constructive Dismissal Ontario | Forced to Quit | Employment Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Were you forced to quit due to intolerable work conditions? Constructive dismissal may entitle you to severance. Paralegal help in London Ontario. Free consultation.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Constructive Dismissal Claims', description: 'When your employer makes fundamental changes to your job, you may be entitled to treat it as a termination.' },
+    { title: 'Risk Assessment', description: 'Constructive dismissal claims are risky. I help you understand the risks before making decisions.' },
+    { title: 'Strategic Advice', description: 'Sometimes staying and objecting is better than leaving. I help you choose the right approach.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Situation Assessment', description: 'Determine if changes meet the constructive dismissal threshold.' },
+    { step: '2', title: 'Strategy Development', description: 'Decide whether to stay and object or treat as termination.' },
+    { step: '3', title: 'Legal Action', description: 'If proceeding, pursue damages as if wrongfully dismissed.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Fundamental Changes', description: 'Major unilateral changes can trigger claims.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Same Damages', description: 'If successful, entitled to same as wrongful dismissal.' },
+    { icon: <AlertTriangle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />, title: 'Risk Warning', description: 'Claims are risky—must act quickly and correctly.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What is constructive dismissal?", answer: "When an employer unilaterally makes a fundamental change to your employment—without your agreement—you may be entitled to treat it as if you were fired. You resign and sue for wrongful dismissal damages." },
+    { question: "What changes qualify as constructive dismissal?", answer: "Significant pay cut (typically 10%+), major demotion, substantial change in duties, forced relocation, toxic work environment, unilateral change to work hours/schedule. The change must be fundamental, not minor." },
+    { question: "Why are these claims risky?", answer: "If you quit and a court later decides the change wasn't 'fundamental enough,' you're just an employee who resigned—no damages. You've lost your job and your claim. This is why assessment is critical before acting." },
+    { question: "What should I do if my employer makes changes?", answer: "DON'T immediately resign. First: object in writing, stating you don't accept the change. Continue working 'under protest.' This preserves your rights while you get legal advice. Acting too quickly (or too slowly) can hurt your claim." },
+    { question: "How quickly do I need to act?", answer: "If you continue working under new conditions without objecting, you may be found to have accepted the change—losing your claim. Object immediately in writing, then get legal advice within days, not weeks." },
+    { question: "What damages can I get if successful?", answer: "Same as wrongful dismissal: reasonable notice period (common law calculation based on age, tenure, position). If the change was also discriminatory or harassing, additional damages may be available." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <UserMinus className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Employment Law</span>
+    <>
+      <SEO title="Constructive Dismissal Paralegal Ontario | Job Change Claims" description="Licensed paralegal for constructive dismissal claims in Ontario. Fundamental job changes, pay cuts, demotion. Risk assessment. Free consultation." canonical="https://www.legalassist.london/services/constructive-dismissal" />
+      <ServicePageLayout seoTitle="Constructive Dismissal | Ontario" seoDescription="Constructive dismissal claims in Ontario." canonical="https://www.legalassist.london/services/constructive-dismissal" problemHeadline="Constructive Dismissal Claims" problemDescription="Employer fundamentally changed your job without your consent? Pay cut, demotion, major changes? You may have a claim—but these are risky. Get advice first." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Constructive dismissal" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Understanding Constructive Dismissal</h2>
+            
+            <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-red-800 mb-3 flex items-center gap-2">
+                <AlertCircle className="w-6 h-6" />
+                High-Risk Claims: Don't Act Without Advice
+              </h3>
+              <p className="text-red-900">Constructive dismissal claims are risky. If you quit and the court disagrees that changes were "fundamental," you're just someone who resigned voluntarily. Get legal advice BEFORE making any decisions.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Constructive Dismissal Claims
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              If your employer made fundamental changes to your job or created intolerable conditions that forced you to quit, you may have been constructively dismissed—and entitled to severance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* What is Constructive Dismissal */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What is Constructive Dismissal?</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                Constructive dismissal occurs when an employer doesn't actually fire you, but makes such significant changes to your employment that you're effectively forced to resign. The law treats this the same as being fired.
-              </p>
-              <div className="bg-primary/5 p-6 rounded-lg">
-                <p className="font-paragraph text-foreground/80">
-                  <strong>Key principle:</strong> If you resign due to constructive dismissal, you're entitled to the same notice, severance, and damages as if you were terminated without cause.
-                </p>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">What May Qualify</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <CheckCircle className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">May Be Constructive Dismissal:</h4>
+                <ul className="text-green-900 text-sm space-y-2">
+                  <li>• Significant pay cut (10%+ typically)</li>
+                  <li>• Major demotion in title/responsibilities</li>
+                  <li>• Forced relocation to different city</li>
+                  <li>• Fundamental change in job duties</li>
+                  <li>• Toxic/hostile work environment</li>
+                  <li>• Unilateral major schedule changes</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <XCircle className="w-6 h-6 text-red-600 mb-2" />
+                <h4 className="font-bold text-red-800 mb-2">Likely NOT Constructive Dismissal:</h4>
+                <ul className="text-red-900 text-sm space-y-2">
+                  <li>• Minor inconveniences</li>
+                  <li>• Small changes to duties</li>
+                  <li>• Reasonable management decisions</li>
+                  <li>• Performance management (if legitimate)</li>
+                  <li>• Changes you agreed to</li>
+                  <li>• Changes allowed by contract</li>
+                </ul>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Signs of Constructive Dismissal */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Signs of Constructive Dismissal</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { icon: TrendingDown, title: 'Significant Pay Cut', desc: 'Reduction in salary, commission structure, or benefits without your consent—typically 10%+ or more.' },
-              { icon: UserMinus, title: 'Demotion', desc: 'Being moved to a lower position, losing your title, or having responsibilities significantly reduced.' },
-              { icon: Clock, title: 'Hours Changed', desc: 'Major changes to work schedule, being forced to part-time, or geographic relocation.' },
-              { icon: Ban, title: 'Intolerable Conditions', desc: 'Harassment, bullying, or toxic environment that makes continued employment impossible.' },
-              { icon: Briefcase, title: 'Fundamental Job Changes', desc: 'Complete change in duties, reporting structure, or the essential nature of your role.' },
-              { icon: AlertTriangle, title: 'Failure to Pay', desc: 'Not being paid wages owed, suspension without pay, or being laid off indefinitely.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <item.icon className="w-8 h-8 text-primary mb-3" />
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Critical Steps</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <div className="text-2xl font-bold text-yellow-800 mb-2">1. Don't Quit Yet</div>
+                <p className="text-yellow-900 text-sm">Resigning prematurely is the biggest mistake. You lose leverage and may lose your claim entirely.</p>
               </div>
-            ))}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <div className="text-2xl font-bold text-yellow-800 mb-2">2. Object in Writing</div>
+                <p className="text-yellow-900 text-sm">Email HR/manager stating you don't accept the change and are working "under protest" while seeking advice.</p>
+              </div>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <div className="text-2xl font-bold text-yellow-800 mb-2">3. Get Advice Fast</div>
+                <p className="text-yellow-900 text-sm">Time matters. Continuing to work without objection may mean you've accepted the change.</p>
+              </div>
+            </div>
+
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
+              <h4 className="font-bold text-foreground mb-2">The Risk-Reward Reality</h4>
+              <p className="text-foreground/80 text-sm">If you succeed: damages same as wrongful dismissal (potentially months of pay). If you fail: you're unemployed with no damages. This is why proper assessment and strategy matter enormously.</p>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* What to Do */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What To Do If You Suspect Constructive Dismissal</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {[
-                { step: '1', title: 'Don\'t Quit Immediately', desc: 'If you resign without objecting to the changes, you may lose your claim. Document your objection first.' },
-                { step: '2', title: 'Object in Writing', desc: 'Send a written objection to the changes. This preserves your rights while you decide what to do.' },
-                { step: '3', title: 'Document Everything', desc: 'Keep records of all changes, communications, and how they affect you.' },
-                { step: '4', title: 'Get Legal Advice', desc: 'Before resigning, understand whether your situation qualifies as constructive dismissal.' },
-                { step: '5', title: 'Make Your Decision', desc: 'You typically must act within a reasonable time—either accept the changes or resign and claim constructive dismissal.' },
-              ].map((item, index) => (
-                <div key={index} className={`p-6 flex items-start gap-4 ${index !== 4 ? 'border-b border-gray-100' : ''}`}>
-                  <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold">
-                    {item.step}
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
-                    <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                  </div>
-                </div>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Constructive Dismissal FAQs</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* Warning */}
-      <section className="py-16 md:py-20 bg-amber-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto">
-            <AlertTriangle className="w-12 h-12 text-amber-600 mx-auto mb-4" />
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">Critical Warning: Timing Matters</h2>
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <p className="font-paragraph text-foreground/80 mb-4">
-                Constructive dismissal claims have strict timing requirements:
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'If you continue working under new conditions too long, you may be seen as "accepting" them',
-                  'If you quit without objecting, you may lose your claim entirely',
-                  'You must act within a "reasonable time"—usually weeks, not months',
-                  'Getting legal advice BEFORE you resign is essential',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 font-paragraph text-foreground/80">
-                    <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" /> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Job Fundamentally Changed?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Don't act without advice. Let me assess your situation and explain your options.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
-
-      {/* What You Can Recover */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What You May Be Entitled To</h2>
-          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: 'Notice / Severance Pay', desc: 'Same as wrongful dismissal—potentially up to 24 months or more.' },
-              { title: 'Lost Benefits', desc: 'Value of health, dental, pension contributions during notice period.' },
-              { title: 'Lost Bonus / Commission', desc: 'Compensation for bonuses you would have earned.' },
-              { title: 'Moral Damages', desc: 'In cases of bad faith conduct by the employer.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <UserMinus className="w-12 h-12 mx-auto mb-4 opacity-90" />
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Think You've Been Constructively Dismissed?</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Don't resign without understanding your rights. Free consultation to assess your situation.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Employment matters within paralegal scope
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.employment} />
+      </ServicePageLayout>
+    </>
   );
 }

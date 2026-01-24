@@ -1,214 +1,123 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, Clock, CheckCircle, AlertTriangle, Users, Calendar, Briefcase, TrendingDown } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, HelpCircle, Users, Briefcase, Scale, Clock } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function AgeDiscriminationPage() {
-  useEffect(() => {
-    document.title = 'Age Discrimination | Older Worker Rights Ontario | HRTO | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Experienced age discrimination at work? Ontario prohibits discrimination against workers 18+. File an HRTO complaint for hiring, termination, or workplace age bias. Free consultation London.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Age Discrimination', description: 'Ontario prohibits age discrimination in employment for workers 18 and older. I help file HRTO applications.' },
+    { title: 'Common in Terminations', description: 'Older workers often face disguised age discrimination in layoffs and terminations. "Restructuring" may hide age bias.' },
+    { title: 'Notice Period Impact', description: 'Age is also a factor in wrongful dismissal—older workers typically get longer notice periods.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Identify Evidence', description: 'Comments, patterns, comparisons to younger workers.' },
+    { step: '2', title: 'Assess Claim', description: 'Is age a factor in the adverse treatment?' },
+    { step: '3', title: 'File HRTO', description: 'Application within 1 year of discrimination.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Protected Ground', description: 'Age 18+ is protected in employment.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Pattern Evidence', description: 'Systemic patterns can prove discrimination.' },
+    { icon: <AlertTriangle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />, title: 'Some Exceptions', description: 'Mandatory retirement gone, but some exemptions remain.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What age is protected from discrimination?", answer: "In Ontario, age protection in employment covers workers 18 and older. There's no upper limit—mandatory retirement was abolished in 2006. Some exceptions exist (certain industries, bona fide occupational requirements)." },
+    { question: "How do I prove age discrimination?", answer: "Direct evidence is rare (they won't say 'you're too old'). Look for: comments about age, energy, retirement plans; pattern of older workers let go while younger kept; job postings seeking 'young' or 'energetic' candidates; sudden performance issues after years of good reviews." },
+    { question: "I was laid off in a 'restructuring.' Could it be age discrimination?", answer: "Possibly. Look at who was actually laid off vs kept. If the 'restructuring' disproportionately affected older workers, or your role was 'eliminated' then refilled with someone younger, this can indicate discrimination." },
+    { question: "What about comments like 'when are you retiring?'", answer: "Repeated questions about retirement plans, especially combined with adverse action, can be evidence of age discrimination. Single innocent inquiries may not be enough, but a pattern of such comments is relevant." },
+    { question: "Is it age discrimination if they hired someone younger for less money?", answer: "If you were let go and replaced by a younger, cheaper employee doing the same job, this can support age discrimination. Cost savings alone doesn't justify discrimination—but proving age was the factor (not just cost) requires evidence." },
+    { question: "What damages are available for age discrimination?", answer: "Lost wages (past and future), general damages for injury to dignity ($5,000-$40,000+ depending on severity), and orders to reinstate (rarely ordered) or change practices. Age discrimination often overlaps with wrongful dismissal claims." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Calendar className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Human Rights</span>
+    <>
+      <SEO title="Age Discrimination Paralegal Ontario | HRTO Employment Age Claims" description="Licensed paralegal for age discrimination claims in Ontario. Workplace age discrimination, older worker termination. HRTO applications. Free consultation." canonical="https://www.legalassist.london/services/age-discrimination" />
+      <ServicePageLayout seoTitle="Age Discrimination | Ontario" seoDescription="Age discrimination help in Ontario." canonical="https://www.legalassist.london/services/age-discrimination" problemHeadline="Age Discrimination" problemDescription="Passed over, pushed out, or fired because of your age? Age discrimination in employment is illegal. I help older workers fight back." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Age discrimination" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Understanding Age Discrimination</h2>
+            
+            <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">No Mandatory Retirement</h3>
+              <p className="text-foreground/80">Since 2006, Ontario has prohibited mandatory retirement. Employers cannot force you out based on age alone. You can work as long as you're able and willing.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Age Discrimination Claims
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Ontario law protects workers of all ages from discrimination. Whether you're being passed over for promotions, pressured to retire, or targeted for termination because of your age, we can help you fight back.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* The Law */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Age Discrimination in Ontario</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                The Ontario Human Rights Code protects workers <strong>18 years and older</strong> from discrimination in employment based on age. This includes:
-              </p>
-              <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  'Hiring and recruitment',
-                  'Promotions and advancement',
-                  'Terms and conditions of employment',
-                  'Layoffs and terminations',
-                  'Training opportunities',
-                  'Compensation and benefits',
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                    <span className="font-paragraph text-foreground">{item}</span>
-                  </div>
-                ))}
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Signs of Age Discrimination</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <AlertTriangle className="w-6 h-6 text-red-600 mb-2" />
+                <h4 className="font-bold text-red-800 mb-2">Warning Signs:</h4>
+                <ul className="text-red-900 text-sm space-y-1">
+                  <li>• Repeated questions about retirement plans</li>
+                  <li>• Comments about being "overqualified"</li>
+                  <li>• Excluded from training/advancement</li>
+                  <li>• Sudden negative performance reviews</li>
+                  <li>• Position "eliminated" then refilled</li>
+                  <li>• Pattern of older workers let go</li>
+                </ul>
               </div>
-              <div className="bg-primary/5 p-4 rounded-lg mt-6">
-                <p className="font-paragraph text-foreground/80 text-center">
-                  <strong>Important:</strong> Ontario eliminated mandatory retirement in 2006. Employers cannot force you to retire at any age.
-                </p>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <CheckCircle className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Building Your Case:</h4>
+                <ul className="text-green-900 text-sm space-y-1">
+                  <li>• Document age-related comments</li>
+                  <li>• Compare treatment to younger colleagues</li>
+                  <li>• Keep performance reviews (before/after)</li>
+                  <li>• Note who was laid off vs kept</li>
+                  <li>• Save job postings (age preferences)</li>
+                  <li>• Track training/opportunity denials</li>
+                </ul>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Signs of Age Discrimination */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Signs of Age Discrimination</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { icon: TrendingDown, title: 'Passed Over for Promotions', desc: 'Younger, less experienced workers get promoted while you\'re overlooked despite qualifications.' },
-              { icon: Users, title: 'Comments About Age', desc: '"When are you retiring?" or jokes about being "old school" or "out of touch."' },
-              { icon: Briefcase, title: 'Excluded from Projects', desc: 'Being left out of new initiatives, training, or opportunities given to younger workers.' },
-              { icon: Calendar, title: 'Pressured to Retire', desc: 'Hints or direct pressure to "make room for younger workers" or take early retirement.' },
-              { icon: AlertTriangle, title: 'Targeted for Layoffs', desc: 'Older workers disproportionately selected during "restructuring" or "downsizing."' },
-              { icon: Scale, title: 'Different Standards', desc: 'Being held to different performance standards or disciplined more harshly than younger employees.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <item.icon className="w-8 h-8 text-primary mb-3" />
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Proving Age Discrimination */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">How Age Discrimination is Proven</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              <p className="font-paragraph text-foreground/80 mb-6">
-                You don't need a "smoking gun." Discrimination can be proven through:
-              </p>
-              <ul className="space-y-4">
-                {[
-                  { title: 'Statistical Patterns', desc: 'Multiple older workers terminated while younger workers retained' },
-                  { title: 'Comments and Remarks', desc: 'Age-related comments, even if framed as "jokes"' },
-                  { title: 'Timing', desc: 'Termination shortly after age-related conversations or turning a milestone age' },
-                  { title: 'Comparator Evidence', desc: 'How younger employees in similar situations were treated' },
-                  { title: 'Shifting Reasons', desc: 'Employer gives inconsistent explanations for their decisions' },
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-heading font-bold text-foreground">{item.title}:</span>
-                      <span className="font-paragraph text-foreground/70"> {item.desc}</span>
-                    </div>
-                  </li>
-                ))}
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Age & Wrongful Dismissal</h3>
+            <div className="bg-primary/5 rounded-lg p-6 mb-8">
+              <Clock className="w-8 h-8 text-primary mb-3" />
+              <p className="text-foreground/80 mb-4">Age affects wrongful dismissal claims in two ways:</p>
+              <ul className="text-foreground/80 text-sm space-y-2">
+                <li><span className="font-bold">Discrimination claim:</span> If age was a factor in termination, you may have an HRTO claim for discrimination damages.</li>
+                <li><span className="font-bold">Notice period:</span> Older workers generally receive longer notice periods because finding comparable work is harder. This increases your severance entitlement.</li>
               </ul>
+              <p className="text-foreground/70 text-sm mt-4">These claims can be pursued together—discrimination at HRTO and wrongful dismissal for enhanced notice.</p>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg">
+              <h4 className="font-bold text-yellow-800 mb-2">1 Year Limitation</h4>
+              <p className="text-yellow-900 text-sm">HRTO applications must be filed within one year of the last discriminatory act. Don't wait—the longer you delay, the harder it becomes to gather evidence and prove your case.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Wrongful Dismissal + Age */}
-      <section className="py-16 md:py-20 bg-amber-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto">
-            <Scale className="w-12 h-12 text-amber-600 mx-auto mb-4" />
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">Older Workers & Wrongful Dismissal</h2>
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <p className="font-paragraph text-foreground/80 mb-4">
-                Even without proving discrimination, older workers are entitled to longer notice periods because:
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'Courts recognize older workers face greater challenges finding new employment',
-                  'Length of service is a key factor—and older workers often have more',
-                  'Specialized skills developed over a career may be harder to transfer',
-                  'Notice periods of 20-24+ months are common for older, long-service employees',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 font-paragraph text-foreground/80">
-                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" /> {item}
-                  </li>
-                ))}
-              </ul>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Age Discrimination FAQs</h2>
             </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* What You Can Do */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Your Options</h2>
-          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: 'Human Rights Complaint', desc: 'File with HRTO for discrimination remedies including compensation for injury to dignity.', timeline: '1 year deadline' },
-              { title: 'Wrongful Dismissal Claim', desc: 'Sue for proper notice/severance. Age is a factor in calculating your entitlement.', timeline: '2 year deadline' },
-              { title: 'ESA Complaint', desc: 'If your employer violated employment standards while discriminating.', timeline: '2 year deadline' },
-              { title: 'Negotiate Severance', desc: 'Use leverage of potential claims to negotiate better severance package.', timeline: 'Act quickly' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70 text-sm mb-2">{item.desc}</p>
-                <span className="inline-block text-xs font-medium text-amber-700 bg-amber-50 px-2 py-1 rounded">{item.timeline}</span>
-              </div>
-            ))}
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Experiencing Age Discrimination?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Document what's happening and let's discuss your options.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <Calendar className="w-12 h-12 mx-auto mb-4 opacity-90" />
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Experience Matters—So Do Your Rights</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your situation and explain your options.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Human Rights Tribunal representation
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.humanRights} />
+      </ServicePageLayout>
+    </>
   );
 }
