@@ -74,6 +74,7 @@ const DefamationSlanderPage = lazy(() => import('@/components/pages/DefamationSl
 const BailHearingsPage = lazy(() => import('@/components/pages/BailHearingsPage'));
 const ParalegalVsLawyerPage = lazy(() => import('@/components/pages/ParalegalVsLawyerPage'));
 const WhatIsAParalegalPage = lazy(() => import('@/components/pages/WhatIsAParalegalPage'));
+const IRBRepresentationPage = lazy(() => import('@/components/pages/IRBRepresentationPage'));
 
 // Guide Pages
 const TenantRightsGuidePage = lazy(() => import('@/components/pages/TenantRightsGuidePage'));
@@ -234,6 +235,7 @@ export default function Router() {
             <Route path="/services/social-benefits-tribunal" element={<SocialBenefitsTribunalPage />} />
             <Route path="/services/defamation-slander" element={<DefamationSlanderPage />} />
             <Route path="/services/bail-hearings" element={<BailHearingsPage />} />
+            <Route path="/services/irb-representation" element={<IRBRepresentationPage />} />
             <Route path="/paralegal-vs-lawyer" element={<ParalegalVsLawyerPage />} />
             <Route path="/what-is-a-paralegal" element={<WhatIsAParalegalPage />} />
 

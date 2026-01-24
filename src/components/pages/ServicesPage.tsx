@@ -393,6 +393,38 @@ Our goal is to help you resolve your debt situation efficiently and affordably. 
     costInfo: 'Hourly rates $150-250/hour or flat fees for debt negotiation packages. Free initial consultation to assess your debt situation.',
     timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Settlement agreements typically finalized within 2-3 months.',
     eligibility: 'Available to individuals and businesses in Ontario with outstanding debts seeking negotiated resolution with creditors. Best suited for those wanting to avoid court proceedings or formal bankruptcy.'
+  },
+  {
+    id: 'irb-representation',
+    name: 'Immigration & Refugee Board (IRB) Representation',
+    tribunal: 'Immigration & Refugee Board (IRB)',
+    shortDescription: 'Paralegal support for pre-IRB matters and referrals to qualified immigration lawyers and RCICs for formal representation.',
+    icon: <Landmark className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_9159b5daf01d44f0872726abb1084da1~mv2.png?originWidth=384&originHeight=192',
+    learnMore: `The Immigration and Refugee Board of Canada (IRB) is a federal tribunal that makes decisions on immigration and refugee matters. While paralegals cannot provide formal representation before the IRB, we offer valuable pre-IRB support and referrals to qualified immigration lawyers and Regulated Canadian Immigration Consultants (RCICs).
+
+IMPORTANT DISCLAIMER: Immigration and refugee matters are complex federal legal matters. Only lawyers and RCICs licensed by Immigration, Refugees and Citizenship Canada (IRCC) are authorized to represent clients before the IRB. Paralegal services are limited to pre-IRB support only.
+
+We provide support for:
+
+• Document Preparation & Organization: Gathering and organizing supporting documents for IRB proceedings
+• Case Assessment & Information: Initial assessment and general information about IRB processes
+• Timeline & Process Guidance: Explanation of IRB timelines, deadlines, and procedural requirements
+• Lawyer & RCIC Referrals: Referrals to qualified immigration lawyers and RCICs for formal representation
+
+The IRB has four divisions: Refugee Protection Division (RPD), Immigration Appeal Division (IAD), Immigration Division (ID), and Security Division (SD). Each handles different types of immigration matters.
+
+CRITICAL: Do not attempt to represent yourself or rely solely on paralegal services for IRB matters. Failure to obtain proper legal representation can result in serious consequences including deportation and loss of immigration status.`,
+    keyPoints: [
+      'Pre-IRB document preparation',
+      'Case assessment & information',
+      'Qualified lawyer & RCIC referrals',
+      'Federal tribunal guidance',
+      'Immigration matter support'
+    ],
+    costInfo: 'Hourly rates $150-250/hour for pre-IRB paralegal services. Free initial consultation. Referrals to immigration lawyers and RCICs for formal representation.',
+    timeline: 'Initial assessment: 1-2 weeks. Document preparation: 2-4 weeks. Referral to lawyer/RCIC for formal representation.',
+    eligibility: 'Available to individuals facing IRB proceedings seeking pre-IRB paralegal support. Formal representation requires a qualified immigration lawyer or RCIC.'
   }
 ];
 
@@ -540,6 +572,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'debt-negotiation' ? (
                         <Link to="/services/debt-negotiation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'irb-representation' ? (
+                        <Link to="/services/irb-representation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
