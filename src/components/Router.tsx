@@ -146,8 +146,8 @@ const SarniaParalegalPage = lazy(() => import('@/components/pages/SarniaParalega
 const WindsorParalegalPage = lazy(() => import('@/components/pages/WindsorParalegalPage'));
 const ChathamKentParalegalPage = lazy(() => import('@/components/pages/ChathamKentParalegalPage'));
 const LeamingtonParalegalPage = lazy(() => import('@/components/pages/LeamingtonParalegalPage'));
-const NorfolkCountyParalegalPage = lazy(() => import('@/components/pages/NorfolkCountyParalegalPage'));
-const HuronCountyParalegalPage = lazy(() => import('@/components/pages/HuronCountyParalegalPage'));
+const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
+const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
 
 // 404 Page
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
@@ -299,8 +299,8 @@ export default function Router() {
             <Route path="/locations/windsor" element={<WindsorParalegalPage />} />
             <Route path="/locations/chatham-kent" element={<ChathamKentParalegalPage />} />
             <Route path="/locations/leamington" element={<LeamingtonParalegalPage />} />
-            <Route path="/locations/norfolk-county" element={<NorfolkCountyParalegalPage />} />
-            <Route path="/locations/huron-county" element={<HuronCountyParalegalPage />} />
+            <Route path="/client-intake" element={<ClientIntakePage />} />
+            <Route path="/client-dashboard" element={<ClientDashboardPage />} />
 
             {/* Other Pages */}
             <Route path="/legal-news" element={<LegalNewsPage />} />
