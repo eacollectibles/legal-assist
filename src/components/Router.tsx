@@ -55,6 +55,9 @@ const ContractDisputesPage = lazy(() => import('@/components/pages/ContractDispu
 const JudgementEnforcementPage = lazy(() => import('@/components/pages/JudgementEnforcementPage'));
 const PropertyDamageClaimsPage = lazy(() => import('@/components/pages/PropertyDamageClaimsPage'));
 
+// Debt Negotiation
+const DebtNegotiationPage = lazy(() => import('@/components/pages/DebtNegotiationPage'));
+
 // Phase 2 SEO - Location Pages
 const StThomasParalegalPage = lazy(() => import('@/components/pages/StThomasParalegalPage'));
 const WoodstockParalegalPage = lazy(() => import('@/components/pages/WoodstockParalegalPage'));
@@ -215,6 +218,9 @@ export default function Router() {
             <Route path="/services/contract-disputes" element={<ContractDisputesPage />} />
             <Route path="/services/judgement-enforcement" element={<JudgementEnforcementPage />} />
             <Route path="/services/property-damage-claims" element={<PropertyDamageClaimsPage />} />
+
+            {/* Debt Negotiation */}
+            <Route path="/services/debt-negotiation" element={<DebtNegotiationPage />} />
 
             {/* Phase 2 SEO - Location Pages */}
             <Route path="/st-thomas-paralegal" element={<StThomasParalegalPage />} />
