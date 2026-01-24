@@ -4,7 +4,7 @@ import { MemberProvider } from '@/integrations';
 import ComingSoonModal from '@/components/ComingSoonModal';
 
 // Main Pages - Keep HomePage and ContactPage as static imports
-import HomePage from '@/components/pages/HomePage';
+import HomePage from '@/components/pages/HomePageNew';
 import ContactPage from '@/components/pages/ContactPage';
 import ConflictDetectedPage from '@/components/pages/ConflictDetectedPage';
 
