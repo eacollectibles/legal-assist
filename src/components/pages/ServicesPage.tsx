@@ -362,6 +362,37 @@ IMPORTANT SCOPE LIMITATIONS: Paralegals can represent clients in Small Claims Co
     costInfo: 'Hourly rates $150-250/hour or flat fees for specific services. Free initial consultation to assess your employment situation and confirm it falls within paralegal scope.',
     timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Small Claims Court proceedings (if necessary): 3-6 months.',
     eligibility: 'Available to employees in Ontario with employment disputes within paralegal scope of practice. Claims must fall within Small Claims Court jurisdiction (up to $50,000) for court representation. We will advise if your matter requires a lawyer.'
+  },
+  {
+    id: 'debt-negotiation',
+    name: 'Debt Negotiation & Creditor Resolution',
+    tribunal: 'Debt Negotiation & Settlement',
+    shortDescription: 'Professional negotiation with creditors to reduce debt, arrange payment plans, and achieve debt resolution without court proceedings.',
+    icon: <Handshake className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_45e4ddef1b79494a92d7e0856a1601a0~mv2.png?id=debt-negotiation',
+    learnMore: `Overwhelming debt can be stressful and impact your financial future. Our licensed paralegals provide professional debt negotiation services to help you resolve debts with creditors without the need for court proceedings or formal bankruptcy.
+
+We assist with:
+
+• Creditor Negotiation: Direct communication with creditors to negotiate reduced balances or favorable payment terms
+• Debt Settlement Agreements: Preparation and negotiation of settlement agreements that resolve debts for less than owed
+• Payment Plan Arrangements: Structuring affordable payment plans that work with your budget
+• Creditor Communication: Professional correspondence and negotiation on your behalf
+• Debt Consolidation Guidance: Information on consolidating multiple debts into manageable payments
+• Pre-Litigation Support: Negotiation to avoid court proceedings and collection actions
+• Documentation and Record-Keeping: Maintaining clear records of all agreements and payments
+
+Our goal is to help you resolve your debt situation efficiently and affordably. We work to achieve the best possible terms with your creditors while protecting your financial interests.`,
+    keyPoints: [
+      'Creditor negotiation and communication',
+      'Debt settlement agreements',
+      'Affordable payment plan arrangements',
+      'Avoid court proceedings',
+      'Professional debt resolution'
+    ],
+    costInfo: 'Hourly rates $150-250/hour or flat fees for debt negotiation packages. Free initial consultation to assess your debt situation.',
+    timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Settlement agreements typically finalized within 2-3 months.',
+    eligibility: 'Available to individuals and businesses in Ontario with outstanding debts seeking negotiated resolution with creditors. Best suited for those wanting to avoid court proceedings or formal bankruptcy.'
   }
 ];
 
@@ -504,6 +535,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'employment-issues' ? (
                         <Link to="/services/employment-issues" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'debt-negotiation' ? (
+                        <Link to="/services/debt-negotiation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
