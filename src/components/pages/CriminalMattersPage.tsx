@@ -42,8 +42,8 @@ export default function CriminalMattersPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_2c3ad0bc7db54ec992e0d8641bbaa58d~mv2.png?originWidth=1152&originHeight=768"
-                alt="Professional Canadian courtroom interior with wooden judge's bench, witness stand, and Canadian maple leaf flags representing Ontario Provincial Court proceedings"
+                src="https://static.wixstatic.com/media/99571b_bc1cd72aa98041f1af668ab32e732612~mv2.png?originWidth=1152&originHeight=768"
+                alt="Criminal matters representation in Ontario, Canada - Professional Ontario courthouse interior with wooden judge's bench, witness stand, and Canadian maple leaf flags"
                 width={600}
                 height={400}
                 className="w-full h-auto"
