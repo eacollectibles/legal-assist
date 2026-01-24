@@ -9,7 +9,7 @@ export default function VehiclePurchaseDisputesPage() {
     document.title = 'Used Car & Vehicle Purchase Disputes | Small Claims Court Ontario | LegalAssist';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for used car disputes in Ontario. Lemon cars, dealer fraud, undisclosed damage, odometer rollback. Recover up to $35,000 in Small Claims Court. London Ontario.');
+      metaDesc.setAttribute('content', 'Paralegal for used car disputes in Ontario. Lemon cars, dealer fraud, undisclosed damage, odometer rollback. Recover up to $50,000 in Small Claims Court. London Ontario.');
     }
   }, []);
 
@@ -204,7 +204,7 @@ export default function VehiclePurchaseDisputesPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

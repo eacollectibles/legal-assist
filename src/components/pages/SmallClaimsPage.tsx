@@ -61,12 +61,12 @@ export default function SmallClaimsPage() {
       <SEO 
         title="Small Claims Court Paralegal | Claims up to $50,000 | London Ontario"
         description="Expert Small Claims Court representation in London, Ontario. Licensed paralegal for debt recovery, contract disputes & property damage claims up to $50,000. Free consultation."
-        canonical="https://www.legalassist.london/services/small-claims"
+        canonical="https://www.legalassist.london/services/small-claims-court"
       />
       <ServicePageLayout
         seoTitle="Small Claims Court Paralegal | Claims up to $50,000 | London Ontario"
         seoDescription="Expert Small Claims Court representation in London, Ontario. Licensed paralegal for debt recovery, contract disputes & property damage claims up to $50,000. Free consultation."
-        canonical="https://www.legalassist.london/services/small-claims"
+        canonical="https://www.legalassist.london/services/small-claims-court"
         problemHeadline="Small Claims Court Paralegal in Ontario"
         problemDescription="Expert legal representation for civil disputes up to $50,000 in Ontario. Whether you're an applicant seeking compensation or a defendant protecting your interests, we provide comprehensive support throughout the entire process."
         heroImage={{
@@ -85,7 +85,7 @@ export default function SmallClaimsPage() {
                 What is Small Claims Court?
               </h2>
               <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                Small Claims Court is an accessible division of the Ontario Court of Justice designed to resolve civil disputes efficiently and affordably. It handles claims up to $50,000 (or $35,000 if the defendant does not agree to the higher limit), making it ideal for individuals and small businesses seeking compensation for various disputes.
+                Small Claims Court is an accessible division of the Ontario Court of Justice designed to resolve civil disputes efficiently and affordably. It handles claims up to $50,000, making it ideal for individuals and small businesses seeking compensation for various disputes.
               </p>
               <p className="font-paragraph text-lg text-foreground/80">
                 Our firm specializes in representing both applicants and defendants, ensuring your rights are protected and your case is presented effectively before the court.

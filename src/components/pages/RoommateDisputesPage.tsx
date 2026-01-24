@@ -121,7 +121,7 @@ export default function RoommateDisputesPage() {
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
               {[
                 { title: 'Negotiated Agreement', desc: 'Often the fastest solution. We help draft departure agreements with clear terms and timelines.' },
-                { title: 'Small Claims Court', desc: 'Sue for unpaid rent, damages, or to recover money owed. Monetary claims up to $35,000.' },
+                { title: 'Small Claims Court', desc: 'Sue for unpaid rent, damages, or to recover money owed. Monetary claims up to $50,000.' },
                 { title: 'Trespass Notice', desc: 'For occupants who refuse to leave after reasonable notice, this may be a necessary step.' },
                 { title: 'Lease Assignment/Amendment', desc: 'Work with the landlord to formally change who is on the lease.' },
                 { title: 'LTB Application (if applicable)', desc: 'In limited cases where the occupant qualifies as a tenant, the LTB may have jurisdiction.' },

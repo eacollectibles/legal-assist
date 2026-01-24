@@ -9,7 +9,7 @@ export default function ProfessionalNegligencePage() {
     document.title = 'Professional Negligence Claims | Accountant, Realtor, Advisor Errors | Small Claims Court Ontario';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for professional negligence claims in Ontario Small Claims Court. Accountant, realtor, financial advisor errors caused you loss? Recover up to $35,000. London Ontario.');
+      metaDesc.setAttribute('content', 'Paralegal for professional negligence claims in Ontario Small Claims Court. Accountant, realtor, financial advisor errors caused you loss? Recover up to $50,000. London Ontario.');
     }
   }, []);
 
@@ -167,7 +167,7 @@ export default function ProfessionalNegligencePage() {
                   <h3 className="font-heading font-bold text-foreground mb-2">Court Claim</h3>
                   <ul className="font-paragraph text-foreground/70 space-y-1 text-sm">
                     <li>• Can award monetary damages</li>
-                    <li>• Up to $35,000 in Small Claims</li>
+                    <li>• Up to $50,000 in Small Claims</li>
                     <li>• Enforceable judgment</li>
                     <li>• May be covered by their insurance</li>
                     <li>• Can pursue both options</li>
@@ -222,7 +222,7 @@ export default function ProfessionalNegligencePage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

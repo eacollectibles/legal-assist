@@ -6,10 +6,10 @@ import Footer from '@/components/Footer';
 
 export default function PersonalInjuryClaimsPage() {
   useEffect(() => {
-    document.title = 'Personal Injury Claims Under $35,000 | Small Claims Court Ontario | LegalAssist';
+    document.title = 'Personal Injury Claims Under $50,000 | Small Claims Court Ontario | LegalAssist';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal for personal injury claims under $35,000 in Ontario Small Claims Court. Slip and fall, dog bites, minor vehicle injuries. Free consultation in London.');
+      metaDesc.setAttribute('content', 'Licensed paralegal for personal injury claims under $50,000 in Ontario Small Claims Court. Slip and fall, dog bites, minor vehicle injuries. Free consultation in London.');
     }
   }, []);
 
@@ -29,7 +29,7 @@ export default function PersonalInjuryClaimsPage() {
               Personal Injury Claims in Small Claims Court
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Injured due to someone else's negligence? If your claim is under $35,000, you can pursue compensation through Ontario's Small Claims Court with licensed paralegal representation.
+              Injured due to someone else's negligence? If your claim is under $50,000, you can pursue compensation through Ontario's Small Claims Court with licensed paralegal representation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
@@ -51,7 +51,7 @@ export default function PersonalInjuryClaimsPage() {
             {[
               { icon: AlertTriangle, title: 'Slip and Fall Injuries', desc: 'Injuries from falls on poorly maintained property, icy sidewalks, wet floors, or uneven surfaces.' },
               { icon: Heart, title: 'Dog Bites & Animal Attacks', desc: 'Compensation for medical expenses, lost wages, and pain from animal attacks. Ontario has strict liability laws.' },
-              { icon: Shield, title: 'Minor Vehicle Accident Injuries', desc: 'Soft tissue injuries, whiplash, or minor injuries from car accidents where damages are under $35,000.' },
+              { icon: Shield, title: 'Minor Vehicle Accident Injuries', desc: 'Soft tissue injuries, whiplash, or minor injuries from car accidents where damages are under $50,000.' },
               { icon: Users, title: 'Assault & Battery Claims', desc: 'Civil claims for injuries from physical assault. Pursue compensation even if criminal charges weren\'t laid.' },
               { icon: Scale, title: 'Sports & Recreation Injuries', desc: 'Injuries from negligent supervision, faulty equipment, or unsafe facility conditions.' },
               { icon: FileText, title: 'Product Liability Injuries', desc: 'Injuries caused by defective or dangerous products. Manufacturers can be held liable.' },
@@ -199,7 +199,7 @@ export default function PersonalInjuryClaimsPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

@@ -9,7 +9,7 @@ export default function NeighbourDisputesPage() {
     document.title = 'Neighbour Disputes | Tree Damage, Fences, Boundaries | Small Claims Court Ontario';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for neighbour disputes in Ontario Small Claims Court. Tree damage, fence disputes, property line issues, water drainage. Recover up to $35,000. London Ontario.');
+      metaDesc.setAttribute('content', 'Paralegal for neighbour disputes in Ontario Small Claims Court. Tree damage, fence disputes, property line issues, water drainage. Recover up to $50,000. London Ontario.');
     }
   }, []);
 
@@ -194,7 +194,7 @@ export default function NeighbourDisputesPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

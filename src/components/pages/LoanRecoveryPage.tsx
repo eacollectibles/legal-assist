@@ -10,7 +10,7 @@ export default function LoanRecoveryPage() {
     document.title = 'Recover Money Lent to Friends or Family | Small Claims Court Ontario | LegalAssist';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for personal loan recovery in Ontario Small Claims Court. Friend or family member won\'t repay money you lent? Recover up to $35,000. London Ontario.');
+      metaDesc.setAttribute('content', 'Paralegal for personal loan recovery in Ontario Small Claims Court. Friend or family member won\'t repay money you lent? Recover up to $50,000. London Ontario.');
     }
   }, []);
 
@@ -174,7 +174,7 @@ export default function LoanRecoveryPage() {
               {[
                 { step: '1', title: 'Evidence Review', desc: 'We review all your communications, bank records, and other evidence to build the strongest case.' },
                 { step: '2', title: 'Demand Letter', desc: 'Professional letter demanding repayment. Often prompts payment to avoid court.' },
-                { step: '3', title: 'File Claim', desc: 'If no response, file Plaintiff\'s Claim in Small Claims Court (up to $35,000).' },
+                { step: '3', title: 'File Claim', desc: 'If no response, file Plaintiff\'s Claim in Small Claims Court (up to $50,000).' },
                 { step: '4', title: 'Settlement Conference', desc: 'Mandatory meeting where many cases settle. We represent you and negotiate.' },
                 { step: '5', title: 'Trial (if needed)', desc: 'Present evidence and testimony to prove your case before a judge.' },
                 { step: '6', title: 'Enforcement', desc: 'If they still don\'t pay, pursue garnishment or seizure of assets.' },
@@ -217,7 +217,7 @@ export default function LoanRecoveryPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

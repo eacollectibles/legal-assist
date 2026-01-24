@@ -6,10 +6,10 @@ import Footer from '@/components/Footer';
 
 export default function WrongfulDismissalClaimsPage() {
   useEffect(() => {
-    document.title = 'Wrongful Dismissal Claims Under $35,000 | Small Claims Court Ontario | LegalAssist';
+    document.title = 'Wrongful Dismissal Claims Under $50,000 | Small Claims Court Ontario | LegalAssist';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for wrongful dismissal claims under $35,000 in Ontario Small Claims Court. Fired without proper notice or severance? Free consultation in London Ontario.');
+      metaDesc.setAttribute('content', 'Paralegal for wrongful dismissal claims under $50,000 in Ontario Small Claims Court. Fired without proper notice or severance? Free consultation in London Ontario.');
     }
   }, []);
 
@@ -29,7 +29,7 @@ export default function WrongfulDismissalClaimsPage() {
               Wrongful Dismissal Claims
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Terminated without proper notice or adequate severance? If your claim is under $35,000, you can pursue compensation in Small Claims Court with licensed paralegal representation.
+              Terminated without proper notice or adequate severance? If your claim is under $50,000, you can pursue compensation in Small Claims Court with licensed paralegal representation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
@@ -129,11 +129,11 @@ export default function WrongfulDismissalClaimsPage() {
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">When Small Claims Court is Right for You</h2>
             <div className="bg-white p-8 rounded-xl shadow-sm">
               <p className="font-paragraph text-foreground/80 mb-6">
-                Small Claims Court can handle wrongful dismissal claims up to <strong>$35,000</strong>. This is often ideal for:
+                Small Claims Court can handle wrongful dismissal claims up to <strong>$50,000</strong>. This is often ideal for:
               </p>
               <ul className="space-y-4">
                 {[
-                  { title: 'Lower to mid-income employees', desc: 'Where the claim for unpaid notice falls under $35,000' },
+                  { title: 'Lower to mid-income employees', desc: 'Where the claim for unpaid notice falls under $50,000' },
                   { title: 'Shorter employment tenure', desc: 'Where the reasonable notice period results in a smaller claim' },
                   { title: 'Cost-conscious approach', desc: 'Paralegal fees are typically lower than employment lawyers' },
                   { title: 'Faster resolution', desc: 'Small Claims moves quicker than Superior Court' },
@@ -149,7 +149,7 @@ export default function WrongfulDismissalClaimsPage() {
               </ul>
               <div className="mt-6 p-4 bg-amber-50 rounded-lg">
                 <p className="font-paragraph text-amber-800 text-sm">
-                  <strong>Note:</strong> If your claim exceeds $35,000, you may need to pursue it in Superior Court with an employment lawyer. We can help you estimate your claim value.
+                  <strong>Note:</strong> If your claim exceeds $50,000, you may need to pursue it in Superior Court with an employment lawyer. We can help you estimate your claim value.
                 </p>
               </div>
             </div>
@@ -253,7 +253,7 @@ export default function WrongfulDismissalClaimsPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

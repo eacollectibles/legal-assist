@@ -9,7 +9,7 @@ export default function HomeImprovementDisputesPage() {
     document.title = 'Contractor & Home Renovation Disputes | Small Claims Court Ontario | LegalAssist';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for contractor disputes in Ontario Small Claims Court. Bad renovations, incomplete work, contractor fraud. Recover up to $35,000. Free consultation London.');
+      metaDesc.setAttribute('content', 'Paralegal for contractor disputes in Ontario Small Claims Court. Bad renovations, incomplete work, contractor fraud. Recover up to $50,000. Free consultation London.');
     }
   }, []);
 
@@ -29,7 +29,7 @@ export default function HomeImprovementDisputesPage() {
               Contractor & Home Renovation Disputes
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Bad contractor? Incomplete renovation? Shoddy workmanship? Pursue compensation in Small Claims Court for home improvement disputes up to $35,000.
+              Bad contractor? Incomplete renovation? Shoddy workmanship? Pursue compensation in Small Claims Court for home improvement disputes up to $50,000.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
@@ -194,7 +194,7 @@ export default function HomeImprovementDisputesPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

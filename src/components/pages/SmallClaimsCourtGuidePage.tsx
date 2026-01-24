@@ -29,7 +29,7 @@ export default function SmallClaimsCourtGuidePage() {
               What to Expect at Small Claims Court
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Small Claims Court handles civil disputes up to $35,000. This guide explains the entire process from filing to judgment.
+              Small Claims Court handles civil disputes up to $50,000. This guide explains the entire process from filing to judgment.
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function SmallClaimsCourtGuidePage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Small Claims Court Basics</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
             {[
-              { icon: Scale, title: 'Monetary Limit', desc: 'Claims up to $35,000 (not including interest and costs)' },
+              { icon: Scale, title: 'Monetary Limit', desc: 'Claims up to $50,000 (not including interest and costs)' },
               { icon: Clock, title: 'Timeline', desc: 'Typically 8-12 months from filing to trial' },
               { icon: Users, title: 'Representation', desc: 'You can represent yourself or hire a paralegal or lawyer' },
             ].map((item, index) => (
