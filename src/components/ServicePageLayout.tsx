@@ -6,6 +6,7 @@ import { CheckCircle, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Image } from '@/components/ui/image';
+import ConversionStrip from '@/components/ConversionStrip';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 interface AuthorityItem {
@@ -149,6 +150,13 @@ export default function ServicePageLayout({
           </div>
         </div>
       </section>
+
+      {/* CONVERSION STRIP */}
+      <ConversionStrip 
+        outcome="Expert representation & favorable outcomes"
+        timeline="Quick resolution with clear timelines"
+        pricing="Transparent fees with no hidden costs"
+      />
 
       {/* Section 2: Authority */}
       <section className="w-full py-16 md:py-24 bg-white">

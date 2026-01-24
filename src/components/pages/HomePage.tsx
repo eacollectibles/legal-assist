@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import StickyContactBar from '@/components/StickyContactBar';
 import CallProcessBox from '@/components/CallProcessBox';
 import PrimaryCTA from '@/components/PrimaryCTA';
+import ConversionStrip from '@/components/ConversionStrip';
 import { cn } from '@/lib/utils';
 import {
   Accordion,
@@ -290,6 +291,13 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent lg:bg-gradient-to-r lg:from-secondary/30 lg:to-transparent" />
         </div>
       </section>
+
+      {/* CONVERSION STRIP */}
+      <ConversionStrip 
+        outcome="Expert representation & favorable outcomes"
+        timeline="Quick resolution with clear timelines"
+        pricing="Transparent fees with no hidden costs"
+      />
 
       {/* EDITORIAL INTRO SECTION */}
       {/* Layout: Sticky side note with scrolling content */}
