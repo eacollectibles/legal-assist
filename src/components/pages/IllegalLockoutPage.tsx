@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Phone, Home, AlertTriangle, CheckCircle, Lock } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function IllegalLockoutPage() {
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function IllegalLockoutPage() {
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Has your landlord changed the locks, removed your belongings, or prevented you from entering your home? This is illegal. You have rights and we can help you get back in immediately.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-red-600 text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-700">Get Emergency Help <ArrowRight className="w-5 h-5" /></Link>
-              <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-red-600 text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-50"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+              <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-red-600 text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-red-50"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
             </div>
           </div>
         </div>
@@ -97,7 +98,7 @@ export default function IllegalLockoutPage() {
           <p className="font-paragraph text-lg text-white/90 mb-8 max-w-2xl mx-auto">This is an emergency. Contact us immediately and we will help you take action.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-red-600 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-gray-100">Get Emergency Help <ArrowRight className="w-5 h-5" /></Link>
-            <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-white/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+            <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-white text-white font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-white/10"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
           </div>
         </div>
       </section>
