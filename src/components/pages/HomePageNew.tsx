@@ -267,7 +267,8 @@ export default function HomePage() {
             <p className="text-white/70 font-paragraph text-lg mb-10 max-w-md">
               We provide Paralegal representation for traffic tickets, human rights matters, landlord-tenant disputes, and Small Claims court cases throughout Ontario
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* Hero CTA: Hide on mobile, show on desktop - sticky bar is primary on mobile */}
+            <div className="hidden sm:flex flex-col sm:flex-row gap-4">
               <PrimaryCTA variant="button" size="lg" />
               <Link 
                 to="/services"
