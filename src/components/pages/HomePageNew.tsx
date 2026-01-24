@@ -1,7 +1,7 @@
 // HPI 1.6-V
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown, Home, AlertCircle, Briefcase, Gavel } from 'lucide-react';
+import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, ArrowDown, Home, AlertCircle, Briefcase, Gavel, MessageSquare, FileText, Zap } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -336,8 +336,8 @@ export default function HomePage() {
               
               <AnimatedElement delay={300}>
                 <div className="prose prose-lg prose-stone text-secondary/80 font-paragraph">
-                  <p className="mb-6 text-lg leading-loose">{"At LegalAssist, we help individuals navigate Ontario’s legal system with clarity and confidence. Our services are provided by Licensed Paralegals in good standing with the Law Society of Ontario, offering knowledgeable and practical assistance within the authorized scope of paralegal practice."}</p>
-                  <p className="text-lg leading-loose">{"Whether you are dealing with a traffic offence, a Small Claims Court matter within the court’s monetary jurisdiction, or a landlord-tenant dispute, our Licensed Paralegals provide knowledgeable and practical legal services within the authorized scope of practice. We are committed to offering services that are accessible, understandable, and cost-effective."}</p>
+                  <p className="mb-6 text-lg leading-loose">{"At LegalAssist, we help individuals navigate Ontario's legal system with clarity and confidence. Our services are provided by Licensed Paralegals in good standing with the Law Society of Ontario, offering knowledgeable and practical assistance within the authorized scope of paralegal practice."}</p>
+                  <p className="text-lg leading-loose">{"Whether you are dealing with a traffic offence, a Small Claims Court matter within the court's monetary jurisdiction, or a landlord-tenant dispute, our Licensed Paralegals provide knowledgeable and practical legal services within the authorized scope of practice. We are committed to offering services that are accessible, understandable, and cost-effective."}</p>
                 </div>
               </AnimatedElement>
 
@@ -374,6 +374,119 @@ export default function HomePage() {
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
           <AnimatedElement>
             <CallProcessBox />
+          </AnimatedElement>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS SECTION */}
+      <section className="py-16 md:py-24 lg:py-32 bg-pastelbeige/30 relative">
+        <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <AnimatedElement>
+              <h2 className="font-heading text-4xl md:text-5xl text-secondary mb-6">How It Works</h2>
+              <p className="font-paragraph text-lg text-secondary/70">A simple, transparent process to get you the legal help you need</p>
+            </AnimatedElement>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            {/* Step 1 */}
+            <AnimatedElement delay={0} className="h-full">
+              <div className="relative h-full">
+                <div className="bg-white rounded-xl p-8 lg:p-10 shadow-sm border border-secondary/10 h-full flex flex-col">
+                  {/* Step Number */}
+                  <div className="absolute -top-6 left-8 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading text-xl font-bold shadow-lg">
+                    1
+                  </div>
+
+                  {/* Icon */}
+                  <div className="mt-6 mb-6">
+                    <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <MessageSquare className="w-8 h-8 text-primary" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="font-heading text-2xl text-secondary mb-3">Tell Us What's Going On</h3>
+                  <p className="font-paragraph text-secondary/70 leading-relaxed flex-1">
+                    Share the details of your legal situation during a free 30-minute consultation. We listen, ask clarifying questions, and understand your concerns.
+                  </p>
+
+                  {/* Subtext */}
+                  <p className="font-paragraph text-sm text-primary font-semibold mt-6">Intake & Assessment</p>
+                </div>
+
+                {/* Connector Arrow (hidden on mobile) */}
+                <div className="hidden md:block absolute -right-6 top-1/2 transform -translate-y-1/2">
+                  <ArrowRight className="w-6 h-6 text-secondary/30" />
+                </div>
+              </div>
+            </AnimatedElement>
+
+            {/* Step 2 */}
+            <AnimatedElement delay={100} className="h-full">
+              <div className="relative h-full">
+                <div className="bg-white rounded-xl p-8 lg:p-10 shadow-sm border border-secondary/10 h-full flex flex-col">
+                  {/* Step Number */}
+                  <div className="absolute -top-6 left-8 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading text-xl font-bold shadow-lg">
+                    2
+                  </div>
+
+                  {/* Icon */}
+                  <div className="mt-6 mb-6">
+                    <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <FileText className="w-8 h-8 text-primary" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="font-heading text-2xl text-secondary mb-3">Get Your Plan</h3>
+                  <p className="font-paragraph text-secondary/70 leading-relaxed flex-1">
+                    We review your situation, explain your legal options, and present a clear strategy tailored to your goals and budget.
+                  </p>
+
+                  {/* Subtext */}
+                  <p className="font-paragraph text-sm text-primary font-semibold mt-6">Review & Options</p>
+                </div>
+
+                {/* Connector Arrow (hidden on mobile) */}
+                <div className="hidden md:block absolute -right-6 top-1/2 transform -translate-y-1/2">
+                  <ArrowRight className="w-6 h-6 text-secondary/30" />
+                </div>
+              </div>
+            </AnimatedElement>
+
+            {/* Step 3 */}
+            <AnimatedElement delay={200} className="h-full">
+              <div className="relative h-full">
+                <div className="bg-white rounded-xl p-8 lg:p-10 shadow-sm border border-secondary/10 h-full flex flex-col">
+                  {/* Step Number */}
+                  <div className="absolute -top-6 left-8 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading text-xl font-bold shadow-lg">
+                    3
+                  </div>
+
+                  {/* Icon */}
+                  <div className="mt-6 mb-6">
+                    <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <Zap className="w-8 h-8 text-primary" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="font-heading text-2xl text-secondary mb-3">We Take Action</h3>
+                  <p className="font-paragraph text-secondary/70 leading-relaxed flex-1">
+                    We handle the heavy lifting—drafting letters, filing documents, representing you in court or at tribunal hearings.
+                  </p>
+
+                  {/* Subtext */}
+                  <p className="font-paragraph text-sm text-primary font-semibold mt-6">Letters, Filing & Representation</p>
+                </div>
+              </div>
+            </AnimatedElement>
+          </div>
+
+          {/* CTA Below Steps */}
+          <AnimatedElement delay={300} className="mt-16 text-center">
+            <PrimaryCTA variant="button" size="lg" />
           </AnimatedElement>
         </div>
       </section>
