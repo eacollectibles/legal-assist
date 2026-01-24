@@ -32,10 +32,13 @@ export default function PrimaryCTA({
   if (variant === 'desktop') {
     return (
       <div className="hidden md:flex items-center gap-4">
-        <button className={baseClasses}>
+        <a 
+          href={PHONE_HREF}
+          className={baseClasses}
+        >
           <Phone className="w-5 h-5" />
           <span>Call Now for a Free Case Review</span>
-        </button>
+        </a>
         <span className="font-paragraph text-secondary font-semibold whitespace-nowrap">
           {PHONE_DISPLAY}
         </span>
@@ -56,16 +59,16 @@ export default function PrimaryCTA({
     );
   }
 
-  // Standard button variant (links to contact page)
+  // Standard button variant (initiates phone call)
   if (variant === 'button') {
     return (
-      <Link 
-        to="/contact"
+      <a 
+        href={PHONE_HREF}
         className={baseClasses}
       >
         <Phone className="w-5 h-5" />
         <span>Call Now for a Free Case Review</span>
-      </Link>
+      </a>
     );
   }
 
