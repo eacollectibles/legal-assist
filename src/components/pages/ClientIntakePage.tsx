@@ -12,11 +12,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { BaseCrudService } from '@/integrations';
 import { ClientProfiles, ClientDocuments, FileAssignments } from '@/entities';
-import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle, ExternalLink, Car, Home, Scale, HelpCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle, ExternalLink } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import TicketQuoteCalculator from '@/components/TicketQuoteCalculator';
-import type { QuoteResult } from '@/lib/ticket-quote-service';
 
 interface FormData {
   // Personal Information
@@ -66,16 +64,9 @@ interface FormData {
   conflictMatchesFound: string;
   conflictAcknowledged: boolean;
   conflictMatterCity: string;
-  
-  // Ticket Quote (for traffic tickets)
-  ticketQuoteCompleted: boolean;
-  ticketOffenceType: string;
-  ticketServiceFee: number;
-  ticketRecommendation: string;
 }
 
 const sections = [
-  { id: 'service', title: 'Service Type', icon: Car },                  // STEP 0 (NEW)
   { id: 'conflict', title: 'Conflict of Interest', icon: Shield },      // STEP 1
   { id: 'personal', title: 'Personal Information', icon: User },        // STEP 2
   { id: 'contact', title: 'Contact Information', icon: Phone },         // STEP 3
@@ -104,9 +95,6 @@ export default function ClientIntakePage() {
     checkedNames: string[];
     checkedDate: string;
   } | null>(null);
-  const [selectedServiceType, setSelectedServiceType] = useState<string>('');
-  const [showTicketQuote, setShowTicketQuote] = useState(false);
-  const [ticketQuoteResult, setTicketQuoteResult] = useState<QuoteResult | null>(null);
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -142,10 +130,6 @@ export default function ClientIntakePage() {
     conflictMatchesFound: '',
     conflictAcknowledged: false,
     conflictMatterCity: '',
-    ticketQuoteCompleted: false,
-    ticketOffenceType: '',
-    ticketServiceFee: 0,
-    ticketRecommendation: '',
   });
 
   useEffect(() => {
@@ -441,59 +425,10 @@ export default function ClientIntakePage() {
     }
   };
 
-  // Handle service type selection
-  const handleServiceTypeSelect = (serviceType: string) => {
-    setSelectedServiceType(serviceType);
-    
-    // Auto-set case type based on selection
-    if (serviceType === 'traffic') {
-      handleInputChange('caseType', 'Traffic Ticket');
-      setShowTicketQuote(true);
-    } else if (serviceType === 'ltb') {
-      handleInputChange('caseType', 'Landlord and Tenant Board');
-      setShowTicketQuote(false);
-    } else if (serviceType === 'small_claims') {
-      handleInputChange('caseType', 'Small Claims Court');
-      setShowTicketQuote(false);
-    } else if (serviceType === 'other') {
-      setShowTicketQuote(false);
-    }
-  };
-
-  // Handle ticket quote completion
-  const handleTicketQuoteComplete = (quote: QuoteResult) => {
-    setTicketQuoteResult(quote);
-    handleInputChange('ticketQuoteCompleted', true);
-    handleInputChange('ticketOffenceType', quote.offence.name);
-    handleInputChange('ticketServiceFee', quote.serviceFee);
-    handleInputChange('ticketRecommendation', quote.recommendation);
-    
-    // Auto-fill case description with ticket details
-    const description = `Traffic ticket: ${quote.offence.name}. ${quote.offence.demeritPoints} demerit points. Quote received: $${quote.serviceFee} service fee.`;
-    handleInputChange('caseDescription', description);
-    
-    toast({
-      title: 'Quote Saved',
-      description: 'Your ticket quote has been saved. Click "Save & Continue" to proceed.',
-    });
-  };
-
-  // Skip ticket quote
-  const handleSkipTicketQuote = () => {
-    setShowTicketQuote(false);
-    toast({
-      title: 'Quote Skipped',
-      description: 'You can discuss your ticket details during the consultation.',
-    });
-  };
-
   const validateSection = (sectionIndex: number): boolean => {
     const section = sections[sectionIndex].id;
     
     switch (section) {
-      case 'service':
-        // Service type must be selected, and if traffic ticket, quote should be completed OR skipped
-        return !!selectedServiceType;
       case 'conflict':
         // Can only proceed if passed AND acknowledged
         // BLOCKED status = cannot proceed at all
@@ -674,14 +609,13 @@ export default function ClientIntakePage() {
                     {sections[currentSection].title}
                   </CardTitle>
                   <CardDescription className="font-paragraph">
-                    {currentSection === 0 && 'Select the type of legal service you need'}
-                    {currentSection === 1 && 'Conflict of Interest Check (LSO Compliance)'}
-                    {currentSection === 2 && 'Tell us about yourself'}
-                    {currentSection === 3 && 'How can we reach you?'}
-                    {currentSection === 4 && 'Where do you live?'}
-                    {currentSection === 5 && 'Who should we contact in case of emergency?'}
-                    {currentSection === 6 && 'Tell us about your legal matter'}
-                    {currentSection === 7 && 'When are you available for appointments?'}
+                    {currentSection === 0 && 'Conflict of Interest Check (LSO Compliance)'}
+                    {currentSection === 1 && 'Tell us about yourself'}
+                    {currentSection === 2 && 'How can we reach you?'}
+                    {currentSection === 3 && 'Where do you live?'}
+                    {currentSection === 4 && 'Who should we contact in case of emergency?'}
+                    {currentSection === 5 && 'Tell us about your legal matter'}
+                    {currentSection === 6 && 'When are you available for appointments?'}
                   </CardDescription>
                 </div>
               </div>
@@ -697,179 +631,8 @@ export default function ClientIntakePage() {
                   transition={{ duration: 0.3 }}
                   className="space-y-6"
                 >
-                  {/* Service Type Selection - SECTION 0 (NEW FIRST STEP) */}
+                  {/* Conflict of Interest Check - SECTION 0 (FIRST STEP) */}
                   {currentSection === 0 && (
-                    <div className="space-y-6">
-                      {/* Welcome Message */}
-                      <div className="bg-primary/5 border border-primary/20 rounded-lg p-5">
-                        <h4 className="font-heading font-bold text-foreground mb-2 flex items-center gap-2">
-                          <Car className="w-5 h-5 text-primary" />
-                          Welcome! Let's Get Started
-                        </h4>
-                        <p className="font-paragraph text-sm text-foreground/80">
-                          Select the type of legal matter you need help with. This helps us customize your intake experience and provide relevant information.
-                        </p>
-                      </div>
-
-                      {/* Service Type Cards */}
-                      {!showTicketQuote ? (
-                        <div className="grid gap-4">
-                          {/* Traffic Ticket */}
-                          <button
-                            type="button"
-                            onClick={() => handleServiceTypeSelect('traffic')}
-                            className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
-                              selectedServiceType === 'traffic'
-                                ? 'border-primary bg-primary/5'
-                                : 'border-foreground/10 hover:border-primary/50 hover:bg-primary/5'
-                            }`}
-                          >
-                            <div className="flex items-start gap-4">
-                              <div className={`p-3 rounded-lg ${selectedServiceType === 'traffic' ? 'bg-primary text-white' : 'bg-foreground/5'}`}>
-                                <Car className="w-6 h-6" />
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-heading font-bold text-foreground mb-1">Traffic Ticket</h4>
-                                <p className="font-paragraph text-sm text-foreground/60">
-                                  Speeding, red light, careless driving, stunt driving, distracted driving, and other Highway Traffic Act offences.
-                                </p>
-                                {selectedServiceType === 'traffic' && (
-                                  <p className="font-paragraph text-sm text-primary mt-2 font-medium">
-                                    ✓ Get an instant quote for your ticket!
-                                  </p>
-                                )}
-                              </div>
-                              {selectedServiceType === 'traffic' && (
-                                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                              )}
-                            </div>
-                          </button>
-
-                          {/* Landlord & Tenant Board */}
-                          <button
-                            type="button"
-                            onClick={() => handleServiceTypeSelect('ltb')}
-                            className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
-                              selectedServiceType === 'ltb'
-                                ? 'border-primary bg-primary/5'
-                                : 'border-foreground/10 hover:border-primary/50 hover:bg-primary/5'
-                            }`}
-                          >
-                            <div className="flex items-start gap-4">
-                              <div className={`p-3 rounded-lg ${selectedServiceType === 'ltb' ? 'bg-primary text-white' : 'bg-foreground/5'}`}>
-                                <Home className="w-6 h-6" />
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-heading font-bold text-foreground mb-1">Landlord & Tenant Board</h4>
-                                <p className="font-paragraph text-sm text-foreground/60">
-                                  Evictions, rent disputes, maintenance issues, bad faith claims, N4/N5/N7/N12/N13 notices, and LTB applications.
-                                </p>
-                              </div>
-                              {selectedServiceType === 'ltb' && (
-                                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                              )}
-                            </div>
-                          </button>
-
-                          {/* Small Claims Court */}
-                          <button
-                            type="button"
-                            onClick={() => handleServiceTypeSelect('small_claims')}
-                            className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
-                              selectedServiceType === 'small_claims'
-                                ? 'border-primary bg-primary/5'
-                                : 'border-foreground/10 hover:border-primary/50 hover:bg-primary/5'
-                            }`}
-                          >
-                            <div className="flex items-start gap-4">
-                              <div className={`p-3 rounded-lg ${selectedServiceType === 'small_claims' ? 'bg-primary text-white' : 'bg-foreground/5'}`}>
-                                <Scale className="w-6 h-6" />
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-heading font-bold text-foreground mb-1">Small Claims Court</h4>
-                                <p className="font-paragraph text-sm text-foreground/60">
-                                  Debt collection, contract disputes, property damage, consumer complaints, and claims up to $35,000.
-                                </p>
-                              </div>
-                              {selectedServiceType === 'small_claims' && (
-                                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                              )}
-                            </div>
-                          </button>
-
-                          {/* Other Legal Matters */}
-                          <button
-                            type="button"
-                            onClick={() => handleServiceTypeSelect('other')}
-                            className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
-                              selectedServiceType === 'other'
-                                ? 'border-primary bg-primary/5'
-                                : 'border-foreground/10 hover:border-primary/50 hover:bg-primary/5'
-                            }`}
-                          >
-                            <div className="flex items-start gap-4">
-                              <div className={`p-3 rounded-lg ${selectedServiceType === 'other' ? 'bg-primary text-white' : 'bg-foreground/5'}`}>
-                                <HelpCircle className="w-6 h-6" />
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-heading font-bold text-foreground mb-1">Other Legal Matters</h4>
-                                <p className="font-paragraph text-sm text-foreground/60">
-                                  Human Rights Tribunal, provincial offences, employment issues, WSIB appeals, or other matters.
-                                </p>
-                              </div>
-                              {selectedServiceType === 'other' && (
-                                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                              )}
-                            </div>
-                          </button>
-                        </div>
-                      ) : (
-                        /* Ticket Quote Calculator */
-                        <div className="space-y-4">
-                          <TicketQuoteCalculator
-                            onQuoteComplete={handleTicketQuoteComplete}
-                            onSkip={handleSkipTicketQuote}
-                          />
-                          
-                          {ticketQuoteResult && (
-                            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
-                              <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
-                              <div>
-                                <p className="font-paragraph font-medium text-green-800">Quote saved!</p>
-                                <p className="font-paragraph text-sm text-green-700">
-                                  {ticketQuoteResult.offence.name} — ${ticketQuoteResult.serviceFee} service fee
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                          
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              setShowTicketQuote(false);
-                              setSelectedServiceType('');
-                            }}
-                            className="w-full"
-                          >
-                            ← Choose a Different Service Type
-                          </Button>
-                        </div>
-                      )}
-
-                      {/* Selection Confirmation */}
-                      {selectedServiceType && !showTicketQuote && (
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
-                          <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
-                          <p className="font-paragraph text-green-800">
-                            Great choice! Click <strong>Save & Continue</strong> to proceed with the conflict check.
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Conflict of Interest Check - SECTION 1 (was SECTION 0) */}
-                  {currentSection === 1 && (
                     <div className="space-y-6">
                       {/* Welcome & Explanation */}
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
@@ -1186,8 +949,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Personal Information - NOW SECTION 2 */}
-                  {currentSection === 2 && (
+                  {/* Personal Information - NOW SECTION 1 */}
+                  {currentSection === 1 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <Label htmlFor="firstName" className="font-paragraph">
@@ -1279,8 +1042,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Contact Information - NOW SECTION 3 */}
-                  {currentSection === 3 && (
+                  {/* Contact Information - NOW SECTION 2 */}
+                  {currentSection === 2 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <Label htmlFor="phoneNumber" className="font-paragraph">
@@ -1347,8 +1110,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Address Information - NOW SECTION 4 */}
-                  {currentSection === 4 && (
+                  {/* Address Information - NOW SECTION 3 */}
+                  {currentSection === 3 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="md:col-span-2">
                         <Label htmlFor="streetAddress" className="font-paragraph">
@@ -1412,8 +1175,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Emergency Contact - NOW SECTION 5 */}
-                  {currentSection === 5 && (
+                  {/* Emergency Contact - NOW SECTION 4 */}
+                  {currentSection === 4 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <Label htmlFor="emergencyContactName" className="font-paragraph">
@@ -1455,8 +1218,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Case Information - NOW SECTION 6 */}
-                  {currentSection === 6 && (
+                  {/* Case Information - NOW SECTION 5 */}
+                  {currentSection === 5 && (
                     <div className="space-y-6">
                       {/* LSO Compliance Disclaimer */}
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -1580,8 +1343,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Availability - NOW SECTION 7 */}
-                  {currentSection === 7 && (
+                  {/* Availability - NOW SECTION 6 */}
+                  {currentSection === 6 && (
                     <div className="space-y-6">
                       <div>
                         <Label className="font-paragraph mb-3 block">
@@ -1629,7 +1392,7 @@ export default function ClientIntakePage() {
               {/* Navigation Buttons */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-foreground/10">
                 {/* Only show Skip if NOT blocked */}
-                {!(currentSection === 1 && formData.conflictCheckStatus === 'blocked') && (
+                {!(currentSection === 0 && formData.conflictCheckStatus === 'blocked') && (
                   <Button
                     variant="outline"
                     onClick={handleSkip}
@@ -1651,7 +1414,7 @@ export default function ClientIntakePage() {
                     </Button>
                   )}
                   {/* Only show Save & Continue if NOT blocked */}
-                  {!(currentSection === 1 && formData.conflictCheckStatus === 'blocked') && (
+                  {!(currentSection === 0 && formData.conflictCheckStatus === 'blocked') && (
                     <Button
                       onClick={handleNext}
                       disabled={isLoading}
