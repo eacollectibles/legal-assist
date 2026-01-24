@@ -13,6 +13,8 @@ const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
 const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
 const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
+const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
+const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
 
 // Service Pages
 const SmallClaimsPage = lazy(() => import('@/components/pages/SmallClaimsPage'));
@@ -178,6 +180,8 @@ export default function Router() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />
             <Route path="/client-login" element={<ClientLoginPage />} />
+            <Route path="/client-intake" element={<ClientIntakePage />} />
+            <Route path="/client-dashboard" element={<ClientDashboardPage />} />
 
             {/* Core Service Pages */}
             <Route path="/services/small-claims-court" element={<SmallClaimsPage />} />
