@@ -197,6 +197,35 @@ export interface ClientProfiles {
 
 
 /**
+ * Collection ID: conflictlogs
+ * Interface for ConflictLogs
+ */
+export interface ConflictLogs {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  conflictCode?: string;
+  /** @wixFieldType text */
+  fullName?: string;
+  /** @wixFieldType text */
+  phoneNumber?: string;
+  /** @wixFieldType text */
+  email?: string;
+  /** @wixFieldType text */
+  conflictReason?: string;
+  /** @wixFieldType datetime */
+  detectedAt?: Date | string;
+  /** @wixFieldType boolean */
+  reviewed?: boolean;
+  /** @wixFieldType text */
+  reviewedBy?: string;
+  /** @wixFieldType datetime */
+  reviewedAt?: Date | string;
+}
+
+
+/**
  * Collection ID: documenttemplates
  * Interface for DocumentTemplates
  */

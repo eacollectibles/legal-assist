@@ -6,6 +6,7 @@ import ComingSoonModal from '@/components/ComingSoonModal';
 // Main Pages - Keep HomePage and ContactPage as static imports
 import HomePage from '@/components/pages/HomePage';
 import ContactPage from '@/components/pages/ContactPage';
+import ConflictDetectedPage from '@/components/pages/ConflictDetectedPage';
 
 // Lazy load all other pages
 const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
@@ -168,6 +169,7 @@ export default function Router() {
             {/* Main Pages */}
             <Route path="/" element={<HomePage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/conflict-detected" element={<ConflictDetectedPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />

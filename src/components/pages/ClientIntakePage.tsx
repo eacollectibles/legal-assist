@@ -401,11 +401,8 @@ export default function ClientIntakePage() {
       handleInputChange('conflictMatchesFound', JSON.stringify(uniqueMatches));
 
       if (hasConflict) {
-        toast({
-          title: 'Potential Conflict Detected',
-          description: 'We found matching records. Please contact our office to proceed.',
-          variant: 'destructive',
-        });
+        // Trigger conflict detected flow - generates code, deletes account, stores log
+        await handleConflictDetected();
       } else {
         toast({
           title: 'No Conflicts Found ✓',
@@ -530,10 +527,117 @@ export default function ClientIntakePage() {
     }
   };
 
-  const handleSkip = async () => {
-    await saveProgress();
-    sessionStorage.setItem('intakeSkipped', 'true');
-    navigate('/client-dashboard');
+  // ... keep existing code (handleSubmit function) ...
+
+  // Generate unique 8-character alphanumeric conflict code
+  const generateConflictCode = (): string => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = 'CONF-';
+    for (let i = 0; i < 8; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  };
+
+  // Handle conflict detected - generate code, store log, delete account, show message
+  const handleConflictDetected = async () => {
+    try {
+      const conflictCode = generateConflictCode();
+      
+      // Get user email from signup
+      const userEmail = sessionStorage.getItem('signupEmail') || '';
+      
+      // Create conflict log entry
+      const conflictLogData = {
+        _id: crypto.randomUUID(),
+        conflictCode: conflictCode,
+        fullName: `${formData.firstName} ${formData.lastName}`,
+        phoneNumber: formData.phoneNumber,
+        email: userEmail,
+        conflictReason: `Conflict detected during intake: Opposing parties match existing records`,
+        detectedAt: new Date().toISOString(),
+        reviewed: false,
+        reviewedBy: null,
+        reviewedAt: null,
+      };
+
+      // Save conflict log
+      await BaseCrudService.create('conflictlogs', conflictLogData);
+
+      // Delete the client profile that was just created
+      if (clientId) {
+        try {
+          await BaseCrudService.delete('clientprofiles', clientId);
+        } catch (err) {
+          console.error('Error deleting client profile:', err);
+        }
+      }
+
+      // Delete any documents uploaded by this client
+      try {
+        const { items: docs } = await BaseCrudService.getAll('clientdocuments');
+        const clientDocs = docs?.filter(d => d.clientEmail === userEmail) || [];
+        for (const doc of clientDocs) {
+          await BaseCrudService.delete('clientdocuments', doc._id);
+        }
+      } catch (err) {
+        console.error('Error deleting client documents:', err);
+      }
+
+      // Delete the user account
+      try {
+        const { items: accounts } = await BaseCrudService.getAll('useraccounts');
+        const userAccount = accounts?.find(a => a.email === userEmail);
+        if (userAccount) {
+          await BaseCrudService.delete('useraccounts', userAccount._id);
+        }
+      } catch (err) {
+        console.error('Error deleting user account:', err);
+      }
+
+      // Send notification to all paralegal dashboards
+      try {
+        const { items: users } = await BaseCrudService.getAll('useraccounts');
+        const paralegals = users?.filter(u => u.isAdmin) || [];
+        
+        for (const paralegal of paralegals) {
+          await BaseCrudService.create('notifications', {
+            _id: crypto.randomUUID(),
+            userId: paralegal._id,
+            notificationType: 'conflict_detected',
+            notificationTitle: `Conflict Detected - Code: ${conflictCode}`,
+            notificationMessage: `A potential conflict of interest has been detected. Client: ${formData.firstName} ${formData.lastName}. Phone: ${formData.phoneNumber}. Reference Code: ${conflictCode}`,
+            isRead: false,
+            createdDate: new Date().toISOString(),
+            relatedActivityId: conflictLogData._id,
+          });
+        }
+      } catch (err) {
+        console.error('Error sending notifications:', err);
+      }
+
+      // Show conflict detected screen with code
+      setConflictCheckResult({
+        status: 'conflict_detected',
+        matches: [],
+        checkedNames: [],
+        checkedDate: new Date().toISOString(),
+      });
+
+      // Store conflict code in session for display
+      sessionStorage.setItem('conflictCode', conflictCode);
+      sessionStorage.setItem('conflictDetected', 'true');
+
+      // Navigate to conflict detected page
+      navigate('/conflict-detected');
+    } catch (error) {
+      console.error('Error handling conflict detection:', error);
+      toast({
+        title: 'Error',
+        description: 'An error occurred while processing the conflict detection.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const progress = ((currentSection + 1) / sections.length) * 100;
@@ -1391,17 +1495,6 @@ export default function ClientIntakePage() {
 
               {/* Navigation Buttons */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-foreground/10">
-                {/* Only show Skip if NOT blocked */}
-                {!(currentSection === 0 && formData.conflictCheckStatus === 'blocked') && (
-                  <Button
-                    variant="outline"
-                    onClick={handleSkip}
-                    className="w-full sm:w-auto order-3 sm:order-1"
-                  >
-                    Skip for Now
-                  </Button>
-                )}
-
                 <div className="flex gap-3 w-full sm:w-auto order-1 sm:order-2">
                   {currentSection > 0 && (
                     <Button
