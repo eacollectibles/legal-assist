@@ -9,7 +9,7 @@ export default function SexualHarassmentPage() {
     document.title = 'Sexual Harassment Claims | Workplace Harassment Ontario | HRTO | LegalAssist';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Experiencing sexual harassment at work? File an HRTO complaint. Ontario employers must provide harassment-free workplaces. Confidential consultations. Paralegal help London.');
+      metaDesc.setAttribute('content', 'Experiencing sexual harassment at work? File an HRTO complaint. Ontario employers must provide harassment-free workplaces. Private consultations. Paralegal help London.');
     }
   }, []);
 
@@ -33,7 +33,7 @@ export default function SexualHarassmentPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Confidential Consultation <ArrowRight className="w-5 h-5" />
+                Private Consultation <ArrowRight className="w-5 h-5" />
               </Link>
               <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
                 Call (519) 601-1110
@@ -181,7 +181,7 @@ export default function SexualHarassmentPage() {
             <Shield className="w-12 h-12 text-amber-600 mx-auto mb-4" />
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">We Believe You</h2>
             <p className="font-paragraph text-foreground/80 mb-6">
-              Coming forward about sexual harassment takes courage. We provide a safe, non-judgmental space to discuss your situation. All consultations are completely confidential.
+              Coming forward about sexual harassment takes courage. We provide a safe, non-judgmental space to discuss your situation. All information is handled securely.
             </p>
             <p className="font-paragraph text-foreground/70 text-sm">
               You are not alone. What happened to you is not your fault. You have the right to a harassment-free workplace.
@@ -194,9 +194,9 @@ export default function SexualHarassmentPage() {
       <section className="py-16 md:py-20 bg-primary text-primary-foreground">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <Phone className="w-12 h-12 mx-auto mb-4 opacity-90" />
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Confidential Help Is Available</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Private Help Is Available</h2>
           <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free, confidential consultation to discuss your situation and understand your options.
+            Free, private consultation to discuss your situation and understand your options.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">

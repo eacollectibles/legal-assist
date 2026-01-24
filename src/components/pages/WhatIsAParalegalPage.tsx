@@ -144,7 +144,7 @@ export default function WhatIsAParalegalPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                  <span className="font-paragraph text-foreground/80">Client communications are protected by solicitor-client privilege</span>
+                  <span className="font-paragraph text-foreground/80">Formal client communications (after retainer) are protected by paralegal-client privilege</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />

@@ -192,7 +192,7 @@ export default function PregnancyDiscriminationPage() {
               Pregnancy discrimination is more common than many people realize, and it's absolutely wrong. You should be able to start or grow your family without fear of losing your job or being treated unfairly.
             </p>
             <p className="font-paragraph text-foreground/70 text-sm">
-              We provide supportive, confidential consultations to help you understand your options and decide the best path forward.
+              We provide supportive, private consultations to help you understand your options and decide the best path forward.
             </p>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function PregnancyDiscriminationPage() {
           <Baby className="w-12 h-12 mx-auto mb-4 opacity-90" />
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Protect Your Rights & Your Family</h2>
           <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free, confidential consultation to review your situation and explain your options.
+            Free, private consultation to review your situation and explain your options.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">

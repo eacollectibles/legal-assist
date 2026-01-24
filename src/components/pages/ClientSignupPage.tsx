@@ -365,9 +365,9 @@ export default function ClientSignupPage() {
                   </div>
 
                   <div>
-                    <h4 className="font-heading font-bold text-foreground mb-2">🔒 Privacy & Confidentiality</h4>
+                    <h4 className="font-heading font-bold text-foreground mb-2">🔒 Privacy & Security</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      All information is securely encrypted and handled in accordance with professional confidentiality obligations applicable to licensed paralegals in Ontario.
+                      All information is securely encrypted and handled in accordance with professional obligations applicable to licensed paralegals in Ontario. Please note that creating an account does not establish a paralegal-client relationship.
                     </p>
                   </div>
 

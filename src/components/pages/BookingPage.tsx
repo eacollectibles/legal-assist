@@ -340,9 +340,9 @@ export default function BookingPage() {
                   </div>
 
                   <div>
-                    <h4 className="font-heading font-bold text-foreground mb-2">Confidentiality</h4>
+                    <h4 className="font-heading font-bold text-foreground mb-2">Information Security</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      All consultations are confidential and protected by attorney-client privilege.
+                      All information submitted is handled securely. Please note that no paralegal-client relationship is created until a written retainer agreement is signed.
                     </p>
                   </div>
                 </div>

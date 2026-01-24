@@ -127,7 +127,7 @@ export default function RaceDiscriminationPage() {
         <div className="w-full py-16 md:py-24 bg-primary/5">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
             <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Experiencing Race Discrimination?</h2>
-            <p className="font-paragraph text-lg text-foreground/80 mb-8">You don't have to tolerate this. Let me assess your situation confidentially.</p>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">You don't have to tolerate this. Let me assess your situation in a private, secure consultation.</p>
             <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>

@@ -292,7 +292,7 @@ const CallbackForm: React.FC = () => {
       </button>
       
       <p className="text-sm text-center text-secondary/60 -mt-2">
-        No obligation. Confidential review by a licensed Ontario paralegal.
+        No obligation. Secure review by a licensed Ontario paralegal.
       </p>
     </form>
   );

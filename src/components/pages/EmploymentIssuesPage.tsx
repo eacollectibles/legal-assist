@@ -566,16 +566,16 @@ export default function EmploymentIssuesPage() {
               </p>
             </div>
 
-            {/* Confidentiality */}
+            {/* Information Security */}
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="font-heading text-xl font-bold text-foreground mb-4">
-                Is my information confidential?
+                Is my information secure?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
-                Yes, absolutely. All communications between you and our paralegals are protected by solicitor-client privilege. We maintain strict confidentiality regarding your employment situation and personal information.
+                Yes. All information you provide is handled securely. Once a formal paralegal-client relationship is established through a signed retainer agreement, your communications are protected by paralegal-client privilege.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed">
-                We will not disclose any information without your consent, except as required by law. Your privacy and confidentiality are fundamental to our service.
+                We will not disclose any information without your consent, except as required by law. Your privacy is fundamental to our service.
               </p>
             </div>
 
@@ -632,9 +632,9 @@ export default function EmploymentIssuesPage() {
               </p>
             </div>
             <div className="bg-pastelgreen/20 border border-pastelgreen/30 rounded-lg p-8">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-3">Confidentiality</h3>
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">Information Security & Privilege</h3>
               <p className="font-paragraph text-foreground/80 mb-4">
-                All communications between you and our paralegals are protected by solicitor-client privilege. We maintain strict confidentiality regarding your employment situation and personal information.
+                All information you provide is handled securely. Once a formal paralegal-client relationship is established through a signed retainer agreement, your communications are protected by paralegal-client privilege and we maintain strict confidentiality regarding your employment situation.
               </p>
             </div>
             <div className="bg-pastelbeige/30 border border-pastelbeige rounded-lg p-8">

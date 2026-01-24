@@ -95,7 +95,7 @@ export default function TrafficTicketGuidePage() {
                 <tbody className="divide-y divide-border">
                   <tr className="bg-green-50"><td className="px-6 py-4 font-medium">Clean record, minor ticket (0-2 pts)</td><td className="px-6 py-4 text-green-800">Consider paying or early resolution</td><td className="px-6 py-4 text-sm">Minimal insurance impact, not worth time/cost</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Already have points, any ticket</td><td className="px-6 py-4 text-primary font-medium">Fight or negotiate</td><td className="px-6 py-4 text-sm">Accumulating points = suspensions, major increases</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">Major ticket (4+ points)</td><td className="px-6 py-4 text-primary font-medium">Definitely fight</td><td className="px-6 py-4 text-sm">Insurance impact far exceeds cost of fighting</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Major ticket (4+ points)</td><td className="px-6 py-4 text-primary font-medium">Often worth contesting</td><td className="px-6 py-4 text-sm">Insurance impact far exceeds cost of fighting</td></tr>
                   <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Careless, stunt, impaired</td><td className="px-6 py-4 text-red-800 font-bold">Get representation</td><td className="px-6 py-4 text-sm">Licence, insurance, possibly criminal—too much at stake</td></tr>
                 </tbody>
               </table>

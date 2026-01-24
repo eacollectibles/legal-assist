@@ -262,7 +262,7 @@ export default function ClientLoginPage() {
                   <div>
                     <h4 className="font-heading font-bold text-foreground mb-2">🔒 Complete Privacy</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      All information is encrypted and protected by solicitor-client privilege.
+                      All information is encrypted and handled securely in accordance with our professional obligations.
                     </p>
                   </div>
 

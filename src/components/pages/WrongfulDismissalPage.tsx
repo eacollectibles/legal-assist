@@ -44,9 +44,9 @@ export default function WrongfulDismissalPage() {
             <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
               <h3 className="font-heading text-xl font-bold text-red-800 mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-6 h-6" />
-                Don't Accept the First Offer
+                Consider Getting Your Offer Reviewed
               </h3>
-              <p className="text-red-900">Employers often offer ESA minimums first. Common law entitlements are typically 3-4x higher. Get an assessment before signing anything.</p>
+              <p className="text-red-900">Employers often offer ESA minimums first. Common law entitlements may be significantly higher. Consider getting an assessment before signing anything.</p>
             </div>
 
             <h3 className="font-heading text-2xl font-bold text-foreground mb-6">ESA vs. Common Law Notice</h3>
@@ -120,7 +120,7 @@ export default function WrongfulDismissalPage() {
         <div className="w-full py-16 md:py-24 bg-primary/5">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
             <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Recently Terminated?</h2>
-            <p className="font-paragraph text-lg text-foreground/80 mb-8">Don't accept the first offer. Let me calculate what you're actually entitled to.</p>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Consider getting your offer reviewed. I can help you understand your potential entitlement.</p>
             <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>

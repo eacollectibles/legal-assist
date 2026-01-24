@@ -119,7 +119,7 @@ export default function ConflictDetectedPage() {
                 <li className="flex gap-3">
                   <span className="text-primary font-bold">•</span>
                   <span>
-                    <strong>Confidentiality:</strong> All information related to this conflict check is kept confidential and secure.
+                    <strong>Information Security:</strong> All information related to this conflict check is handled securely.
                   </span>
                 </li>
               </ul>

@@ -22,7 +22,7 @@ export default function DebtNegotiationPage() {
 
   const steps = [
     {
-      title: 'Confidential Review',
+      title: 'Secure Review',
       description: 'We review your debts, creditor communications, and financial situation to understand your complete picture.'
     },
     {

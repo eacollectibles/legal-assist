@@ -510,7 +510,7 @@ export default function CarelessDrivingDefencePage() {
               Facing a Careless Driving Charge?
             </h2>
             <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-              Don't plead guilty without understanding your options. Get an honest assessment of your case and what outcomes are realistically possible.
+              Consider getting advice before making any decisions. Get an honest assessment of your case and what outcomes may be realistically possible.
             </p>
             <a 
               href="/contact" 

@@ -35,7 +35,7 @@ export default function SecurityDepositPage() {
   return (
     <>
       <SEO title="Security Deposit Ontario | Illegal Deposits Recovery" description="Security deposits are illegal in Ontario. Licensed paralegal helps recover illegal deposits through LTB. Rent deposit rules explained. Free consultation." canonical="https://www.legalassist.london/services/security-deposits" />
-      <ServicePageLayout seoTitle="Security Deposits | Ontario" seoDescription="Security deposit recovery in Ontario." canonical="https://www.legalassist.london/services/security-deposits" problemHeadline="Security Deposits" problemDescription="Security deposits are ILLEGAL in Ontario. If your landlord collected one, you can get it back. Only last month's rent deposit is permitted." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Security deposits" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+      <ServicePageLayout seoTitle="Security Deposits | Ontario" seoDescription="Security deposit recovery in Ontario." canonical="https://www.legalassist.london/services/security-deposits" problemHeadline="Security Deposits" problemDescription="Security deposits are prohibited under Ontario law. If your landlord collected one, you may be able to recover it through the LTB. Only last month's rent deposit is permitted." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Security deposits" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -119,7 +119,7 @@ export default function SecurityDepositPage() {
         <div className="w-full py-16 md:py-24 bg-primary/5">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
             <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Paid an Illegal Deposit?</h2>
-            <p className="font-paragraph text-lg text-foreground/80 mb-8">You can get it back. Let me help you recover what's yours.</p>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">You may be able to recover it through the LTB. Let me review your situation.</p>
             <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>

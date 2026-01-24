@@ -34,8 +34,8 @@ export default function SeveranceNegotiationPage() {
 
   return (
     <>
-      <SEO title="Severance Negotiation Paralegal Ontario | Severance Package Review" description="Licensed paralegal for severance negotiation in Ontario. Don't accept the first offer. Review, calculate entitlement, negotiate. Free consultation." canonical="https://www.legalassist.london/services/severance-negotiation" />
-      <ServicePageLayout seoTitle="Severance Negotiation | Ontario" seoDescription="Severance negotiation help in Ontario." canonical="https://www.legalassist.london/services/severance-negotiation" problemHeadline="Severance Negotiation" problemDescription="Offered a severance package? Don't sign yet. First offers are almost always below your actual entitlement. I help you get what you deserve." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Severance negotiation" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+      <SEO title="Severance Negotiation Paralegal Ontario | Severance Package Review" description="Licensed paralegal for severance negotiation in Ontario. Get your offer reviewed before signing. Calculate entitlement, negotiate. Free consultation." canonical="https://www.legalassist.london/services/severance-negotiation" />
+      <ServicePageLayout seoTitle="Severance Negotiation | Ontario" seoDescription="Severance negotiation help in Ontario." canonical="https://www.legalassist.london/services/severance-negotiation" problemHeadline="Severance Negotiation" problemDescription="Offered a severance package? Consider getting it reviewed before signing. First offers are often below what the law provides. I help you understand your potential entitlement." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Severance negotiation" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -44,9 +44,9 @@ export default function SeveranceNegotiationPage() {
             <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
               <h3 className="font-heading text-xl font-bold text-red-800 mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-6 h-6" />
-                Don't Sign Anything Yet
+                Important: Get Advice Before Signing
               </h3>
-              <p className="text-red-900">Once you sign a release, you cannot come back for more money—even if you later learn you were entitled to much more. Get your package reviewed before signing anything.</p>
+              <p className="text-red-900">Once you sign a release, you generally cannot come back for more money—even if you later learn you may have been entitled to more. Consider having your package reviewed before signing anything.</p>
             </div>
 
             <h3 className="font-heading text-2xl font-bold text-foreground mb-6">ESA vs. Common Law: The Gap</h3>

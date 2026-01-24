@@ -385,9 +385,9 @@ export default function CriminalMattersPage() {
                 </p>
               </div>
               <div>
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Confidentiality & Privilege</h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Information Security & Privilege</h3>
                 <p className="font-paragraph text-foreground/80 mb-4">
-                  All communications between you and our paralegals are protected by solicitor-client privilege. We maintain strict confidentiality regarding your case and personal information.
+                  Once a formal paralegal-client relationship is established through a signed retainer agreement, all communications are protected by paralegal-client privilege. Information submitted through this website prior to retainer is handled securely but is not subject to privilege.
                 </p>
               </div>
               <div>

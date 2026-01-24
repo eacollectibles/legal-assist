@@ -271,9 +271,10 @@ export default function PublicUploadPage() {
             </Button>
           </div>
 
-          <div className="text-xs text-muted-foreground text-center pt-4 border-t">
+          <div className="text-xs text-muted-foreground text-center pt-4 border-t space-y-2">
             <p>This is a secure upload link provided by {uploadToken?.createdByParalegalName}.</p>
             <p>Your upload will be encrypted and stored securely.</p>
+            <p className="mt-2 text-[10px]">Note: Information submitted through this upload does not create a paralegal-client relationship and is not subject to privilege until a written retainer agreement is signed.</p>
           </div>
         </CardContent>
       </Card>

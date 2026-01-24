@@ -46,7 +46,7 @@ export default function FollowingTooCloselyPage() {
                 <AlertTriangle className="w-6 h-6" />
                 4 Demerit Points
               </h3>
-              <p className="text-yellow-900">Following too closely carries the same points as speeding 30-49 km/h over. This is a serious charge with significant insurance consequences—definitely worth fighting.</p>
+              <p className="text-yellow-900">Following too closely carries the same points as speeding 30-49 km/h over. This is a serious charge with significant insurance consequences—often worth contesting.</p>
             </div>
 
             <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Why This Charge is Different</h3>

@@ -423,7 +423,7 @@ export default function AboutPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                  <span className="font-paragraph text-foreground/80">Client communications are protected by solicitor-client privilege</span>
+                  <span className="font-paragraph text-foreground/80">Formal client communications (after retainer) are protected by paralegal-client privilege</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
@@ -536,12 +536,12 @@ export default function AboutPage() {
                     </td>
                   </tr>
                   <tr className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 font-heading font-semibold text-foreground">Solicitor-Client Privilege</td>
+                    <td className="px-6 py-4 font-heading font-semibold text-foreground">Client Privilege</td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
-                      Communications are protected by solicitor-client privilege; Confidentiality is guaranteed
+                      Client communications (after retainer) are protected by paralegal-client privilege
                     </td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
-                      Communications are protected by solicitor-client privilege; Confidentiality is guaranteed
+                      Client communications (after retainer) are protected by solicitor-client privilege
                     </td>
                   </tr>
                 </tbody>
@@ -636,7 +636,7 @@ export default function AboutPage() {
                 <strong>Both Are Regulated Professionals:</strong> Both paralegals and lawyers are licensed and regulated by the Law Society of Ontario. Both must adhere to strict professional conduct standards and ethical obligations. Both maintain professional liability insurance and are subject to discipline procedures.
               </p>
               <p>
-                <strong>Solicitor-Client Privilege:</strong> Communications with both paralegals and lawyers are protected by solicitor-client privilege, meaning they cannot be forced to disclose what you tell them without your consent.
+                <strong>Client Privilege:</strong> Once a formal client relationship is established through a signed retainer agreement, communications with both paralegals (paralegal-client privilege) and lawyers (solicitor-client privilege) are protected. Please note that information shared prior to signing a retainer is handled securely but is not subject to privilege.
               </p>
               <p>
                 <strong>Cost Savings:</strong> Paralegals typically charge lower hourly rates than lawyers, making them an affordable option for matters within their scope of practice. This can result in significant cost savings for clients.
