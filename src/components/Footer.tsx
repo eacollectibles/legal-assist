@@ -150,8 +150,11 @@ export default function Footer() {
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
               <strong className="text-secondary-foreground/90">Disclaimer:</strong> This website provides general information about paralegal services and is not intended to constitute legal advice. The information contained on this website should not be relied upon as legal advice and does not create or imply a paralegal-client relationship. Contacting LegalAssist through this website, submitting an online form, or sending an email does not establish a paralegal-client relationship unless and until a written retainer agreement is executed. No confidentiality or privilege attaches to information submitted through this website prior to the formal establishment of a paralegal-client relationship. LegalAssist is operated by a Licensed Paralegal regulated by the Law Society of Ontario. For advice specific to your legal situation, please contact us to schedule a consultation.
             </p>
-            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
               <strong className="text-secondary-foreground/90">Immigration Services Notice:</strong> Immigration services are provided exclusively by licensed Regulated Canadian Immigration Consultants (RCICs). LegalAssist Paralegal Services does not provide immigration advice or representation except where permitted by the Law Society of Ontario in relation to advocacy before the Immigration and Refugee Board (IRB).
+            </p>
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+              <strong className="text-secondary-foreground/90">Insolvency Services Notice:</strong> Insolvency and bankruptcy services referenced on this website are provided exclusively by Licensed Insolvency Trustees (LITs) licensed by the Office of the Superintendent of Bankruptcy. LegalAssist Paralegal Services does not provide insolvency advice or representation.
             </p>
           </div>
           <p className="text-xs text-secondary-foreground/50 text-center mb-2">
