@@ -225,7 +225,7 @@ export default function ClientLoginPage() {
                 </Button>
 
                 <p className="font-paragraph text-sm text-foreground/60 text-center">
-                  Don't have an account? <Link to="/client-signup" className="text-primary hover:underline">Create one here</Link>
+                  Don't have an account? <Link to="/signup" className="text-primary hover:underline">Create one here</Link>
                 </p>
               </form>
             </div>

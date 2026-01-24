@@ -1,108 +1,148 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Phone, Home, AlertTriangle, CheckCircle, Shield } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, AlertCircle, Shield, FileText, Phone } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function HarassmentByLandlordPage() {
-  useEffect(() => {
-    document.title = 'Landlord Harassment Ontario | Tenant Rights T2 Application | LegalAssist';
-  }, []);
+  const authorityItems = [
+    { title: 'Harassment Claims', description: 'Landlord harassment is illegal. I help tenants document, report, and pursue compensation for landlord misconduct.' },
+    { title: 'T2 Applications', description: 'File T2 applications for interference with reasonable enjoyment, harassment, and illegal entry.' },
+    { title: 'Rent Reduction & Damages', description: 'Pursue rent reductions and general damages for the impact on your living situation.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Document Everything', description: 'Keep records of every incident—dates, times, witnesses, photos, recordings.' },
+    { step: '2', title: 'Formal Complaint', description: 'Send written notice to landlord about the harassment.' },
+    { step: '3', title: 'T2 Application', description: 'File with LTB seeking orders, rent reduction, and damages.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Clear Legal Protection', description: 'RTA prohibits harassment and interference.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Compensation Available', description: 'Rent reductions and general damages.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Orders to Stop', description: 'LTB can order landlord to cease conduct.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What counts as landlord harassment?", answer: "Repeated unwanted contact, threats, intimidation, unauthorized entry, shutting off utilities, removing amenities, interfering with guests, creating noise, refusing necessary repairs to force you out, false accusations, or any conduct intended to pressure you to leave." },
+    { question: "What is 'substantial interference'?", answer: "Actions that significantly impact your ability to enjoy your rental. This includes: excessive noise, removal of amenities, blocking access to common areas, failing to address safety issues, or any persistent conduct that makes living there difficult." },
+    { question: "What evidence do I need?", answer: "Documentation is critical: keep a log of incidents with dates/times, save all text messages and emails, photograph any physical evidence, get witness statements, record conversations (you can record if you're part of the conversation in Ontario), and save voicemails." },
+    { question: "What compensation can I get?", answer: "Rent reduction for the period of harassment (typically 10-25% depending on severity), general damages for stress and inconvenience ($500-5,000+ depending on severity), and orders requiring the landlord to stop the conduct." },
+    { question: "What about illegal entry?", answer: "Landlords must give 24 hours written notice before entering, except emergencies. Entering without notice, entering excessively, or entering for invalid reasons is illegal. Each illegal entry can result in damages." },
+    { question: "What if I'm afraid to file?", answer: "Landlords cannot retaliate for filing T2. If they do (N12 after complaint, rent increase threats), that's additional grounds for your case. Document any retaliation and report it. The law protects tenants who exercise their rights." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Shield className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Tenant Rights</span>
-            </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">Harassment by Landlord in Ontario</h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Is your landlord harassing you, interfering with your enjoyment, or trying to force you out? You have legal protections and can seek compensation through the Landlord and Tenant Board.</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Help Now <ArrowRight className="w-5 h-5" /></Link>
-              <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> (519) 601-1127</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Types of Landlord Harassment</h2>
-          <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">The Residential Tenancies Act prohibits landlords from harassing, coercing, or interfering with tenants.</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige">
-              <h3 className="font-heading text-lg font-bold text-foreground mb-4">Harassment Examples:</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Frequent unannounced entries</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Verbal abuse or threats</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Excessive contact or surveillance</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Deliberate disruption (noise, construction)</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Refusing to accept rent</span></li>
-              </ul>
-            </div>
+    <>
+      <SEO title="Landlord Harassment Help | T2 Application Ontario" description="Licensed paralegal for landlord harassment claims in Ontario. Illegal entry, interference, intimidation. T2 applications, rent reduction, damages. Free consultation." canonical="https://www.legalassist.london/services/harassment-by-landlord" />
+      <ServicePageLayout seoTitle="Landlord Harassment Help | Ontario" seoDescription="Help for tenants experiencing landlord harassment." canonical="https://www.legalassist.london/services/harassment-by-landlord" problemHeadline="Landlord Harassment & Interference" problemDescription="Is your landlord making your life difficult to force you out? Harassment, illegal entry, and interference are prohibited. You can fight back." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Landlord harassment help" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Landlord Harassment: Know Your Rights</h2>
             
-            <div className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige">
-              <h3 className="font-heading text-lg font-bold text-foreground mb-4">Interference Examples:</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Reducing or removing services</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Restricting access to amenities</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Not maintaining the property</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Entering without proper notice</span></li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Refusing reasonable requests</span></li>
+            <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">The Law Is Clear</h3>
+              <p className="text-foreground/80">The Residential Tenancies Act prohibits landlords from harassing, coercing, threatening, or interfering with tenants. You have the right to quiet enjoyment of your rental.</p>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">What Constitutes Harassment</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <h4 className="font-bold text-red-800 mb-3">Direct Harassment:</h4>
+                <ul className="text-red-900 text-sm space-y-2">
+                  <li>• Threats or intimidation</li>
+                  <li>• Excessive contact/messaging</li>
+                  <li>• Verbal abuse or insults</li>
+                  <li>• False accusations</li>
+                  <li>• Pressuring you to sign N11</li>
+                  <li>• Retaliation for complaints</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <h4 className="font-bold text-red-800 mb-3">Substantial Interference:</h4>
+                <ul className="text-red-900 text-sm space-y-2">
+                  <li>• Illegal entry without notice</li>
+                  <li>• Shutting off utilities</li>
+                  <li>• Removing amenities</li>
+                  <li>• Creating excessive noise</li>
+                  <li>• Blocking access to common areas</li>
+                  <li>• Refusing to repair to force you out</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Landlord Entry Rules</h3>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-12">
+              <h4 className="font-bold text-yellow-800 mb-3">Legal Entry Requirements:</h4>
+              <ul className="text-yellow-900 text-sm space-y-2">
+                <li>✓ 24 hours written notice (except emergencies)</li>
+                <li>✓ Between 8am and 8pm (unless you agree otherwise)</li>
+                <li>✓ Only for valid reasons: repairs, inspections, showings (with notice)</li>
+                <li>✓ Cannot enter just to "check on things"</li>
+                <li>✗ NO entry without notice except true emergencies (fire, flood)</li>
               </ul>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Document Everything</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <FileText className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Keep Records:</h4>
+                <ul className="text-green-900 text-sm space-y-1">
+                  <li>• Incident log with dates/times</li>
+                  <li>• Save all communications</li>
+                  <li>• Get witness statements</li>
+                </ul>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <Phone className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Record When Possible:</h4>
+                <ul className="text-green-900 text-sm space-y-1">
+                  <li>• You can record your own conversations</li>
+                  <li>• Video unauthorized entries</li>
+                  <li>• Save voicemails</li>
+                </ul>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <Shield className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Report Serious Issues:</h4>
+                <ul className="text-green-900 text-sm space-y-1">
+                  <li>• Police for threats/trespass</li>
+                  <li>• Bylaw for utility shutoffs</li>
+                  <li>• LTB for T2 application</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Your Legal Options</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg p-6 border border-pastelbeige">
-              <h3 className="font-heading text-lg font-bold text-foreground mb-4">T2 Application</h3>
-              <p className="font-paragraph text-foreground/70 mb-4">File a T2 application at the LTB for harassment, interference, or coercion. You can seek:</p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Rent abatement</span></li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">General compensation</span></li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Order to stop the behaviour</span></li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Administrative fine (up to $50,000)</span></li>
-              </ul>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Harassment FAQs</h2>
             </div>
-            
-            <div className="bg-white rounded-lg p-6 border border-pastelbeige">
-              <h3 className="font-heading text-lg font-bold text-foreground mb-4">Evidence to Gather</h3>
-              <p className="font-paragraph text-foreground/70 mb-4">Documentation is crucial for harassment claims:</p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Dates, times, and descriptions</span></li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Written communications (texts, emails)</span></li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Photos or videos</span></li>
-                <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" /><span className="font-paragraph text-foreground/70">Witness statements</span></li>
-              </ul>
-            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Being Harassed by Your Landlord?</h2>
-          <p className="font-paragraph text-lg text-secondary-foreground/80 mb-8 max-w-2xl mx-auto">You do not have to put up with it. Contact us to discuss your situation and legal options.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Help Now <ArrowRight className="w-5 h-5" /></Link>
-            <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Being Harassed by Your Landlord?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Document everything and let's discuss your options for making it stop and getting compensated.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.landlordTenant} />
+      </ServicePageLayout>
+    </>
   );
 }

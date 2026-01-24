@@ -28,7 +28,7 @@ export default function EmploymentIssuesPage() {
                 Expert guidance on employment disputes, wrongful dismissal, severance packages, and workplace rights violations. Our licensed paralegals help you navigate complex employment matters and protect your rights.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -663,7 +663,7 @@ export default function EmploymentIssuesPage() {
             Don't navigate employment issues alone. Our experienced paralegals are here to protect your rights, negotiate fair settlements, and help you move forward.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
+            <Link to="/booking">
               <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                 Schedule Your Consultation
               </Button>

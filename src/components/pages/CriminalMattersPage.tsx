@@ -28,7 +28,7 @@ export default function CriminalMattersPage() {
                 Expert paralegal representation for summary conviction offences in Ontario. Our licensed paralegals provide skilled defense for criminal charges within our scope of practice, helping you navigate the criminal justice system with confidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -42,8 +42,8 @@ export default function CriminalMattersPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_bc1cd72aa98041f1af668ab32e732612~mv2.png?originWidth=1152&originHeight=768"
-                alt="Criminal matters representation in Ontario, Canada - Professional Ontario courthouse interior with wooden judge's bench, witness stand, and Canadian maple leaf flags"
+                src="https://static.wixstatic.com/media/99571b_435bddb0469946d3a00f5601e7879951~mv2.png?originWidth=1152&originHeight=768"
+                alt="Professional Canadian courtroom interior with wooden judge's bench, witness stand, and Canadian maple leaf flags representing Ontario Provincial Court proceedings"
                 width={600}
                 height={400}
                 className="w-full h-auto"
@@ -417,7 +417,7 @@ export default function CriminalMattersPage() {
             Don't face the criminal justice system alone. Our experienced paralegals are here to protect your rights and fight for the best possible outcome in your case.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
+            <Link to="/booking">
               <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                 Schedule Your Consultation
               </Button>

@@ -1,212 +1,137 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, CheckCircle, AlertTriangle, Octagon, DollarSign, Eye, Camera } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, Gauge, Octagon } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function StopSignTicketPage() {
-  useEffect(() => {
-    document.title = 'Stop Sign Ticket Defence | Fail to Stop Ontario | Traffic Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Fight stop sign tickets in Ontario. Fail to stop charges carry 3 demerit points and fines. Paralegal defence for rolling stops, blocked signs, and improper charges. Free consultation.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Stop Sign Defence', description: 'Did you stop? What counts as a "complete stop"? These are judgment calls—and judgment calls can be challenged.' },
+    { title: 'Evidence Analysis', description: 'Officer vantage point, intersection design, and timing all matter. I identify weaknesses in the Crown\'s case.' },
+    { title: 'Insurance Focus', description: '3 demerit points means insurance increases. Worth fighting to protect your rates.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Ticket Review', description: 'Analyze the intersection, officer position, and circumstances.' },
+    { step: '2', title: 'Defence Strategy', description: 'Challenge evidence or negotiate for reduction.' },
+    { step: '3', title: 'Court Representation', description: 'Handle all appearances on your behalf.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'You Don\'t Attend Court', description: 'I handle everything.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Insurance Protection', description: '3 points significantly impacts insurance.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Good Success Rate', description: '50-60% of contested cases result in reduction or withdrawal.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What counts as a complete stop?", answer: "Your wheels must completely stop moving. A 'rolling stop' or 'California stop' where you slow down but don't fully stop is technically a violation. However, what the officer perceives from their vantage point may not reflect reality." },
+    { question: "What are the penalties?", answer: "3 demerit points, $110 set fine plus surcharges (~$85 total), and 15-25% insurance increase for 3 years. The insurance cost is typically $900-1,800+ over three years—far more than the fine." },
+    { question: "What if the stop sign was obscured?", answer: "If the sign was blocked by vegetation, a vehicle, or weather conditions, this can be a defence. We need evidence—photos, Google Street View, witness statements about sign visibility." },
+    { question: "What if I stopped but past the line?", answer: "You must stop before the stop line (or crosswalk, or before entering intersection if no line). Stopping past the line is technically a violation, but if you stopped and it was safe, this is arguable." },
+    { question: "Can stop sign tickets be reduced?", answer: "Yes. Common reductions: disobey sign (2 points) or other lesser offences. Success rates: 50-60% reduced, 10-15% withdrawn, 25-40% convicted." },
+    { question: "What if the officer was far away?", answer: "Officer vantage point matters. If they were at an angle or distance that made accurate observation difficult, this creates reasonable doubt. We examine where the officer was positioned." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Octagon className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Traffic Ticket Defence</span>
+    <>
+      <SEO title="Stop Sign Ticket Defence Paralegal | Ontario" description="Licensed paralegal defending stop sign tickets in Ontario. 3 demerit points, rolling stop defence. Protect your insurance. Free consultation." canonical="https://www.legalassist.london/services/stop-sign-ticket" />
+      <ServicePageLayout seoTitle="Stop Sign Ticket Defence | Ontario" seoDescription="Licensed paralegal defending stop sign tickets." canonical="https://www.legalassist.london/services/stop-sign-ticket" problemHeadline="Stop Sign Ticket Defence in Ontario" problemDescription="Accused of running a stop sign? Whether you stopped or not, the officer's observation is challengeable. 3 demerit points are worth fighting for." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=stop-sign-hero", alt: "Stop sign ticket defence" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">The Math on Stop Sign Tickets</h2>
+            
+            <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
+              <p className="text-foreground text-lg"><strong>Fine:</strong> ~$195 | <strong>Insurance increase:</strong> $900-1,800+ over 3 years | <strong>Cost to fight:</strong> $300-500</p>
+              <p className="text-foreground/80 mt-2">The math usually favours fighting. Even if you're not sure you can win, the potential savings justify the attempt.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Stop Sign Ticket Defence
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Charged with failing to stop at a stop sign? Whether it was a "rolling stop" or you believe you did stop, we help drivers fight these tickets and protect their records.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* The Penalties */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Stop Sign Violation Penalties</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-8 mb-8">
-              <div className="grid md:grid-cols-3 gap-6 text-center">
-                <div>
-                  <DollarSign className="w-10 h-10 text-red-600 mx-auto mb-2" />
-                  <p className="font-heading text-3xl font-bold text-red-700">$85+</p>
-                  <p className="font-paragraph text-red-700">Set Fine</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 text-center">
+                <Gauge className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-yellow-700 mb-2">3</div>
+                <p className="text-yellow-800 font-medium">Demerit Points</p>
+              </div>
+              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 text-center">
+                <DollarSign className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-yellow-700 mb-2">~$195</div>
+                <p className="text-yellow-800 font-medium">Total Fine</p>
+              </div>
+              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 text-center">
+                <DollarSign className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-yellow-700 mb-2">15-25%</div>
+                <p className="text-yellow-800 font-medium">Insurance Increase</p>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Should You Fight?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                  <h4 className="font-heading text-lg font-bold text-green-800">Fight When:</h4>
                 </div>
-                <div>
-                  <AlertTriangle className="w-10 h-10 text-red-600 mx-auto mb-2" />
-                  <p className="font-heading text-3xl font-bold text-red-700">3</p>
-                  <p className="font-paragraph text-red-700">Demerit Points</p>
+                <ul className="space-y-2 text-green-900 text-sm">
+                  <li>• You believe you stopped</li>
+                  <li>• Sign was obscured</li>
+                  <li>• Officer was distant/angled</li>
+                  <li>• Insurance rates are high</li>
+                  <li>• You drive for work</li>
+                </ul>
+              </div>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-6 h-6 text-yellow-600" />
+                  <h4 className="font-heading text-lg font-bold text-yellow-800">Negotiate When:</h4>
                 </div>
-                <div>
-                  <Scale className="w-10 h-10 text-red-600 mx-auto mb-2" />
-                  <p className="font-heading text-3xl font-bold text-red-700">$400+</p>
-                  <p className="font-paragraph text-red-700">Insurance Impact/Year</p>
+                <ul className="space-y-2 text-yellow-900 text-sm">
+                  <li>• Clean record gives leverage</li>
+                  <li>• Want reduced points</li>
+                  <li>• Need certainty</li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <XCircle className="w-6 h-6 text-gray-600" />
+                  <h4 className="font-heading text-lg font-bold text-gray-800">May Not Be Worth It:</h4>
                 </div>
+                <ul className="space-y-2 text-gray-900 text-sm">
+                  <li>• You know you didn't stop</li>
+                  <li>• Dashcam shows violation</li>
+                  <li>• Already have many points</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* The Law */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What the Law Requires</h2>
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                Under Section 136(1) of the Highway Traffic Act, when approaching a stop sign, you must:
-              </p>
-              <ol className="space-y-4">
-                {[
-                  'Come to a complete stop - your wheels must stop moving entirely',
-                  'Stop at the stop line, or if none, at the crosswalk',
-                  'If no stop line or crosswalk, stop at the edge of the roadway',
-                  'Yield the right-of-way to traffic in the intersection',
-                  'Proceed only when safe to do so',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 font-paragraph text-foreground/80">
-                    <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">{index + 1}</span>
-                    {item}
-                  </li>
-                ))}
-              </ol>
-              <div className="bg-amber-50 p-4 rounded-lg mt-6">
-                <p className="font-paragraph text-amber-800">
-                  <strong>Key point:</strong> A "rolling stop" or "California stop" where your wheels slow but never fully stop is technically a violation, even if you yielded properly.
-                </p>
-              </div>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Honest Answers</h2>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Defences */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Possible Defences</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { icon: Eye, title: 'Officer\'s View Obstructed', desc: 'If the officer couldn\'t clearly see your wheels from their vantage point, their observation may be unreliable.' },
-              { icon: Octagon, title: 'Sign Not Visible', desc: 'Overgrown vegetation, damage, or poor placement that made the stop sign difficult to see.' },
-              { icon: Camera, title: 'No Dashcam Evidence', desc: 'Without video, it\'s your word against the officer\'s. We can challenge the reliability of their observation.' },
-              { icon: AlertTriangle, title: 'Emergency Circumstances', desc: 'Medical emergency or safety concerns that required immediate action.' },
-              { icon: Scale, title: 'Procedural Errors', desc: 'Mistakes on the ticket, wrong location, or improper service can invalidate the charge.' },
-              { icon: Shield, title: 'You Did Stop', desc: 'If you genuinely stopped completely, we help you present evidence and testimony to prove it.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <item.icon className="w-8 h-8 text-primary mb-3" />
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Related Charges */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">Related Stop Sign Charges We Defend</h2>
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {[
-                { charge: 'Fail to stop at stop sign', section: 'HTA 136(1)(a)', points: '3 demerit points' },
-                { charge: 'Stop - Loss of Clear View', section: 'HTA 136(1)(b)', points: '3 demerit points' },
-                { charge: 'Fail to yield after stopping', section: 'HTA 136(1)', points: '3 demerit points' },
-                { charge: 'Fail to stop - school crossing', section: 'HTA 136', points: '3 demerit points' },
-                { charge: 'Disobey stop sign - private road', section: 'HTA 136', points: '3 demerit points' },
-              ].map((item, index) => (
-                <div key={index} className={`p-4 flex justify-between items-center ${index !== 4 ? 'border-b border-gray-100' : ''}`}>
-                  <div>
-                    <p className="font-paragraph font-medium text-foreground">{item.charge}</p>
-                    <p className="font-paragraph text-sm text-foreground/60">{item.section}</p>
-                  </div>
-                  <span className="text-sm font-medium text-red-600 bg-red-50 px-2 py-1 rounded">{item.points}</span>
-                </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* Why Fight */}
-      <section className="py-16 md:py-20 bg-amber-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-6">Why Fight a Stop Sign Ticket?</h2>
-            <p className="font-paragraph text-foreground/80 mb-6">
-              Many people think stop sign tickets are minor and just pay them. But consider:
-            </p>
-            <div className="grid md:grid-cols-3 gap-6 text-left">
-              {[
-                { title: '3 Demerit Points', desc: 'These add up fast. At 9 points, you face an interview. At 15, licence suspension.' },
-                { title: 'Insurance Increase', desc: 'A minor conviction can raise your premiums by $300-500 per year for 3+ years.' },
-                { title: 'Permanent Record', desc: 'The conviction stays on your abstract for 3 years, visible to employers and insurers.' },
-              ].map((item, index) => (
-                <div key={index} className="bg-white p-5 rounded-lg">
-                  <h3 className="font-heading font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="font-paragraph text-foreground/70 text-sm">{item.desc}</p>
-                </div>
-              ))}
-            </div>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Got a Stop Sign Ticket?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">The insurance math usually favours fighting. Get an honest assessment.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Don't Let a Stop Sign Ticket Stop Your Record</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your ticket and discuss your defence options.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Traffic ticket defence across Ontario
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.trafficTickets} />
+      </ServicePageLayout>
+    </>
   );
 }

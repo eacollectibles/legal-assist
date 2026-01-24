@@ -1,202 +1,191 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Phone, Home, CheckCircle, AlertTriangle } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { FAQSection } from '@/components/FAQSection';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, Home, Clock, AlertCircle, Scale, Users } from 'lucide-react';
 import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function EvictionNonPaymentPage() {
+  const authorityItems = [
+    { title: 'Non-Payment Defence', description: 'L1 evictions for non-payment have strict procedures. I know the defences that delay or prevent eviction and the options for repaying arrears.' },
+    { title: 'Tenant Rights', description: 'You have the right to pay arrears and void the eviction order—even after an order is issued. I ensure you understand all your options.' },
+    { title: 'Landlord Representation', description: 'For landlords, I help navigate the L1 process efficiently while ensuring proper procedures are followed.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Situation Analysis', description: 'Review the N4 notice, calculate actual arrears, and identify any improper charges.' },
+    { step: '2', title: 'Strategy Development', description: 'For tenants: payment plan, void order, defence. For landlords: proper procedure, enforcement.' },
+    { step: '3', title: 'LTB Representation', description: 'Represent you at the hearing and work toward the best possible outcome.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Void Rights', description: 'Tenants can void eviction orders by paying arrears—even after the order.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Arrears Verification', description: 'We verify the arrears amount—landlords sometimes include improper charges.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Payment Plans', description: 'Negotiate payment plans that prevent eviction.' }
+  ];
+
+  const honestFAQs = [
+    { question: "Can I be evicted for owing one month's rent?", answer: "Technically yes, but practically it takes 2-4+ months. The landlord must serve N4, wait 14 days, file L1, wait for hearing (weeks to months), get order, file with Sheriff. You can pay and stop the process at many points." },
+    { question: "What is the 'void' period?", answer: "After receiving an eviction order, tenants have 11 days to pay ALL arrears plus costs and void the order. This right exists even after the order is issued. Pay before the Sheriff enforces and you stay." },
+    { question: "How long does eviction actually take?", answer: "From N4 to Sheriff enforcement: typically 3-6 months minimum. LTB backlogs mean hearings are delayed. Tenants who engage with the process have more time than those who ignore it." },
+    { question: "What if the landlord included improper charges?", answer: "Landlords can only claim lawful rent in arrears. If they included utilities (unless in lease), parking separately charged, or late fees, these may be improper. We verify the actual amount owed." },
+    { question: "Can I get a payment plan instead of eviction?", answer: "Yes. LTB can order payment plans, especially for first-time arrears with otherwise good tenants. Plans typically require ongoing rent plus arrears payments. Breaking the plan can result in immediate eviction." },
+    { question: "For landlords: How do I get my rent or my unit back?", answer: "File L1 promptly after N4 expires. Proper procedures matter—defective notices cause delays. Even with an order, tenants can void. Focus on getting your money; eviction doesn't always mean you'll collect arrears." }
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
-        <Breadcrumbs />
-      </div>
-      
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Home className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Landlord Services</span>
+    <>
+      <SEO title="Non-Payment Eviction Defence | L1 Eviction Help | Ontario" description="Licensed paralegal for non-payment evictions in Ontario. Tenant defence, void rights, payment plans. Landlord L1 applications. Free consultation." canonical="https://www.legalassist.london/services/eviction-non-payment" />
+      <ServicePageLayout seoTitle="Non-Payment Eviction | Ontario" seoDescription="Non-payment eviction help for tenants and landlords." canonical="https://www.legalassist.london/services/eviction-non-payment" problemHeadline="Non-Payment of Rent: Eviction Defence & L1 Applications" problemDescription="Behind on rent? Facing eviction? Or a landlord with a tenant who won't pay? The L1 process has strict rules that protect both parties—understanding them is essential." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Non-payment eviction" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Non-Payment Eviction Timeline</h2>
+            
+            <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">The Reality</h3>
+              <p className="text-foreground/80">Non-payment evictions typically take 3-6+ months from start to finish. LTB backlogs and tenant rights mean quick evictions are rare. Both sides should plan accordingly.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">Eviction for Non-Payment of Rent (N4)</h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Tenant not paying rent? We help Ontario landlords navigate the eviction process from serving the N4 notice through to obtaining and enforcing an eviction order.</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Start Eviction Process <ArrowRight className="w-5 h-5" /></Link>
-              <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> (519) 601-1127</a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">The Non-Payment Eviction Process</h2>
-          <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">Understanding the timeline and steps for evicting a tenant who has not paid rent.</p>
-          
-          <div className="max-w-4xl mx-auto space-y-8">
-            <div className="flex gap-6">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
-                <div className="w-0.5 h-full bg-primary/20 mt-2"></div>
-              </div>
-              <div className="flex-1 pb-8">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-2">Serve N4 Notice</h3>
-                <p className="font-paragraph text-foreground/70 mb-4">When rent is overdue, serve the tenant with an N4 Notice to End a Tenancy Early for Non-payment of Rent. The notice must include the correct amount owing and give proper notice periods.</p>
-                <div className="bg-pastelbeige/30 rounded-lg p-4 border border-pastelbeige">
-                  <p className="font-paragraph text-sm text-foreground/80"><strong>Notice Period:</strong> 14 days for most tenancies, 7 days for daily/weekly tenancies</p>
-                </div>
-              </div>
+            {/* Timeline */}
+            <div className="overflow-x-auto mb-12">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                  <tr className="bg-primary text-white">
+                    <th className="px-6 py-4 text-left font-heading">Stage</th>
+                    <th className="px-6 py-4 text-center font-heading">Timeline</th>
+                    <th className="px-6 py-4 text-left font-heading">Tenant Options</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr><td className="px-6 py-4 font-medium">N4 Notice Served</td><td className="px-6 py-4 text-center">Day 0</td><td className="px-6 py-4 text-sm text-green-600">Pay arrears within 14 days to void notice</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">L1 Filed</td><td className="px-6 py-4 text-center">Day 15+</td><td className="px-6 py-4 text-sm text-green-600">Pay arrears anytime before order</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Hearing Scheduled</td><td className="px-6 py-4 text-center">4-12 weeks</td><td className="px-6 py-4 text-sm text-green-600">Request payment plan, challenge arrears</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Order Issued</td><td className="px-6 py-4 text-center">Same day</td><td className="px-6 py-4 text-sm text-yellow-600">11 days to pay and void order</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Sheriff Enforcement</td><td className="px-6 py-4 text-center">+2-4 weeks</td><td className="px-6 py-4 text-sm text-red-600">Pay before Sheriff arrives to stay</td></tr>
+                </tbody>
+              </table>
             </div>
-            
-            <div className="flex gap-6">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
-                <div className="w-0.5 h-full bg-primary/20 mt-2"></div>
-              </div>
-              <div className="flex-1 pb-8">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-2">Wait for Notice Period</h3>
-                <p className="font-paragraph text-foreground/70 mb-4">The tenant has until the termination date to pay the full amount owing (rent plus any NSF fees). If they pay in full, the N4 is void and the tenancy continues.</p>
-                <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
-                  <p className="font-paragraph text-sm text-foreground/80"><strong>Important:</strong> If the tenant pays after the N4 but before you file at the LTB, the notice is void.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex gap-6">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
-                <div className="w-0.5 h-full bg-primary/20 mt-2"></div>
-              </div>
-              <div className="flex-1 pb-8">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-2">File L1 Application</h3>
-                <p className="font-paragraph text-foreground/70 mb-4">If the tenant has not paid or vacated, file an L1 Application to Evict a Tenant for Non-payment of Rent and to Collect Rent the Tenant Owes with the Landlord and Tenant Board.</p>
-                <div className="bg-pastelbeige/30 rounded-lg p-4 border border-pastelbeige">
-                  <p className="font-paragraph text-sm text-foreground/80"><strong>Filing Fee:</strong> Currently $201 (subject to change). You can request this be added to the order.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex gap-6">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">4</div>
-                <div className="w-0.5 h-full bg-primary/20 mt-2"></div>
-              </div>
-              <div className="flex-1 pb-8">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-2">Attend LTB Hearing</h3>
-                <p className="font-paragraph text-foreground/70 mb-4">The LTB will schedule a hearing (usually by video conference). We represent you, present evidence of non-payment, and argue for an eviction order.</p>
-                <div className="bg-pastelbeige/30 rounded-lg p-4 border border-pastelbeige">
-                  <p className="font-paragraph text-sm text-foreground/80"><strong>Timeline:</strong> Hearings are typically scheduled 4-8 weeks after filing, depending on LTB backlog.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex gap-6">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">5</div>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-2">Enforce the Order</h3>
-                <p className="font-paragraph text-foreground/70 mb-4">If the tenant does not pay or vacate by the order date, we file the order with the Sheriff for enforcement. The Sheriff will schedule an eviction date.</p>
-                <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-                  <p className="font-paragraph text-sm text-foreground/80"><strong>Result:</strong> Eviction order plus judgment for arrears that can be enforced through Small Claims Court.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Common N4 Mistakes to Avoid</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg p-6 border border-red-200">
-              <AlertTriangle className="w-8 h-8 text-red-500 mb-4" />
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Wrong Amount Calculated</h3>
-              <p className="font-paragraph text-foreground/70">The N4 must state the exact amount owing. Including incorrect amounts or charges not permitted can void the notice.</p>
-            </div>
-            
-            <div className="bg-white rounded-lg p-6 border border-red-200">
-              <AlertTriangle className="w-8 h-8 text-red-500 mb-4" />
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Improper Service</h3>
-              <p className="font-paragraph text-foreground/70">The N4 must be served correctly. Hand delivery, mail, or sliding under the door have different rules and timelines.</p>
-            </div>
-            
-            <div className="bg-white rounded-lg p-6 border border-red-200">
-              <AlertTriangle className="w-8 h-8 text-red-500 mb-4" />
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Wrong Termination Date</h3>
-              <p className="font-paragraph text-foreground/70">The termination date must fall on the last day of a rental period and provide the minimum notice required.</p>
-            </div>
-            
-            <div className="bg-white rounded-lg p-6 border border-red-200">
-              <AlertTriangle className="w-8 h-8 text-red-500 mb-4" />
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Filing Too Early</h3>
-              <p className="font-paragraph text-foreground/70">You cannot file the L1 until after the termination date on the N4 has passed. Filing early will get your application dismissed.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Why Use a Paralegal for Evictions?</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
+            {/* For Tenants vs Landlords */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Avoid Costly Mistakes</h3>
-                <p className="font-paragraph text-foreground/70">One error on the N4 or L1 can delay your case by months. We ensure everything is done correctly the first time.</p>
+                <h3 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Users className="w-6 h-6 text-primary" />
+                  For Tenants
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 className="font-bold text-green-800 mb-2">Your Rights:</h4>
+                    <ul className="text-green-900 text-sm space-y-1">
+                      <li>• Pay arrears anytime to stop eviction</li>
+                      <li>• 11-day void period after order</li>
+                      <li>• Request payment plan at hearing</li>
+                      <li>• Challenge improper charges</li>
+                      <li>• More time if landlord made errors</li>
+                    </ul>
+                  </div>
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 className="font-bold text-yellow-800 mb-2">Honest Reality:</h4>
+                    <ul className="text-yellow-900 text-sm space-y-1">
+                      <li>• Eviction is eventual if you can't pay</li>
+                      <li>• Delays buy time, not forgiveness</li>
+                      <li>• Arrears judgment follows you</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+                  <Home className="w-6 h-6 text-primary" />
+                  For Landlords
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="font-bold text-blue-800 mb-2">Process Requirements:</h4>
+                    <ul className="text-blue-900 text-sm space-y-1">
+                      <li>• N4 must be perfectly accurate</li>
+                      <li>• Wait full 14 days before L1</li>
+                      <li>• Include only lawful rent charges</li>
+                      <li>• Proper service of all documents</li>
+                      <li>• Filing fee: $201</li>
+                    </ul>
+                  </div>
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 className="font-bold text-yellow-800 mb-2">Honest Reality:</h4>
+                    <ul className="text-yellow-900 text-sm space-y-1">
+                      <li>• Process takes months, not weeks</li>
+                      <li>• Tenant can void even after order</li>
+                      <li>• Collecting arrears is separate battle</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Save Time</h3>
-                <p className="font-paragraph text-foreground/70">We handle all paperwork, filings, and communications so you can focus on your business or other properties.</p>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">When to Fight vs. When to Plan</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <CheckCircle className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Fight/Challenge When:</h4>
+                <ul className="text-green-900 text-sm space-y-1">
+                  <li>• N4 has wrong amounts</li>
+                  <li>• Includes improper charges</li>
+                  <li>• Procedural errors by landlord</li>
+                  <li>• You can pay if given time</li>
+                  <li>• Maintenance issues offset rent</li>
+                </ul>
               </div>
-            </div>
-            
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Professional Representation</h3>
-                <p className="font-paragraph text-foreground/70">At the hearing, we present your case professionally, cross-examine the tenant, and argue for the best possible outcome.</p>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <AlertTriangle className="w-6 h-6 text-yellow-600 mb-2" />
+                <h4 className="font-bold text-yellow-800 mb-2">Negotiate Payment Plan When:</h4>
+                <ul className="text-yellow-900 text-sm space-y-1">
+                  <li>• Temporary income disruption</li>
+                  <li>• Otherwise good tenant history</li>
+                  <li>• Can afford ongoing rent + extra</li>
+                  <li>• Want to stay in unit</li>
+                </ul>
               </div>
-            </div>
-            
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Maximize Recovery</h3>
-                <p className="font-paragraph text-foreground/70">We ensure the order includes all arrears, filing fees, and daily compensation so you recover as much as possible.</p>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <XCircle className="w-6 h-6 text-red-600 mb-2" />
+                <h4 className="font-bold text-red-800 mb-2">Plan to Move When:</h4>
+                <ul className="text-red-900 text-sm space-y-1">
+                  <li>• Can't afford this rent long-term</li>
+                  <li>• Significant arrears accumulated</li>
+                  <li>• Better to leave on own terms</li>
+                  <li>• Can negotiate arrears forgiveness</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <FAQSection />
-
-      <RelatedServices services={relatedServicesConfig.landlordTenant} />
-
-      <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Ready to Start the Eviction Process?</h2>
-          <p className="font-paragraph text-lg text-secondary-foreground/80 mb-8 max-w-2xl mx-auto">Contact us for a free consultation. We will review your situation and get the eviction process started immediately.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Start Eviction Process <ArrowRight className="w-5 h-5" /></Link>
-            <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Non-Payment FAQs</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      <Footer />
-    </div>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Facing Non-Payment Issues?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Whether you're a tenant facing eviction or a landlord owed rent, understand your options.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
+          </div>
+        </div>
+        <RelatedServices services={relatedServicesConfig.landlordTenant} />
+      </ServicePageLayout>
+    </>
   );
 }

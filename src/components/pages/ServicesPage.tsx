@@ -362,69 +362,6 @@ IMPORTANT SCOPE LIMITATIONS: Paralegals can represent clients in Small Claims Co
     costInfo: 'Hourly rates $150-250/hour or flat fees for specific services. Free initial consultation to assess your employment situation and confirm it falls within paralegal scope.',
     timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Small Claims Court proceedings (if necessary): 3-6 months.',
     eligibility: 'Available to employees in Ontario with employment disputes within paralegal scope of practice. Claims must fall within Small Claims Court jurisdiction (up to $50,000) for court representation. We will advise if your matter requires a lawyer.'
-  },
-  {
-    id: 'debt-negotiation',
-    name: 'Debt Negotiation & Creditor Resolution',
-    tribunal: 'Debt Negotiation & Settlement',
-    shortDescription: 'Professional negotiation with creditors to reduce debt, arrange payment plans, and achieve debt resolution without court proceedings.',
-    icon: <Handshake className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_45e4ddef1b79494a92d7e0856a1601a0~mv2.png?id=debt-negotiation',
-    learnMore: `Overwhelming debt can be stressful and impact your financial future. Our licensed paralegals provide professional debt negotiation services to help you resolve debts with creditors without the need for court proceedings or formal bankruptcy.
-
-We assist with:
-
-• Creditor Negotiation: Direct communication with creditors to negotiate reduced balances or favorable payment terms
-• Debt Settlement Agreements: Preparation and negotiation of settlement agreements that resolve debts for less than owed
-• Payment Plan Arrangements: Structuring affordable payment plans that work with your budget
-• Creditor Communication: Professional correspondence and negotiation on your behalf
-• Debt Consolidation Guidance: Information on consolidating multiple debts into manageable payments
-• Pre-Litigation Support: Negotiation to avoid court proceedings and collection actions
-• Documentation and Record-Keeping: Maintaining clear records of all agreements and payments
-
-Our goal is to help you resolve your debt situation efficiently and affordably. We work to achieve the best possible terms with your creditors while protecting your financial interests.`,
-    keyPoints: [
-      'Creditor negotiation and communication',
-      'Debt settlement agreements',
-      'Affordable payment plan arrangements',
-      'Avoid court proceedings',
-      'Professional debt resolution'
-    ],
-    costInfo: 'Hourly rates $150-250/hour or flat fees for debt negotiation packages. Free initial consultation to assess your debt situation.',
-    timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Settlement agreements typically finalized within 2-3 months.',
-    eligibility: 'Available to individuals and businesses in Ontario with outstanding debts seeking negotiated resolution with creditors. Best suited for those wanting to avoid court proceedings or formal bankruptcy.'
-  },
-  {
-    id: 'irb-representation',
-    name: 'Immigration & Refugee Board (IRB) Representation',
-    tribunal: 'Immigration & Refugee Board (IRB)',
-    shortDescription: 'Paralegal support for pre-IRB matters and referrals to qualified immigration lawyers and RCICs for formal representation.',
-    icon: <Landmark className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_9159b5daf01d44f0872726abb1084da1~mv2.png?originWidth=384&originHeight=192',
-    learnMore: `The Immigration and Refugee Board of Canada (IRB) is a federal tribunal that makes decisions on immigration and refugee matters. While paralegals cannot provide formal representation before the IRB, we offer valuable pre-IRB support and referrals to qualified immigration lawyers and Regulated Canadian Immigration Consultants (RCICs).
-
-IMPORTANT DISCLAIMER: Immigration and refugee matters are complex federal legal matters. Only lawyers and RCICs licensed by Immigration, Refugees and Citizenship Canada (IRCC) are authorized to represent clients before the IRB. Paralegal services are limited to pre-IRB support only.
-
-We provide support for:
-
-• Document Preparation & Organization: Gathering and organizing supporting documents for IRB proceedings
-• Case Assessment & Information: Initial assessment and general information about IRB processes
-• Timeline & Process Guidance: Explanation of IRB timelines, deadlines, and procedural requirements
-• Lawyer & RCIC Referrals: Referrals to qualified immigration lawyers and RCICs for formal representation
-
-The IRB has four divisions: Refugee Protection Division (RPD), Immigration Appeal Division (IAD), Immigration Division (ID), and Security Division (SD). Each handles different types of immigration matters.
-
-CRITICAL: Do not attempt to represent yourself or rely solely on paralegal services for IRB matters. Failure to obtain proper legal representation can result in serious consequences including deportation and loss of immigration status.`,
-    keyPoints: [
-      'Pre-IRB document preparation',
-      'Case assessment & information',
-      'Qualified lawyer & RCIC referrals',
-      'Federal tribunal guidance',
-      'Immigration matter support'
-    ],
-    costInfo: 'Hourly rates $150-250/hour for pre-IRB paralegal services. Free initial consultation. Referrals to immigration lawyers and RCICs for formal representation.',
-    timeline: 'Initial assessment: 1-2 weeks. Document preparation: 2-4 weeks. Referral to lawyer/RCIC for formal representation.',
-    eligibility: 'Available to individuals facing IRB proceedings seeking pre-IRB paralegal support. Formal representation requires a qualified immigration lawyer or RCIC.'
   }
 ];
 
@@ -570,16 +507,6 @@ export default function ServicesPage() {
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
-                      ) : service.id === 'debt-negotiation' ? (
-                        <Link to="/services/debt-negotiation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      ) : service.id === 'irb-representation' ? (
-                        <Link to="/services/irb-representation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
                       ) : (
                         <button
                           onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
@@ -621,7 +548,7 @@ export default function ServicesPage() {
                       </div>
 
                       <Link
-                        to="/contact"
+                        to="/booking"
                         className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg transition-all hover:bg-primary/90"
                       >
                         Schedule an Appointment

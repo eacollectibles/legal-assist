@@ -1,211 +1,121 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, CheckCircle, AlertTriangle, Car, DollarSign, ArrowRightLeft, CircleDot } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, Gauge } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function FailToYieldPage() {
-  useEffect(() => {
-    document.title = 'Fail to Yield Ticket Defence | Right of Way Violations Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Fight fail to yield tickets in Ontario. Right of way violations at intersections, pedestrian crossings, and merging. 3 demerit points. Paralegal defence. Free consultation.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Intersection Defence', description: 'Fail to yield charges often follow accidents. Who had the right of way isn\'t always clear—circumstances matter.' },
+    { title: 'Evidence Analysis', description: 'These charges rely on witness statements and officer conclusions. Inconsistencies create defence opportunities.' },
+    { title: 'Insurance Focus', description: '3 demerit points affects your insurance significantly. Worth fighting.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Incident Analysis', description: 'Review circumstances, witness statements, intersection layout.' },
+    { step: '2', title: 'Defence Strategy', description: 'Challenge evidence or negotiate reduction.' },
+    { step: '3', title: 'Court Representation', description: 'Handle all appearances on your behalf.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Full Representation', description: 'You don\'t attend court.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Common Reduction', description: 'Often reduced from careless driving.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Insurance Protection', description: 'Fight to protect your rates.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What are the penalties?", answer: "3 demerit points, $110 set fine plus surcharges (~$195 total), 15-25% insurance increase for 3 years. Insurance cost typically $900-1,800+ over three years." },
+    { question: "When must you yield?", answer: "At stop signs, yield signs, to pedestrians, to emergency vehicles, when turning left, when entering from driveway/parking lot. Right-of-way rules can be complex at certain intersections." },
+    { question: "What if there was a collision?", answer: "Collision doesn't prove you failed to yield. The other driver may have been speeding, run a light/sign, or made a sudden move. All circumstances are relevant." },
+    { question: "What defences work?", answer: "Other driver was speeding, ran their own sign/light, made sudden move, poor sightlines at intersection, confusing intersection design, or you actually had right of way." },
+    { question: "Can this be reduced?", answer: "Yes. Common reductions include disobey sign (2 points) or other lesser offences. Clean record helps significantly." },
+    { question: "What if right of way was unclear?", answer: "Some intersections have confusing designs or poor signage. If reasonable drivers could disagree about who had right of way, that creates reasonable doubt." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <ArrowRightLeft className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Traffic Ticket Defence</span>
-            </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Fail to Yield & Right of Way Defence
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Right of way rules can be confusing, and officers don't always get it right. We defend drivers charged with failing to yield at intersections, crosswalks, and when merging.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Types of Fail to Yield */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Types of Fail to Yield Charges</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {[
-                { section: 'HTA 135(2)', title: 'Fail to Yield - Through Highway', points: '3', fine: '$85', desc: 'Not yielding when entering from a stop sign onto a through highway' },
-                { section: 'HTA 135(3)', title: 'Fail to Yield - Yield Sign', points: '3', fine: '$85', desc: 'Not yielding to traffic when facing a yield sign' },
-                { section: 'HTA 136(1)', title: 'Fail to Yield After Stopping', points: '3', fine: '$85', desc: 'Stopped at stop sign but proceeded when unsafe' },
-                { section: 'HTA 139', title: 'Fail to Yield to Pedestrian', points: '3', fine: '$85', desc: 'Not yielding to pedestrians in crosswalk' },
-                { section: 'HTA 141(5)', title: 'Fail to Yield - Left Turn', points: '3', fine: '$85', desc: 'Turning left without yielding to oncoming traffic' },
-                { section: 'HTA 142(1)', title: 'Fail to Yield - Private Drive', points: '2', fine: '$85', desc: 'Entering highway from private road or driveway without yielding' },
-                { section: 'HTA 154(1)', title: 'Fail to Yield - Emergency Vehicle', points: '3', fine: '$400+', desc: 'Not pulling over for emergency vehicles - very serious' },
-              ].map((item, index) => (
-                <div key={index} className={`p-5 ${index !== 6 ? 'border-b border-gray-100' : ''}`}>
-                  <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
-                    <div>
-                      <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded mr-2">{item.section}</span>
-                      <h3 className="font-heading text-lg font-bold text-foreground inline">{item.title}</h3>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="text-xs font-medium text-amber-700 bg-amber-50 px-2 py-1 rounded">{item.points} points</span>
-                      <span className="text-xs font-medium text-red-700 bg-red-50 px-2 py-1 rounded">${item.fine}+</span>
-                    </div>
-                  </div>
-                  <p className="font-paragraph text-foreground/70 text-sm">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Right of Way Rules */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Understanding Right of Way Rules</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: 'Uncontrolled Intersections', desc: 'Vehicle on the right has right of way. If you arrive at the same time, the vehicle on the right goes first.', icon: CircleDot },
-              { title: 'Stop Signs', desc: 'First to stop, first to go. If simultaneous, vehicle on the right proceeds first.', icon: Shield },
-              { title: 'Yield Signs', desc: 'You must slow or stop to let traffic on the main road pass before entering.', icon: ArrowRightLeft },
-              { title: 'Left Turns', desc: 'You must yield to ALL oncoming traffic, including vehicles that appear far away.', icon: Car },
-              { title: 'Pedestrian Crosswalks', desc: 'Pedestrians ALWAYS have right of way at marked crosswalks. You must stop, not just slow.', icon: CheckCircle },
-              { title: 'Merging', desc: 'Traffic already on the highway has right of way. Merging vehicles must yield and find a safe gap.', icon: ArrowRight },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <item.icon className="w-8 h-8 text-primary mb-3" />
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70 text-sm">{item.desc}</p>
+    <>
+      <SEO title="Fail to Yield Defence Paralegal | Ontario" description="Licensed paralegal defending fail to yield charges in Ontario. 3 demerit points, intersection collision defence. Protect your insurance. Free consultation." canonical="https://www.legalassist.london/services/fail-to-yield" />
+      <ServicePageLayout seoTitle="Fail to Yield Defence | Ontario" seoDescription="Defending fail to yield charges in Ontario." canonical="https://www.legalassist.london/services/fail-to-yield" problemHeadline="Fail to Yield Defence in Ontario" problemDescription="Charged with failing to yield right of way? The circumstances matter more than who got hit. 3 demerit points are worth fighting for." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Fail to yield defence" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Penalties & Insurance Impact</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 text-center">
+                <Gauge className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-yellow-700 mb-2">3</div>
+                <p className="text-yellow-800 font-medium">Demerit Points</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Common Defences */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Possible Defences</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {[
-                { title: 'You Had Right of Way', desc: 'The officer may have misunderstood who should have yielded. We examine the facts to determine if you actually had right of way.' },
-                { title: 'Other Driver\'s Actions', desc: 'The other vehicle may have been speeding, changing lanes suddenly, or otherwise acting unpredictably.' },
-                { title: 'Obstructed View', desc: 'Parked vehicles, vegetation, or other obstructions prevented you from seeing oncoming traffic.' },
-                { title: 'Signal Malfunction', desc: 'Traffic lights, pedestrian signals, or other traffic control devices were malfunctioning.' },
-                { title: 'Emergency Circumstances', desc: 'You had to proceed due to medical emergency or other urgent circumstances.' },
-                { title: 'No Collision Occurred', desc: 'If no collision or near-miss occurred, it may be harder to prove you failed to yield.' },
-              ].map((item, index) => (
-                <div key={index} className={`p-6 flex items-start gap-4 ${index !== 5 ? 'border-b border-gray-100' : ''}`}>
-                  <Scale className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
-                    <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Special: Emergency Vehicles */}
-      <section className="py-16 md:py-20 bg-red-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto">
-            <AlertTriangle className="w-12 h-12 text-red-600 mx-auto mb-4" />
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">Fail to Yield to Emergency Vehicle</h2>
-            <p className="font-paragraph text-foreground/80 mb-6 text-center">
-              This is the most serious fail to yield charge, carrying:
-            </p>
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <ul className="space-y-3">
-                {[
-                  'Fine: $400 - $2,000 for first offence',
-                  '3 demerit points',
-                  'Possible licence suspension',
-                  'Significant insurance impact',
-                  'Community safety zone doubles fines',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-2 font-paragraph text-foreground/80">
-                    <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" /> {item}
-                  </li>
-                ))}
-              </ul>
-              <p className="font-paragraph text-foreground/70 mt-4 text-sm">
-                If you're charged with this offence, contact us immediately. These charges can be defended, especially if you couldn't safely pull over or didn't hear/see the emergency vehicle.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Fight */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl font-bold text-foreground mb-8 text-center">Why Fight a Fail to Yield Ticket?</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
-            {[
-              { title: 'Demerit Points', desc: '2-3 demerit points that accumulate toward suspension thresholds.' },
-              { title: 'Insurance Impact', desc: 'Moving violations raise your premiums significantly for 3+ years.' },
-              { title: 'Fault Implications', desc: 'In accidents, a fail to yield conviction can establish fault for civil claims.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm text-center">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
+              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 text-center">
+                <DollarSign className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-yellow-700 mb-2">~$195</div>
+                <p className="text-yellow-800 font-medium">Total Fine</p>
               </div>
-            ))}
+              <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200 text-center">
+                <DollarSign className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-yellow-700 mb-2">15-25%</div>
+                <p className="text-yellow-800 font-medium">Insurance Increase</p>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Should You Fight?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <CheckCircle className="w-6 h-6 text-green-600 mb-2" />
+                <h4 className="font-bold text-green-800 mb-2">Fight When:</h4>
+                <ul className="text-green-900 text-sm space-y-1">
+                  <li>• Other driver was at fault too</li>
+                  <li>• Poor intersection visibility</li>
+                  <li>• Confusing signage</li>
+                  <li>• Insurance at stake</li>
+                </ul>
+              </div>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <AlertTriangle className="w-6 h-6 text-yellow-600 mb-2" />
+                <h4 className="font-bold text-yellow-800 mb-2">Negotiate When:</h4>
+                <ul className="text-yellow-900 text-sm space-y-1">
+                  <li>• Clean record gives leverage</li>
+                  <li>• Want certainty</li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                <XCircle className="w-6 h-6 text-gray-600 mb-2" />
+                <h4 className="font-bold text-gray-800 mb-2">Difficult If:</h4>
+                <ul className="text-gray-900 text-sm space-y-1">
+                  <li>• Clear video evidence</li>
+                  <li>• Multiple witnesses agree</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Fight Your Fail to Yield Ticket</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your ticket and explain your defence options.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Honest Answers</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Traffic ticket defence across Ontario
-          </p>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Charged with Fail to Yield?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Get an honest assessment of your defence options.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
+          </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.trafficTickets} />
+      </ServicePageLayout>
+    </>
   );
 }

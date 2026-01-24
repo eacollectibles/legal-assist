@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { AlertCircle, CheckCircle, Eye, EyeOff, Lock } from 'lucide-react';
+import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useMember } from '@/integrations';
 import { signup } from '@/lib/auth-service';
-
-const ADMIN_PASSWORD = 'Hazar23!';
 
 interface SignupFormData {
   firstName: string;
@@ -17,7 +15,6 @@ interface SignupFormData {
   password: string;
   confirmPassword: string;
   agreeToTerms: boolean;
-  adminPassword: string;
 }
 
 export default function ClientSignupPage() {
@@ -38,12 +35,10 @@ export default function ClientSignupPage() {
     password: '',
     confirmPassword: '',
     agreeToTerms: false,
-    adminPassword: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showAdminPassword, setShowAdminPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -59,12 +54,6 @@ export default function ClientSignupPage() {
 
   const validateForm = (): boolean => {
     setError('');
-
-    // Check admin password first
-    if (!formData.adminPassword || formData.adminPassword !== ADMIN_PASSWORD) {
-      setError('Account creation is currently locked.');
-      return false;
-    }
 
     if (!formData.firstName.trim()) {
       setError('First name is required');
@@ -124,11 +113,10 @@ export default function ClientSignupPage() {
         return;
       }
 
-      // Store clientId and email in sessionStorage for intake form
+      // Store clientId in sessionStorage for intake form
       if (result.user?.clientId) {
         sessionStorage.setItem('clientId', result.user.clientId);
       }
-      sessionStorage.setItem('signupEmail', formData.email);
 
       // Account created successfully and user is authenticated
       setSuccess(true);
@@ -139,7 +127,6 @@ export default function ClientSignupPage() {
         password: '',
         confirmPassword: '',
         agreeToTerms: false,
-        adminPassword: '',
       });
 
       // Redirect to intake form after successful signup
@@ -155,21 +142,6 @@ export default function ClientSignupPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
-      {/* Pre-Launch Lock Notice */}
-      <div className="w-full bg-amber-50 border-b-2 border-amber-200">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 py-4 flex items-start gap-3">
-          <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="font-paragraph text-amber-900 font-semibold">
-              🚧 Account creation is temporarily locked while LegalAssist Paralegal Services prepares for launch.
-            </p>
-            <p className="font-paragraph text-amber-800 text-sm mt-1">
-              Administrator access only at this time.
-            </p>
-          </div>
-        </div>
-      </div>
 
       {/* Signup Form Section */}
       <section className="w-full py-16 md:py-24 bg-white">
@@ -192,7 +164,7 @@ export default function ClientSignupPage() {
                 >
                   Create an Account
                 </Button>
-                <Link to="/client-login" className="w-full sm:w-auto">
+                <Link to="/login" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
                     className="w-full border-primary text-primary hover:bg-primary/5 font-semibold py-3 px-8"
@@ -228,36 +200,6 @@ export default function ClientSignupPage() {
                     </div>
                   </div>
                 )}
-
-                {/* Administrator Access Password */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                  <label htmlFor="adminPassword" className="block font-paragraph font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <Lock className="w-4 h-4 text-blue-600" />
-                    Administrator Access Password *
-                  </label>
-                  <div className="relative">
-                    <Input
-                      id="adminPassword"
-                      name="adminPassword"
-                      type={showAdminPassword ? 'text' : 'password'}
-                      value={formData.adminPassword}
-                      onChange={handleInputChange}
-                      placeholder="Enter administrator password"
-                      className="border-blue-300 bg-white"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowAdminPassword(!showAdminPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-foreground/60 hover:text-foreground"
-                    >
-                      {showAdminPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
-                  <p className="font-paragraph text-xs text-blue-700 mt-2">
-                    This field is required to create an account during the pre-launch phase.
-                  </p>
-                </div>
 
                 {/* First Name */}
                 <div>
@@ -388,7 +330,7 @@ export default function ClientSignupPage() {
                 </Button>
 
                 <p className="font-paragraph text-sm text-foreground/60 text-center">
-                  Already have an account? <Link to="/client-login" className="text-primary hover:underline">Sign in here</Link>
+                  Already have an account? <Link to="/login" className="text-primary hover:underline">Sign in here</Link>
                 </p>
               </form>
               </div>

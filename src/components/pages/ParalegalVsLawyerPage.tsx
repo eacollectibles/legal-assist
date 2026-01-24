@@ -80,7 +80,7 @@ export default function ParalegalVsLawyerPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What Paralegals CAN Handle</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
-              { area: 'Small Claims Court', desc: 'All civil disputes up to $50,000 - contracts, debts, property damage' },
+              { area: 'Small Claims Court', desc: 'All civil disputes up to $35,000 - contracts, debts, property damage' },
               { area: 'Landlord & Tenant Board', desc: 'Evictions, rent disputes, maintenance issues, all LTB matters' },
               { area: 'Traffic Tickets', desc: 'Speeding, careless driving, stunt driving, all Highway Traffic Act offences' },
               { area: 'Provincial Offences', desc: 'By-law violations, regulatory offences, trespass charges' },

@@ -1,237 +1,151 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, Clock, CheckCircle, AlertTriangle, Briefcase, FileText, DollarSign, Users } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, Briefcase, Calculator, Clock, Scale } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function WrongfulTerminationPage() {
-  useEffect(() => {
-    document.title = 'Wrongful Termination | Fired Without Cause Ontario | Employment Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Were you wrongfully terminated in Ontario? Get help with termination without cause, severance disputes, and employment standards claims. Paralegal services London. Free consultation.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Severance Assessment', description: 'Most termination offers are too low. I calculate what you\'re actually entitled to under the law.' },
+    { title: 'Negotiation', description: 'Before court, I negotiate with employers to get you a better package—often significantly more.' },
+    { title: 'Legal Action', description: 'If negotiation fails, I pursue your claim through Small Claims Court (up to $35,000).' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Entitlement Calculation', description: 'Analyze your situation and calculate proper notice/severance entitlement.' },
+    { step: '2', title: 'Negotiation', description: 'Counter the employer\'s offer with your true entitlement.' },
+    { step: '3', title: 'Legal Action', description: 'If necessary, file claim to recover what you\'re owed.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Common Law Notice', description: 'Often much more than ESA minimums.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Negotiation Works', description: 'Most cases settle without court.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $35,000', description: 'Small Claims handles substantial claims.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What is 'wrongful termination' in Ontario?", answer: "In Ontario, employers can fire you for almost any reason (not 'just cause'). Wrongful termination means they didn't give you enough notice or pay in lieu. The question isn't IF they could fire you, but HOW MUCH they owe you." },
+    { question: "ESA vs Common Law—what's the difference?", answer: "ESA minimums are the floor (roughly 1 week per year, capped at 8 weeks). Common law notice is usually much higher—based on age, tenure, position, and likelihood of finding similar work. A 50-year-old manager with 15 years might get 18-24 months, not 8 weeks." },
+    { question: "Can they fire me without cause?", answer: "Yes—unless you have a contract saying otherwise. Ontario doesn't require 'just cause' for termination. But firing without cause means they OWE you proper notice or pay in lieu. The only question is how much." },
+    { question: "What factors affect my entitlement?", answer: "Age (older = more), length of service (longer = more), position (senior = more), character of employment (specialized = more), and availability of similar employment. These are weighed together—there's no exact formula." },
+    { question: "Should I sign the severance offer?", answer: "Almost never sign immediately—there's usually no rush despite what they say. Most initial offers are below true entitlement. Get it reviewed first. Signing usually waives your right to claim more later." },
+    { question: "What about 'just cause' termination?", answer: "If employer claims 'just cause' (gross misconduct), they don't have to pay severance. But 'just cause' is a HIGH bar—performance issues, minor misconduct, personality conflicts usually don't qualify. Many 'just cause' claims fail." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Briefcase className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Employment Law</span>
+    <>
+      <SEO title="Wrongful Termination Paralegal Ontario | Severance Negotiation" description="Licensed paralegal for wrongful termination claims in Ontario. Severance calculation, negotiation, Small Claims Court. Get what you're actually owed. Free consultation." canonical="https://www.legalassist.london/services/wrongful-termination" />
+      <ServicePageLayout seoTitle="Wrongful Termination Claims | Ontario" seoDescription="Wrongful termination and severance claims in Ontario." canonical="https://www.legalassist.london/services/wrongful-termination" problemHeadline="Wrongful Termination & Severance in Ontario" problemDescription="Lost your job? The severance they offered is probably too low. I calculate what you're actually entitled to—and negotiate to get it." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Wrongful termination" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Understanding Termination Rights</h2>
+            
+            <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-yellow-800 mb-3 flex items-center gap-2">
+                <AlertTriangle className="w-6 h-6" />
+                Don't Sign Immediately
+              </h3>
+              <p className="text-yellow-900">Despite what employers say, there's rarely a deadline to accept. Most initial offers are significantly below true entitlement. Get it reviewed before signing—signing usually waives your rights.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Wrongful Termination Claims
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Lost your job unexpectedly? You may be entitled to more than your employer offered. We help workers understand their rights and fight for proper compensation after termination.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Find out where you stand <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* What is Wrongful Termination */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What is Wrongful Termination?</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
-              <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                In Ontario, employers can terminate employees without cause—but they must provide proper notice or pay in lieu of notice. Wrongful termination occurs when:
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'You were not given adequate notice or severance pay',
-                  'Your termination violated the Employment Standards Act (ESA)',
-                  'You were fired for discriminatory reasons (age, disability, pregnancy, etc.)',
-                  'You were terminated in retaliation for exercising your rights',
-                  'Your employer breached your employment contract',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 font-paragraph text-foreground/80">
-                    <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" /> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-primary/5 p-6 rounded-lg">
-              <p className="font-paragraph text-foreground/80 text-center">
-                <strong>Important:</strong> Even if your employer says you were fired "for cause," they may be wrong. True just cause is difficult to prove and many employers misuse the term.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ESA vs Common Law */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">ESA Minimums vs. Common Law Entitlements</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-4">ESA Minimum (Statutory)</h3>
-              <p className="font-paragraph text-foreground/70 mb-4">
-                The Employment Standards Act sets minimum notice periods:
-              </p>
-              <ul className="space-y-2 text-sm">
-                {[
-                  'Less than 3 months: No notice required',
-                  '3 months to 1 year: 1 week',
-                  '1 to 3 years: 2 weeks',
-                  '3 to 4 years: 3 weeks',
-                  '4 to 5 years: 4 weeks',
-                  '5 to 6 years: 5 weeks',
-                  '6 to 7 years: 6 weeks',
-                  '7 to 8 years: 7 weeks',
-                  '8+ years: 8 weeks (maximum)',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-2 font-paragraph text-foreground/80">
-                    <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" /> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-primary">
-              <h3 className="font-heading text-xl font-bold text-primary mb-4">Common Law Entitlement</h3>
-              <p className="font-paragraph text-foreground/70 mb-4">
-                You may be entitled to much more—up to 24 months or more based on:
-              </p>
-              <ul className="space-y-2 text-sm">
-                {[
-                  'Length of service',
-                  'Your age',
-                  'Type of position',
-                  'Availability of similar employment',
-                  'Whether you were induced to leave another job',
-                  'Your education and skills',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-2 font-paragraph text-foreground/80">
-                    <Scale className="w-4 h-4 text-primary flex-shrink-0" /> {item}
-                  </li>
-                ))}
-              </ul>
-              <p className="font-paragraph text-primary font-medium mt-4 text-sm">
-                Don't settle for ESA minimums without understanding your full entitlements!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Signs You May Have a Claim */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Signs You May Have a Claim</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: 'Offered Only ESA Minimum', desc: 'If your severance offer matches exactly the ESA chart, you\'re likely entitled to more under common law.' },
-              { title: 'Long-Term Employee', desc: 'Employees with 5+ years of service are often entitled to significantly more than ESA minimums.' },
-              { title: 'Older Worker', desc: 'Courts recognize older workers face greater challenges finding new employment.' },
-              { title: 'Specialized Position', desc: 'If your skills are specialized, finding similar work takes longer, increasing your entitlement.' },
-              { title: 'Induced to Join', desc: 'If you left secure employment to join this company, that increases your notice entitlement.' },
-              { title: 'No Written Contract', desc: 'Without a valid termination clause, common law entitlements apply.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">ESA Minimums vs. Common Law</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <h4 className="font-bold text-red-800 mb-3">ESA Minimums (The Floor)</h4>
+                <ul className="text-red-900 text-sm space-y-2">
+                  <li>• 1 week per year of service</li>
+                  <li>• Maximum 8 weeks termination pay</li>
+                  <li>• Plus severance pay if qualified (5+ years at large employer)</li>
+                  <li><strong>This is the MINIMUM—not your full entitlement</strong></li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What We Can Help With */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">How We Help</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            {[
-              { step: '1', title: 'Review Your Situation', desc: 'We examine your employment history, contract, and termination circumstances to assess your claim.' },
-              { step: '2', title: 'Calculate Entitlements', desc: 'We determine what you\'re actually owed under both ESA and common law.' },
-              { step: '3', title: 'Negotiate With Employer', desc: 'We communicate with your employer to negotiate a fair severance package.' },
-              { step: '4', title: 'File Claims If Needed', desc: 'For ESA violations, we can file claims with the Ministry of Labour. For larger claims, we can pursue Small Claims Court.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold">
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="font-heading text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                </div>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <h4 className="font-bold text-green-800 mb-3">Common Law (What Courts Award)</h4>
+                <ul className="text-green-900 text-sm space-y-2">
+                  <li>• Based on multiple factors</li>
+                  <li>• Can be 2-24+ months</li>
+                  <li>• No arbitrary cap</li>
+                  <li><strong>Usually MUCH higher than ESA</strong></li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* Time Limits */}
-      <section className="py-16 md:py-20 bg-amber-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <Clock className="w-12 h-12 text-amber-600 mx-auto mb-4" />
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">Important Time Limits</h2>
-            <div className="bg-white p-6 rounded-xl shadow-sm text-left">
-              <ul className="space-y-4">
-                {[
-                  { limit: '2 years', desc: 'ESA claims must be filed within 2 years of the violation' },
-                  { limit: '2 years', desc: 'Small Claims Court / civil claims for wrongful dismissal' },
-                  { limit: '1 year', desc: 'Human rights complaints (if discrimination involved)' },
-                  { limit: 'Immediately', desc: 'Don\'t sign anything without understanding your rights first!' },
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="font-heading font-bold text-primary">{item.limit}</span>
-                    <span className="font-paragraph text-foreground/80">{item.desc}</span>
-                  </li>
-                ))}
-              </ul>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Factors That Increase Entitlement</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+              <div className="bg-primary/5 rounded-lg p-6 text-center">
+                <Clock className="w-10 h-10 text-primary mx-auto mb-3" />
+                <div className="text-xl font-bold text-foreground mb-2">Length of Service</div>
+                <p className="text-foreground/80 text-sm">More years = more notice</p>
+              </div>
+              <div className="bg-primary/5 rounded-lg p-6 text-center">
+                <Calculator className="w-10 h-10 text-primary mx-auto mb-3" />
+                <div className="text-xl font-bold text-foreground mb-2">Age</div>
+                <p className="text-foreground/80 text-sm">Older workers get more</p>
+              </div>
+              <div className="bg-primary/5 rounded-lg p-6 text-center">
+                <Briefcase className="w-10 h-10 text-primary mx-auto mb-3" />
+                <div className="text-xl font-bold text-foreground mb-2">Position Level</div>
+                <p className="text-foreground/80 text-sm">Senior roles = more notice</p>
+              </div>
+              <div className="bg-primary/5 rounded-lg p-6 text-center">
+                <Scale className="w-10 h-10 text-primary mx-auto mb-3" />
+                <div className="text-xl font-bold text-foreground mb-2">Job Market</div>
+                <p className="text-foreground/80 text-sm">Harder to replace = more</p>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Example Scenarios</h3>
+            <div className="overflow-x-auto mb-12">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                  <tr className="bg-primary text-white">
+                    <th className="px-6 py-4 text-left font-heading">Profile</th>
+                    <th className="px-6 py-4 text-center font-heading">ESA Minimum</th>
+                    <th className="px-6 py-4 text-center font-heading">Typical Common Law</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr><td className="px-6 py-4 text-sm">25-year-old, 2 years, entry-level</td><td className="px-6 py-4 text-center">2 weeks</td><td className="px-6 py-4 text-center">2-4 months</td></tr>
+                  <tr><td className="px-6 py-4 text-sm">40-year-old, 10 years, manager</td><td className="px-6 py-4 text-center">8 weeks</td><td className="px-6 py-4 text-center">10-14 months</td></tr>
+                  <tr><td className="px-6 py-4 text-sm">55-year-old, 20 years, director</td><td className="px-6 py-4 text-center">8 weeks + severance</td><td className="px-6 py-4 text-center">18-24 months</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
+              <h4 className="font-bold text-foreground mb-3">Mitigation Duty</h4>
+              <p className="text-foreground/80 text-sm">You have a duty to look for new work. If you find comparable work during the notice period, your damages may be reduced. Keep records of your job search—this matters if the case goes to court.</p>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <Briefcase className="w-12 h-12 mx-auto mb-4 opacity-90" />
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Don't Accept Less Than You Deserve</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your termination and explain what you may be entitled to.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Find out where you stand <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Termination FAQs</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Employment matters within paralegal scope
-          </p>
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Received a Termination Offer?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Don't sign yet. Let me calculate what you're actually entitled to—it's probably more.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
+          </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.employment} />
+      </ServicePageLayout>
+    </>
   );
 }

@@ -50,7 +50,7 @@ export default function CambridgeParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 401, Highway 24, and Hespeler Road tickets. Speeding, careless driving, red light cameras, and more.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Contract disputes, unpaid debts, property damage, and consumer issues. Claims up to $50,000.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Contract disputes, unpaid debts, property damage, and consumer issues. Claims up to $35,000.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, N4/N5/N12 notices, rent arrears, maintenance orders. LTB representation for Cambridge landlords and tenants.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'Municipal by-law tickets, trespass charges, and regulatory violations in Cambridge.', link: '/services/provincial-offences' },
             ].map((service, index) => (

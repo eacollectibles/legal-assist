@@ -1,214 +1,164 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Phone, AlertTriangle, CheckCircle, DollarSign, Shield, Clock, Scale } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
-import PrimaryCTA from '@/components/PrimaryCTA';
-import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { FAQSection } from '@/components/FAQSection';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, Clock, DollarSign, HelpCircle, Gauge, TrendingUp } from 'lucide-react';
 import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function SpeedingTicketDefencePage() {
+  const authorityItems = [
+    { title: 'Insurance Impact Focus', description: 'The fine is the smallest cost of a speeding ticket. I focus on what matters: keeping demerit points off your record and protecting your insurance rates.' },
+    { title: 'Speed Measurement Challenges', description: 'Radar and laser readings aren\'t infallible. I know how to challenge calibration, operator error, and procedural issues.' },
+    { title: 'Honest Assessment', description: 'Not every speeding ticket is worth fighting. I\'ll tell you if your case has legs before you spend money on defence.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Ticket Analysis', description: 'Review the ticket, speed alleged, and circumstances to determine if fighting makes financial sense.' },
+    { step: '2', title: 'Disclosure Review', description: 'Obtain officer notes, calibration records, and identify potential weaknesses.' },
+    { step: '3', title: 'Court Representation', description: 'Negotiate for reduction or fight at trial—you don\'t need to attend.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'You Don\'t Attend Court', description: 'I handle everything—appearances, negotiations, and trial.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Cost-Benefit Analysis', description: 'I\'ll calculate if fighting is worth it based on insurance impact.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Realistic Expectations', description: 'Honest assessment of likely outcomes before you commit.' }
+  ];
+
+  const honestFAQs = [
+    { question: "Is it worth fighting a speeding ticket?", answer: "Do the math: A 3-point speeding ticket can increase your insurance by $900-1,800 over 3 years. If fighting costs $300-500 with a realistic chance of reduction, the math usually favours fighting. But for zero-point tickets (under 16 km/h over), it's often not worth the effort." },
+    { question: "What are the demerit points for speeding?", answer: "1-15 km/h over: 0 points. 16-29 km/h over: 3 points. 30-49 km/h over: 4 points. 50+ km/h over: 6 points (stunt driving). The points directly correlate with insurance impact." },
+    { question: "Can the radar/laser reading be wrong?", answer: "Yes. Common issues include: improper calibration, operator error, targeting the wrong vehicle, interference from other objects. We request calibration records and officer training documentation to identify potential challenges." },
+    { question: "What if I was definitely speeding?", answer: "What you did and what the Crown can prove are different things. The prosecution must prove the speed beyond reasonable doubt. Evidence gaps, calibration issues, or procedural errors can create reasonable doubt even when you know you were speeding." },
+    { question: "What outcomes are realistic?", answer: "Speeding 16-29 km/h over: 60-70% reduced to 0-point offence, 15-20% withdrawn, 10-25% convicted as charged. Higher speeds are harder to reduce but still possible with clean record and evidence issues." },
+    { question: "How long does it take?", answer: "Typically 3-8 months from filing to resolution. The court sets the timeline. Faster resolution is possible but may limit negotiation options." }
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
-        <Breadcrumbs />
-      </div>
-      
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <AlertTriangle className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Traffic Ticket Defence</span>
-            </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">Speeding Ticket Defence in Ontario</h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Got a speeding ticket? Do not just pay it. A conviction can increase your insurance rates for years and add demerit points to your licence. Let us fight it for you.</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <PrimaryCTA variant="button" size="lg" />
-              <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Why You Should Fight Your Speeding Ticket</h2>
-          <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">Paying a speeding ticket is an admission of guilt with consequences that last for years.</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-              <DollarSign className="w-10 h-10 text-red-600 mb-4" />
-              <h3 className="font-heading text-xl font-bold text-foreground mb-2">Insurance Increases</h3>
-              <p className="font-paragraph text-foreground/70">A speeding conviction can increase your auto insurance by 15-25% for up to 3 years. That is thousands of dollars in extra premiums.</p>
-            </div>
+    <>
+      <SEO title="Speeding Ticket Defence Paralegal | Fight Speeding Tickets | Ontario" description="Licensed paralegal defending speeding tickets in Ontario. Protect your insurance rates and driving record. Radar and laser challenges. Free consultation." canonical="https://www.legalassist.london/services/speeding-ticket-defence" />
+      <ServicePageLayout seoTitle="Speeding Ticket Defence Paralegal | Ontario" seoDescription="Licensed paralegal defending speeding tickets in Ontario." canonical="https://www.legalassist.london/services/speeding-ticket-defence" problemHeadline="Speeding Ticket Defence in Ontario" problemDescription="The fine on your ticket isn't the real cost—it's the insurance increase that follows. Before you pay, understand what's actually at stake." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=speeding-ticket-hero", alt: "Speeding ticket defence" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        {/* Demerit Points Table */}
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Speeding Penalties & Insurance Impact</h2>
             
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-              <AlertTriangle className="w-10 h-10 text-red-600 mb-4" />
-              <h3 className="font-heading text-xl font-bold text-foreground mb-2">Demerit Points</h3>
-              <p className="font-paragraph text-foreground/70">Speeding tickets carry 3-6 demerit points depending on speed. Too many points can result in licence suspension.</p>
+            <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-red-800 mb-3">The Real Cost</h3>
+              <p className="text-red-900 text-lg">A single speeding conviction can increase your insurance by <strong>15-30% for three years</strong>—that's <strong>$1,000-3,000+ more</strong> than the fine.</p>
             </div>
-            
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-              <Scale className="w-10 h-10 text-red-600 mb-4" />
-              <h3 className="font-heading text-xl font-bold text-foreground mb-2">Permanent Record</h3>
-              <p className="font-paragraph text-foreground/70">The conviction stays on your driving record for 3 years and can affect employment opportunities requiring a clean abstract.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Ontario Speeding Ticket Demerit Points</h2>
-          
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-lg border border-pastelbeige overflow-hidden">
-              <div className="bg-primary text-primary-foreground px-6 py-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <span className="font-heading font-bold">Speed Over Limit</span>
-                  <span className="font-heading font-bold text-right">Demerit Points</span>
+            <div className="overflow-x-auto mb-12">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                  <tr className="bg-primary text-white">
+                    <th className="px-6 py-4 text-left font-heading">Speed Over Limit</th>
+                    <th className="px-6 py-4 text-center font-heading">Points</th>
+                    <th className="px-6 py-4 text-center font-heading">Insurance Impact</th>
+                    <th className="px-6 py-4 text-left font-heading">Worth Fighting?</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr className="hover:bg-background/50">
+                    <td className="px-6 py-4 font-medium">1-15 km/h over</td>
+                    <td className="px-6 py-4 text-center"><span className="text-green-600 font-bold">0</span></td>
+                    <td className="px-6 py-4 text-center"><span className="text-green-600">Minimal</span></td>
+                    <td className="px-6 py-4 text-sm">Usually not worth the cost</td>
+                  </tr>
+                  <tr className="hover:bg-background/50">
+                    <td className="px-6 py-4 font-medium">16-29 km/h over</td>
+                    <td className="px-6 py-4 text-center"><span className="text-yellow-600 font-bold">3</span></td>
+                    <td className="px-6 py-4 text-center"><span className="text-yellow-600">15-25%</span></td>
+                    <td className="px-6 py-4 text-sm">Yes—cost of fighting &lt; insurance increase</td>
+                  </tr>
+                  <tr className="hover:bg-background/50">
+                    <td className="px-6 py-4 font-medium">30-49 km/h over</td>
+                    <td className="px-6 py-4 text-center"><span className="text-orange-600 font-bold">4</span></td>
+                    <td className="px-6 py-4 text-center"><span className="text-orange-600">25-40%</span></td>
+                    <td className="px-6 py-4 text-sm">Definitely—significant impact</td>
+                  </tr>
+                  <tr className="hover:bg-background/50">
+                    <td className="px-6 py-4 font-medium">50+ km/h over</td>
+                    <td className="px-6 py-4 text-center"><span className="text-red-600 font-bold">6</span></td>
+                    <td className="px-6 py-4 text-center"><span className="text-red-600">50%+ or denial</span></td>
+                    <td className="px-6 py-4 text-sm">Must fight—severe consequences</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Decision Framework */}
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Should You Fight?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                  <h4 className="font-heading text-lg font-bold text-green-800">Fight When:</h4>
                 </div>
+                <ul className="space-y-2 text-green-900 text-sm">
+                  <li>• 16+ km/h over (demerit points)</li>
+                  <li>• You have high insurance rates</li>
+                  <li>• You drive professionally</li>
+                  <li>• Calibration/procedure issues possible</li>
+                  <li>• Speed was close to threshold</li>
+                </ul>
               </div>
-              <div className="divide-y divide-pastelbeige">
-                <div className="px-6 py-4 grid grid-cols-2 gap-4">
-                  <span className="font-paragraph">1-15 km/h over</span>
-                  <span className="font-paragraph text-right font-semibold">0 points</span>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-6 h-6 text-yellow-600" />
+                  <h4 className="font-heading text-lg font-bold text-yellow-800">Negotiate When:</h4>
                 </div>
-                <div className="px-6 py-4 grid grid-cols-2 gap-4">
-                  <span className="font-paragraph">16-29 km/h over</span>
-                  <span className="font-paragraph text-right font-semibold">3 points</span>
+                <ul className="space-y-2 text-yellow-900 text-sm">
+                  <li>• Clean record gives leverage</li>
+                  <li>• Want certainty vs trial risk</li>
+                  <li>• Need quick resolution</li>
+                  <li>• Crown may reduce to 0-point</li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <XCircle className="w-6 h-6 text-gray-600" />
+                  <h4 className="font-heading text-lg font-bold text-gray-800">May Not Be Worth It:</h4>
                 </div>
-                <div className="px-6 py-4 grid grid-cols-2 gap-4">
-                  <span className="font-paragraph">30-49 km/h over</span>
-                  <span className="font-paragraph text-right font-semibold">4 points</span>
-                </div>
-                <div className="px-6 py-4 grid grid-cols-2 gap-4 bg-red-50">
-                  <span className="font-paragraph text-red-700">50+ km/h over (Stunt Driving)</span>
-                  <span className="font-paragraph text-right font-semibold text-red-700">6 points + suspension</span>
-                </div>
+                <ul className="space-y-2 text-gray-900 text-sm">
+                  <li>• Zero-point speeding (under 16 km/h)</li>
+                  <li>• Clean record, low insurance</li>
+                  <li>• Ticket way out of town</li>
+                  <li>• Don't drive regularly</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">How We Defend Your Speeding Ticket</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Review Officer Notes</h3>
-                <p className="font-paragraph text-foreground/70">We obtain and analyze the officer's notes and evidence for procedural errors or inconsistencies.</p>
-              </div>
+        {/* FAQs */}
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Speeding Ticket FAQs</h2>
             </div>
-            
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Challenge Radar/Laser Evidence</h3>
-                <p className="font-paragraph text-foreground/70">We verify if speed detection equipment was properly calibrated and operated correctly.</p>
-              </div>
-            </div>
-            
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Negotiate Reductions</h3>
-                <p className="font-paragraph text-foreground/70">We negotiate with prosecutors to reduce charges, minimize points, and lower fines.</p>
-              </div>
-            </div>
-            
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle className="w-5 h-5 text-primary" /></div>
-              <div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">Court Representation</h3>
-                <p className="font-paragraph text-foreground/70">We appear in court on your behalf so you do not have to miss work or deal with court stress.</p>
-              </div>
-            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Possible Outcomes When You Fight</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><CheckCircle className="w-8 h-8 text-green-600" /></div>
-              <h3 className="font-heading text-xl font-bold text-foreground mb-2">Complete Dismissal</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">Charges withdrawn or dismissed due to insufficient evidence or procedural errors.</p>
-            </div>
-            
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"><Scale className="w-8 h-8 text-blue-600" /></div>
-              <h3 className="font-heading text-xl font-bold text-foreground mb-2">Reduced Charges</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">Negotiated reduction to a lesser offence with fewer or no demerit points.</p>
-            </div>
-            
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4"><DollarSign className="w-8 h-8 text-yellow-600" /></div>
-              <h3 className="font-heading text-xl font-bold text-foreground mb-2">Lower Fine</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">Reduced fine amount even if conviction stands, saving you money.</p>
-            </div>
+        {/* CTA */}
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Got a Speeding Ticket?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">Send me your ticket and I'll tell you if fighting is worth it—based on the math, not guesswork.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
 
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Why Choose LegalAssist for Traffic Defence</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><Shield className="w-8 h-8 text-primary" /></div>
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">LSO Licensed</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">Regulated paralegal with authority to represent you in Provincial Offences Court.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><Clock className="w-8 h-8 text-primary" /></div>
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">We Go to Court</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">You do not need to take time off work. We handle all court appearances.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><DollarSign className="w-8 h-8 text-primary" /></div>
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Flat Fee Pricing</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">Know your costs upfront. No surprises or hidden fees.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><CheckCircle className="w-8 h-8 text-primary" /></div>
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Free Consultation</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">We review your ticket and explain your options at no cost.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <FAQSection />
-
-      <RelatedServices services={relatedServicesConfig.trafficTickets} />
-
-      <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Got a Speeding Ticket?</h2>
-          <p className="font-paragraph text-lg text-secondary-foreground/80 mb-8 max-w-2xl mx-auto">Do not pay it without exploring your options. Contact us for a free case review and find out how we can help.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Free Case Review <ArrowRight className="w-5 h-5" /></Link>
-            <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.trafficTickets} />
+      </ServicePageLayout>
+    </>
   );
 }

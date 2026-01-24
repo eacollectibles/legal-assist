@@ -1,203 +1,143 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { ArrowRight, Shield, Scale, Clock, CheckCircle, AlertTriangle, Truck, FileText, DollarSign, AlertCircle } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ServicePageLayout from '@/components/ServicePageLayout';
+import SEO from '@/components/SEO';
+import { CheckCircle, XCircle, AlertTriangle, DollarSign, HelpCircle, Gauge, Truck, AlertCircle, FileText } from 'lucide-react';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function CommercialVehicleViolationsPage() {
-  useEffect(() => {
-    document.title = 'Commercial Vehicle Violations | CVOR Defence | Truck Ticket Paralegal Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Commercial vehicle ticket defence in Ontario. CVOR points, truck driver violations, logbook offences, and carrier safety ratings. Paralegal help for commercial drivers. Free consultation.');
-    }
-  }, []);
+  const authorityItems = [
+    { title: 'Commercial Vehicle Expertise', description: 'Commercial vehicle violations have serious consequences for your CVOR, employment, and livelihood. I understand the unique stakes.' },
+    { title: 'CVOR Protection', description: 'Every conviction affects your carrier\'s safety rating. I fight to protect your CVOR standing and keep you on the road.' },
+    { title: 'Employment Focus', description: 'Your CDL is your livelihood. I prioritize outcomes that protect your ability to work.' }
+  ];
+
+  const processSteps = [
+    { step: '1', title: 'Violation Analysis', description: 'Review the charge, CVOR implications, and potential employment impact.' },
+    { step: '2', title: 'Defence Strategy', description: 'Develop defence focused on protecting your commercial driving privileges.' },
+    { step: '3', title: 'Court Representation', description: 'Handle all appearances with focus on minimizing CVOR points.' }
+  ];
+
+  const reassuranceItems = [
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'CVOR Understanding', description: 'I know how convictions affect carrier safety ratings.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Employment Protection', description: 'Strategies aimed at keeping you working.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Full Representation', description: 'You don\'t miss work for court appearances.' }
+  ];
+
+  const honestFAQs = [
+    { question: "What happens if I get convicted as a commercial driver?", answer: "Three impacts: 1) Demerit points on your personal licence, 2) CVOR points against your carrier's safety rating, 3) Potential employment consequences. Major carriers track all violations and may terminate employment for serious convictions." },
+    { question: "What violations are most serious for commercial drivers?", answer: "Speeding, log book violations, hours of service, overweight loads, brake and mechanical defects, dangerous goods violations, and stunt driving are most serious. Even 'minor' violations accumulate and can trigger MTO audits." },
+    { question: "How does CVOR work?", answer: "Commercial Vehicle Operator's Registration tracks all violations for your carrier. Points accumulate based on violation severity. Too many points trigger MTO facility audits, increased inspections, or operating authority suspension. Every conviction adds points." },
+    { question: "Can commercial vehicle violations be reduced?", answer: "Yes, and it's often more important for commercial drivers than anyone else. Reducing a 4-point to a 2-point violation, or getting a withdrawal, significantly impacts CVOR and employment. Clean driving record helps negotiation." },
+    { question: "What about out-of-province violations?", answer: "Ontario gets notified of convictions from other provinces. They appear on your driving record and can affect your commercial privileges. Worth fighting even if the ticket is far away." },
+    { question: "Will my employer find out?", answer: "Likely yes. Many carriers run regular driver abstract checks. Serious violations may require immediate reporting under employment agreements. Better to fight and get a reduction than accept a conviction." }
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 via-background to-pastelbeige/20 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <Truck className="w-5 h-5" />
-              <span className="font-paragraph text-sm font-medium">Traffic Ticket Defence</span>
+    <>
+      <SEO title="Commercial Vehicle Violation Defence | Truck Driver Tickets | Ontario" description="Licensed paralegal defending commercial vehicle violations in Ontario. CVOR protection, CDL defence, employment preservation. Log book, speeding, overweight. Free consultation." canonical="https://www.legalassist.london/services/commercial-vehicle-violations" />
+      <ServicePageLayout seoTitle="Commercial Vehicle Violation Defence | Ontario" seoDescription="Defending commercial vehicle violations in Ontario." canonical="https://www.legalassist.london/services/commercial-vehicle-violations" problemHeadline="Commercial Vehicle Violation Defence in Ontario" problemDescription="When your CDL is your livelihood, every ticket matters more. CVOR points, employment consequences, and carrier audits make fighting essential—not optional." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Commercial vehicle violation defence" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+        
+        <div className="w-full py-16 md:py-24 bg-white">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Why Commercial Drivers Must Fight</h2>
+            
+            <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
+              <h3 className="font-heading text-xl font-bold text-red-800 mb-3 flex items-center gap-2">
+                <Truck className="w-6 h-6" />
+                Triple Impact
+              </h3>
+              <p className="text-red-900">Commercial violations hit three ways: demerit points on your licence, CVOR points against your carrier, and potential termination. For commercial drivers, even "minor" tickets can end careers.</p>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Commercial Vehicle & CVOR Violations
-            </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Commercial vehicle tickets affect more than just your licence—they impact your CVOR, your carrier's safety rating, and your livelihood. We defend truck drivers, owner-operators, and fleet carriers across Ontario.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
-                Free Consultation <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/5 transition-colors">
-                Call (519) 601-1110
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Understanding CVOR */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Understanding the CVOR System</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              { icon: FileText, title: 'What is CVOR?', desc: 'Commercial Vehicle Operator\'s Registration tracks the safety record of commercial carriers operating in Ontario. Every violation adds points.' },
-              { icon: AlertCircle, title: 'CVOR Points', desc: 'Unlike demerit points on your licence, CVOR points are assigned to both the driver AND the carrier. They affect carrier safety ratings.' },
-              { icon: Scale, title: 'Violation Rate', desc: 'MTO calculates a "violation rate" based on total points divided by fleet size. High rates trigger audits and sanctions.' },
-              { icon: DollarSign, title: 'Carrier Sanctions', desc: 'Poor CVOR standing can result in fleet audits, operating restrictions, or even revocation of carrier authority.' },
-              { icon: Truck, title: 'Driver Impact', desc: 'As a driver, violations follow you. Future employers check your abstract and CVOR history before hiring.' },
-              { icon: Clock, title: 'Points Stay 2 Years', desc: 'CVOR points remain on record for 2 years from conviction date, affecting your carrier\'s rating the entire time.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <item.icon className="w-10 h-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-red-50 rounded-lg p-6 border border-red-200 text-center">
+                <Gauge className="w-10 h-10 text-red-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-red-700 mb-2">Personal</div>
+                <p className="text-red-800 font-medium">Demerit Points</p>
+                <p className="text-sm text-red-700 mt-1">On your licence</p>
               </div>
-            ))}
+              <div className="bg-red-50 rounded-lg p-6 border border-red-200 text-center">
+                <FileText className="w-10 h-10 text-red-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-red-700 mb-2">CVOR</div>
+                <p className="text-red-800 font-medium">Carrier Points</p>
+                <p className="text-sm text-red-700 mt-1">Against employer</p>
+              </div>
+              <div className="bg-red-50 rounded-lg p-6 border border-red-200 text-center">
+                <AlertCircle className="w-10 h-10 text-red-600 mx-auto mb-3" />
+                <div className="text-3xl font-bold text-red-700 mb-2">Job</div>
+                <p className="text-red-800 font-medium">Employment Risk</p>
+                <p className="text-sm text-red-700 mt-1">Termination possible</p>
+              </div>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Common Commercial Violations</h3>
+            <div className="overflow-x-auto mb-8">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead>
+                  <tr className="bg-primary text-white">
+                    <th className="px-6 py-4 text-left font-heading">Violation</th>
+                    <th className="px-6 py-4 text-center font-heading">Points</th>
+                    <th className="px-6 py-4 text-center font-heading">Employment Risk</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr><td className="px-6 py-4">Speeding (16-29 km/h)</td><td className="px-6 py-4 text-center font-bold">3</td><td className="px-6 py-4 text-center text-yellow-600">Moderate</td></tr>
+                  <tr><td className="px-6 py-4">Speeding (30-49 km/h)</td><td className="px-6 py-4 text-center font-bold">4</td><td className="px-6 py-4 text-center text-red-600">High</td></tr>
+                  <tr><td className="px-6 py-4">Log book violation</td><td className="px-6 py-4 text-center font-bold">0-3</td><td className="px-6 py-4 text-center text-yellow-600">Moderate</td></tr>
+                  <tr><td className="px-6 py-4">Hours of service</td><td className="px-6 py-4 text-center font-bold">3</td><td className="px-6 py-4 text-center text-red-600">High</td></tr>
+                  <tr><td className="px-6 py-4">Overweight</td><td className="px-6 py-4 text-center font-bold">0</td><td className="px-6 py-4 text-center text-yellow-600">Moderate (high fine)</td></tr>
+                  <tr><td className="px-6 py-4">Brake/mechanical defect</td><td className="px-6 py-4 text-center font-bold">0-3</td><td className="px-6 py-4 text-center text-red-600">High</td></tr>
+                  <tr><td className="px-6 py-4">Stunt driving (50+ over)</td><td className="px-6 py-4 text-center font-bold">6</td><td className="px-6 py-4 text-center text-red-600">Severe—likely termination</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Should You Fight?</h3>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+              <CheckCircle className="w-6 h-6 text-green-600 mb-2" />
+              <h4 className="font-bold text-green-800 mb-2">Almost Always Yes Because:</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-green-900 text-sm">
+                <ul className="space-y-1">
+                  <li>• Your livelihood depends on your licence</li>
+                  <li>• CVOR points affect your carrier</li>
+                  <li>• Employers check driving abstracts</li>
+                </ul>
+                <ul className="space-y-1">
+                  <li>• Even reductions help significantly</li>
+                  <li>• Insurance rates are already high</li>
+                  <li>• Accumulation triggers audits</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Common Violations */}
-      <section className="py-16 md:py-20 bg-pastelbeige/20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Common Commercial Vehicle Violations</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              {[
-                { title: 'Hours of Service / Logbook Violations', points: '3-5 CVOR points', desc: 'Driving over hours, falsified logs, failure to maintain daily logs' },
-                { title: 'Overweight Violations', points: '2-5 CVOR points', desc: 'Exceeding axle weights, gross vehicle weight, or permit limits' },
-                { title: 'Pre-Trip Inspection Failures', points: '3 CVOR points', desc: 'No daily inspection, defective equipment, missing inspection reports' },
-                { title: 'Load Security Violations', points: '2-4 CVOR points', desc: 'Unsecured loads, improper tie-downs, shifting cargo' },
-                { title: 'Speeding (Commercial)', points: '2-4 CVOR points', desc: 'Higher penalties for commercial vehicles, especially with dangerous goods' },
-                { title: 'Out-of-Service Orders', points: '5 CVOR points', desc: 'Operating after being placed out of service is extremely serious' },
-                { title: 'Dangerous Goods Violations', points: '3-5 CVOR points', desc: 'Documentation errors, placarding, shipping papers' },
-              ].map((item, index) => (
-                <div key={index} className={`p-6 flex items-start gap-4 ${index !== 6 ? 'border-b border-gray-100' : ''}`}>
-                  <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start flex-wrap gap-2">
-                      <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
-                      <span className="text-sm font-medium text-red-600 bg-red-50 px-2 py-1 rounded">{item.points}</span>
-                    </div>
-                    <p className="font-paragraph text-foreground/70 mt-1">{item.desc}</p>
-                  </div>
-                </div>
+        <div className="w-full py-16 md:py-24 bg-background">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              <h2 className="font-heading text-4xl font-bold text-foreground">Honest Answers</h2>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {honestFAQs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg border border-border px-6">
+                  <AccordionTrigger className="text-left font-heading text-lg font-semibold py-6 hover:no-underline">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 pb-6">{faq.answer}</AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </div>
-      </section>
 
-      {/* Why Fight */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Why Fight Commercial Vehicle Tickets?</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: 'Protect Your CVOR', desc: 'Every conviction adds points. Too many points trigger MTO audits and sanctions against your carrier.' },
-              { title: 'Preserve Your Career', desc: 'Your driving abstract follows you. Violations make it harder to get hired by quality carriers.' },
-              { title: 'Avoid Insurance Increases', desc: 'Commercial insurance premiums skyrocket with convictions. One bad year can cost thousands.' },
-              { title: 'Prevent Operating Restrictions', desc: 'Carriers with poor CVOR ratings can face operating restrictions or lose their authority entirely.' },
-              { title: 'Owner-Operator Protection', desc: 'If you own your truck, YOU are the carrier. Every ticket directly impacts your business.' },
-              { title: 'Keep Your Licence', desc: 'Some violations carry licence suspensions that end your ability to drive commercially.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="font-paragraph text-foreground/70">{item.desc}</p>
-              </div>
-            ))}
+        <div className="w-full py-16 md:py-24 bg-primary/5">
+          <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-4">Commercial Vehicle Ticket?</h2>
+            <p className="font-paragraph text-lg text-foreground/80 mb-8">Your CDL is your career. Don't accept a conviction without fighting. Get an honest assessment.</p>
+            <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-      </section>
-
-      {/* Defence Strategies */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Our Defence Strategies</h2>
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            {[
-              { step: '1', title: 'Challenge the Stop', desc: 'Was the inspection or traffic stop conducted lawfully? Improper stops can invalidate charges.' },
-              { step: '2', title: 'Technical Defences', desc: 'Scale calibration, ELD data accuracy, measurement procedures—technical errors happen.' },
-              { step: '3', title: 'Documentation Review', desc: 'Logbooks, inspection reports, and shipping documents must be properly completed by officers.' },
-              { step: '4', title: 'Negotiate Reductions', desc: 'Often we can negotiate to reduce charges to lesser offences with fewer or no CVOR points.' },
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm flex gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold">
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="font-heading text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="font-paragraph text-foreground/70">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Who We Help */}
-      <section className="py-16 md:py-20 bg-amber-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">Who We Help</h2>
-          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-4">
-            {[
-              'AZ and DZ licence holders',
-              'Owner-operators',
-              'Fleet carriers and dispatchers',
-              'Long-haul truck drivers',
-              'Local delivery drivers',
-              'Bus and coach operators',
-              'Tow truck operators',
-              'Construction vehicle operators',
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                <span className="font-paragraph text-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <Truck className="w-12 h-12 mx-auto mb-4 opacity-90" />
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">Protect Your Commercial Driving Career</h2>
-          <p className="font-paragraph text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Free consultation to review your ticket and explain how we can protect your CVOR and your livelihood.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
-              Book Free Consultation <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Commercial vehicle ticket defence across Ontario
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+        <RelatedServices services={relatedServicesConfig.trafficTickets} />
+      </ServicePageLayout>
+    </>
   );
 }

@@ -28,7 +28,7 @@ export default function MediationServicesPage() {
                 Professional mediation to resolve disputes collaboratively and cost-effectively. Our experienced mediators help parties find mutually beneficial solutions while maintaining control over the outcome.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
+                <Link to="/booking">
                   <Button className="bg-primary hover:bg-primary/90 text-white w-full">
                     Schedule Consultation
                   </Button>
@@ -567,7 +567,7 @@ export default function MediationServicesPage() {
           <p className="font-paragraph text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Contact us today for a free consultation to discuss your dispute and explore whether mediation is the right solution for you.
           </p>
-          <Link to="/contact">
+          <Link to="/booking">
             <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">
               Schedule Your Free Consultation
             </Button>
