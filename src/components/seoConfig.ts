@@ -152,16 +152,16 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       {
         question: 'What types of cases can a paralegal handle in Ontario?',
-        answer: 'In Ontario, licensed paralegals can handle: Small Claims Court matters up to $35,000, Landlord and Tenant Board disputes, traffic tickets and provincial offences, minor criminal matters (summary convictions), Human Rights Tribunal applications, and various administrative tribunals.'
+        answer: 'In Ontario, licensed paralegals can handle: Small Claims Court matters up to $50,000, Landlord and Tenant Board disputes, traffic tickets and provincial offences, minor criminal matters (summary convictions), Human Rights Tribunal applications, and various administrative tribunals.'
       },
       {
         question: 'Do I need a lawyer or a paralegal for my case?',
-        answer: 'For traffic tickets, LTB matters, Small Claims Court under $35,000, and HRTO applications, a paralegal can provide the same representation as a lawyer at a lower cost. You need a lawyer for criminal indictable offences, family law, real estate, and claims over $35,000.'
+        answer: 'For traffic tickets, LTB matters, Small Claims Court under $50,000, and HRTO applications, a paralegal can provide the same representation as a lawyer at a lower cost. You need a lawyer for criminal indictable offences, family law, real estate, and claims over $50,000.'
       }
     ,
       {
         question: 'How do I know if I need a paralegal or a lawyer?',
-        answer: 'Paralegals handle Small Claims Court (up to $35,000), LTB, traffic tickets, provincial offences, human rights tribunal, and minor criminal matters. For criminal charges, family law, real estate, or claims over $35,000, you need a lawyer.'
+        answer: 'Paralegals handle Small Claims Court (up to $50,000), LTB, traffic tickets, provincial offences, human rights tribunal, and minor criminal matters. For criminal charges, family law, real estate, or claims over $50,000, you need a lawyer.'
       },
       {
         question: 'Do you offer free consultations?',
@@ -1276,7 +1276,7 @@ export const seoConfig: Record<string, SEOConfig> = {
       },
       {
         question: 'What penalties do landlords face for illegal lockouts?',
-        answer: 'The LTB can order landlords to pay: compensation for out-of-pocket expenses, general damages up to $35,000, and the landlord may face fines up to $50,000 under the RTA. Repeat offenders face even harsher penalties.'
+        answer: 'The LTB can order landlords to pay: compensation for out-of-pocket expenses, general damages up to $50,000, and the landlord may face fines up to $50,000 under the RTA. Repeat offenders face even harsher penalties.'
       }
     ,
       {
@@ -1697,8 +1697,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   // SMALL CLAIMS COURT - MAIN & SUB-PAGES (19 pages)
   // ============================================
   '/services/small-claims-court': {
-    title: 'Small Claims Court | Sue or Defend Up to $35,000 | London Ontario',
-    description: 'Small Claims Court representation in London, Ontario. Debt collection, contract disputes, property damage claims. Claims up to $35,000. Free consultation.',
+    title: 'Small Claims Court | Sue or Defend Up to $50,000 | London Ontario',
+    description: 'Small Claims Court representation in London, Ontario. Debt collection, contract disputes, property damage claims. Claims up to $50,000. Free consultation.',
     keywords: 'small claims court london, sue someone ontario, debt collection paralegal, contract dispute lawyer',
     schema: {
       type: 'LegalService',
@@ -1714,7 +1714,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       {
         question: 'What is the limit for Small Claims Court in Ontario?',
-        answer: 'The monetary limit for Small Claims Court in Ontario is $35,000, not including interest and costs. Claims over $35,000 must be filed in Superior Court.'
+        answer: 'The monetary limit for Small Claims Court in Ontario is $50,000, not including interest and costs. Claims over $50,000 must be filed in Superior Court.'
       },
       {
         question: 'How much does it cost to sue in Small Claims Court?',
@@ -1780,7 +1780,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/contract-disputes': {
     title: 'Contract Disputes | Breach of Contract | London Ontario',
-    description: 'Contract dispute representation in London. Breach of contract, failed agreements. Small Claims up to $35,000.',
+    description: 'Contract dispute representation in London. Breach of contract, failed agreements. Small Claims up to $50,000.',
     keywords: 'contract dispute london, breach of contract ontario, business dispute',
     schema: { type: 'LegalService', name: 'Contract Disputes', serviceType: 'Contract Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Contract Disputes', url: '/services/contract-disputes' }],
@@ -1831,7 +1831,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     schema: { type: 'LegalService', name: 'Property Damage Claims', serviceType: 'Damage Claim Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Property Damage', url: '/services/property-damage-claims' }],
     faqs: [
-      { question: 'Can I sue for property damage?', answer: 'Yes, for negligent or intentional damage up to $35,000. Document damage with photos and get repair estimates.' },
+      { question: 'Can I sue for property damage?', answer: 'Yes, for negligent or intentional damage up to $50,000. Document damage with photos and get repair estimates.' },
       { question: 'What damages can I recover?', answer: 'Repair costs or fair market value, diminished value, loss of use, and related expenses.' }
     ,
       {
@@ -1918,12 +1918,12 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/personal-injury-claims': {
     title: 'Personal Injury Claims | Small Claims | London Ontario',
-    description: 'Personal injury claims under $35,000. Slip and fall, minor injuries.',
+    description: 'Personal injury claims under $50,000. Slip and fall, minor injuries.',
     keywords: 'personal injury small claims, slip and fall, injury compensation',
     schema: { type: 'LegalService', name: 'Personal Injury', serviceType: 'Personal Injury Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Personal Injury', url: '/services/personal-injury-claims' }],
     faqs: [
-      { question: 'Can I claim injury in Small Claims?', answer: 'Yes, for injuries with damages under $35,000. Serious injuries may need Superior Court.' },
+      { question: 'Can I claim injury in Small Claims?', answer: 'Yes, for injuries with damages under $50,000. Serious injuries may need Superior Court.' },
       { question: 'What can I recover?', answer: 'Medical expenses, lost wages, out-of-pocket costs, and general damages for pain and suffering.' }
     ,
       {
@@ -2101,7 +2101,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/wrongful-dismissal-claims': {
     title: 'Wrongful Dismissal Claims | Small Claims | London Ontario',
-    description: 'Wrongful dismissal claims under $35,000. Fired without proper notice or severance.',
+    description: 'Wrongful dismissal claims under $50,000. Fired without proper notice or severance.',
     keywords: 'wrongful dismissal small claims, fired without notice, termination pay claim',
     schema: { type: 'LegalService', name: 'Wrongful Dismissal', serviceType: 'Employment Termination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Wrongful Dismissal', url: '/services/wrongful-dismissal-claims' }],
@@ -2123,7 +2123,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/professional-negligence': {
     title: 'Professional Negligence | Malpractice Claims | London Ontario',
-    description: 'Professional negligence claims. Accountant errors, contractor negligence under $35,000.',
+    description: 'Professional negligence claims. Accountant errors, contractor negligence under $50,000.',
     keywords: 'professional negligence, malpractice claim, accountant error',
     schema: { type: 'LegalService', name: 'Professional Negligence', serviceType: 'Malpractice Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Professional Negligence', url: '/services/professional-negligence' }],
@@ -2378,8 +2378,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     schema: { type: 'LegalService', name: 'Employment Services', serviceType: 'Employment Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment Issues', url: '/services/employment-issues' }],
     faqs: [
-      { question: 'What employment issues can a paralegal help with?', answer: 'Paralegals can assist with: Small Claims Court employment claims under $35,000, HRTO discrimination complaints, Ministry of Labour complaints, and employment standards issues.' },
-      { question: 'When should I contact an employment lawyer instead?', answer: 'For wrongful dismissal claims over $35,000, complex contract disputes, or senior executive packages, a lawyer may be more appropriate. We can refer you if needed.' }
+      { question: 'What employment issues can a paralegal help with?', answer: 'Paralegals can assist with: Small Claims Court employment claims under $50,000, HRTO discrimination complaints, Ministry of Labour complaints, and employment standards issues.' },
+      { question: 'When should I contact an employment lawyer instead?', answer: 'For wrongful dismissal claims over $50,000, complex contract disputes, or senior executive packages, a lawyer may be more appropriate. We can refer you if needed.' }
     ,
       {
         question: 'How long will this affect my insurance?',
@@ -3200,7 +3200,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     schema: { type: 'Article', name: 'Paralegal vs Lawyer Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'Paralegal vs Lawyer', url: '/guides/paralegal-vs-lawyer' }],
     faqs: [
-      { question: 'When should I use a paralegal instead of a lawyer?', answer: 'Use a paralegal for: traffic tickets, LTB matters, Small Claims Court (under $35,000), HRTO, and minor criminal matters. Use a lawyer for: serious criminal charges, family law, real estate, and claims over $35,000.' },
+      { question: 'When should I use a paralegal instead of a lawyer?', answer: 'Use a paralegal for: traffic tickets, LTB matters, Small Claims Court (under $50,000), HRTO, and minor criminal matters. Use a lawyer for: serious criminal charges, family law, real estate, and claims over $50,000.' },
       { question: 'Are paralegals cheaper than lawyers?', answer: 'Generally yes. Paralegals typically charge $150-300/hour vs $300-600+ for lawyers. For matters within paralegal scope, you get equivalent representation at lower cost.' }
     ,
       {
@@ -3474,7 +3474,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     schema: { type: 'LegalService', name: 'Employment Law Services', serviceType: 'Employment Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment Law', url: '/services/employment' }],
     faqs: [
-      { question: 'What employment matters can a paralegal handle?', answer: 'Paralegals handle: wrongful dismissal claims under $35,000 in Small Claims Court, Employment Standards Act complaints, and certain workplace tribunal matters. Larger claims require a lawyer.' },
+      { question: 'What employment matters can a paralegal handle?', answer: 'Paralegals handle: wrongful dismissal claims under $50,000 in Small Claims Court, Employment Standards Act complaints, and certain workplace tribunal matters. Larger claims require a lawyer.' },
       { question: 'What are my rights when terminated?', answer: 'You\'re entitled to notice or pay in lieu based on length of service. ESA minimums are 1 week per year (max 8 weeks). Common law may entitle you to more. Severance pay applies for 5+ years with large employers.' },
       { question: 'Can my employer change my job duties?', answer: 'Minor changes are usually permitted. Significant changes to duties, pay, hours, or location without consent may be constructive dismissal, entitling you to severance as if you were fired.' }
     ,
@@ -4065,14 +4065,14 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/small-claims-guide': {
     title: 'Small Claims Court Guide Ontario | How to Sue or Defend',
-    description: 'Complete guide to Small Claims Court in Ontario. Learn how to file a claim, defend yourself, and collect judgments up to $35,000.',
+    description: 'Complete guide to Small Claims Court in Ontario. Learn how to file a claim, defend yourself, and collect judgments up to $50,000.',
     keywords: 'small claims court guide ontario, how to sue ontario, small claims process guide',
     schema: { type: 'Article', name: 'Small Claims Court Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides' }, { name: 'Small Claims Guide', url: '/guides/small-claims-guide' }],
     faqs: [
       { question: 'How much does Small Claims Court cost?', answer: 'Filing fees: $102 (claims up to $500) or $273 (over $500). Additional fees for serving documents, trial requests, and enforcement. Most costs recoverable if you win.' },
       { question: 'What\'s the process for Small Claims Court?', answer: 'File claim, serve defendant, wait for defence, attend mandatory settlement conference, trial if not settled, enforcement if needed. Takes 6-12 months typically.' },
-      { question: 'Can I sue for any amount?', answer: 'Small Claims maximum is $35,000 plus interest and costs. Larger claims need Superior Court (requires a lawyer). You can reduce your claim to fit Small Claims.' }
+      { question: 'Can I sue for any amount?', answer: 'Small Claims maximum is $50,000 plus interest and costs. Larger claims need Superior Court (requires a lawyer). You can reduce your claim to fit Small Claims.' }
     ,
       {
         question: 'What costs can I recover if I win?',

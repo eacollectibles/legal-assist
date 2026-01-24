@@ -34,7 +34,7 @@ export default function WrongfulDismissalPage() {
 
   return (
     <>
-      <SEO title="Wrongful Dismissal Paralegal Ontario | Severance Negotiation" description="Licensed paralegal for wrongful dismissal claims in Ontario. Notice period calculation, severance negotiation. Claims up to $35,000. Free consultation." canonical="https://www.legalassist.london/services/wrongful-dismissal" />
+      <SEO title="Wrongful Dismissal Paralegal Ontario | Severance Negotiation" description="Licensed paralegal for wrongful dismissal claims in Ontario. Notice period calculation, severance negotiation. Claims up to $50,000. Free consultation." canonical="https://www.legalassist.london/services/wrongful-dismissal" />
       <ServicePageLayout seoTitle="Wrongful Dismissal | Ontario" seoDescription="Wrongful dismissal help in Ontario." canonical="https://www.legalassist.london/services/wrongful-dismissal" problemHeadline="Wrongful Dismissal Claims" problemDescription="Terminated without adequate notice? You're likely entitled to more than ESA minimums. I help calculate your entitlement and negotiate fair severance." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Wrongful dismissal" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">

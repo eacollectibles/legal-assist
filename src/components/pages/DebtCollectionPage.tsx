@@ -24,7 +24,7 @@ export default function DebtCollectionPage() {
   ];
 
   const honestFAQs = [
-    { question: "For creditors: What's the process to collect a debt?", answer: "1) Verify the debt is valid and documented, 2) Send formal demand letter with deadline, 3) If no payment, file Small Claims Court claim (up to $35,000), 4) Get judgment, 5) Enforce through garnishment, examination in aid of execution, or other means." },
+    { question: "For creditors: What's the process to collect a debt?", answer: "1) Verify the debt is valid and documented, 2) Send formal demand letter with deadline, 3) If no payment, file Small Claims Court claim (up to $50,000), 4) Get judgment, 5) Enforce through garnishment, examination in aid of execution, or other means." },
     { question: "What if they won't pay even with a judgment?", answer: "Judgment doesn't guarantee collection. You can: garnish wages (limited percentage), garnish bank accounts, examine them under oath about assets, register lien on property, or seize non-exempt assets. Some people are 'judgment-proof' if they have no attachable assets." },
     { question: "For debtors: Can old debts still be collected?", answer: "The limitation period in Ontario is 2 years from last acknowledgment or payment. After that, you can raise limitation as a complete defence. However, some debts (government, secured) have longer or no limitations." },
     { question: "What if I'm being sued for a debt I don't owe?", answer: "File a defence disputing the debt. Demand proof: original contract, account statements, chain of ownership if sold to collector. Debt collectors must prove the debt is valid, accurate, and that they have the right to collect it." },
@@ -35,7 +35,7 @@ export default function DebtCollectionPage() {
   return (
     <>
       <SEO title="Debt Collection Paralegal Ontario | Collect or Defend Debts" description="Licensed paralegal for debt collection and defence in Ontario. Collect unpaid debts, defend against invalid claims, judgment enforcement. Free consultation." canonical="https://www.legalassist.london/services/debt-collection" />
-      <ServicePageLayout seoTitle="Debt Collection & Defence | Ontario" seoDescription="Debt collection and defence services in Ontario." canonical="https://www.legalassist.london/services/debt-collection" problemHeadline="Debt Collection & Defence" problemDescription="Whether you're owed money or being pursued for a debt, I can help. Collecting debts, defending against claims, and enforcing judgments—up to $35,000." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Debt collection" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+      <ServicePageLayout seoTitle="Debt Collection & Defence | Ontario" seoDescription="Debt collection and defence services in Ontario." canonical="https://www.legalassist.london/services/debt-collection" problemHeadline="Debt Collection & Defence" problemDescription="Whether you're owed money or being pursued for a debt, I can help. Collecting debts, defending against claims, and enforcing judgments—up to $50,000." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Debt collection" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
