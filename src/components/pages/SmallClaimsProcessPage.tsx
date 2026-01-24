@@ -34,8 +34,8 @@ export default function SmallClaimsProcessPage() {
 
   return (
     <>
-      <SEO title="Small Claims Court Process Ontario | Complete Guide" description="Complete guide to Small Claims Court process in Ontario. Filing, service, settlement conference, trial. Claims up to $35,000. Free consultation." canonical="https://www.legalassist.london/guides/small-claims-process" />
-      <ServicePageLayout seoTitle="Small Claims Court Process | Ontario" seoDescription="Guide to the Small Claims Court process." canonical="https://www.legalassist.london/guides/small-claims-process" problemHeadline="Small Claims Court: How It Works" problemDescription="Small Claims Court handles disputes up to $35,000 in Ontario. It's designed to be accessible, but knowing the process helps you succeed." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Small claims process" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+      <SEO title="Small Claims Court Process Ontario | Complete Guide" description="Complete guide to Small Claims Court process in Ontario. Filing, service, settlement conference, trial. Claims up to $50,000. Free consultation." canonical="https://www.legalassist.london/guides/small-claims-process" />
+      <ServicePageLayout seoTitle="Small Claims Court Process | Ontario" seoDescription="Guide to the Small Claims Court process." canonical="https://www.legalassist.london/guides/small-claims-process" problemHeadline="Small Claims Court: How It Works" problemDescription="Small Claims Court handles disputes up to $50,000 in Ontario. It's designed to be accessible, but knowing the process helps you succeed." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Small claims process" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
