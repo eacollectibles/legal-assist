@@ -652,6 +652,45 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Legal Aid Ontario Section */}
+      <section className="w-full py-16 md:py-24 bg-white">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-heading text-4xl font-bold text-foreground mb-8">
+              Do Paralegals Accept Legal Aid in Ontario?
+            </h2>
+            
+            <div className="space-y-6 mb-8">
+              <p className="font-paragraph text-lg text-foreground/80 leading-relaxed">
+                Many people seeking legal help in Ontario ask whether paralegals accept Legal Aid Ontario certificates. In most cases, Legal Aid Ontario does not fund paralegal services. Legal Aid certificates are primarily issued for lawyer-provided services, particularly in criminal, family, and refugee matters.
+              </p>
+              
+              <p className="font-paragraph text-lg text-foreground/80 leading-relaxed">
+                Licensed paralegals in Ontario are authorized to provide services in specific areas of law, such as Small Claims Court, Landlord-Tenant disputes, Provincial Offences, and Human Rights matters. These areas are generally not covered by Legal Aid funding.
+              </p>
+              
+              <p className="font-paragraph text-lg text-foreground/80 leading-relaxed">
+                While Legal Aid Ontario is an important public resource, paralegal services are typically provided on a private-retainer basis, often at a lower cost than retaining a lawyer.
+              </p>
+            </div>
+
+            {/* Conversion-Safe Closing */}
+            <div className="bg-pastelbeige/20 rounded-lg p-8 border border-pastelbeige mb-8">
+              <p className="font-paragraph text-lg text-foreground/80 leading-relaxed">
+                If you do not qualify for Legal Aid or your matter is not covered, working with a licensed paralegal may be a cost-effective alternative. We offer transparent pricing and practical guidance to help you understand your options.
+              </p>
+            </div>
+
+            {/* Optional Disclaimer */}
+            <div className="bg-pastellavender/20 rounded-lg p-8 border border-pastellavender/30">
+              <p className="font-paragraph text-sm text-foreground/80 italic">
+                This information is provided for general informational purposes only and does not constitute legal advice.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-r from-primary/10 to-pastelbeige/30">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
