@@ -254,7 +254,7 @@ export default function HomePage() {
         <div className="bg-secondary texture-noise flex items-center p-8 lg:p-16 xl:p-24 order-2 lg:order-1">
           <div className="max-w-xl">
             <span className="text-primary font-paragraph text-sm tracking-[0.2em] uppercase mb-6 block">
-              Licensed Ontario Paralegal
+              Licensed Ontario Paralegals
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-heading leading-[1.1] mb-8">
               Legal help<br/>
