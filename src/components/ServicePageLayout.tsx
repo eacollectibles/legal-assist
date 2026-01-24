@@ -8,6 +8,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Image } from '@/components/ui/image';
 import ConversionStrip from '@/components/ConversionStrip';
 import PrimaryCTA from '@/components/PrimaryCTA';
+import AutoSEO from '@/components/AutoSEO';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 // ... keep existing code (imports)
 
@@ -95,12 +96,11 @@ export default function ServicePageLayout({
 }: ServicePageLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
-      {/* SEO Meta Tags */}
-      <head>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDescription} />
-        <link rel="canonical" href={canonical} />
-      </head>
+      <AutoSEO
+        title={seoTitle}
+        description={seoDescription}
+        canonical={canonical}
+      />
 
       <Header />
       <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
