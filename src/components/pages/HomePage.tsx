@@ -262,7 +262,7 @@ export default function HomePage() {
               lawyer price tag.
             </h1>
             <p className="text-white/70 font-paragraph text-lg mb-10 max-w-md">
-              Traffic tickets. Landlord disputes. Small claims. Get professional representation at a fraction of the cost.
+              We provide Paralegal representation for traffic tickets, human rights matters, landlord-tenant disputes, and Small Claims court cases throughout Ontario
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link 
