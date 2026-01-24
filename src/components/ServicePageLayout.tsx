@@ -9,6 +9,7 @@ import { Image } from '@/components/ui/image';
 import ConversionStrip from '@/components/ConversionStrip';
 import PrimaryCTA from '@/components/PrimaryCTA';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+// ... keep existing code (imports)
 
 interface AuthorityItem {
   title: string;
@@ -117,33 +118,15 @@ export default function ServicePageLayout({
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 {problemDescription}
               </p>
-              {/* Mobile: Single primary CTA + text link for call */}
-              <div className="flex flex-col gap-3 sm:hidden">
-                <Link to="/contact" className="w-full">
-                  <Button className="bg-primary hover:bg-primary/90 text-white w-full h-12">
-                    Find Out Where You Stand
-                  </Button>
-                </Link>
-                <a 
+              {/* Dominant CTA (site-wide consistent) */}
+              <div className="flex flex-col gap-3">
+                <PrimaryCTA variant="button" className="w-full sm:w-auto" />
+                <a
                   href={PHONE_HREF}
-                  className="text-primary font-medium text-center flex items-center justify-center gap-2 py-2"
+                  className="text-primary font-medium sm:text-left text-center flex items-center sm:justify-start justify-center gap-2 py-2"
                 >
                   <Phone className="w-4 h-4" />
                   Call {PHONE_DISPLAY}
-                </a>
-              </div>
-              {/* Desktop: Two buttons side by side */}
-              <div className="hidden sm:flex flex-row gap-4">
-                <Link to="/contact">
-                  <Button className="bg-primary hover:bg-primary/90 text-white">
-                    Find Out Where You Stand
-                  </Button>
-                </Link>
-                <a href={PHONE_HREF}>
-                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">
-                    <Phone className="w-4 h-4 mr-2" />
-                    Call {PHONE_DISPLAY}
-                  </Button>
                 </a>
               </div>
             </div>
