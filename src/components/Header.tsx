@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu, X, LogOut, ChevronDown } from 'lucide-react';
+import { Menu, X, LogOut, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useMember } from '@/integrations';
 import { useAuth } from '@/hooks/use-auth';
 
@@ -9,6 +9,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
   const { isAuthenticated, member, actions, isLoading } = useMember();
   const { user, isAuthenticated: isAuthenticatedLocal, isAdmin: userIsAdmin, logout: logoutLocal } = useAuth();
   
@@ -17,7 +18,29 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-background border-b border-secondary/10 sticky top-0 z-50" role="banner">
+    <>
+      {/* Coming Soon Banner */}
+      {!bannerDismissed && (
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white relative">
+          <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-2 sm:py-2.5">
+            <div className="flex items-center justify-center gap-2 text-center pr-8">
+              <AlertTriangle className="w-4 h-4 flex-shrink-0 hidden sm:block" />
+              <p className="font-paragraph text-xs sm:text-sm font-medium">
+                <span className="font-bold">Coming Soon:</span> LegalAssist is not yet open. We are not currently accepting clients or providing legal services.
+              </p>
+            </div>
+            <button
+              onClick={() => setBannerDismissed(true)}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded transition-colors"
+              aria-label="Dismiss banner"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+      
+      <header className="bg-background border-b border-secondary/10 sticky top-0 z-50" role="banner">
       <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0" aria-label="LegalAssist home">
@@ -327,5 +350,6 @@ export default function Header() {
         )}
       </div>
     </header>
+    </>
   );
 }

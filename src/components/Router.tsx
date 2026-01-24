@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { MemberProvider } from '@/integrations';
+import ComingSoonModal from '@/components/ComingSoonModal';
 
 // Main Pages - Keep HomePage and ContactPage as static imports
 import HomePage from '@/components/pages/HomePage';
@@ -11,7 +12,6 @@ const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
 const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
 const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
-const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
 
 // Service Pages
 const SmallClaimsPage = lazy(() => import('@/components/pages/SmallClaimsPage'));
@@ -161,6 +161,7 @@ export default function Router() {
   return (
     <BrowserRouter>
       <MemberProvider>
+        <ComingSoonModal />
         <ScrollToTop />
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
@@ -171,7 +172,6 @@ export default function Router() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />
             <Route path="/client-login" element={<ClientLoginPage />} />
-            <Route path="/client-intake" element={<ClientIntakePage />} />
 
             {/* Core Service Pages */}
             <Route path="/services/small-claims-court" element={<SmallClaimsPage />} />
