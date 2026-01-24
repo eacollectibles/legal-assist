@@ -13,6 +13,8 @@ const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
 const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
 const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
+const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
+const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
 
 // Service Pages
 const SmallClaimsPage = lazy(() => import('@/components/pages/SmallClaimsPage'));
@@ -86,69 +88,6 @@ const EmploymentRightsGuidePage = lazy(() => import('@/components/pages/Employme
 const LegalDeadlinesGuidePage = lazy(() => import('@/components/pages/LegalDeadlinesGuidePage'));
 const BeingSuedGuidePage = lazy(() => import('@/components/pages/BeingSuedGuidePage'));
 
-// Phase 3 - New Location Pages
-const IngersollParalegalPage = lazy(() => import('@/components/pages/IngersollParalegalPage'));
-const TillsonburgParalegalPage = lazy(() => import('@/components/pages/TillsonburgParalegalPage'));
-const AylmerParalegalPage = lazy(() => import('@/components/pages/AylmerParalegalPage'));
-
-// Phase 3 - New Small Claims Pages
-const UnpaidInvoicesPage = lazy(() => import('@/components/pages/UnpaidInvoicesPage'));
-const SecurityDepositsPage = lazy(() => import('@/components/pages/SecurityDepositsPage'));
-const ConsumerDisputesPage = lazy(() => import('@/components/pages/ConsumerDisputesPage'));
-
-// Phase 3 - HRTO Cluster
-const WorkplaceDiscriminationPage = lazy(() => import('@/components/pages/WorkplaceDiscriminationPage'));
-const HousingDiscriminationPage = lazy(() => import('@/components/pages/HousingDiscriminationPage'));
-
-// Phase 3 Step 2 - Small Claims Domination Cluster
-const PersonalInjuryClaimsPage = lazy(() => import('@/components/pages/PersonalInjuryClaimsPage'));
-const HomeImprovementDisputesPage = lazy(() => import('@/components/pages/HomeImprovementDisputesPage'));
-const VehiclePurchaseDisputesPage = lazy(() => import('@/components/pages/VehiclePurchaseDisputesPage'));
-const NeighbourDisputesPage = lazy(() => import('@/components/pages/NeighbourDisputesPage'));
-const ReturnOfPropertyPage = lazy(() => import('@/components/pages/ReturnOfPropertyPage'));
-const BreachOfWarrantyPage = lazy(() => import('@/components/pages/BreachOfWarrantyPage'));
-const LoanRecoveryPage = lazy(() => import('@/components/pages/LoanRecoveryPage'));
-const TenantDamageClaimsPage = lazy(() => import('@/components/pages/TenantDamageClaimsPage'));
-const WrongfulDismissalClaimsPage = lazy(() => import('@/components/pages/WrongfulDismissalClaimsPage'));
-const ProfessionalNegligencePage = lazy(() => import('@/components/pages/ProfessionalNegligencePage'));
-
-// Phase 3 Step 3 - LTB Expansion Cluster
-const RentArrearsDefencePage = lazy(() => import('@/components/pages/RentArrearsDefencePage'));
-const SubsidizedHousingPage = lazy(() => import('@/components/pages/SubsidizedHousingPage'));
-const RoommateDisputesPage = lazy(() => import('@/components/pages/RoommateDisputesPage'));
-const LeaseBreakingPage = lazy(() => import('@/components/pages/LeaseBreakingPage'));
-const PetDisputesPage = lazy(() => import('@/components/pages/PetDisputesPage'));
-const NoiseComplaintsPage = lazy(() => import('@/components/pages/NoiseComplaintsPage'));
-const LTBHearingPrepPage = lazy(() => import('@/components/pages/LTBHearingPrepPage'));
-const RentReductionPage = lazy(() => import('@/components/pages/RentReductionPage'));
-const MobileHomeParkPage = lazy(() => import('@/components/pages/MobileHomeParkPage'));
-const SuperintendentIssuesPage = lazy(() => import('@/components/pages/SuperintendentIssuesPage'));
-
-// Phase 3 Step 4 - Traffic Ticket Expansion Cluster
-const CommercialVehicleViolationsPage = lazy(() => import('@/components/pages/CommercialVehicleViolationsPage'));
-const HOVLaneViolationsPage = lazy(() => import('@/components/pages/HOVLaneViolationsPage'));
-const StopSignTicketPage = lazy(() => import('@/components/pages/StopSignTicketPage'));
-const StreetRacingPage = lazy(() => import('@/components/pages/StreetRacingPage'));
-const FailToYieldPage = lazy(() => import('@/components/pages/FailToYieldPage'));
-const UnsafeLaneChangePage = lazy(() => import('@/components/pages/UnsafeLaneChangePage'));
-const FollowingTooCloselyPage = lazy(() => import('@/components/pages/FollowingTooCloselyPage'));
-const DrivingWhileSuspendedPage = lazy(() => import('@/components/pages/DrivingWhileSuspendedPage'));
-const SchoolZoneSpeedingPage = lazy(() => import('@/components/pages/SchoolZoneSpeedingPage'));
-const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltViolationsPage'));
-
-// Additional Service Pages
-const KitchenerParalegalPage = lazy(() => import('@/components/pages/KitchenerParalegalPage'));
-const CambridgeParalegalPage = lazy(() => import('@/components/pages/CambridgeParalegalPage'));
-const GuelphParalegalPage = lazy(() => import('@/components/pages/GuelphParalegalPage'));
-const BrantfordParalegalPage = lazy(() => import('@/components/pages/BrantfordParalegalPage'));
-const StratfordParalegalPage = lazy(() => import('@/components/pages/StratfordParalegalPage'));
-const SarniaParalegalPage = lazy(() => import('@/components/pages/SarniaParalegalPage'));
-const WindsorParalegalPage = lazy(() => import('@/components/pages/WindsorParalegalPage'));
-const ChathamKentParalegalPage = lazy(() => import('@/components/pages/ChathamKentParalegalPage'));
-const LeamingtonParalegalPage = lazy(() => import('@/components/pages/LeamingtonParalegalPage'));
-const NorfolkCountyParalegalPage = lazy(() => import('@/components/pages/NorfolkCountyParalegalPage'));
-const HuronCountyParalegalPage = lazy(() => import('@/components/pages/HuronCountyParalegalPage'));
-
 // 404 Page
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
 
@@ -178,6 +117,8 @@ export default function Router() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />
             <Route path="/client-login" element={<ClientLoginPage />} />
+            <Route path="/client-intake" element={<ClientIntakePage />} />
+            <Route path="/client-dashboard" element={<ClientDashboardPage />} />
 
             {/* Core Service Pages */}
             <Route path="/services/small-claims-court" element={<SmallClaimsPage />} />
@@ -238,69 +179,6 @@ export default function Router() {
             <Route path="/services/irb-representation" element={<IRBRepresentationPage />} />
             <Route path="/paralegal-vs-lawyer" element={<ParalegalVsLawyerPage />} />
             <Route path="/what-is-a-paralegal" element={<WhatIsAParalegalPage />} />
-
-            {/* Phase 3 - New Location Pages */}
-            <Route path="/ingersoll-paralegal" element={<IngersollParalegalPage />} />
-            <Route path="/tillsonburg-paralegal" element={<TillsonburgParalegalPage />} />
-            <Route path="/aylmer-paralegal" element={<AylmerParalegalPage />} />
-
-            {/* Phase 3 - New Small Claims Pages */}
-            <Route path="/services/unpaid-invoices" element={<UnpaidInvoicesPage />} />
-            <Route path="/services/security-deposits" element={<SecurityDepositsPage />} />
-            <Route path="/services/consumer-disputes" element={<ConsumerDisputesPage />} />
-
-            {/* Phase 3 - HRTO Cluster */}
-            <Route path="/services/workplace-discrimination" element={<WorkplaceDiscriminationPage />} />
-            <Route path="/services/housing-discrimination" element={<HousingDiscriminationPage />} />
-
-            {/* Phase 3 Step 2 - Small Claims Domination Cluster */}
-            <Route path="/services/personal-injury-claims" element={<PersonalInjuryClaimsPage />} />
-            <Route path="/services/home-improvement-disputes" element={<HomeImprovementDisputesPage />} />
-            <Route path="/services/vehicle-purchase-disputes" element={<VehiclePurchaseDisputesPage />} />
-            <Route path="/services/neighbour-disputes" element={<NeighbourDisputesPage />} />
-            <Route path="/services/return-of-property" element={<ReturnOfPropertyPage />} />
-            <Route path="/services/breach-of-warranty" element={<BreachOfWarrantyPage />} />
-            <Route path="/services/loan-recovery" element={<LoanRecoveryPage />} />
-            <Route path="/services/tenant-damage-claims" element={<TenantDamageClaimsPage />} />
-            <Route path="/services/wrongful-dismissal-claims" element={<WrongfulDismissalClaimsPage />} />
-            <Route path="/services/professional-negligence" element={<ProfessionalNegligencePage />} />
-
-            {/* Phase 3 Step 3 - LTB Expansion Cluster (10 NEW PAGES) */}
-            <Route path="/services/rent-arrears-defence" element={<RentArrearsDefencePage />} />
-            <Route path="/services/subsidized-housing-eviction" element={<SubsidizedHousingPage />} />
-            <Route path="/services/roommate-disputes" element={<RoommateDisputesPage />} />
-            <Route path="/services/breaking-lease-early" element={<LeaseBreakingPage />} />
-            <Route path="/services/pet-disputes" element={<PetDisputesPage />} />
-            <Route path="/services/noise-complaints-defence" element={<NoiseComplaintsPage />} />
-            <Route path="/services/ltb-hearing-preparation" element={<LTBHearingPrepPage />} />
-            <Route path="/services/rent-reduction-applications" element={<RentReductionPage />} />
-            <Route path="/services/mobile-home-park-disputes" element={<MobileHomeParkPage />} />
-            <Route path="/services/superintendent-housing-rights" element={<SuperintendentIssuesPage />} />
-
-            {/* Phase 3 Step 4 - Traffic Ticket Expansion Cluster (10 NEW PAGES) */}
-            <Route path="/services/commercial-vehicle-violations" element={<CommercialVehicleViolationsPage />} />
-            <Route path="/services/hov-lane-violations" element={<HOVLaneViolationsPage />} />
-            <Route path="/services/stop-sign-ticket" element={<StopSignTicketPage />} />
-            <Route path="/services/street-racing" element={<StreetRacingPage />} />
-            <Route path="/services/fail-to-yield" element={<FailToYieldPage />} />
-            <Route path="/services/unsafe-lane-change" element={<UnsafeLaneChangePage />} />
-            <Route path="/services/following-too-closely" element={<FollowingTooCloselyPage />} />
-            <Route path="/services/driving-while-suspended" element={<DrivingWhileSuspendedPage />} />
-            <Route path="/services/school-zone-speeding" element={<SchoolZoneSpeedingPage />} />
-            <Route path="/services/seatbelt-violations" element={<SeatbeltViolationsPage />} />
-
-            {/* Additional Location Pages */}
-            <Route path="/locations/kitchener" element={<KitchenerParalegalPage />} />
-            <Route path="/locations/cambridge" element={<CambridgeParalegalPage />} />
-            <Route path="/locations/guelph" element={<GuelphParalegalPage />} />
-            <Route path="/locations/brantford" element={<BrantfordParalegalPage />} />
-            <Route path="/locations/stratford" element={<StratfordParalegalPage />} />
-            <Route path="/locations/sarnia" element={<SarniaParalegalPage />} />
-            <Route path="/locations/windsor" element={<WindsorParalegalPage />} />
-            <Route path="/locations/chatham-kent" element={<ChathamKentParalegalPage />} />
-            <Route path="/locations/leamington" element={<LeamingtonParalegalPage />} />
-            <Route path="/locations/norfolk-county" element={<NorfolkCountyParalegalPage />} />
-            <Route path="/locations/huron-county" element={<HuronCountyParalegalPage />} />
 
             {/* Other Pages */}
             <Route path="/legal-news" element={<LegalNewsPage />} />
