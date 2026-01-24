@@ -3,6 +3,7 @@ import { ArrowRight, Phone, AlertTriangle, CheckCircle, DollarSign, Shield, Cloc
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+import PrimaryCTA from '@/components/PrimaryCTA';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FAQSection } from '@/components/FAQSection';
 import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
@@ -25,7 +26,7 @@ export default function SpeedingTicketDefencePage() {
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">Speeding Ticket Defence in Ontario</h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Got a speeding ticket? Do not just pay it. A conviction can increase your insurance rates for years and add demerit points to your licence. Let us fight it for you.</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Find Out Where You Stand <ArrowRight className="w-5 h-5" /></Link>
+              <PrimaryCTA variant="button" size="lg" />
               <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> {PHONE_DISPLAY}</a>
             </div>
           </div>

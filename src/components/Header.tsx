@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Menu, X, LogOut, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useMember } from '@/integrations';
 import { useAuth } from '@/hooks/use-auth';
+import PrimaryCTA from '@/components/PrimaryCTA';
 
 export default function Header() {
   const location = useLocation();
@@ -187,12 +188,7 @@ export default function Header() {
                     >
                       Client Portal
                     </Link>
-                    <Link 
-                      to="/contact" 
-                      className="btn-shine btn-lift bg-primary text-primary-foreground font-paragraph px-6 py-3 rounded-lg"
-                    >
-                      Find Out Where You Stand
-                    </Link>
+                    <PrimaryCTA variant="desktop" size="md" />
                   </>
                 )}
               </>
@@ -335,13 +331,7 @@ export default function Header() {
                     >
                       Client Portal
                     </Link>
-                    <Link 
-                      to="/contact" 
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="btn-shine btn-lift bg-primary text-primary-foreground font-paragraph px-3 py-2 rounded-lg text-center"
-                    >
-                      Find Out Where You Stand
-                    </Link>
+                    <PrimaryCTA variant="mobile" size="md" />
                   </>
                 )}
               </>

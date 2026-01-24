@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyContactBar from '@/components/StickyContactBar';
 import CallProcessBox from '@/components/CallProcessBox';
+import PrimaryCTA from '@/components/PrimaryCTA';
 import { cn } from '@/lib/utils';
 import {
   Accordion,
@@ -266,12 +267,7 @@ export default function HomePage() {
               We provide Paralegal representation for traffic tickets, human rights matters, landlord-tenant disputes, and Small Claims court cases throughout Ontario
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link 
-                to="/contact"
-                className="btn-shine btn-lift bg-primary text-white font-paragraph font-semibold px-8 py-4 text-lg rounded-lg inline-block text-center"
-              >
-                Free Consultation
-              </Link>
+              <PrimaryCTA variant="button" size="lg" />
               <Link 
                 to="/services"
                 className="btn-shine btn-lift border border-white/30 text-white font-paragraph px-8 py-4 text-lg rounded-lg inline-block text-center"
@@ -729,12 +725,7 @@ export default function HomePage() {
             
             <AnimatedElement delay={200}>
               <div className="flex flex-col gap-4 items-center mb-6">
-                <Link 
-                  to="/contact"
-                  className="btn-shine btn-lift inline-block bg-primary text-primary-foreground font-paragraph font-semibold px-10 py-5 text-xl rounded-lg"
-                >
-                  Find Out Where You Stand
-                </Link>
+                <PrimaryCTA variant="button" size="lg" />
                 <p className="font-paragraph text-base text-secondary/70 max-w-xl">
                   Get a clear explanation of your rights and options under Ontario law.
                 </p>

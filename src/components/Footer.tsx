@@ -1,11 +1,25 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+import PrimaryCTA from '@/components/PrimaryCTA';
 
 export default function Footer() {
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-16">
+        {/* Primary CTA Section */}
+        <div className="mb-12 sm:mb-16 pb-12 sm:pb-16 border-b border-secondary-foreground/20">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-6 text-secondary-foreground">
+            Ready to Get Started?
+          </h2>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <PrimaryCTA variant="button" size="lg" />
+            <p className="font-paragraph text-secondary-foreground/80">
+              Get a free consultation with our licensed paralegals
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-12 mb-8 sm:mb-12">
           
           {/* Brand Section */}
