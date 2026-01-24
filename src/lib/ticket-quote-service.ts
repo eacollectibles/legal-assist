@@ -1,488 +1,454 @@
 /**
- * Ticket Quote Service
- * Handles pricing calculations and offence data for traffic ticket quotes
- * Currently uses SIMULATED AI extraction - replace with real API later
+ * Traffic Ticket Quote Service
+ * Handles ticket extraction (simulated/real), offence database, and quote calculations
  */
+
+// Toggle for real API vs simulation
+export const USE_REAL_API = false;
+
+// ============================================
+// TYPES
+// ============================================
 
 export interface OffenceType {
   id: string;
   name: string;
   category: 'speeding' | 'major' | 'minor' | 'criminal_adjacent';
   demeritPoints: number;
-  typicalFineRange: [number, number];
-  insuranceImpactPercent: [number, number];
-  insuranceImpactDescription: string;
-  serviceFee: number;
-  courtAppearances: number;
-  successRate: {
-    withdrawn: number;
-    reduced: number;
-    convicted: number;
-  };
+  fineRange: { min: number; max: number };
+  insuranceImpactPercent: number; // Estimated 3-year impact on premiums
+  serviceFee: number; // Our fee to fight it
+  typicalCourtAppearances: number;
+  successRate: { withdrawn: number; reduced: number; convicted: number };
   notes: string;
 }
 
 export interface TicketDetails {
   offenceType: string;
-  offenceDescription?: string;
+  offenceId: string;
+  speed?: number;
   speedLimit?: number;
-  allegedSpeed?: number;
-  speedOver?: number;
   fineAmount?: number;
-  courtLocation?: string;
+  demeritPoints: number;
   courtDate?: string;
+  courtLocation?: string;
   ticketNumber?: string;
-  dateOfOffence?: string;
-  location?: string;
+  officerNotes?: string;
 }
 
 export interface QuoteResult {
-  offence: OffenceType;
   ticketDetails: TicketDetails;
+  offence: OffenceType;
   serviceFee: number;
-  estimatedInsuranceIncrease: {
-    monthly: [number, number];
-    threeYear: [number, number];
+  estimatedInsuranceImpact: {
+    monthlyIncrease: number;
+    threeYearTotal: number;
   };
   breakEvenAnalysis: {
-    worthFighting: boolean;
-    reasoning: string;
-    potentialSavings: [number, number];
+    costToFight: number;
+    costIfConvicted: number;
+    potentialSavings: number;
   };
-  recommendation: 'fight' | 'negotiate' | 'consider_paying' | 'strongly_fight';
+  recommendation: 'strongly_fight' | 'fight' | 'negotiate' | 'consider_paying';
   recommendationReason: string;
-  timeline: string;
+  estimatedTimeline: string;
   disclaimer: string;
 }
 
 // ============================================
-// OFFENCE DATABASE WITH TEST PRICING
+// OFFENCE DATABASE
 // ============================================
 
-export const OFFENCE_TYPES: Record<string, OffenceType> = {
-  // SPEEDING OFFENCES
-  'speeding_0_15': {
-    id: 'speeding_0_15',
-    name: 'Speeding 1-15 km/h Over',
+export const OFFENCE_TYPES: OffenceType[] = [
+  // SPEEDING TIERS
+  {
+    id: 'speeding_1_15',
+    name: 'Speeding 1-15 km/h over',
     category: 'speeding',
     demeritPoints: 0,
-    typicalFineRange: [40, 75],
-    insuranceImpactPercent: [0, 5],
-    insuranceImpactDescription: 'Minimal or no impact',
-    serviceFee: 199,
-    courtAppearances: 1,
+    fineRange: { min: 52, max: 52 },
+    insuranceImpactPercent: 5,
+    serviceFee: 299,
+    typicalCourtAppearances: 1,
     successRate: { withdrawn: 25, reduced: 50, convicted: 25 },
-    notes: 'Often not worth fighting unless you need a clean record for employment'
+    notes: 'Minor speeding. Often reduced to 0 points or withdrawn for clean records.',
   },
-  'speeding_16_29': {
+  {
     id: 'speeding_16_29',
-    name: 'Speeding 16-29 km/h Over',
+    name: 'Speeding 16-29 km/h over',
     category: 'speeding',
     demeritPoints: 3,
-    typicalFineRange: [95, 180],
-    insuranceImpactPercent: [15, 25],
-    insuranceImpactDescription: 'Moderate increase - typically 15-25%',
-    serviceFee: 349,
-    courtAppearances: 1,
+    fineRange: { min: 95, max: 180 },
+    insuranceImpactPercent: 15,
+    serviceFee: 399,
+    typicalCourtAppearances: 1,
     successRate: { withdrawn: 20, reduced: 55, convicted: 25 },
-    notes: 'Most common ticket - usually worth fighting due to insurance impact'
+    notes: 'Most common speeding ticket. Good chance of reduction to 0-point offence.',
   },
-  'speeding_30_49': {
+  {
     id: 'speeding_30_49',
-    name: 'Speeding 30-49 km/h Over',
+    name: 'Speeding 30-49 km/h over',
     category: 'speeding',
     demeritPoints: 4,
-    typicalFineRange: [190, 380],
-    insuranceImpactPercent: [25, 40],
-    insuranceImpactDescription: 'Significant increase - typically 25-40%',
-    serviceFee: 449,
-    courtAppearances: 1,
-    successRate: { withdrawn: 15, reduced: 60, convicted: 25 },
-    notes: 'Serious ticket - strongly consider fighting'
+    fineRange: { min: 220, max: 360 },
+    insuranceImpactPercent: 25,
+    serviceFee: 549,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 15, reduced: 50, convicted: 35 },
+    notes: 'Significant speeding. Insurance impact substantial. Worth fighting.',
   },
-  'stunt_driving': {
-    id: 'stunt_driving',
-    name: 'Stunt Driving (50+ km/h Over)',
+  {
+    id: 'speeding_50_plus',
+    name: 'Speeding 50+ km/h over (Stunt Driving)',
     category: 'major',
     demeritPoints: 6,
-    typicalFineRange: [2000, 10000],
-    insuranceImpactPercent: [50, 100],
-    insuranceImpactDescription: 'Severe - 50%+ increase or policy cancellation',
+    fineRange: { min: 2000, max: 10000 },
+    insuranceImpactPercent: 100,
     serviceFee: 1499,
-    courtAppearances: 2,
-    successRate: { withdrawn: 12, reduced: 35, convicted: 53 },
-    notes: 'Immediate licence suspension and vehicle impound. Very serious - always fight'
+    typicalCourtAppearances: 2,
+    successRate: { withdrawn: 10, reduced: 40, convicted: 50 },
+    notes: 'Stunt driving charge. Mandatory court. Licence suspension. MUST fight this.',
   },
-  'careless_driving': {
+
+  // MAJOR OFFENCES
+  {
     id: 'careless_driving',
     name: 'Careless Driving',
     category: 'major',
     demeritPoints: 6,
-    typicalFineRange: [490, 2000],
-    insuranceImpactPercent: [50, 100],
-    insuranceImpactDescription: 'Severe - possible policy cancellation',
+    fineRange: { min: 490, max: 2000 },
+    insuranceImpactPercent: 75,
     serviceFee: 999,
-    courtAppearances: 2,
-    successRate: { withdrawn: 12, reduced: 55, convicted: 33 },
-    notes: 'One of the most serious non-criminal offences. Often reduced to lesser charge.'
+    typicalCourtAppearances: 2,
+    successRate: { withdrawn: 15, reduced: 45, convicted: 40 },
+    notes: 'Serious charge. Often reduced to minor offence with proper defence.',
   },
-  'distracted_driving': {
+  {
     id: 'distracted_driving',
     name: 'Distracted Driving (Cell Phone)',
     category: 'major',
     demeritPoints: 3,
-    typicalFineRange: [615, 1000],
-    insuranceImpactPercent: [25, 40],
-    insuranceImpactDescription: 'High impact - insurers treat this seriously',
-    serviceFee: 449,
-    courtAppearances: 1,
-    successRate: { withdrawn: 15, reduced: 50, convicted: 35 },
-    notes: 'Insurers view this as high-risk behaviour. Worth fighting.'
+    fineRange: { min: 615, max: 1000 },
+    insuranceImpactPercent: 35,
+    serviceFee: 549,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 20, reduced: 40, convicted: 40 },
+    notes: 'Common charge. Defence often focuses on whether device was "in use".',
   },
-  'red_light': {
+  {
+    id: 'no_insurance',
+    name: 'Operating Without Insurance',
+    category: 'major',
+    demeritPoints: 0,
+    fineRange: { min: 5000, max: 25000 },
+    insuranceImpactPercent: 50,
+    serviceFee: 799,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 30, reduced: 35, convicted: 35 },
+    notes: 'Massive fines but NO demerit points. Often reduced if insurance obtained.',
+  },
+  {
+    id: 'drive_suspended',
+    name: 'Driving While Suspended',
+    category: 'major',
+    demeritPoints: 6,
+    fineRange: { min: 1000, max: 5000 },
+    insuranceImpactPercent: 100,
+    serviceFee: 999,
+    typicalCourtAppearances: 2,
+    successRate: { withdrawn: 10, reduced: 30, convicted: 60 },
+    notes: 'Serious offence. Can result in vehicle impoundment. Requires strong defence.',
+  },
+  {
+    id: 'stunt_driving',
+    name: 'Stunt Driving / Racing',
+    category: 'major',
+    demeritPoints: 6,
+    fineRange: { min: 2000, max: 10000 },
+    insuranceImpactPercent: 100,
+    serviceFee: 1499,
+    typicalCourtAppearances: 2,
+    successRate: { withdrawn: 10, reduced: 35, convicted: 55 },
+    notes: 'Immediate roadside suspension. Vehicle impounded. Must fight aggressively.',
+  },
+
+  // MINOR OFFENCES
+  {
     id: 'red_light',
     name: 'Red Light Violation',
     category: 'minor',
     demeritPoints: 3,
-    typicalFineRange: [260, 500],
-    insuranceImpactPercent: [15, 25],
-    insuranceImpactDescription: 'Moderate increase',
-    serviceFee: 349,
-    courtAppearances: 1,
-    successRate: { withdrawn: 15, reduced: 55, convicted: 30 },
-    notes: 'Camera tickets have NO demerit points - officer-issued tickets do'
+    fineRange: { min: 325, max: 500 },
+    insuranceImpactPercent: 20,
+    serviceFee: 399,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 25, reduced: 45, convicted: 30 },
+    notes: 'Defence often challenges timing of light or visibility conditions.',
   },
-  'red_light_camera': {
-    id: 'red_light_camera',
-    name: 'Red Light Camera',
-    category: 'minor',
-    demeritPoints: 0,
-    typicalFineRange: [325, 325],
-    insuranceImpactPercent: [0, 0],
-    insuranceImpactDescription: 'No insurance impact - registered to vehicle not driver',
-    serviceFee: 199,
-    courtAppearances: 1,
-    successRate: { withdrawn: 10, reduced: 30, convicted: 60 },
-    notes: 'No demerit points. Registered owner liable. May not be worth fighting.'
-  },
-  'stop_sign': {
+  {
     id: 'stop_sign',
     name: 'Fail to Stop at Stop Sign',
     category: 'minor',
     demeritPoints: 3,
-    typicalFineRange: [85, 200],
-    insuranceImpactPercent: [15, 25],
-    insuranceImpactDescription: 'Moderate increase',
-    serviceFee: 299,
-    courtAppearances: 1,
-    successRate: { withdrawn: 15, reduced: 55, convicted: 30 },
-    notes: 'Often comes down to officer vantage point and intersection conditions'
-  },
-  'follow_too_closely': {
-    id: 'follow_too_closely',
-    name: 'Follow Too Closely',
-    category: 'minor',
-    demeritPoints: 4,
-    typicalFineRange: [85, 200],
-    insuranceImpactPercent: [15, 25],
-    insuranceImpactDescription: 'Moderate increase',
+    fineRange: { min: 110, max: 150 },
+    insuranceImpactPercent: 15,
     serviceFee: 349,
-    courtAppearances: 1,
-    successRate: { withdrawn: 20, reduced: 50, convicted: 30 },
-    notes: 'Often issued after collisions. Challenging but possible.'
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 30, reduced: 45, convicted: 25 },
+    notes: 'Common ticket. Often reduced or withdrawn with clean driving record.',
   },
-  'fail_to_yield': {
-    id: 'fail_to_yield',
-    name: 'Fail to Yield',
-    category: 'minor',
-    demeritPoints: 3,
-    typicalFineRange: [85, 200],
-    insuranceImpactPercent: [15, 25],
-    insuranceImpactDescription: 'Moderate increase',
-    serviceFee: 299,
-    courtAppearances: 1,
-    successRate: { withdrawn: 15, reduced: 55, convicted: 30 },
-    notes: 'Depends heavily on intersection conditions and witness accounts'
-  },
-  'unsafe_lane_change': {
+  {
     id: 'unsafe_lane_change',
     name: 'Unsafe Lane Change',
     category: 'minor',
     demeritPoints: 3,
-    typicalFineRange: [85, 200],
-    insuranceImpactPercent: [15, 25],
-    insuranceImpactDescription: 'Moderate increase',
-    serviceFee: 299,
-    courtAppearances: 1,
-    successRate: { withdrawn: 20, reduced: 50, convicted: 30 },
-    notes: 'Often issued after accidents - fight if you dispute fault'
+    fineRange: { min: 110, max: 150 },
+    insuranceImpactPercent: 15,
+    serviceFee: 349,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 25, reduced: 50, convicted: 25 },
+    notes: 'Subjective charge. Defence challenges officer\'s interpretation.',
   },
-  'improper_turn': {
+  {
+    id: 'follow_too_closely',
+    name: 'Following Too Closely',
+    category: 'minor',
+    demeritPoints: 4,
+    fineRange: { min: 110, max: 150 },
+    insuranceImpactPercent: 18,
+    serviceFee: 349,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 20, reduced: 50, convicted: 30 },
+    notes: 'Often issued after accidents. Defence challenges distance measurement.',
+  },
+  {
     id: 'improper_turn',
     name: 'Improper Turn',
     category: 'minor',
     demeritPoints: 2,
-    typicalFineRange: [85, 150],
-    insuranceImpactPercent: [10, 20],
-    insuranceImpactDescription: 'Low to moderate increase',
-    serviceFee: 249,
-    courtAppearances: 1,
-    successRate: { withdrawn: 20, reduced: 55, convicted: 25 },
-    notes: 'Includes illegal U-turns, wrong-way turns, etc.'
+    fineRange: { min: 110, max: 150 },
+    insuranceImpactPercent: 10,
+    serviceFee: 299,
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 30, reduced: 45, convicted: 25 },
+    notes: 'Minor offence. Often reduced to zero points.',
   },
-  'seatbelt': {
+  {
     id: 'seatbelt',
     name: 'Seatbelt Violation',
     category: 'minor',
     demeritPoints: 2,
-    typicalFineRange: [200, 305],
-    insuranceImpactPercent: [10, 15],
-    insuranceImpactDescription: 'Low to moderate increase',
+    fineRange: { min: 240, max: 365 },
+    insuranceImpactPercent: 5,
     serviceFee: 249,
-    courtAppearances: 1,
-    successRate: { withdrawn: 15, reduced: 45, convicted: 40 },
-    notes: 'Difficult to fight unless procedural issues exist'
+    typicalCourtAppearances: 1,
+    successRate: { withdrawn: 15, reduced: 40, convicted: 45 },
+    notes: 'No demerit points in Ontario. Minor insurance impact.',
   },
-  'no_insurance': {
-    id: 'no_insurance',
-    name: 'No Insurance (CAIA)',
-    category: 'major',
-    demeritPoints: 0,
-    typicalFineRange: [5000, 25000],
-    insuranceImpactPercent: [100, 200],
-    insuranceImpactDescription: 'Extreme - may be uninsurable for years',
-    serviceFee: 999,
-    courtAppearances: 2,
-    successRate: { withdrawn: 25, reduced: 40, convicted: 35 },
-    notes: 'Massive fines but often defensible if you actually had insurance'
-  },
-  'driving_suspended': {
-    id: 'driving_suspended',
-    name: 'Driving While Suspended',
-    category: 'major',
-    demeritPoints: 6,
-    typicalFineRange: [1000, 5000],
-    insuranceImpactPercent: [50, 100],
-    insuranceImpactDescription: 'Severe - possible policy cancellation',
-    serviceFee: 799,
-    courtAppearances: 2,
-    successRate: { withdrawn: 15, reduced: 35, convicted: 50 },
-    notes: 'Serious offence - defence depends on knowledge of suspension'
-  },
-  'fail_to_remain': {
+
+  // CRIMINAL-ADJACENT
+  {
     id: 'fail_to_remain',
     name: 'Fail to Remain at Accident',
     category: 'criminal_adjacent',
     demeritPoints: 7,
-    typicalFineRange: [400, 2000],
-    insuranceImpactPercent: [75, 150],
-    insuranceImpactDescription: 'Very severe - likely policy issues',
-    serviceFee: 999,
-    courtAppearances: 2,
+    fineRange: { min: 400, max: 2000 },
+    insuranceImpactPercent: 100,
+    serviceFee: 1299,
+    typicalCourtAppearances: 2,
+    successRate: { withdrawn: 15, reduced: 35, convicted: 50 },
+    notes: 'Serious charge. Can be criminal if injuries involved. Requires immediate legal help.',
+  },
+  {
+    id: 'fail_to_stop_police',
+    name: 'Fail to Stop for Police',
+    category: 'criminal_adjacent',
+    demeritPoints: 7,
+    fineRange: { min: 1000, max: 10000 },
+    insuranceImpactPercent: 100,
+    serviceFee: 1299,
+    typicalCourtAppearances: 2,
     successRate: { withdrawn: 10, reduced: 30, convicted: 60 },
-    notes: 'Can also be criminal charge. POA version for minor incidents.'
+    notes: 'Very serious. Can lead to criminal charges. Immediate consultation required.',
   },
-  'racing': {
-    id: 'racing',
-    name: 'Street Racing',
-    category: 'major',
-    demeritPoints: 6,
-    typicalFineRange: [2000, 10000],
-    insuranceImpactPercent: [75, 150],
-    insuranceImpactDescription: 'Very severe - likely policy cancellation',
-    serviceFee: 1499,
-    courtAppearances: 2,
-    successRate: { withdrawn: 10, reduced: 30, convicted: 60 },
-    notes: 'Similar penalties to stunt driving. Always fight.'
-  },
-  'novice_violation': {
-    id: 'novice_violation',
-    name: 'G1/G2 Licence Violation',
-    category: 'minor',
-    demeritPoints: 0,
-    typicalFineRange: [85, 200],
-    insuranceImpactPercent: [15, 30],
-    insuranceImpactDescription: 'Moderate - can affect licence progression',
-    serviceFee: 299,
-    courtAppearances: 1,
-    successRate: { withdrawn: 20, reduced: 50, convicted: 30 },
-    notes: 'Includes passenger limits, BAC restrictions, highway restrictions'
-  },
-  'other': {
-    id: 'other',
-    name: 'Other Traffic Offence',
-    category: 'minor',
-    demeritPoints: 0,
-    typicalFineRange: [85, 500],
-    insuranceImpactPercent: [0, 25],
-    insuranceImpactDescription: 'Varies by offence',
-    serviceFee: 349,
-    courtAppearances: 1,
-    successRate: { withdrawn: 20, reduced: 50, convicted: 30 },
-    notes: 'Contact us for a specific assessment'
-  }
+];
+
+export const OFFENCE_CATEGORIES = {
+  speeding: 'Speeding Violations',
+  major: 'Major Violations',
+  minor: 'Minor Violations',
+  criminal_adjacent: 'Serious Violations',
 };
 
-// Average monthly insurance premium for calculations
-const AVERAGE_MONTHLY_PREMIUM = 250;
-
 // ============================================
-// SIMULATED AI TICKET EXTRACTION
+// SIMULATED EXTRACTION (for testing)
 // ============================================
 
-export async function extractTicketDetailsFromImage(imageFile: File): Promise<TicketDetails> {
-  // Simulate processing delay (1.5-2.5 seconds)
-  await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
-  
-  // SIMULATED RESPONSES - Returns random realistic ticket data
-  const simulatedTickets: TicketDetails[] = [
-    {
-      offenceType: 'speeding_16_29',
-      offenceDescription: 'Speeding - exceed limit by 16-29 km/h',
-      speedLimit: 80,
-      allegedSpeed: 102,
-      speedOver: 22,
-      fineAmount: 95,
-      courtLocation: 'London POA Court',
-      courtDate: '2025-03-15',
-      ticketNumber: 'ON-2025-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      dateOfOffence: '2025-01-10',
-      location: 'Highway 401 WB, near Wellington Rd'
-    },
-    {
-      offenceType: 'speeding_30_49',
-      offenceDescription: 'Speeding - exceed limit by 30-49 km/h',
-      speedLimit: 60,
-      allegedSpeed: 98,
-      speedOver: 38,
-      fineAmount: 295,
-      courtLocation: 'London POA Court',
-      courtDate: '2025-03-20',
-      ticketNumber: 'ON-2025-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      dateOfOffence: '2025-01-12',
-      location: 'Dundas St E, near Highbury Ave'
-    },
-    {
-      offenceType: 'distracted_driving',
-      offenceDescription: 'Drive - hand-held communication device',
-      fineAmount: 615,
-      courtLocation: 'London POA Court',
-      courtDate: '2025-04-05',
-      ticketNumber: 'ON-2025-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      dateOfOffence: '2025-01-08',
-      location: 'Oxford St W, near Wonderland Rd'
-    },
-    {
-      offenceType: 'red_light',
-      offenceDescription: 'Fail to stop - red light',
-      fineAmount: 325,
-      courtLocation: 'London POA Court',
-      courtDate: '2025-03-28',
-      ticketNumber: 'ON-2025-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      dateOfOffence: '2025-01-15',
-      location: 'Richmond St at Oxford St'
-    },
-    {
-      offenceType: 'stunt_driving',
-      offenceDescription: 'Stunt driving - 50 km/h or more over posted limit',
-      speedLimit: 100,
-      allegedSpeed: 158,
-      speedOver: 58,
-      fineAmount: 2000,
-      courtLocation: 'London POA Court',
-      courtDate: '2025-04-15',
-      ticketNumber: 'ON-2025-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      dateOfOffence: '2025-01-20',
-      location: 'Highway 402 WB, near Airport Rd'
-    },
-    {
-      offenceType: 'careless_driving',
-      offenceDescription: 'Careless driving',
-      fineAmount: 490,
-      courtLocation: 'London POA Court',
-      courtDate: '2025-04-22',
-      ticketNumber: 'ON-2025-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      dateOfOffence: '2025-01-18',
-      location: 'Wharncliffe Rd at Oxford St'
-    }
-  ];
-  
-  // Return a random simulated ticket
-  return simulatedTickets[Math.floor(Math.random() * simulatedTickets.length)];
+const MOCK_TICKETS: TicketDetails[] = [
+  {
+    offenceType: 'Speeding 16-29 km/h over',
+    offenceId: 'speeding_16_29',
+    speed: 78,
+    speedLimit: 60,
+    fineAmount: 140,
+    demeritPoints: 3,
+    courtDate: '2026-03-15',
+    courtLocation: 'London Provincial Offences Court',
+    ticketNumber: 'ON-2026-123456',
+  },
+  {
+    offenceType: 'Speeding 30-49 km/h over',
+    offenceId: 'speeding_30_49',
+    speed: 142,
+    speedLimit: 100,
+    fineAmount: 295,
+    demeritPoints: 4,
+    courtDate: '2026-03-20',
+    courtLocation: 'St. Thomas Provincial Offences Court',
+    ticketNumber: 'ON-2026-234567',
+  },
+  {
+    offenceType: 'Distracted Driving (Cell Phone)',
+    offenceId: 'distracted_driving',
+    fineAmount: 615,
+    demeritPoints: 3,
+    courtDate: '2026-04-01',
+    courtLocation: 'London Provincial Offences Court',
+    ticketNumber: 'ON-2026-345678',
+  },
+  {
+    offenceType: 'Red Light Violation',
+    offenceId: 'red_light',
+    fineAmount: 325,
+    demeritPoints: 3,
+    courtDate: '2026-03-25',
+    courtLocation: 'Woodstock Provincial Offences Court',
+    ticketNumber: 'ON-2026-456789',
+  },
+  {
+    offenceType: 'Stunt Driving / Racing',
+    offenceId: 'stunt_driving',
+    speed: 155,
+    speedLimit: 100,
+    fineAmount: 2000,
+    demeritPoints: 6,
+    courtDate: '2026-04-10',
+    courtLocation: 'London Provincial Offences Court',
+    ticketNumber: 'ON-2026-567890',
+  },
+  {
+    offenceType: 'Careless Driving',
+    offenceId: 'careless_driving',
+    fineAmount: 490,
+    demeritPoints: 6,
+    courtDate: '2026-04-15',
+    courtLocation: 'Stratford Provincial Offences Court',
+    ticketNumber: 'ON-2026-678901',
+  },
+];
+
+// ============================================
+// EXTRACTION FUNCTIONS
+// ============================================
+
+/**
+ * Extract ticket details from an uploaded image
+ * Currently simulated - will integrate with Claude API later
+ */
+export async function extractTicketDetailsFromImage(
+  imageBase64: string
+): Promise<{ success: boolean; details?: TicketDetails; error?: string }> {
+  if (USE_REAL_API) {
+    // TODO: Implement real Claude API call
+    // const response = await fetch('/api/extract-ticket', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ image: imageBase64 }),
+    // });
+    // return await response.json();
+    return { success: false, error: 'Real API not yet implemented' };
+  }
+
+  // SIMULATED: Return a random mock ticket after a delay
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate processing time
+
+  const randomTicket = MOCK_TICKETS[Math.floor(Math.random() * MOCK_TICKETS.length)];
+  return {
+    success: true,
+    details: { ...randomTicket },
+  };
 }
 
 // ============================================
-// QUOTE CALCULATION ENGINE
+// QUOTE CALCULATION
 // ============================================
 
+/**
+ * Calculate a comprehensive quote based on ticket details
+ */
 export function calculateQuote(ticketDetails: TicketDetails): QuoteResult {
-  const offence = OFFENCE_TYPES[ticketDetails.offenceType] || OFFENCE_TYPES['other'];
-  
-  // Calculate insurance impact based on average premium
-  const monthlyIncreaseLow = Math.round(AVERAGE_MONTHLY_PREMIUM * (offence.insuranceImpactPercent[0] / 100));
-  const monthlyIncreaseHigh = Math.round(AVERAGE_MONTHLY_PREMIUM * (offence.insuranceImpactPercent[1] / 100));
-  
-  const threeYearLow = monthlyIncreaseLow * 36;
-  const threeYearHigh = monthlyIncreaseHigh * 36;
-  
-  // Determine if fighting is worth it
-  const potentialSavingsLow = threeYearLow - offence.serviceFee;
-  const potentialSavingsHigh = threeYearHigh - offence.serviceFee;
-  
-  const worthFighting = potentialSavingsLow > 0 || offence.demeritPoints >= 4;
-  
+  const offence = OFFENCE_TYPES.find((o) => o.id === ticketDetails.offenceId);
+
+  if (!offence) {
+    throw new Error(`Unknown offence type: ${ticketDetails.offenceId}`);
+  }
+
+  // Calculate insurance impact (based on Ontario average of ~$250/month)
+  const averageMonthlyPremium = 250;
+  const monthlyIncrease = Math.round(averageMonthlyPremium * (offence.insuranceImpactPercent / 100));
+  const threeYearTotal = monthlyIncrease * 36; // 3 years
+
+  // Calculate break-even analysis
+  const ticketFine = ticketDetails.fineAmount || offence.fineRange.min;
+  const costToFight = offence.serviceFee;
+  const costIfConvicted = ticketFine + threeYearTotal;
+  const potentialSavings = costIfConvicted - costToFight;
+
   // Determine recommendation
   let recommendation: QuoteResult['recommendation'];
   let recommendationReason: string;
-  
+
   if (offence.category === 'major' || offence.category === 'criminal_adjacent') {
     recommendation = 'strongly_fight';
-    recommendationReason = `This is a serious offence with ${offence.demeritPoints} demerit points. The insurance and licensing consequences make fighting essential.`;
-  } else if (offence.demeritPoints >= 3 && potentialSavingsLow > 200) {
+    recommendationReason = `This is a serious charge with significant consequences including ${offence.demeritPoints} demerit points and potential insurance increases of $${threeYearTotal} over 3 years. Fighting this ticket is strongly recommended.`;
+  } else if (threeYearTotal > offence.serviceFee * 2) {
     recommendation = 'fight';
-    recommendationReason = `With ${offence.demeritPoints} demerit points, your insurance could increase by $${threeYearLow.toLocaleString()}-$${threeYearHigh.toLocaleString()} over 3 years. Fighting is likely worth the investment.`;
-  } else if (offence.demeritPoints > 0) {
+    recommendationReason = `The potential insurance savings of $${threeYearTotal} significantly exceed our service fee of $${offence.serviceFee}. Fighting this ticket makes financial sense.`;
+  } else if (offence.successRate.withdrawn + offence.successRate.reduced > 60) {
+    recommendation = 'fight';
+    recommendationReason = `With a ${offence.successRate.withdrawn + offence.successRate.reduced}% success rate for withdrawal or reduction, fighting this ticket offers good odds of a better outcome.`;
+  } else if (potentialSavings > 200) {
     recommendation = 'negotiate';
-    recommendationReason = `This ticket carries ${offence.demeritPoints} demerit points. A reduction to a zero-point offence could save you hundreds in insurance costs.`;
-  } else if (offence.demeritPoints === 0 && offence.serviceFee > (ticketDetails.fineAmount || 0) * 1.5) {
+    recommendationReason = `While the potential savings are moderate, we may be able to negotiate a reduction to minimize the impact on your driving record.`;
+  } else {
     recommendation = 'consider_paying';
-    recommendationReason = `With no demerit points, the insurance impact is minimal. Fighting may cost more than the potential benefit, unless you need a clean record.`;
-  } else {
-    recommendation = 'negotiate';
-    recommendationReason = `Let's review the specifics to see if we can get this reduced or withdrawn.`;
+    recommendationReason = `Based on the fine amount and insurance impact, the cost-benefit of fighting this ticket is marginal. However, keeping demerit points off your record still has value.`;
   }
-  
-  // Build reasoning for break-even analysis
-  let breakEvenReasoning: string;
-  if (potentialSavingsLow > 500) {
-    breakEvenReasoning = `Even in a conservative scenario, you could save $${potentialSavingsLow.toLocaleString()}+ over three years by fighting this ticket.`;
-  } else if (potentialSavingsLow > 0) {
-    breakEvenReasoning = `Fighting this ticket could save you $${potentialSavingsLow.toLocaleString()}-$${potentialSavingsHigh.toLocaleString()} over three years in avoided insurance increases.`;
-  } else if (offence.demeritPoints > 0) {
-    breakEvenReasoning = `While the direct savings may be modest, keeping ${offence.demeritPoints} demerit points off your record protects your licence and future insurability.`;
-  } else {
-    breakEvenReasoning = `The direct financial benefit may be limited, but there may be other reasons to fight (employment, professional licence, clean record).`;
-  }
-  
+
+  // Estimate timeline
+  const estimatedTimeline =
+    offence.typicalCourtAppearances === 1
+      ? '2-4 months from today'
+      : '4-8 months (multiple court appearances may be required)';
+
   return {
-    offence,
     ticketDetails,
+    offence,
     serviceFee: offence.serviceFee,
-    estimatedInsuranceIncrease: {
-      monthly: [monthlyIncreaseLow, monthlyIncreaseHigh],
-      threeYear: [threeYearLow, threeYearHigh]
+    estimatedInsuranceImpact: {
+      monthlyIncrease,
+      threeYearTotal,
     },
     breakEvenAnalysis: {
-      worthFighting,
-      reasoning: breakEvenReasoning,
-      potentialSavings: [potentialSavingsLow, potentialSavingsHigh]
+      costToFight,
+      costIfConvicted,
+      potentialSavings,
     },
     recommendation,
     recommendationReason,
-    timeline: offence.courtAppearances === 1 
-      ? '3-6 months typical resolution' 
-      : '4-8 months typical resolution',
-    disclaimer: 'This quote is an estimate based on typical cases. Actual outcomes depend on the specific facts of your case. Insurance impact estimates are based on an average $250/month policy and may vary by insurer.'
+    estimatedTimeline,
+    disclaimer:
+      'This quote is an estimate based on typical outcomes and average Ontario insurance rates. Actual results may vary based on your specific circumstances, driving history, and court location. Insurance impact estimates are based on an average monthly premium of $250.',
   };
 }
 
@@ -490,37 +456,43 @@ export function calculateQuote(ticketDetails: TicketDetails): QuoteResult {
 // HELPER FUNCTIONS
 // ============================================
 
-export function getOffenceCategories(): { id: string; label: string; offences: OffenceType[] }[] {
-  return [
-    {
-      id: 'speeding',
-      label: 'Speeding Offences',
-      offences: Object.values(OFFENCE_TYPES).filter(o => o.category === 'speeding')
-    },
-    {
-      id: 'major',
-      label: 'Major Offences',
-      offences: Object.values(OFFENCE_TYPES).filter(o => o.category === 'major' || o.category === 'criminal_adjacent')
-    },
-    {
-      id: 'minor',
-      label: 'Other Traffic Offences',
-      offences: Object.values(OFFENCE_TYPES).filter(o => o.category === 'minor')
+/**
+ * Get the speeding offence based on km/h over the limit
+ */
+export function detectSpeedingOffence(kmOverLimit: number): OffenceType | undefined {
+  if (kmOverLimit >= 50) return OFFENCE_TYPES.find((o) => o.id === 'speeding_50_plus');
+  if (kmOverLimit >= 30) return OFFENCE_TYPES.find((o) => o.id === 'speeding_30_49');
+  if (kmOverLimit >= 16) return OFFENCE_TYPES.find((o) => o.id === 'speeding_16_29');
+  if (kmOverLimit >= 1) return OFFENCE_TYPES.find((o) => o.id === 'speeding_1_15');
+  return undefined;
+}
+
+/**
+ * Get all offences grouped by category
+ */
+export function getOffencesByCategory(): Record<string, OffenceType[]> {
+  const grouped: Record<string, OffenceType[]> = {};
+
+  for (const offence of OFFENCE_TYPES) {
+    if (!grouped[offence.category]) {
+      grouped[offence.category] = [];
     }
-  ];
+    grouped[offence.category].push(offence);
+  }
+
+  return grouped;
 }
 
-export function detectSpeedingCategory(speedOver: number): string {
-  if (speedOver >= 50) return 'stunt_driving';
-  if (speedOver >= 30) return 'speeding_30_49';
-  if (speedOver >= 16) return 'speeding_16_29';
-  return 'speeding_0_15';
-}
-
+/**
+ * Get all offences as a flat list
+ */
 export function getAllOffences(): OffenceType[] {
-  return Object.values(OFFENCE_TYPES);
+  return OFFENCE_TYPES;
 }
 
+/**
+ * Get a single offence by ID
+ */
 export function getOffenceById(id: string): OffenceType | undefined {
-  return OFFENCE_TYPES[id];
+  return OFFENCE_TYPES.find((o) => o.id === id);
 }
