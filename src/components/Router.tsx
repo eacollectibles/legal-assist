@@ -10,6 +10,7 @@ import ConflictDetectedPage from '@/components/pages/ConflictDetectedPage';
 
 // Lazy load all other pages
 const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
+const MeetOurTeamPage = lazy(() => import('@/components/pages/MeetOurTeamPage'));
 const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
 const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
@@ -175,6 +176,7 @@ export default function Router() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/conflict-detected" element={<ConflictDetectedPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/about/team" element={<MeetOurTeamPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />
             <Route path="/client-login" element={<ClientLoginPage />} />

@@ -73,7 +73,7 @@ export default function Header() {
             >
               <button 
                 className={`font-paragraph text-base transition-colors flex items-center gap-1 ${
-                  isActive('/about') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
+                  isActive('/about') || isActive('/about/team') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
                     ? 'text-primary font-semibold' 
                     : 'text-secondary hover:text-primary'
                 }`}
@@ -94,6 +94,16 @@ export default function Header() {
                       }`}
                     >
                       About Us
+                    </Link>
+                    <Link
+                      to="/about/team"
+                      className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                        isActive('/about/team')
+                          ? 'text-primary font-semibold bg-primary/5'
+                          : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                      }`}
+                    >
+                      Meet Our Team
                     </Link>
                     <Link
                       to="/guides/what-is-a-paralegal"
@@ -240,8 +250,19 @@ export default function Header() {
                 About Us
               </Link>
               <Link 
-                to="/guides/what-is-a-paralegal" 
+                to="/about/team" 
                 onClick={() => setMobileMenuOpen(false)}
+                className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
+                  isActive('/about/team') 
+                    ? 'bg-primary text-primary-foreground font-semibold' 
+                    : 'text-secondary hover:bg-pastelbeige'
+                }`}
+              >
+                Meet Our Team
+              </Link>
+              <Link 
+                to="/guides/what-is-a-paralegal" 
+                onClick={() => setMobileMenuOpen(false)}}
                 className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
                   isActive('/guides/what-is-a-paralegal') 
                     ? 'bg-primary text-primary-foreground font-semibold' 
