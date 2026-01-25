@@ -204,9 +204,9 @@ export default function ClientLoginPage() {
                       Remember me
                     </label>
                   </div>
-                  <a href="#" className="font-paragraph text-primary hover:underline text-sm">
+                  <Link to="/forgot-password" className="font-paragraph text-primary hover:underline text-sm">
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Submit Button */}

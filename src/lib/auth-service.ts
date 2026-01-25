@@ -385,3 +385,125 @@ export async function changePassword(currentPassword: string, newPassword: strin
     };
   }
 }
+
+/**
+ * Request password reset for a user
+ * Generates a reset token and stores it temporarily
+ */
+export async function requestPasswordReset(email: string): Promise<AuthResponse> {
+  try {
+    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const user = users?.find(u => u.email === email);
+
+    if (!user) {
+      // Don't reveal if email exists for security
+      return {
+        success: true,
+        message: 'If an account exists with this email, you will receive a password reset link.',
+      };
+    }
+
+    // Generate a reset token (in production, this would be sent via email)
+    const resetToken = generateResetToken();
+    const resetTokenExpiry = new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(); // 1 hour expiry
+
+    // Store reset token in localStorage for demo purposes
+    // In production, this would be stored in a database and sent via email
+    const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
+    resetTokens[email] = {
+      token: resetToken,
+      expiry: resetTokenExpiry,
+    };
+    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+
+    // In production, send email with reset link
+    console.log(`Password reset token for ${email}: ${resetToken}`);
+    console.log(`Reset link: /reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`);
+
+    return {
+      success: true,
+      message: 'If an account exists with this email, you will receive a password reset link.',
+    };
+  } catch (error) {
+    console.error('Password reset request error:', error);
+    return {
+      success: false,
+      message: 'Failed to process password reset request. Please try again.',
+    };
+  }
+}
+
+/**
+ * Reset password using a reset token
+ */
+export async function resetPassword(email: string, token: string, newPassword: string): Promise<AuthResponse> {
+  try {
+    if (newPassword.length < 6) {
+      return {
+        success: false,
+        message: 'Password must be at least 6 characters long',
+      };
+    }
+
+    // Verify reset token
+    const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
+    const storedToken = resetTokens[email];
+
+    if (!storedToken || storedToken.token !== token) {
+      return {
+        success: false,
+        message: 'Invalid or expired reset token',
+      };
+    }
+
+    if (new Date(storedToken.expiry) < new Date()) {
+      delete resetTokens[email];
+      localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+      return {
+        success: false,
+        message: 'Reset token has expired. Please request a new one.',
+      };
+    }
+
+    // Find user and update password
+    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const user = users?.find(u => u.email === email);
+
+    if (!user) {
+      return {
+        success: false,
+        message: 'User account not found',
+      };
+    }
+
+    const newHashedPassword = await hashPassword(newPassword);
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      passwordHash: newHashedPassword,
+    });
+
+    // Clear the reset token
+    delete resetTokens[email];
+    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+
+    return {
+      success: true,
+      message: 'Password reset successfully. You can now log in with your new password.',
+    };
+  } catch (error) {
+    console.error('Password reset error:', error);
+    return {
+      success: false,
+      message: 'Failed to reset password. Please try again.',
+    };
+  }
+}
+
+/**
+ * Generate a random reset token
+ */
+function generateResetToken(): string {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+}

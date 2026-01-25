@@ -23,6 +23,8 @@ const MeetOurTeamPage = lazy(() => import('@/components/pages/MeetOurTeamPage'))
 const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
 const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
+const ForgotPasswordPage = lazy(() => import('@/components/pages/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('@/components/pages/ResetPasswordPage'));
 const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
 const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
@@ -63,6 +65,8 @@ export default function Router() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />
             <Route path="/client-login" element={<ClientLoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/client-intake" element={<ClientIntakePage />} />
             <Route path="/client-dashboard" element={<ClientDashboardPage />} />
 
