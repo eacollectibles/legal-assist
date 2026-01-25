@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail, Phone, Award, Shield, Scale, GraduationCap, Heart, MapPin, Calendar, CheckCircle, MessageSquare, FileText, Handshake } from 'lucide-react';
+import { ArrowRight, Mail, Phone, Shield, Scale, GraduationCap, Heart, MapPin, Calendar, CheckCircle, MessageSquare, FileText, Handshake } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 
 export default function MeetOurTeamPage() {
@@ -38,8 +38,9 @@ export default function MeetOurTeamPage() {
           '@type': 'Person',
           name: 'Candice Fogarty',
           jobTitle: 'Co-Founder & Licensed Paralegal',
-          description: 'P1 Licensed Paralegal with the Law Society of Ontario (LSO #P21479) and Qualified Addictions Counselor',
+          description: 'Licensed Paralegal with the Law Society of Ontario (LSO #P21479) and Qualified Addictions Counselor',
           email: 'candice@legalassist.london',
+          image: 'https://static.wixstatic.com/media/99571b_placeholder2~mv2.jpg',
           worksFor: { '@type': 'LegalService', name: 'LegalAssist Paralegal Services' }
         },
         {
@@ -48,6 +49,7 @@ export default function MeetOurTeamPage() {
           jobTitle: 'Co-Founder & Paralegal Licensing Candidate',
           description: 'Paralegal Licensing Candidate with background in law enforcement',
           email: 'jeanfrancois@legalassist.london',
+          image: 'https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png',
           worksFor: { '@type': 'LegalService', name: 'LegalAssist Paralegal Services' }
         }
       ]
@@ -68,12 +70,12 @@ export default function MeetOurTeamPage() {
       <section className="w-full bg-gradient-to-br from-primary/10 via-pastelbeige/40 to-pastellavender/20 py-16 md:py-24">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <nav className="flex items-center justify-center gap-2 text-sm font-paragraph mb-6">
+            <nav className="flex items-center justify-center gap-2 text-sm font-paragraph mb-6" aria-label="Breadcrumb">
               <Link to="/" className="text-foreground/60 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">Home</Link>
-              <span className="text-foreground/40">/</span>
+              <span className="text-foreground/40" aria-hidden="true">/</span>
               <Link to="/about" className="text-foreground/60 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">About</Link>
-              <span className="text-foreground/40">/</span>
-              <span className="text-primary font-medium">Our Team</span>
+              <span className="text-foreground/40" aria-hidden="true">/</span>
+              <span className="text-primary font-medium" aria-current="page">Our Team</span>
             </nav>
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
               Meet Our <span className="text-primary">Team</span>
@@ -83,15 +85,15 @@ export default function MeetOurTeamPage() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6">
               <div className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-primary" />
+                <MapPin className="w-5 h-5 text-primary" aria-hidden="true" />
                 <span className="font-paragraph text-sm text-foreground/80">Ontario-Based</span>
               </div>
               <div className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
-                <span className="font-paragraph text-sm text-foreground/80">Clear, Transparent Pricing</span>
+                <FileText className="w-5 h-5 text-primary" aria-hidden="true" />
+                <span className="font-paragraph text-sm text-foreground/80">Fees Confirmed in Writing</span>
               </div>
               <div className="flex items-center gap-2">
-                <Heart className="w-5 h-5 text-primary" />
+                <Heart className="w-5 h-5 text-primary" aria-hidden="true" />
                 <span className="font-paragraph text-sm text-foreground/80">Client-First Approach</span>
               </div>
             </div>
@@ -106,7 +108,7 @@ export default function MeetOurTeamPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="flex items-start gap-4 p-4">
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <MessageSquare className="w-5 h-5 text-primary" />
+                <MessageSquare className="w-5 h-5 text-primary" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-heading font-bold text-foreground mb-1">1. Tell Us What's Going On</p>
@@ -115,7 +117,7 @@ export default function MeetOurTeamPage() {
             </div>
             <div className="flex items-start gap-4 p-4">
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Scale className="w-5 h-5 text-primary" />
+                <Scale className="w-5 h-5 text-primary" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-heading font-bold text-foreground mb-1">2. We Explain Your Options</p>
@@ -124,7 +126,7 @@ export default function MeetOurTeamPage() {
             </div>
             <div className="flex items-start gap-4 p-4">
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Handshake className="w-5 h-5 text-primary" />
+                <Handshake className="w-5 h-5 text-primary" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-heading font-bold text-foreground mb-1">3. Confirm Next Steps</p>
@@ -148,37 +150,36 @@ export default function MeetOurTeamPage() {
                     width={400}
                     height={533}
                     className="w-full h-full object-cover"
-                    loading="lazy"
                   />
                 </div>
                 <div className="absolute -bottom-3 -right-3 bg-white rounded-lg shadow-lg p-2 border border-gray-100">
                   <div className="flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-primary" />
-                    <span className="text-xs font-bold text-foreground">P1 Licensed</span>
+                    <Shield className="w-4 h-4 text-primary" aria-hidden="true" />
+                    <span className="text-xs font-bold text-foreground">LSO Licensed</span>
                   </div>
                 </div>
               </div>
               <div className="mt-8 bg-pastelbeige/20 rounded-xl p-6">
                 <h3 className="font-heading text-lg font-bold text-foreground mb-4">Contact Candice</h3>
-                <a href="mailto:candice@legalassist.london" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded mb-3">
-                  <Mail className="w-5 h-5 text-primary" />
+                <a href="mailto:candice@legalassist.london" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded mb-3">
+                  <Mail className="w-5 h-5 text-primary" aria-hidden="true" />
                   <span className="font-paragraph text-sm">candice@legalassist.london</span>
                 </a>
-                <a href="tel:3658829515" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded">
-                  <Phone className="w-5 h-5 text-primary" />
+                <a href="tel:3658829515" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                  <Phone className="w-5 h-5 text-primary" aria-hidden="true" />
                   <span className="font-paragraph text-sm">(365) 882-9515</span>
                 </a>
               </div>
             </div>
             <div className="lg:col-span-2">
               <div className="flex flex-wrap items-center gap-3 mb-4">
-                <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-paragraph font-medium">P1 Licensed Paralegal (LSO #P21479)</span>
+                <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-paragraph font-medium">Licensed Paralegal (Law Society of Ontario) — LSO #P21479</span>
                 <span className="px-3 py-1 bg-pastelgreen/40 text-foreground rounded-full text-sm font-paragraph font-medium">Co-Founder</span>
               </div>
               <h2 className="font-heading text-4xl font-bold text-foreground mb-2">Candice Fogarty</h2>
               <p className="font-paragraph text-xl text-primary font-medium mb-6">Co-Founder & Licensed Paralegal</p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Candice Fogarty is the co-founder and lead paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a P1 Licensed Paralegal with the Law Society of Ontario and Qualified Addictions Counselor, she offers a unique combination of legal expertise and compassionate understanding.
+                Candice Fogarty is the co-founder and lead paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal expertise and compassionate understanding.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
                 Her dedication to thorough case preparation and compassionate client service has made her invaluable to the team. With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines LegalAssist's approach.
@@ -192,29 +193,32 @@ export default function MeetOurTeamPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <Scale className="w-5 h-5 text-primary" />
+                    <Scale className="w-5 h-5 text-primary" aria-hidden="true" />
                     <h3 className="font-heading font-bold text-foreground">Areas of Practice</h3>
                   </div>
                   <p className="text-sm text-foreground/80 mb-3 font-medium">Practices in all areas of services offered, including:</p>
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Landlord & Tenant Board (LTB)</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Small Claims Court</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Provincial Offences Court</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Human Rights Tribunal (HRTO)</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Employment Matters</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Traffic & Driving Offences</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Landlord & Tenant Board (LTB)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Small Claims Court</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Provincial Offences Court</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Human Rights Tribunal (HRTO)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Employment Matters</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Traffic & Driving Offences</li>
                   </ul>
+                  <Link to="/services" className="inline-block mt-4 text-sm text-primary underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                    View all services →
+                  </Link>
                 </div>
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <GraduationCap className="w-5 h-5 text-primary" />
+                    <GraduationCap className="w-5 h-5 text-primary" aria-hidden="true" />
                     <h3 className="font-heading font-bold text-foreground">Credentials</h3>
                   </div>
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />P1 Licensed Paralegal (LSO #P21479)</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Paralegal Diploma with Distinction</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Commissioner of Oaths</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Qualified Addictions Counselor</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Licensed Paralegal (LSO #P21479)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Paralegal Diploma with Distinction</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Commissioner of Oaths</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Qualified Addictions Counselor</li>
                   </ul>
                 </div>
               </div>
@@ -241,19 +245,19 @@ export default function MeetOurTeamPage() {
                 </div>
                 <div className="absolute -bottom-3 -left-3 bg-white rounded-lg shadow-lg p-2 border border-gray-100">
                   <div className="flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-primary" />
+                    <GraduationCap className="w-4 h-4 text-primary" aria-hidden="true" />
                     <span className="text-xs font-bold text-foreground">Licensing Candidate</span>
                   </div>
                 </div>
               </div>
               <div className="mt-8 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                 <h3 className="font-heading text-lg font-bold text-foreground mb-4">Contact Johnny</h3>
-                <a href="mailto:jeanfrancois@legalassist.london" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded mb-3">
-                  <Mail className="w-5 h-5 text-primary" />
+                <a href="mailto:jeanfrancois@legalassist.london" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded mb-3">
+                  <Mail className="w-5 h-5 text-primary" aria-hidden="true" />
                   <span className="font-paragraph text-sm">jeanfrancois@legalassist.london</span>
                 </a>
-                <a href="tel:3658829515" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded">
-                  <Phone className="w-5 h-5 text-primary" />
+                <a href="tel:3658829515" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                  <Phone className="w-5 h-5 text-primary" aria-hidden="true" />
                   <span className="font-paragraph text-sm">(365) 882-9515</span>
                 </a>
               </div>
@@ -283,24 +287,27 @@ export default function MeetOurTeamPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <Scale className="w-5 h-5 text-primary" />
+                    <Scale className="w-5 h-5 text-primary" aria-hidden="true" />
                     <h3 className="font-heading font-bold text-foreground">Areas of Focus</h3>
                   </div>
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Landlord & Tenant Board (LTB)</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Human Rights Tribunal (HRTO)</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Small Claims Court</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Licence Appeal Tribunal (LAT)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Landlord & Tenant Board (LTB)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Human Rights Tribunal (HRTO)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Small Claims Court</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Licence Appeal Tribunal (LAT)</li>
                   </ul>
+                  <Link to="/services" className="inline-block mt-4 text-sm text-primary underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                    View all services →
+                  </Link>
                 </div>
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <GraduationCap className="w-5 h-5 text-primary" />
+                    <GraduationCap className="w-5 h-5 text-primary" aria-hidden="true" />
                     <h3 className="font-heading font-bold text-foreground">Background</h3>
                   </div>
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Paralegal Licensing Candidate</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Law Enforcement Diploma</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Paralegal Licensing Candidate</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Law Enforcement Diploma</li>
                   </ul>
                 </div>
               </div>
@@ -313,17 +320,20 @@ export default function MeetOurTeamPage() {
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-primary/10 via-pastelbeige/30 to-pastelpeach/20">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Ready to Work With Our Team?</h2>
-          <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
+          <p className="font-paragraph text-lg text-foreground/80 mb-2 max-w-2xl mx-auto">
             Schedule a free consultation today to discuss your situation.
+          </p>
+          <p className="font-paragraph text-sm text-foreground/60 mb-8 max-w-2xl mx-auto">
+            Fees vary by matter and are confirmed before any work begins.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-medium px-8 py-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-              <Calendar className="w-5 h-5" />
+              <Calendar className="w-5 h-5" aria-hidden="true" />
               Book Free Consultation
             </Link>
             <Link to="/services" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-medium px-8 py-4 rounded-lg hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
               View Our Services
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
             </Link>
           </div>
         </div>
