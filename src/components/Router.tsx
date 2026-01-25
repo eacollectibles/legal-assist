@@ -10,6 +10,7 @@ import { smallClaimsRoutes } from '@/routes/smallClaimsRoutes';
 import { locationRoutes } from '@/routes/locationRoutes';
 import { otherServiceRoutes } from '@/routes/otherServiceRoutes';
 import { guideRoutes } from '@/routes/guideRoutes';
+import { adminRoutes } from '@/routes/adminRoutes';
 
 // Core Pages - Static imports for critical pages
 import HomePage from '@/components/pages/HomePageNew';
@@ -42,6 +43,7 @@ const allRoutes = [
   ...locationRoutes,
   ...otherServiceRoutes,
   ...guideRoutes,
+  ...adminRoutes,
 ];
 
 export default function Router() {
@@ -75,7 +77,6 @@ export default function Router() {
             <Route path="/services/human-rights" element={<Navigate to="/services/human-rights-tribunal" replace />} />
             <Route path="/signup" element={<Navigate to="/client-signup" replace />} />
             <Route path="/login" element={<Navigate to="/client-login" replace />} />
-            <Route path="/booking" element={<Navigate to="/contact" replace />} />
 
             {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />
