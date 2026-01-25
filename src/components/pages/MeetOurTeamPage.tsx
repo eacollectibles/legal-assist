@@ -61,7 +61,7 @@ export default function MeetOurTeamPage() {
               <div className="relative">
                 <div className="rounded-xl overflow-hidden shadow-xl aspect-[3/4] bg-pastellavender/30">
                   <Image
-                    src="https://static.wixstatic.com/media/99571b_placeholder~mv2.jpg"
+                    src="https://static.wixstatic.com/media/99571b_3a7adf82af044db7b48df7581cf8f2e5~mv2.png"
                     alt="Johnny Demers, Licensed Paralegal"
                     width={400}
                     height={533}
@@ -126,7 +126,9 @@ export default function MeetOurTeamPage() {
                   </div>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Paralegal Licensing Candidate</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Law Enforcement Diploma</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Policing Diploma with Honors</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Security Diploma with Honors</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Paralegal Diploma with Distinction</li>
                   </ul>
                 </div>
               </div>
