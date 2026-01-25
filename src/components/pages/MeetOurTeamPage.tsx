@@ -209,6 +209,7 @@ export default function MeetOurTeamPage() {
                   </div>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />P1 Licensed Paralegal (LSO #P21479)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Paralegal Diploma with Distinction</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Commissioner of Oaths</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Qualified Addictions Counselor</li>
                   </ul>
@@ -227,7 +228,7 @@ export default function MeetOurTeamPage() {
               <div className="relative">
                 <div className="rounded-xl overflow-hidden shadow-xl aspect-[3/4] bg-pastellavender/30">
                   <Image
-                    src="https://static.wixstatic.com/media/99571b_placeholder~mv2.jpg"
+                    src="https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png"
                     alt="Johnny Demers, Paralegal Licensing Candidate at LegalAssist"
                     width={400}
                     height={533}
