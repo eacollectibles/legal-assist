@@ -33,7 +33,7 @@ export default function MeetOurTeamPage() {
         addressRegion: 'ON',
         addressCountry: 'CA'
       },
-      employee: [
+      founder: [
         {
           '@type': 'Person',
           name: 'Candice Fogarty',
@@ -150,6 +150,7 @@ export default function MeetOurTeamPage() {
                     width={400}
                     height={533}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <div className="absolute -bottom-3 -right-3 bg-white rounded-lg shadow-lg p-2 border border-gray-100">
@@ -177,7 +178,10 @@ export default function MeetOurTeamPage() {
                 <span className="px-3 py-1 bg-pastelgreen/40 text-foreground rounded-full text-sm font-paragraph font-medium">Co-Founder</span>
               </div>
               <h2 className="font-heading text-4xl font-bold text-foreground mb-2">Candice Fogarty</h2>
-              <p className="font-paragraph text-xl text-primary font-medium mb-6">Co-Founder & Licensed Paralegal</p>
+              <p className="font-paragraph text-xl text-primary font-medium mb-2">Co-Founder & Licensed Paralegal</p>
+              <p className="text-sm text-foreground/60 mb-6">
+                Law Society of Ontario licence verified — LSO #P21479
+              </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
                 Candice Fogarty is the co-founder and lead paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal expertise and compassionate understanding.
               </p>
@@ -202,8 +206,8 @@ export default function MeetOurTeamPage() {
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Small Claims Court</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Provincial Offences Court</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Human Rights Tribunal (HRTO)</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Employment Matters</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Traffic & Driving Offences</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Workplace Disputes (where permitted)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Traffic & Driving Offences (Provincial Offences Court)</li>
                   </ul>
                   <Link to="/services" className="inline-block mt-4 text-sm text-primary underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
                     View all services →
