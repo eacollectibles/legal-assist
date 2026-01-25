@@ -10,6 +10,7 @@ import { smallClaimsRoutes } from '@/routes/smallClaimsRoutes';
 import { locationRoutes } from '@/routes/locationRoutes';
 import { otherServiceRoutes } from '@/routes/otherServiceRoutes';
 import { guideRoutes } from '@/routes/guideRoutes';
+import { cityServiceRoutes } from '@/routes/cityServiceRoutes';
 
 // Core Pages - Static imports for critical pages
 import HomePage from '@/components/pages/HomePageNew';
@@ -42,6 +43,7 @@ const allRoutes = [
   ...locationRoutes,
   ...otherServiceRoutes,
   ...guideRoutes,
+  ...cityServiceRoutes,
 ];
 
 export default function Router() {
