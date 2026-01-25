@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LandlordServicesPage() {
-  useEffect(() => {
-    document.title = 'Landlord Legal Services in Ontario | Evictions & LTB | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Professional landlord legal services in Ontario. Licensed paralegal for evictions, LTB applications, rent disputes, and property management legal matters.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   const services = [
     { title: 'Non-Payment of Rent (N4)', description: 'Eviction applications when tenants fail to pay rent. We handle the entire process from notice to enforcement.', link: '/services/eviction-non-payment' },

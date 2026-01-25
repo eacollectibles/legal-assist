@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function CambridgeParalegalPage() {
-  useEffect(() => {
-    document.title = 'Cambridge Paralegal | Traffic Tickets, Small Claims, LTB | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal serving Cambridge, Preston, Hespeler, and Galt. Traffic ticket defence, Small Claims Court, Landlord Tenant Board. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

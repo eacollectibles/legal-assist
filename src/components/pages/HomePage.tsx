@@ -261,67 +261,7 @@ export default function HomePage() {
   const [showStickyBar, setShowStickyBar] = useState(true);
   const ctaSectionRef = useRef<HTMLElement>(null);
 
-  // Inject SEO meta tags and schema
-  useEffect(() => {
-    // Title
-    document.title = 'LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON';
-    
-    // Meta Description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', 'Licensed paralegal services in London, Ontario. Expert representation for traffic tickets, landlord-tenant disputes, small claims court up to $50,000, and human rights matters. Free 30-minute consultation. Rates from $150/hour.');
-
-    // Open Graph Tags
-    const ogTags = [
-      { property: 'og:title', content: 'LegalAssist Paralegal Services | Licensed Ontario Paralegal' },
-      { property: 'og:description', content: 'Affordable legal representation in London, ON. Traffic tickets, landlord-tenant, small claims court. Free consultation.' },
-      { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://legalassistparalegal.com' },
-      { property: 'og:locale', content: 'en_CA' }
-    ];
-
-    ogTags.forEach(tag => {
-      let el = document.querySelector(`meta[property="${tag.property}"]`);
-      if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute('property', tag.property);
-        document.head.appendChild(el);
-      }
-      el.setAttribute('content', tag.content);
-    });
-
-    // Canonical URL
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', 'https://legalassistparalegal.com');
-
-    // Schema Markup
-    const schemaScript = document.createElement('script');
-    schemaScript.type = 'application/ld+json';
-    schemaScript.id = 'homepage-schema';
-    schemaScript.textContent = JSON.stringify([
-      LOCAL_BUSINESS_SCHEMA,
-      FAQ_SCHEMA,
-      BREADCRUMB_SCHEMA
-    ]);
-    
-    const existing = document.getElementById('homepage-schema');
-    if (existing) existing.remove();
-    document.head.appendChild(schemaScript);
-
-    return () => {
-      const script = document.getElementById('homepage-schema');
-      if (script) script.remove();
-    };
-  }, []);
+  // SEO handled by AutoSEO component
 
   // Hide sticky bar when CTA is visible
   useEffect(() => {

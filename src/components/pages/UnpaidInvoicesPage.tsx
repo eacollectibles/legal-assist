@@ -6,13 +6,7 @@ import Footer from '@/components/Footer';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export default function UnpaidInvoicesPage() {
-  useEffect(() => {
-    document.title = 'Collect Unpaid Invoices in Small Claims Court | London Ontario Paralegal';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Recover unpaid invoices up to $50,000 in Ontario Small Claims Court. Licensed paralegal in London helps businesses collect outstanding debts. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

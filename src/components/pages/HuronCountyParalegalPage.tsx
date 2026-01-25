@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function HuronCountyParalegalPage() {
-  useEffect(() => {
-    document.title = 'Huron County Paralegal | Goderich, Clinton, Exeter | Traffic, LTB | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal serving Huron County including Goderich, Clinton, Exeter, Seaforth. Traffic ticket defence, Small Claims Court, Landlord Tenant Board. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

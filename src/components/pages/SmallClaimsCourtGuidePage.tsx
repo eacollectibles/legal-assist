@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function SmallClaimsCourtGuidePage() {
-  useEffect(() => {
-    document.title = 'What to Expect at Small Claims Court Ontario | Complete Guide | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to Small Claims Court in Ontario. Learn about the process, settlement conferences, trials, and how to prepare your case. Free information.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

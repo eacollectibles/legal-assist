@@ -5,10 +5,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function StThomasParalegalPage() {
-  useEffect(() => {
-    document.title = 'Paralegal Services in St. Thomas Ontario | LegalAssist';
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

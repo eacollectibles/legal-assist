@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function RentArrearsDefencePage() {
-  useEffect(() => {
-    document.title = 'Rent Arrears Defence | N4 Notice Help | LTB Paralegal London Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Facing eviction for unpaid rent in Ontario? Paralegal help for N4 notices and L1 applications. Know your rights, payment plans, and defences. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

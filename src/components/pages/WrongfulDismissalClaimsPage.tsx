@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function WrongfulDismissalClaimsPage() {
-  useEffect(() => {
-    document.title = 'Wrongful Dismissal Claims Under $35,000 | Small Claims Court Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for wrongful dismissal claims under $35,000 in Ontario Small Claims Court. Fired without proper notice or severance? Free consultation in London Ontario.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

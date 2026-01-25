@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LiquorLicenceActPage() {
-  useEffect(() => {
-    document.title = 'Liquor Licence Act Violations | AGCO Charges Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged under the Liquor Licence Act? We defend individuals and businesses against LLA offences including underage drinking, over-serving, and licence violations. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

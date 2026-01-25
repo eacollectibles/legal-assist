@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function HumanRightsComplaintGuidePage() {
-  useEffect(() => {
-    document.title = 'How to File a Human Rights Complaint Ontario | HRTO Guide | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to filing a human rights complaint at the HRTO in Ontario. Learn about grounds, deadlines, the process, and what to expect. Free information.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

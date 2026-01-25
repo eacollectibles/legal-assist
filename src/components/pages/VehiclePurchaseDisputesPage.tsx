@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function VehiclePurchaseDisputesPage() {
-  useEffect(() => {
-    document.title = 'Used Car & Vehicle Purchase Disputes | Small Claims Court Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for used car disputes in Ontario. Lemon cars, dealer fraud, undisclosed damage, odometer rollback. Recover up to $35,000 in Small Claims Court. London Ontario.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

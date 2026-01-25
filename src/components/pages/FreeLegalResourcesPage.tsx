@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function FreeLegalResourcesPage() {
-  useEffect(() => {
-    document.title = 'Free Legal Resources Ontario | Government & Community Resources | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Directory of free legal resources in Ontario. Find government forms, tribunal websites, legal aid, and self-help tools. Comprehensive list of where to get help.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

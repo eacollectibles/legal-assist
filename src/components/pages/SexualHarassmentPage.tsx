@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function SexualHarassmentPage() {
-  useEffect(() => {
-    document.title = 'Sexual Harassment Claims | Workplace Harassment Ontario | HRTO | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Experiencing sexual harassment at work? File an HRTO complaint. Ontario employers must provide harassment-free workplaces. Private consultations. Paralegal help London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

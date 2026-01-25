@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function TillsonburgParalegalPage() {
-  useEffect(() => {
-    document.title = 'Paralegal Services in Tillsonburg Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal services in Tillsonburg, Ontario. Affordable representation for Small Claims Court, Landlord Tenant Board, traffic tickets, and tribunals. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

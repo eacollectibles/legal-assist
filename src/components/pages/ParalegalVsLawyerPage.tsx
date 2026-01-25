@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function ParalegalVsLawyerPage() {
-  useEffect(() => {
-    document.title = 'Paralegal vs Lawyer | When to Use Each in Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Understand the difference between paralegals and lawyers in Ontario. Learn when you need each, cost comparison, and what paralegals can handle. Free guide.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

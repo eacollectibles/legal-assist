@@ -6,13 +6,7 @@ import { ArrowRight, CheckCircle, Users, Briefcase, Shield, Award, Gavel, Dollar
 import { Image } from '@/components/ui/image';
 
 export default function AboutPage() {
-  useEffect(() => {
-    document.title = 'About LegalAssist | Professional Paralegal Services in Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Learn about LegalAssist Paralegal Services. We provide accessible, professional legal representation across Ontario for individuals and small businesses.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

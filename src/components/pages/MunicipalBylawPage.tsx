@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function MunicipalBylawPage() {
-  useEffect(() => {
-    document.title = 'Municipal By-law Violations | By-law Tickets Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Fight municipal by-law tickets in Ontario. Noise complaints, parking, property standards, animal control violations. Paralegal defence London, St. Thomas, Woodstock. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

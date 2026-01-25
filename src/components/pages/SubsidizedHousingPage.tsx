@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function SubsidizedHousingPage() {
-  useEffect(() => {
-    document.title = 'Subsidized Housing & RGI Eviction Defence | LTB Paralegal Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal help for subsidized housing and RGI tenants facing eviction in Ontario. Income review disputes, arrears, and social housing rights. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

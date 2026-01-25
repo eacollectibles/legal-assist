@@ -18,13 +18,7 @@ interface SignupFormData {
 }
 
 export default function ClientSignupPage() {
-  useEffect(() => {
-    document.title = 'Create Account | LegalAssist Client Portal';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Create your LegalAssist client account to access our secure portal, track your legal matters, and communicate with your paralegal team.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   const navigate = useNavigate();
   const { actions } = useMember();

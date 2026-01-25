@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function FailToComplyPage() {
-  useEffect(() => {
-    document.title = 'Fail to Comply Defence | Breach of Probation Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with fail to comply or breach of probation in Ontario? We defend breach charges. Protect your freedom. Paralegal representation London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

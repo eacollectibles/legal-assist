@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LeaseBreakingPage() {
-  useEffect(() => {
-    document.title = 'Breaking a Lease in Ontario | Early Termination Options | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Need to break your lease early in Ontario? Understand your options: assignment, N9, N11, and landlord obligations. Paralegal help for lease termination. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

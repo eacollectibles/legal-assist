@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function TenantRightsGuidePage() {
-  useEffect(() => {
-    document.title = 'Ontario Tenant Rights Guide | Know Your Rights | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to tenant rights in Ontario. Learn about eviction protection, rent increases, repairs, and what your landlord can and cannot do. Free information.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

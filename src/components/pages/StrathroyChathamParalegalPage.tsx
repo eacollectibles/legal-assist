@@ -5,10 +5,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function StrathroyChathamParalegalPage() {
-  useEffect(() => {
-    document.title = 'Paralegal Services in Strathroy & Chatham Ontario | LegalAssist';
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

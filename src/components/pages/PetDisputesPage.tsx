@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function PetDisputesPage() {
-  useEffect(() => {
-    document.title = 'Pet Disputes & No-Pet Clause Ontario | Tenant Rights | LTB Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'No-pet clauses are void in Ontario! Know your rights as a tenant with pets. Paralegal help for pet-related eviction threats and disputes. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

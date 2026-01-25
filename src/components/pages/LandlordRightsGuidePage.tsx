@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LandlordRightsGuidePage() {
-  useEffect(() => {
-    document.title = 'Ontario Landlord Rights Guide | Know Your Rights | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to landlord rights in Ontario. Learn about eviction procedures, rent collection, property access, and legal remedies. Free information for landlords.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

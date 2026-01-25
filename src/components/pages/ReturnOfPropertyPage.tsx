@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function ReturnOfPropertyPage() {
-  useEffect(() => {
-    document.title = 'Return of Personal Property | Wrongful Possession Claims | Small Claims Court Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for return of personal property in Ontario Small Claims Court. Ex-partner, roommate, or employer keeping your belongings? Recover up to $50,000. London Ontario.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

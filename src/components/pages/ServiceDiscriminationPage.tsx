@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function ServiceDiscriminationPage() {
-  useEffect(() => {
-    document.title = 'Service Discrimination | Refused Service Ontario | HRTO | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Denied service due to race, disability, or other protected grounds? File an HRTO complaint. Ontario businesses cannot discriminate in providing services. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

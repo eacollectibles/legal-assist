@@ -6,10 +6,6 @@ import Footer from '@/components/Footer';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function G1G2ViolationsPage() {
-  useEffect(() => {
-    document.title = 'G1 G2 Ticket Defence Ontario | Novice Driver Violations | LegalAssist';
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

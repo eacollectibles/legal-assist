@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function TrespassPropertyPage() {
-  useEffect(() => {
-    document.title = 'Trespass to Property Defence | Trespass Charges Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with trespass to property in Ontario? We defend trespass charges under the Trespass to Property Act. Avoid fines and records. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

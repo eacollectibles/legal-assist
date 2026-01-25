@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function EmploymentRightsGuidePage() {
-  useEffect(() => {
-    document.title = 'Ontario Employment Rights Guide | Know Your Rights at Work | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to employee rights in Ontario. Learn about termination, severance, overtime, vacation pay, and what your employer must provide. Free information.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

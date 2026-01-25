@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function ProvincialOffencesPage() {
-  useEffect(() => {
-    document.title = 'Provincial Offences Act Defence | POA Tickets Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged under the Provincial Offences Act? We defend POA tickets including traffic, regulatory, and by-law offences across Ontario. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

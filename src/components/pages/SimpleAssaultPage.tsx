@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function SimpleAssaultPage() {
-  useEffect(() => {
-    document.title = 'Simple Assault Defence | Assault Charges Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with simple assault in Ontario? We defend assault charges including domestic assault. Protect your record. Paralegal representation London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

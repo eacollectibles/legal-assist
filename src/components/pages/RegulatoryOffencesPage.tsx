@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function RegulatoryOffencesPage() {
-  useEffect(() => {
-    document.title = 'Regulatory Offences Defence | OHSA Violations Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with regulatory offences in Ontario? We defend OHSA, environmental, health and safety, and business licensing violations. Paralegal representation London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

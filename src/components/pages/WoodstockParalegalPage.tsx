@@ -6,10 +6,6 @@ import Footer from '@/components/Footer';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function WoodstockParalegalPage() {
-  useEffect(() => {
-    document.title = 'Paralegal Services in Woodstock, Ontario | LegalAssist';
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

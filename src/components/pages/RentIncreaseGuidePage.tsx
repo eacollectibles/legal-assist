@@ -5,10 +5,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function RentIncreaseGuidePage() {
-  useEffect(() => {
-    document.title = 'Rent Increase Rules Ontario 2025 | Guideline & Notice | LegalAssist';
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

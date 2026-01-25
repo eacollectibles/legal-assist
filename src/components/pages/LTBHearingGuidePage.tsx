@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LTBHearingGuidePage() {
-  useEffect(() => {
-    document.title = 'How to Prepare for an LTB Hearing | Complete Guide | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Complete guide to preparing for a Landlord and Tenant Board hearing in Ontario. What to bring, what to expect, and how to present your case. Free information.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

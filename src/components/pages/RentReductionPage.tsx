@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function RentReductionPage() {
-  useEffect(() => {
-    document.title = 'Rent Reduction Applications | T2 T6 Forms | LTB Paralegal Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Apply for rent reduction at the LTB for maintenance failures, service cuts, or illegal charges. T2 and T6 applications in Ontario. Free paralegal consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

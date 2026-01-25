@@ -6,61 +6,7 @@ import { ArrowRight, Mail, Phone, Shield, Scale, GraduationCap, Heart, MapPin, C
 import { Image } from '@/components/ui/image';
 
 export default function MeetOurTeamPage() {
-  useEffect(() => {
-    document.title = 'Meet Our Team | LegalAssist Paralegal Services | London Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Meet the team behind LegalAssist in London, Ontario, including Law Society of Ontario licensed paralegals and support staff. Learn about our approach and experience.');
-    }
-
-    // Add JSON-LD structured data
-    const existingScript = document.querySelector('#team-structured-data');
-    if (existingScript) existingScript.remove();
-    
-    const script = document.createElement('script');
-    script.id = 'team-structured-data';
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'LegalService',
-      name: 'LegalAssist Paralegal Services',
-      description: 'Professional paralegal services in London, Ontario',
-      url: 'https://legalassist.london',
-      telephone: '+1-365-882-9515',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'London',
-        addressRegion: 'ON',
-        addressCountry: 'CA'
-      },
-      founder: [
-        {
-          '@type': 'Person',
-          name: 'Candice Fogarty',
-          jobTitle: 'Co-Founder & Licensed Paralegal',
-          description: 'Licensed Paralegal with the Law Society of Ontario (LSO #P21479) and Qualified Addictions Counselor',
-          email: 'candice@legalassist.london',
-          image: 'https://static.wixstatic.com/media/99571b_placeholder2~mv2.jpg',
-          worksFor: { '@type': 'LegalService', name: 'LegalAssist Paralegal Services' }
-        },
-        {
-          '@type': 'Person',
-          name: 'Johnny Demers',
-          jobTitle: 'Co-Founder & Paralegal Licensing Candidate',
-          description: 'Paralegal Licensing Candidate with background in law enforcement',
-          email: 'jeanfrancois@legalassist.london',
-          image: 'https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png',
-          worksFor: { '@type': 'LegalService', name: 'LegalAssist Paralegal Services' }
-        }
-      ]
-    });
-    document.head.appendChild(script);
-
-    return () => {
-      const scriptToRemove = document.querySelector('#team-structured-data');
-      if (scriptToRemove) scriptToRemove.remove();
-    };
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

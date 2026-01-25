@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function TheftUnderPage() {
-  useEffect(() => {
-    document.title = 'Theft Under $5000 Defence | Shoplifting Charges Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with theft under $5000 or shoplifting in Ontario? We defend minor theft charges. Avoid a criminal record. Paralegal representation London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

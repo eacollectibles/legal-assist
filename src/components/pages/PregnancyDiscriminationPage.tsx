@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function PregnancyDiscriminationPage() {
-  useEffect(() => {
-    document.title = 'Pregnancy Discrimination | Parental Leave Rights Ontario | HRTO | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Fired or mistreated due to pregnancy or parental leave? Ontario law protects you. File an HRTO complaint for pregnancy discrimination. Paralegal help London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

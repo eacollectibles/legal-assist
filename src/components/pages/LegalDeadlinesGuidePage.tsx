@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LegalDeadlinesGuidePage() {
-  useEffect(() => {
-    document.title = 'Important Legal Deadlines in Ontario | Don\'t Miss These | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Critical legal deadlines in Ontario you need to know. Traffic tickets, Small Claims, LTB, human rights, and more. Missing deadlines can cost you your case.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

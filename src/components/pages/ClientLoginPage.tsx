@@ -15,13 +15,7 @@ interface LoginFormData {
 }
 
 export default function ClientLoginPage() {
-  useEffect(() => {
-    document.title = 'Client Login | LegalAssist Portal';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Login to your LegalAssist client portal to access your case information, documents, and communicate with your paralegal team securely.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   const navigate = useNavigate();
   const { actions } = useMember();

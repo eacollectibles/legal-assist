@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function PersonalInjuryClaimsPage() {
-  useEffect(() => {
-    document.title = 'Personal Injury Claims Under $50,000 | Small Claims Court Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal for personal injury claims under $50,000 in Ontario Small Claims Court. Slip and fall, dog bites, minor vehicle injuries. Free consultation in London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

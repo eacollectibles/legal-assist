@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function BreachOfWarrantyPage() {
-  useEffect(() => {
-    document.title = 'Warranty Claims & Breach of Warranty | Small Claims Court Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for warranty disputes in Ontario Small Claims Court. Manufacturer won\'t honour warranty? Defective products? Recover up to $50,000. London Ontario.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

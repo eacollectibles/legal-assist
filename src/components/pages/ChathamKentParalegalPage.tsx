@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function ChathamKentParalegalPage() {
-  useEffect(() => {
-    document.title = 'Chatham-Kent Paralegal | Traffic Tickets, Small Claims, LTB | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal serving Chatham-Kent. Traffic ticket defence on Highway 401/402, Small Claims Court, Landlord Tenant Board representation. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

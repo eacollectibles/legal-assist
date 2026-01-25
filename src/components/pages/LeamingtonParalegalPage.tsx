@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function LeamingtonParalegalPage() {
-  useEffect(() => {
-    document.title = 'Leamington Paralegal | Kingsville, Essex County | Traffic, LTB | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal serving Leamington, Kingsville, and Essex County. Traffic ticket defence, Small Claims Court, Landlord Tenant Board. Agricultural worker issues. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

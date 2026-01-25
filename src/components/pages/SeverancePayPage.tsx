@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function SeverancePayPage() {
-  useEffect(() => {
-    document.title = 'Severance Pay Ontario | Termination Pay Calculator | Employment Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Understand severance pay in Ontario. Calculate your entitlement, know the difference between termination pay and severance pay. Paralegal help London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

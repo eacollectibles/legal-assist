@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 export default function WhatIsAParalegalPage() {
-  useEffect(() => {
-    document.title = 'What Is a Paralegal in Ontario? | LegalAssist Paralegal Services';
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function SuperintendentIssuesPage() {
-  useEffect(() => {
-    document.title = 'Superintendent & Building Staff Rights Ontario | LTB Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal help for superintendents and building staff in Ontario. Job loss, tied housing, and eviction timelines. Know your rights when employment ends. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

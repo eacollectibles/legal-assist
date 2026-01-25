@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function MischiefUnderPage() {
-  useEffect(() => {
-    document.title = 'Mischief Under $5000 Defence | Property Damage Charges Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with mischief under $5000 in Ontario? Property damage, vandalism, graffiti charges. Avoid a criminal record. Paralegal defence London. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

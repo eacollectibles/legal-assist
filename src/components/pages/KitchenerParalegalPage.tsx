@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function KitchenerParalegalPage() {
-  useEffect(() => {
-    document.title = 'Kitchener Paralegal | Traffic Tickets, Small Claims, LTB | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Licensed paralegal serving Kitchener and Waterloo Region. Traffic ticket defence, Small Claims Court, Landlord Tenant Board representation. Free consultation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

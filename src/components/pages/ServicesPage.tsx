@@ -366,13 +366,7 @@ IMPORTANT SCOPE LIMITATIONS: Paralegals can represent clients in Small Claims Co
 ];
 
 export default function ServicesPage() {
-  useEffect(() => {
-    document.title = 'Legal Services | Paralegal Representation in Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Comprehensive paralegal services in Ontario. Small claims court, landlord-tenant board, traffic tickets, human rights tribunal, employment issues, and criminal matters representation.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   const [expandedService, setExpandedService] = useState<string | null>(null);
 

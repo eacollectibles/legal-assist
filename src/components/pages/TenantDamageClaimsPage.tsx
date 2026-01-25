@@ -5,13 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function TenantDamageClaimsPage() {
-  useEffect(() => {
-    document.title = 'Tenant Damage Claims for Landlords | Small Claims Court Ontario | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Paralegal for landlords pursuing tenant damage claims in Ontario Small Claims Court. Recover costs for property damage beyond normal wear. Up to $35,000. London Ontario.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">

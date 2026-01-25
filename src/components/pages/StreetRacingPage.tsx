@@ -6,13 +6,7 @@ import Footer from '@/components/Footer';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
 export default function StreetRacingPage() {
-  useEffect(() => {
-    document.title = 'Street Racing Charges Defence | Racing on Highway Ontario | Paralegal | LegalAssist';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Charged with street racing in Ontario? Face licence suspension, vehicle impound, and $2,000+ fines. Expert paralegal defence for racing charges. Free consultation London.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   return (
     <div className="min-h-screen bg-background">
