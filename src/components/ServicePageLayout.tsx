@@ -9,6 +9,8 @@ import { Image } from '@/components/ui/image';
 import ConversionStrip from '@/components/ConversionStrip';
 import PrimaryCTA from '@/components/PrimaryCTA';
 import AutoSEO from '@/components/AutoSEO';
+import { TrustSignals } from '@/components/TrustSignals';
+import { WhatHappensNext } from '@/components/WhatHappensNext';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 // ... keep existing code (imports)
 
@@ -143,6 +145,14 @@ export default function ServicePageLayout({
         timeline="Quick resolution with clear timelines"
         pricing="Transparent fees with no hidden costs"
       />
+
+      {/* TRUST SIGNALS */}
+      <section className="py-8 md:py-12 bg-background">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8 space-y-4">
+          <TrustSignals />
+          <WhatHappensNext />
+        </div>
+      </section>
 
       {/* Section 2: Authority */}
       <section className="w-full py-16 md:py-24 bg-white">
