@@ -8,6 +8,15 @@ import {
   businessInfo 
 } from './seoConfig';
 
+// Props interface for optional overrides
+interface AutoSEOProps {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string;
+  noindex?: boolean;
+}
+
 // LocalBusiness/LegalService Schema - consistent sitewide
 const localBusinessSchema = {
   "@context": "https://schema.org",
@@ -61,16 +70,22 @@ const localBusinessSchema = {
   ]
 };
 
-export function AutoSEO() {
+export function AutoSEO({ title, description, canonical, keywords, noindex }: AutoSEOProps = {}) {
   const location = useLocation();
   const baseUrl = 'https://legalassist.london';
   
   useEffect(() => {
+    // Get config from seoConfig.ts as base
     const seo = getSEOConfig(location.pathname);
-    const canonicalUrl = `${baseUrl}${location.pathname}`;
+    
+    // Use props if provided, otherwise fall back to seoConfig
+    const finalTitle = title || seo.title;
+    const finalDescription = description || seo.description;
+    const finalCanonical = canonical || `${baseUrl}${location.pathname}`;
+    const finalKeywords = keywords || seo.keywords;
     
     // Document title
-    document.title = seo.title;
+    document.title = finalTitle;
     
     // Helper: Set meta tag
     const setMeta = (name: string, content: string, isProperty = false) => {
@@ -114,26 +129,26 @@ export function AutoSEO() {
     };
     
     // Core meta tags
-    setMeta('description', seo.description);
-    if (seo.keywords) {
-      setMeta('keywords', seo.keywords);
+    setMeta('description', finalDescription);
+    if (finalKeywords) {
+      setMeta('keywords', finalKeywords);
     }
     
-    // Robots - block private pages
+    // Robots - block private pages or if noindex prop is true
     const isPrivate = /^\/(admin|dashboard|client-dashboard|login|signup|client-login|client-signup|intake|booking|upload|paralegal-dashboard|meeting-request)/.test(location.pathname);
-    setMeta('robots', isPrivate ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1');
+    setMeta('robots', (isPrivate || noindex) ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1');
     
     // Canonical URL
-    setLink('canonical', canonicalUrl);
+    setLink('canonical', finalCanonical);
     
     // Language alternates
-    setLink('alternate', canonicalUrl, 'en-CA');
-    setLink('alternate', canonicalUrl, 'x-default');
+    setLink('alternate', finalCanonical, 'en-CA');
+    setLink('alternate', finalCanonical, 'x-default');
     
     // Open Graph
-    setMeta('og:title', seo.title, true);
-    setMeta('og:description', seo.description, true);
-    setMeta('og:url', canonicalUrl, true);
+    setMeta('og:title', finalTitle, true);
+    setMeta('og:description', finalDescription, true);
+    setMeta('og:url', finalCanonical, true);
     setMeta('og:type', 'website', true);
     setMeta('og:site_name', businessInfo.name, true);
     setMeta('og:locale', 'en_CA', true);
@@ -141,8 +156,8 @@ export function AutoSEO() {
     
     // Twitter Card
     setMeta('twitter:card', 'summary_large_image');
-    setMeta('twitter:title', seo.title);
-    setMeta('twitter:description', seo.description);
+    setMeta('twitter:title', finalTitle);
+    setMeta('twitter:description', finalDescription);
     setMeta('twitter:image', 'https://legalassist.london/og-image.jpg');
     
     // Geo
@@ -152,9 +167,9 @@ export function AutoSEO() {
     // Schema: LocalBusiness (persistent sitewide - only set once)
     setJsonLd('schema-localbusiness', localBusinessSchema);
     
-    // Schema: Service (page-specific)
+    // Schema: Service (page-specific) - only if seoConfig has schema defined
     if (seo.schema) {
-      setJsonLd('schema-service', generateServiceSchema(seo, canonicalUrl));
+      setJsonLd('schema-service', generateServiceSchema(seo, finalCanonical));
     } else {
       setJsonLd('schema-service', null);
     }
@@ -173,7 +188,7 @@ export function AutoSEO() {
       setJsonLd('schema-breadcrumb', null);
     }
     
-  }, [location.pathname]);
+  }, [location.pathname, title, description, canonical, keywords, noindex]);
   
   return null;
 }
