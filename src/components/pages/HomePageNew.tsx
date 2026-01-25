@@ -9,6 +9,8 @@ import StickyContactBar from '@/components/StickyContactBar';
 import CallProcessBox from '@/components/CallProcessBox';
 import PrimaryCTA from '@/components/PrimaryCTA';
 import ConversionStrip from '@/components/ConversionStrip';
+import { TrustSignals } from '@/components/TrustSignals';
+import { WhatHappensNext } from '@/components/WhatHappensNext';
 import { cn } from '@/lib/utils';
 import {
   Accordion,
@@ -307,6 +309,14 @@ export default function HomePage() {
         timeline="Quick resolution with clear timelines"
         pricing="Transparent fees with no hidden costs"
       />
+
+      {/* TRUST SIGNALS SECTION */}
+      <section className="py-8 md:py-12 bg-background">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-12 space-y-4">
+          <TrustSignals />
+          <WhatHappensNext />
+        </div>
+      </section>
 
       {/* EDITORIAL INTRO SECTION */}
       {/* Layout: Sticky side note with scrolling content */}
