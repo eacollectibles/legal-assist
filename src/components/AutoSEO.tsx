@@ -8,6 +8,59 @@ import {
   businessInfo 
 } from './seoConfig';
 
+// LocalBusiness/LegalService Schema - consistent sitewide
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "@id": "https://legalassist.london/#organization",
+  "name": "LegalAssist Paralegal Services",
+  "url": "https://legalassist.london",
+  "telephone": "365-882-9515",
+  "email": "info@legalassist.london",
+  "logo": "https://legalassist.london/logo.png",
+  "image": "https://legalassist.london/og-image.jpg",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "London",
+    "addressRegion": "ON",
+    "postalCode": "N6A 2L1",
+    "addressCountry": "CA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 42.9849,
+    "longitude": -81.2453
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Ontario" },
+    { "@type": "City", "name": "London" },
+    { "@type": "AdministrativeArea", "name": "Middlesex County" },
+    { "@type": "AdministrativeArea", "name": "Southwestern Ontario" }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  ],
+  "serviceType": [
+    "Traffic Ticket Defence",
+    "Landlord Tenant Board Representation",
+    "Small Claims Court",
+    "Human Rights Tribunal",
+    "Provincial Offences",
+    "Employment Issues"
+  ],
+  "sameAs": [
+    // Add your social profiles here when available
+    // "https://www.linkedin.com/company/legalassist",
+    // "https://www.google.com/maps/place/LegalAssist"
+  ]
+};
+
 export function AutoSEO() {
   const location = useLocation();
   const baseUrl = 'https://legalassist.london';
@@ -84,31 +137,36 @@ export function AutoSEO() {
     setMeta('og:type', 'website', true);
     setMeta('og:site_name', businessInfo.name, true);
     setMeta('og:locale', 'en_CA', true);
+    setMeta('og:image', 'https://legalassist.london/og-image.jpg', true);
     
     // Twitter Card
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', seo.title);
     setMeta('twitter:description', seo.description);
+    setMeta('twitter:image', 'https://legalassist.london/og-image.jpg');
     
     // Geo
     setMeta('geo.region', 'CA-ON');
     setMeta('geo.placename', 'London');
     
-    // Schema: Service
+    // Schema: LocalBusiness (persistent sitewide - only set once)
+    setJsonLd('schema-localbusiness', localBusinessSchema);
+    
+    // Schema: Service (page-specific)
     if (seo.schema) {
       setJsonLd('schema-service', generateServiceSchema(seo, canonicalUrl));
     } else {
       setJsonLd('schema-service', null);
     }
     
-    // Schema: FAQ
+    // Schema: FAQ (page-specific)
     if (seo.faqs && seo.faqs.length > 0) {
       setJsonLd('schema-faq', generateFAQSchema(seo.faqs));
     } else {
       setJsonLd('schema-faq', null);
     }
     
-    // Schema: Breadcrumb
+    // Schema: Breadcrumb (page-specific)
     if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
       setJsonLd('schema-breadcrumb', generateBreadcrumbSchema(seo.breadcrumbs, baseUrl));
     } else {
