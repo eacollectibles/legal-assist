@@ -1,0 +1,50 @@
+import { lazy } from 'react';
+
+// Landlord & Tenant Board Pages
+const LandlordTenantBoardPage = lazy(() => import('@/components/pages/LandlordTenantBoardPage'));
+const LandlordServicesPage = lazy(() => import('@/components/pages/LandlordServicesPage'));
+const TenantServicesPage = lazy(() => import('@/components/pages/TenantServicesPage'));
+const EvictionNonPaymentPage = lazy(() => import('@/components/pages/EvictionNonPaymentPage'));
+const N12PersonalUsePage = lazy(() => import('@/components/pages/N12PersonalUsePage'));
+const N13RenovationEvictionPage = lazy(() => import('@/components/pages/N13RenovationEvictionPage'));
+const AboveGuidelineIncreasePage = lazy(() => import('@/components/pages/AboveGuidelineIncreasePage'));
+const MaintenanceRepairsPage = lazy(() => import('@/components/pages/MaintenanceRepairsPage'));
+const BadFaithEvictionPage = lazy(() => import('@/components/pages/BadFaithEvictionPage'));
+const RentIncreaseGuidePage = lazy(() => import('@/components/pages/RentIncreaseGuidePage'));
+const IllegalLockoutPage = lazy(() => import('@/components/pages/IllegalLockoutPage'));
+const HarassmentByLandlordPage = lazy(() => import('@/components/pages/HarassmentByLandlordPage'));
+const RentArrearsDefencePage = lazy(() => import('@/components/pages/RentArrearsDefencePage'));
+const SubsidizedHousingPage = lazy(() => import('@/components/pages/SubsidizedHousingPage'));
+const RoommateDisputesPage = lazy(() => import('@/components/pages/RoommateDisputesPage'));
+const LeaseBreakingPage = lazy(() => import('@/components/pages/LeaseBreakingPage'));
+const PetDisputesPage = lazy(() => import('@/components/pages/PetDisputesPage'));
+const NoiseComplaintsPage = lazy(() => import('@/components/pages/NoiseComplaintsPage'));
+const LTBHearingPrepPage = lazy(() => import('@/components/pages/LTBHearingPrepPage'));
+const RentReductionPage = lazy(() => import('@/components/pages/RentReductionPage'));
+const MobileHomeParkPage = lazy(() => import('@/components/pages/MobileHomeParkPage'));
+const SuperintendentIssuesPage = lazy(() => import('@/components/pages/SuperintendentIssuesPage'));
+
+export const landlordTenantRoutes = [
+  { path: '/services/landlord-tenant-board', element: LandlordTenantBoardPage },
+  { path: '/services/landlord-services', element: LandlordServicesPage },
+  { path: '/services/tenant-services', element: TenantServicesPage },
+  { path: '/services/eviction-non-payment', element: EvictionNonPaymentPage },
+  { path: '/services/n12-personal-use-eviction', element: N12PersonalUsePage },
+  { path: '/services/n13-renovation-eviction', element: N13RenovationEvictionPage },
+  { path: '/services/above-guideline-increase', element: AboveGuidelineIncreasePage },
+  { path: '/services/maintenance-repairs', element: MaintenanceRepairsPage },
+  { path: '/services/bad-faith-eviction', element: BadFaithEvictionPage },
+  { path: '/services/rent-increase-guide', element: RentIncreaseGuidePage },
+  { path: '/services/illegal-lockout', element: IllegalLockoutPage },
+  { path: '/services/landlord-harassment', element: HarassmentByLandlordPage },
+  { path: '/services/rent-arrears-defence', element: RentArrearsDefencePage },
+  { path: '/services/subsidized-housing-eviction', element: SubsidizedHousingPage },
+  { path: '/services/roommate-disputes', element: RoommateDisputesPage },
+  { path: '/services/breaking-lease-early', element: LeaseBreakingPage },
+  { path: '/services/pet-disputes', element: PetDisputesPage },
+  { path: '/services/noise-complaints-defence', element: NoiseComplaintsPage },
+  { path: '/services/ltb-hearing-preparation', element: LTBHearingPrepPage },
+  { path: '/services/rent-reduction-applications', element: RentReductionPage },
+  { path: '/services/mobile-home-park-disputes', element: MobileHomeParkPage },
+  { path: '/services/superintendent-housing-rights', element: SuperintendentIssuesPage },
+];
