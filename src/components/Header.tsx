@@ -135,9 +135,9 @@ export default function Header() {
                 {isAuthenticated || isAuthenticatedLocal ? (
                   <>
                     <Link 
-                      to="/dashboard" 
+                      to="/client-dashboard" 
                       className={`font-paragraph text-base transition-colors ${
-                        isActive('/dashboard') 
+                        isActive('/client-dashboard') 
                           ? 'text-primary font-semibold' 
                           : 'text-secondary hover:text-primary'
                       }`}
@@ -279,10 +279,10 @@ export default function Header() {
                 {isAuthenticated || isAuthenticatedLocal ? (
                   <>
                     <Link 
-                      to="/dashboard" 
+                      to="/client-dashboard" 
                       onClick={() => setMobileMenuOpen(false)}
                       className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
-                        isActive('/dashboard') 
+                        isActive('/client-dashboard') 
                           ? 'bg-primary text-primary-foreground font-semibold' 
                           : 'text-secondary hover:bg-pastelbeige'
                       }`}
