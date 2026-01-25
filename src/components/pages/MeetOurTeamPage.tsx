@@ -320,6 +320,64 @@ export default function MeetOurTeamPage() {
         </div>
       </section>
 
+      {/* Join Our Team */}
+      <section className="w-full py-16 md:py-20 bg-white border-t border-gray-100">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-pastellavender/30 via-pastelbeige/20 to-pastelpeach/20 rounded-2xl p-8 md:p-12 border border-pastellavender/40">
+              <div className="flex flex-col md:flex-row md:items-center gap-8">
+                <div className="flex-1">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-paragraph font-medium mb-4">
+                    <Handshake className="w-4 h-4" aria-hidden="true" />
+                    Contract Opportunities
+                  </div>
+                  <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                    Join Our Team
+                  </h2>
+                  <p className="font-paragraph text-foreground/80 mb-4">
+                    Are you a licensed paralegal looking for flexible, contract-based work? LegalAssist is growing, and we're looking for passionate paralegals who share our commitment to accessible justice.
+                  </p>
+                  <div className="space-y-2 mb-6">
+                    <p className="font-paragraph text-sm text-foreground/70 font-medium">We're looking for:</p>
+                    <ul className="space-y-2">
+                      <li className="flex items-center gap-2 text-sm text-foreground/80">
+                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true" />
+                        Licensed Paralegals (Law Society of Ontario)
+                      </li>
+                      <li className="flex items-center gap-2 text-sm text-foreground/80">
+                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true" />
+                        Experience in LTB, Small Claims, HRTO, or Provincial Offences
+                      </li>
+                      <li className="flex items-center gap-2 text-sm text-foreground/80">
+                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true" />
+                        Client-focused mindset with strong communication skills
+                      </li>
+                    </ul>
+                  </div>
+                  <p className="font-paragraph text-sm text-foreground/60 italic">
+                    Flexible arrangements available — work on your terms while helping clients across Southwestern Ontario.
+                  </p>
+                </div>
+                <div className="md:w-64 flex-shrink-0">
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center">
+                    <p className="font-heading font-bold text-foreground mb-2">Interested?</p>
+                    <p className="font-paragraph text-sm text-foreground/70 mb-4">Send us your resume and a brief intro.</p>
+                    <a 
+                      href="mailto:help@legalassist.london?subject=Contract%20Paralegal%20Inquiry" 
+                      className="inline-flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground font-paragraph font-medium px-6 py-3 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+                    >
+                      <Mail className="w-4 h-4" aria-hidden="true" />
+                      Get in Touch
+                    </a>
+                    <p className="font-paragraph text-xs text-foreground/50 mt-3">help@legalassist.london</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-primary/10 via-pastelbeige/30 to-pastelpeach/20">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
