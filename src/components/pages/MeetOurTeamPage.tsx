@@ -195,11 +195,14 @@ export default function MeetOurTeamPage() {
                     <Scale className="w-5 h-5 text-primary" />
                     <h3 className="font-heading font-bold text-foreground">Areas of Practice</h3>
                   </div>
+                  <p className="text-sm text-foreground/80 mb-3 font-medium">Practices in all areas of services offered, including:</p>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Landlord & Tenant Board (LTB)</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Small Claims Court</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Provincial Offences Court</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Human Rights Tribunal (HRTO)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Employment Matters</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Traffic & Driving Offences</li>
                   </ul>
                 </div>
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
