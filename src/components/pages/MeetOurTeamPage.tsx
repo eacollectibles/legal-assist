@@ -77,13 +77,13 @@ export default function MeetOurTeamPage() {
               </div>
               <div className="mt-8 bg-pastelbeige/20 rounded-xl p-6">
                 <h3 className="font-heading text-lg font-bold text-foreground mb-4">Contact Johnny</h3>
-                <a href="mailto:johnny@legalassist.ca" className="flex items-center gap-3 text-foreground/80 hover:text-primary mb-3">
+                <a href="mailto:jeanfrancois@legalassist.london" className="flex items-center gap-3 text-foreground/80 hover:text-primary mb-3">
                   <Mail className="w-5 h-5 text-primary" />
-                  <span className="font-paragraph text-sm">johnny@legalassist.ca</span>
+                  <span className="font-paragraph text-sm">jeanfrancois@legalassist.london</span>
                 </a>
-                <a href="tel:5195550100" className="flex items-center gap-3 text-foreground/80 hover:text-primary">
+                <a href="tel:3658829515" className="flex items-center gap-3 text-foreground/80 hover:text-primary">
                   <Phone className="w-5 h-5 text-primary" />
-                  <span className="font-paragraph text-sm">(519) 555-0100</span>
+                  <span className="font-paragraph text-sm">(365) 882-9515</span>
                 </a>
               </div>
             </div>
@@ -98,11 +98,11 @@ export default function MeetOurTeamPage() {
                 Johnny Demers is the co-founder of LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny helped establish LegalAssist to provide professional legal representation to individuals and small businesses across Southwestern Ontario.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
-                Drawing on his background in policing and security, Johnny brings a unique perspective to legal matters. His approach emphasizes clear communication, thorough preparation, and a strong understanding of procedural requirements. Johnny takes pride in demystifying the legal process for clients and ensuring they understand their rights at every stage.
+                Drawing on his background in law enforcement, Johnny brings a unique perspective to legal matters. His approach emphasizes clear communication, thorough preparation, and a strong understanding of procedural requirements. Johnny takes pride in demystifying the legal process for clients and ensuring they understand their rights at every stage.
               </p>
               <blockquote className="bg-gradient-to-br from-pastelbeige/30 to-pastelpeach/20 rounded-xl p-6 mb-8 border-l-4 border-primary">
                 <p className="font-paragraph text-foreground/90 italic">
-                  "I co-founded LegalAssist because I believe everyone deserves quality legal representation, regardless of their financial situation. My background in policing and security gives me a unique understanding of the legal system."
+                  "I co-founded LegalAssist because I believe everyone deserves quality legal representation, regardless of their financial situation. My background in law enforcement gives me a unique understanding of the legal system."
                 </p>
                 <footer className="mt-3 font-heading font-bold text-foreground">— Johnny Demers</footer>
               </blockquote>
@@ -113,10 +113,10 @@ export default function MeetOurTeamPage() {
                     <h3 className="font-heading font-bold text-foreground">Areas of Practice</h3>
                   </div>
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Traffic Tickets</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Small Claims Court</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Landlord & Tenant</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Human Rights Tribunal</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Defamation & Slander</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Licence Appeal Tribunal</li>
                   </ul>
                 </div>
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
@@ -126,8 +126,7 @@ export default function MeetOurTeamPage() {
                   </div>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Paralegal Licensing Candidate</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Policing Diploma</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Security Diploma</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" />Law Enforcement Diploma</li>
                   </ul>
                 </div>
               </div>
@@ -160,13 +159,13 @@ export default function MeetOurTeamPage() {
               </div>
               <div className="mt-8 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                 <h3 className="font-heading text-lg font-bold text-foreground mb-4">Contact Candice</h3>
-                <a href="mailto:candice@legalassist.ca" className="flex items-center gap-3 text-foreground/80 hover:text-primary mb-3">
+                <a href="mailto:candice@legalassist.london" className="flex items-center gap-3 text-foreground/80 hover:text-primary mb-3">
                   <Mail className="w-5 h-5 text-primary" />
-                  <span className="font-paragraph text-sm">candice@legalassist.ca</span>
+                  <span className="font-paragraph text-sm">candice@legalassist.london</span>
                 </a>
-                <a href="tel:5195550101" className="flex items-center gap-3 text-foreground/80 hover:text-primary">
+                <a href="tel:3658829515" className="flex items-center gap-3 text-foreground/80 hover:text-primary">
                   <Phone className="w-5 h-5 text-primary" />
-                  <span className="font-paragraph text-sm">(519) 555-0101</span>
+                  <span className="font-paragraph text-sm">(365) 882-9515</span>
                 </a>
               </div>
             </div>
