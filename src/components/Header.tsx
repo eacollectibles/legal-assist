@@ -262,7 +262,7 @@ export default function Header() {
               </Link>
               <Link 
                 to="/guides/what-is-a-paralegal" 
-                onClick={() => setMobileMenuOpen(false)}}
+                onClick={() => setMobileMenuOpen(false)}
                 className={`font-paragraph text-base py-2 px-3 rounded-lg transition-colors ${
                   isActive('/guides/what-is-a-paralegal') 
                     ? 'bg-primary text-primary-foreground font-semibold' 
