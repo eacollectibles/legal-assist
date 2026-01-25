@@ -984,7 +984,7 @@ export default function ClientIntakePage() {
                                   Schedule a Callback
                                 </a>
                                 <p className="text-xs text-foreground/60 mt-3">
-                                  Or call us directly at: <strong>(519) 123-4567</strong>
+                                  Or call us directly at: <strong>365-882-9515</strong>
                                 </p>
                               </div>
 

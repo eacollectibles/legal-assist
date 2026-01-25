@@ -17,16 +17,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-// SEO Meta Tags
-const setMetaDescription = (description: string) => {
-  let metaDescription = document.querySelector('meta[name="description"]');
-  if (!metaDescription) {
-    metaDescription = document.createElement('meta');
-    metaDescription.setAttribute('name', 'description');
-    document.head.appendChild(metaDescription);
-  }
-  metaDescription.setAttribute('content', description);
-};
+// SEO is handled by AutoSEO component via seoConfig.ts
 
 // --- Utility Components for Motion & Interaction ---
 
@@ -146,14 +137,7 @@ const ParallaxContainer = ({ children, className }: { children: React.ReactNode;
 // --- Main Page Component ---
 
 export default function HomePage() {
-  // Set page title and meta description
-  useEffect(() => {
-    document.title = 'LegalAssist Paralegal | Affordable Legal Services in Ontario';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', 'Professional paralegal services in Ontario. Expert representation for traffic tickets, landlord-tenant disputes, small claims court, and more. Affordable legal help when you need it.');
-    }
-  }, []);
+  // SEO handled by AutoSEO component
 
   // State for sticky contact bar visibility
   const [showStickyBar, setShowStickyBar] = useState(true);
@@ -214,10 +198,6 @@ export default function HomePage() {
       delay: 300
     }
   ];
-
-  useEffect(() => {
-    document.title = 'LegalAssist Paralegal Services | Licensed Ontario Paralegal | London, ON';
-  }, []);
 
   // Intersection Observer to hide sticky bar when CTA section is visible
   useEffect(() => {

@@ -222,8 +222,8 @@ export default function PetDisputesPage() {
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-gray-100 transition-colors">
               Book Free Consultation <ArrowRight className="w-5 h-5" />
             </Link>
-            <a href="tel:5196011110" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
-              Call (519) 601-1110
+            <a href="tel:3658829515" className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-white/10 transition-colors">
+              Call 365-882-9515
             </a>
           </div>
         </div>

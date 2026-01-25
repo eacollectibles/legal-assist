@@ -134,11 +134,11 @@ export default function ConflictDetectedPage() {
                 If you have questions or need to discuss this matter, please contact our office directly.
               </p>
               <a
-                href="tel:+15191234567"
+                href="tel:+13658829515"
                 className="inline-flex items-center justify-center gap-2 bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors mb-4"
               >
                 <Phone className="w-5 h-5" />
-                Call Us: (519) 123-4567
+                Call Us: 365-882-9515
               </a>
               <p className="font-paragraph text-sm text-foreground/70">
                 Available Monday - Friday, 9am - 5pm EST

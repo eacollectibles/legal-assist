@@ -24,7 +24,7 @@ export default function RentIncreaseGuidePage() {
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Understanding when, how much, and how landlords can legally increase rent in Ontario. Know your rights as a tenant or your obligations as a landlord.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Legal Help <ArrowRight className="w-5 h-5" /></Link>
-              <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+              <a href="tel:+13658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> 365-882-9515</a>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function RentIncreaseGuidePage() {
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-8 max-w-2xl mx-auto">Whether you are a landlord wanting to increase rent properly or a tenant who received an improper notice, we can help.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Get Legal Help <ArrowRight className="w-5 h-5" /></Link>
-            <a href="tel:+15196011127" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> (519) 601-1127</a>
+            <a href="tel:+13658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10"><Phone className="w-5 h-5" /> 365-882-9515</a>
           </div>
         </div>
       </section>

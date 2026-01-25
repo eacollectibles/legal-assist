@@ -31,7 +31,7 @@ export default function LondonParalegalPage() {
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
                 Book Free Consultation <ArrowRight className="w-5 h-5" />
               </Link>
-              <a href="tel:3658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5">
+              <a href="tel:+13658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5">
                 <Phone className="w-5 h-5" /> 365-882-9515
               </a>
             </div>
@@ -149,7 +149,7 @@ export default function LondonParalegalPage() {
             <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
               Book Free Consultation <ArrowRight className="w-5 h-5" />
             </Link>
-            <a href="tel:3658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10">
+            <a href="tel:+13658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-foreground/10">
               <Phone className="w-5 h-5" /> 365-882-9515
             </a>
           </div>
