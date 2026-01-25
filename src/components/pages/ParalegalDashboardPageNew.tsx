@@ -11,6 +11,7 @@ const AssignmentsTab = lazy(() => import('./paralegal-dashboard/AssignmentsTab')
 const SignaturesTab = lazy(() => import('./paralegal-dashboard/SignaturesTab'));
 const MessagesTab = lazy(() => import('./paralegal-dashboard/MessagesTab'));
 const FileManagementTab = lazy(() => import('./paralegal-dashboard/FileManagementTab'));
+const SettingsTab = lazy(() => import('./paralegal-dashboard/SettingsTab'));
 const GraphConnectionTest = lazy(() => import('@/components/GraphConnectionTest'));
 
 // Loading spinner component
@@ -88,6 +89,12 @@ function DashboardContent() {
                 File Management
               </TabsTrigger>
               <TabsTrigger 
+                value="settings"
+                className="data-[state=active]:bg-primary data-[state=active]:text-white px-4 py-2 rounded-lg border"
+              >
+                Settings
+              </TabsTrigger>
+              <TabsTrigger 
                 value="graph-test"
                 className="data-[state=active]:bg-primary data-[state=active]:text-white px-4 py-2 rounded-lg border"
               >
@@ -122,6 +129,12 @@ function DashboardContent() {
             <TabsContent value="filemanagement">
               <Suspense fallback={<TabLoading />}>
                 <FileManagementTab />
+              </Suspense>
+            </TabsContent>
+
+            <TabsContent value="settings">
+              <Suspense fallback={<TabLoading />}>
+                <SettingsTab />
               </Suspense>
             </TabsContent>
 
