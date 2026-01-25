@@ -57,7 +57,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/': {
     title: 'LegalAssist Paralegal Services | London Ontario | Affordable Legal Help',
-    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call (519) 601-1110.',
+    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 365-882-9515.',
     keywords: 'paralegal london ontario, legal services london, traffic ticket lawyer london, LTB paralegal, small claims court london',
     schema: {
       type: 'LocalBusiness',
@@ -78,14 +78,14 @@ export const seoConfig: Record<string, SEOConfig> = {
       },
       {
         question: 'Do you offer free consultations?',
-        answer: 'Yes, we offer free initial consultations for all services. Call (519) 601-1110 or book online to discuss your case with a licensed paralegal at no obligation.'
+        answer: 'Yes, we offer free initial consultations for all services. Call 365-882-9515 or book online to discuss your case with a licensed paralegal at no obligation.'
       }
     ]
   },
 
   '/contact': {
     title: 'Contact Us | Free Consultation | LegalAssist London Ontario',
-    description: 'Contact LegalAssist for a free consultation. Located in London, Ontario. Call (519) 601-1110 or book online. Traffic tickets, LTB, small claims court representation.',
+    description: 'Contact LegalAssist for a free consultation. Located in London, Ontario. Call 365-882-9515 or book online. Traffic tickets, LTB, small claims court representation.',
     keywords: 'contact paralegal london, free legal consultation london ontario, book paralegal appointment',
     breadcrumbs: [
       { name: 'Home', url: '/' },
@@ -98,7 +98,7 @@ export const seoConfig: Record<string, SEOConfig> = {
       },
       {
         question: 'How quickly will you respond to my inquiry?',
-        answer: 'We typically respond to all inquiries within 24 hours on business days. For urgent matters, please call us directly at (519) 601-1110.'
+        answer: 'We typically respond to all inquiries within 24 hours on business days. For urgent matters, please call us directly at 365-882-9515.'
       }
     ,
       {
@@ -3676,7 +3676,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/locations/london': {
     title: 'Paralegal Services London Ontario | LegalAssist',
-    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant, small claims court. Local expertise. Call (519) 601-1110.',
+    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant, small claims court. Local expertise. Call 365-882-9515.',
     keywords: 'paralegal london ontario, lawyer london on, legal services london, court representation london',
     schema: { type: 'LocalBusiness', name: 'LegalAssist London', areaServed: ['London', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'London', url: '/locations/london' }],
