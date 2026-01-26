@@ -47,6 +47,84 @@ export default defineConfig({
         ],
       },
     } : undefined,
+    // ============================================
+    // PAGE SPEED OPTIMIZATIONS
+    // ============================================
+    build: {
+      // Enable minification
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+          pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        },
+        mangle: true,
+      },
+      // Optimize chunk splitting
+      rollupOptions: {
+        output: {
+          // Manual chunk splitting for better caching
+          manualChunks: (id) => {
+            // Vendor chunks - rarely change, cache well
+            if (id.includes('node_modules')) {
+              // React ecosystem
+              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+                return 'vendor-react';
+              }
+              // Radix UI components
+              if (id.includes('@radix-ui')) {
+                return 'vendor-radix';
+              }
+              // Lucide icons
+              if (id.includes('lucide-react')) {
+                return 'vendor-icons';
+              }
+              // Other vendors
+              return 'vendor';
+            }
+            // UI components - shared across pages
+            if (id.includes('/components/ui/')) {
+              return 'ui-components';
+            }
+            // Service pages - large chunk, load on demand
+            if (id.includes('/components/pages/') && (
+              id.includes('Page.tsx') || 
+              id.includes('Service')
+            )) {
+              return 'pages';
+            }
+          },
+          // Consistent chunk names for better caching
+          chunkFileNames: 'assets/[name]-[hash].js',
+          entryFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash].[ext]',
+        },
+      },
+      // Target modern browsers for smaller bundles
+      target: 'es2020',
+      // CSS code splitting
+      cssCodeSplit: true,
+      // Generate source maps for production debugging (optional)
+      sourcemap: false,
+      // Increase chunk size warning limit
+      chunkSizeWarningLimit: 1000,
+    },
+    // Optimize deps
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'lucide-react',
+      ],
+      exclude: ['@wix/astro'],
+    },
+    // Enable esbuild for faster builds
+    esbuild: {
+      legalComments: 'none',
+      treeShaking: true,
+    },
   },
   ...(isBuild && { adapter: cloudProviderFetchAdapter({}) }),
   devToolbar: {
@@ -61,5 +139,12 @@ export default defineConfig({
   },
   security: {
     checkOrigin: false
-  }
+  },
+  // Prefetch settings
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'viewport',
+  },
+  // Compression
+  compressHTML: true,
 });
