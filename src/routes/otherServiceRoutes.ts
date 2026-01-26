@@ -14,7 +14,6 @@ const CommissionerOfOathsPage = lazy(() => import('@/components/pages/Commission
 const MediationServicesPage = lazy(() => import('@/components/pages/MediationServicesPage'));
 const SocialBenefitsTribunalPage = lazy(() => import('@/components/pages/SocialBenefitsTribunalPage'));
 const IRBRepresentationPage = lazy(() => import('@/components/pages/IRBRepresentationPage'));
-const LegalNewsPage = lazy(() => import('@/components/pages/LegalNewsPage'));
 
 export const otherServiceRoutes = [
   { path: '/services/human-rights-tribunal', element: HumanRightsTribunalPage },
@@ -28,5 +27,4 @@ export const otherServiceRoutes = [
   { path: '/services/mediation', element: MediationServicesPage },
   { path: '/services/social-benefits-tribunal', element: SocialBenefitsTribunalPage },
   { path: '/services/irb-representation', element: IRBRepresentationPage },
-  { path: '/legal-news', element: LegalNewsPage },
 ];
