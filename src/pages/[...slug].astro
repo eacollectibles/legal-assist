@@ -2,8 +2,12 @@
 /**
  * [...slug].astro - Dynamic page handler with SERVER-SIDE SEO
  * 
- * This file renders SEO meta tags on the server so Google sees them
- * when crawling. AutoSEO.tsx still runs client-side for SPA navigation.
+ * PERFORMANCE OPTIMIZATIONS:
+ * - Critical font preloading
+ * - DNS prefetch for external resources
+ * - Preconnect for critical origins
+ * - Deferred non-critical scripts
+ * - Optimized resource hints
  */
 import AppRouter from "@/components/Router";
 import { seoConfig, businessInfo, generateFAQSchema, generateBreadcrumbSchema } from "@/components/seoConfig";
@@ -136,6 +140,34 @@ const currentYear = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     
+    <!-- ============================================
+         PERFORMANCE: Critical Resource Hints
+         ============================================ -->
+    
+    <!-- Preload critical fonts (eliminates FOIT) -->
+    <link 
+      rel="preload" 
+      href="/fonts/dmsans/v17/rP2Hp2ywxg089UriCZOIHTWEBlw.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin="anonymous"
+    />
+    <link 
+      rel="preload" 
+      href="/fonts/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin="anonymous"
+    />
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://static.wixstatic.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    
+    <!-- Preconnect for critical third-party origins -->
+    <link rel="preconnect" href="https://static.parastorage.com" crossorigin="anonymous" />
+    
     <!-- SERVER-SIDE SEO: Title -->
     <title>{pageConfig.title}</title>
     
@@ -200,54 +232,99 @@ const currentYear = new Date().getFullYear();
     <!-- Security -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     
-    <!-- Performance - Preconnect -->
-    <link rel="dns-prefetch" href="https://static.wixstatic.com" />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="preconnect" href="https://static.parastorage.com" crossOrigin="anonymous" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-    
     <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-      {JSON.stringify(schemaData)}
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
     
     <!-- SERVER-SIDE SEO: FAQ Schema if present -->
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
     
     <!-- SERVER-SIDE SEO: Breadcrumb Schema if present -->
     {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
+    
+    <!-- ============================================
+         PERFORMANCE: Critical CSS (Inline)
+         Prevents render-blocking for above-the-fold content
+         ============================================ -->
+    <style is:inline>
+      /* Critical CSS - Above the fold styles */
+      html{opacity:0;visibility:hidden;background-color:#F9F5F0}
+      html.hydrated{opacity:1;visibility:visible;transition:opacity .15s ease-in-out}
+      body{margin:0;font-family:'DM Sans',system-ui,-apple-system,sans-serif;background-color:#F9F5F0;color:#4A2C23}
+      .bg-background{background-color:#F9F5F0}
+      .text-secondary{color:#4A2C23}
+      .text-primary{color:#B94A1F}
+      .font-heading{font-family:'Playfair Display',Georgia,serif}
+      .font-paragraph{font-family:'DM Sans',system-ui,sans-serif}
+      /* Loading skeleton */
+      .skeleton-pulse{animation:pulse 1.5s cubic-bezier(.4,0,.6,1) infinite}
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+      /* Prevent layout shift */
+      #root{min-height:100vh;display:flex;flex-direction:column}
+    </style>
   </head>
   <body class="w-full h-full">
+    <!-- Loading indicator (shows while JS loads) -->
+    <div id="loading-indicator" class="fixed inset-0 bg-background z-[9999] flex items-center justify-center" aria-hidden="true">
+      <div class="flex flex-col items-center gap-4">
+        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+          <span class="text-primary font-heading font-bold text-xl">LA</span>
+        </div>
+        <div class="w-32 h-1 bg-secondary/10 rounded-full overflow-hidden">
+          <div class="h-full bg-primary rounded-full" style="animation: loading 1s ease-in-out infinite; width: 30%;"></div>
+        </div>
+      </div>
+      <style>
+        @keyframes loading {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
+        }
+      </style>
+    </div>
+    
     <div id="root" class="w-full h-full bg-background">
       <AppRouter client:only="react" />
     </div>
+    
     <script>
-      // CRITICAL: Ensure hydration is marked ASAP
+      // CRITICAL: Fast hydration marker
       const markHydrated = () => {
         document.documentElement.classList.add('hydrated');
-        console.log('[Hydration] Page marked as hydrated');
+        // Hide loading indicator
+        const loader = document.getElementById('loading-indicator');
+        if (loader) {
+          loader.style.opacity = '0';
+          loader.style.transition = 'opacity 0.2s ease-out';
+          setTimeout(() => loader.remove(), 200);
+        }
       };
       
-      // Mark immediately on script execution
-      markHydrated();
-      
-      // Redundant fallbacks for safety
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', markHydrated);
+      // Mark immediately
+      if (document.readyState === 'complete') {
+        markHydrated();
+      } else {
+        // Use fastest available event
+        if (document.readyState === 'interactive') {
+          markHydrated();
+        } else {
+          document.addEventListener('DOMContentLoaded', markHydrated, { once: true });
+        }
       }
-      setTimeout(markHydrated, 100);
-      setTimeout(markHydrated, 500);
-      setTimeout(markHydrated, 2000);
-      window.addEventListener('load', markHydrated);
       
-      // Emergency fallback: if not marked after 3 seconds, force it
+      // Fallback timeouts
+      setTimeout(markHydrated, 100);
+      setTimeout(markHydrated, 1000);
+      
+      // Emergency fallback
       setTimeout(() => {
         if (!document.documentElement.classList.contains('hydrated')) {
-          console.warn('[Hydration] Emergency fallback: forcing hydration marker');
+          console.warn('[Hydration] Emergency fallback triggered');
           markHydrated();
         }
       }, 3000);
     </script>
+    
+    <!-- Prefetch likely navigation targets -->
+    <link rel="prefetch" href="/services" />
+    <link rel="prefetch" href="/contact" />
   </body>
 </html>
