@@ -79,14 +79,14 @@ const AnimatedElement = ({
       case 'slide-in-right': return 'opacity-0 translate-x-10 transition-all duration-1000 ease-out data-[visible=true]:opacity-100 data-[visible=true]:translate-x-0';
       case 'scale-up': return 'opacity-0 scale-95 transition-all duration-1000 ease-out data-[visible=true]:opacity-100 data-[visible=true]:scale-100';
       case 'fade-up':
-      default: return 'opacity-0 translate-y-8 transition-all duration-1000 ease-out';
+      default: return '';
     }
   };
 
   return (
     <div 
       ref={ref} 
-      className={cn(getAnimationClass(), className, "[&.is-visible]:opacity-100 [&.is-visible]:translate-y-0 [&.is-visible]:translate-x-0 [&.is-visible]:scale-100")}
+      className={cn(getAnimationClass(), className, "")}
     >
       {children}
     </div>
@@ -226,10 +226,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
-      {/* DEPLOYMENT TEST - DELETE AFTER CONFIRMING */}
-      <div style={{background: 'red', color: 'white', padding: '20px', textAlign: 'center', fontSize: '24px', fontWeight: 'bold'}}>
-        TEST BANNER - IF YOU SEE THIS, DEPLOYMENT WORKS - Jan 26 10PM
-      </div>
+
       <Header />
       
       {/* Primary SEO H1 - Screen reader accessible, visually minimal */}
@@ -331,7 +328,7 @@ export default function HomePage() {
             {/* Sticky Header */}
             <div className="lg:col-span-4 relative">
               <div className="sticky top-32">
-                <AnimatedElement>
+                <div>
                   <div className="flex items-center gap-4 mb-6">
                     <div className="h-px w-12 bg-primary" />
                     <span className="font-paragraph text-sm font-semibold tracking-widest uppercase text-primary">
@@ -345,26 +342,26 @@ export default function HomePage() {
                   <div className="mt-12 hidden lg:block">
                     <ArrowDown className="w-8 h-8 text-secondary/40 animate-bounce" />
                   </div>
-                </AnimatedElement>
+                </div>
               </div>
             </div>
 
             {/* Scrolling Content */}
             <div className="lg:col-span-7 lg:col-start-6 space-y-12">
-              <AnimatedElement delay={200}>
+              <div>
                 <p className="font-heading text-2xl md:text-3xl text-secondary leading-relaxed">
                   Professional Guidance, Personalized Approach.
                 </p>
-              </AnimatedElement>
+              </div>
               
-              <AnimatedElement delay={300}>
+              <div>
                 <div className="prose prose-lg prose-stone text-secondary/80 font-paragraph">
                   <p className="mb-6 text-lg leading-loose">{"At LegalAssist, we help individuals navigate Ontario's legal system with clarity and confidence. Our services are provided by Licensed Paralegals in good standing with the Law Society of Ontario, offering knowledgeable and practical assistance within the authorized scope of paralegal practice."}</p>
                   <p className="text-lg leading-loose">{"Whether you are dealing with a traffic offence, a Small Claims Court matter within the court's monetary jurisdiction, or a landlord-tenant dispute, our Licensed Paralegals provide knowledgeable and practical legal services within the authorized scope of practice. We are committed to offering services that are accessible, understandable, and cost-effective."}</p>
                 </div>
-              </AnimatedElement>
+              </div>
 
-              <AnimatedElement delay={400}>
+              <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8 border-t border-secondary/10">
                   <div className="flex items-start gap-4">
                     <div className="p-2 bg-white rounded-full shadow-sm">
@@ -385,7 +382,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-              </AnimatedElement>
+              </div>
             </div>
 
           </div>
@@ -395,9 +392,9 @@ export default function HomePage() {
       {/* CALL PROCESS BOX SECTION */}
       <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
-          <AnimatedElement>
+          <div>
             <CallProcessBox />
-          </AnimatedElement>
+          </div>
         </div>
       </section>
 
@@ -405,15 +402,15 @@ export default function HomePage() {
       <section className="py-16 md:py-24 lg:py-32 bg-pastelbeige/30 relative">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <AnimatedElement>
+            <div>
               <h2 className="font-heading text-4xl md:text-5xl text-secondary mb-6">How It Works</h2>
               <p className="font-paragraph text-lg text-secondary/70">A simple, transparent process to get you the legal help you need</p>
-            </AnimatedElement>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {/* Step 1 */}
-            <AnimatedElement delay={0} className="h-full">
+            <div>
               <div className="relative h-full">
                 <div className="bg-white rounded-xl p-8 lg:p-10 shadow-sm border border-secondary/10 h-full flex flex-col">
                   {/* Step Number */}
@@ -443,10 +440,10 @@ export default function HomePage() {
                   <ArrowRight className="w-6 h-6 text-secondary/30" />
                 </div>
               </div>
-            </AnimatedElement>
+            </div>
 
             {/* Step 2 */}
-            <AnimatedElement delay={100} className="h-full">
+            <div>
               <div className="relative h-full">
                 <div className="bg-white rounded-xl p-8 lg:p-10 shadow-sm border border-secondary/10 h-full flex flex-col">
                   {/* Step Number */}
@@ -476,10 +473,10 @@ export default function HomePage() {
                   <ArrowRight className="w-6 h-6 text-secondary/30" />
                 </div>
               </div>
-            </AnimatedElement>
+            </div>
 
             {/* Step 3 */}
-            <AnimatedElement delay={200} className="h-full">
+            <div>
               <div className="relative h-full">
                 <div className="bg-white rounded-xl p-8 lg:p-10 shadow-sm border border-secondary/10 h-full flex flex-col">
                   {/* Step Number */}
@@ -504,13 +501,13 @@ export default function HomePage() {
                   <p className="font-paragraph text-sm text-primary font-semibold mt-6">Letters, Filing & Representation</p>
                 </div>
               </div>
-            </AnimatedElement>
+            </div>
           </div>
 
           {/* CTA Below Steps */}
-          <AnimatedElement delay={300} className="mt-16 text-center">
+          <div>
             <PrimaryCTA variant="button" size="lg" />
-          </AnimatedElement>
+          </div>
         </div>
       </section>
 
@@ -518,10 +515,10 @@ export default function HomePage() {
       <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <AnimatedElement>
+            <div>
               <h2 className="font-heading text-4xl md:text-5xl text-secondary mb-6">Why Partner With LegalAssist</h2>
               <p className="font-paragraph text-lg text-secondary/70">{"We combine professional standards with a client-focused approach to provide reliable and practical legal services."}</p>
-            </AnimatedElement>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -529,7 +526,7 @@ export default function HomePage() {
               if (!feature) return null;
               
               return (
-                <AnimatedElement key={index} delay={feature.delay || 0} className="h-full">
+                <div>
                   <div className={cn(
                     "group relative h-full p-8 lg:p-10 transition-all duration-500 hover:-translate-y-2 overflow-hidden flex flex-col",
                     feature.color || "bg-pastelbeige"
@@ -573,7 +570,7 @@ export default function HomePage() {
                       <feature.icon className="absolute -bottom-8 -right-8 w-48 h-48 text-secondary/5 rotate-12 group-hover:rotate-0 transition-transform duration-700 ease-out" />
                     )}
                   </div>
-                </AnimatedElement>
+                </div>
               );
             })}
           </div>
@@ -615,23 +612,23 @@ export default function HomePage() {
           {/* Right: Content Side */}
           <div className="flex items-center p-8 lg:p-24 xl:p-32">
             <div className="max-w-xl">
-              <AnimatedElement>
+              <div>
                 <span className="inline-block py-1 px-3 border border-white/20 rounded-full text-xs font-medium tracking-wider uppercase mb-8 text-white/80">
                   Our Expertise
                 </span>
                 <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl mb-8 text-white">
                   <span className="heading-underline">Comprehensive</span> Legal Services
                 </h2>
-              </AnimatedElement>
+              </div>
 
-              <AnimatedElement delay={200}>
+              <div>
                 <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-8">{"Licensed paralegals in Ontario are authorized to represent clients in a broad range of legal matters. This includes summary conviction criminal offences, provincial offences such as traffic tickets, landlord-tenant disputes, and Small Claims Court matters up to $50,000. We provide professional representation across the full scope of paralegal-permitted practice areas."}</p>
                 <p className="font-paragraph text-lg text-white/70 leading-relaxed mb-12">
                   Our team specializes in making the legal process understandable and manageable, guiding you through each step with clarity and confidence.
                 </p>
-              </AnimatedElement>
+              </div>
 
-              <AnimatedElement delay={300}>
+              <div>
                 <Link 
                   to="/services"
                   className="inline-flex items-center gap-3 text-white border-b border-primary pb-1 hover:text-primary hover:border-white transition-colors text-lg font-paragraph group"
@@ -639,7 +636,7 @@ export default function HomePage() {
                   View All Practice Areas
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
                 </Link>
-              </AnimatedElement>
+              </div>
             </div>
           </div>
 
@@ -650,17 +647,17 @@ export default function HomePage() {
       <section className="py-16 md:py-24 lg:py-32 bg-dark relative overflow-hidden">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <AnimatedElement>
+            <div>
               <span className="text-primary font-paragraph text-sm tracking-[0.2em] uppercase mb-6 block">
                 Our Services
               </span>
               <h2 className="font-heading text-4xl md:text-5xl text-white mb-6">Our Practice Areas</h2>
               <p className="font-paragraph text-lg text-white/70">Comprehensive legal representation across Ontario's key tribunals and courts</p>
-            </AnimatedElement>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatedElement delay={0}>
+            <div>
               <Link 
                 to="/services/small-claims-court" 
                 className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
@@ -678,9 +675,9 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={100}>
+            <div>
               <Link 
                 to="/services/landlord-tenant-board" 
                 className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
@@ -698,9 +695,9 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={200}>
+            <div>
               <Link 
                 to="/services/traffic-tickets" 
                 className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
@@ -718,9 +715,9 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={300}>
+            <div>
               <Link 
                 to="/services/human-rights-tribunal" 
                 className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
@@ -738,9 +735,9 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={400}>
+            <div>
               <Link 
                 to="/services/employment-issues" 
                 className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
@@ -758,9 +755,9 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={500}>
+            <div>
               <Link 
                 to="/services/criminal-matters" 
                 className="card-hover bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group"
@@ -778,7 +775,7 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </Link>
-            </AnimatedElement>
+            </div>
           </div>
         </div>
       </section>
@@ -787,19 +784,19 @@ export default function HomePage() {
       <section className="texture-noise py-16 md:py-24 lg:py-32 bg-pastellavender relative overflow-hidden">
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl mx-auto">
-            <AnimatedElement>
+            <div>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-secondary mb-4 text-center">
                 <span className="heading-underline">Frequently Asked</span> Questions
               </h2>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={100}>
+            <div>
               <p className="font-paragraph text-lg text-foreground/70 text-center mb-16">
                 Get answers to common questions about paralegal services in Ontario
               </p>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={200}>
+            <div>
               <Accordion type="single" collapsible className="w-full space-y-4">
                 <AccordionItem value="item-1" className="bg-white/50 backdrop-blur-sm rounded-lg px-6 border-none">
                   <AccordionTrigger className="font-heading text-xl text-secondary hover:text-primary hover:no-underline py-6">
@@ -846,7 +843,7 @@ export default function HomePage() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </AnimatedElement>
+            </div>
           </div>
         </div>
       </section>
@@ -861,26 +858,26 @@ export default function HomePage() {
 
         <div className="max-w-[100rem] mx-auto px-6 lg:px-12 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <AnimatedElement animation="scale-up">
+            <div>
               <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl text-secondary mb-8">
                 Unsure where you stand legally in Ontario?
               </h2>
-            </AnimatedElement>
+            </div>
             
-            <AnimatedElement delay={200}>
+            <div>
               <div className="flex flex-col gap-4 items-center mb-6">
                 <PrimaryCTA variant="button" size="lg" />
                 <p className="font-paragraph text-base text-secondary/70 max-w-xl">
                   Get a clear explanation of your rights and options under Ontario law.
                 </p>
               </div>
-            </AnimatedElement>
+            </div>
 
-            <AnimatedElement delay={300}>
+            <div>
               <p className="font-paragraph text-sm text-secondary/60 italic">
                 Licensed Ontario paralegal • No obligation
               </p>
-            </AnimatedElement>
+            </div>
           </div>
         </div>
       </section>
