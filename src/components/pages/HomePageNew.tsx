@@ -97,7 +97,7 @@ export default function HomePage() {
         {/* Right: Image Side */}
         <div className="relative order-1 lg:order-2 min-h-[40vh] lg:min-h-0">
           <img
-            src="https://static.wixstatic.com/media/12d367_4f26ccd17f8f4e3a8958306ea08c2332~mv2.png"
+            src="https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1200,h_900,al_c,q_85/banner.jpeg"
             alt="Paralegal consultation in London Ontario"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -383,3 +383,4 @@ export default function HomePage() {
     </div>
   );
 }
+
