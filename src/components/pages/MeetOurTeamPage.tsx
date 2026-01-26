@@ -121,15 +121,15 @@ export default function MeetOurTeamPage() {
             <div className="lg:col-span-2">
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-paragraph font-medium">Licensed Paralegal (Law Society of Ontario) — LSO #P21479</span>
-                <span className="px-3 py-1 bg-pastelgreen/40 text-foreground rounded-full text-sm font-paragraph font-medium">Co-Founder</span>
+                <span className="px-3 py-1 bg-pastelgreen/40 text-foreground rounded-full text-sm font-paragraph font-medium">Founder</span>
               </div>
               <h2 className="font-heading text-4xl font-bold text-foreground mb-2">Candice Fogarty</h2>
-              <p className="font-paragraph text-xl text-primary font-medium mb-2">Co-Founder & Licensed Paralegal</p>
+              <p className="font-paragraph text-xl text-primary font-medium mb-2">Founder & Licensed Paralegal</p>
               <p className="text-sm text-foreground/60 mb-6">
                 Law Society of Ontario licence verified — LSO #P21479
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Candice Fogarty is the co-founder and lead paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal expertise and compassionate understanding.
+                Candice Fogarty is the founder and lead paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal expertise and compassionate understanding.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
                 Her dedication to thorough case preparation and compassionate client service has made her invaluable to the team. With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines LegalAssist's approach.
@@ -215,22 +215,21 @@ export default function MeetOurTeamPage() {
             <div className="lg:col-span-2 lg:order-1">
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-paragraph font-medium">Paralegal Licensing Candidate</span>
-                <span className="px-3 py-1 bg-pastelgreen/40 text-foreground rounded-full text-sm font-paragraph font-medium">Co-Founder</span>
               </div>
               <h2 className="font-heading text-4xl font-bold text-foreground mb-2">Johnny Demers</h2>
-              <p className="font-paragraph text-xl text-primary font-medium mb-2">Co-Founder & Paralegal Licensing Candidate</p>
+              <p className="font-paragraph text-xl text-primary font-medium mb-2">Paralegal Licensing Candidate</p>
               <p className="font-paragraph text-sm text-foreground/60 mb-6 italic">
                 Johnny is a paralegal licensing candidate and does not provide legal services independently. He works under the supervision of licensed paralegals in accordance with Law Society of Ontario rules.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Johnny Demers is the co-founder of LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny helped establish LegalAssist to provide professional legal support to individuals and small businesses across Southwestern Ontario.
+                Johnny Demers is a paralegal licensing candidate at LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny is dedicated to providing professional legal support to individuals and small businesses across Southwestern Ontario.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
                 Drawing on his background in law enforcement, Johnny brings a unique perspective to legal matters. His approach emphasizes clear communication, thorough preparation, and a strong understanding of procedural requirements. Johnny takes pride in demystifying the legal process for clients and ensuring they understand their rights at every stage.
               </p>
               <blockquote className="bg-gradient-to-br from-pastelbeige/30 to-pastelpeach/20 rounded-xl p-6 mb-8 border-l-4 border-primary">
                 <p className="font-paragraph text-foreground/90 italic">
-                  "I co-founded LegalAssist because I believe everyone deserves quality legal support, regardless of their financial situation. My background in law enforcement gives me a unique understanding of the legal system."
+                  "I'm passionate about helping clients navigate the legal system with clarity and confidence. My background in law enforcement gives me a unique understanding of the legal process."
                 </p>
                 <footer className="mt-3 font-heading font-bold text-foreground">— Johnny Demers</footer>
               </blockquote>
