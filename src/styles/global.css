@@ -5,6 +5,57 @@
 @tailwind utilities;
 
 /* ============================================
+   PERFORMANCE: CSS Containment & Paint Optimization
+   ============================================ */
+
+@layer base {
+  /* GPU acceleration for animated elements */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  /* Content containment for layout isolation */
+  main, article, section {
+    contain: content;
+  }
+  
+  /* Strict containment for heavy components */
+  .contain-strict {
+    contain: strict;
+  }
+  
+  .contain-paint {
+    contain: paint;
+  }
+  
+  /* Optimize text rendering */
+  body {
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Optimize images */
+  img, video {
+    content-visibility: auto;
+  }
+  
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ============================================
    MOBILE-FIRST UX FOUNDATIONS
    ============================================ */
 
@@ -335,6 +386,20 @@ body.menu-open {
   .skeleton-button {
     @apply skeleton h-12 w-full rounded-xl;
   }
+  
+  /* Optimized skeleton animation */
+  .skeleton-pulse {
+    animation: skeleton-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* ============================================
@@ -508,5 +573,53 @@ body.menu-open {
 @media (hover: hover) and (pointer: fine) {
   .heading-underline-grow:hover::after {
     width: 100%;
+  }
+}
+
+/* ============================================
+   PERFORMANCE: Lazy Load Below Fold Content
+   ============================================ */
+
+@layer utilities {
+  /* Content visibility for lazy rendering */
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+  }
+  
+  /* Skip rendering for offscreen content */
+  .content-hidden {
+    content-visibility: hidden;
+  }
+  
+  /* Always render (for critical content) */
+  .content-visible {
+    content-visibility: visible;
+  }
+}
+
+/* ============================================
+   PERFORMANCE: Optimized Animations
+   ============================================ */
+
+@layer utilities {
+  /* Use transform instead of position for animations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Optimized fade animation */
+  .fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
