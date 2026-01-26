@@ -21,7 +21,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-12 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8 mb-8 sm:mb-12">
           
           {/* Brand Section */}
           <div>
@@ -56,28 +56,10 @@ export default function Footer() {
                 About Us
               </Link>
               <Link 
-                to="/guides/what-is-a-paralegal" 
-                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
-              >
-                What Is a Paralegal?
-              </Link>
-              <Link 
-                to="/guides/paralegal-vs-lawyer" 
-                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
-              >
-                Paralegal vs. Lawyer
-              </Link>
-              <Link 
                 to="/services" 
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Services
-              </Link>
-              <Link 
-                to="/legal-news" 
-                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
-              >
-                Recent Decisions
               </Link>
               <Link 
                 to="/contact" 
@@ -87,10 +69,47 @@ export default function Footer() {
               </Link>
             </nav>
           </div>
+
+          {/* Resources Section - NEW */}
+          <div>
+            <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Resources</h3>
+            <nav className="flex flex-col gap-0.5" aria-label="Resources navigation">
+              <Link 
+                to="/resources" 
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                All Resources
+              </Link>
+              <Link 
+                to="/legal-news" 
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Recent Decisions
+              </Link>
+              <Link 
+                to="/guides/ontario-tenant-rights" 
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Tenant Rights Guide
+              </Link>
+              <Link 
+                to="/guides/small-claims-court-process" 
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Small Claims Guide
+              </Link>
+              <Link 
+                to="/guides/what-is-a-paralegal" 
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                What Is a Paralegal?
+              </Link>
+            </nav>
+          </div>
           
           {/* Contact Information Section - 48px touch targets */}
           <div>
-            <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Contact Information</h3>
+            <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Contact</h3>
             <div className="flex flex-col gap-0.5">
               {/* Address - not clickable but styled consistently */}
               <div className="flex items-start gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg">

@@ -10,13 +10,21 @@ export default function Header() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+  const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const { isAuthenticated, member, actions, isLoading } = useMember();
   const { user, isAuthenticated: isAuthenticatedLocal, isAdmin: userIsAdmin, logout: logoutLocal } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  const isResourcesActive = () => {
+    return location.pathname.startsWith('/guides') || 
+           location.pathname === '/legal-news' || 
+           location.pathname === '/resources';
   };
 
   // Lock body scroll when mobile menu is open
@@ -35,6 +43,7 @@ export default function Header() {
   useEffect(() => {
     setMobileMenuOpen(false);
     setMobileAboutOpen(false);
+    setMobileResourcesOpen(false);
   }, [location.pathname]);
 
   // Close mobile menu on escape key
@@ -55,6 +64,7 @@ export default function Header() {
   const handleMobileLinkClick = useCallback(() => {
     setMobileMenuOpen(false);
     setMobileAboutOpen(false);
+    setMobileResourcesOpen(false);
   }, []);
 
   return (
@@ -109,6 +119,8 @@ export default function Header() {
               >
                 Home
               </Link>
+              
+              {/* About Dropdown */}
               <div 
                 className="relative"
                 onMouseEnter={() => setAboutDropdownOpen(true)}
@@ -174,6 +186,7 @@ export default function Header() {
                   </div>
                 )}
               </div>
+              
               <Link 
                 to="/services" 
                 className={`font-paragraph text-base transition-colors focus-ring rounded px-2 py-1 -mx-2 ${
@@ -184,6 +197,97 @@ export default function Header() {
               >
                 Services
               </Link>
+
+              {/* Resources Dropdown - NEW */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setResourcesDropdownOpen(true)}
+                onMouseLeave={() => setResourcesDropdownOpen(false)}
+              >
+                <button 
+                  className={`font-paragraph text-base transition-colors flex items-center gap-1 focus-ring rounded px-2 py-1 -mx-2 ${
+                    isResourcesActive()
+                      ? 'text-primary font-semibold' 
+                      : 'text-secondary hover:text-primary'
+                  }`}
+                  aria-expanded={resourcesDropdownOpen}
+                  aria-haspopup="true"
+                >
+                  Resources
+                  <ChevronDown className={`w-4 h-4 transition-transform ${resourcesDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {resourcesDropdownOpen && (
+                  <div className="absolute top-full left-0 pt-2 w-64">
+                    <div className="bg-background border border-secondary/10 rounded-lg shadow-lg py-2">
+                      <Link
+                        to="/resources"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/resources')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        All Resources
+                      </Link>
+                      <Link
+                        to="/legal-news"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/legal-news')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Recent Legal Decisions
+                      </Link>
+                      <div className="border-t border-secondary/10 my-2" />
+                      <span className="block px-4 py-1 font-paragraph text-xs text-secondary/50 uppercase tracking-wider">
+                        Legal Guides
+                      </span>
+                      <Link
+                        to="/guides/ontario-tenant-rights"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/guides/ontario-tenant-rights')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Ontario Tenant Rights
+                      </Link>
+                      <Link
+                        to="/guides/small-claims-court-process"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/guides/small-claims-court-process')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Small Claims Court Guide
+                      </Link>
+                      <Link
+                        to="/guides/ltb-hearing-preparation"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/guides/ltb-hearing-preparation')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        LTB Hearing Preparation
+                      </Link>
+                      <Link
+                        to="/guides/what-to-do-when-sued"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/guides/what-to-do-when-sued')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        What to Do When Sued
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {!isLoading && (
                 <>
@@ -266,7 +370,7 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile Navigation - Full screen overlay */}
+          {/* Mobile Navigation */}
           {mobileMenuOpen && (
             <nav 
               id="mobile-menu"
@@ -287,7 +391,7 @@ export default function Header() {
                   Home
                 </Link>
                 
-                {/* About Section - Accordion style */}
+                {/* About Section - Accordion */}
                 <div className="flex flex-col">
                   <button
                     onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
@@ -365,6 +469,71 @@ export default function Header() {
                   Services
                 </Link>
 
+                {/* Resources Section - Accordion - NEW */}
+                <div className="flex flex-col">
+                  <button
+                    onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
+                    className={`font-paragraph text-base min-h-[48px] flex items-center justify-between px-4 rounded-lg transition-colors focus-ring ${
+                      isResourcesActive()
+                        ? 'text-primary font-semibold' 
+                        : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                    }`}
+                    aria-expanded={mobileResourcesOpen}
+                  >
+                    <span>Resources</span>
+                    <ChevronDown className={`w-5 h-5 transition-transform ${mobileResourcesOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {mobileResourcesOpen && (
+                    <div className="ml-4 mt-1 flex flex-col gap-1 border-l-2 border-pastelbeige pl-2">
+                      <Link 
+                        to="/resources" 
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/resources') 
+                            ? 'bg-primary text-primary-foreground font-semibold' 
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        All Resources
+                      </Link>
+                      <Link 
+                        to="/legal-news" 
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/legal-news') 
+                            ? 'bg-primary text-primary-foreground font-semibold' 
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Recent Legal Decisions
+                      </Link>
+                      <Link 
+                        to="/guides/ontario-tenant-rights" 
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/guides/ontario-tenant-rights') 
+                            ? 'bg-primary text-primary-foreground font-semibold' 
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Tenant Rights Guide
+                      </Link>
+                      <Link 
+                        to="/guides/small-claims-court-process" 
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/guides/small-claims-court-process') 
+                            ? 'bg-primary text-primary-foreground font-semibold' 
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Small Claims Guide
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
                 {!isLoading && (
                   <>
                     {isAuthenticated || isAuthenticatedLocal ? (
@@ -425,7 +594,7 @@ export default function Header() {
                           Client Portal
                         </Link>
                         
-                        {/* Mobile CTA - prominent placement */}
+                        {/* Mobile CTA */}
                         <div className="mt-3 pt-3 border-t border-secondary/10">
                           <PrimaryCTA variant="mobile" size="lg" className="w-full min-h-[52px]" />
                         </div>
