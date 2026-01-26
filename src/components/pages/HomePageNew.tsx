@@ -226,6 +226,10 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
+      {/* DEPLOYMENT TEST - DELETE AFTER CONFIRMING */}
+      <div style={{background: 'red', color: 'white', padding: '20px', textAlign: 'center', fontSize: '24px', fontWeight: 'bold'}}>
+        TEST BANNER - IF YOU SEE THIS, DEPLOYMENT WORKS - Jan 26 10PM
+      </div>
       <Header />
       
       {/* Primary SEO H1 - Screen reader accessible, visually minimal */}
