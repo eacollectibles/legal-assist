@@ -65,14 +65,15 @@ export default function HomePage() {
       <h1 className="sr-only">Licensed Paralegal Services in Ontario</h1>
       
       {/* HERO SECTION */}
-      <section className="min-h-[80vh] flex items-center bg-secondary">
-        <div className="max-w-[100rem] mx-auto px-6 lg:px-12 py-20">
-          <div className="max-w-3xl">
+      <section className="min-h-[85vh] grid lg:grid-cols-2">
+        {/* Left: Text Side */}
+        <div className="bg-secondary flex items-center p-8 lg:p-16 xl:p-24 order-2 lg:order-1">
+          <div className="max-w-xl">
             <span className="text-primary font-paragraph text-sm tracking-widest uppercase mb-6 block">Licensed Ontario Paralegals</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white font-heading leading-tight mb-8">
-              Legal help <span className="text-primary">without</span> the lawyer price tag.
+            <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-heading leading-tight mb-8">
+              Legal help<br/><span className="text-primary">without</span> the<br/>lawyer price tag.
             </h2>
-            <p className="text-white/70 font-paragraph text-lg mb-10 max-w-xl">
+            <p className="text-white/70 font-paragraph text-lg mb-10 max-w-md">
               Expert representation for traffic tickets, landlord-tenant disputes, small claims court, and more throughout Ontario.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -91,6 +92,16 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
+        </div>
+        
+        {/* Right: Image Side */}
+        <div className="relative order-1 lg:order-2 min-h-[40vh] lg:min-h-0">
+          <img
+            src="https://static.wixstatic.com/media/12d367_4f26ccd17f8f4e3a8958306ea08c2332~mv2.png"
+            alt="Paralegal consultation in London Ontario"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-secondary/30" />
         </div>
       </section>
 
