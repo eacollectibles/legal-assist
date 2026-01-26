@@ -1,6 +1,4 @@
-import { Phone, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Phone, Mail, MessageCircle } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 import PrimaryCTA from '@/components/PrimaryCTA';
 
@@ -12,32 +10,43 @@ export default function StickyContactBar({ isVisible = true }: StickyContactBarP
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
-      <div className="backdrop-blur-lg bg-background/95 border-t border-primary/20 shadow-lg">
-        <div className="flex flex-col gap-3 p-4 pb-safe max-w-[100rem] mx-auto">
-          {/* Dominant CTA: Call Now for a Free Case Review */}
-          <PrimaryCTA variant="mobile" size="md" />
+    <div 
+      className="fixed bottom-0 left-0 right-0 z-50 lg:hidden"
+      role="navigation"
+      aria-label="Quick contact options"
+    >
+      {/* Gradient fade for content visibility */}
+      <div className="absolute inset-x-0 -top-6 h-6 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
+      
+      <div className="backdrop-blur-xl bg-background/95 border-t border-primary/20 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+        <div 
+          className="flex flex-col gap-2 p-3 sm:p-4 max-w-[100rem] mx-auto"
+          style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}
+        >
+          {/* Primary CTA - Full width, prominent */}
+          <PrimaryCTA variant="mobile" size="lg" className="w-full" />
           
-          {/* Secondary Contact Options: Visually subordinate */}
+          {/* Secondary Contact Options - Equal width buttons */}
           <div className="flex gap-2">
-            {/* Phone Tap */}
+            {/* Phone Tap - 48px touch target */}
             <a 
               href={PHONE_HREF}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-paragraph text-secondary bg-white/50 hover:bg-white/70 rounded-lg transition-colors"
+              className="flex-1 min-h-[48px] flex items-center justify-center gap-2 px-4 text-sm font-paragraph font-medium text-secondary bg-white/60 hover:bg-white/80 active:bg-white active:scale-[0.98] rounded-xl border border-secondary/10 transition-all duration-150 focus-ring"
+              aria-label={`Call us at ${PHONE_DISPLAY}`}
             >
-              <Phone className="w-4 h-4" />
-              <span className="hidden xs:inline">{PHONE_DISPLAY}</span>
-              <span className="xs:hidden">Call</span>
+              <Phone className="w-5 h-5 text-primary" />
+              <span className="hidden xs:inline font-semibold">{PHONE_DISPLAY}</span>
+              <span className="xs:hidden font-semibold">Call</span>
             </a>
             
-            {/* Email Tap */}
+            {/* Email Tap - 48px touch target */}
             <a 
               href="mailto:info@legalassist.ca"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-paragraph text-secondary bg-white/50 hover:bg-white/70 rounded-lg transition-colors"
+              className="flex-1 min-h-[48px] flex items-center justify-center gap-2 px-4 text-sm font-paragraph font-medium text-secondary bg-white/60 hover:bg-white/80 active:bg-white active:scale-[0.98] rounded-xl border border-secondary/10 transition-all duration-150 focus-ring"
+              aria-label="Email us"
             >
-              <Mail className="w-4 h-4" />
-              <span className="hidden xs:inline">Email</span>
-              <span className="xs:hidden">Email</span>
+              <Mail className="w-5 h-5 text-primary" />
+              <span className="font-semibold">Email</span>
             </a>
           </div>
         </div>
