@@ -51,16 +51,8 @@ export default defineConfig({
     // PAGE SPEED OPTIMIZATIONS
     // ============================================
     build: {
-      // Enable minification
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-          pure_funcs: ['console.log', 'console.info', 'console.debug'],
-        },
-        mangle: true,
-      },
+      // Use default esbuild minification (faster, no extra deps)
+      minify: true,
       // Optimize chunk splitting
       rollupOptions: {
         output: {
@@ -87,13 +79,6 @@ export default defineConfig({
             if (id.includes('/components/ui/')) {
               return 'ui-components';
             }
-            // Service pages - large chunk, load on demand
-            if (id.includes('/components/pages/') && (
-              id.includes('Page.tsx') || 
-              id.includes('Service')
-            )) {
-              return 'pages';
-            }
           },
           // Consistent chunk names for better caching
           chunkFileNames: 'assets/[name]-[hash].js',
@@ -105,7 +90,7 @@ export default defineConfig({
       target: 'es2020',
       // CSS code splitting
       cssCodeSplit: true,
-      // Generate source maps for production debugging (optional)
+      // No source maps in production
       sourcemap: false,
       // Increase chunk size warning limit
       chunkSizeWarningLimit: 1000,
@@ -120,7 +105,7 @@ export default defineConfig({
       ],
       exclude: ['@wix/astro'],
     },
-    // Enable esbuild for faster builds
+    // Enable esbuild optimizations
     esbuild: {
       legalComments: 'none',
       treeShaking: true,
@@ -139,11 +124,6 @@ export default defineConfig({
   },
   security: {
     checkOrigin: false
-  },
-  // Prefetch settings
-  prefetch: {
-    prefetchAll: false,
-    defaultStrategy: 'viewport',
   },
   // Compression
   compressHTML: true,
