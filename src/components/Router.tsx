@@ -22,7 +22,6 @@ import { locationRoutes } from '@/routes/locationRoutes';
 import { otherServiceRoutes } from '@/routes/otherServiceRoutes';
 import { guideRoutes } from '@/routes/guideRoutes';
 import { adminRoutes } from '@/routes/adminRoutes';
-import { resourceRoutes } from '@/routes/resourceRoutes';
 
 // ============================================
 // CRITICAL PAGES - Eagerly loaded for fast FCP
@@ -171,7 +170,6 @@ const allRoutes = [
   ...otherServiceRoutes,
   ...guideRoutes,
   ...adminRoutes,
-  ...resourceRoutes,
 ];
 
 // ============================================

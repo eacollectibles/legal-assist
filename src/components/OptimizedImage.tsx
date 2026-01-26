@@ -5,7 +5,6 @@
  * - Native lazy loading
  * - Blur placeholder
  * - Responsive srcset
- * - WebP support detection
  * - Intersection Observer for eager loading above fold
  */
 
@@ -118,7 +117,6 @@ export default function OptimizedImage({
         height={height}
         loading={priority ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}
-        fetchpriority={priority ? 'high' : 'auto'}
         onLoad={handleLoad}
         className={`
           w-full h-full object-cover
@@ -133,26 +131,6 @@ export default function OptimizedImage({
       )}
     </div>
   );
-}
-
-/**
- * Hook for detecting WebP support
- */
-export function useWebPSupport(): boolean {
-  const [supportsWebP, setSupportsWebP] = useState(true);
-
-  useEffect(() => {
-    const checkWebP = async () => {
-      const webpData = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
-      const img = new Image();
-      img.onload = () => setSupportsWebP(img.width > 0 && img.height > 0);
-      img.onerror = () => setSupportsWebP(false);
-      img.src = webpData;
-    };
-    checkWebP();
-  }, []);
-
-  return supportsWebP;
 }
 
 /**
