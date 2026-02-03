@@ -6,3 +6,4 @@ export { otherServiceRoutes } from './otherServiceRoutes';
 export { guideRoutes } from './guideRoutes';
 export { adminRoutes } from './adminRoutes';
 export { resourceRoutes } from './resourceRoutes';
+export { blogRoutes } from './blogRoutes';
