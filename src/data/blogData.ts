@@ -61,7 +61,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'can-paralegal-represent-small-claims-court',
     title: 'Can a Paralegal Represent Me in Small Claims Court?',
-    description: 'Yes! Licensed paralegals can represent you in Ontario Small Claims Court for claims up to $35,000. Learn when to hire a paralegal vs lawyer.',
+    description: 'Yes! Licensed paralegals can represent you in Ontario Small Claims Court for claims up to $50,000. Learn when to hire a paralegal vs lawyer.',
     category: 'small-claims',
     date: '2026-01-12',
     readTime: '3 min',
@@ -79,7 +79,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
       
       <h2>Small Claims Court Limits</h2>
-      <p>Ontario Small Claims Court handles civil disputes up to <strong>$35,000</strong> (not including interest and costs). Common cases include:</p>
+      <p>Ontario Small Claims Court handles civil disputes up to <strong>$50,000</strong> (not including interest and costs). Common cases include:</p>
       <ul>
         <li>Unpaid invoices and debts</li>
         <li>Contract disputes</li>
@@ -100,7 +100,7 @@ export const blogPosts: BlogPost[] = [
       <p>Need help with a Small Claims matter? <a href="/contact">Contact us</a> for a free consultation.</p>
     `,
     faqs: [
-      { q: 'What\'s the maximum I can sue for in Small Claims Court?', a: 'The limit is $35,000 in Ontario, not including interest and court costs which are added on top.' },
+      { q: 'What\'s the maximum I can sue for in Small Claims Court?', a: 'The limit is $50,000 in Ontario, not including interest and court costs which are added on top.' },
       { q: 'Do I have to go to court myself?', a: 'Not necessarily. Your paralegal can attend most proceedings on your behalf, including settlement conferences and even trial in many cases.' }
     ]
   },
@@ -433,7 +433,7 @@ export const blogPosts: BlogPost[] = [
     `,
     faqs: [
       { q: 'Should I accept the severance offer my employer gave me?', a: 'Not before getting legal advice. First offers are often below what you\'re entitled to. A free consultation can tell you if it\'s fair.' },
-      { q: 'Can paralegals handle wrongful dismissal cases?', a: 'Yes, for claims within Small Claims Court jurisdiction (up to $35,000). For larger claims, we can refer you to an employment lawyer.' }
+      { q: 'Can paralegals handle wrongful dismissal cases?', a: 'Yes, for claims within Small Claims Court jurisdiction (up to $50,000). For larger claims, we can refer you to an employment lawyer.' }
     ]
   },
   {
