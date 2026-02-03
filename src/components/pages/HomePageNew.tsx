@@ -1,7 +1,7 @@
 // HPI 2.1 - Standalone Full Version (No External Component Dependencies)
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, Home, AlertCircle, Briefcase, Gavel, Phone, MessageCircle, FileText } from 'lucide-react';
+import { ArrowRight, Scale, Users, Clock, Shield, CheckCircle2, Home, AlertCircle, Briefcase, Gavel, Phone, MessageCircle, FileText, Mail, Calendar } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
@@ -374,10 +374,21 @@ export default function HomePage() {
       
       {/* STICKY BAR */}
       {showStickyBar && (
-        <div className="fixed bottom-0 left-0 right-0 bg-secondary border-t border-white/10 py-3 px-4 z-50 sm:hidden">
-          <a href="tel:+13658829515" className="flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-lg font-paragraph">
+        <div className="fixed bottom-0 left-0 right-0 bg-secondary border-t border-white/10 py-3 px-4 z-50 sm:hidden" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
+          <a href="tel:+13658829515" className="flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-lg font-paragraph mb-2">
             <Phone className="w-5 h-5" /> Call Now - Free Consultation
           </a>
+          <div className="flex gap-2">
+            <a href="mailto:info@legalassist.ca" className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
+              <Mail className="w-4 h-4" /> Email
+            </a>
+            <a href="sms:+13658829515" className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
+              <MessageCircle className="w-4 h-4" /> Text
+            </a>
+            <Link to="/booking" className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
+              <Calendar className="w-4 h-4" /> Appt
+            </Link>
+          </div>
         </div>
       )}
     </div>
