@@ -4224,6 +4224,20 @@ export const seoConfig: Record<string, SEOConfig> = {
       }
     ]
   },
+
+  // ============================================
+  // BLOG PAGES
+  // ============================================
+  '/blog': {
+    title: 'Legal Blog | Ontario Paralegal Resources | LegalAssist',
+    description: 'Practical legal information for Ontario residents. Articles on traffic tickets, landlord-tenant issues, small claims court, employment rights, and more.',
+    keywords: 'ontario legal blog, paralegal articles, traffic ticket tips, ltb information, small claims guide',
+    schema: { type: 'Article', name: 'LegalAssist Blog' },
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Blog', url: '/blog' }
+    ]
+  },
 };
 
 // ============================================

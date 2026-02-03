@@ -11,6 +11,7 @@ import { locationRoutes } from '@/routes/locationRoutes';
 import { otherServiceRoutes } from '@/routes/otherServiceRoutes';
 import { guideRoutes } from '@/routes/guideRoutes';
 import { adminRoutes } from '@/routes/adminRoutes';
+import { blogRoutes } from '@/routes/blogRoutes';
 
 // Core Pages - Static imports for critical pages
 import HomePage from '@/components/pages/HomePageNew';
@@ -46,6 +47,7 @@ const allRoutes = [
   ...otherServiceRoutes,
   ...guideRoutes,
   ...adminRoutes,
+  ...blogRoutes,
 ];
 
 export default function Router() {

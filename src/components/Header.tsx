@@ -23,6 +23,7 @@ export default function Header() {
 
   const isResourcesActive = () => {
     return location.pathname.startsWith('/guides') || 
+           location.pathname.startsWith('/blog') ||
            location.pathname === '/legal-news' || 
            location.pathname === '/resources';
   };
@@ -229,6 +230,16 @@ export default function Header() {
                         }`}
                       >
                         All Resources
+                      </Link>
+                      <Link
+                        to="/blog"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          location.pathname.startsWith('/blog')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Blog
                       </Link>
                       <Link
                         to="/legal-news"
@@ -496,6 +507,17 @@ export default function Header() {
                         }`}
                       >
                         All Resources
+                      </Link>
+                      <Link 
+                        to="/blog" 
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          location.pathname.startsWith('/blog') 
+                            ? 'bg-primary text-primary-foreground font-semibold' 
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Blog
                       </Link>
                       <Link 
                         to="/legal-news" 
