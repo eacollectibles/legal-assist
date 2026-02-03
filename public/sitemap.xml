@@ -491,4 +491,61 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Blog Pages -->
+  <url>
+    <loc>https://legalassist.london/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/how-much-does-paralegal-cost-ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/can-paralegal-represent-small-claims-court</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/what-happens-ignore-traffic-ticket-ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/can-landlord-enter-without-notice-ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/speeding-ticket-affect-insurance-ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/2026-ontario-rent-increase-guideline</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/how-long-eviction-take-ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/fighting-careless-driving-charge-ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/wrongful-dismissal-ontario-what-to-do</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://legalassist.london/blog/stunt-driving-ontario-new-rules</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
