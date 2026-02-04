@@ -116,6 +116,34 @@ export default function HomePage() {
       {/* TRUST SIGNALS */}
       <section className="py-12 bg-background">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-12 space-y-4">
+          {/* Quick Trust Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6">
+            <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
+              <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="font-paragraph text-sm font-medium text-secondary">LSO Licensed</span>
+            </div>
+            <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full">
+              <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="font-paragraph text-sm font-medium text-secondary">Free 30-Min Consultation</span>
+            </div>
+            <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full">
+              <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="font-paragraph text-sm font-medium text-secondary">24hr Response Time</span>
+            </div>
+            <div className="flex items-center gap-2 bg-purple-50 px-4 py-2 rounded-full">
+              <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="font-paragraph text-sm font-medium text-secondary">Flat Fee Pricing</span>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-6 p-6 bg-primary/5 rounded-2xl border border-primary/10">
             <div className="flex gap-3">
               <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
@@ -134,8 +162,8 @@ export default function HomePage() {
             <div className="flex gap-3">
               <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
               <div>
-                <p className="font-heading font-semibold text-secondary">No Pressure</p>
-                <p className="text-sm text-secondary/70">We explain options. You decide.</p>
+                <p className="font-heading font-semibold text-secondary">Response Within 24 Hours</p>
+                <p className="text-sm text-secondary/70">Fast turnaround on all inquiries.</p>
               </div>
             </div>
           </div>
