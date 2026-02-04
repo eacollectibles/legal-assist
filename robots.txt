@@ -1,0 +1,58 @@
+User-agent: *
+Allow: /
+
+# Block private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /login
+Disallow: /signup
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /intake
+Disallow: /booking
+Disallow: /meeting-request
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Block system files
+Disallow: /_astro/
+Disallow: /api/
+
+# Googlebot - NO crawl delay, let it crawl freely
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /upload/
+Disallow: /api/
+
+# Googlebot-Image
+User-agent: Googlebot-Image
+Allow: /
+
+# Bingbot
+User-agent: bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Crawl-delay: 2
+
+# Block aggressive SEO bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap
+Sitemap: https://legalassist.london/sitemap.xml
