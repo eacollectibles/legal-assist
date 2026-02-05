@@ -4261,9 +4261,102 @@ export function getSEOConfig(path: string): SEOConfig {
   };
 }
 
-// NOTE: Individual schema generators (generateFAQSchema, generateLocalBusinessSchema,
-// generateServiceSchema, generateBreadcrumbSchema) have been removed.
-// All schema is now generated as a unified @graph in AutoSEO.tsx.
+/**
+ * Generate JSON-LD Schema for FAQ pages
+ */
+export function generateFAQSchema(faqs: FAQ[]): object {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+}
+
+/**
+ * Generate JSON-LD Schema for Local Business
+ */
+export function generateLocalBusinessSchema(): object {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LegalService",
+    "name": businessInfo.name,
+    "url": businessInfo.url,
+    "telephone": businessInfo.telephone,
+    "email": businessInfo.email,
+    "address": {
+      "@type": "PostalAddress",
+      ...businessInfo.address
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      ...businessInfo.geo
+    },
+    "priceRange": businessInfo.priceRange,
+    "openingHours": businessInfo.openingHours,
+    "areaServed": [
+      { "@type": "City", "name": "London" },
+      { "@type": "AdministrativeArea", "name": "Middlesex County" },
+      { "@type": "AdministrativeArea", "name": "Southwestern Ontario" }
+    ],
+    "serviceType": [
+      "Traffic Ticket Defence",
+      "Landlord Tenant Board Representation",
+      "Small Claims Court",
+      "Human Rights Tribunal",
+      "Provincial Offences"
+    ]
+  };
+}
+
+/**
+ * Generate JSON-LD Schema for Service pages
+ */
+export function generateServiceSchema(config: SEOConfig, canonicalUrl: string): object {
+  if (!config.schema) return {};
+  
+  return {
+    "@context": "https://schema.org",
+    "@type": config.schema.type || "LegalService",
+    "@id": `${canonicalUrl}#service`,
+    "name": config.schema.name || config.title,
+    "url": canonicalUrl,
+    "description": config.description,
+    "provider": {
+      "@type": "LegalService",
+      "@id": "https://legalassist.london/#organization",
+      "name": businessInfo.name,
+      "url": businessInfo.url
+    },
+    "serviceType": config.schema.serviceType,
+    "areaServed": config.schema.areaServed?.map(area => ({
+      "@type": "AdministrativeArea",
+      "name": area
+    }))
+  };
+}
+
+/**
+ * Generate Breadcrumb JSON-LD Schema
+ */
+export function generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[], baseUrl: string): object {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbs.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": `${baseUrl}${item.url}`
+    }))
+  };
+}
 
 // Export total count for reference
 export const totalConfiguredPages = Object.keys(seoConfig).length;
