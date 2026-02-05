@@ -2,6 +2,11 @@
 // Complete configuration for all 143 pages with FAQs
 // Generated: January 21, 2026
 
+export interface ContentSection {
+  heading: string;
+  content: string;
+}
+
 export interface SEOConfig {
   title: string;
   description: string;
@@ -9,6 +14,7 @@ export interface SEOConfig {
   schema?: PageSchema;
   breadcrumbs?: BreadcrumbItem[];
   faqs?: FAQ[];
+  contentSections?: ContentSection[];
 }
 
 export interface BreadcrumbItem {
@@ -79,6 +85,24 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'Do you offer free consultations?',
         answer: 'Yes, we offer free initial consultations for all services. Call 365-882-9515 or book online to discuss your case with a licensed paralegal at no obligation.'
+      }
+    ],
+    contentSections: [
+      {
+        heading: 'Licensed Paralegal Services in London, Ontario',
+        content: 'LegalAssist Paralegal Services provides affordable legal representation for individuals and businesses throughout London and Southwestern Ontario. We are licensed by the Law Society of Ontario to represent clients in traffic ticket court, the Landlord and Tenant Board, Small Claims Court for claims up to $50,000, the Human Rights Tribunal of Ontario, provincial offences court, and various administrative tribunals. Our goal is to provide the same quality representation as a lawyer at a fraction of the cost.'
+      },
+      {
+        heading: 'Our Legal Services',
+        content: 'Traffic Ticket Defence: We fight speeding tickets, careless driving charges, stunt driving charges, distracted driving tickets, red light tickets, and all other Highway Traffic Act offences. We focus on protecting your insurance rates and demerit points. Landlord and Tenant Board: We represent both landlords and tenants at LTB hearings including evictions, rent disputes, maintenance issues, N12 and N13 notices, above-guideline rent increases, and bad faith eviction claims. Small Claims Court: We handle debt collection, contract disputes, property damage claims, consumer disputes, and other civil matters up to $50,000. Human Rights Tribunal: We file and defend HRTO applications for workplace discrimination, housing discrimination, service discrimination, and harassment based on protected grounds.'
+      },
+      {
+        heading: 'Why Choose LegalAssist',
+        content: 'We offer transparent flat-rate pricing with no hidden fees so you know the cost upfront. We provide free initial consultations to assess your case before you commit. We serve all of Southwestern Ontario including London, St. Thomas, Woodstock, Strathroy, Ingersoll, Kitchener, Windsor, Sarnia, Brantford, Guelph, Cambridge, Chatham-Kent, Stratford, and Tillsonburg. We handle court appearances on your behalf so you do not need to take time off work. We are licensed by the Law Society of Ontario and carry professional liability insurance.'
+      },
+      {
+        heading: 'Areas We Serve',
+        content: 'LegalAssist serves clients throughout Southwestern Ontario. Our primary service area includes London, Middlesex County, Elgin County, and Oxford County. We also serve clients in Kitchener-Waterloo, Windsor-Essex, Sarnia-Lambton, Brantford-Brant, Guelph-Wellington, Cambridge, Chatham-Kent, Stratford-Perth, Huron County, and Norfolk County. We appear at courts and tribunals across the region including London Provincial Offences Court, St. Thomas Court, Woodstock Court, and all Landlord and Tenant Board locations in Southwestern Ontario.'
       }
     ]
   },
@@ -167,6 +191,28 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Do you offer free consultations?',
         answer: 'Yes, we offer free initial consultations for all practice areas. This allows us to assess your situation, explain your options, and provide a clear quote with no obligation.'
       }
+    ],
+    contentSections: [
+      {
+        heading: 'Our Paralegal Services in London, Ontario',
+        content: 'LegalAssist offers a comprehensive range of licensed paralegal services across Southwestern Ontario. We handle traffic tickets and provincial offences, landlord and tenant board matters, Small Claims Court litigation up to $50,000, Human Rights Tribunal applications, employment disputes, and commissioner of oaths services. Every service includes a free initial consultation, transparent flat-rate pricing, and dedicated representation from a licensed paralegal.'
+      },
+      {
+        heading: 'Traffic Ticket and Provincial Offences Defence',
+        content: 'We defend all types of traffic tickets including speeding, careless driving, stunt driving, distracted driving, red light tickets, stop sign tickets, fail to yield, unsafe lane change, following too closely, driving while suspended, no insurance charges, commercial vehicle violations, and HOV lane violations. Our focus is on minimizing demerit points and protecting your insurance rates. Fees start at $300.'
+      },
+      {
+        heading: 'Landlord and Tenant Board Representation',
+        content: 'We represent both landlords and tenants at the LTB. For landlords: eviction applications for non-payment (L1), cause-based evictions (L2), N12 personal use evictions, N13 renovation evictions, and above-guideline rent increases. For tenants: eviction defence, maintenance disputes (T2), illegal rent increase claims (T6), bad faith eviction claims, and rent abatement applications. Fees start at $500.'
+      },
+      {
+        heading: 'Small Claims Court Litigation',
+        content: 'We handle all Small Claims Court matters up to $50,000 including debt collection, unpaid invoices, contract disputes, property damage claims, consumer disputes, defective products, security deposit recovery, home improvement disputes, vehicle purchase disputes, and personal injury claims. We represent both plaintiffs filing claims and defendants responding to claims. Fees start at $750.'
+      },
+      {
+        heading: 'Human Rights Tribunal Applications',
+        content: 'We file and defend applications at the Human Rights Tribunal of Ontario for workplace discrimination, housing discrimination, service discrimination, sexual harassment, disability accommodation failures, and reprisal claims. Protected grounds include race, gender, disability, age, sexual orientation, family status, creed, and more. We pursue maximum compensation for injury to dignity, lost wages, and policy changes.'
+      }
     ]
   },
 
@@ -208,6 +254,28 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How long will this affect my insurance?',
         answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
+    ],
+    contentSections: [
+      {
+        heading: 'The Real Cost of a Traffic Ticket in Ontario',
+        content: 'The fine on your ticket is not the real cost — it is the insurance increase that follows. A single speeding conviction can increase your insurance by 15-30% for three years. On a typical policy, that is $1,000 to $3,000 or more on top of the fine. Three demerit points for speeding does not sound bad until your renewal premium jumps $50 to $100 per month. Before you pay or fight, understand what is actually at stake and whether fighting makes financial sense for your situation.'
+      },
+      {
+        heading: 'Demerit Points and Insurance Impact',
+        content: 'Speeding 1-15 km/h over carries 0 demerit points with minimal insurance impact. Speeding 16-29 km/h over carries 3 demerit points and a 5-15% insurance increase. Speeding 30-49 km/h over carries 4 demerit points and a 15-30% insurance increase. Speeding 50+ km/h over carries 6 demerit points plus a stunt driving charge with 50-300% insurance increase or policy cancellation. Careless driving carries 6 demerit points and a 25-50% insurance increase. Disobey traffic signal carries 3 demerit points and a 10-20% insurance increase. Fail to yield carries 3 demerit points and a 10-20% insurance increase. Follow too closely carries 4 demerit points and a 15-25% insurance increase.'
+      },
+      {
+        heading: 'Should You Fight, Negotiate, or Pay Your Traffic Ticket?',
+        content: 'Fight your ticket when you have 3 or more demerit points at stake, when the insurance impact over 3 years exceeds the cost to fight, when there are genuine evidence or procedural issues with the ticket, or when your driving record already has points and more could trigger a suspension. Negotiate at early resolution when you were clearly speeding but want to reduce points and insurance impact, when a reduction from 4 points to 3 points saves significant insurance cost, or when you want a faster resolution without going to trial. Paying may be acceptable when the ticket carries zero demerit points such as minor speeding under 16 km/h, when you have a clean record and the insurance impact will be minimal, or when the cost and time to fight exceeds the potential savings.'
+      },
+      {
+        heading: 'How Our Traffic Ticket Defence Process Works',
+        content: 'Step 1: Ticket Review — We review your ticket, analyze the charges, assess possible defences, and calculate whether fighting makes financial sense given the insurance impact. Step 2: Disclosure and Strategy — We request Crown disclosure, review officer notes and evidence, identify weaknesses, and develop a defence or negotiation strategy. Step 3: Court Representation — We appear in court for you, whether to negotiate a reduction or fight at trial. Most clients never need to attend court at all. We handle everything from first appearances to final resolution.'
+      },
+      {
+        heading: 'Types of Traffic Tickets We Defend',
+        content: 'We defend all types of traffic tickets in Ontario including speeding tickets from minor infractions to 49 km/h over the limit, careless driving charges which carry 6 demerit points and up to $2,000 in fines, stunt driving and racing charges for 50+ km/h over the limit with mandatory licence suspension and vehicle impound, distracted driving tickets for cell phone and handheld device use, red light and stop sign tickets, fail to yield and unsafe lane change tickets, following too closely charges, driving while suspended charges, no insurance charges which carry fines of $5,000 to $50,000, and commercial vehicle violations including CVOR impacts.'
+      }
     ]
   },
 
@@ -244,6 +312,24 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How long will this affect my insurance?',
         answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ],
+    contentSections: [
+      {
+        heading: 'Speeding Ticket Penalties in Ontario',
+        content: 'Speeding 1-15 km/h over the limit carries a set fine of $2.50 per km ($40-50), 0 demerit points, and minimal insurance impact. Speeding 16-29 km/h over carries a set fine of $3.75 per km ($60-110), 3 demerit points, and a 5-15% insurance increase. Speeding 30-49 km/h over carries a set fine of $7.00 per km ($210-340), 4 demerit points, and a 15-30% insurance increase. Speeding 50+ km/h over is also classified as stunt driving with fines of $2,000-$10,000, 6 demerit points, immediate 14-day licence suspension and vehicle impound, and a 50-300% insurance increase or policy cancellation.'
+      },
+      {
+        heading: 'The Real Cost of a Speeding Ticket — An Example',
+        content: 'Consider a typical 25 km/h over the limit ticket carrying 3 demerit points. The set fine is approximately $95. But the insurance increase at 10% on a $2,000 per year policy over 3 years adds $600. The true cost is approximately $695. Fighting the ticket, even with paralegal fees, often costs less than paying it when you factor in the 3-year insurance impact.'
+      },
+      {
+        heading: 'Defence Strategies for Speeding Tickets',
+        content: 'There are several valid defences to speeding tickets in Ontario. Radar or laser calibration challenges require the Crown to prove the device was properly calibrated and maintained. Officer operation errors can arise if the device was not used correctly or if the reading was not properly locked. Wrong vehicle identification is possible in heavy traffic or when multiple vehicles are present. Speed limit signage issues occur when signs are missing, obscured, or improperly posted. We also challenge cases where officer notes are inconsistent, where there are gaps in the evidence chain, or where procedural requirements were not followed.'
+      },
+      {
+        heading: 'When to Fight a Speeding Ticket',
+        content: 'Whether to fight depends on your record and the points at stake. If it is your first minor ticket on a clean record with zero points, paying may be acceptable. But if you already have points on your record, or the ticket carries 3 or more demerit points, fighting often saves money on insurance over the long run. Even attending early resolution to negotiate a reduction from 4 points to 3 points can make a meaningful difference in your insurance premiums. We do a cost-benefit analysis for every case before you commit.'
       }
     ]
   },
@@ -282,6 +368,20 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How long will this affect my insurance?',
         answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
       }
+    ],
+    contentSections: [
+      {
+        heading: 'Careless Driving Penalties in Ontario',
+        content: 'Careless driving under Section 130 of the Highway Traffic Act is one of the most serious traffic charges in Ontario. A conviction carries 6 demerit points, fines ranging from $400 to $2,000, a possible licence suspension of up to 2 years, and potential jail time of up to 6 months. The insurance impact is severe — expect a 25-50% premium increase for at least 3 years, and some insurers may cancel your policy entirely. Careless driving is often charged after motor vehicle accidents, especially when police believe one driver was not paying attention or driving without reasonable consideration for others.'
+      },
+      {
+        heading: 'Defence Strategies for Careless Driving',
+        content: 'Careless driving is a subjective charge — the Crown must prove that your driving fell below the standard of a reasonably prudent driver. This opens several defence avenues. We challenge the officer\'s observations and the basis for the charge. We examine whether road conditions, weather, or unexpected circumstances contributed to the incident. We review witness statements and accident reconstruction evidence. In many cases, we negotiate a reduction to a lesser charge such as following too closely (4 points), improper lane change (2 points), or fail to yield (3 points). A reduction from careless driving to a lesser charge can save thousands of dollars in insurance premiums over 3 years.'
+      },
+      {
+        heading: 'Careless Driving vs Criminal Dangerous Driving',
+        content: 'It is important to understand the difference between careless driving under the Highway Traffic Act and dangerous driving under the Criminal Code. Careless driving is a provincial offence handled in provincial offences court where a licensed paralegal can represent you. Dangerous driving is a criminal offence that requires a lawyer. If your careless driving charge involves serious injury or death, you may also face criminal charges. In cases involving only a careless driving charge under the HTA, we provide full representation from disclosure to trial or negotiation.'
+      }
     ]
   },
 
@@ -318,6 +418,16 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How long will this affect my insurance?',
         answer: 'A traffic conviction typically affects insurance rates for 3 years from conviction date. Impact varies by insurer and offence. Fighting often costs less than long-term insurance increase.'
+      }
+    ],
+    contentSections: [
+      {
+        heading: 'Stunt Driving Penalties in Ontario',
+        content: 'Stunt driving is one of the most serious driving offences in Ontario. If you are caught going 50 km/h or more over the speed limit, or 40 km/h over on roads with limits under 80 km/h, you face immediate roadside consequences: a 30-day licence suspension and 14-day vehicle impound, both of which happen before you ever see a courtroom. If convicted, penalties include fines from $2,000 to $10,000, 6 demerit points, a possible licence suspension up to 2 years, and up to 6 months in jail. A second offence carries a possible licence suspension up to 10 years. The insurance impact is catastrophic — most insurers will either cancel your policy or increase premiums by 200-300% or more.'
+      },
+      {
+        heading: 'Defence Strategies for Stunt Driving Charges',
+        content: 'Despite the severity of stunt driving charges, there are real defence strategies available. We challenge the accuracy and calibration of speed measurement devices including radar, laser, and pacing. We examine whether the officer followed proper procedures for roadside testing and evidence collection. We review whether the speed zone was properly posted and whether construction zone rules applied. In some cases, we can negotiate a reduction from stunt driving to regular speeding, which dramatically reduces the penalties and insurance impact. Every case is different, and we provide an honest assessment of your options before you commit to a defence strategy.'
       }
     ]
   },
@@ -912,6 +1022,28 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'How long will my LTB case take?',
         answer: 'Current processing times vary 3-12 months depending on application type and urgency. We work to move your case forward as efficiently as possible.'
+      }
+    ],
+    contentSections: [
+      {
+        heading: 'Landlord and Tenant Board: Key Facts for Ontario',
+        content: 'The Landlord and Tenant Board (LTB) is a tribunal that resolves disputes between landlords and tenants in Ontario under the Residential Tenancies Act, 2006. It handles evictions, rent increases, maintenance disputes, and other tenancy issues. LTB hearings are less formal than court but the outcomes are legally binding. Decisions can affect your housing, your income, and your rights as either a landlord or tenant. Having proper representation significantly improves outcomes at the LTB.'
+      },
+      {
+        heading: 'What a Paralegal Can Do at the LTB',
+        content: 'As a licensed paralegal, I provide full representation at LTB hearings for both landlords and tenants. For landlords, this includes filing L1 applications for non-payment of rent, L2 applications for cause-based evictions, N12 personal use evictions, N13 renovation evictions, above-guideline rent increase applications, and enforcement of eviction orders. For tenants, this includes defending against all eviction applications, filing T2 applications for maintenance issues, T6 applications for illegal rent increases, bad faith eviction claims, rent abatement applications, and seeking compensation for landlord interference with reasonable enjoyment. I also handle related matters including superintendent disputes, sublet and assignment issues, and subsidized housing matters.'
+      },
+      {
+        heading: 'For Landlords: When to File, Negotiate, or Wait',
+        content: 'File an L1 application when a tenant is behind on rent and has not responded to the N4 notice within the 14-day voiding period. File an L2 when the tenant has caused serious damage, engaged in illegal activity, substantially interfered with other tenants, or you need the unit for personal use under N12. Try negotiation when the tenant has a history of paying but is temporarily behind, when you want to avoid the time and cost of an LTB hearing, or when a payment plan could resolve the arrears. Wait when the issues are minor and may resolve on their own, or when you need to gather more evidence before filing.'
+      },
+      {
+        heading: 'For Tenants: Your Rights and Defence Options',
+        content: 'If you have received an eviction notice, do not panic and do not move out immediately. Most eviction notices require an LTB hearing before a landlord can legally evict you. You have the right to attend the hearing and present your case. Common tenant defences include challenging the validity of the notice, proving the landlord has not met procedural requirements, demonstrating bad faith in N12 personal use claims, raising maintenance issues as a counter-claim, requesting additional time through section 83 relief, and negotiating payment plans for rent arrears. Even if you owe rent, the LTB often grants relief from eviction if you can pay arrears within a reasonable timeline.'
+      },
+      {
+        heading: 'LTB Application Types Explained',
+        content: 'L1 is for eviction based on non-payment of rent and is the most common application type. L2 is for eviction based on cause such as damage, illegal activity, or personal use. T2 is filed by tenants for maintenance issues or interference with reasonable enjoyment. T6 is filed by tenants for illegal rent increases or charges. N4 is the notice to end tenancy for non-payment given to tenants with a 14-day voiding period. N12 is the notice for landlord personal use requiring 60 days notice and one month rent compensation. N13 is the notice for renovations requiring the unit to be vacant. Each application type has specific procedural requirements that must be followed exactly or the application may be dismissed.'
       }
     ]
   },
@@ -1729,6 +1861,24 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'What costs can I recover if I win?',
         answer: 'Filing fees, service costs, and portion of legal fees (up to 15% of claim). Interest on judgment also awarded. We pursue full cost recovery.'
       }
+    ],
+    contentSections: [
+      {
+        heading: 'Ontario Small Claims Court: Key Facts',
+        content: 'Small Claims Court in Ontario handles civil disputes up to $50,000 not including interest and costs. It is designed to be more accessible and less formal than Superior Court, but the outcomes are legally binding and enforceable. As a licensed paralegal, I can represent you in Small Claims Court for claims up to $50,000. For claims over $50,000, you need a lawyer and must file in Superior Court. Common types of cases include unpaid debts and invoices, breach of contract, property damage, consumer disputes, defective products, security deposit recovery, and personal injury claims within the monetary limit.'
+      },
+      {
+        heading: 'Should You File, Negotiate, or Walk Away?',
+        content: 'Filing makes sense when you have clear evidence of what is owed such as a contract, invoice, or written agreement, when the amount is significant enough to justify the time and cost, when the other party can actually pay if you win, and when you have tried to resolve it directly and failed. Negotiation is smarter when both sides have legitimate arguments, when preserving the relationship matters such as with a business partner or neighbour, when a quick partial payment is better than a long court process, or when the other side has made a reasonable counter-offer. Walking away might be best when the amount is small relative to the effort and cost, when the other party has no assets or income to collect from even if you win, when your evidence is weak, or when the emotional cost of litigation outweighs the potential recovery.'
+      },
+      {
+        heading: 'The Small Claims Court Process Step by Step',
+        content: 'Step 1: File Your Claim — Prepare and file a Plaintiff\'s Claim form with the court along with the filing fee of $102 for claims under $500 or $273 for claims over $500. Step 2: Serve the Defendant — The defendant must be formally served with the claim. They have 20 days to file a defence. Step 3: Defence or Default — If the defendant does not respond within 20 days, you can request a default judgment. If they file a defence, the case proceeds to a settlement conference. Step 4: Settlement Conference — A mandatory meeting with a judge to explore settlement. Many cases resolve at this stage without going to trial. Step 5: Trial — If settlement fails, the case goes to trial where both sides present evidence and a judge makes a binding decision. Step 6: Enforcement — If you win and the other party does not pay, enforcement options include garnishment of wages or bank accounts and seizure of assets.'
+      },
+      {
+        heading: 'What Paralegals Can and Cannot Do in Small Claims Court',
+        content: 'Licensed paralegals can handle all aspects of Small Claims Court representation up to the $50,000 limit. This includes drafting and filing claims and defences, serving documents, representing you at settlement conferences and trial, examining witnesses, making legal arguments, and enforcing judgments. Paralegals cannot represent you in Superior Court for claims over $50,000, handle appeals to Divisional Court (a lawyer is required), or provide legal advice on matters outside their scope of practice. For most Small Claims Court matters, a paralegal provides the same quality representation as a lawyer at a significantly lower cost.'
+      }
     ]
   },
 
@@ -2184,6 +2334,24 @@ export const seoConfig: Record<string, SEOConfig> = {
       {
         question: 'What remedies can the HRTO award?',
         answer: 'Monetary compensation for lost wages and dignity injury, policy changes, required training, reinstatement. We pursue maximum appropriate remedies.'
+      }
+    ],
+    contentSections: [
+      {
+        heading: 'Human Rights Tribunal of Ontario (HRTO): What You Need to Know',
+        content: 'The Human Rights Tribunal of Ontario hears complaints about discrimination under the Ontario Human Rights Code. The Code protects people from discrimination in five social areas: employment, housing, services, contracts, and membership in unions or professional associations. Discrimination is based on protected grounds including race, ancestry, place of origin, colour, ethnic origin, citizenship, creed or religion, sex, sexual orientation, gender identity and expression, age, disability, family status, and marital status. If you have experienced discrimination in any of these areas based on a protected ground, you may have a valid HRTO application.'
+      },
+      {
+        heading: 'Types of Human Rights Claims We Handle',
+        content: 'We handle a wide range of human rights matters including workplace discrimination based on race, gender, disability, age, or other protected grounds. Housing discrimination such as being denied a rental unit, harassed by a landlord, or subjected to different terms based on a protected ground. Service discrimination including being denied or treated differently when accessing services, stores, restaurants, or public facilities. Employment harassment including sexual harassment, racial harassment, and hostile work environment claims. Failure to accommodate disability in the workplace or housing. Reprisal claims when someone retaliates against you for asserting your human rights.'
+      },
+      {
+        heading: 'The HRTO Process Explained',
+        content: 'You must file your HRTO application within one year of the last incident of discrimination. The application is filed directly with the Tribunal and must include details of the discrimination, the protected ground involved, and the remedies you are seeking. After filing, the respondent has an opportunity to respond. The Tribunal may schedule a mediation to attempt resolution. If mediation fails or is not appropriate, the case proceeds to a hearing where both sides present evidence and the Tribunal makes a binding decision. The entire process typically takes 12 to 18 months from filing to hearing.'
+      },
+      {
+        heading: 'Remedies and Compensation at the HRTO',
+        content: 'The HRTO can award several types of remedies. Monetary compensation for injury to dignity, feelings, and self-respect typically ranges from $5,000 to $35,000 depending on the severity and duration of the discrimination. Lost wages and benefits if you lost your job or were denied employment. Out-of-pocket expenses related to the discrimination. The Tribunal can also order non-monetary remedies such as policy changes, mandatory human rights training, reinstatement to your position, letters of reference, and public interest remedies that benefit the broader community.'
       }
     ]
   },
