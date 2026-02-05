@@ -51,18 +51,18 @@ const schemaData = {
   "@graph": [
     {
       "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
-      "@id": "https://legalassist.london/#organization",
+      "@id": "https://www.legalassist.london/#organization",
       "name": "LegalAssist Paralegal Services",
       "alternateName": "LegalAssist",
       "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
-      "url": "https://legalassist.london",
+      "url": "https://www.legalassist.london",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://legalassist.london/logo.png",
+        "url": "https://www.legalassist.london/logo.png",
         "width": 512,
         "height": 512
       },
-      "image": "https://legalassist.london/og-image.jpg",
+      "image": "https://www.legalassist.london/og-image.jpg",
       "telephone": PHONE_TEL,
       "email": "info@legalassist.london",
       "address": {
@@ -110,18 +110,18 @@ const schemaData = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://legalassist.london/#website",
-      "url": "https://legalassist.london",
+      "@id": "https://www.legalassist.london/#website",
+      "url": "https://www.legalassist.london",
       "name": "LegalAssist Paralegal Services",
       "description": "Licensed paralegal services in London, Ontario",
       "publisher": {
-        "@id": "https://legalassist.london/#organization"
+        "@id": "https://www.legalassist.london/#organization"
       },
       "inLanguage": "en-CA"
     },
     {
       "@type": "ContactPoint",
-      "@id": "https://legalassist.london/#contact",
+      "@id": "https://www.legalassist.london/#contact",
       "telephone": PHONE_TEL,
       "contactType": "customer service",
       "availableLanguage": "English",
@@ -263,8 +263,93 @@ const currentYear = new Date().getFullYear();
     </style>
   </head>
   <body class="w-full h-full">
+    <!-- ============================================
+         SERVER-RENDERED SEO CONTENT
+         This HTML is visible to Google on first crawl.
+         Hidden once React hydrates. Users see the React app.
+         ============================================ -->
+    <div id="ssr-content" class="w-full bg-background text-secondary font-paragraph">
+      <header class="max-w-4xl mx-auto px-4 py-6">
+        <a href="/" class="text-primary font-heading font-bold text-2xl no-underline">LegalAssist Paralegal Services</a>
+        <nav class="mt-4" aria-label="Main navigation">
+          <ul class="flex flex-wrap gap-4 list-none p-0 m-0">
+            <li><a href="/" class="text-secondary hover:text-primary no-underline">Home</a></li>
+            <li><a href="/services" class="text-secondary hover:text-primary no-underline">Services</a></li>
+            <li><a href="/services/traffic-tickets" class="text-secondary hover:text-primary no-underline">Traffic Tickets</a></li>
+            <li><a href="/services/landlord-tenant-board" class="text-secondary hover:text-primary no-underline">Landlord &amp; Tenant</a></li>
+            <li><a href="/services/small-claims" class="text-secondary hover:text-primary no-underline">Small Claims</a></li>
+            <li><a href="/services/human-rights-tribunal" class="text-secondary hover:text-primary no-underline">Human Rights</a></li>
+            <li><a href="/about" class="text-secondary hover:text-primary no-underline">About</a></li>
+            <li><a href="/contact" class="text-secondary hover:text-primary no-underline">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 py-8">
+        {/* Breadcrumbs */}
+        {pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0 && (
+          <nav aria-label="Breadcrumb" class="mb-6">
+            <ol class="flex flex-wrap gap-2 list-none p-0 m-0 text-sm">
+              {pageConfig.breadcrumbs.map((crumb: any, i: number) => (
+                <li class="flex items-center gap-2">
+                  {i > 0 && <span aria-hidden="true">/</span>}
+                  <a href={crumb.url} class="text-primary no-underline">{crumb.name}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
+        {/* Page heading and description */}
+        <h1 class="font-heading text-3xl md:text-4xl text-secondary mb-4">{pageConfig.title.split('|')[0].trim()}</h1>
+        <p class="text-lg text-secondary/80 mb-8 leading-relaxed">{pageConfig.description}</p>
+
+        {/* Service info */}
+        {pageConfig.schema && pageConfig.schema.serviceType && (
+          <section class="mb-8">
+            <h2 class="font-heading text-2xl text-secondary mb-3">Our Service</h2>
+            <p class="text-secondary/80">{pageConfig.schema.name || pageConfig.schema.serviceType} — serving {pageConfig.schema.areaServed ? pageConfig.schema.areaServed.join(', ') : 'London and Southwestern Ontario'}.</p>
+          </section>
+        )}
+
+        {/* CTA */}
+        <section class="mb-8 p-6 bg-primary/5 rounded-lg">
+          <h2 class="font-heading text-2xl text-secondary mb-3">Free Consultation</h2>
+          <p class="text-secondary/80 mb-4">Call <a href={`tel:${businessInfo.telephone}`} class="text-primary font-semibold no-underline">{businessInfo.telephoneDisplay}</a> or <a href="/contact" class="text-primary font-semibold no-underline">book online</a> to speak with a licensed paralegal at no obligation.</p>
+        </section>
+
+        {/* FAQs rendered as real HTML */}
+        {pageConfig.faqs && pageConfig.faqs.length > 0 && (
+          <section class="mb-8">
+            <h2 class="font-heading text-2xl text-secondary mb-6">Frequently Asked Questions</h2>
+            {pageConfig.faqs.map((faq: any) => (
+              <div class="mb-6">
+                <h3 class="font-heading text-xl text-secondary mb-2">{faq.question}</h3>
+                <p class="text-secondary/80 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* Contact info block */}
+        <section class="mb-8">
+          <h2 class="font-heading text-2xl text-secondary mb-3">Contact LegalAssist</h2>
+          <p class="text-secondary/80">
+            <strong>Phone:</strong> <a href={`tel:${businessInfo.telephone}`} class="text-primary no-underline">{businessInfo.telephoneDisplay}</a><br/>
+            <strong>Email:</strong> <a href={`mailto:${businessInfo.email}`} class="text-primary no-underline">{businessInfo.email}</a><br/>
+            <strong>Location:</strong> {businessInfo.address.addressLocality}, {businessInfo.address.addressRegion} {businessInfo.address.postalCode}<br/>
+            <strong>Hours:</strong> Monday–Friday 9:00 AM – 6:00 PM
+          </p>
+        </section>
+      </main>
+
+      <footer class="max-w-4xl mx-auto px-4 py-6 border-t border-secondary/10">
+        <p class="text-sm text-secondary/60">© {currentYear} LegalAssist Paralegal Services. Licensed by the Law Society of Ontario. Serving London and Southwestern Ontario.</p>
+      </footer>
+    </div>
+
     <!-- Loading indicator (shows while JS loads) -->
-    <div id="loading-indicator" class="fixed inset-0 bg-background z-[9999] flex items-center justify-center" aria-hidden="true">
+    <div id="loading-indicator" class="fixed inset-0 bg-background z-[9999] flex items-center justify-center" aria-hidden="true" style="display:none;">
       <div class="flex flex-col items-center gap-4">
         <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
           <span class="text-primary font-heading font-bold text-xl">LA</span>
@@ -281,7 +366,7 @@ const currentYear = new Date().getFullYear();
       </style>
     </div>
     
-    <div id="root" class="w-full h-full bg-background">
+    <div id="root" class="w-full h-full bg-background" style="display:none;">
       <AppRouter client:only="react" />
     </div>
     
@@ -289,38 +374,39 @@ const currentYear = new Date().getFullYear();
       // CRITICAL: Fast hydration marker
       const markHydrated = () => {
         document.documentElement.classList.add('hydrated');
-        // Hide loading indicator
+        
+        // Hide SSR content, show React app
+        const ssr = document.getElementById('ssr-content');
+        const root = document.getElementById('root');
         const loader = document.getElementById('loading-indicator');
+        
+        if (ssr) ssr.style.display = 'none';
+        if (root) root.style.display = '';
         if (loader) {
+          loader.style.display = 'flex';
           loader.style.opacity = '0';
           loader.style.transition = 'opacity 0.2s ease-out';
           setTimeout(() => loader.remove(), 200);
         }
       };
       
-      // Mark immediately
-      if (document.readyState === 'complete') {
-        markHydrated();
-      } else {
-        // Use fastest available event
-        if (document.readyState === 'interactive') {
+      // Wait for React to actually mount before swapping
+      const observer = new MutationObserver(() => {
+        const root = document.getElementById('root');
+        if (root && root.children.length > 1) {
           markHydrated();
-        } else {
-          document.addEventListener('DOMContentLoaded', markHydrated, { once: true });
+          observer.disconnect();
         }
-      }
+      });
+      observer.observe(document.getElementById('root') || document.body, { childList: true, subtree: true });
       
-      // Fallback timeouts
-      setTimeout(markHydrated, 100);
-      setTimeout(markHydrated, 1000);
-      
-      // Emergency fallback
+      // Fallback: if React hasn't mounted in 5s, swap anyway
       setTimeout(() => {
         if (!document.documentElement.classList.contains('hydrated')) {
-          console.warn('[Hydration] Emergency fallback triggered');
+          console.warn('[Hydration] Fallback triggered');
           markHydrated();
         }
-      }, 3000);
+      }, 5000);
     </script>
     
     <!-- Prefetch likely navigation targets -->
