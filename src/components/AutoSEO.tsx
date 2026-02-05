@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { 
   getSEOConfig, 
-  businessInfo,
-  type SEOConfig
+  businessInfo
 } from './seoConfig';
+import type { SEOConfig } from './seoConfig';
 
 // Props interface for optional overrides
 interface AutoSEOProps {
