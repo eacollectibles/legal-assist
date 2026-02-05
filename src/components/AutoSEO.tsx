@@ -21,13 +21,13 @@ interface AutoSEOProps {
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LegalService",
-  "@id": "https://legalassist.london/#organization",
+  "@id": "https://www.legalassist.london/#organization",
   "name": "LegalAssist Paralegal Services",
-  "url": "https://legalassist.london",
+  "url": "https://www.legalassist.london",
   "telephone": "365-882-9515",
   "email": "info@legalassist.london",
-  "logo": "https://legalassist.london/logo.png",
-  "image": "https://legalassist.london/og-image.jpg",
+  "logo": "https://www.legalassist.london/logo.png",
+  "image": "https://www.legalassist.london/og-image.jpg",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
@@ -72,7 +72,7 @@ const localBusinessSchema = {
 
 export function AutoSEO({ title, description, canonical, keywords, noindex }: AutoSEOProps = {}) {
   const location = useLocation();
-  const baseUrl = 'https://legalassist.london';
+  const baseUrl = 'https://www.legalassist.london';
   
   useEffect(() => {
     // Get config from seoConfig.ts as base
@@ -152,13 +152,13 @@ export function AutoSEO({ title, description, canonical, keywords, noindex }: Au
     setMeta('og:type', 'website', true);
     setMeta('og:site_name', businessInfo.name, true);
     setMeta('og:locale', 'en_CA', true);
-    setMeta('og:image', 'https://legalassist.london/og-image.jpg', true);
+    setMeta('og:image', 'https://www.legalassist.london/og-image.jpg', true);
     
     // Twitter Card
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', finalTitle);
     setMeta('twitter:description', finalDescription);
-    setMeta('twitter:image', 'https://legalassist.london/og-image.jpg');
+    setMeta('twitter:image', 'https://www.legalassist.london/og-image.jpg');
     
     // Geo
     setMeta('geo.region', 'CA-ON');

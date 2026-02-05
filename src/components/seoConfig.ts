@@ -32,7 +32,7 @@ export interface PageSchema {
 // Base business info for all schemas
 export const businessInfo = {
   name: 'LegalAssist Paralegal Services',
-  url: 'https://legalassist.london',
+  url: 'https://www.legalassist.london',
   telephone: '+13658829515',
   telephoneDisplay: '365-882-9515',
   email: 'info@legalassist.london',
@@ -4330,7 +4330,7 @@ export function generateServiceSchema(config: SEOConfig, canonicalUrl: string): 
     "description": config.description,
     "provider": {
       "@type": "LegalService",
-      "@id": "https://legalassist.london/#organization",
+      "@id": "https://www.legalassist.london/#organization",
       "name": businessInfo.name,
       "url": businessInfo.url
     },
