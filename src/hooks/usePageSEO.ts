@@ -16,7 +16,7 @@ import { getSEOConfig, SEOConfig } from '@/components/seoConfig';
  */
 export function usePageSEO(overrides?: Partial<SEOConfig>) {
   const location = useLocation();
-  const baseUrl = 'https://legalassist.london';
+  const baseUrl = 'https://www.legalassist.london';
   
   useEffect(() => {
     // Get SEO config for current route
