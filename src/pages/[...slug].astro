@@ -312,6 +312,16 @@ const currentYear = new Date().getFullYear();
           </section>
         )}
 
+        {/* SSR Content Sections - Rich content for Google */}
+        {pageConfig.contentSections && pageConfig.contentSections.length > 0 && (
+          pageConfig.contentSections.map((section: any) => (
+            <section class="mb-8">
+              <h2 class="font-heading text-2xl text-secondary mb-3">{section.heading}</h2>
+              <p class="text-secondary/80 leading-relaxed">{section.content}</p>
+            </section>
+          ))
+        )}
+
         {/* CTA */}
         <section class="mb-8 p-6 bg-primary/5 rounded-lg">
           <h2 class="font-heading text-2xl text-secondary mb-3">Free Consultation</h2>
