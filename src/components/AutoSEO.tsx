@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { 
   getSEOConfig, 
-  businessInfo
+  generateServiceSchema, 
+  generateFAQSchema, 
+  generateBreadcrumbSchema,
+  businessInfo 
 } from './seoConfig';
-import type { SEOConfig } from './seoConfig';
 
 // Props interface for optional overrides
 interface AutoSEOProps {
@@ -18,30 +20,33 @@ interface AutoSEOProps {
 const BASE_URL = 'https://legalassist.london';
 
 /**
- * Build the unified @graph schema for a page.
- * One JSON-LD block per page. Every node uses @id so Google can
- * connect: Organization → LegalService → WebSite → WebPage → Service → FAQPage → BreadcrumbList
+ * Build unified @graph schema for a page.
+ * One JSON-LD block per page so Google can connect:
+ * Organization → LegalService → WebSite → WebPage → Service → FAQPage → BreadcrumbList
  */
-function buildSchemaGraph(seo: SEOConfig, canonicalUrl: string, pathname: string): object {
-  const graph: object[] = [];
+function buildSchemaGraph(
+  seo: { title: string; description: string; schema?: any; faqs?: any[]; breadcrumbs?: any[] },
+  canonicalUrl: string
+) {
+  var graph = [];
 
-  // ─── 1. Organization (top-level entity) ───
+  // 1. Organization (top-level entity)
   graph.push({
     "@type": "Organization",
-    "@id": `${BASE_URL}/#organization`,
+    "@id": BASE_URL + "/#organization",
     "name": businessInfo.name,
     "url": BASE_URL,
     "telephone": businessInfo.telephone,
     "email": businessInfo.email,
     "logo": {
       "@type": "ImageObject",
-      "@id": `${BASE_URL}/#logo`,
-      "url": `${BASE_URL}/logo.png`,
-      "contentUrl": `${BASE_URL}/logo.png`,
+      "@id": BASE_URL + "/#logo",
+      "url": BASE_URL + "/logo.png",
+      "contentUrl": BASE_URL + "/logo.png",
       "caption": businessInfo.name,
       "inLanguage": "en-CA"
     },
-    "image": `${BASE_URL}/og-image.jpg`,
+    "image": BASE_URL + "/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": businessInfo.address.streetAddress,
@@ -82,27 +87,21 @@ function buildSchemaGraph(seo: SEOConfig, canonicalUrl: string, pathname: string
       "Employment Disputes",
       "Ontario Paralegal Services"
     ],
-    "sameAs": [
-      // Uncomment as profiles go live:
-      // "https://www.google.com/maps/place/LegalAssist+Paralegal+Services",
-      // "https://www.linkedin.com/company/legalassist-paralegal",
-      // "https://www.facebook.com/LegalAssistLondon",
-      // "https://www.instagram.com/legalassistlondon"
-    ]
+    "sameAs": []
   });
 
-  // ─── 2. LegalService (LocalBusiness subtype) ───
+  // 2. LegalService (LocalBusiness subtype)
   graph.push({
     "@type": "LegalService",
-    "@id": `${BASE_URL}/#legalservice`,
+    "@id": BASE_URL + "/#legalservice",
     "name": businessInfo.name,
     "url": BASE_URL,
     "telephone": businessInfo.telephone,
     "email": businessInfo.email,
-    "logo": { "@id": `${BASE_URL}/#logo` },
-    "image": `${BASE_URL}/og-image.jpg`,
+    "logo": { "@id": BASE_URL + "/#logo" },
+    "image": BASE_URL + "/og-image.jpg",
     "priceRange": businessInfo.priceRange,
-    "parentOrganization": { "@id": `${BASE_URL}/#organization` },
+    "parentOrganization": { "@id": BASE_URL + "/#organization" },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": businessInfo.address.streetAddress,
@@ -116,7 +115,7 @@ function buildSchemaGraph(seo: SEOConfig, canonicalUrl: string, pathname: string
       "latitude": businessInfo.geo.latitude,
       "longitude": businessInfo.geo.longitude
     },
-    "hasMap": `https://www.google.com/maps?q=${businessInfo.geo.latitude},${businessInfo.geo.longitude}`,
+    "hasMap": "https://www.google.com/maps?q=" + businessInfo.geo.latitude + "," + businessInfo.geo.longitude,
     "areaServed": [
       {
         "@type": "AdministrativeArea",
@@ -147,97 +146,94 @@ function buildSchemaGraph(seo: SEOConfig, canonicalUrl: string, pathname: string
     "paymentAccepted": "Cash, Credit Card, Debit, E-Transfer"
   });
 
-  // ─── 3. WebSite ───
+  // 3. WebSite
   graph.push({
     "@type": "WebSite",
-    "@id": `${BASE_URL}/#website`,
+    "@id": BASE_URL + "/#website",
     "name": businessInfo.name,
     "url": BASE_URL,
-    "publisher": { "@id": `${BASE_URL}/#organization` },
+    "publisher": { "@id": BASE_URL + "/#organization" },
     "inLanguage": "en-CA",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": `${BASE_URL}/search?q={search_term_string}`
+        "urlTemplate": BASE_URL + "/search?q={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
   });
 
-  // ─── 4. WebPage (current page) ───
-  const webPage: Record<string, unknown> = {
+  // 4. WebPage (current page)
+  var webPage: any = {
     "@type": "WebPage",
-    "@id": `${canonicalUrl}#webpage`,
+    "@id": canonicalUrl + "#webpage",
     "url": canonicalUrl,
     "name": seo.title,
     "description": seo.description,
-    "isPartOf": { "@id": `${BASE_URL}/#website` },
-    "about": { "@id": `${BASE_URL}/#legalservice` },
+    "isPartOf": { "@id": BASE_URL + "/#website" },
+    "about": { "@id": BASE_URL + "/#legalservice" },
     "inLanguage": "en-CA"
   };
-
-  // Link breadcrumb if present
   if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
-    webPage["breadcrumb"] = { "@id": `${canonicalUrl}#breadcrumb` };
+    webPage["breadcrumb"] = { "@id": canonicalUrl + "#breadcrumb" };
   }
-
   graph.push(webPage);
 
-  // ─── 5. Service (page-specific, only if schema defined) ───
+  // 5. Service (page-specific)
   if (seo.schema) {
-    const serviceNode: Record<string, unknown> = {
+    var serviceNode: any = {
       "@type": seo.schema.type || "LegalService",
-      "@id": `${canonicalUrl}#service`,
+      "@id": canonicalUrl + "#service",
       "name": seo.schema.name || seo.title,
       "url": canonicalUrl,
       "description": seo.description,
-      "provider": { "@id": `${BASE_URL}/#legalservice` },
-      "mainEntityOfPage": { "@id": `${canonicalUrl}#webpage` }
+      "provider": { "@id": BASE_URL + "/#legalservice" },
+      "mainEntityOfPage": { "@id": canonicalUrl + "#webpage" }
     };
-
     if (seo.schema.serviceType) {
       serviceNode["serviceType"] = seo.schema.serviceType;
     }
-
     if (seo.schema.areaServed && seo.schema.areaServed.length > 0) {
-      serviceNode["areaServed"] = seo.schema.areaServed.map(area => ({
-        "@type": "AdministrativeArea",
-        "name": area
-      }));
+      serviceNode["areaServed"] = seo.schema.areaServed.map(function(area: string) {
+        return { "@type": "AdministrativeArea", "name": area };
+      });
     }
-
     graph.push(serviceNode);
   }
 
-  // ─── 6. FAQPage (page-specific, only if faqs exist) ───
+  // 6. FAQPage (page-specific)
   if (seo.faqs && seo.faqs.length > 0) {
     graph.push({
       "@type": "FAQPage",
-      "@id": `${canonicalUrl}#faq`,
-      "mainEntityOfPage": { "@id": `${canonicalUrl}#webpage` },
-      "mainEntity": seo.faqs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
+      "@id": canonicalUrl + "#faq",
+      "mainEntityOfPage": { "@id": canonicalUrl + "#webpage" },
+      "mainEntity": seo.faqs.map(function(faq: any) {
+        return {
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        };
+      })
     });
   }
 
-  // ─── 7. BreadcrumbList (page-specific) ───
+  // 7. BreadcrumbList (page-specific)
   if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
     graph.push({
       "@type": "BreadcrumbList",
-      "@id": `${canonicalUrl}#breadcrumb`,
-      "itemListElement": seo.breadcrumbs.map((item, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "name": item.name,
-        "item": `${BASE_URL}${item.url}`
-      }))
+      "@id": canonicalUrl + "#breadcrumb",
+      "itemListElement": seo.breadcrumbs.map(function(item: any, index: number) {
+        return {
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item.name,
+          "item": BASE_URL + item.url
+        };
+      })
     });
   }
 
@@ -247,7 +243,7 @@ function buildSchemaGraph(seo: SEOConfig, canonicalUrl: string, pathname: string
   };
 }
 
-export function AutoSEO({ title, description, canonical, keywords, noindex }: AutoSEOProps = {}) {
+export function AutoSEO({ title, description, canonical, keywords, noindex }: AutoSEOProps) {
   const location = useLocation();
   
   useEffect(() => {
@@ -257,16 +253,16 @@ export function AutoSEO({ title, description, canonical, keywords, noindex }: Au
     // Use props if provided, otherwise fall back to seoConfig
     const finalTitle = title || seo.title;
     const finalDescription = description || seo.description;
-    const finalCanonical = canonical || `${BASE_URL}${location.pathname}`;
+    const finalCanonical = canonical || (BASE_URL + location.pathname);
     const finalKeywords = keywords || seo.keywords;
     
     // Document title
     document.title = finalTitle;
     
     // Helper: Set meta tag
-    const setMeta = (name: string, content: string, isProperty = false) => {
+    const setMeta = (name: string, content: string, isProperty?: boolean) => {
       const attr = isProperty ? 'property' : 'name';
-      let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement;
+      let el = document.querySelector('meta[' + attr + '="' + name + '"]') as HTMLMetaElement;
       if (!el) {
         el = document.createElement('meta');
         el.setAttribute(attr, name);
@@ -278,8 +274,8 @@ export function AutoSEO({ title, description, canonical, keywords, noindex }: Au
     // Helper: Set link tag
     const setLink = (rel: string, href: string, hreflang?: string) => {
       const selector = hreflang 
-        ? `link[rel="${rel}"][hreflang="${hreflang}"]`
-        : `link[rel="${rel}"]:not([hreflang])`;
+        ? 'link[rel="' + rel + '"][hreflang="' + hreflang + '"]'
+        : 'link[rel="' + rel + '"]:not([hreflang])';
       let el = document.querySelector(selector) as HTMLLinkElement;
       if (!el) {
         el = document.createElement('link');
@@ -288,6 +284,20 @@ export function AutoSEO({ title, description, canonical, keywords, noindex }: Au
         document.head.appendChild(el);
       }
       el.href = href;
+    };
+    
+    // Helper: Set JSON-LD script
+    const setJsonLd = (id: string, data: object | null) => {
+      const existing = document.getElementById(id);
+      if (existing) existing.remove();
+      
+      if (data) {
+        const script = document.createElement('script');
+        script.id = id;
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(data);
+        document.head.appendChild(script);
+      }
     };
     
     // Core meta tags
@@ -314,43 +324,29 @@ export function AutoSEO({ title, description, canonical, keywords, noindex }: Au
     setMeta('og:type', 'website', true);
     setMeta('og:site_name', businessInfo.name, true);
     setMeta('og:locale', 'en_CA', true);
-    setMeta('og:image', `${BASE_URL}/og-image.jpg`, true);
+    setMeta('og:image', BASE_URL + '/og-image.jpg', true);
     
     // Twitter Card
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', finalTitle);
     setMeta('twitter:description', finalDescription);
-    setMeta('twitter:image', `${BASE_URL}/og-image.jpg`);
+    setMeta('twitter:image', BASE_URL + '/og-image.jpg');
     
     // Geo
     setMeta('geo.region', 'CA-ON');
     setMeta('geo.placename', 'London');
     
-    // ─── UNIFIED @graph SCHEMA ───
-    // One JSON-LD block with connected graph instead of 4 separate scripts
-    const graphId = 'schema-graph';
-    const existing = document.getElementById(graphId);
-    if (existing) existing.remove();
+    // UNIFIED @graph SCHEMA - one JSON-LD block with connected graph
+    setJsonLd('schema-graph', buildSchemaGraph(
+      { title: finalTitle, description: finalDescription, schema: seo.schema, faqs: seo.faqs, breadcrumbs: seo.breadcrumbs },
+      finalCanonical
+    ));
 
-    // Build the merged SEO config for graph generation
-    const mergedSeo: typeof seo = {
-      ...seo,
-      title: finalTitle,
-      description: finalDescription
-    };
-
-    const graphData = buildSchemaGraph(mergedSeo, finalCanonical, location.pathname);
-    const script = document.createElement('script');
-    script.id = graphId;
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(graphData);
-    document.head.appendChild(script);
-
-    // Clean up old separate schema scripts from previous version
-    ['schema-localbusiness', 'schema-service', 'schema-faq', 'schema-breadcrumb'].forEach(id => {
-      const old = document.getElementById(id);
-      if (old) old.remove();
-    });
+    // Remove old separate schema scripts
+    setJsonLd('schema-localbusiness', null);
+    setJsonLd('schema-service', null);
+    setJsonLd('schema-faq', null);
+    setJsonLd('schema-breadcrumb', null);
     
   }, [location.pathname, title, description, canonical, keywords, noindex]);
   
