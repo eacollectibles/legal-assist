@@ -51,4 +51,4 @@ User-agent: DotBot
 Disallow: /
 
 # Sitemap
-Sitemap: https://legalassist.london/sitemap.xml
+Sitemap: https://www.legalassist.london/sitemap.xml
