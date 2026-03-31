@@ -223,8 +223,8 @@ export default function HomePage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-8 pt-8 border-t border-secondary/10">
                 <div>
-                  <p className="font-heading text-4xl text-primary mb-2">30+</p>
-                  <p className="font-paragraph text-secondary/70 text-sm">Years Combined Experience</p>
+                  <p className="font-heading text-4xl text-primary mb-2">40+</p>
+                  <p className="font-paragraph text-secondary/70 text-sm">Years Combined Customer Service Experience</p>
                 </div>
                 <div>
                   <p className="font-heading text-4xl text-primary mb-2">98%</p>

@@ -82,7 +82,7 @@ const sections = [
   { id: 'address', title: 'Address', icon: MapPin },                    // STEP 4
   { id: 'emergency', title: 'Emergency Contact', icon: Phone },         // STEP 5
   { id: 'case', title: 'Case Information', icon: Briefcase },           // STEP 6
-  { id: 'availability', title: 'Availability', icon: Clock },           // STEP 7
+  { id: 'booking', title: 'Book Consultation', icon: Calendar },         // STEP 7
 ];
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -511,8 +511,8 @@ export default function ClientIntakePage() {
         return !!(formData.emergencyContactName && formData.emergencyContactPhone);
       case 'case':
         return !!(formData.caseType && formData.caseDescription);
-      case 'availability':
-        return formData.preferredDays.length > 0 && formData.preferredTimes.length > 0;
+      case 'booking':
+        return true; // Cal.com handles booking validation
       default:
         return true;
     }
@@ -681,7 +681,7 @@ export default function ClientIntakePage() {
                     {currentSection === 4 && 'Where do you live?'}
                     {currentSection === 5 && 'Who should we contact in case of emergency?'}
                     {currentSection === 6 && 'Tell us about your legal matter'}
-                    {currentSection === 7 && 'When are you available for appointments?'}
+                    {currentSection === 7 && 'Schedule your consultation appointment'}
                   </CardDescription>
                 </div>
               </div>
@@ -1580,46 +1580,25 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Availability - NOW SECTION 7 */}
+                  {/* Book Consultation - SECTION 7 */}
                   {currentSection === 7 && (
                     <div className="space-y-6">
-                      <div>
-                        <Label className="font-paragraph mb-3 block">
-                          Preferred Days <span className="text-destructive">*</span>
-                        </Label>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                          {daysOfWeek.map((day) => (
-                            <div key={day} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`day-${day}`}
-                                checked={formData.preferredDays.includes(day)}
-                                onCheckedChange={() => handleCheckboxArrayChange('preferredDays', day)}
-                              />
-                              <Label htmlFor={`day-${day}`} className="font-paragraph cursor-pointer">
-                                {day}
-                              </Label>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                        <p className="font-paragraph text-foreground/80 text-sm">
+                          You're almost done! Please select a date and time below to book your initial consultation. You'll receive a confirmation email with a Zoom meeting link.
+                        </p>
                       </div>
-                      <div>
-                        <Label className="font-paragraph mb-3 block">
-                          Preferred Times <span className="text-destructive">*</span>
-                        </Label>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                          {timeSlots.map((time) => (
-                            <div key={time} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`time-${time}`}
-                                checked={formData.preferredTimes.includes(time)}
-                                onCheckedChange={() => handleCheckboxArrayChange('preferredTimes', time)}
-                              />
-                              <Label htmlFor={`time-${time}`} className="font-paragraph cursor-pointer">
-                                {time}
-                              </Label>
-                            </div>
-                          ))}
-                        </div>
+                      <div
+                        className="rounded-lg overflow-hidden border border-gray-200"
+                        style={{ minHeight: '600px' }}
+                      >
+                        <iframe
+                          src="https://cal.com/jeanfrancois-demers/30min"
+                          frameBorder="0"
+                          style={{ width: '100%', height: '600px', border: 'none' }}
+                          title="Book a consultation"
+                          allow="camera; microphone"
+                        />
                       </div>
                     </div>
                   )}
