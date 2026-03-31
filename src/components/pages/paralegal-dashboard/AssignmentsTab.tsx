@@ -9,8 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { 
-  Calendar, User, FileText, Plus, AlertCircle, CheckCircle, 
-  UserPlus, Mail, ClipboardList, ArrowRight, ArrowLeft, Printer, X 
+  Calendar, User, FileText, Plus, AlertCircle, CheckCircle,
+  UserPlus, Mail, ClipboardList, ArrowRight, ArrowLeft, Printer, X, Trash2
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useParalegalDashboard } from './ParalegalDashboardContext';
@@ -233,6 +233,24 @@ export default function AssignmentsTab() {
       refreshData();
     } catch (error) {
       console.error('Error self-assigning:', error);
+    }
+  };
+
+  const [deletingAssignmentId, setDeletingAssignmentId] = useState<string | null>(null);
+
+  const handleDeleteAssignment = async (assignmentId: string) => {
+    if (!confirm('Are you sure you want to delete this client file? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      setDeletingAssignmentId(assignmentId);
+      await BaseCrudService.remove('fileassignments', assignmentId);
+      setFileAssignments(fileAssignments.filter(a => a._id !== assignmentId));
+    } catch (error) {
+      console.error('Error deleting assignment:', error);
+      alert('Failed to delete file assignment. Please try again.');
+    } finally {
+      setDeletingAssignmentId(null);
     }
   };
 
@@ -756,8 +774,8 @@ export default function AssignmentsTab() {
                     <strong>Notes:</strong> {assignment.notes}
                   </p>
                 )}
-                {assignment.paralegalId !== currentParalegalId && (
-                  <div className="pt-2">
+                <div className="pt-2 flex gap-2">
+                  {assignment.paralegalId !== currentParalegalId && (
                     <Button
                       size="sm"
                       onClick={() => handleSelfAssign(assignment.clientId || '')}
@@ -766,8 +784,18 @@ export default function AssignmentsTab() {
                       <User className="h-4 w-4" />
                       Assign to Me
                     </Button>
-                  </div>
-                )}
+                  )}
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => handleDeleteAssignment(assignment._id || '')}
+                    disabled={deletingAssignmentId === assignment._id}
+                    className="gap-2"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    {deletingAssignmentId === assignment._id ? 'Deleting...' : 'Delete File'}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))

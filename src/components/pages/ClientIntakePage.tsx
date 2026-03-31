@@ -1628,16 +1628,7 @@ export default function ClientIntakePage() {
 
               {/* Navigation Buttons */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-foreground/10">
-                {/* Only show Skip if NOT blocked */}
-                {!(currentSection === 1 && formData.conflictCheckStatus === 'blocked') && (
-                  <Button
-                    variant="outline"
-                    onClick={handleSkip}
-                    className="w-full sm:w-auto order-3 sm:order-1"
-                  >
-                    Skip for Now
-                  </Button>
-                )}
+                {/* Skip for Now option removed */}
 
                 <div className="flex gap-3 w-full sm:w-auto order-1 sm:order-2">
                   {currentSection > 0 && (
