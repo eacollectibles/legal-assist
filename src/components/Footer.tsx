@@ -21,7 +21,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-8 mb-8 sm:mb-12">
 
           {/* Brand Section */}
           <div>
@@ -103,6 +103,43 @@ export default function Footer() {
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Small Claims Guide
+              </Link>
+            </nav>
+          </div>
+
+          {/* London Services Section */}
+          <div>
+            <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">London Services</h3>
+            <nav className="flex flex-col gap-0.5" aria-label="London paralegal services">
+              <Link
+                to="/paralegal-london-ontario"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal London Ontario
+              </Link>
+              <Link
+                to="/landlord-tenant-paralegal-london"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Landlord &amp; Tenant London
+              </Link>
+              <Link
+                to="/small-claims-paralegal-london"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Small Claims Court London
+              </Link>
+              <Link
+                to="/traffic-ticket-paralegal-london"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Traffic Tickets London
+              </Link>
+              <Link
+                to="/hrto-paralegal-london"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Human Rights Tribunal London
               </Link>
             </nav>
           </div>

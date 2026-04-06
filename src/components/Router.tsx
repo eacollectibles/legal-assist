@@ -81,6 +81,7 @@ export default function Router() {
             ))}
 
             {/* Legacy URL Redirects */}
+            <Route path="/london-paralegal" element={<Navigate to="/paralegal-london-ontario" replace />} />
             <Route path="/services/small-claims" element={<Navigate to="/services/small-claims-court" replace />} />
             <Route path="/services/landlord-tenant" element={<Navigate to="/services/landlord-tenant-board" replace />} />
             <Route path="/services/human-rights" element={<Navigate to="/services/human-rights-tribunal" replace />} />

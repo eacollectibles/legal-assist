@@ -511,9 +511,29 @@
 
   <!-- Location Pages - Original Format -->
   <url>
-    <loc>https://www.legalassist.london/london-paralegal</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://www.legalassist.london/paralegal-london-ontario</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.legalassist.london/landlord-tenant-paralegal-london</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.legalassist.london/small-claims-paralegal-london</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.legalassist.london/traffic-ticket-paralegal-london</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.legalassist.london/hrto-paralegal-london</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.legalassist.london/st-thomas-paralegal</loc>

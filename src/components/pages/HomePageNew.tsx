@@ -469,12 +469,28 @@ export default function HomePageNew() {
       <section className="bg-slate py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
           <h2 className="font-heading text-2xl font-bold text-matte mb-4">
-            Paralegal Services in London, Ontario
+            <Link to="/paralegal-london-ontario" className="hover:text-primary transition-colors">
+              Licensed Paralegal in London, Ontario
+            </Link>
           </h2>
-          <p className="text-matte/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-matte/60 max-w-2xl mx-auto leading-relaxed mb-6">
             Serving London, Ontario and surrounding areas including St. Thomas, Woodstock, Stratford,
             Kitchener, and communities across Southwestern Ontario.
           </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/landlord-tenant-paralegal-london" className="inline-flex items-center gap-1 bg-white/80 text-matte/80 hover:text-primary px-4 py-2 rounded-lg text-sm font-paragraph transition-colors">
+              Landlord &amp; Tenant London
+            </Link>
+            <Link to="/small-claims-paralegal-london" className="inline-flex items-center gap-1 bg-white/80 text-matte/80 hover:text-primary px-4 py-2 rounded-lg text-sm font-paragraph transition-colors">
+              Small Claims Court London
+            </Link>
+            <Link to="/traffic-ticket-paralegal-london" className="inline-flex items-center gap-1 bg-white/80 text-matte/80 hover:text-primary px-4 py-2 rounded-lg text-sm font-paragraph transition-colors">
+              Traffic Tickets London
+            </Link>
+            <Link to="/hrto-paralegal-london" className="inline-flex items-center gap-1 bg-white/80 text-matte/80 hover:text-primary px-4 py-2 rounded-lg text-sm font-paragraph transition-colors">
+              Human Rights Tribunal London
+            </Link>
+          </div>
         </div>
       </section>
 
