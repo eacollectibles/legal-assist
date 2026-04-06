@@ -56,7 +56,7 @@ export default function LondonParalegalPage() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link to="/services/small-claims" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
+            <Link to="/small-claims-paralegal-london" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Scale className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Small Claims Court London</h3>
               <p className="font-paragraph text-foreground/70 mb-2">Claims up to $50,000 including debt recovery, breach of contract, property damage, and consumer disputes filed at the London Small Claims Court.</p>
@@ -64,7 +64,7 @@ export default function LondonParalegalPage() {
               <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </Link>
 
-            <Link to="/services/landlord-tenant" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
+            <Link to="/landlord-tenant-paralegal-london" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Home className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Landlord &amp; Tenant Board London</h3>
               <p className="font-paragraph text-foreground/70 mb-2">Representation for eviction hearings, N4/N5/N12/N13 notices, rent arrears, above-guideline increases, and maintenance disputes at the London LTB.</p>
@@ -72,7 +72,7 @@ export default function LondonParalegalPage() {
               <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </Link>
 
-            <Link to="/services/traffic-tickets" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
+            <Link to="/traffic-ticket-paralegal-london" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Car className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Traffic Tickets London</h3>
               <p className="font-paragraph text-foreground/70 mb-2">Fight speeding tickets, careless driving, stunt driving, red light camera tickets, and Highway Traffic Act charges issued in London and on Highway 401.</p>
@@ -80,7 +80,7 @@ export default function LondonParalegalPage() {
               <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </Link>
 
-            <Link to="/services/human-rights" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
+            <Link to="/hrto-paralegal-london" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all hover:shadow-lg group">
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Users className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Human Rights Tribunal Ontario</h3>
               <p className="font-paragraph text-foreground/70 mb-2">Filing and defending discrimination complaints related to employment, housing, and services under the Ontario Human Rights Code.</p>

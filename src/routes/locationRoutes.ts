@@ -5,6 +5,10 @@ const LocationsHubPage = lazy(() => import('@/components/pages/LocationsHubPage'
 
 // Location Pages
 const LondonParalegalPage = lazy(() => import('@/components/pages/LondonParalegalPage'));
+const LandlordTenantLondonPage = lazy(() => import('@/components/pages/LandlordTenantLondonPage'));
+const SmallClaimsLondonPage = lazy(() => import('@/components/pages/SmallClaimsLondonPage'));
+const TrafficTicketLondonPage = lazy(() => import('@/components/pages/TrafficTicketLondonPage'));
+const HRTOLondonPage = lazy(() => import('@/components/pages/HRTOLondonPage'));
 const StThomasParalegalPage = lazy(() => import('@/components/pages/StThomasParalegalPage'));
 const WoodstockParalegalPage = lazy(() => import('@/components/pages/WoodstockParalegalPage'));
 const StrathroyChathamParalegalPage = lazy(() => import('@/components/pages/StrathroyChathamParalegalPage'));
@@ -180,6 +184,10 @@ export const locationRoutes = [
   // Hub page - all Ontario locations
   { path: '/locations', element: LocationsHubPage },
   { path: '/paralegal-london-ontario', element: LondonParalegalPage },
+  { path: '/landlord-tenant-paralegal-london', element: LandlordTenantLondonPage },
+  { path: '/small-claims-paralegal-london', element: SmallClaimsLondonPage },
+  { path: '/traffic-ticket-paralegal-london', element: TrafficTicketLondonPage },
+  { path: '/hrto-paralegal-london', element: HRTOLondonPage },
   { path: '/st-thomas-paralegal', element: StThomasParalegalPage },
   { path: '/woodstock-paralegal', element: WoodstockParalegalPage },
   { path: '/strathroy-chatham-paralegal', element: StrathroyChathamParalegalPage },

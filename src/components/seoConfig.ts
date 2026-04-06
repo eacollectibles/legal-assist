@@ -2790,6 +2790,58 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
 
+  '/landlord-tenant-paralegal-london': {
+    title: 'Landlord Tenant Paralegal London Ontario | LTB Representation London',
+    description: 'Licensed paralegal for landlord and tenant disputes in London, Ontario. Evictions, rent disputes, LTB hearings, N4/N5/N12 notices. Serving London & Middlesex County. Free consultation.',
+    keywords: 'landlord tenant paralegal london, ltb london ontario, eviction paralegal london, landlord tenant board london, tenant rights london, landlord services london ontario',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist - Landlord Tenant Paralegal London', areaServed: ['London', 'Middlesex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Landlord & Tenant', url: '/landlord-tenant-paralegal-london' }],
+    faqs: [
+      { question: 'How much does a landlord tenant paralegal cost in London?', answer: 'Our rates are significantly lower than London lawyers. We offer transparent retainer agreements with clear pricing. Contact us for a free consultation to discuss your specific LTB matter.' },
+      { question: 'Can a paralegal represent me at the London LTB?', answer: 'Yes. Licensed paralegals are authorized by the Law Society of Ontario to represent both landlords and tenants at the Landlord and Tenant Board, including all hearings and mediations.' },
+      { question: 'How long does an LTB case take in London?', answer: 'LTB timelines vary depending on the type of application. Non-payment of rent matters are typically resolved within 1-3 months, while other matters may take longer. We provide realistic timelines during your free consultation.' }
+    ]
+  },
+
+  '/small-claims-paralegal-london': {
+    title: 'Small Claims Court Paralegal London Ontario | Claims up to $50,000',
+    description: 'Licensed paralegal for Small Claims Court in London, Ontario. Debt recovery, contract disputes, property damage claims up to $50,000. London courthouse experience. Free consultation.',
+    keywords: 'small claims court paralegal london, small claims london ontario, debt recovery london, contract dispute london, sue someone london ontario, paralegal small claims london',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist - Small Claims Paralegal London', areaServed: ['London', 'Middlesex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Small Claims Court', url: '/small-claims-paralegal-london' }],
+    faqs: [
+      { question: 'How much can I sue for in London Small Claims Court?', answer: 'Small Claims Court in Ontario handles claims up to $50,000 (not including interest and costs). Claims above this amount must be filed in Superior Court, which requires a lawyer.' },
+      { question: 'Where is London Small Claims Court?', answer: 'Small Claims Court matters for London and Middlesex County are heard at the Superior Court of Justice at 80 Dundas Street, London, Ontario.' },
+      { question: 'How long does a small claims case take in London?', answer: 'From filing to trial, a London Small Claims case typically takes 6-12 months. Many cases settle at the mandatory settlement conference, which is usually scheduled within 3-6 months of filing.' }
+    ]
+  },
+
+  '/traffic-ticket-paralegal-london': {
+    title: 'Traffic Ticket Paralegal London Ontario | Fight Your London Ticket',
+    description: 'Licensed paralegal to fight traffic tickets in London, Ontario. Speeding, careless driving, stunt driving, red light cameras. London Provincial Offences Court experience. Free consultation.',
+    keywords: 'traffic ticket paralegal london, fight speeding ticket london, careless driving london ontario, stunt driving london, london provincial offences court, traffic lawyer london ontario',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist - Traffic Ticket Paralegal London', areaServed: ['London', 'Middlesex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Traffic Tickets', url: '/traffic-ticket-paralegal-london' }],
+    faqs: [
+      { question: 'How much does it cost to fight a traffic ticket in London?', answer: 'Our fees depend on the type of charge and complexity. Speeding tickets start at an affordable flat rate. Contact us for a free consultation and quote specific to your London traffic ticket.' },
+      { question: 'Do I need to go to court for my London traffic ticket?', answer: 'In most cases, no. Your paralegal appears at the London Provincial Offences Court on your behalf, so you do not need to miss work or make court appearances.' },
+      { question: 'How long do I have to fight a London traffic ticket?', answer: 'You have 15 days from the date on the ticket to request a trial or early resolution. Missing this deadline can result in an automatic conviction. Contact us immediately after receiving a ticket.' }
+    ]
+  },
+
+  '/hrto-paralegal-london': {
+    title: 'HRTO Paralegal London Ontario | Human Rights Tribunal Representation',
+    description: 'Licensed paralegal for Human Rights Tribunal (HRTO) applications in London, Ontario. Employment discrimination, housing discrimination, harassment. Serving London & Middlesex County.',
+    keywords: 'hrto paralegal london, human rights tribunal london ontario, discrimination paralegal london, workplace discrimination london, housing discrimination london, hrto application london',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist - HRTO Paralegal London', areaServed: ['London', 'Middlesex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Human Rights Tribunal', url: '/hrto-paralegal-london' }],
+    faqs: [
+      { question: 'How long do I have to file a human rights complaint in London?', answer: 'You have one year from the date of the last discriminatory act to file an application with the Human Rights Tribunal of Ontario. Contact us as soon as possible to preserve your rights.' },
+      { question: 'Can a paralegal represent me at the HRTO?', answer: 'Yes. Licensed paralegals are authorized to represent applicants and respondents at the Human Rights Tribunal of Ontario for all types of discrimination complaints.' },
+      { question: 'What compensation can I get from the HRTO?', answer: 'HRTO remedies can include monetary compensation for injury to dignity, lost wages, reinstatement to employment, policy changes, and other non-monetary orders. Awards vary based on the severity and circumstances of the discrimination.' }
+    ]
+  },
+
   '/st-thomas-paralegal': {
     title: 'St. Thomas Paralegal | Legal Services Elgin County',
     description: 'Affordable paralegal services in St. Thomas, Elgin County. Traffic tickets, landlord-tenant disputes, small claims. Serving Aylmer, Port Stanley. Call 226-272-5153.',
