@@ -17,6 +17,8 @@
     "@astrojs/react": "4.3.0",
     "@astrojs/tailwind": "6.0.2",
     "@hello-pangea/dnd": "18.0.1",
+    "pdf-lib": "^1.17.1",
+    "@emailjs/browser": "^4.3.3",
     "@hookform/resolvers": "5.2.0",
     "@radix-ui/react-accordion": "1.2.11",
     "@radix-ui/react-alert-dialog": "1.1.14",
@@ -153,7 +155,7 @@
     "vitest": "3.1.4"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.45.1"
+    "@rollup/rollup-linux-x64-gnu": "^4.45.1"
   },
   "overrides": {
     "@wix/services-definitions": "^1.0.1",

@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8 mb-8 sm:mb-12">
-          
+
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
@@ -38,31 +38,31 @@ export default function Footer() {
               Professional paralegal services across Ontario, delivering accessible and affordable legal support for individuals and businesses.
             </p>
           </div>
-          
+
           {/* Quick Links Section - 48px touch targets */}
           <div>
             <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Quick Links</h3>
             <nav className="flex flex-col gap-0.5" aria-label="Footer navigation">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Home
               </Link>
-              <Link 
-                to="/about" 
+              <Link
+                to="/about"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 About Us
               </Link>
-              <Link 
-                to="/services" 
+              <Link
+                to="/services"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Services
               </Link>
-              <Link 
-                to="/contact" 
+              <Link
+                to="/contact"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Contact
@@ -70,58 +70,56 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Resources Section - NEW */}
+          {/* Resources Section */}
           <div>
             <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Resources</h3>
             <nav className="flex flex-col gap-0.5" aria-label="Resources navigation">
-              <Link 
-                to="/blog" 
+              <Link
+                to="/blog"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Blog
               </Link>
-              <Link 
-                to="/resources" 
+              <Link
+                to="/resources"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 All Resources
               </Link>
-              <Link 
-                to="/legal-news" 
+              <Link
+                to="/legal-news"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Recent Decisions
               </Link>
-              <Link 
-                to="/guides/ontario-tenant-rights" 
+              <Link
+                to="/guides/ontario-tenant-rights"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Tenant Rights Guide
               </Link>
-              <Link 
-                to="/guides/small-claims-court-process" 
+              <Link
+                to="/guides/small-claims-court-process"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Small Claims Guide
               </Link>
             </nav>
           </div>
-          
-          {/* Contact Information Section - 48px touch targets */}
+
+          {/* Contact Information Section */}
           <div>
             <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Contact</h3>
             <div className="flex flex-col gap-0.5">
-              {/* Address - not clickable but styled consistently */}
               <div className="flex items-start gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg">
                 <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80">
                   P.O Box 1000<br />London, Ontario, N6A 2L1
                 </span>
               </div>
-              
-              {/* Phone - clickable with proper touch target */}
-              <a 
-                href={PHONE_HREF} 
+
+              <a
+                href={PHONE_HREF}
                 className="flex items-center gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors group focus-ring"
                 aria-label={`Call us at ${PHONE_DISPLAY}`}
               >
@@ -130,10 +128,9 @@ export default function Footer() {
                   {PHONE_DISPLAY}
                 </span>
               </a>
-              
-              {/* Email - clickable with proper touch target */}
-              <a 
-                href="mailto:info@legalassist.london" 
+
+              <a
+                href="mailto:info@legalassist.london"
                 className="flex items-center gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors group focus-ring"
                 aria-label="Email us at info@legalassist.london"
               >
@@ -173,25 +170,24 @@ export default function Footer() {
             <span className="font-paragraph text-sm text-secondary-foreground/80">Flat Fee Pricing</span>
           </div>
         </div>
-        
-        {/* LSO Badge - proper touch target */}
+
+        {/* LSO Badge */}
         <div className="flex justify-center mb-8">
-          <a 
-            href="https://lso.ca/public-resources/finding-a-lawyer-or-paralegal/lawyer-and-paralegal-directory" 
-            target="_blank" 
+          <a
+            href="https://lso.ca/public-resources/finding-a-lawyer-or-paralegal/lawyer-and-paralegal-directory"
+            target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 bg-white/10 hover:bg-white/20 active:bg-white/25 border border-secondary-foreground/20 rounded-xl min-h-[64px] px-5 sm:px-6 py-3 sm:py-4 transition-colors group focus-ring"
             aria-label="Verify our credentials on the Law Society of Ontario Directory (opens in new tab)"
           >
-            {/* LSO Shield Icon */}
             <div className="w-11 h-11 sm:w-12 sm:h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                 aria-hidden="true"
               >
@@ -204,12 +200,12 @@ export default function Footer() {
                 Licensed by the Law Society of Ontario
               </p>
               <p className="font-paragraph text-xs text-secondary-foreground/70">
-                Verify our credentials on the LSO Directory →
+                Verify our credentials on the LSO Directory &rarr;
               </p>
             </div>
           </a>
         </div>
-        
+
         {/* Disclaimer and Copyright */}
         <div className="border-t border-secondary-foreground/20 pt-6 sm:pt-8">
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 text-center mb-6 italic">
@@ -230,11 +226,11 @@ export default function Footer() {
             </p>
           </div>
           <p className="text-xs text-secondary-foreground/50 text-center mb-2">
-            Images on this website are for illustrative purposes only. All persons depicted are models 
+            Images on this website are for illustrative purposes only. All persons depicted are models
             or AI-generated and do not represent actual clients, cases, or outcomes.
           </p>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
-            © 2026 LegalAssist Paralegal Services. Operated by XXXXX XXXXX, Licensed Paralegal (Law Society of Ontario), Licence No. [LSO Licence #]. All rights reserved.
+            &copy; 2026 LegalAssist Paralegal Services. Operated by XXXXX XXXXX, Licensed Paralegal (Law Society of Ontario), Licence No. [LSO Licence #]. All rights reserved.
           </p>
         </div>
       </div>

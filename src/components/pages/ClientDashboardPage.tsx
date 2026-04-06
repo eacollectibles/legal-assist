@@ -7,7 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { FileText, MessageSquare, CreditCard, User, Bell, BellDot, FileSignature, Info, CheckCircle } from 'lucide-react';
+import { FileText, MessageSquare, CreditCard, User, Bell, BellDot, FileSignature, Info, CheckCircle, Shield } from 'lucide-react';
 import { getCurrentUser, isAuthenticated, isAdmin } from '@/lib/auth-service';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 import { GeneratedDocuments, ClientProfiles } from '@/entities';
@@ -20,6 +20,7 @@ import PaymentsTab from './dashboard/PaymentsTab';
 import MessagesTab from './dashboard/MessagesTab';
 import NotificationsTab from './dashboard/NotificationsTab';
 import QuickAccessDocs from './dashboard/QuickAccessDocs';
+import MyFileTab from './dashboard/MyFileTab';
 
 // Import types
 import { 
@@ -142,10 +143,27 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadProfile = async () => {
     setIsLoadingProfile(true);
     try {
+      // Primary lookup: by clientId (CL-XXXXXX format) which is the _id in clientprofiles
+      const clientId = currentUser?.clientId;
+      if (clientId) {
+        const directProfile = await BaseCrudService.getById<ClientProfiles>('clientprofiles', clientId);
+        if (directProfile) {
+          setProfile(directProfile);
+          setIntakeCompleted(directProfile.intakeCompleted || false);
+          setIsLoadingProfile(false);
+          return;
+        }
+      }
+
+      // Fallback: search all profiles if direct lookup fails
       const { items } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
-      let userProfile = items?.find(p => p._id === currentUser?.email);
-      if (!userProfile && userAccountId) {
-        userProfile = items?.find(p => p._id === userAccountId);
+      let userProfile = items?.find(p => p._id === clientId);
+      if (!userProfile) {
+        // Last resort: match by firstName + lastName from currentUser
+        userProfile = items?.find(p =>
+          p.firstName === currentUser?.firstName &&
+          p.lastName === currentUser?.lastName
+        );
       }
       setProfile(userProfile || null);
       if (userProfile) {
@@ -217,7 +235,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     try {
       const { items: assignments } = await BaseCrudService.getAll('fileassignments');
       const { items: users } = await BaseCrudService.getAll('useraccounts');
-      const userAssignment = assignments?.find(a => a.clientId === userAccountId || a.clientId === currentUser?.email);
+      const clientId = currentUser?.clientId;
+      const userAssignment = assignments?.find(a => a.clientId === clientId || a.clientId === userAccountId || a.clientId === currentUser?.email);
       if (userAssignment && userAssignment.paralegalId) {
         const paralegal = users?.find(u => u._id === userAssignment.paralegalId);
         if (paralegal) {
@@ -233,8 +252,10 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
     setIsLoadingGeneratedDocs(true);
     try {
       const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
+      const clientId = currentUser?.clientId;
       const userDocs = items?.filter(doc => {
         if (doc.clientEmail === currentUser?.email) return true;
+        if (clientId && doc.clientId === clientId) return true;
         if (doc.clientId === userAccountId || doc.clientId === currentUser?.email) return true;
         return false;
       }) || [];
@@ -497,12 +518,16 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
           )}
 
           {/* Tabs */}
-          <Tabs defaultValue="documents" className="w-full">
+          <Tabs defaultValue="myfile" className="w-full">
             <div className="relative mb-8">
               <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none z-10 md:hidden" />
               <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none z-10 md:hidden" />
               
               <TabsList className="flex w-full overflow-x-auto scrollbar-hide md:grid md:grid-cols-6 gap-2 h-auto pb-2 md:pb-0">
+                <TabsTrigger value="myfile" className="flex items-center gap-2 py-3 px-4 min-w-[100px] md:min-w-0 flex-shrink-0 md:flex-shrink">
+                  <Shield className="w-4 h-4" />
+                  <span>My File</span>
+                </TabsTrigger>
                 <TabsTrigger value="documents" className="flex items-center gap-2 py-3 px-4 min-w-[120px] md:min-w-0 flex-shrink-0 md:flex-shrink">
                   <FileText className="w-4 h-4" />
                   <span>Documents</span>
@@ -540,8 +565,17 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
               </TabsList>
             </div>
 
+            <TabsContent value="myfile">
+              <MyFileTab
+                currentUser={currentUser}
+                profile={profile}
+                documents={documents}
+                isLoadingProfile={isLoadingProfile}
+              />
+            </TabsContent>
+
             <TabsContent value="documents">
-              <DocumentsTab 
+              <DocumentsTab
                 currentUser={currentUser}
                 documents={documents}
                 setDocuments={setDocuments}

@@ -157,6 +157,80 @@ export default function SignaturesTab() {
     }
   };
 
+  const handleViewDocument = async (doc: GeneratedDocuments) => {
+    // If we have a URL, open it directly
+    const url = doc.signedDocumentUrl || doc.documentUrl;
+    if (url && (url.startsWith('http') || url.startsWith('data:'))) {
+      window.open(url, '_blank');
+      return;
+    }
+
+    // Otherwise, generate a PDF on-the-fly from stored content or re-fetch the template
+    try {
+      const { generatePDF } = await import('@/lib/pdf-generator');
+      let content = doc.documentContent;
+
+      // If no stored content, try to regenerate from the original template
+      if (!content && doc.templateId) {
+        try {
+          const { items: templates } = await BaseCrudService.getAll<any>('documenttemplates');
+          const template = templates?.find((t: any) => t._id === doc.templateId);
+          if (template?.templateContent) {
+            content = template.templateContent;
+
+            // Try to fill in client data if available
+            if (doc.clientId) {
+              try {
+                const { items: clientProfiles } = await BaseCrudService.getAll<any>('clientprofiles');
+                const client = clientProfiles?.find((c: any) => c._id === doc.clientId);
+                if (client) {
+                  content = content!
+                    .replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim() || '—')
+                    .replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '—')
+                    .replace(/\{CLIENT_ADDRESS_LINE1\}/g, client.streetAddress || '—')
+                    .replace(/\{CLIENT_CITY\}/g, client.city || '—')
+                    .replace(/\{CLIENT_PROVINCE\}/g, client.state || '—')
+                    .replace(/\{CLIENT_POSTAL_CODE\}/g, client.zipCode || '—')
+                    .replace(/\{MATTER_REFERENCE\}/g, '—')
+                    .replace(/\{DATE\}/g, doc.generationDate
+                      ? new Date(doc.generationDate).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })
+                      : new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' }));
+                }
+              } catch (clientErr) {
+                console.warn('Could not load client data for template fill:', clientErr);
+              }
+            }
+          }
+        } catch (templateErr) {
+          console.warn('Could not re-fetch template for document regeneration:', templateErr);
+        }
+      }
+
+      // Final fallback — if still no content, show an error rather than a blank PDF
+      if (!content) {
+        alert('Document content is unavailable. The document may need to be regenerated from the Document Workflow page.');
+        return;
+      }
+
+      const pdfDataUrl = await generatePDF(content, doc.documentName || 'Document');
+
+      // Cache the generated URL and content so subsequent clicks are instant
+      await BaseCrudService.update('generateddocuments', {
+        _id: doc._id,
+        documentUrl: pdfDataUrl,
+        documentContent: content,
+      } as any);
+      setGeneratedDocuments(prev =>
+        prev.map(d => d._id === doc._id ? { ...d, documentUrl: pdfDataUrl, documentContent: content } : d)
+      );
+
+      window.open(pdfDataUrl, '_blank');
+    } catch (error) {
+      console.error('Error generating document PDF:', error);
+      alert('Unable to generate document. Please try again.');
+    }
+  };
+
   const openEmailDialog = async (doc: GeneratedDocuments) => {
     setEmailingDocument(doc);
     
@@ -173,7 +247,7 @@ export default function SignaturesTab() {
         ? `${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim()
         : 'Paralegal';
 
-      const token = await createUploadToken({
+      const tokenResult = await createUploadToken({
         clientId: doc.clientId || 'unknown',
         clientName,
         matterId: doc._id,
@@ -181,10 +255,10 @@ export default function SignaturesTab() {
         documentId: doc._id,
         createdByParalegalId: currentParalegalId,
         createdByParalegalName: paralegalName,
-        expiresInDays: 7
+        expiryHours: 7 * 24
       });
 
-      setEmailUploadToken(token);
+      setEmailUploadToken(tokenResult.token);
     } catch (error) {
       console.error('Error creating upload token:', error);
     }
@@ -314,14 +388,16 @@ export default function SignaturesTab() {
                       </div>
 
                       <div className="flex md:flex-col gap-2">
-                        {doc.documentUrl && (
-                          <Button variant="outline" size="sm" asChild className="flex-1 md:flex-none">
-                            <a href={doc.documentUrl} target="_blank" rel="noopener noreferrer">
-                              <FileText className="w-4 h-4 md:mr-2" />
-                              <span className="hidden md:inline">View</span>
-                            </a>
-                          </Button>
-                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleViewDocument(doc)}
+                          className="flex-1 md:flex-none"
+                        >
+                          <FileText className="w-4 h-4 md:mr-2" />
+                          <span className="hidden md:inline">View Document</span>
+                          <span className="md:hidden">View</span>
+                        </Button>
                         {requiresSignature && !isSigned && (
                           <Button
                             size="sm"
@@ -334,30 +410,29 @@ export default function SignaturesTab() {
                           </Button>
                         )}
                         {isSigned && doc.signedDocumentUrl && (
-                          <>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              asChild
-                              className="flex-1 md:flex-none border-green-300 text-green-700 hover:bg-green-50"
-                            >
-                              <a href={doc.signedDocumentUrl} download>
-                                <Download className="w-4 h-4 md:mr-2" />
-                                <span className="hidden md:inline">Download Signed</span>
-                                <span className="md:hidden">Download</span>
-                              </a>
-                            </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => openEmailDialog(doc)}
-                              className="bg-blue-600 hover:bg-blue-700 text-white flex-1 md:flex-none"
-                            >
-                              <Mail className="w-4 h-4 md:mr-2" />
-                              <span className="hidden md:inline">Email Document</span>
-                              <span className="md:hidden">Email</span>
-                            </Button>
-                          </>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            asChild
+                            className="flex-1 md:flex-none border-green-300 text-green-700 hover:bg-green-50"
+                          >
+                            <a href={doc.signedDocumentUrl} download>
+                              <Download className="w-4 h-4 md:mr-2" />
+                              <span className="hidden md:inline">Download Signed</span>
+                              <span className="md:hidden">Download</span>
+                            </a>
+                          </Button>
                         )}
+                        {/* Email Document — always available */}
+                        <Button
+                          size="sm"
+                          onClick={() => openEmailDialog(doc)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white flex-1 md:flex-none"
+                        >
+                          <Mail className="w-4 h-4 md:mr-2" />
+                          <span className="hidden md:inline">{isSigned ? 'Email Signed' : 'Email Document'}</span>
+                          <span className="md:hidden">Email</span>
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -371,26 +446,32 @@ export default function SignaturesTab() {
       {/* Signature Dialog */}
       {signingDocument && (
         <DocumentSignature
+          documentId={signingDocument._id}
           documentName={signingDocument.documentName || 'Document'}
           onSignatureComplete={handleSignatureComplete}
-          onClose={() => setSigningDocument(null)}
+          onCancel={() => setSigningDocument(null)}
         />
       )}
 
       {/* Email Dialog */}
       {emailingDocument && (
         <EmailDocumentDialog
-          open={isEmailDialogOpen}
-          onOpenChange={(open) => {
-            setIsEmailDialogOpen(open);
-            if (!open) {
-              setEmailingDocument(null);
-              setEmailUploadToken(undefined);
-            }
+          document={emailingDocument}
+          isOpen={isEmailDialogOpen}
+          onClose={() => {
+            setIsEmailDialogOpen(false);
+            setEmailingDocument(null);
+            setEmailUploadToken(undefined);
           }}
-          documentName={emailingDocument.documentName || 'Document'}
-          recipientEmail={emailingDocument.clientEmail || ''}
           onSend={handleEmailDocument}
+          paralegalName={(() => {
+            const paralegal = paralegals.find(p => p._id === currentParalegalId);
+            return paralegal ? `${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim() : 'Paralegal';
+          })()}
+          clientName={(() => {
+            const client = clients.find(c => c._id === emailingDocument.clientId);
+            return client ? `${client.firstName || ''} ${client.lastName || ''}`.trim() : 'Client';
+          })()}
           uploadToken={emailUploadToken}
         />
       )}

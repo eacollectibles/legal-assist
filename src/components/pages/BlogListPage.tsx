@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Clock, Calendar } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -25,10 +26,51 @@ export default function BlogListPage() {
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
+  const blogListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'LegalAssist Blog — Ontario Legal Resources',
+    description: 'Practical legal information for Ontario residents. Traffic tickets, landlord-tenant issues, small claims court, employment law, and more.',
+    url: 'https://www.legalassist.london/blog',
+    publisher: {
+      '@type': 'LegalService',
+      name: 'LegalAssist Paralegal Services',
+      url: 'https://www.legalassist.london',
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: sortedPosts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `https://www.legalassist.london/blog/${post.slug}`,
+        name: post.title,
+      })),
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Legal Blog — Ontario Paralegal Resources | LegalAssist</title>
+        <meta name="description" content="Practical legal information for Ontario residents. Expert articles on traffic tickets, landlord-tenant disputes, small claims court, employment law, and more." />
+        <link rel="canonical" href="https://www.legalassist.london/blog" />
+        <meta property="og:title" content="Legal Blog — Ontario Paralegal Resources | LegalAssist" />
+        <meta property="og:description" content="Practical legal information for Ontario residents. Expert articles on traffic tickets, landlord-tenant disputes, small claims court, employment law, and more." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.legalassist.london/blog" />
+        <meta property="og:image" content="https://www.legalassist.london/og-image.jpg" />
+        <meta property="og:locale" content="en_CA" />
+        <meta property="og:site_name" content="LegalAssist Paralegal Services" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Legal Blog — Ontario Paralegal Resources | LegalAssist" />
+        <meta name="twitter:description" content="Practical legal information for Ontario residents." />
+        <meta name="twitter:image" content="https://www.legalassist.london/og-image.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify(blogListSchema)}
+        </script>
+      </Helmet>
       <Header />
-      
+
       {/* Hero */}
       <section className="bg-secondary py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -110,10 +152,10 @@ export default function BlogListPage() {
             Get a free consultation with a licensed paralegal. We're here to help.
           </p>
           <a 
-            href="tel:+13658829515"
+            href="tel:+12262725153"
             className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg font-paragraph"
           >
-            Call 365-882-9515
+            Call 226-272-5153
           </a>
         </div>
       </section>

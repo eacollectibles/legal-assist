@@ -5,6 +5,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /client-dashboard
+Disallow: /client-intake
 Disallow: /login
 Disallow: /signup
 Disallow: /client-login
@@ -12,8 +13,12 @@ Disallow: /client-signup
 Disallow: /intake
 Disallow: /booking
 Disallow: /meeting-request
+Disallow: /meeting-dashboard
 Disallow: /upload/
 Disallow: /paralegal-dashboard
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /conflict-detected
 
 # Block system files
 Disallow: /_astro/
@@ -28,7 +33,17 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
 Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /conflict-detected
+Disallow: /meeting-dashboard
+Disallow: /meeting-request
+Disallow: /booking
 
 # Bingbot
 User-agent: bingbot
@@ -50,5 +65,24 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
+# Block AI training bots
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
 # Sitemap
-Sitemap: https://legalassist.london/sitemap.xml
+Sitemap: https://www.legalassist.london/sitemap.xml

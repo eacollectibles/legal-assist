@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { MemberProvider } from '@/integrations';
-import ComingSoonModal from '@/components/ComingSoonModal';
+// ComingSoonModal removed - site is live
 
 // Route configurations
 import { trafficRoutes } from '@/routes/trafficRoutes';
@@ -12,15 +13,15 @@ import { otherServiceRoutes } from '@/routes/otherServiceRoutes';
 import { guideRoutes } from '@/routes/guideRoutes';
 import { adminRoutes } from '@/routes/adminRoutes';
 import { blogRoutes } from '@/routes/blogRoutes';
+import { resourceRoutes } from '@/routes/resourceRoutes';
 
-// Core Pages - Static imports for critical pages
-import HomePage from '@/components/pages/HomePageNew';
-import ContactPage from '@/components/pages/ContactPage';
-import ConflictDetectedPage from '@/components/pages/ConflictDetectedPage';
-
-// Lazy load other core pages
+// Lazy load all pages for optimal code splitting
+const HomePage = lazy(() => import('@/components/pages/HomePageNew'));
+const ContactPage = lazy(() => import('@/components/pages/ContactPage'));
+const ConflictDetectedPage = lazy(() => import('@/components/pages/ConflictDetectedPage'));
 const AboutPage = lazy(() => import('@/components/pages/AboutPage'));
 const MeetOurTeamPage = lazy(() => import('@/components/pages/MeetOurTeamPage'));
+const StudentPlacementPage = lazy(() => import('@/components/pages/StudentPlacementPage'));
 const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'));
 const ClientSignupPage = lazy(() => import('@/components/pages/ClientSignupPage'));
 const ClientLoginPage = lazy(() => import('@/components/pages/ClientLoginPage'));
@@ -48,13 +49,14 @@ const allRoutes = [
   ...guideRoutes,
   ...adminRoutes,
   ...blogRoutes,
+  ...resourceRoutes,
 ];
 
 export default function Router() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
       <MemberProvider>
-        <ComingSoonModal />
         <ScrollToTop />
         <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><div className="text-foreground">Loading...</div></div>}>
           <Routes>
@@ -64,6 +66,7 @@ export default function Router() {
             <Route path="/conflict-detected" element={<ConflictDetectedPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/about/team" element={<MeetOurTeamPage />} />
+            <Route path="/about/student-placement" element={<StudentPlacementPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/client-signup" element={<ClientSignupPage />} />
             <Route path="/client-login" element={<ClientLoginPage />} />
@@ -83,6 +86,8 @@ export default function Router() {
             <Route path="/services/human-rights" element={<Navigate to="/services/human-rights-tribunal" replace />} />
             <Route path="/signup" element={<Navigate to="/client-signup" replace />} />
             <Route path="/login" element={<Navigate to="/client-login" replace />} />
+            <Route path="/what-is-a-paralegal" element={<Navigate to="/guides/what-is-a-paralegal" replace />} />
+            <Route path="/paralegal-vs-lawyer" element={<Navigate to="/guides/paralegal-vs-lawyer" replace />} />
 
             {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />
@@ -90,5 +95,6 @@ export default function Router() {
         </Suspense>
       </MemberProvider>
     </BrowserRouter>
+    </HelmetProvider>
   );
 }

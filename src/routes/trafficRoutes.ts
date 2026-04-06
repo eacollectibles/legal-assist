@@ -21,6 +21,7 @@ const DrivingWhileSuspendedPage = lazy(() => import('@/components/pages/DrivingW
 const SchoolZoneSpeedingPage = lazy(() => import('@/components/pages/SchoolZoneSpeedingPage'));
 const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltViolationsPage'));
 const ProvincialOffencesPage = lazy(() => import('@/components/pages/ProvincialOffencesPage'));
+const MunicipalBylawPage = lazy(() => import('@/components/pages/MunicipalBylawPage'));
 
 export const trafficRoutes = [
   { path: '/services/traffic-tickets', element: TrafficTicketsPage },
@@ -43,4 +44,5 @@ export const trafficRoutes = [
   { path: '/services/school-zone-speeding', element: SchoolZoneSpeedingPage },
   { path: '/services/seatbelt-violations', element: SeatbeltViolationsPage },
   { path: '/services/provincial-offences', element: ProvincialOffencesPage },
+  { path: '/services/municipal-bylaw', element: MunicipalBylawPage },
 ];

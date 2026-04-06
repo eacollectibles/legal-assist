@@ -12,6 +12,7 @@ import {
 } from '@/lib/upload-token-service';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BackToDashboard from '@/components/BackToDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -27,7 +28,7 @@ import { Switch } from '@/components/ui/switch';
 import { Copy, Plus, Link2, Clock, CheckCircle, XCircle, Eye, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-export default function UploadTokenManagementPage() {
+export default function UploadTokenManagementPage({ embedded }: { embedded?: boolean } = {}) {
   const [tokens, setTokens] = useState<UploadTokens[]>([]);
   const [clients, setClients] = useState<ClientProfiles[]>([]);
   const [loading, setLoading] = useState(true);
@@ -203,9 +204,9 @@ export default function UploadTokenManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="max-w-[100rem] mx-auto px-6 py-12">
+    <div className={embedded ? '' : 'min-h-screen bg-background'}>
+      {!embedded && <><Header /><BackToDashboard /></>}
+      <main className={embedded ? '' : 'max-w-[100rem] mx-auto px-6 py-12'}>
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-heading font-bold text-foreground mb-2">Upload Token Management</h1>
@@ -541,7 +542,7 @@ export default function UploadTokenManagementPage() {
           </DialogContent>
         </Dialog>
       </main>
-      <Footer />
+      {!embedded && <Footer />}
     </div>
   );
 }

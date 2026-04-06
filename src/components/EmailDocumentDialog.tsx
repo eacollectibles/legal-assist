@@ -54,26 +54,54 @@ export default function EmailDocumentDialog({
       // CRITICAL FIX: Generate upload link if token is provided
       const uploadLink = uploadToken ? generateUploadLink(uploadToken) : null;
 
-      const defaultSubject = `Authorization and Direction - ${clientName}`;
-      
-      // Template for sending Authorization and Direction to third parties
-      const defaultBody = `Dear Sir/Madam,
+      const docName = document.documentName || 'Legal Document';
+      const isSigned = document.status === 'signed';
 
-RE: Authorization and Direction - ${clientName}
+      // Check if URLs are usable (not base64 data URLs which are too large for emails)
+      const isUsableUrl = (url?: string) => url && !url.startsWith('data:') && url.startsWith('http');
+      const signedUrl = isUsableUrl(document.signedDocumentUrl) ? document.signedDocumentUrl : null;
+      const docUrl = isUsableUrl(document.documentUrl) ? document.documentUrl : null;
+      const bestUrl = signedUrl || docUrl;
 
-Please find attached a signed Authorization and Direction from our client, ${clientName}, authorizing the release of information to our office.
+      const defaultSubject = isSigned
+        ? `Authorization and Direction - ${clientName}`
+        : `${docName} - ${clientName}`;
 
-We kindly request that you provide the requested documentation/information as outlined in the attached authorization at your earliest convenience.
+      const defaultBody = isSigned
+        ? `RE: Authorization and Direction - ${clientName}
+
+Please find a signed Authorization and Direction from our client, ${clientName}, authorizing the release of information to our office.
+${bestUrl ? `\n📎 DOWNLOAD DOCUMENT:\n${bestUrl}\n` : `\nA copy of the signed document will be provided to you separately by our office.\n`}
+We kindly request that you provide the requested documentation/information as outlined in the authorization at your earliest convenience.
 
 ${uploadLink ? `📤 SECURE UPLOAD LINK
 For your convenience, you may upload the requested documents electronically using the secure link below:
 ${uploadLink}
 
 This link is unique to this matter and allows you to securely upload files directly to our office.
-` : ''}
-If you have any questions or require additional information, please do not hesitate to contact our office.
+` : ''}If you have any questions or require additional information, please do not hesitate to contact our office.
 
 Thank you for your cooperation.
+
+Yours truly,
+
+${paralegalName}
+LegalAssist Paralegal Services
+London, Ontario
+info@legalassist.london`
+        : `RE: ${docName}
+
+Please find the following document for your review:
+
+Document: ${docName}
+Date: ${today}
+${docUrl ? `\n📎 DOWNLOAD DOCUMENT:\n${docUrl}\n` : `\nA copy of this document will be provided to you separately by our office.\n`}
+Please review the document carefully. If you have any questions or require any changes, do not hesitate to contact our office.
+
+${uploadLink ? `📤 SECURE UPLOAD LINK
+If you need to send us any documents, you may upload them securely using the link below:
+${uploadLink}
+` : ''}Thank you.
 
 Yours truly,
 
@@ -169,7 +197,7 @@ info@legalassist.london`;
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="w-5 h-5 text-primary" />
-            Email Signed Document
+            {document.status === 'signed' ? 'Email Signed Document' : 'Email Document'}
           </DialogTitle>
         </DialogHeader>
 

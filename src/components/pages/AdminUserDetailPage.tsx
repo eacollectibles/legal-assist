@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TrafficTicketOnboarding from '@/components/TrafficTicketOnboarding';
 import { getCurrentUser, isAdmin } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { UserAccounts, ClientProfiles, ClientDocuments, Messages, PaymentRecords } from '@/entities';
@@ -673,9 +674,10 @@ export default function AdminUserDetailPage() {
       <section className="w-full py-12 md:py-16 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <Tabs defaultValue="account" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-8">
+            <TabsList className="grid w-full grid-cols-4 md:grid-cols-7 mb-8">
               <TabsTrigger value="account">Account Info</TabsTrigger>
               <TabsTrigger value="profile">Personal Details</TabsTrigger>
+              <TabsTrigger value="traffic">Traffic Ticket</TabsTrigger>
               <TabsTrigger value="documents">Documents ({documents.length})</TabsTrigger>
               <TabsTrigger value="messages">Messages ({messages.length})</TabsTrigger>
               <TabsTrigger value="billing">Billing ({payments.length})</TabsTrigger>
@@ -923,6 +925,11 @@ export default function AdminUserDetailPage() {
                   </div>
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* Traffic Ticket Onboarding Tab */}
+            <TabsContent value="traffic">
+              <TrafficTicketOnboarding clientProfile={clientProfile} />
             </TabsContent>
 
             {/* Documents Tab */}

@@ -14,6 +14,7 @@ const PublicUploadPage = lazy(() => import('@/components/pages/PublicUploadPage'
 const MeetingDashboardPage = lazy(() => import('@/components/pages/MeetingDashboardPage'));
 const MeetingRequestPage = lazy(() => import('@/components/pages/MeetingRequestPage'));
 const BookingPage = lazy(() => import('@/components/pages/BookingPage'));
+const ClientFileManagementPage = lazy(() => import('@/components/pages/ClientFileManagementPage'));
 
 export const adminRoutes = [
   // Main Paralegal Dashboard
@@ -27,6 +28,10 @@ export const adminRoutes = [
   { path: '/admin/meeting-requests', element: AdminMeetingRequestsPage },
   { path: '/admin/grant-admin', element: GrantAdminPage },
   
+  // Client File Management (LSO By-Law 7.1 Compliance)
+  { path: '/admin/client-files', element: ClientFileManagementPage },
+  { path: '/admin/client-files/:fileId', element: ClientFileManagementPage },
+
   // Document Management
   { path: '/admin/documents', element: DocumentWorkflowPage },
   { path: '/admin/upload-tokens', element: UploadTokenManagementPage },

@@ -6,12 +6,28 @@ export interface Appointment {
   type?: string;
   eventDate?: Date | string;
   eventTime?: any;
+  endTime?: string;
+  duration?: number;
   clientId?: string;
   assignedParalegalId?: string;
   status?: string;
   priority?: string;
   location?: string;
   notes?: string;
+  // Cal.com fields
+  source?: 'calcom' | 'manual';
+  calcomId?: number;
+  calcomUid?: string;
+  meetingUrl?: string;
+  zoomLink?: string;
+  zoomPassword?: string;
+  clientName?: string;
+  clientEmail?: string;
+  clientPhone?: string;
+  clientTimezone?: string;
+  paralegalName?: string;
+  paralegalEmail?: string;
+  description?: string;
 }
 
 export interface FileAssignment {
@@ -114,6 +130,22 @@ export interface Conversation {
   clientId?: string;
   matterId?: string;
   matterReference?: string;
+}
+
+export interface GeneratedDocument {
+  _id: string;
+  documentName?: string;
+  documentUrl?: string;
+  signedDocumentUrl?: string;
+  clientEmail?: string;
+  clientName?: string;
+  status?: string;
+  documentType?: string;
+  createdDate?: Date | string;
+  signedDate?: Date | string;
+  paralegalName?: string;
+  clientId?: string;
+  matterId?: string;
 }
 
 // Helper functions

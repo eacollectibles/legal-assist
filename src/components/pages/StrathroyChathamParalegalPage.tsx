@@ -20,7 +20,7 @@ export default function StrathroyChathamParalegalPage() {
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">Licensed paralegal representation for Small Claims Court, Landlord and Tenant Board, traffic tickets, and tribunal matters. Serving Strathroy, Chatham-Kent, and surrounding communities.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">Book Free Consultation <ArrowRight className="w-5 h-5" /></Link>
-              <a href="tel:+13658829515" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> 365-882-9515</a>
+              <a href="tel:+12262725153" className="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/5"><Phone className="w-5 h-5" /> 226-272-5153</a>
             </div>
           </div>
         </div>
@@ -31,13 +31,13 @@ export default function StrathroyChathamParalegalPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Legal Services We Provide</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Link to="/services/small-claims" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
+            <Link to="/services/small-claims-court" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
               <Scale className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-2">Small Claims Court</h3>
               <p className="font-paragraph text-foreground/70">Claims up to $50,000 for debt recovery, contract disputes, and property damage.</p>
             </Link>
 
-            <Link to="/services/landlord-tenant" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
+            <Link to="/services/landlord-tenant-board" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
               <Home className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-2">Landlord &amp; Tenant Board</h3>
               <p className="font-paragraph text-foreground/70">Evictions, rent disputes, maintenance issues, and LTB hearings.</p>

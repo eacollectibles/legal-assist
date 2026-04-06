@@ -182,7 +182,7 @@ Note: For family law mediation (divorce, custody, support), please consult a fam
     tribunal: 'Provincial Court - Summary Conviction',
     shortDescription: 'Expert paralegal representation for summary conviction offences in Ontario.',
     icon: <Shield className="w-8 h-8" />,
-    image: 'https://static.wixstatic.com/media/99571b_4ba7fcab4a44445f8d02822f47c00c92~mv2.png?id=criminal-matters',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Old_Toronto_City_Hall_Courtroom121.jpg/1200px-Old_Toronto_City_Hall_Courtroom121.jpg',
     learnMore: `Criminal charges can have serious consequences for your future. Our licensed paralegals provide skilled defense representation for summary conviction offences in Provincial Court, helping you navigate the criminal justice system with confidence.
 
 We represent clients charged with:
@@ -447,17 +447,17 @@ export default function ServicesPage() {
                     {/* Learn More Button */}
                     <div className="px-6 py-4 border-t border-gray-100 mt-auto">
                       {service.id === 'small-claims' ? (
-                        <Link to="/services/small-claims" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                        <Link to="/services/small-claims-court" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'landlord-tenant' ? (
-                        <Link to="/services/landlord-tenant" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                        <Link to="/services/landlord-tenant-board" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'hrto' ? (
-                        <Link to="/services/human-rights" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                        <Link to="/services/human-rights-tribunal" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>

@@ -88,7 +88,7 @@ function generateTeamStructuredData() {
     '@type': 'LegalService',
     name: 'LegalAssist Paralegal Services',
     description: 'Professional paralegal services in London, Ontario and surrounding areas',
-    url: 'https://legalassist.ca',
+    url: 'https://www.legalassist.london',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'London',

@@ -77,6 +77,11 @@ export default function ClientLoginPage() {
         return;
       }
 
+      // Store clientId in sessionStorage for intake form and dashboard
+      if (result.user?.clientId) {
+        sessionStorage.setItem('clientId', result.user.clientId);
+      }
+
       // Login successful
       setSuccess(true);
       setFormData({

@@ -17,6 +17,8 @@ import { Helmet } from 'react-helmet-async';
 import { Scale, Search, ExternalLink, Filter, Clock, ChevronRight, RefreshCw, AlertCircle, BookOpen } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 import PrimaryCTA from '@/components/PrimaryCTA';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import {
   fetchAllCases,
   filterByCategory,
@@ -103,7 +105,7 @@ export default function LegalNewsPage() {
     '@type': 'CollectionPage',
     name: 'Recent Ontario Legal Decisions | LegalAssist',
     description: 'Stay informed with the latest Ontario tribunal and court decisions relevant to landlord-tenant disputes, traffic tickets, small claims, and human rights matters.',
-    url: 'https://legalassist.ca/legal-news',
+    url: 'https://www.legalassist.london/legal-news',
     publisher: {
       '@type': 'LegalService',
       name: 'LegalAssist Paralegal Services',
@@ -235,13 +237,14 @@ export default function LegalNewsPage() {
           content="Stay informed with the latest Ontario tribunal and court decisions. Landlord-tenant, traffic, small claims, and human rights cases updated from CanLII." 
         />
         <meta name="keywords" content="Ontario legal decisions, LTB decisions, HRTO rulings, small claims court, traffic court Ontario, CanLII" />
-        <link rel="canonical" href="https://legalassist.ca/legal-news" />
+        <link rel="canonical" href="https://www.legalassist.london/legal-news" />
         <script type="application/ld+json">
           {JSON.stringify(pageSchema)}
         </script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
+        <Header />
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary to-primary/80 text-white py-12 sm:py-16 px-4">
           <div className="max-w-5xl mx-auto">
@@ -431,6 +434,7 @@ export default function LegalNewsPage() {
             </div>
           </section>
         </main>
+        <Footer />
       </div>
     </>
   );

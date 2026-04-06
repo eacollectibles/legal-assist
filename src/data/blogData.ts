@@ -14,6 +14,562 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'ontario-bill-60-tenant-landlord-changes-2026',
+    title: 'Ontario Bill 60: What Tenants and Landlords Need to Know in 2026',
+    description: 'Bill 60 brings major changes to Ontario\'s rental laws including faster evictions, new notice rules, and changes to tenant defences. Here\'s the full breakdown.',
+    category: 'ltb',
+    date: '2026-04-28',
+    readTime: '5 min',
+    content: `
+      <p>Ontario's Bill 60, the <strong>Fighting Delays, Building Faster Act</strong>, has introduced sweeping changes to the Residential Tenancies Act. Whether you're a landlord or tenant in London, Ontario, these changes affect you directly.</p>
+
+      <h2>Faster Non-Payment Eviction Timelines</h2>
+      <p>One of the biggest changes: landlords can now file an eviction application at the Landlord and Tenant Board <strong>7 days</strong> after serving a notice of non-payment of rent. Previously, this waiting period was 15 days. This means the entire eviction process moves faster.</p>
+
+      <h2>Fixed-Term Leases No Longer Auto-Convert</h2>
+      <p>Under the old rules, a fixed-term lease automatically converted to a month-to-month tenancy when it expired. Under Bill 60, landlords have more flexibility to renegotiate terms or end the lease at the conclusion of a fixed term. Tenants should carefully review any new lease offers.</p>
+
+      <h2>Personal Use Evictions (N12) Changes</h2>
+      <p>If a landlord provides at least <strong>120 days notice</strong> for an N12 personal use eviction, they are no longer required to compensate the tenant with one month's rent. Under the previous rules, one month's compensation was mandatory regardless of the notice period.</p>
+
+      <h2>Shorter Appeal Windows for Tenants</h2>
+      <p>Tenants now have <strong>15 days</strong> to request a review of an LTB eviction order, down from the previous 30 days. This makes it critical to act immediately if you disagree with a decision.</p>
+
+      <h2>New Rules for Raising Maintenance Issues at Hearings</h2>
+      <p>Previously, tenants could raise maintenance complaints at a non-payment hearing as a defence. Under Bill 60, if a tenant wants to raise maintenance issues during a rent arrears hearing, they are generally required to <strong>pay 50% of the alleged arrears into the Board's trust</strong> before those arguments will be heard.</p>
+
+      <h2>What This Means for You</h2>
+      <p>Both landlords and tenants need to understand these new timelines and requirements. The faster processes and stricter procedural rules make professional representation more important than ever.</p>
+
+      <p>Need help navigating Bill 60 changes? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation.</p>
+    `,
+    faqs: [
+      { q: 'When did Bill 60 take effect?', a: 'Bill 60 passed in 2025 with provisions rolling out through 2026. Check with us for the latest implementation dates on specific sections.' },
+      { q: 'Does Bill 60 affect my current lease?', a: 'Yes - the new rules apply to all residential tenancies in Ontario, including existing ones. The changes to eviction timelines and hearing procedures are already in effect.' },
+      { q: 'Do I still have rent control under Bill 60?', a: 'If your unit was first occupied before November 15, 2018, rent control still applies. The 2026 guideline is 2.5%. Units first occupied after that date remain exempt from rent control.' }
+    ]
+  },
+  {
+    slug: 'distracted-driving-cell-phone-ticket-ontario',
+    title: 'Caught Using Your Phone While Driving in Ontario? Here\'s What to Expect',
+    description: 'Ontario distracted driving fines start at $615 with 3 demerit points and a licence suspension. Learn the penalties and how to fight a cell phone ticket.',
+    category: 'traffic',
+    date: '2026-04-24',
+    readTime: '4 min',
+    content: `
+      <p>Distracted driving charges in Ontario are far more serious than most people realize. A single cell phone ticket can cost you thousands of dollars when you factor in fines, insurance increases, and licence suspensions.</p>
+
+      <h2>Current Penalties for Distracted Driving</h2>
+
+      <h3>Fully Licensed Drivers (G Licence)</h3>
+      <ul>
+        <li><strong>First offence:</strong> Fine of $615 to $1,000, 3 demerit points, 3-day licence suspension</li>
+        <li><strong>Second offence:</strong> Fine of $615 to $2,000, 6 demerit points, 7-day licence suspension</li>
+        <li><strong>Third offence:</strong> Fine of $615 to $3,000, 6 demerit points, 30-day licence suspension</li>
+      </ul>
+
+      <h3>Novice Drivers (G1, G2)</h3>
+      <ul>
+        <li><strong>First offence:</strong> $615 fine, 30-day licence suspension (no demerit points)</li>
+        <li><strong>Second offence:</strong> $615 fine, 90-day licence suspension</li>
+        <li><strong>Third offence:</strong> Licence cancellation and requirement to restart the graduated licensing process</li>
+      </ul>
+
+      <h2>What Counts as Distracted Driving?</h2>
+      <p>You can be charged for holding or using a hand-held device while driving, including:</p>
+      <ul>
+        <li>Texting or reading texts</li>
+        <li>Scrolling through social media</li>
+        <li>Holding a phone to talk (even at a red light)</li>
+        <li>Entering an address in GPS while driving</li>
+        <li>Watching videos</li>
+      </ul>
+      <p>The only exception is calling 911 for emergencies.</p>
+
+      <h2>The Hidden Cost: Insurance</h2>
+      <p>A distracted driving conviction stays on your record for 3 years. Insurance increases of <strong>25-50%</strong> are common, which over 3 years can easily add $2,000-$5,000 in additional premiums on top of the fine itself.</p>
+
+      <h2>How to Fight a Distracted Driving Ticket</h2>
+      <p>Common defences include:</p>
+      <ul>
+        <li>You were using the device in hands-free mode</li>
+        <li>The device was securely mounted and you used a single touch</li>
+        <li>You were calling 911</li>
+        <li>The vehicle was safely pulled over and not in a lane of traffic</li>
+        <li>Officer misidentified the device or activity</li>
+      </ul>
+
+      <p>Got a distracted driving ticket? Call <a href="tel:+12262725153">226-272-5153</a> before you pay it.</p>
+    `,
+    faqs: [
+      { q: 'Can I hold my phone at a red light?', a: 'No. Ontario\'s distracted driving law applies whenever you are in the lane of traffic, even if stopped at a light. You must be safely pulled over and parked.' },
+      { q: 'Does a hands-free car mount make it legal?', a: 'Yes, if the phone is mounted securely. You can use voice commands and a single touch to accept or end a call. However, scrolling or texting while mounted is still illegal.' },
+      { q: 'Will a distracted driving ticket affect my insurance?', a: 'Yes, significantly. Most insurers treat distracted driving as a serious conviction. Expect premium increases of 25-50% for three years.' }
+    ]
+  },
+  {
+    slug: 'filing-human-rights-complaint-ontario-hrto',
+    title: 'How to File a Human Rights Complaint in Ontario (HRTO Guide)',
+    description: 'Experienced workplace discrimination? Learn how to file a complaint with the Human Rights Tribunal of Ontario, deadlines, and what a paralegal can do for you.',
+    category: 'employment',
+    date: '2026-04-21',
+    readTime: '5 min',
+    content: `
+      <p>If you've experienced discrimination in the workplace, housing, or services based on a protected ground, you may be able to file a complaint with the <strong>Human Rights Tribunal of Ontario (HRTO)</strong>. Here's what you need to know.</p>
+
+      <h2>What Are Protected Grounds?</h2>
+      <p>Ontario's Human Rights Code protects you from discrimination based on:</p>
+      <ul>
+        <li>Race, colour, ethnic origin, or ancestry</li>
+        <li>Disability (physical or mental)</li>
+        <li>Sex, gender identity, or sexual orientation</li>
+        <li>Age</li>
+        <li>Religion or creed</li>
+        <li>Family or marital status</li>
+        <li>Receipt of public assistance (housing only)</li>
+        <li>Record of offences (employment only)</li>
+      </ul>
+
+      <h2>Common Examples of Discrimination</h2>
+      <ul>
+        <li>Fired or demoted because of your disability or need for accommodation</li>
+        <li>Denied a promotion due to your race, gender, or age</li>
+        <li>Workplace harassment based on a protected ground</li>
+        <li>Landlord refusing to rent to you based on family status or income source</li>
+        <li>Denied service based on your religion or ethnicity</li>
+      </ul>
+
+      <h2>The Filing Deadline</h2>
+      <p>You must file your HRTO application within <strong>1 year</strong> of the last incident of discrimination. In some cases, the Tribunal may allow late filings, but this is not guaranteed. Don't wait.</p>
+
+      <h2>Steps to File</h2>
+      <ol>
+        <li><strong>Document everything:</strong> Save emails, texts, performance reviews, and any evidence of discriminatory treatment</li>
+        <li><strong>Complete Form 1:</strong> The Application to the HRTO (available online at tribunalsontario.ca)</li>
+        <li><strong>Describe the discrimination:</strong> Include specific incidents with dates, times, and witnesses</li>
+        <li><strong>Submit the application:</strong> Can be filed electronically</li>
+        <li><strong>Mediation:</strong> The HRTO will typically offer mediation before a hearing</li>
+      </ol>
+
+      <h2>What Can a Paralegal Do?</h2>
+      <p>Licensed paralegals can represent you at the HRTO. We can:</p>
+      <ul>
+        <li>Assess whether you have a strong case</li>
+        <li>Draft and file your application</li>
+        <li>Represent you in mediation and hearings</li>
+        <li>Negotiate settlements on your behalf</li>
+      </ul>
+
+      <h2>What Remedies Are Available?</h2>
+      <p>If your complaint is successful, the HRTO can order:</p>
+      <ul>
+        <li>Monetary compensation for injury to dignity and lost wages</li>
+        <li>Reinstatement to your job</li>
+        <li>Changes to policies or practices</li>
+        <li>A written apology</li>
+      </ul>
+
+      <p>Think you've been discriminated against? <a href="/contact">Contact us</a> for a free, confidential consultation.</p>
+    `,
+    faqs: [
+      { q: 'Do I need a lawyer for the HRTO?', a: 'No. Licensed paralegals have full rights to represent you at the HRTO. We handle these cases regularly and at a lower cost than most lawyers.' },
+      { q: 'How long does an HRTO case take?', a: 'Most cases take 12-18 months from filing to resolution. Many settle at mediation, which happens earlier in the process.' },
+      { q: 'Can I file if I was an independent contractor?', a: 'Yes. The Human Rights Code applies broadly, not just to traditional employees. Contact us to discuss your specific situation.' }
+    ]
+  },
+  {
+    slug: 'how-to-collect-small-claims-court-judgment-ontario',
+    title: 'Won in Small Claims Court? How to Actually Collect Your Money',
+    description: 'Winning a Small Claims Court judgment is only half the battle. Learn how to enforce and collect what you\'re owed in Ontario.',
+    category: 'small-claims',
+    date: '2026-04-17',
+    readTime: '4 min',
+    content: `
+      <p>Congratulations on winning your Small Claims Court case. But here's the reality many people don't expect: the court doesn't collect the money for you. If the other party doesn't pay voluntarily, you need to take enforcement steps.</p>
+
+      <h2>Step 1: Wait for the Appeal Period</h2>
+      <p>After a judgment is issued, the losing party has <strong>30 days</strong> to appeal. If no appeal is filed, you can begin enforcement.</p>
+
+      <h2>Step 2: Send a Demand</h2>
+      <p>Start with a formal demand letter. Often, a letter from a paralegal on your behalf is enough to prompt payment. Many debtors pay once they realize enforcement actions are coming.</p>
+
+      <h2>Step 3: Examination of Debtor</h2>
+      <p>If they don't pay, you can request a <strong>debtor examination</strong> (also called a judgment debtor exam). This is a court hearing where the debtor must disclose:</p>
+      <ul>
+        <li>Employment and income details</li>
+        <li>Bank accounts</li>
+        <li>Property and vehicles owned</li>
+        <li>Other assets and debts</li>
+      </ul>
+      <p>If the debtor fails to attend, a warrant for their arrest can be issued.</p>
+
+      <h2>Step 4: Enforcement Tools</h2>
+      <p>Once you know where the debtor's assets are, you can use:</p>
+      <ul>
+        <li><strong>Garnishment of wages:</strong> Up to 20% of the debtor's wages can be directed to you</li>
+        <li><strong>Garnishment of bank accounts:</strong> Freeze and seize funds from their bank</li>
+        <li><strong>Writ of seizure and sale:</strong> A sheriff can seize and sell the debtor's personal property</li>
+        <li><strong>Lien on property:</strong> Register the judgment against their real estate</li>
+      </ul>
+
+      <h2>How Long Is a Judgment Valid?</h2>
+      <p>A Small Claims Court judgment is valid for <strong>6 years</strong> and can be renewed. Interest accrues on the judgment at the Courts of Justice Act rate.</p>
+
+      <h2>When to Get Help</h2>
+      <p>Enforcement can be complicated and time-consuming. A paralegal experienced in collections can handle the process efficiently and knows which enforcement tools work best for each situation.</p>
+
+      <p>Need help collecting a judgment? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation.</p>
+    `,
+    faqs: [
+      { q: 'What if the debtor has no money or assets?', a: 'This is called being "judgment proof." The judgment remains valid for 6 years (renewable), so you can attempt collection later if their situation changes.' },
+      { q: 'How much does it cost to enforce a judgment?', a: 'Enforcement costs (filing fees, sheriff fees) are generally added to the amount the debtor owes. Your paralegal fees for the enforcement process are separate.' },
+      { q: 'Can I garnish someone\'s wages without their employer knowing why?', a: 'The employer will know a garnishment is in place but not the details of the case. They are legally required to comply with the garnishment order.' }
+    ]
+  },
+  {
+    slug: 'tenant-defences-against-eviction-ontario',
+    title: '5 Defences Tenants Can Use to Fight an Eviction in Ontario',
+    description: 'Facing eviction in Ontario? You may have strong defences. Learn 5 common ways tenants can fight back at the Landlord and Tenant Board.',
+    category: 'ltb',
+    date: '2026-04-14',
+    readTime: '4 min',
+    content: `
+      <p>Getting an eviction notice is frightening, but receiving a notice does not mean you have to leave. The Landlord and Tenant Board must approve any eviction, and you have the right to present defences at your hearing.</p>
+
+      <h2>1. The Notice Is Defective</h2>
+      <p>Eviction notices must meet strict technical requirements. Common defects include:</p>
+      <ul>
+        <li>Wrong termination date (must give proper notice period)</li>
+        <li>Incorrect or missing information</li>
+        <li>Served improperly (not in accordance with the Act)</li>
+        <li>Wrong form used for the situation</li>
+      </ul>
+      <p>A defective notice can result in the entire application being dismissed.</p>
+
+      <h2>2. You've Paid the Rent Arrears</h2>
+      <p>For N4 non-payment evictions, if you pay all rent arrears plus the filing fee before the hearing or before the eviction order takes effect, the application is typically dismissed. This is called "voiding" the notice.</p>
+
+      <h2>3. The Landlord Filed in Bad Faith</h2>
+      <p>For N12 (personal use) evictions, you can argue the landlord doesn't genuinely intend to move in. Signs of bad faith include:</p>
+      <ul>
+        <li>The unit is re-listed for rent shortly after you leave</li>
+        <li>The landlord has used N12 notices before on other tenants</li>
+        <li>The person claimed to be moving in has no real connection to the area</li>
+      </ul>
+
+      <h2>4. Maintenance Issues and Breach of Landlord Obligations</h2>
+      <p>If your landlord has failed to maintain the property, you may be able to raise this as a defence or file your own applications (T2, T6) seeking rent abatement and repairs. Note that under Bill 60, raising maintenance issues at a non-payment hearing now requires paying 50% of arrears into trust first.</p>
+
+      <h2>5. Request Relief From Eviction</h2>
+      <p>Even if the landlord has grounds, the LTB has the power to grant "relief from eviction" under Section 83 of the Residential Tenancies Act. The Board considers:</p>
+      <ul>
+        <li>Your personal circumstances (illness, disability, children)</li>
+        <li>How long you've been a tenant</li>
+        <li>Whether you can catch up on payments</li>
+        <li>The impact eviction would have on you</li>
+      </ul>
+
+      <h2>Don't Face a Hearing Alone</h2>
+      <p>LTB hearings move quickly and the rules are technical. Having a paralegal present your case dramatically improves your chances of staying in your home.</p>
+
+      <p>Facing eviction? Call <a href="tel:+12262725153">226-272-5153</a> immediately for a free consultation.</p>
+    `,
+    faqs: [
+      { q: 'Can my landlord lock me out?', a: 'Absolutely not. Illegal lockouts are a serious offence. If this happens, call the police and file a T2 application at the LTB immediately.' },
+      { q: 'Do I have to leave when the notice expires?', a: 'No. An eviction notice is not an eviction order. Only the LTB can order an eviction, and only a Sheriff can enforce it. Never leave just because you received a notice.' },
+      { q: 'What if I can\'t afford a paralegal?', a: 'Contact us anyway - we offer payment plans and can discuss your options. Legal Aid Ontario may also help depending on your income.' }
+    ]
+  },
+  {
+    slug: 'red-light-camera-ticket-ontario-fight',
+    title: 'Got a Red Light Camera Ticket in Ontario? Should You Fight It?',
+    description: 'Red light camera tickets in Ontario come with fines but no demerit points. Learn whether you should pay or fight, and what your options are.',
+    category: 'traffic',
+    date: '2026-04-11',
+    readTime: '3 min',
+    content: `
+      <p>Red light camera tickets are different from regular traffic tickets in several important ways. Before you pay or ignore it, here's what you need to know.</p>
+
+      <h2>How Red Light Camera Tickets Work</h2>
+      <p>Unlike regular traffic tickets, a red light camera ticket is issued to the <strong>vehicle owner</strong>, not the driver. This is an important distinction that affects your options.</p>
+
+      <h2>The Good News</h2>
+      <ul>
+        <li><strong>No demerit points:</strong> Red light camera tickets do not add demerit points to anyone's licence</li>
+        <li><strong>No insurance impact:</strong> Because the ticket is against the vehicle (not the driver), insurance companies generally don't consider it</li>
+        <li><strong>No criminal record:</strong> It's a set fine, not a moving violation</li>
+      </ul>
+
+      <h2>The Bad News</h2>
+      <ul>
+        <li><strong>Fine is $325:</strong> The set fine for running a red light camera in Ontario is $325</li>
+        <li><strong>Plate renewal issues:</strong> Unpaid red light camera tickets can prevent you from renewing your licence plate</li>
+        <li><strong>Collections:</strong> Unpaid fines can be sent to collections</li>
+      </ul>
+
+      <h2>Should You Fight It?</h2>
+      <p>Since there are no demerit points or insurance consequences, fighting a red light camera ticket is primarily about the fine itself. It may be worth fighting if:</p>
+      <ul>
+        <li>You were not the driver and can prove it</li>
+        <li>The photo evidence is unclear</li>
+        <li>There were issues with the intersection (signal timing, visibility)</li>
+        <li>Your vehicle was stolen at the time</li>
+        <li>You entered the intersection on a yellow light</li>
+      </ul>
+
+      <h2>Red Light Camera vs. Officer-Issued Ticket</h2>
+      <p>If an officer pulls you over for running a red light (not a camera), the consequences are much worse:</p>
+      <ul>
+        <li>3 demerit points</li>
+        <li>Fine of $260 to $500</li>
+        <li>Insurance increase for 3 years</li>
+      </ul>
+      <p>Always fight an officer-issued red light ticket - the stakes are much higher.</p>
+
+      <p>Questions about a traffic ticket? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation.</p>
+    `,
+    faqs: [
+      { q: 'Will a red light camera ticket increase my insurance?', a: 'Generally no, because the ticket is issued to the vehicle owner, not the driver. Insurance companies typically don\'t factor these in.' },
+      { q: 'What if someone else was driving my car?', a: 'You can request a trial and testify that you were not the driver. However, as the owner, the burden is on you to show someone else was driving.' }
+    ]
+  },
+  {
+    slug: 'paralegal-vs-lawyer-ontario-when-to-hire',
+    title: 'Paralegal vs. Lawyer in Ontario: When Should You Hire Which?',
+    description: 'Not sure whether to hire a paralegal or lawyer? Learn the differences in scope, cost, and when each is the right choice for your legal matter.',
+    category: 'general',
+    date: '2026-04-09',
+    readTime: '4 min',
+    content: `
+      <p>Many people aren't sure whether they need a paralegal or a lawyer. In Ontario, both are licensed by the Law Society and can represent you - but in different areas of law. Understanding the difference can save you hundreds or even thousands of dollars.</p>
+
+      <h2>What Can Paralegals Handle?</h2>
+      <p>Licensed paralegals in Ontario can represent you in:</p>
+      <ul>
+        <li><strong>Small Claims Court:</strong> Civil disputes up to $50,000</li>
+        <li><strong>Traffic tickets:</strong> All Highway Traffic Act charges</li>
+        <li><strong>Landlord and Tenant Board:</strong> Evictions, rent disputes, maintenance issues</li>
+        <li><strong>Provincial offences:</strong> Bylaw infractions, regulatory charges</li>
+        <li><strong>Human Rights Tribunal of Ontario:</strong> Discrimination complaints</li>
+        <li><strong>Criminal summary conviction offences:</strong> Minor criminal charges</li>
+        <li><strong>Workplace Safety and Insurance Board:</strong> WSIB appeals</li>
+        <li><strong>Notary services:</strong> Commissioning documents and affidavits</li>
+      </ul>
+
+      <h2>When Do You Need a Lawyer?</h2>
+      <p>You'll need a lawyer for:</p>
+      <ul>
+        <li>Superior Court matters (claims over $50,000)</li>
+        <li>Serious criminal charges (indictable offences)</li>
+        <li>Real estate transactions</li>
+        <li>Wills and estate planning</li>
+        <li>Family law (divorce, custody, child support)</li>
+        <li>Corporate and business law</li>
+        <li>Immigration (beyond simple applications)</li>
+      </ul>
+
+      <h2>Cost Comparison</h2>
+      <p>This is where the biggest difference lies:</p>
+      <ul>
+        <li><strong>Paralegal hourly rate:</strong> Typically $100-$250/hour</li>
+        <li><strong>Lawyer hourly rate:</strong> Typically $250-$600+/hour</li>
+      </ul>
+      <p>For matters within a paralegal's scope, you're getting the same level of expertise at a significantly lower cost. We handle these specific areas daily - it's all we do.</p>
+
+      <h2>Are Paralegals Qualified?</h2>
+      <p>Absolutely. Ontario paralegals must:</p>
+      <ul>
+        <li>Complete an accredited paralegal program</li>
+        <li>Pass the Law Society licensing exam</li>
+        <li>Carry professional liability insurance</li>
+        <li>Complete continuing professional development annually</li>
+        <li>Follow the same ethical rules as lawyers</li>
+      </ul>
+
+      <h2>The Bottom Line</h2>
+      <p>If your legal issue falls within a paralegal's scope, hiring a lawyer is paying more for the same result. If it's outside our scope, a good paralegal will tell you honestly and refer you to a lawyer.</p>
+
+      <p>Not sure which you need? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation - we'll point you in the right direction.</p>
+    `,
+    faqs: [
+      { q: 'Can a paralegal give legal advice?', a: 'Yes. Licensed paralegals in Ontario can provide legal advice within their scope of practice. We are regulated by the Law Society of Ontario just like lawyers.' },
+      { q: 'What if my case starts in Small Claims but grows bigger?', a: 'If a matter exceeds a paralegal\'s scope (e.g., the claim exceeds $50,000 and moves to Superior Court), we\'ll refer you to a trusted lawyer. We always prioritize your best outcome.' }
+    ]
+  },
+  {
+    slug: 'illegal-lockout-tenant-rights-ontario',
+    title: 'Locked Out by Your Landlord? Know Your Rights in Ontario',
+    description: 'Illegal lockouts are against the law in Ontario. Learn what to do if your landlord changes the locks, shuts off utilities, or tries to force you out.',
+    category: 'ltb',
+    date: '2026-04-07',
+    readTime: '4 min',
+    content: `
+      <p>If your landlord has changed the locks, removed your belongings, shut off utilities, or otherwise tried to force you out without an LTB order, they have committed an <strong>illegal lockout</strong>. This is one of the most serious violations of the Residential Tenancies Act.</p>
+
+      <h2>What Counts as an Illegal Lockout?</h2>
+      <ul>
+        <li>Changing the locks while you're out</li>
+        <li>Removing your personal belongings from the unit</li>
+        <li>Shutting off electricity, water, heat, or gas</li>
+        <li>Blocking access to the building or unit</li>
+        <li>Intimidating or threatening you to leave</li>
+        <li>Removing doors, windows, or fixtures to make the unit unlivable</li>
+      </ul>
+      <p>Even if you owe rent, your landlord <strong>cannot</strong> take any of these actions. Only a Sheriff with a valid LTB eviction order can remove a tenant.</p>
+
+      <h2>What to Do Immediately</h2>
+      <ol>
+        <li><strong>Call the police:</strong> An illegal lockout is a provincial offence. Police can help you regain entry</li>
+        <li><strong>Document everything:</strong> Take photos, videos, and screenshots of any communications</li>
+        <li><strong>Contact a paralegal:</strong> You need to file at the LTB quickly</li>
+        <li><strong>Keep receipts:</strong> If you need a hotel, food, or replacement items, keep all receipts for your claim</li>
+      </ol>
+
+      <h2>Filing a T2 Application</h2>
+      <p>A T2 application at the LTB is used when a landlord has interfered with your rights. For illegal lockouts, the LTB can:</p>
+      <ul>
+        <li>Order the landlord to let you back in immediately</li>
+        <li>Award compensation for expenses (hotel, food, damages)</li>
+        <li>Award a rent abatement</li>
+        <li>Order general damages for the violation</li>
+        <li>Fine the landlord up to $50,000 for a corporation or $25,000 for an individual</li>
+      </ul>
+
+      <h2>Emergency Orders</h2>
+      <p>In urgent lockout situations, you can request an emergency hearing at the LTB, which can be scheduled within days rather than the usual weeks or months.</p>
+
+      <h2>Landlord Penalties</h2>
+      <p>Landlords who commit illegal lockouts face serious consequences. Under the Residential Tenancies Act, a landlord who is found guilty of an illegal lockout can face fines of up to <strong>$50,000 for a corporation</strong> or <strong>$25,000 for an individual</strong>.</p>
+
+      <p>Been locked out illegally? Call <a href="tel:+12262725153">226-272-5153</a> immediately - this is an urgent matter.</p>
+    `,
+    faqs: [
+      { q: 'Can my landlord lock me out if I owe rent?', a: 'No. Owing rent does not give a landlord the right to lock you out. They must follow the proper LTB eviction process, which includes a hearing and a Sheriff-enforced order.' },
+      { q: 'What if the landlord says I abandoned the unit?', a: 'A landlord can only treat a unit as abandoned under specific legal circumstances. If you\'re still living there and they lock you out, it\'s illegal regardless of what they claim.' },
+      { q: 'How quickly can the LTB help with a lockout?', a: 'Emergency motions for illegal lockouts can be heard within days. Contact us immediately and we can file an emergency request on your behalf.' }
+    ]
+  },
+  {
+    slug: 'suing-contractor-bad-work-ontario-small-claims',
+    title: 'Bad Contractor Work? How to Sue in Small Claims Court in Ontario',
+    description: 'Hired a contractor who did terrible work or disappeared with your money? Learn how to take them to Small Claims Court in Ontario.',
+    category: 'small-claims',
+    date: '2026-04-04',
+    readTime: '4 min',
+    content: `
+      <p>You hired a contractor, paid good money, and the work is terrible - or worse, they took your deposit and disappeared. Unfortunately, this is one of the most common reasons people end up in Small Claims Court.</p>
+
+      <h2>Can You Sue a Contractor in Small Claims Court?</h2>
+      <p>Yes. If your claim is worth <strong>$50,000 or less</strong> (including the cost of repairs, losses, and damages), Small Claims Court is the right place. Common contractor disputes include:</p>
+      <ul>
+        <li>Incomplete or abandoned work</li>
+        <li>Poor quality workmanship</li>
+        <li>Contractor took deposit and never started</li>
+        <li>Work not done according to contract or code</li>
+        <li>Property damage caused during the work</li>
+        <li>Significant delays beyond what was agreed</li>
+      </ul>
+
+      <h2>Building Your Case</h2>
+      <p>To win, you need to prove what was agreed and what went wrong:</p>
+      <ol>
+        <li><strong>The contract:</strong> Written contracts are best, but text messages, emails, and verbal agreements (with witnesses) count</li>
+        <li><strong>Payment records:</strong> Bank statements, e-transfers, receipts, cancelled cheques</li>
+        <li><strong>Photos and videos:</strong> Before, during, and after the work</li>
+        <li><strong>Expert opinion:</strong> Get a quote from another contractor to fix or complete the work</li>
+        <li><strong>Communications:</strong> Save all texts, emails, and voicemails showing attempts to resolve the issue</li>
+      </ol>
+
+      <h2>What Can You Recover?</h2>
+      <ul>
+        <li>Cost to fix or complete the work by another contractor</li>
+        <li>Refund of money paid for work not done</li>
+        <li>Compensation for property damage</li>
+        <li>Additional costs caused by the delay (e.g., extended rental costs)</li>
+        <li>Court costs and interest</li>
+      </ul>
+
+      <h2>The Court Process</h2>
+      <ol>
+        <li><strong>File a Plaintiff's Claim:</strong> Outlines your case and what you're seeking</li>
+        <li><strong>Serve the contractor:</strong> They must be properly notified</li>
+        <li><strong>Settlement conference:</strong> A judge helps both sides try to settle</li>
+        <li><strong>Trial:</strong> If no settlement is reached, you present your case</li>
+      </ol>
+
+      <h2>Time Limit</h2>
+      <p>You have <strong>2 years</strong> from when you discovered the problem to file a claim. Don't wait - witnesses' memories fade and evidence can be lost.</p>
+
+      <p>Need to sue a contractor? Call <a href="tel:+12262725153">226-272-5153</a> for a free case evaluation.</p>
+    `,
+    faqs: [
+      { q: 'What if the contractor doesn\'t have a business licence?', a: 'You can still sue them personally. Unlicensed contractors can actually be easier to hold accountable because operating without a licence may itself be a violation.' },
+      { q: 'Should I try to resolve it before going to court?', a: 'Yes, and document your attempts. Send a formal demand letter (we can help with this). Courts look favourably on parties who tried to resolve disputes before filing.' },
+      { q: 'What if the contractor counter-sues me?', a: 'This happens sometimes. They may claim you owe for extra work or changed the scope. Having a written contract and good documentation protects you against counter-claims.' }
+    ]
+  },
+  {
+    slug: 'workplace-harassment-options-ontario',
+    title: 'Experiencing Workplace Harassment in Ontario? Here Are Your Options',
+    description: 'Ontario employees have legal protections against workplace harassment. Learn what counts, how to document it, and your options for filing a complaint.',
+    category: 'employment',
+    date: '2026-04-02',
+    readTime: '4 min',
+    content: `
+      <p>No one should have to tolerate harassment at work. Ontario law provides strong protections for employees, and you have several options for holding harassers and employers accountable.</p>
+
+      <h2>What Is Workplace Harassment?</h2>
+      <p>Under Ontario's Occupational Health and Safety Act, workplace harassment includes:</p>
+      <ul>
+        <li>Repeated unwelcome comments or conduct that is known (or should be known) to be unwelcome</li>
+        <li>Bullying, intimidation, or threatening behaviour</li>
+        <li>Sexual harassment (unwelcome sexual advances, comments, or contact)</li>
+        <li>Workplace sexual solicitation from someone in a position of authority</li>
+      </ul>
+      <p>Harassment can come from supervisors, coworkers, clients, or customers.</p>
+
+      <h2>How to Document Harassment</h2>
+      <p>Good documentation is essential for any complaint:</p>
+      <ul>
+        <li>Keep a detailed log of every incident (date, time, location, what happened, who witnessed it)</li>
+        <li>Save all emails, texts, and written communications</li>
+        <li>Keep copies of any relevant company policies</li>
+        <li>Note any impact on your health (doctor visits, prescriptions, time off work)</li>
+        <li>Store documentation outside of work systems (don't rely on your work email alone)</li>
+      </ul>
+
+      <h2>Your Options for Taking Action</h2>
+
+      <h3>1. Internal Complaint</h3>
+      <p>Every Ontario employer with 5+ employees must have a harassment policy and investigation process. File a formal written complaint with HR or management. The employer is legally required to investigate.</p>
+
+      <h3>2. Ministry of Labour Complaint</h3>
+      <p>If your employer fails to investigate or take action, you can file a complaint with the Ontario Ministry of Labour. An inspector can order the employer to comply with the Act.</p>
+
+      <h3>3. Human Rights Tribunal (HRTO)</h3>
+      <p>If the harassment is based on a protected ground (race, sex, disability, etc.), you can file a complaint at the HRTO within 1 year. A paralegal can represent you through this process.</p>
+
+      <h3>4. Constructive Dismissal Claim</h3>
+      <p>If the harassment is so severe that you feel forced to quit, you may have a claim for constructive dismissal. This entitles you to severance as if you were fired without cause.</p>
+
+      <h2>Employer Obligations</h2>
+      <p>Ontario employers must:</p>
+      <ul>
+        <li>Have a written harassment policy</li>
+        <li>Investigate all complaints</li>
+        <li>Protect complainants from retaliation</li>
+        <li>Provide results of the investigation to both parties</li>
+      </ul>
+
+      <p>Dealing with workplace harassment? Call <a href="tel:+12262725153">226-272-5153</a> for confidential advice.</p>
+    `,
+    faqs: [
+      { q: 'Can I be fired for reporting harassment?', a: 'No. Retaliating against someone for filing a harassment complaint is illegal under Ontario law. If this happens, you have additional legal claims available.' },
+      { q: 'What if the harasser is my boss?', a: 'You can report to their supervisor, HR, or go directly to the Ministry of Labour or HRTO. You don\'t have to report to the person who is harassing you.' },
+      { q: 'Is a single incident enough to file a complaint?', a: 'For general harassment, it usually needs to be a pattern of behaviour. However, a single serious incident (especially sexual harassment or threats) can be enough for an HRTO or police complaint.' }
+    ]
+  },
+  {
     slug: 'how-much-does-paralegal-cost-ontario',
     title: 'How Much Does a Paralegal Cost in Ontario? (2026 Guide)',
     description: 'Paralegal fees in Ontario explained. Traffic tickets from $300, LTB matters from $500, Small Claims from $750. Free consultations available.',
@@ -50,7 +606,7 @@ export const blogPosts: BlogPost[] = [
         <li>Clear written quotes before any work begins</li>
       </ul>
       
-      <p>Call us at <a href="tel:+13658829515">365-882-9515</a> for a free quote on your specific situation.</p>
+      <p>Call us at <a href="tel:+12262725153">226-272-5153</a> for a free quote on your specific situation.</p>
     `,
     faqs: [
       { q: 'Do paralegals charge hourly or flat fees?', a: 'Most paralegals offer both options. At LegalAssist, we prefer flat fees for transparency - you know exactly what you\'ll pay upfront.' },
@@ -139,7 +695,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Best Course of Action</h2>
       <p>Don't wait. Even if you think you're guilty, there are often options to reduce fines or eliminate demerit points. A paralegal can help you understand your options.</p>
       
-      <p>Got a ticket? Call <a href="tel:+13658829515">365-882-9515</a> for a free consultation.</p>
+      <p>Got a ticket? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation.</p>
     `,
     faqs: [
       { q: 'How long do I have to respond to a traffic ticket?', a: '15 days from when you receive the ticket. Don\'t miss this deadline.' },
@@ -233,7 +789,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Best Strategy</h2>
       <p>Before paying any ticket, get a free consultation to understand your options. Many tickets can be reduced or eliminated entirely.</p>
       
-      <p>Got a speeding ticket? Call <a href="tel:+13658829515">365-882-9515</a> for a free case review.</p>
+      <p>Got a speeding ticket? Call <a href="tel:+12262725153">226-272-5153</a> for a free case review.</p>
     `,
     faqs: [
       { q: 'Do insurance companies see every ticket?', a: 'They see convictions, not tickets. If you fight a ticket and win, or get it reduced to a non-moving violation, it may not affect your insurance.' },
@@ -379,7 +935,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Why You Need Representation</h2>
       <p>Careless driving goes on your record as a major conviction. Insurance companies view this almost as seriously as impaired driving. Professional representation significantly improves your chances of a reduced charge or dismissal.</p>
       
-      <p>Facing a careless driving charge? Call <a href="tel:+13658829515">365-882-9515</a> immediately for a free consultation.</p>
+      <p>Facing a careless driving charge? Call <a href="tel:+12262725153">226-272-5153</a> immediately for a free consultation.</p>
     `,
     faqs: [
       { q: 'Is careless driving a criminal charge?', a: 'No, it\'s a provincial offence under the Highway Traffic Act, not the Criminal Code. However, it\'s treated very seriously and has significant consequences.' },
@@ -489,7 +1045,7 @@ export const blogPosts: BlogPost[] = [
         <li>Emergency circumstances</li>
       </ul>
       
-      <p>Charged with stunt driving? Call <a href="tel:+13658829515">365-882-9515</a> immediately - time is critical.</p>
+      <p>Charged with stunt driving? Call <a href="tel:+12262725153">226-272-5153</a> immediately - time is critical.</p>
     `,
     faqs: [
       { q: 'Can I get my car back before the 14 days?', a: 'Generally no. The 14-day impoundment is mandatory. You\'ll also have to pay impound and towing fees.' },

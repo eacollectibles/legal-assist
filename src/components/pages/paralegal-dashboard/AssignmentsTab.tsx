@@ -8,9 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { 
+import {
   Calendar, User, FileText, Plus, AlertCircle, CheckCircle,
-  UserPlus, Mail, ClipboardList, ArrowRight, ArrowLeft, Printer, X, Trash2
+  UserPlus, Mail, ClipboardList, ArrowRight, ArrowLeft, Printer, X, Trash2, AlertTriangle
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useParalegalDashboard } from './ParalegalDashboardContext';
@@ -153,6 +153,43 @@ export default function AssignmentsTab() {
         notes: newClient.initialNotes
       });
 
+      // Sync: also create a clientfiles entry for LSO By-Law 7.1 compliance page
+      try {
+        const year = new Date().getFullYear();
+        const fileNumber = `LA-${year}-${String(Date.now()).slice(-4)}`;
+        const clientFullName = `${newClient.firstName} ${newClient.lastName}`.trim();
+        const paralegal = paralegals.find(p => p._id === currentParalegalId);
+        const paralegalName = paralegal ? `${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim() : '';
+
+        await BaseCrudService.create('clientfiles', {
+          title: `${clientFullName} — ${newClient.caseType || 'General'}`,
+          fileNumber,
+          clientId: clientProfileId,
+          clientName: clientFullName,
+          clientEmail: newClient.email || '',
+          matterType: newClient.caseType || 'traffic',
+          matterDescription: newClient.caseType || '',
+          assignedParalegalName: paralegalName,
+          fileStatus: 'active',
+          dateOpened: new Date(),
+          complianceScore: 0,
+          conflictStatus: 'pending',
+          sectionFileOpening: false,
+          sectionClientIdentification: false,
+          sectionClientVerification: false,
+          sectionSourceOfFunds: false,
+          sectionConflictCheck: false,
+          sectionRetainerAgreement: false,
+          sectionFinancialRecords: false,
+          sectionCommunicationLog: false,
+          sectionCaseDocuments: false,
+          sectionFileClosing: false,
+          sectionContingencyPlan: false,
+        });
+      } catch (syncError) {
+        console.warn('Could not sync to clientfiles collection:', syncError);
+      }
+
       setNewClientId(clientProfileId);
       setClientCreationSuccess(true);
       refreshData();
@@ -215,11 +252,12 @@ export default function AssignmentsTab() {
       const existingAssignment = fileAssignments.find(a => a.clientId === clientId);
       
       if (existingAssignment) {
-        await BaseCrudService.update('fileassignments', existingAssignment._id, {
+        await BaseCrudService.update('fileassignments', {
+          _id: existingAssignment._id,
           paralegalId: currentParalegalId,
           assignedDate: new Date().toISOString(),
           assignedBy: currentParalegalId
-        });
+        } as any);
       } else {
         await BaseCrudService.create('fileassignments', {
           _id: crypto.randomUUID(),
@@ -244,7 +282,7 @@ export default function AssignmentsTab() {
     }
     try {
       setDeletingAssignmentId(assignmentId);
-      await BaseCrudService.remove('fileassignments', assignmentId);
+      await BaseCrudService.delete('fileassignments', assignmentId);
       setFileAssignments(fileAssignments.filter(a => a._id !== assignmentId));
     } catch (error) {
       console.error('Error deleting assignment:', error);
@@ -689,14 +727,29 @@ export default function AssignmentsTab() {
               {clients
                 .filter(client => !fileAssignments.some(a => a.clientId === client._id))
                 .map(client => (
-                  <div key={client._id} className="flex items-center justify-between p-4 bg-white rounded-lg border-2 border-primary/20 hover:border-primary/40 hover:shadow-md transition-all">
+                  <div key={client._id} className={`flex items-center justify-between p-4 bg-white rounded-lg border-2 hover:shadow-md transition-all ${
+                    client.conflictCheckStatus === 'flagged' ? 'border-amber-300 hover:border-amber-400' : 'border-primary/20 hover:border-primary/40'
+                  }`}>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <User className="h-5 w-5 text-primary" />
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        client.conflictCheckStatus === 'flagged' ? 'bg-amber-100' : 'bg-primary/10'
+                      }`}>
+                        {client.conflictCheckStatus === 'flagged'
+                          ? <AlertTriangle className="h-5 w-5 text-amber-600" />
+                          : <User className="h-5 w-5 text-primary" />
+                        }
                       </div>
-                      <span className="font-paragraph text-lg font-semibold text-foreground">
-                        {client.firstName} {client.lastName}
-                      </span>
+                      <div>
+                        <span className="font-paragraph text-lg font-semibold text-foreground">
+                          {client.firstName} {client.lastName}
+                        </span>
+                        {client.conflictCheckStatus === 'flagged' && (
+                          <p className="text-xs text-amber-600 font-medium flex items-center gap-1">
+                            <AlertTriangle className="w-3 h-3" />
+                            Conflict flagged — review before retainer
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => handleViewIntake(client._id)} className="gap-2">
@@ -750,6 +803,15 @@ export default function AssignmentsTab() {
                           {assignment.caseType}
                         </Badge>
                       )}
+                      {(() => {
+                        const client = clients.find(c => c._id === assignment.clientId);
+                        return client?.conflictCheckStatus === 'flagged' ? (
+                          <Badge className="bg-amber-100 text-amber-800 border border-amber-300 gap-1">
+                            <AlertTriangle className="w-3 h-3" />
+                            Conflict Flagged
+                          </Badge>
+                        ) : null;
+                      })()}
                     </div>
                   </div>
                 </div>

@@ -64,14 +64,14 @@ export default function NotFoundPage() {
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link
-                to="/services/small-claims"
+                to="/services/small-claims-court"
                 className="font-paragraph text-sm text-primary hover:underline"
               >
                 Small Claims Court
               </Link>
               <span className="text-foreground/30">•</span>
               <Link
-                to="/services/landlord-tenant"
+                to="/services/landlord-tenant-board"
                 className="font-paragraph text-sm text-primary hover:underline"
               >
                 Landlord Tenant Board

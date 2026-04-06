@@ -1,11 +1,12 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { BaseCrudService } from '@/integrations';
-import type { 
-  Appointment, 
-  FileAssignment, 
-  UserAccount, 
-  ClientProfile, 
+import type {
+  Appointment,
+  FileAssignment,
+  UserAccount,
+  ClientProfile,
   ClientDocument,
+  GeneratedDocument,
   Message,
   Conversation
 } from './types';
@@ -17,21 +18,23 @@ interface ParalegalDashboardContextType {
   paralegals: UserAccount[];
   clients: ClientProfile[];
   documents: ClientDocument[];
+  generatedDocuments: GeneratedDocument[];
   messages: Message[];
   conversations: Conversation[];
   currentParalegalId: string;
-  
+
   // Loading states
   isLoading: boolean;
-  
+
   // Setters for updating data
   setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>;
   setFileAssignments: React.Dispatch<React.SetStateAction<FileAssignment[]>>;
   setClients: React.Dispatch<React.SetStateAction<ClientProfile[]>>;
   setDocuments: React.Dispatch<React.SetStateAction<ClientDocument[]>>;
+  setGeneratedDocuments: React.Dispatch<React.SetStateAction<GeneratedDocument[]>>;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
-  
+
   // Refresh function
   refreshData: () => Promise<void>;
 }
@@ -56,6 +59,7 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
   const [paralegals, setParalegals] = useState<UserAccount[]>([]);
   const [clients, setClients] = useState<ClientProfile[]>([]);
   const [documents, setDocuments] = useState<ClientDocument[]>([]);
+  const [generatedDocuments, setGeneratedDocuments] = useState<GeneratedDocument[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentParalegalId, setCurrentParalegalId] = useState<string>('');
@@ -64,28 +68,63 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const [appointmentsRes, assignmentsRes, usersRes, clientsRes, documentsRes, messagesRes] = await Promise.all([
-        BaseCrudService.getAll<Appointment>('appointments'),
-        BaseCrudService.getAll<FileAssignment>('fileassignments'),
-        BaseCrudService.getAll<UserAccount>('useraccounts'),
-        BaseCrudService.getAll<ClientProfile>('clientprofiles'),
-        BaseCrudService.getAll<ClientDocument>('clientdocuments'),
-        BaseCrudService.getAll<Message>('messages')
+      // Wrap each call with timeout + error catch so nothing blocks the dashboard
+      const safeGet = <T,>(collection: string, timeoutMs = 10000) => {
+        const timeout = new Promise<{ items: T[] }>((resolve) =>
+          setTimeout(() => {
+            console.warn(`[Dashboard] Timeout loading ${collection} after ${timeoutMs}ms`);
+            resolve({ items: [] as T[] });
+          }, timeoutMs)
+        );
+        const fetcher = BaseCrudService.getAll<T>(collection).catch((err) => {
+          console.warn(`[Dashboard] Failed to load ${collection}:`, err);
+          return { items: [] as T[] };
+        });
+        return Promise.race([fetcher, timeout]);
+      };
+
+      const [appointmentsRes, assignmentsRes, usersRes, clientsRes, documentsRes, generatedDocsRes, messagesRes, caseDocsRes] = await Promise.all([
+        safeGet<Appointment>('appointments'),
+        safeGet<FileAssignment>('fileassignments'),
+        safeGet<UserAccount>('useraccounts'),
+        safeGet<ClientProfile>('clientprofiles'),
+        safeGet<ClientDocument>('clientdocuments'),
+        safeGet<GeneratedDocument>('generateddocuments'),
+        safeGet<Message>('messages'),
+        safeGet<any>('casedocuments'),
       ]);
 
       setAppointments(appointmentsRes.items);
       setFileAssignments(assignmentsRes.items);
-      
+
       const adminUsers = usersRes.items.filter(u => u.isAdmin);
       setParalegals(adminUsers);
-      
+
       // Set current paralegal
       if (adminUsers.length > 0) {
         setCurrentParalegalId(adminUsers[0]._id);
       }
-      
+
       setClients(clientsRes.items);
-      setDocuments(documentsRes.items);
+
+      // Merge clientdocuments with casedocuments from the LSO compliance page
+      // so they all show up in the File Management tab
+      const existingDocIds = new Set(documentsRes.items.map((d: any) => d._id));
+      const caseDocs: ClientDocument[] = (caseDocsRes.items || [])
+        .filter((cd: any) => !existingDocIds.has(cd._id))
+        .map((cd: any) => ({
+          _id: cd._id,
+          documentName: cd.documentName || cd.title || 'Case Document',
+          fileUrl: cd.fileUrl || cd.documentUrl || '',
+          uploadDate: cd.uploadDate || cd._createdDate || new Date().toISOString(),
+          clientEmail: cd.clientEmail || '',
+          documentCategory: cd.documentCategory || cd.category || 'case',
+          fileType: cd.fileType || '',
+          fileSize: cd.fileSize || 0,
+          notes: cd.notes || '',
+        }));
+      setDocuments([...documentsRes.items, ...caseDocs]);
+      setGeneratedDocuments(generatedDocsRes.items);
       
       // Sort messages by date
       const sortedMessages = (messagesRes.items || []).sort((a, b) => {
@@ -126,13 +165,20 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
       
       if (!conversationMap.has(convId)) {
         const client = clients.find(c => c._id === msg.clientId);
-        const clientName = client 
+        const clientName = client
           ? `${client.firstName} ${client.lastName}`
           : msg.senderName || 'Unknown';
-        
+
+        // Determine the actual client email: if the message was sent BY the admin/paralegal,
+        // the client email is the recipientEmail; otherwise it's the senderEmail
+        const isFromAdmin = msg.senderEmail === 'admin@legalservices.com';
+        const clientEmail = isFromAdmin
+          ? (msg.recipientEmail || '')
+          : (msg.senderEmail || '');
+
         conversationMap.set(convId, {
           conversationId: convId,
-          clientEmail: msg.senderEmail || '',
+          clientEmail,
           clientName,
           messages: [],
           unreadCount: 0,
@@ -172,6 +218,7 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
     paralegals,
     clients,
     documents,
+    generatedDocuments,
     messages,
     conversations,
     currentParalegalId,
@@ -180,6 +227,7 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
     setFileAssignments,
     setClients,
     setDocuments,
+    setGeneratedDocuments,
     setMessages,
     setConversations,
     refreshData: loadData

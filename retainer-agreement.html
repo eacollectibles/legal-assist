@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tenant Retainer Agreement – LegalAssist Paralegal Services</title>
+<style>
+  :root{
+    --ink:#111827;
+    --muted:#6B7280;
+    --line:#E5E7EB;
+    --paper:#FFFFFF;
+    --bg:#F9FAFB;
+    --accent:#1D4ED8;
+    --accent-light:#EFF6FF;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    padding:24px;
+    background:var(--bg);
+    color:var(--ink);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:14px;
+    line-height:1.55;
+  }
+
+  /* ===== PROMPT OVERLAY ===== */
+  .prompt-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+  }
+  .prompt-overlay.hidden{ display:none; }
+  .prompt-card{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgba(0,0,0,.18);
+    max-width:560px;
+    width:95%;
+    padding:32px;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+  .prompt-card h2{
+    font-size:18px;
+    margin:0 0 4px;
+    text-transform:none;
+    letter-spacing:0;
+  }
+  .prompt-card .prompt-sub{
+    color:var(--muted);
+    font-size:13px;
+    margin:0 0 20px;
+  }
+  .prompt-card label{
+    display:block;
+    font-weight:700;
+    margin:16px 0 6px;
+    font-size:13px;
+  }
+  .prompt-card label:first-of-type{ margin-top:0; }
+
+  .type-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .type-btn{
+    border:2px solid var(--line);
+    border-radius:8px;
+    padding:14px 12px;
+    background:#fff;
+    cursor:pointer;
+    text-align:left;
+    transition:border-color .15s, background .15s;
+  }
+  .type-btn:hover{ border-color:#93C5FD; background:var(--accent-light); }
+  .type-btn.selected{ border-color:var(--accent); background:var(--accent-light); }
+  .type-btn strong{ display:block; font-size:14px; margin-bottom:2px; }
+  .type-btn span{ font-size:12px; color:var(--muted); }
+
+  .rate-fields{ margin-top:16px; }
+  .rate-group{
+    display:none;
+    gap:10px;
+    margin-top:8px;
+  }
+  .rate-group.visible{ display:flex; flex-wrap:wrap; }
+  .rate-group .input-wrap{
+    flex:1;
+    min-width:180px;
+  }
+  .rate-group .input-wrap label{
+    font-size:12px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .rate-group input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 10px;
+    font-size:14px;
+    font-family:inherit;
+  }
+  .rate-group input:focus{ outline:none; border-color:var(--accent); }
+
+  .retainer-deposit-section{ margin-top:16px; }
+  .retainer-deposit-section label{
+    font-size:13px;
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  .retainer-deposit-section input{
+    width:100%;
+    max-width:220px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 10px;
+    font-size:14px;
+    font-family:inherit;
+  }
+  .retainer-deposit-section input:focus{ outline:none; border-color:var(--accent); }
+
+  .prompt-actions{
+    margin-top:24px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+  }
+  .btn-generate{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:10px 28px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    opacity:.5;
+    pointer-events:none;
+    transition:opacity .15s;
+  }
+  .btn-generate.ready{ opacity:1; pointer-events:auto; }
+  .btn-generate.ready:hover{ background:#1E40AF; }
+
+  .error-msg{
+    color:#DC2626;
+    font-size:12px;
+    margin-top:6px;
+    display:none;
+  }
+
+  /* ===== DOCUMENT ===== */
+  .page{
+    max-width:920px;
+    margin:0 auto;
+    background:var(--paper);
+    border:1px solid #000;
+    padding:24px;
+    display:none;
+  }
+  .page.visible{ display:block; }
+  header{
+    margin-bottom:14px;
+  }
+  .toprow{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  h1{
+    font-size:19px;
+    margin:0 0 4px;
+  }
+  .subtitle{
+    font-size:13px;
+    color:var(--muted);
+    margin:0;
+  }
+  .meta{
+    font-size:13px;
+    min-width:260px;
+  }
+  .meta strong{ font-weight:700; }
+  hr{
+    border:none;
+    border-top:1px solid #000;
+    margin:16px 0;
+  }
+  h2{
+    font-size:13px;
+    margin:16px 0 8px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  h3{
+    font-size:14px;
+    margin:12px 0 6px;
+  }
+  p{ margin:8px 0; }
+  ul{ margin:8px 0 8px 18px; }
+  li{ margin:6px 0; }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 18px;
+  }
+  .field{
+    border-bottom:1px solid #000;
+    padding:4px 0;
+    min-height:24px;
+  }
+  .field span{ font-weight:700; }
+  .checkline{
+    margin:6px 0;
+  }
+  .checkline.inactive{
+    display:none;
+  }
+  .note-box{
+    border:1px solid #000;
+    padding:12px;
+    margin:12px 0;
+    background:#fff;
+  }
+  .sig-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:12px;
+  }
+  .sig-card{
+    border:1px solid #000;
+    padding:14px;
+    min-height:150px;
+  }
+  .sig-title{
+    font-weight:700;
+    margin:0 0 10px;
+  }
+  .sig-pre{
+    margin:0;
+    padding:12px;
+    border:1px solid var(--line);
+    background:#fff;
+    font-family:"Courier New", Courier, monospace;
+    font-size:12px;
+    line-height:1.35;
+    white-space:pre-wrap;
+    word-break:break-word;
+    min-height:74px;
+  }
+  .line{
+    border-bottom:1px solid #000;
+    min-height:24px;
+    margin-top:20px;
+  }
+  .line-label{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  footer{
+    margin-top:18px;
+    font-size:12px;
+    text-align:center;
+    color:var(--muted);
+  }
+  .contingency-section{ display:none; }
+  .contingency-section.visible{ display:block; }
+
+  @media (max-width:720px){
+    .grid,.sig-grid{ grid-template-columns:1fr; }
+    .type-options{ grid-template-columns:1fr; }
+  }
+  @media print{
+    body{ background:#fff; padding:0; }
+    .page{ border:none; }
+    .prompt-overlay{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== STEP 1: RETAINER TYPE PROMPT ===== -->
+<div class="prompt-overlay" id="promptOverlay">
+  <div class="prompt-card">
+    <h2>Configure Retainer Agreement</h2>
+    <p class="prompt-sub">Select the billing model and enter the applicable rates before generating the document.</p>
+
+    <label>Retainer Type</label>
+    <div class="type-options" id="typeOptions">
+      <button class="type-btn" data-type="hourly" type="button">
+        <strong>Hourly</strong>
+        <span>Billed per hour + HST</span>
+      </button>
+      <button class="type-btn" data-type="flat" type="button">
+        <strong>Flat Fee</strong>
+        <span>One-time fixed amount + HST</span>
+      </button>
+      <button class="type-btn" data-type="hybrid" type="button">
+        <strong>Hybrid</strong>
+        <span>Flat fee upfront, then hourly</span>
+      </button>
+      <button class="type-btn" data-type="contingency" type="button">
+        <strong>Contingency</strong>
+        <span>% of monetary recovery</span>
+      </button>
+    </div>
+
+    <div class="rate-fields">
+      <!-- Hourly fields -->
+      <div class="rate-group" id="fields-hourly">
+        <div class="input-wrap">
+          <label>Hourly Rate ($)</label>
+          <input type="number" id="input-hourly-rate" placeholder="e.g. 150" min="0" step="0.01">
+        </div>
+      </div>
+
+      <!-- Flat Fee fields -->
+      <div class="rate-group" id="fields-flat">
+        <div class="input-wrap">
+          <label>Flat Fee Amount ($)</label>
+          <input type="number" id="input-flat-fee" placeholder="e.g. 2500" min="0" step="0.01">
+        </div>
+      </div>
+
+      <!-- Hybrid fields -->
+      <div class="rate-group" id="fields-hybrid">
+        <div class="input-wrap">
+          <label>Initial Flat Fee ($)</label>
+          <input type="number" id="input-hybrid-flat" placeholder="e.g. 1000" min="0" step="0.01">
+        </div>
+        <div class="input-wrap">
+          <label>Hourly Rate After ($)</label>
+          <input type="number" id="input-hybrid-hourly" placeholder="e.g. 125" min="0" step="0.01">
+        </div>
+      </div>
+
+      <!-- Contingency fields -->
+      <div class="rate-group" id="fields-contingency">
+        <div class="input-wrap">
+          <label>Contingency Percentage (%)</label>
+          <input type="number" id="input-contingency-pct" placeholder="e.g. 25" min="0" max="100" step="0.5">
+        </div>
+      </div>
+    </div>
+
+    <div class="retainer-deposit-section">
+      <label>Retainer Deposit Amount ($)</label>
+      <input type="number" id="input-retainer-deposit" placeholder="e.g. 500" min="0" step="0.01">
+    </div>
+
+    <div class="error-msg" id="errorMsg">Please select a retainer type and fill in all required rate fields.</div>
+
+    <div class="prompt-actions">
+      <button class="btn-generate" id="btnGenerate" type="button">Generate Agreement</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STEP 2: RETAINER DOCUMENT ===== -->
+<div class="page" id="retainerDoc">
+    <header>
+      <div class="toprow">
+        <div>
+          <h1>LegalAssist Paralegal Services</h1>
+          <p class="subtitle">Tenant Retainer Agreement – Landlord and Tenant Board Matters</p>
+        </div>
+        <div class="meta">
+          <div><strong>Client:</strong> {CLIENT_NAME}</div>
+          <div><strong>File Ref:</strong> {MATTER_REFERENCE}</div>
+          <div><strong>Date:</strong> {DATE}</div>
+        </div>
+      </div>
+    </header>
+    <hr>
+    <h2>1. Parties</h2>
+    <div class="grid">
+      <div class="field"><span>Client Name:</span> {CLIENT_NAME}</div>
+      <div class="field"><span>Phone:</span> {CLIENT_PHONE}</div>
+      <div class="field"><span>Email:</span> {CLIENT_EMAIL}</div>
+      <div class="field"><span>File Ref:</span> {MATTER_REFERENCE}</div>
+      <div class="field"><span>Address:</span> {CLIENT_ADDRESS_LINE1}</div>
+      <div class="field"><span>Unit:</span> {CLIENT_ADDRESS_LINE2}</div>
+      <div class="field"><span>City:</span> {CLIENT_CITY}</div>
+      <div class="field"><span>Province:</span> {CLIENT_PROVINCE}</div>
+      <div class="field"><span>Postal Code:</span> {CLIENT_POSTAL_CODE}</div>
+      <div class="field"><span>Tribunal Matter:</span> {LTB_MATTER_TYPE}</div>
+    </div>
+    <p>
+      This Retainer Agreement is entered into between <strong>LegalAssist Paralegal Services</strong>
+      (the "Paralegal") and <strong>{CLIENT_NAME}</strong> (the "Client").
+    </p>
+
+    <h2>2. Retainer and Relationship</h2>
+    <p>
+      The Client retains the Paralegal to provide legal services in connection with a tenant-side matter before the
+      Landlord and Tenant Board in Ontario.
+    </p>
+    <p>
+      No paralegal-client relationship exists until this agreement is signed and the required retainer payment,
+      if any, has been received.
+    </p>
+
+    <h2>3. Scope of Services</h2>
+    <p>The Paralegal may provide services including, where applicable:</p>
+    <ul>
+      <li>Legal advice and case assessment under the <em>Residential Tenancies Act, 2006</em></li>
+      <li>Preparation of tenant applications, responses, evidence briefs, and written submissions</li>
+      <li>Communication with the landlord or the landlord's representative</li>
+      <li>Negotiation and settlement discussions</li>
+      <li>Representation at mediation, case management, and hearings, whether virtual or in person</li>
+    </ul>
+    <div class="note-box">
+      <strong>Important:</strong> This retainer applies only to the specific matter described above, unless expanded in writing.
+    </div>
+
+    <h2>4. Excluded Services</h2>
+    <p>This retainer does not include, unless separately agreed in writing:</p>
+    <ul>
+      <li>Appeals or judicial review proceedings</li>
+      <li>Enforcement of orders</li>
+      <li>Sheriff coordination or post-order enforcement work</li>
+      <li>Matters outside the jurisdiction of the Landlord and Tenant Board</li>
+      <li>Advice relating to tax, immigration, criminal, or family law issues</li>
+    </ul>
+
+    <h2>5. Fee Structure</h2>
+    <p>The Client and Paralegal agree to the following billing model:</p>
+    <div class="checkline" id="check-hourly">&#9744; <strong>Hourly Retainer:</strong> $ <span class="val-hourly-rate">___</span> per hour + HST</div>
+    <div class="checkline" id="check-flat">&#9744; <strong>Flat Fee:</strong> $ <span class="val-flat-fee">___</span> + HST</div>
+    <div class="checkline" id="check-hybrid">&#9744; <strong>Hybrid Retainer:</strong> Initial flat fee of $ <span class="val-hybrid-flat">___</span> + HST, then $ <span class="val-hybrid-hourly">___</span> per hour + HST</div>
+    <div class="checkline" id="check-contingency">&#9744; <strong>Contingency Fee (tenant monetary claims only):</strong> <span class="val-contingency-pct">___</span>% of monetary recovery obtained, plus HST where applicable</div>
+    <p>
+      The selected billing model for this matter is: <strong id="selectedModel">___</strong>
+    </p>
+
+    <h3>Retainer Deposit</h3>
+    <p>
+      The Client agrees to pay an initial retainer deposit of <strong>$ <span id="retainerDepositVal">___</span> + HST</strong>.
+      No work is required to begin until payment has been received.
+    </p>
+
+    <h3>Disbursements</h3>
+    <p>The Client remains responsible for all reasonable disbursements, including but not limited to:</p>
+    <ul>
+      <li>Landlord and Tenant Board filing fees</li>
+      <li>Courier, service, printing, scanning, or document production costs</li>
+      <li>Third-party reports, records, or other external expenses</li>
+    </ul>
+
+    <h3>Payment Terms</h3>
+    <ul>
+      <li>Invoices are due upon receipt unless otherwise stated in writing</li>
+      <li>Interest may be charged on overdue accounts at 2% per month (24% annually)</li>
+      <li>The Paralegal may suspend services or withdraw if accounts are not kept current, subject to professional obligations</li>
+    </ul>
+
+    <div class="contingency-section" id="contingencySection">
+      <h2>6. Contingency Fee Terms</h2>
+      <p>
+        Any contingency arrangement applies only to monetary recovery actually obtained for the Client,
+        such as compensation or a rent abatement awarded or secured by settlement. A contingency fee does not apply
+        to avoiding eviction, delaying eviction, or obtaining non-monetary relief only.
+      </p>
+      <p>
+        If the Client settles independently, withdraws the matter, fails to cooperate with the recovery process,
+        or otherwise prevents completion of the file, the Paralegal may be entitled to fees based on the fair value
+        of services performed, in addition to disbursements.
+      </p>
+    </div>
+
+    <h2>7. Client Responsibilities</h2>
+    <p>The Client agrees to:</p>
+    <ul>
+      <li>Provide complete, accurate, and truthful information</li>
+      <li>Promptly provide documents, records, and instructions when requested</li>
+      <li>Review draft materials and advise of any corrections promptly</li>
+      <li>Attend all scheduled meetings, mediations, and hearings</li>
+      <li>Keep contact information current</li>
+    </ul>
+
+    <h2>8. Evidence Requirements</h2>
+    <p>
+      The Client acknowledges that tenant claims often depend heavily on evidence, including photographs,
+      videos, notices, written communications, repair requests, receipts, inspection records, and witness information.
+      The Paralegal does not create evidence and cannot guarantee a successful outcome where evidence is incomplete,
+      unavailable, inconsistent, or weak.
+    </p>
+    <p>
+      If the Client fails to provide sufficient evidence or instructions, the Paralegal may limit services,
+      recommend against proceeding, or withdraw where appropriate.
+    </p>
+
+    <h2>9. Ongoing Rent Obligations</h2>
+    <p>
+      The Client understands that starting or defending a Landlord and Tenant Board matter does not automatically
+      suspend rent obligations. Unless specifically advised otherwise, the Client remains responsible for complying
+      with tenancy obligations, including payment of rent when due.
+    </p>
+
+    <h2>10. Urgent or Last-Minute Matters</h2>
+    <p>
+      If the Client retains the Paralegal close to a hearing date, after a deadline has nearly expired,
+      or in other urgent circumstances, preparation time may be limited and strategy may be restricted by available time,
+      evidence, and tribunal scheduling.
+    </p>
+    <p>
+      The Paralegal is not responsible for prejudice caused by late retention, delayed disclosure,
+      or incomplete instructions received shortly before a deadline or hearing.
+    </p>
+
+    <h2>11. Hearing Attendance and Participation</h2>
+    <p>
+      The Client must attend all hearings, be available during any virtual proceeding, and cooperate with hearing preparation.
+      Failure to attend or remain available may result in dismissal of claims, orders being made in the Client's absence,
+      or other adverse consequences.
+    </p>
+
+    <h2>12. Client Conduct</h2>
+    <p>The Client agrees not to:</p>
+    <ul>
+      <li>Harass, threaten, or intimidate the landlord or any witness</li>
+      <li>Send communications that undermine legal strategy</li>
+      <li>Misrepresent facts or conceal relevant information</li>
+      <li>Take unilateral steps that materially affect the matter without informing the Paralegal</li>
+    </ul>
+    <p>
+      Serious misconduct, dishonesty, abuse, or a breakdown in trust may result in withdrawal,
+      subject to professional obligations.
+    </p>
+
+    <h2>13. Settlement</h2>
+    <p>
+      The Client acknowledges that settlement may involve compromise. The Paralegal will provide advice,
+      but the final decision whether to accept or reject a settlement remains with the Client unless the Client has given
+      express written settlement authority.
+    </p>
+
+    <h2>14. No Guarantee and No "Free Rent" Expectation</h2>
+    <p>
+      The Client acknowledges that no result has been promised or guaranteed. Filing a claim or defending an application
+      does not entitle the Client to free rent, full compensation, or any particular remedy. Outcomes depend on the law,
+      the evidence, credibility findings, and the decision of the adjudicator.
+    </p>
+
+    <h2>15. Communication Policy</h2>
+    <ul>
+      <li>Normal response time is approximately 1 to 2 business days</li>
+      <li>Immediate responses are not guaranteed</li>
+      <li>Communication must remain respectful and reasonable in frequency</li>
+    </ul>
+    <p>
+      Excessive, abusive, or inappropriate communication may be grounds for withdrawal,
+      subject to professional obligations.
+    </p>
+
+    <h2>16. File Abandonment</h2>
+    <p>
+      If the Client stops responding, fails to provide instructions, or does not supply requested materials within a reasonable time,
+      the Paralegal may close the file or withdraw. Fees and disbursements incurred to that point remain payable.
+    </p>
+
+    <h2>17. Social Media and Public Statements</h2>
+    <p>
+      The Client is advised not to post online about the landlord, the dispute, the evidence, or the proceeding,
+      as social media and public statements may become relevant evidence.
+    </p>
+
+    <h2>18. No Action Without Funding</h2>
+    <p>
+      The Paralegal is not required to begin or continue work unless required funds have been paid and the account remains current.
+      The Paralegal may decline to file materials, attend hearings, or continue services where payment obligations are not met,
+      subject to professional obligations.
+    </p>
+
+    <h2>19. Withdrawal</h2>
+    <p>The Paralegal may withdraw if:</p>
+    <ul>
+      <li>Fees remain unpaid</li>
+      <li>The Client fails to cooperate or provide proper instructions</li>
+      <li>The Client insists on a dishonest, improper, or unethical course of conduct</li>
+      <li>Professional obligations require withdrawal</li>
+    </ul>
+
+    <h2>20. Limitation of Liability</h2>
+    <p>
+      To the extent permitted by law, the Paralegal is not responsible for delays, tribunal scheduling issues,
+      technology failures outside the Paralegal's control, third-party acts, or the ultimate decision of the Landlord and Tenant Board.
+    </p>
+
+    <h2>21. Indemnity</h2>
+    <p>
+      The Client agrees to indemnify and hold the Paralegal harmless from claims, losses, or expenses arising from false,
+      misleading, incomplete, or concealed information provided by the Client, or from unauthorized actions taken by the Client.
+    </p>
+
+    <h2>22. Electronic Communication and Signatures</h2>
+    <p>
+      The Client consents to communication by email and other electronic means, electronic document exchange,
+      digital storage of the file, and the use of electronic signatures. Electronic copies shall be treated as effective originals.
+    </p>
+
+    <h2>23. Governing Law</h2>
+    <p>
+      This agreement shall be governed by the laws of the Province of Ontario.
+    </p>
+
+    <h2>24. Acknowledgment</h2>
+    <p>
+      By signing below, the Client confirms that they have read and understood this agreement,
+      had the opportunity to ask questions, and agree to its terms.
+    </p>
+    <hr>
+    <div class="sig-grid">
+      <div class="sig-card">
+        <div class="sig-title">Client Electronic Signature</div>
+        <pre class="sig-pre">{SIGNATURE_SECTION}</pre>
+        <div class="line"></div>
+        <div class="line-label">Client Signature</div>
+        <div class="line"></div>
+        <div class="line-label">Date</div>
+      </div>
+      <div class="sig-card">
+        <div class="sig-title">Paralegal Signature</div>
+        <div class="line"></div>
+        <div class="line-label">Jean-Francois Demers, Licensed Paralegal</div>
+        <div class="line"></div>
+        <div class="line-label">Date</div>
+      </div>
+    </div>
+    <footer>
+      LegalAssist Paralegal Services &bull; Tenant Retainer Agreement &bull; www.legalassist.london
+    </footer>
+  </div>
+
+<script>
+(function(){
+  const overlay   = document.getElementById('promptOverlay');
+  const doc       = document.getElementById('retainerDoc');
+  const btnGen    = document.getElementById('btnGenerate');
+  const errorMsg  = document.getElementById('errorMsg');
+  const typeBtns  = document.querySelectorAll('.type-btn');
+
+  const fieldGroups = {
+    hourly:      document.getElementById('fields-hourly'),
+    flat:        document.getElementById('fields-flat'),
+    hybrid:      document.getElementById('fields-hybrid'),
+    contingency: document.getElementById('fields-contingency')
+  };
+
+  const modelLabels = {
+    hourly:      'Hourly Retainer',
+    flat:        'Flat Fee',
+    hybrid:      'Hybrid Retainer',
+    contingency: 'Contingency Fee'
+  };
+
+  let selectedType = null;
+
+  // --- Type selection ---
+  typeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      typeBtns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedType = btn.dataset.type;
+
+      Object.values(fieldGroups).forEach(g => g.classList.remove('visible'));
+      fieldGroups[selectedType].classList.add('visible');
+
+      errorMsg.style.display = 'none';
+      validateForm();
+    });
+  });
+
+  // --- Live validation ---
+  document.querySelectorAll('.rate-group input, #input-retainer-deposit').forEach(inp => {
+    inp.addEventListener('input', validateForm);
+  });
+
+  function validateForm(){
+    if(!selectedType){ btnGen.classList.remove('ready'); return; }
+
+    let valid = true;
+    const requiredInputs = fieldGroups[selectedType].querySelectorAll('input');
+    requiredInputs.forEach(inp => {
+      if(!inp.value || parseFloat(inp.value) < 0) valid = false;
+    });
+
+    const deposit = document.getElementById('input-retainer-deposit');
+    if(!deposit.value) valid = false;
+
+    btnGen.classList.toggle('ready', valid);
+  }
+
+  // --- Generate ---
+  btnGen.addEventListener('click', () => {
+    if(!btnGen.classList.contains('ready')){
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    // Populate the selected fee line with a checkmark; hide the rest
+    const checkIds = ['check-hourly','check-flat','check-hybrid','check-contingency'];
+    const typeMap  = { hourly:'check-hourly', flat:'check-flat', hybrid:'check-hybrid', contingency:'check-contingency' };
+
+    checkIds.forEach(id => {
+      const el = document.getElementById(id);
+      if(id === typeMap[selectedType]){
+        el.classList.remove('inactive');
+        // Replace empty checkbox with checked
+        el.innerHTML = el.innerHTML.replace(/\u2610|&#9744;/, '\u2611');
+      } else {
+        el.classList.add('inactive');
+      }
+    });
+
+    // Fill in rate values
+    if(selectedType === 'hourly'){
+      document.querySelector('.val-hourly-rate').textContent = parseFloat(document.getElementById('input-hourly-rate').value).toFixed(2);
+    }
+    if(selectedType === 'flat'){
+      document.querySelector('.val-flat-fee').textContent = parseFloat(document.getElementById('input-flat-fee').value).toFixed(2);
+    }
+    if(selectedType === 'hybrid'){
+      document.querySelector('.val-hybrid-flat').textContent  = parseFloat(document.getElementById('input-hybrid-flat').value).toFixed(2);
+      document.querySelector('.val-hybrid-hourly').textContent = parseFloat(document.getElementById('input-hybrid-hourly').value).toFixed(2);
+    }
+    if(selectedType === 'contingency'){
+      document.querySelector('.val-contingency-pct').textContent = parseFloat(document.getElementById('input-contingency-pct').value).toFixed(1);
+    }
+
+    // Selected model label
+    document.getElementById('selectedModel').textContent = modelLabels[selectedType];
+
+    // Retainer deposit
+    document.getElementById('retainerDepositVal').textContent = parseFloat(document.getElementById('input-retainer-deposit').value).toFixed(2);
+
+    // Show/hide contingency terms section (Section 6)
+    document.getElementById('contingencySection').classList.toggle('visible', selectedType === 'contingency');
+
+    // Hide overlay, show document
+    overlay.classList.add('hidden');
+    doc.classList.add('visible');
+  });
+})();
+</script>
+</body>
+</html>

@@ -8,49 +8,111 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { FileText, Search, Filter, Eye, Download, Share2, Trash2 } from 'lucide-react';
+import { FileText, Search, Filter, Eye, Download, Share2, Trash2, Shield, ArrowRight, PenTool, FilePen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useParalegalDashboard } from './ParalegalDashboardContext';
-import type { ClientDocument } from './types';
+import type { ClientDocument, GeneratedDocument } from './types';
+
+// Unified document type that merges both uploaded and generated documents
+interface UnifiedDocument {
+  _id: string;
+  documentName: string;
+  fileUrl?: string;
+  date: Date;
+  clientEmail?: string;
+  clientName?: string;
+  category: string;
+  fileType?: string;
+  fileSize?: number;
+  notes?: string;
+  status?: string;
+  source: 'uploaded' | 'generated';
+}
+
+function toUnifiedDoc(doc: ClientDocument): UnifiedDocument {
+  return {
+    _id: doc._id,
+    documentName: doc.documentName || 'Untitled Document',
+    fileUrl: doc.fileUrl,
+    date: new Date(doc.uploadDate || 0),
+    clientEmail: doc.clientEmail,
+    category: doc.documentCategory || 'other',
+    fileType: doc.fileType,
+    fileSize: doc.fileSize,
+    notes: doc.notes,
+    source: 'uploaded',
+  };
+}
+
+function toUnifiedGenDoc(doc: GeneratedDocument): UnifiedDocument {
+  return {
+    _id: doc._id,
+    documentName: doc.documentName || 'Untitled Document',
+    fileUrl: doc.signedDocumentUrl || doc.documentUrl,
+    date: new Date(doc.createdDate || doc.signedDate || 0),
+    clientEmail: doc.clientEmail,
+    clientName: doc.clientName,
+    category: doc.documentType || 'generated',
+    status: doc.status,
+    source: 'generated',
+  };
+}
 
 export default function FileManagementTab() {
-  const { documents, setDocuments, isLoading } = useParalegalDashboard();
+  const navigate = useNavigate();
+  const { documents, generatedDocuments, setDocuments, setGeneratedDocuments, isLoading } = useParalegalDashboard();
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
+  const [filterSource, setFilterSource] = useState<'all' | 'uploaded' | 'generated'>('all');
   const [filterDateFrom, setFilterDateFrom] = useState('');
   const [filterDateTo, setFilterDateTo] = useState('');
-  
+
   // Share dialog states
   const [selectedDocument, setSelectedDocument] = useState<ClientDocument | null>(null);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [shareEmail, setShareEmail] = useState('');
   const [shareMessage, setShareMessage] = useState('');
 
-  const filteredDocuments = documents.filter(doc => {
+  // Build unified list of all documents from both collections
+  const allDocuments: UnifiedDocument[] = [
+    ...documents.map(toUnifiedDoc),
+    ...generatedDocuments.map(toUnifiedGenDoc),
+  ].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+  const filteredDocuments = allDocuments.filter(doc => {
     const matchesSearch = doc.documentName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.notes?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = filterCategory === 'all' || doc.documentCategory === filterCategory;
-    
+      doc.notes?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.clientName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.clientEmail?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = filterCategory === 'all' || doc.category === filterCategory;
+    const matchesSource = filterSource === 'all' || doc.source === filterSource;
+
     let matchesDate = true;
     if (filterDateFrom || filterDateTo) {
-      const docDate = new Date(doc.uploadDate || 0);
-      if (filterDateFrom) matchesDate = matchesDate && docDate >= new Date(filterDateFrom);
-      if (filterDateTo) matchesDate = matchesDate && docDate <= new Date(filterDateTo);
+      if (filterDateFrom) matchesDate = matchesDate && doc.date >= new Date(filterDateFrom);
+      if (filterDateTo) matchesDate = matchesDate && doc.date <= new Date(filterDateTo);
     }
-    
-    return matchesSearch && matchesCategory && matchesDate;
+
+    return matchesSearch && matchesCategory && matchesSource && matchesDate;
   });
 
-  const handleDeleteDocument = async (documentId: string) => {
+  const handleDeleteDocument = async (documentId: string, source: 'uploaded' | 'generated') => {
     if (!confirm('Are you sure you want to delete this document?')) return;
-    
+
     try {
-      await BaseCrudService.delete('clientdocuments', documentId);
-      setDocuments(prev => prev.filter(d => d._id !== documentId));
+      if (source === 'generated') {
+        await BaseCrudService.delete('generateddocuments', documentId);
+        setGeneratedDocuments(prev => prev.filter(d => d._id !== documentId));
+      } else {
+        await BaseCrudService.delete('clientdocuments', documentId);
+        setDocuments(prev => prev.filter(d => d._id !== documentId));
+      }
     } catch (error) {
       console.error('Error deleting document:', error);
+      alert('Failed to delete document. Please try again.');
     }
   };
 
@@ -89,6 +151,40 @@ export default function FileManagementTab() {
         <h2 className="font-heading text-3xl font-bold text-foreground">
           File Management
         </h2>
+      </div>
+
+      {/* LSO Client Files Link */}
+      <div
+        className="bg-primary/5 border border-primary/20 rounded-lg p-4 flex items-center justify-between cursor-pointer hover:bg-primary/10 transition-colors"
+        onClick={() => navigate('/admin/client-files')}
+      >
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <Shield className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="font-heading font-semibold text-foreground text-sm">LSO Client File Management</h3>
+            <p className="text-xs text-foreground/60">By-Law 7.1 compliant client files — audit-ready sections, compliance scoring, and checklists</p>
+          </div>
+        </div>
+        <ArrowRight className="w-5 h-5 text-primary flex-shrink-0" />
+      </div>
+
+      {/* Document Creation & Workflow Link */}
+      <div
+        className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 flex items-center justify-between cursor-pointer hover:bg-indigo-100 transition-colors"
+        onClick={() => navigate('/admin/documents')}
+      >
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-indigo-100 rounded-lg">
+            <PenTool className="w-5 h-5 text-indigo-600" />
+          </div>
+          <div>
+            <h3 className="font-heading font-semibold text-foreground text-sm">Document Creation & Workflow</h3>
+            <p className="text-xs text-foreground/60">Create documents from templates, generate retainers, send for signature, and track status</p>
+          </div>
+        </div>
+        <ArrowRight className="w-5 h-5 text-indigo-600 flex-shrink-0" />
       </div>
 
       {/* Search & Filter Section */}
@@ -130,6 +226,22 @@ export default function FileManagementTab() {
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="filterSource">Source</Label>
+              <Select value={filterSource} onValueChange={(v) => setFilterSource(v as any)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Sources</SelectItem>
+                  <SelectItem value="uploaded">Client Uploads</SelectItem>
+                  <SelectItem value="generated">Generated Documents</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+            <div className="space-y-2">
               <Label htmlFor="filterDateFrom">Date From</Label>
               <Input
                 id="filterDateFrom"
@@ -150,27 +262,27 @@ export default function FileManagementTab() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-foreground/70">
+          <div className="flex items-center gap-2 text-sm text-foreground/70 mt-3">
             <Filter className="h-4 w-4" />
-            <span>Showing {filteredDocuments.length} of {documents.length} documents</span>
+            <span>Showing {filteredDocuments.length} of {allDocuments.length} documents ({documents.length} uploaded, {generatedDocuments.length} generated)</span>
           </div>
         </CardContent>
       </Card>
 
-      {/* Documents List */}
+      {/* Documents List — unified view of uploaded + generated documents */}
       <div className="grid gap-4" style={{ minHeight: '400px' }}>
         {isLoading ? null : filteredDocuments.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <FileText className="h-12 w-12 text-foreground/40 mb-4" />
               <p className="font-paragraph text-lg text-foreground/60">
-                {documents.length === 0 ? 'No documents available' : 'No documents match your filters'}
+                {allDocuments.length === 0 ? 'No documents available' : 'No documents match your filters'}
               </p>
             </CardContent>
           </Card>
         ) : (
           filteredDocuments.map((doc) => (
-            <Card key={doc._id} className="hover:shadow-lg transition-shadow">
+            <Card key={`${doc.source}-${doc._id}`} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
@@ -179,13 +291,29 @@ export default function FileManagementTab() {
                     </CardTitle>
                     <div className="flex flex-wrap gap-2 mb-2">
                       <Badge variant="outline">
-                        {doc.documentCategory 
-                          ? doc.documentCategory.charAt(0).toUpperCase() + doc.documentCategory.slice(1).replace('-', ' ')
+                        {doc.category
+                          ? doc.category.charAt(0).toUpperCase() + doc.category.slice(1).replace('-', ' ')
                           : 'Uncategorized'}
                       </Badge>
-                      <Badge className="bg-pastelbeige text-foreground">
-                        {doc.fileType?.split('/')[1]?.toUpperCase() || 'Unknown'}
-                      </Badge>
+                      {doc.source === 'generated' ? (
+                        <Badge className="bg-indigo-100 text-indigo-800 gap-1">
+                          <FilePen className="h-3 w-3" />
+                          Generated
+                        </Badge>
+                      ) : (
+                        <Badge className="bg-pastelbeige text-foreground">
+                          {doc.fileType?.split('/')[1]?.toUpperCase() || 'Uploaded'}
+                        </Badge>
+                      )}
+                      {doc.status && (
+                        <Badge className={
+                          doc.status === 'signed' ? 'bg-green-100 text-green-800' :
+                          doc.status === 'sent' ? 'bg-blue-100 text-blue-800' :
+                          'bg-gray-100 text-gray-800'
+                        }>
+                          {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -193,21 +321,21 @@ export default function FileManagementTab() {
               <CardContent className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                   <div>
-                    <p className="font-paragraph text-foreground/60">Upload Date</p>
+                    <p className="font-paragraph text-foreground/60">Date</p>
                     <p className="font-paragraph font-semibold text-foreground">
-                      {doc.uploadDate ? format(new Date(doc.uploadDate), 'MMM d, yyyy') : 'N/A'}
+                      {doc.date.getTime() > 0 ? format(doc.date, 'MMM d, yyyy') : 'N/A'}
                     </p>
                   </div>
                   <div>
-                    <p className="font-paragraph text-foreground/60">File Size</p>
+                    <p className="font-paragraph text-foreground/60">{doc.fileSize ? 'File Size' : 'Source'}</p>
                     <p className="font-paragraph font-semibold text-foreground">
-                      {doc.fileSize ? (doc.fileSize / 1024).toFixed(2) + ' KB' : 'Unknown'}
+                      {doc.fileSize ? (doc.fileSize / 1024).toFixed(2) + ' KB' : doc.source === 'generated' ? 'System Generated' : 'Client Upload'}
                     </p>
                   </div>
                   <div>
                     <p className="font-paragraph text-foreground/60">Client</p>
                     <p className="font-paragraph font-semibold text-foreground">
-                      {doc.clientEmail || 'N/A'}
+                      {doc.clientName || doc.clientEmail || 'N/A'}
                     </p>
                   </div>
                 </div>
@@ -229,43 +357,53 @@ export default function FileManagementTab() {
                         window.open(doc.fileUrl, '_blank');
                       }
                     }}
+                    disabled={!doc.fileUrl}
                     className="gap-2"
                   >
                     <Eye className="h-4 w-4" />
                     View
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    asChild
-                    className="gap-2"
-                  >
-                    <a href={doc.fileUrl} download={doc.documentName}>
-                      <Download className="h-4 w-4" />
-                      Download
-                    </a>
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => {
-                      setSelectedDocument(doc);
-                      setIsShareDialogOpen(true);
-                    }}
-                    className="gap-2"
-                  >
-                    <Share2 className="h-4 w-4" />
-                    Share
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleDeleteDocument(doc._id)}
-                    className="gap-2 border-destructive text-destructive hover:bg-destructive/10"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Delete
-                  </Button>
+                  {doc.fileUrl && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      asChild
+                      className="gap-2"
+                    >
+                      <a href={doc.fileUrl} download={doc.documentName}>
+                        <Download className="h-4 w-4" />
+                        Download
+                      </a>
+                    </Button>
+                  )}
+                  {doc.source === 'uploaded' && (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          const original = documents.find(d => d._id === doc._id);
+                          if (original) {
+                            setSelectedDocument(original);
+                            setIsShareDialogOpen(true);
+                          }
+                        }}
+                        className="gap-2"
+                      >
+                        <Share2 className="h-4 w-4" />
+                        Share
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleDeleteDocument(doc._id, doc.source)}
+                        className="gap-2 border-destructive text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Delete
+                      </Button>
+                    </>
+                  )}
                 </div>
               </CardContent>
             </Card>

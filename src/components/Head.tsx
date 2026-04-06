@@ -25,18 +25,18 @@ export const Head = () => {
       // Organization / Legal Service
       {
         "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
-        "@id": "https://legalassist.london/#organization",
+        "@id": "https://www.legalassist.london/#organization",
         "name": "LegalAssist Paralegal Services",
         "alternateName": "LegalAssist",
         "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
-        "url": "https://legalassist.london",
+        "url": "https://www.legalassist.london",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://legalassist.london/logo.png",
+          "url": "https://www.legalassist.london/logo.png",
           "width": 512,
           "height": 512
         },
-        "image": "https://legalassist.london/og-image.jpg",
+        "image": "https://www.legalassist.london/og-image.jpg",
         "telephone": PHONE_TEL,
         "email": "info@legalassist.london",
         "address": {
@@ -99,7 +99,7 @@ export const Head = () => {
               "itemOffered": {
                 "@type": "Service",
                 "name": "Traffic Ticket Defence",
-                "url": "https://legalassist.london/services/traffic-tickets"
+                "url": "https://www.legalassist.london/services/traffic-tickets"
               }
             },
             {
@@ -107,7 +107,7 @@ export const Head = () => {
               "itemOffered": {
                 "@type": "Service",
                 "name": "Small Claims Court Representation",
-                "url": "https://legalassist.london/services/small-claims"
+                "url": "https://www.legalassist.london/services/small-claims"
               }
             },
             {
@@ -115,7 +115,7 @@ export const Head = () => {
               "itemOffered": {
                 "@type": "Service",
                 "name": "Landlord and Tenant Board Representation",
-                "url": "https://legalassist.london/services/landlord-tenant-board"
+                "url": "https://www.legalassist.london/services/landlord-tenant-board"
               }
             },
             {
@@ -123,7 +123,7 @@ export const Head = () => {
               "itemOffered": {
                 "@type": "Service",
                 "name": "Human Rights Tribunal Representation",
-                "url": "https://legalassist.london/services/human-rights-tribunal"
+                "url": "https://www.legalassist.london/services/human-rights-tribunal"
               }
             },
             {
@@ -131,7 +131,7 @@ export const Head = () => {
               "itemOffered": {
                 "@type": "Service",
                 "name": "Provincial Offences Defence",
-                "url": "https://legalassist.london/services/provincial-offences"
+                "url": "https://www.legalassist.london/services/provincial-offences"
               }
             }
           ]
@@ -145,12 +145,12 @@ export const Head = () => {
       // WebSite
       {
         "@type": "WebSite",
-        "@id": "https://legalassist.london/#website",
-        "url": "https://legalassist.london",
+        "@id": "https://www.legalassist.london/#website",
+        "url": "https://www.legalassist.london",
         "name": "LegalAssist Paralegal Services",
         "description": "Licensed paralegal services in London, Ontario",
         "publisher": {
-          "@id": "https://legalassist.london/#organization"
+          "@id": "https://www.legalassist.london/#organization"
         },
         "inLanguage": "en-CA"
       },
@@ -158,7 +158,7 @@ export const Head = () => {
       // ContactPoint
       {
         "@type": "ContactPoint",
-        "@id": "https://legalassist.london/#contact",
+        "@id": "https://www.legalassist.london/#contact",
         "telephone": PHONE_TEL,
         "contactType": "customer service",
         "availableLanguage": "English",
@@ -180,8 +180,8 @@ export const Head = () => {
       <meta name="copyright" content={`© ${currentYear} LegalAssist Paralegal Services`} />
       <meta name="language" content="en-CA" />
       
-      {/* Verification - Update with your codes */}
-      <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
+      {/* Verification - Add your codes from Google Search Console & Bing Webmaster Tools */}
+      {/* <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" /> */}
       {/* <meta name="msvalidate.01" content="YOUR_BING_CODE" /> */}
       
       {/* Geo Location */}
@@ -207,16 +207,17 @@ export const Head = () => {
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       
       {/* Default OG Image (overridden by AutoSEO per page) */}
-      <meta property="og:image" content="https://legalassist.london/og-image.jpg" />
+      <meta property="og:image" content="https://www.legalassist.london/og-image.jpg" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="LegalAssist Paralegal Services - London, Ontario" />
-      <meta name="twitter:image" content="https://legalassist.london/og-image.jpg" />
+      <meta name="twitter:image" content="https://www.legalassist.london/og-image.jpg" />
       
       {/* Security */}
       <meta name="referrer" content="strict-origin-when-cross-origin" />
       
       {/* Performance - Preconnect */}
+      <link rel="preconnect" href="https://static.wixstatic.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://static.wixstatic.com" />
       <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       <link rel="preconnect" href="https://static.parastorage.com" crossOrigin="anonymous" />

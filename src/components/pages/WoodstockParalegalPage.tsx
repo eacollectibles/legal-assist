@@ -32,13 +32,13 @@ export default function WoodstockParalegalPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Legal Services for Woodstock Residents</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Link to="/services/small-claims" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
+            <Link to="/services/small-claims-court" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
               <Scale className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-2">Small Claims Court</h3>
               <p className="font-paragraph text-foreground/70">Claims up to $50,000 for debt recovery, contract disputes, and property damage.</p>
             </Link>
 
-            <Link to="/services/landlord-tenant" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
+            <Link to="/services/landlord-tenant-board" className="bg-pastelbeige/20 rounded-lg p-6 border border-pastelbeige hover:border-primary transition-all">
               <Home className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-2">Landlord &amp; Tenant Board</h3>
               <p className="font-paragraph text-foreground/70">Evictions, rent disputes, maintenance issues, and LTB hearings.</p>

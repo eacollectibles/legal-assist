@@ -1,5 +1,8 @@
 import { lazy } from 'react';
 
+// Locations Hub Page
+const LocationsHubPage = lazy(() => import('@/components/pages/LocationsHubPage'));
+
 // Location Pages
 const LondonParalegalPage = lazy(() => import('@/components/pages/LondonParalegalPage'));
 const StThomasParalegalPage = lazy(() => import('@/components/pages/StThomasParalegalPage'));
@@ -17,9 +20,166 @@ const SarniaParalegalPage = lazy(() => import('@/components/pages/SarniaParalega
 const WindsorParalegalPage = lazy(() => import('@/components/pages/WindsorParalegalPage'));
 const ChathamKentParalegalPage = lazy(() => import('@/components/pages/ChathamKentParalegalPage'));
 const LeamingtonParalegalPage = lazy(() => import('@/components/pages/LeamingtonParalegalPage'));
+const MississaugaParalegalPage = lazy(() => import('@/components/pages/MississaugaParalegalPage'));
+const BramptonParalegalPage = lazy(() => import('@/components/pages/BramptonParalegalPage'));
+const OakvilleParalegalPage = lazy(() => import('@/components/pages/OakvilleParalegalPage'));
+const BurlingtonParalegalPage = lazy(() => import('@/components/pages/BurlingtonParalegalPage'));
+const OshawaParalegalPage = lazy(() => import('@/components/pages/OshawaParalegalPage'));
+const WhitbyParalegalPage = lazy(() => import('@/components/pages/WhitbyParalegalPage'));
+const MarkhamParalegalPage = lazy(() => import('@/components/pages/MarkhamParalegalPage'));
+const NiagaraFallsParalegalPage = lazy(() => import('@/components/pages/NiagaraFallsParalegalPage'));
+const StCatharinesParalegalPage = lazy(() => import('@/components/pages/StCatharinesParalegalPage'));
+const WellandParalegalPage = lazy(() => import('@/components/pages/WellandParalegalPage'));
+const TorontoParalegalPage = lazy(() => import('@/components/pages/TorontoParalegalPage'));
+const RichmondHillParalegalPage = lazy(() => import('@/components/pages/RichmondHillParalegalPage'));
+const VaughanParalegalPage = lazy(() => import('@/components/pages/VaughanParalegalPage'));
+const NewmarketParalegalPage = lazy(() => import('@/components/pages/NewmarketParalegalPage'));
+const AjaxParalegalPage = lazy(() => import('@/components/pages/AjaxParalegalPage'));
+const PickeringParalegalPage = lazy(() => import('@/components/pages/PickeringParalegalPage'));
+const MiltonParalegalPage = lazy(() => import('@/components/pages/MiltonParalegalPage'));
+const HamiltonParalegalPage = lazy(() => import('@/components/pages/HamiltonParalegalPage'));
+const BarrieParalegalPage = lazy(() => import('@/components/pages/BarrieParalegalPage'));
+const StouffvilleParalegalPage = lazy(() => import('@/components/pages/StouffvilleParalegalPage'));
+const OttawaParalegalPage = lazy(() => import('@/components/pages/OttawaParalegalPage'));
+const KingstonParalegalPage = lazy(() => import('@/components/pages/KingstonParalegalPage'));
+const PeterboroughParalegalPage = lazy(() => import('@/components/pages/PeterboroughParalegalPage'));
+const BellevilleParalegalPage = lazy(() => import('@/components/pages/BellevilleParalegalPage'));
+const CornwallParalegalPage = lazy(() => import('@/components/pages/CornwallParalegalPage'));
+const ThunderBayParalegalPage = lazy(() => import('@/components/pages/ThunderBayParalegalPage'));
+const SudburyParalegalPage = lazy(() => import('@/components/pages/SudburyParalegalPage'));
+const SaultSteMarieParalegalPage = lazy(() => import('@/components/pages/SaultSteMarieParalegalPage'));
+const NorthBayParalegalPage = lazy(() => import('@/components/pages/NorthBayParalegalPage'));
+const OrilliaParalegalPage = lazy(() => import('@/components/pages/OrilliaParalegalPage'));
+const OwenSoundParalegalPage = lazy(() => import('@/components/pages/OwenSoundParalegalPage'));
+const CollingwoodParalegalPage = lazy(() => import('@/components/pages/CollingwoodParalegalPage'));
+const OrangevilleParalegalPage = lazy(() => import('@/components/pages/OrangevilleParalegalPage'));
+const HaltonHillsParalegalPage = lazy(() => import('@/components/pages/HaltonHillsParalegalPage'));
+const CobourgParalegalPage = lazy(() => import('@/components/pages/CobourgParalegalPage'));
+const KawarthaLakesParalegalPage = lazy(() => import('@/components/pages/KawarthaLakesParalegalPage'));
+const MidlandParalegalPage = lazy(() => import('@/components/pages/MidlandParalegalPage'));
+const BrockvilleParalegalPage = lazy(() => import('@/components/pages/BrockvilleParalegalPage'));
+const TimminsParalegalPage = lazy(() => import('@/components/pages/TimminsParalegalPage'));
+const ClaringtonParalegalPage = lazy(() => import('@/components/pages/ClaringtonParalegalPage'));
+const AuroraParalegalPage = lazy(() => import('@/components/pages/AuroraParalegalPage'));
+const CaledonParalegalPage = lazy(() => import('@/components/pages/CaledonParalegalPage'));
+const GrimsbyParalegalPage = lazy(() => import('@/components/pages/GrimsbyParalegalPage'));
+const ThoroldParalegalPage = lazy(() => import('@/components/pages/ThoroldParalegalPage'));
+const WaterlooParalegalPage = lazy(() => import('@/components/pages/WaterlooParalegalPage'));
+
+// New 25 city pages
+const PembrokeParalegalPage = lazy(() => import('@/components/pages/PembrokeParalegalPage'));
+
+// Batch 1 - 15 additional cities
+const BrantParalegalPage = lazy(() => import('@/components/pages/BrantParalegalPage'));
+const ClarenceRocklandParalegalPage = lazy(() => import('@/components/pages/ClarenceRocklandParalegalPage'));
+const ElliotLakeParalegalPage = lazy(() => import('@/components/pages/ElliotLakeParalegalPage'));
+const PrinceEdwardCountyParalegalPage = lazy(() => import('@/components/pages/PrinceEdwardCountyParalegalPage'));
+const QuinteWestParalegalPage = lazy(() => import('@/components/pages/QuinteWestParalegalPage'));
+const AmherstburgParalegalPage = lazy(() => import('@/components/pages/AmherstburgParalegalPage'));
+const BradfordWestGwillimburyParalegalPage = lazy(() => import('@/components/pages/BradfordWestGwillimburyParalegalPage'));
+const EastGwillimburyParalegalPage = lazy(() => import('@/components/pages/EastGwillimburyParalegalPage'));
+const ErinParalegalPage = lazy(() => import('@/components/pages/ErinParalegalPage'));
+const EssexParalegalPage = lazy(() => import('@/components/pages/EssexParalegalPage'));
+const FergusEloraParalegalPage = lazy(() => import('@/components/pages/FergusEloraParalegalPage'));
+const FortErieParalegalPage = lazy(() => import('@/components/pages/FortErieParalegalPage'));
+const GananoqueParalegalPage = lazy(() => import('@/components/pages/GananoqueParalegalPage'));
+const GeorginaParalegalPage = lazy(() => import('@/components/pages/GeorginaParalegalPage'));
+const InnisfilParalegalPage = lazy(() => import('@/components/pages/InnisfilParalegalPage'));
+const HuronCountyParalegalPage = lazy(() => import('@/components/pages/HuronCountyParalegalPage'));
+const NorfolkCountyParalegalPage = lazy(() => import('@/components/pages/NorfolkCountyParalegalPage'));
+
+// Batch 2 - 30 additional cities
+const HanoverParalegalPage = lazy(() => import('@/components/pages/HanoverParalegalPage'));
+const HearstParalegalPage = lazy(() => import('@/components/pages/HearstParalegalPage'));
+const KapuskasingParalegalPage = lazy(() => import('@/components/pages/KapuskasingParalegalPage'));
+const KincardineParalegalPage = lazy(() => import('@/components/pages/KincardineParalegalPage'));
+const KingsvilleParalegalPage = lazy(() => import('@/components/pages/KingsvilleParalegalPage'));
+const KirklandLakeParalegalPage = lazy(() => import('@/components/pages/KirklandLakeParalegalPage'));
+const LakeshoreParalegalPage = lazy(() => import('@/components/pages/LakeshoreParalegalPage'));
+const LaSalleParalegalPage = lazy(() => import('@/components/pages/LaSalleParalegalPage'));
+const LincolnParalegalPage = lazy(() => import('@/components/pages/LincolnParalegalPage'));
+const MarathonParalegalPage = lazy(() => import('@/components/pages/MarathonParalegalPage'));
+const MeafordParalegalPage = lazy(() => import('@/components/pages/MeafordParalegalPage'));
+const MississippiMillsParalegalPage = lazy(() => import('@/components/pages/MississippiMillsParalegalPage'));
+const MonoParalegalPage = lazy(() => import('@/components/pages/MonoParalegalPage'));
+const NewTecumsethParalegalPage = lazy(() => import('@/components/pages/NewTecumsethParalegalPage'));
+const NiagaraOnTheLakeParalegalPage = lazy(() => import('@/components/pages/NiagaraOnTheLakeParalegalPage'));
+const PelhamParalegalPage = lazy(() => import('@/components/pages/PelhamParalegalPage'));
+const PenetanguisheneParalegalPage = lazy(() => import('@/components/pages/PenetanguisheneParalegalPage'));
+const PetroliaParalegalPage = lazy(() => import('@/components/pages/PetroliaParalegalPage'));
+const PlymptonWyomingParalegalPage = lazy(() => import('@/components/pages/PlymptonWyomingParalegalPage'));
+const PrescottParalegalPage = lazy(() => import('@/components/pages/PrescottParalegalPage'));
+const RenfrewParalegalPage = lazy(() => import('@/components/pages/RenfrewParalegalPage'));
+const SaugeenShoresParalegalPage = lazy(() => import('@/components/pages/SaugeenShoresParalegalPage'));
+const ShelburneParalegalPage = lazy(() => import('@/components/pages/ShelburneParalegalPage'));
+const SiouxLookoutParalegalPage = lazy(() => import('@/components/pages/SiouxLookoutParalegalPage'));
+const SouthBrucePeninsulaParalegalPage = lazy(() => import('@/components/pages/SouthBrucePeninsulaParalegalPage'));
+const StMarysParalegalPage = lazy(() => import('@/components/pages/StMarysParalegalPage'));
+const TecumsehParalegalPage = lazy(() => import('@/components/pages/TecumsehParalegalPage'));
+const BlueMountainsParalegalPage = lazy(() => import('@/components/pages/BlueMountainsParalegalPage'));
+const BrightonParalegalPage = lazy(() => import('@/components/pages/BrightonParalegalPage'));
+const PortHopeParalegalPage = lazy(() => import('@/components/pages/PortHopeParalegalPage'));
+
+// Batch 3 - 30 additional cities
+const KemptvilleParalegalPage = lazy(() => import('@/components/pages/KemptvilleParalegalPage'));
+const UxbridgeParalegalPage = lazy(() => import('@/components/pages/UxbridgeParalegalPage'));
+const ScugogParalegalPage = lazy(() => import('@/components/pages/ScugogParalegalPage'));
+const KingParalegalPage = lazy(() => import('@/components/pages/KingParalegalPage'));
+const OroMedonteParalegalPage = lazy(() => import('@/components/pages/OroMedonteParalegalPage'));
+const ClearviewParalegalPage = lazy(() => import('@/components/pages/ClearviewParalegalPage'));
+const SevernParalegalPage = lazy(() => import('@/components/pages/SevernParalegalPage'));
+const TrentHillsParalegalPage = lazy(() => import('@/components/pages/TrentHillsParalegalPage'));
+const NorwichParalegalPage = lazy(() => import('@/components/pages/NorwichParalegalPage'));
+const WestLincolnParalegalPage = lazy(() => import('@/components/pages/WestLincolnParalegalPage'));
+const WoolwichParalegalPage = lazy(() => import('@/components/pages/WoolwichParalegalPage'));
+const WilmotParalegalPage = lazy(() => import('@/components/pages/WilmotParalegalPage'));
+const NorthDumfriesParalegalPage = lazy(() => import('@/components/pages/NorthDumfriesParalegalPage'));
+const CentreWellingtonParalegalPage = lazy(() => import('@/components/pages/CentreWellingtonParalegalPage'));
+const MapletonParalegalPage = lazy(() => import('@/components/pages/MapletonParalegalPage'));
+const WellesleyParalegalPage = lazy(() => import('@/components/pages/WellesleyParalegalPage'));
+const WestGreyParalegalPage = lazy(() => import('@/components/pages/WestGreyParalegalPage'));
+const BrocktonParalegalPage = lazy(() => import('@/components/pages/BrocktonParalegalPage'));
+const SouthHuronParalegalPage = lazy(() => import('@/components/pages/SouthHuronParalegalPage'));
+const NorthPerthParalegalPage = lazy(() => import('@/components/pages/NorthPerthParalegalPage'));
+const ZorraParalegalPage = lazy(() => import('@/components/pages/ZorraParalegalPage'));
+const SouthStormontParalegalPage = lazy(() => import('@/components/pages/SouthStormontParalegalPage'));
+const RussellParalegalPage = lazy(() => import('@/components/pages/RussellParalegalPage'));
+const SouthDundasParalegalPage = lazy(() => import('@/components/pages/SouthDundasParalegalPage'));
+const NorthGlengarryParalegalPage = lazy(() => import('@/components/pages/NorthGlengarryParalegalPage'));
+const SouthGlengarryParalegalPage = lazy(() => import('@/components/pages/SouthGlengarryParalegalPage'));
+const LoyalistParalegalPage = lazy(() => import('@/components/pages/LoyalistParalegalPage'));
+const BlindRiverParalegalPage = lazy(() => import('@/components/pages/BlindRiverParalegalPage'));
+const AtikokanParalegalPage = lazy(() => import('@/components/pages/AtikokanParalegalPage'));
+const DeepRiverParalegalPage = lazy(() => import('@/components/pages/DeepRiverParalegalPage'));
+const PerthParalegalPage = lazy(() => import('@/components/pages/PerthParalegalPage'));
+const NapaneeParalegalPage = lazy(() => import('@/components/pages/NapaneeParalegalPage'));
+const BracebridgeParalegalPage = lazy(() => import('@/components/pages/BracebridgeParalegalPage'));
+const ParrySoundParalegalPage = lazy(() => import('@/components/pages/ParrySoundParalegalPage'));
+const KenoraParalegalPage = lazy(() => import('@/components/pages/KenoraParalegalPage'));
+const CochraneParalegalPage = lazy(() => import('@/components/pages/CochraneParalegalPage'));
+const DrydenParalegalPage = lazy(() => import('@/components/pages/DrydenParalegalPage'));
+const FortFrancesParalegalPage = lazy(() => import('@/components/pages/FortFrancesParalegalPage'));
+const TemiskamingShorersParalegalPage = lazy(() => import('@/components/pages/TemiskamingShorersParalegalPage'));
+const EspanolaParalegalPage = lazy(() => import('@/components/pages/EspanolaParalegalPage'));
+const PictonParalegalPage = lazy(() => import('@/components/pages/PictonParalegalPage'));
+const HawkesburyParalegalPage = lazy(() => import('@/components/pages/HawkesburyParalegalPage'));
+const PetawawaParalegalPage = lazy(() => import('@/components/pages/PetawawaParalegalPage'));
+const SmithsFallsParalegalPage = lazy(() => import('@/components/pages/SmithsFallsParalegalPage'));
+const GravenhurstParalegalPage = lazy(() => import('@/components/pages/GravenhurstParalegalPage'));
+const HuntsvilleParalegalPage = lazy(() => import('@/components/pages/HuntsvilleParalegalPage'));
+const CarletonPlaceParalegalPage = lazy(() => import('@/components/pages/CarletonPlaceParalegalPage'));
+const ArnpriorParalegalPage = lazy(() => import('@/components/pages/ArnpriorParalegalPage'));
+const BancroftParalegalPage = lazy(() => import('@/components/pages/BancroftParalegalPage'));
+const HaldimandCountyParalegalPage = lazy(() => import('@/components/pages/HaldimandCountyParalegalPage'));
+const AllistonParalegalPage = lazy(() => import('@/components/pages/AllistonParalegalPage'));
+const WasagaBeachParalegalPage = lazy(() => import('@/components/pages/WasagaBeachParalegalPage'));
+const PortColborneParalegalPage = lazy(() => import('@/components/pages/PortColborneParalegalPage'));
+const GoderichParalegalPage = lazy(() => import('@/components/pages/GoderichParalegalPage'));
 
 export const locationRoutes = [
-  { path: '/london-paralegal', element: LondonParalegalPage },
+  // Hub page - all Ontario locations
+  { path: '/locations', element: LocationsHubPage },
+  { path: '/paralegal-london-ontario', element: LondonParalegalPage },
   { path: '/st-thomas-paralegal', element: StThomasParalegalPage },
   { path: '/woodstock-paralegal', element: WoodstockParalegalPage },
   { path: '/strathroy-chatham-paralegal', element: StrathroyChathamParalegalPage },
@@ -35,4 +195,155 @@ export const locationRoutes = [
   { path: '/locations/windsor', element: WindsorParalegalPage },
   { path: '/locations/chatham-kent', element: ChathamKentParalegalPage },
   { path: '/locations/leamington', element: LeamingtonParalegalPage },
+  { path: '/locations/mississauga', element: MississaugaParalegalPage },
+  { path: '/locations/brampton', element: BramptonParalegalPage },
+  { path: '/locations/oakville', element: OakvilleParalegalPage },
+  { path: '/locations/burlington', element: BurlingtonParalegalPage },
+  { path: '/locations/oshawa', element: OshawaParalegalPage },
+  { path: '/locations/whitby', element: WhitbyParalegalPage },
+  { path: '/locations/markham', element: MarkhamParalegalPage },
+  { path: '/locations/niagara-falls', element: NiagaraFallsParalegalPage },
+  { path: '/locations/st-catharines', element: StCatharinesParalegalPage },
+  { path: '/locations/welland', element: WellandParalegalPage },
+  { path: '/locations/toronto', element: TorontoParalegalPage },
+  { path: '/locations/richmond-hill', element: RichmondHillParalegalPage },
+  { path: '/locations/vaughan', element: VaughanParalegalPage },
+  { path: '/locations/newmarket', element: NewmarketParalegalPage },
+  { path: '/locations/ajax', element: AjaxParalegalPage },
+  { path: '/locations/pickering', element: PickeringParalegalPage },
+  { path: '/locations/milton', element: MiltonParalegalPage },
+  { path: '/locations/hamilton', element: HamiltonParalegalPage },
+  { path: '/locations/barrie', element: BarrieParalegalPage },
+  { path: '/locations/stouffville', element: StouffvilleParalegalPage },
+  { path: '/locations/ottawa', element: OttawaParalegalPage },
+  { path: '/locations/kingston', element: KingstonParalegalPage },
+  { path: '/locations/peterborough', element: PeterboroughParalegalPage },
+  { path: '/locations/belleville', element: BellevilleParalegalPage },
+  { path: '/locations/cornwall', element: CornwallParalegalPage },
+  { path: '/locations/thunder-bay', element: ThunderBayParalegalPage },
+  { path: '/locations/sudbury', element: SudburyParalegalPage },
+  { path: '/locations/sault-ste-marie', element: SaultSteMarieParalegalPage },
+  { path: '/locations/north-bay', element: NorthBayParalegalPage },
+  { path: '/locations/orillia', element: OrilliaParalegalPage },
+  { path: '/locations/owen-sound', element: OwenSoundParalegalPage },
+  { path: '/locations/collingwood', element: CollingwoodParalegalPage },
+  { path: '/locations/orangeville', element: OrangevilleParalegalPage },
+  { path: '/locations/halton-hills', element: HaltonHillsParalegalPage },
+  { path: '/locations/cobourg', element: CobourgParalegalPage },
+  { path: '/locations/kawartha-lakes', element: KawarthaLakesParalegalPage },
+  { path: '/locations/midland', element: MidlandParalegalPage },
+  { path: '/locations/brockville', element: BrockvilleParalegalPage },
+  { path: '/locations/timmins', element: TimminsParalegalPage },
+  { path: '/locations/clarington', element: ClaringtonParalegalPage },
+  { path: '/locations/aurora', element: AuroraParalegalPage },
+  { path: '/locations/caledon', element: CaledonParalegalPage },
+  { path: '/locations/grimsby', element: GrimsbyParalegalPage },
+  { path: '/locations/thorold', element: ThoroldParalegalPage },
+  { path: '/locations/waterloo', element: WaterlooParalegalPage },
+  // New 25 city pages
+  { path: '/locations/pembroke', element: PembrokeParalegalPage },
+  { path: '/locations/perth', element: PerthParalegalPage },
+  { path: '/locations/napanee', element: NapaneeParalegalPage },
+  { path: '/locations/bracebridge', element: BracebridgeParalegalPage },
+  { path: '/locations/parry-sound', element: ParrySoundParalegalPage },
+  { path: '/locations/kenora', element: KenoraParalegalPage },
+  { path: '/locations/cochrane', element: CochraneParalegalPage },
+  { path: '/locations/dryden', element: DrydenParalegalPage },
+  { path: '/locations/fort-frances', element: FortFrancesParalegalPage },
+  { path: '/locations/temiskaming-shores', element: TemiskamingShorersParalegalPage },
+  { path: '/locations/espanola', element: EspanolaParalegalPage },
+  { path: '/locations/picton', element: PictonParalegalPage },
+  { path: '/locations/hawkesbury', element: HawkesburyParalegalPage },
+  { path: '/locations/petawawa', element: PetawawaParalegalPage },
+  { path: '/locations/smiths-falls', element: SmithsFallsParalegalPage },
+  { path: '/locations/gravenhurst', element: GravenhurstParalegalPage },
+  { path: '/locations/huntsville', element: HuntsvilleParalegalPage },
+  { path: '/locations/carleton-place', element: CarletonPlaceParalegalPage },
+  { path: '/locations/arnprior', element: ArnpriorParalegalPage },
+  { path: '/locations/bancroft', element: BancroftParalegalPage },
+  { path: '/locations/haldimand-county', element: HaldimandCountyParalegalPage },
+  { path: '/locations/alliston', element: AllistonParalegalPage },
+  { path: '/locations/wasaga-beach', element: WasagaBeachParalegalPage },
+  { path: '/locations/port-colborne', element: PortColborneParalegalPage },
+  { path: '/locations/goderich', element: GoderichParalegalPage },
+  // Batch 1 - 15 additional cities
+  { path: '/locations/brant', element: BrantParalegalPage },
+  { path: '/locations/clarence-rockland', element: ClarenceRocklandParalegalPage },
+  { path: '/locations/elliot-lake', element: ElliotLakeParalegalPage },
+  { path: '/locations/prince-edward-county', element: PrinceEdwardCountyParalegalPage },
+  { path: '/locations/quinte-west', element: QuinteWestParalegalPage },
+  { path: '/locations/amherstburg', element: AmherstburgParalegalPage },
+  { path: '/locations/bradford-west-gwillimbury', element: BradfordWestGwillimburyParalegalPage },
+  { path: '/locations/east-gwillimbury', element: EastGwillimburyParalegalPage },
+  { path: '/locations/erin', element: ErinParalegalPage },
+  { path: '/locations/essex', element: EssexParalegalPage },
+  { path: '/locations/fergus-elora', element: FergusEloraParalegalPage },
+  { path: '/locations/fort-erie', element: FortErieParalegalPage },
+  { path: '/locations/gananoque', element: GananoqueParalegalPage },
+  { path: '/locations/georgina', element: GeorginaParalegalPage },
+  { path: '/locations/innisfil', element: InnisfilParalegalPage },
+  { path: '/locations/huron-county', element: HuronCountyParalegalPage },
+  { path: '/locations/norfolk-county', element: NorfolkCountyParalegalPage },
+  // Batch 2 - 30 additional cities
+  { path: '/locations/hanover', element: HanoverParalegalPage },
+  { path: '/locations/hearst', element: HearstParalegalPage },
+  { path: '/locations/kapuskasing', element: KapuskasingParalegalPage },
+  { path: '/locations/kincardine', element: KincardineParalegalPage },
+  { path: '/locations/kingsville', element: KingsvilleParalegalPage },
+  { path: '/locations/kirkland-lake', element: KirklandLakeParalegalPage },
+  { path: '/locations/lakeshore', element: LakeshoreParalegalPage },
+  { path: '/locations/lasalle', element: LaSalleParalegalPage },
+  { path: '/locations/lincoln', element: LincolnParalegalPage },
+  { path: '/locations/marathon', element: MarathonParalegalPage },
+  { path: '/locations/meaford', element: MeafordParalegalPage },
+  { path: '/locations/mississippi-mills', element: MississippiMillsParalegalPage },
+  { path: '/locations/mono', element: MonoParalegalPage },
+  { path: '/locations/new-tecumseth', element: NewTecumsethParalegalPage },
+  { path: '/locations/niagara-on-the-lake', element: NiagaraOnTheLakeParalegalPage },
+  { path: '/locations/pelham', element: PelhamParalegalPage },
+  { path: '/locations/penetanguishene', element: PenetanguisheneParalegalPage },
+  { path: '/locations/petrolia', element: PetroliaParalegalPage },
+  { path: '/locations/plympton-wyoming', element: PlymptonWyomingParalegalPage },
+  { path: '/locations/prescott', element: PrescottParalegalPage },
+  { path: '/locations/renfrew', element: RenfrewParalegalPage },
+  { path: '/locations/saugeen-shores', element: SaugeenShoresParalegalPage },
+  { path: '/locations/shelburne', element: ShelburneParalegalPage },
+  { path: '/locations/sioux-lookout', element: SiouxLookoutParalegalPage },
+  { path: '/locations/south-bruce-peninsula', element: SouthBrucePeninsulaParalegalPage },
+  { path: '/locations/st-marys', element: StMarysParalegalPage },
+  { path: '/locations/tecumseh', element: TecumsehParalegalPage },
+  { path: '/locations/blue-mountains', element: BlueMountainsParalegalPage },
+  { path: '/locations/brighton', element: BrightonParalegalPage },
+  { path: '/locations/port-hope', element: PortHopeParalegalPage },
+  // Batch 3 - 30 additional cities
+  { path: '/locations/kemptville', element: KemptvilleParalegalPage },
+  { path: '/locations/uxbridge', element: UxbridgeParalegalPage },
+  { path: '/locations/scugog', element: ScugogParalegalPage },
+  { path: '/locations/king', element: KingParalegalPage },
+  { path: '/locations/oro-medonte', element: OroMedonteParalegalPage },
+  { path: '/locations/clearview', element: ClearviewParalegalPage },
+  { path: '/locations/severn', element: SevernParalegalPage },
+  { path: '/locations/trent-hills', element: TrentHillsParalegalPage },
+  { path: '/locations/norwich', element: NorwichParalegalPage },
+  { path: '/locations/west-lincoln', element: WestLincolnParalegalPage },
+  { path: '/locations/woolwich', element: WoolwichParalegalPage },
+  { path: '/locations/wilmot', element: WilmotParalegalPage },
+  { path: '/locations/north-dumfries', element: NorthDumfriesParalegalPage },
+  { path: '/locations/centre-wellington', element: CentreWellingtonParalegalPage },
+  { path: '/locations/mapleton', element: MapletonParalegalPage },
+  { path: '/locations/wellesley', element: WellesleyParalegalPage },
+  { path: '/locations/west-grey', element: WestGreyParalegalPage },
+  { path: '/locations/brockton', element: BrocktonParalegalPage },
+  { path: '/locations/south-huron', element: SouthHuronParalegalPage },
+  { path: '/locations/north-perth', element: NorthPerthParalegalPage },
+  { path: '/locations/zorra', element: ZorraParalegalPage },
+  { path: '/locations/south-stormont', element: SouthStormontParalegalPage },
+  { path: '/locations/russell', element: RussellParalegalPage },
+  { path: '/locations/south-dundas', element: SouthDundasParalegalPage },
+  { path: '/locations/north-glengarry', element: NorthGlengarryParalegalPage },
+  { path: '/locations/south-glengarry', element: SouthGlengarryParalegalPage },
+  { path: '/locations/loyalist', element: LoyalistParalegalPage },
+  { path: '/locations/blind-river', element: BlindRiverParalegalPage },
+  { path: '/locations/atikokan', element: AtikokanParalegalPage },
+  { path: '/locations/deep-river', element: DeepRiverParalegalPage },
 ];

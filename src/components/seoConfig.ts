@@ -32,9 +32,9 @@ export interface PageSchema {
 // Base business info for all schemas
 export const businessInfo = {
   name: 'LegalAssist Paralegal Services',
-  url: 'https://legalassist.london',
-  telephone: '+13658829515',
-  telephoneDisplay: '365-882-9515',
+  url: 'https://www.legalassist.london',
+  telephone: '+12262725153',
+  telephoneDisplay: '226-272-5153',
   email: 'info@legalassist.london',
   address: {
     streetAddress: 'P.O Box 1000',
@@ -57,7 +57,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/': {
     title: 'LegalAssist Paralegal Services | London Ontario | Affordable Legal Help',
-    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 365-882-9515.',
+    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 226-272-5153.',
     keywords: 'paralegal london ontario, legal services london, traffic ticket lawyer london, LTB paralegal, small claims court london',
     schema: {
       type: 'LocalBusiness',
@@ -78,14 +78,14 @@ export const seoConfig: Record<string, SEOConfig> = {
       },
       {
         question: 'Do you offer free consultations?',
-        answer: 'Yes, we offer free initial consultations for all services. Call 365-882-9515 or book online to discuss your case with a licensed paralegal at no obligation.'
+        answer: 'Yes, we offer free initial consultations for all services. Call 226-272-5153 or book online to discuss your case with a licensed paralegal at no obligation.'
       }
     ]
   },
 
   '/contact': {
     title: 'Contact Us | Free Consultation | LegalAssist London Ontario',
-    description: 'Contact LegalAssist for a free consultation. Located in London, Ontario. Call 365-882-9515 or book online. Traffic tickets, LTB, small claims court representation.',
+    description: 'Contact LegalAssist for a free consultation. Located in London, Ontario. Call 226-272-5153 or book online. Traffic tickets, LTB, small claims court representation.',
     keywords: 'contact paralegal london, free legal consultation london ontario, book paralegal appointment',
     breadcrumbs: [
       { name: 'Home', url: '/' },
@@ -98,7 +98,7 @@ export const seoConfig: Record<string, SEOConfig> = {
       },
       {
         question: 'How quickly will you respond to my inquiry?',
-        answer: 'We typically respond to all inquiries within 24 hours on business days. For urgent matters, please call us directly at 365-882-9515.'
+        answer: 'We typically respond to all inquiries within 24 hours on business days. For urgent matters, please call us directly at 226-272-5153.'
       }
     ,
       {
@@ -138,6 +138,20 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'How long have you been in practice?',
         answer: 'We have been serving Southwestern Ontario with professional paralegal services for several years. Our team stays current through continuing professional development.'
       }
+    ]
+  },
+
+  '/about/student-placement': {
+    title: 'Student Placement Program | Paralegal Field Placement | LegalAssist London',
+    description: 'LegalAssist accepts student placements from accredited Ontario paralegal and law clerk programs. Learn about our high standards, application process, interview, speaking test, and onboarding requirements.',
+    keywords: 'paralegal student placement ontario, paralegal field placement london, law clerk placement, paralegal internship, student placement program, paralegal co-op ontario, legal placement london ontario',
+    schema: { type: 'Article', name: 'Student Placement Program' },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }, { name: 'Student Placements', url: '/about/student-placement' }],
+    faqs: [
+      { question: 'Does LegalAssist accept student placements?', answer: 'Yes, we accept placements from accredited Ontario college Paralegal, Law Clerk, and Legal Assistant programs. Our program provides hands-on experience with real client files under direct supervision.' },
+      { question: 'Is the student placement paid?', answer: 'No, this is an educational field placement where students earn academic credit. However, students who demonstrate exceptional performance may be considered for paid positions after graduation and licensing.' },
+      { question: 'What is the application process for a student placement?', answer: 'Submit a cover letter, resume, unofficial transcript, program coordinator letter, two references, and a writing sample. Shortlisted candidates complete an in-person interview with a speaking and communication test.' },
+      { question: 'Can I complete the placement remotely?', answer: 'No, all placements are in-person at our London, Ontario office. Legal work requires hands-on experience with physical files, court attendance, and face-to-face client interaction.' }
     ]
   },
 
@@ -1757,7 +1771,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/debt-collection': {
     title: 'Debt Collection | Collect Money Owed | London Ontario',
-    description: 'Collect debts through Small Claims Court in London. Unpaid invoices, loans, money owed. Fast debt recovery.',
+    description: 'Expert debt collection services in London, Ontario via Small Claims Court. Recover unpaid invoices, loans, and money owed. Free consultation. Call 226-272-5153.',
     keywords: 'debt collection london, collect money owed ontario, unpaid debt recovery',
     schema: { type: 'LegalService', name: 'Debt Collection', serviceType: 'Debt Collection', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Debt Collection', url: '/services/debt-collection' }],
@@ -1780,7 +1794,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/contract-disputes': {
     title: 'Contract Disputes | Breach of Contract | London Ontario',
-    description: 'Contract dispute representation in London. Breach of contract, failed agreements. Small Claims up to $50,000.',
+    description: 'Contract dispute representation in London, Ontario. Breach of contract claims up to $50,000. Small Claims Court expertise. Free consultation. 226-272-5153.',
     keywords: 'contract dispute london, breach of contract ontario, business dispute',
     schema: { type: 'LegalService', name: 'Contract Disputes', serviceType: 'Contract Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Contract Disputes', url: '/services/contract-disputes' }],
@@ -1803,7 +1817,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/judgement-enforcement': {
     title: 'Judgment Enforcement | Collect Your Judgment | London Ontario',
-    description: 'Won your case but not paid? We enforce judgments through garnishment, seizure, examination. London.',
+    description: 'Enforce your Small Claims judgment in London, Ontario. Wage garnishment, bank seizure, asset examination. Expert collection strategies. Call 226-272-5153.',
     keywords: 'judgment enforcement ontario, collect court judgment, garnishment',
     schema: { type: 'LegalService', name: 'Judgment Enforcement', serviceType: 'Judgment Collection', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Enforcement', url: '/services/judgement-enforcement' }],
@@ -1826,7 +1840,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/property-damage-claims': {
     title: 'Property Damage Claims | Sue for Damages | London Ontario',
-    description: 'Property damage claims in London. Vehicle damage, property destruction, negligence claims.',
+    description: 'Property damage claims in London, Ontario via Small Claims Court. Vehicle damage, destruction from negligence. Expert representation. Free consultation.',
     keywords: 'property damage claim ontario, sue for damages, negligence claim',
     schema: { type: 'LegalService', name: 'Property Damage Claims', serviceType: 'Damage Claim Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Property Damage', url: '/services/property-damage-claims' }],
@@ -1849,7 +1863,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/unpaid-invoices': {
     title: 'Unpaid Invoices | Collect Outstanding Bills | London Ontario',
-    description: 'Collect unpaid invoices through Small Claims Court. Business debt collection.',
+    description: 'Collect unpaid invoices in London, Ontario. Small Claims Court business debt recovery. Demand letters, filing, enforcement. Call 226-272-5153.',
     keywords: 'unpaid invoice collection, outstanding bill recovery, business debt',
     schema: { type: 'LegalService', name: 'Invoice Collection', serviceType: 'Invoice Recovery', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Unpaid Invoices', url: '/services/unpaid-invoices' }],
@@ -1872,7 +1886,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/security-deposits': {
     title: 'Security Deposit Recovery | Get Deposit Back | London Ontario',
-    description: 'Recover security deposits. Wrongfully withheld deposits, illegal deductions.',
+    description: 'Recover wrongfully withheld security deposits in London, Ontario. Landlord illegal deductions. Small Claims or LTB action. Free consultation.',
     keywords: 'security deposit recovery, get deposit back, landlord keeping deposit',
     schema: { type: 'LegalService', name: 'Deposit Recovery', serviceType: 'Security Deposit Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Security Deposits', url: '/services/security-deposits' }],
@@ -1895,7 +1909,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/consumer-disputes': {
     title: 'Consumer Disputes | Consumer Protection | London Ontario',
-    description: 'Consumer dispute representation. Defective products, unfair business practices.',
+    description: 'Consumer protection claims in London, Ontario. Defective products, refunds, unfair business practices. Small Claims Court representation.',
     keywords: 'consumer dispute ontario, consumer protection claim, defective product',
     schema: { type: 'LegalService', name: 'Consumer Disputes', serviceType: 'Consumer Protection Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Consumer Disputes', url: '/services/consumer-disputes' }],
@@ -1918,7 +1932,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/personal-injury-claims': {
     title: 'Personal Injury Claims | Small Claims | London Ontario',
-    description: 'Personal injury claims under $50,000. Slip and fall, minor injuries.',
+    description: 'Personal injury claims up to $50,000 in London, Ontario. Slip and fall, negligence, minor injuries. Small Claims Court representation. Call 226-272-5153.',
     keywords: 'personal injury small claims, slip and fall, injury compensation',
     schema: { type: 'LegalService', name: 'Personal Injury', serviceType: 'Personal Injury Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Personal Injury', url: '/services/personal-injury-claims' }],
@@ -1941,7 +1955,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/home-improvement-disputes': {
     title: 'Home Improvement Disputes | Contractor Problems | London Ontario',
-    description: 'Home improvement disputes. Bad contractors, incomplete work, renovation problems.',
+    description: 'Home improvement disputes in London, Ontario. Bad contractors, incomplete work, poor quality. Small Claims Court representation. Free consultation.',
     keywords: 'contractor dispute, bad contractor claim, renovation problem',
     schema: { type: 'LegalService', name: 'Contractor Disputes', serviceType: 'Home Improvement Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Home Improvement', url: '/services/home-improvement-disputes' }],
@@ -1964,7 +1978,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/vehicle-purchase-disputes': {
     title: 'Vehicle Purchase Disputes | Lemon Car | London Ontario',
-    description: 'Vehicle purchase disputes. Lemon cars, undisclosed damage, misrepresented vehicles.',
+    description: 'Lemon car claims in London, Ontario. Undisclosed damage, misrepresented vehicles. Small Claims Court representation. Free consultation. 226-272-5153.',
     keywords: 'lemon car ontario, vehicle purchase dispute, used car complaint',
     schema: { type: 'LegalService', name: 'Vehicle Disputes', serviceType: 'Vehicle Purchase Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Vehicle Disputes', url: '/services/vehicle-purchase-disputes' }],
@@ -1987,7 +2001,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/neighbour-disputes': {
     title: 'Neighbour Disputes | Property Line Issues | London Ontario',
-    description: 'Neighbour disputes. Property lines, fences, trees, noise, trespass.',
+    description: 'Neighbour disputes in London, Ontario. Fences, tree damage, property lines, trespass. Small Claims Court representation. Free consultation. 226-272-5153.',
     keywords: 'neighbour dispute, property line conflict, fence dispute, tree damage',
     schema: { type: 'LegalService', name: 'Neighbour Disputes', serviceType: 'Property Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Neighbour Disputes', url: '/services/neighbour-disputes' }],
@@ -2010,7 +2024,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/return-of-property': {
     title: 'Return of Property | Get Belongings Back | London Ontario',
-    description: 'Recover personal belongings through Small Claims Court.',
+    description: 'Recover personal belongings in London, Ontario via Small Claims Court. Conversion claims up to $50,000. Free consultation. 226-272-5153.',
     keywords: 'return of property, get belongings back, conversion claim',
     schema: { type: 'LegalService', name: 'Property Recovery', serviceType: 'Return of Property Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Return of Property', url: '/services/return-of-property' }],
@@ -2032,7 +2046,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/breach-of-warranty': {
     title: 'Breach of Warranty | Product Warranty Claims | London Ontario',
-    description: 'Warranty not honored? Breach of warranty claims for product and service warranties.',
+    description: 'Warranty breach claims in London, Ontario. Product and service warranties not honored. Expert Small Claims representation. Call 226-272-5153.',
     keywords: 'breach of warranty, warranty claim, product warranty dispute',
     schema: { type: 'LegalService', name: 'Warranty Claims', serviceType: 'Warranty Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Warranty Claims', url: '/services/breach-of-warranty' }],
@@ -2055,7 +2069,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/loan-recovery': {
     title: 'Loan Recovery | Personal Loan Collection | London Ontario',
-    description: 'Personal loan recovery. Friends, family who won\'t repay loans.',
+    description: 'Personal loan recovery in London, Ontario via Small Claims Court. Friends, family, colleagues who won\'t repay. Free consultation. 226-272-5153.',
     keywords: 'personal loan recovery, lent money not repaid, loan collection',
     schema: { type: 'LegalService', name: 'Loan Recovery', serviceType: 'Personal Loan Collection', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Loan Recovery', url: '/services/loan-recovery' }],
@@ -2078,7 +2092,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/tenant-damage-claims': {
     title: 'Tenant Damage Claims | Landlord Recovery | London Ontario',
-    description: 'Tenant damaged rental property? Recover through Small Claims Court.',
+    description: 'Landlord damage recovery in London, Ontario. Tenant damaged property? Small Claims Court representation for repairs and deductions. Free consultation.',
     keywords: 'tenant damage claim, landlord property damage, sue tenant',
     schema: { type: 'LegalService', name: 'Tenant Damage Claims', serviceType: 'Landlord Damage Recovery', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Tenant Damage', url: '/services/tenant-damage-claims' }],
@@ -2146,7 +2160,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/defamation-slander': {
     title: 'Defamation and Slander | Reputation Claims | London Ontario',
-    description: 'Defamation claims. Slander, libel, false statements damaging reputation.',
+    description: 'Defamation claims in London, Ontario. Slander, libel, false statements damaging reputation. Small Claims Court representation. Free consultation. 226-272-5153.',
     keywords: 'defamation claim, slander lawsuit, libel claim, reputation damage',
     schema: { type: 'LegalService', name: 'Defamation Claims', serviceType: 'Defamation Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Defamation', url: '/services/defamation-slander' }],
@@ -2190,7 +2204,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/workplace-discrimination': {
     title: 'Workplace Discrimination | Employment Human Rights | London Ontario',
-    description: 'Workplace discrimination claims in London, Ontario. Race, gender, disability, age discrimination at work. HRTO representation.',
+    description: 'Workplace discrimination claims in London, Ontario. Race, gender, disability, age discrimination at work. HRTO representation. Free consultation. 226-272-5153.',
     keywords: 'workplace discrimination ontario, employment discrimination, work harassment claim',
     schema: { type: 'LegalService', name: 'Workplace Discrimination', serviceType: 'Employment Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Workplace Discrimination', url: '/services/workplace-discrimination' }],
@@ -2212,7 +2226,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/housing-discrimination': {
     title: 'Housing Discrimination | Rental Discrimination | London Ontario',
-    description: 'Housing discrimination claims in London. Denied housing based on race, family status, disability, income source. HRTO representation.',
+    description: 'Housing discrimination claims in London, Ontario via HRTO. Denied housing based on race, family status, disability. Free consultation. 226-272-5153.',
     keywords: 'housing discrimination ontario, rental discrimination, denied apartment, landlord discrimination',
     schema: { type: 'LegalService', name: 'Housing Discrimination', serviceType: 'Housing Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Housing Discrimination', url: '/services/housing-discrimination' }],
@@ -2235,7 +2249,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/disability-accommodation': {
     title: 'Disability Accommodation | Accessibility Rights | London Ontario',
-    description: 'Disability accommodation claims in London. Workplace accommodations, service accessibility. Duty to accommodate.',
+    description: 'Disability accommodation claims in London, Ontario. Duty to accommodate, workplace accessibility, AODA. HRTO representation. Free consultation. 226-272-5153.',
     keywords: 'disability accommodation ontario, workplace accessibility, duty to accommodate, AODA claims',
     schema: { type: 'LegalService', name: 'Disability Accommodation', serviceType: 'Accessibility Rights Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Disability Accommodation', url: '/services/disability-accommodation' }],
@@ -2257,7 +2271,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/sexual-harassment': {
     title: 'Sexual Harassment Claims | Workplace Harassment | London Ontario',
-    description: 'Sexual harassment claims in London, Ontario. Workplace harassment, hostile environment, quid pro quo harassment. HRTO representation.',
+    description: 'Sexual harassment claims in London, Ontario. Workplace harassment, hostile environment. HRTO representation. Expert support. Call 226-272-5153.',
     keywords: 'sexual harassment claim ontario, workplace harassment, hostile work environment, harassment complaint',
     schema: { type: 'LegalService', name: 'Sexual Harassment Claims', serviceType: 'Harassment Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Sexual Harassment', url: '/services/sexual-harassment' }],
@@ -2279,7 +2293,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/age-discrimination': {
     title: 'Age Discrimination | Employment Age Rights | London Ontario',
-    description: 'Age discrimination claims in London, Ontario. Workplace ageism, mandatory retirement, hiring discrimination based on age.',
+    description: 'Age discrimination claims in London, Ontario. Workplace ageism, mandatory retirement, hiring discrimination. HRTO representation. Free consultation.',
     keywords: 'age discrimination ontario, workplace ageism, older worker discrimination, age rights employment',
     schema: { type: 'LegalService', name: 'Age Discrimination', serviceType: 'Age Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Age Discrimination', url: '/services/age-discrimination' }],
@@ -2348,7 +2362,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/reprisal-claims': {
     title: 'Reprisal Claims | Human Rights Retaliation | London Ontario',
-    description: 'Human rights reprisal claims in London. Retaliated against for filing complaint or participating in investigation.',
+    description: 'Human rights reprisal claims in London, Ontario. Retaliated for complaints, investigation participation. HRTO representation. Free consultation.',
     keywords: 'reprisal claim ontario, human rights retaliation, fired for complaint, whistleblower protection',
     schema: { type: 'LegalService', name: 'Reprisal Claims', serviceType: 'Retaliation Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Reprisal Claims', url: '/services/reprisal-claims' }],
@@ -2395,7 +2409,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/wrongful-termination': {
     title: 'Wrongful Termination | Fired Unfairly | London Ontario',
-    description: 'Wrongful termination help in London, Ontario. Fired without cause or proper notice. Know your rights and options.',
+    description: 'Wrongful termination help in London, Ontario. Fired without proper notice or just cause. Assess your entitlement. Free consultation. 226-272-5153.',
     keywords: 'wrongful termination ontario, fired unfairly, termination without cause, employee termination rights',
     schema: { type: 'LegalService', name: 'Wrongful Termination', serviceType: 'Termination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment Issues', url: '/services/employment-issues' }, { name: 'Wrongful Termination', url: '/services/wrongful-termination' }],
@@ -2418,7 +2432,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/unpaid-wages': {
     title: 'Unpaid Wages | Recover Wages Owed | London Ontario',
-    description: 'Recover unpaid wages in London, Ontario. Owed money by employer, unpaid overtime, vacation pay, commissions.',
+    description: 'Recover unpaid wages in London, Ontario. Employer owes overtime, vacation pay, commissions. Ministry of Labour, Small Claims. Free consultation.',
     keywords: 'unpaid wages ontario, recover wages owed, employer owes money, unpaid overtime',
     schema: { type: 'LegalService', name: 'Unpaid Wages', serviceType: 'Wage Recovery', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment Issues', url: '/services/employment-issues' }, { name: 'Unpaid Wages', url: '/services/unpaid-wages' }],
@@ -2440,7 +2454,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/severance-pay': {
     title: 'Severance Pay | Termination Pay | London Ontario',
-    description: 'Severance pay disputes in London, Ontario. Calculate your entitlements, negotiate better severance packages.',
+    description: 'Severance pay disputes in London, Ontario. Calculate ESA and common law entitlements. Negotiate better packages. Call 226-272-5153.',
     keywords: 'severance pay ontario, termination pay, severance calculation, severance negotiation',
     schema: { type: 'LegalService', name: 'Severance Pay', serviceType: 'Severance Disputes', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment Issues', url: '/services/employment-issues' }, { name: 'Severance Pay', url: '/services/severance-pay' }],
@@ -2462,7 +2476,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/constructive-dismissal': {
     title: 'Constructive Dismissal | Forced to Quit | London Ontario',
-    description: 'Constructive dismissal claims in London. Employer changed job significantly, hostile work environment, forced resignation.',
+    description: 'Constructive dismissal claims in London, Ontario. Job changed, hostile work environment, forced resignation. Expert assessment. Free consultation.',
     keywords: 'constructive dismissal ontario, forced to quit, job changed significantly, hostile workplace quit',
     schema: { type: 'LegalService', name: 'Constructive Dismissal', serviceType: 'Constructive Dismissal Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment Issues', url: '/services/employment-issues' }, { name: 'Constructive Dismissal', url: '/services/constructive-dismissal' }],
@@ -2509,7 +2523,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/provincial-offences': {
     title: 'Provincial Offences | POA Matters | London Ontario',
-    description: 'Provincial Offences Act defence in London, Ontario. Regulatory violations, municipal bylaws, provincial regulations.',
+    description: 'Provincial Offences Act defence in London, Ontario. Municipal bylaws, regulatory violations, provincial court representation. Call 226-272-5153.',
     keywords: 'provincial offence defence, POA matters london, regulatory violation, provincial court',
     schema: { type: 'LegalService', name: 'Provincial Offences', serviceType: 'POA Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }],
@@ -2575,7 +2589,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/mischief-under-5000': {
     title: 'Mischief Under $5000 Defence | Property Damage | London Ontario',
-    description: 'Mischief under $5000 defence in London. Property damage charges, vandalism, graffiti. Criminal defence.',
+    description: 'Mischief under $5000 defence in London, Ontario. Vandalism, graffiti, property damage charges. Diversion options. Free consultation. 226-272-5153.',
     keywords: 'mischief under 5000, property damage charge, vandalism defence, graffiti charge',
     schema: { type: 'LegalService', name: 'Mischief Defence', serviceType: 'Mischief Under $5000 Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Mischief Under $5000', url: '/services/mischief-under-5000' }],
@@ -2708,7 +2722,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/regulatory-offences': {
     title: 'Regulatory Offences | Administrative Violations | London Ontario',
-    description: 'Regulatory offence defence in London. Workplace safety, environmental violations, professional regulations.',
+    description: 'Regulatory offence defence in London, Ontario. OHSA, environmental, professional regulation violations. Expert representation. Free consultation.',
     keywords: 'regulatory offence ontario, administrative violation, OHSA charge, environmental offence',
     schema: { type: 'LegalService', name: 'Regulatory Defence', serviceType: 'Regulatory Offence Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Regulatory Offences', url: '/services/regulatory-offences' }],
@@ -2730,7 +2744,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/fail-to-comply': {
     title: 'Fail to Comply | Breach Conditions | London Ontario',
-    description: 'Fail to comply defence in London. Breaching probation, bail conditions, court orders. Avoid additional charges.',
+    description: 'Fail to comply defence in London, Ontario. Bail conditions, probation breach, court order violations. Expert representation. Call 226-272-5153.',
     keywords: 'fail to comply charge, breach conditions ontario, probation breach, bail breach',
     schema: { type: 'LegalService', name: 'Breach Defence', serviceType: 'Fail to Comply Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Fail to Comply', url: '/services/fail-to-comply' }],
@@ -2753,12 +2767,12 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   // LOCATION PAGES (21 pages)
   // ============================================
-  '/london-paralegal': {
-    title: 'London Paralegal | Legal Services London Ontario',
-    description: 'Paralegal services in London, Ontario. Traffic tickets, landlord-tenant, small claims court, human rights. Local expertise. Free consultation.',
-    keywords: 'paralegal london ontario, london lawyer alternative, legal services london, london court representation',
-    schema: { type: 'LocalBusiness', name: 'LegalAssist London', areaServed: ['London', 'Middlesex County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'London Paralegal', url: '/london-paralegal' }],
+  '/paralegal-london-ontario': {
+    title: 'Paralegal London Ontario | Affordable Legal Services London ON',
+    description: 'Licensed paralegal in London, Ontario. Small Claims Court, Landlord & Tenant Board, traffic tickets, human rights tribunal. Serving London & Middlesex County. Free consultation.',
+    keywords: 'paralegal london ontario, paralegal london on, london paralegal services, small claims court london, landlord tenant board london, traffic ticket london, licensed paralegal london ontario, affordable paralegal london',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist - Paralegal London Ontario', areaServed: ['London', 'Middlesex County', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }],
     faqs: [
       { question: 'Where is LegalAssist located in London?', answer: 'We serve all of London and Middlesex County. We handle matters at London courts including the Ontario Court of Justice at 80 Dundas Street and Superior Court at 80 Dundas Street.' },
       { question: 'What courts do you cover in London?', answer: 'We appear at London Provincial Offences Court, Ontario Court of Justice, Superior Court of Justice, Small Claims Court, and Landlord and Tenant Board hearings for the London region.' }
@@ -2778,7 +2792,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/st-thomas-paralegal': {
     title: 'St. Thomas Paralegal | Legal Services Elgin County',
-    description: 'Paralegal services in St. Thomas and Elgin County. Traffic tickets, landlord-tenant, small claims. Local representation.',
+    description: 'Affordable paralegal services in St. Thomas, Elgin County. Traffic tickets, landlord-tenant disputes, small claims. Serving Aylmer, Port Stanley. Call 226-272-5153.',
     keywords: 'paralegal st thomas, elgin county legal services, st thomas traffic ticket, st thomas lawyer alternative',
     schema: { type: 'LocalBusiness', name: 'LegalAssist St. Thomas', areaServed: ['St. Thomas', 'Elgin County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'St. Thomas Paralegal', url: '/st-thomas-paralegal' }],
@@ -2801,7 +2815,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/woodstock-paralegal': {
     title: 'Woodstock Paralegal | Legal Services Oxford County',
-    description: 'Paralegal services in Woodstock and Oxford County. Traffic tickets, landlord-tenant, small claims court representation.',
+    description: 'Licensed paralegal services in Woodstock, Oxford County. Traffic defence, LTB, small claims at Woodstock courthouse. Free consultation. 226-272-5153.',
     keywords: 'paralegal woodstock, oxford county legal services, woodstock traffic ticket, woodstock lawyer alternative',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Woodstock', areaServed: ['Woodstock', 'Oxford County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Woodstock Paralegal', url: '/woodstock-paralegal' }],
@@ -2824,7 +2838,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/ingersoll-paralegal': {
     title: 'Ingersoll Paralegal | Legal Services Ingersoll Ontario',
-    description: 'Paralegal services in Ingersoll, Ontario. Traffic tickets, landlord-tenant disputes, small claims court. Local expertise.',
+    description: 'Expert paralegal services in Ingersoll, Ontario. Traffic tickets, landlord-tenant, small claims (heard in Woodstock). Free consultation. Call 226-272-5153.',
     keywords: 'paralegal ingersoll, ingersoll legal services, ingersoll traffic ticket, ingersoll lawyer',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Ingersoll', areaServed: ['Ingersoll', 'Oxford County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Ingersoll Paralegal', url: '/ingersoll-paralegal' }],
@@ -2847,7 +2861,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/tillsonburg-paralegal': {
     title: 'Tillsonburg Paralegal | Legal Services Tillsonburg Ontario',
-    description: 'Paralegal services in Tillsonburg, Ontario. Traffic tickets, landlord disputes, small claims court. Serving Oxford and Norfolk.',
+    description: 'Paralegal services in Tillsonburg, Ontario. Traffic tickets, landlord-tenant, small claims. Serving Oxford and Norfolk counties. Free consultation.',
     keywords: 'paralegal tillsonburg, tillsonburg legal services, tillsonburg traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Tillsonburg', areaServed: ['Tillsonburg', 'Oxford County', 'Norfolk County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Tillsonburg Paralegal', url: '/tillsonburg-paralegal' }],
@@ -2870,7 +2884,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/aylmer-paralegal': {
     title: 'Aylmer Paralegal | Legal Services Aylmer Ontario',
-    description: 'Paralegal services in Aylmer, Ontario. Traffic tickets, landlord-tenant, small claims court. Serving East Elgin.',
+    description: 'Paralegal services in Aylmer, Ontario. Traffic tickets, landlord-tenant, small claims (heard in St. Thomas). Free consultation. Call 226-272-5153.',
     keywords: 'paralegal aylmer, aylmer legal services, aylmer traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Aylmer', areaServed: ['Aylmer', 'Elgin County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Aylmer Paralegal', url: '/aylmer-paralegal' }],
@@ -2893,7 +2907,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/strathroy-chatham-paralegal': {
     title: 'Strathroy & Chatham Paralegal | Legal Services',
-    description: 'Paralegal services in Strathroy, Chatham, and surrounding areas. Traffic tickets, landlord-tenant, small claims court.',
+    description: 'Paralegal services in Strathroy, Chatham and surrounding areas. Traffic tickets, LTB, small claims court. Chatham courthouse representation.',
     keywords: 'paralegal strathroy, paralegal chatham, strathroy legal services, chatham traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Strathroy-Chatham', areaServed: ['Strathroy', 'Chatham-Kent', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Strathroy & Chatham Paralegal', url: '/strathroy-chatham-paralegal' }],
@@ -2916,7 +2930,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/kitchener': {
     title: 'Kitchener Paralegal | Legal Services Waterloo Region',
-    description: 'Paralegal services in Kitchener-Waterloo. Traffic tickets, landlord-tenant, small claims court. Serving Waterloo Region.',
+    description: 'Kitchener-Waterloo paralegal services at courthouse (200 Frederick Street). Traffic tickets, LTB, small claims. Free consultation. 226-272-5153.',
     keywords: 'paralegal kitchener, kitchener waterloo legal services, kitchener traffic ticket, waterloo region paralegal',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Kitchener', areaServed: ['Kitchener', 'Waterloo', 'Cambridge', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Kitchener', url: '/locations/kitchener' }],
@@ -2939,7 +2953,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/cambridge': {
     title: 'Cambridge Paralegal | Legal Services Cambridge Ontario',
-    description: 'Paralegal services in Cambridge, Ontario. Traffic tickets, landlord-tenant, small claims. Waterloo Region representation.',
+    description: 'Cambridge paralegal services (matters heard in Kitchener). Traffic tickets, landlord-tenant, small claims. Free consultation. Call 226-272-5153.',
     keywords: 'paralegal cambridge ontario, cambridge legal services, cambridge traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Cambridge', areaServed: ['Cambridge', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Cambridge', url: '/locations/cambridge' }],
@@ -2962,7 +2976,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/guelph': {
     title: 'Guelph Paralegal | Legal Services Wellington County',
-    description: 'Paralegal services in Guelph and Wellington County. Traffic tickets, landlord-tenant, small claims court representation.',
+    description: 'Guelph courthouse paralegal services (74 Woolwich Street). Traffic tickets, landlord-tenant, small claims, provincial offences. Call 226-272-5153.',
     keywords: 'paralegal guelph, guelph legal services, guelph traffic ticket, wellington county paralegal',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Guelph', areaServed: ['Guelph', 'Wellington County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Guelph', url: '/locations/guelph' }],
@@ -2985,7 +2999,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/brantford': {
     title: 'Brantford Paralegal | Legal Services Brant County',
-    description: 'Paralegal services in Brantford and Brant County. Traffic tickets, landlord-tenant, small claims court.',
+    description: 'Brantford courthouse paralegal services (70 Wellington Street). Traffic tickets, landlord-tenant, small claims. Free consultation. 226-272-5153.',
     keywords: 'paralegal brantford, brantford legal services, brantford traffic ticket, brant county paralegal',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Brantford', areaServed: ['Brantford', 'Brant County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Brantford', url: '/locations/brantford' }],
@@ -3008,7 +3022,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/stratford': {
     title: 'Stratford Paralegal | Legal Services Perth County',
-    description: 'Paralegal services in Stratford and Perth County. Traffic tickets, landlord-tenant, small claims court representation.',
+    description: 'Stratford courthouse paralegal services for Perth County. Traffic tickets, landlord-tenant, small claims, provincial offences. Free consultation.',
     keywords: 'paralegal stratford, stratford legal services, stratford traffic ticket, perth county paralegal',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Stratford', areaServed: ['Stratford', 'Perth County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Stratford', url: '/locations/stratford' }],
@@ -3031,7 +3045,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/sarnia': {
     title: 'Sarnia Paralegal | Legal Services Lambton County',
-    description: 'Paralegal services in Sarnia and Lambton County. Traffic tickets, landlord-tenant, small claims court.',
+    description: 'Sarnia courthouse paralegal services (700 Christina Street North). Traffic, landlord-tenant, small claims, LTB. Call 226-272-5153.',
     keywords: 'paralegal sarnia, sarnia legal services, sarnia traffic ticket, lambton county paralegal',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Sarnia', areaServed: ['Sarnia', 'Lambton County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Sarnia', url: '/locations/sarnia' }],
@@ -3054,7 +3068,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/windsor': {
     title: 'Windsor Paralegal | Legal Services Essex County',
-    description: 'Paralegal services in Windsor and Essex County. Traffic tickets, landlord-tenant, small claims court representation.',
+    description: 'Windsor courthouse paralegal services (245 Windsor Avenue). Traffic tickets, landlord-tenant, small claims, LTB. Call 226-272-5153.',
     keywords: 'paralegal windsor, windsor legal services, windsor traffic ticket, essex county paralegal',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Windsor', areaServed: ['Windsor', 'Essex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Windsor', url: '/locations/windsor' }],
@@ -3077,7 +3091,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/chatham-kent': {
     title: 'Chatham-Kent Paralegal | Legal Services Chatham Ontario',
-    description: 'Paralegal services in Chatham-Kent. Traffic tickets, landlord-tenant, small claims court. Serving all of Chatham-Kent.',
+    description: 'Chatham courthouse paralegal services. Traffic tickets, landlord-tenant, small claims, provincial offences. Free consultation. 226-272-5153.',
     keywords: 'paralegal chatham kent, chatham legal services, chatham traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Chatham-Kent', areaServed: ['Chatham-Kent', 'Chatham', 'Wallaceburg', 'Ridgetown'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Chatham-Kent', url: '/locations/chatham-kent' }],
@@ -3100,7 +3114,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/leamington': {
     title: 'Leamington Paralegal | Legal Services Leamington Ontario',
-    description: 'Paralegal services in Leamington, Ontario. Traffic tickets, landlord-tenant, small claims. Essex County representation.',
+    description: 'Leamington paralegal services (matters heard in Windsor). Traffic tickets, landlord-tenant, small claims. Free consultation. 226-272-5153.',
     keywords: 'paralegal leamington, leamington legal services, leamington traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Leamington', areaServed: ['Leamington', 'Essex County', 'Kingsville'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Leamington', url: '/locations/leamington' }],
@@ -3123,7 +3137,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/norfolk-county': {
     title: 'Norfolk County Paralegal | Legal Services Simcoe Ontario',
-    description: 'Paralegal services in Norfolk County. Traffic tickets, landlord-tenant, small claims. Simcoe, Port Dover, Delhi.',
+    description: 'Norfolk County paralegal services at Simcoe courthouse. Traffic tickets, landlord-tenant, small claims, LTB. Free consultation. 226-272-5153.',
     keywords: 'paralegal norfolk county, simcoe legal services, port dover paralegal, norfolk traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Norfolk County', areaServed: ['Norfolk County', 'Simcoe', 'Port Dover', 'Delhi'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Norfolk County', url: '/locations/norfolk-county' }],
@@ -3146,7 +3160,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/huron-county': {
     title: 'Huron County Paralegal | Legal Services Goderich Ontario',
-    description: 'Paralegal services in Huron County. Traffic tickets, landlord-tenant, small claims. Goderich, Clinton, Seaforth.',
+    description: 'Huron County paralegal services at Goderich courthouse. Traffic tickets, landlord-tenant, small claims, LTB. Free consultation. 226-272-5153.',
     keywords: 'paralegal huron county, goderich legal services, huron county traffic ticket',
     schema: { type: 'LocalBusiness', name: 'LegalAssist Huron County', areaServed: ['Huron County', 'Goderich', 'Clinton', 'Seaforth'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Huron County', url: '/locations/huron-county' }],
@@ -3164,6 +3178,506 @@ export const seoConfig: Record<string, SEOConfig> = {
         question: 'Do you offer services in languages other than English?',
         answer: 'We primarily operate in English but can arrange interpreter services when needed. Contact us to discuss your language requirements.'
       }
+    ]
+  },
+
+  // ============================================
+  // GTA & BROADER REACH CITIES (10 pages)
+  // ============================================
+  '/locations/mississauga': {
+    title: 'Mississauga Paralegal | Legal Services Peel Region',
+    description: 'Mississauga paralegal services for Peel Region. Traffic tickets on QEW/403/401, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal mississauga, mississauga legal services, mississauga traffic ticket, peel region paralegal, mississauga small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Mississauga', areaServed: ['Mississauga', 'Peel Region', 'Streetsville', 'Port Credit'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Mississauga', url: '/locations/mississauga' }],
+    faqs: [
+      { question: 'Do you handle traffic tickets from the QEW and 403?', answer: 'Yes, we defend traffic tickets issued on the QEW, Highway 403, Highway 401, and Mississauga city streets including Hurontario, Dundas, and Erin Mills Parkway.' },
+      { question: 'Where are Mississauga court matters heard?', answer: 'Most Mississauga matters are heard at Brampton courthouse (A. Grenville & William Davis Courthouse) or Mississauga Provincial Offences Court.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas in Peel Region do you serve?', answer: 'We serve Mississauga, Streetsville, Port Credit, Meadowvale, Erin Mills, Cooksville, and all of Peel Region.' }
+    ]
+  },
+
+  '/locations/brampton': {
+    title: 'Brampton Paralegal | Legal Services Brampton Ontario',
+    description: 'Brampton paralegal services at A. Grenville & William Davis Courthouse. Traffic tickets, Small Claims, LTB, provincial offences. Free consultation. 226-272-5153.',
+    keywords: 'paralegal brampton, brampton legal services, brampton traffic ticket, brampton small claims court, peel region paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Brampton', areaServed: ['Brampton', 'Caledon', 'Bolton', 'Peel Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Brampton', url: '/locations/brampton' }],
+    faqs: [
+      { question: 'Do you appear at Brampton courthouse?', answer: 'Yes, we regularly appear at the A. Grenville & William Davis Courthouse in Brampton for traffic, provincial offences, small claims, and LTB matters.' },
+      { question: 'What areas near Brampton do you serve?', answer: 'We serve Brampton, Caledon, Bolton, Georgetown, Bramalea, Heart Lake, and all of Peel Region.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with Highway 410 speeding tickets?', answer: 'Absolutely. We handle all Highway 410 traffic offences including speeding, careless driving, and stunt driving charges.' }
+    ]
+  },
+
+  '/locations/oakville': {
+    title: 'Oakville Paralegal | Legal Services Halton Region',
+    description: 'Oakville paralegal services for Halton Region. Traffic tickets on QEW/403, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal oakville, oakville legal services, oakville traffic ticket, halton region paralegal, oakville small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Oakville', areaServed: ['Oakville', 'Halton Region', 'Milton', 'Halton Hills'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Oakville', url: '/locations/oakville' }],
+    faqs: [
+      { question: 'Where are Oakville court matters heard?', answer: 'Oakville matters are typically heard at Milton courthouse or Oakville Provincial Offences Court depending on the matter type.' },
+      { question: 'Do you handle QEW speeding tickets through Oakville?', answer: 'Yes, we defend tickets issued on the QEW, Highway 403, Trafalgar Road, and all Oakville area roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What communities in Halton do you serve?', answer: 'We serve Oakville, Milton, Halton Hills, Bronte, Glen Abbey, Kerr Village, and surrounding Halton Region.' }
+    ]
+  },
+
+  '/locations/burlington': {
+    title: 'Burlington Paralegal | Legal Services Burlington Ontario',
+    description: 'Burlington paralegal services for Halton Region. Traffic tickets on QEW/403, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal burlington, burlington legal services, burlington traffic ticket, halton region paralegal, burlington small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Burlington', areaServed: ['Burlington', 'Halton Region', 'Waterdown', 'Flamborough'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Burlington', url: '/locations/burlington' }],
+    faqs: [
+      { question: 'Where are Burlington court matters heard?', answer: 'Burlington matters may be heard at Hamilton courthouse or Milton courthouse depending on the offence type and jurisdiction.' },
+      { question: 'Do you serve Waterdown and Flamborough?', answer: 'Yes, we serve Burlington, Aldershot, Waterdown, Flamborough, Stoney Creek, Dundas, and surrounding communities.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with QEW tickets near the Skyway?', answer: 'Yes, we handle all traffic offences on the QEW, Highway 403, and Burlington city streets including speeding and careless driving.' }
+    ]
+  },
+
+  '/locations/oshawa': {
+    title: 'Oshawa Paralegal | Legal Services Durham Region',
+    description: 'Oshawa paralegal services at Durham Region courthouse. Traffic tickets on Highway 401, Small Claims, LTB, provincial offences. Free consultation. 226-272-5153.',
+    keywords: 'paralegal oshawa, oshawa legal services, oshawa traffic ticket, durham region paralegal, oshawa small claims court',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Oshawa', areaServed: ['Oshawa', 'Durham Region', 'Whitby', 'Courtice'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Oshawa', url: '/locations/oshawa' }],
+    faqs: [
+      { question: 'Do you appear at Oshawa courthouse?', answer: 'Yes, we appear at the Ontario Court of Justice and Superior Court of Justice in Oshawa for traffic, small claims, provincial offences, and LTB matters.' },
+      { question: 'What areas in Durham Region do you serve?', answer: 'We serve Oshawa, Whitby, Courtice, Bowmanville, Ajax, Pickering, and all Durham Region communities.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with Highway 401 tickets near Oshawa?', answer: 'Yes, we handle all Highway 401 traffic offences through Durham Region including speeding, careless driving, and stunt driving.' }
+    ]
+  },
+
+  '/locations/whitby': {
+    title: 'Whitby Paralegal | Legal Services Whitby Ontario',
+    description: 'Whitby paralegal services for south Durham Region. Traffic tickets on Highway 401, Small Claims, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal whitby, whitby legal services, whitby traffic ticket, durham region paralegal, whitby small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Whitby', areaServed: ['Whitby', 'Durham Region', 'Brooklin', 'Ajax'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Whitby', url: '/locations/whitby' }],
+    faqs: [
+      { question: 'Where are Whitby court matters heard?', answer: 'Whitby matters are typically heard at Oshawa courthouse or Whitby Provincial Offences Court depending on the matter type.' },
+      { question: 'Do you serve Brooklin and Ajax?', answer: 'Yes, we serve Whitby, Brooklin, Ajax, Pickering, Port Perry, Uxbridge, and surrounding Durham communities.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you handle Highway 401 and Highway 12 tickets?', answer: 'Yes, we defend all traffic offences on Highway 401, Highway 12, Brock Street, and Whitby area roads.' }
+    ]
+  },
+
+  '/locations/markham': {
+    title: 'Markham Paralegal | Legal Services York Region',
+    description: 'Markham paralegal services for York Region. Traffic tickets on Highway 404/Highway 7, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal markham, markham legal services, markham traffic ticket, york region paralegal, markham small claims court',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Markham', areaServed: ['Markham', 'York Region', 'Unionville', 'Stouffville'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Markham', url: '/locations/markham' }],
+    faqs: [
+      { question: 'Where are Markham court matters heard?', answer: 'Markham matters are typically heard at Newmarket courthouse or Markham Provincial Offences Court depending on the matter type.' },
+      { question: 'Do you serve Unionville and Stouffville?', answer: 'Yes, we serve Markham, Unionville, Stouffville, Richmond Hill, Thornhill, and surrounding York Region.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with Highway 404 and Highway 7 tickets?', answer: 'Yes, we handle all traffic offences on Highway 404, Highway 7, Markham Road, Kennedy Road, and Markham area streets.' }
+    ]
+  },
+
+  '/locations/niagara-falls': {
+    title: 'Niagara Falls Paralegal | Legal Services Niagara Region',
+    description: 'Niagara Falls paralegal services for Niagara Region. Traffic tickets on QEW/Highway 420, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal niagara falls, niagara falls legal services, niagara falls traffic ticket, niagara region paralegal, niagara small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Niagara Falls', areaServed: ['Niagara Falls', 'Niagara Region', 'Fort Erie', 'Niagara-on-the-Lake'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Niagara Falls', url: '/locations/niagara-falls' }],
+    faqs: [
+      { question: 'Do you handle Niagara Falls tourist district tickets?', answer: 'Yes, we defend all traffic and by-law offences in the Niagara Falls area including Lundy\'s Lane, Highway 420, and the tourist district.' },
+      { question: 'Where are Niagara Falls court matters heard?', answer: 'Niagara Falls matters are heard at St. Catharines courthouse or Niagara Falls Provincial Offences Court depending on the offence.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What communities in Niagara do you serve?', answer: 'We serve Niagara Falls, Niagara-on-the-Lake, Fort Erie, Thorold, Chippawa, Welland, and all of Niagara Region.' }
+    ]
+  },
+
+  '/locations/st-catharines': {
+    title: 'St. Catharines Paralegal | Legal Services Niagara Peninsula',
+    description: 'St. Catharines paralegal services at Niagara courthouse. Traffic tickets on QEW/Highway 406, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal st catharines, st catharines legal services, st catharines traffic ticket, niagara region paralegal, st catharines small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist St. Catharines', areaServed: ['St. Catharines', 'Niagara Region', 'Thorold', 'Merritton'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'St. Catharines', url: '/locations/st-catharines' }],
+    faqs: [
+      { question: 'Do you appear at St. Catharines courthouse?', answer: 'Yes, we regularly appear at the Ontario Court of Justice and Superior Court of Justice in St. Catharines for traffic, small claims, provincial offences, and LTB matters.' },
+      { question: 'What areas near St. Catharines do you serve?', answer: 'We serve St. Catharines, Thorold, Merritton, Port Dalhousie, Jordan, Vineland, and surrounding Niagara Peninsula.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with QEW and Highway 406 tickets?', answer: 'Yes, we handle all traffic offences on the QEW, Highway 406, Ontario Street, Geneva Street, and St. Catharines area roads.' }
+    ]
+  },
+
+  '/locations/welland': {
+    title: 'Welland Paralegal | Legal Services South Niagara',
+    description: 'Welland paralegal services for south Niagara Region. Traffic tickets, Small Claims Court, LTB hearings, provincial offences. Free consultation. 226-272-5153.',
+    keywords: 'paralegal welland, welland legal services, welland traffic ticket, south niagara paralegal, welland small claims court',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Welland', areaServed: ['Welland', 'South Niagara', 'Pelham', 'Port Colborne'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Welland', url: '/locations/welland' }],
+    faqs: [
+      { question: 'Do you appear at Welland courthouse?', answer: 'Yes, we appear at the Ontario Court of Justice in Welland for traffic, small claims, provincial offences, and LTB matters.' },
+      { question: 'What communities near Welland do you serve?', answer: 'We serve Welland, Pelham, Fonthill, Port Colborne, Wainfleet, Dunnville, and surrounding south Niagara communities.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with Highway 140 and Highway 58 tickets?', answer: 'Yes, we handle all traffic offences on Highway 140, Highway 58, King Street, and Welland area roads.' }
+    ]
+  },
+
+  '/locations/toronto': {
+    title: 'Toronto Paralegal | Legal Services Greater Toronto Area',
+    description: 'Toronto paralegal services for the GTA. Traffic tickets on DVP/Gardiner/401/427, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal toronto, toronto legal services, toronto traffic ticket, gta paralegal, toronto small claims court, toronto landlord tenant',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Toronto', areaServed: ['Toronto', 'North York', 'Scarborough', 'Etobicoke', 'East York'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Toronto', url: '/locations/toronto' }],
+    faqs: [
+      { question: 'Do you handle traffic tickets from the DVP and Gardiner Expressway?', answer: 'Yes, we defend traffic tickets issued on the DVP, Gardiner Expressway, Highway 401, Highway 427, Highway 400, and all Toronto city streets.' },
+      { question: 'Where are Toronto court matters heard?', answer: 'Toronto matters are heard at Old City Hall, 2201 Finch Ave West courthouse, and various Provincial Offences courts across the city depending on location.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas of Toronto do you serve?', answer: 'We serve all of Toronto including Downtown, North York, Scarborough, Etobicoke, East York, York, and surrounding GTA communities.' }
+    ]
+  },
+
+  '/locations/richmond-hill': {
+    title: 'Richmond Hill Paralegal | Legal Services York Region',
+    description: 'Richmond Hill paralegal services for York Region. Traffic tickets on Highway 404/407, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal richmond hill, richmond hill legal services, richmond hill traffic ticket, york region paralegal, richmond hill small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Richmond Hill', areaServed: ['Richmond Hill', 'York Region', 'Thornhill', 'Oak Ridges'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Richmond Hill', url: '/locations/richmond-hill' }],
+    faqs: [
+      { question: 'Where are Richmond Hill court matters heard?', answer: 'Richmond Hill matters are typically heard at Newmarket courthouse (Ontario Court of Justice) or York Region Provincial Offences Court.' },
+      { question: 'Do you handle Highway 404 and 407 speeding tickets?', answer: 'Yes, we defend tickets issued on Highway 404, Highway 407, Yonge Street, Bayview Avenue, and all Richmond Hill area roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas in York Region do you serve?', answer: 'We serve Richmond Hill, Thornhill, Oak Ridges, Jefferson, Langstaff, and surrounding York Region communities.' }
+    ]
+  },
+
+  '/locations/vaughan': {
+    title: 'Vaughan Paralegal | Legal Services Vaughan Ontario',
+    description: 'Vaughan paralegal services for York Region. Traffic tickets on Highway 400/407, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal vaughan, vaughan legal services, vaughan traffic ticket, woodbridge paralegal, york region paralegal, vaughan small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Vaughan', areaServed: ['Vaughan', 'Woodbridge', 'Maple', 'Kleinburg', 'Concord'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Vaughan', url: '/locations/vaughan' }],
+    faqs: [
+      { question: 'Do you handle Highway 400 speeding tickets?', answer: 'Yes, we defend all Highway 400 traffic offences including speeding, careless driving, and stunt driving charges through Vaughan and York Region.' },
+      { question: 'Where are Vaughan court matters heard?', answer: 'Vaughan matters are typically heard at Newmarket courthouse or York Region Provincial Offences Court depending on the offence type.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What communities in Vaughan do you serve?', answer: 'We serve Vaughan, Woodbridge, Maple, Kleinburg, Concord, Thornhill, and all of York Region.' }
+    ]
+  },
+
+  '/locations/newmarket': {
+    title: 'Newmarket Paralegal | Legal Services North York Region',
+    description: 'Newmarket paralegal services for north York Region. Traffic tickets on Highway 404/400, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal newmarket, newmarket legal services, newmarket traffic ticket, aurora paralegal, north york region paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Newmarket', areaServed: ['Newmarket', 'Aurora', 'East Gwillimbury', 'Holland Landing'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Newmarket', url: '/locations/newmarket' }],
+    faqs: [
+      { question: 'Do you appear at Newmarket courthouse?', answer: 'Yes, we regularly appear at the Ontario Court of Justice in Newmarket for traffic, provincial offences, small claims, and LTB matters.' },
+      { question: 'What areas near Newmarket do you serve?', answer: 'We serve Newmarket, Aurora, East Gwillimbury, Holland Landing, Sharon, Mount Albert, and surrounding north York Region.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'Can you help with Davis Drive and Highway 404 tickets?', answer: 'Absolutely. We handle all traffic offences on Davis Drive, Highway 404, Highway 400, Yonge Street, and Newmarket area roads.' }
+    ]
+  },
+
+  '/locations/ajax': {
+    title: 'Ajax Paralegal | Legal Services Durham Region',
+    description: 'Ajax paralegal services for Durham Region. Traffic tickets on Highway 401/412, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal ajax, ajax legal services, ajax traffic ticket, durham region paralegal, ajax small claims court',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Ajax', areaServed: ['Ajax', 'Durham Region', 'Pickering', 'Whitby'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Ajax', url: '/locations/ajax' }],
+    faqs: [
+      { question: 'Where are Ajax court matters heard?', answer: 'Ajax matters are typically heard at Oshawa courthouse or Ajax Provincial Offences Court depending on the matter type.' },
+      { question: 'Do you handle Highway 401 and 412 speeding tickets?', answer: 'Yes, we defend tickets issued on Highway 401, Highway 412, Kingston Road, Harwood Avenue, and all Ajax area roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas in Durham do you serve from Ajax?', answer: 'We serve Ajax, Pickering, Whitby, and western Durham Region communities.' }
+    ]
+  },
+
+  '/locations/pickering': {
+    title: 'Pickering Paralegal | Legal Services Durham Region',
+    description: 'Pickering paralegal services for Durham Region. Traffic tickets on Highway 401/407, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal pickering, pickering legal services, pickering traffic ticket, durham region paralegal, pickering small claims',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Pickering', areaServed: ['Pickering', 'Durham Region', 'Ajax', 'Rouge Park'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Pickering', url: '/locations/pickering' }],
+    faqs: [
+      { question: 'Where are Pickering court matters heard?', answer: 'Pickering matters are typically heard at Oshawa courthouse or Durham Region Provincial Offences Court.' },
+      { question: 'Do you handle Highway 401 tickets through Pickering?', answer: 'Yes, we defend tickets issued on Highway 401, Highway 407, Brock Road, Kingston Road, and all Pickering area roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas near Pickering do you serve?', answer: 'We serve Pickering, Rouge Park, Claremont, Greenwood, Bay Ridges, and surrounding Durham Region.' }
+    ]
+  },
+
+  '/locations/milton': {
+    title: 'Milton Paralegal | Legal Services Halton Region',
+    description: 'Milton paralegal services for Halton Region. Traffic tickets on Highway 401/407, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal milton, milton legal services, milton traffic ticket, halton region paralegal, milton small claims court',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Milton', areaServed: ['Milton', 'Halton Region', 'Campbellville', 'Halton Hills'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Milton', url: '/locations/milton' }],
+    faqs: [
+      { question: 'Do you appear at Milton courthouse?', answer: 'Yes, we regularly appear at the Ontario Court of Justice in Milton for traffic, provincial offences, small claims, and LTB matters.' },
+      { question: 'Do you handle Highway 401 and 407 tickets near Milton?', answer: 'Yes, we defend tickets issued on Highway 401, Highway 407, James Snow Parkway, Trafalgar Road, and Milton area roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What communities near Milton do you serve?', answer: 'We serve Milton, Campbellville, Kilbride, Nassagaweya, Halton Hills, and surrounding Halton Region.' }
+    ]
+  },
+
+  '/locations/hamilton': {
+    title: 'Hamilton Paralegal | Legal Services Golden Horseshoe',
+    description: 'Hamilton paralegal services for the Golden Horseshoe. Traffic tickets on QEW/LINC/403, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal hamilton, hamilton legal services, hamilton traffic ticket, hamilton small claims court, stoney creek paralegal, dundas paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Hamilton', areaServed: ['Hamilton', 'Stoney Creek', 'Dundas', 'Ancaster', 'Flamborough'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Hamilton', url: '/locations/hamilton' }],
+    faqs: [
+      { question: 'Do you appear at Hamilton courthouse?', answer: 'Yes, we regularly appear at the John Dickinson Hamilton courthouse and Hamilton Provincial Offences Court for traffic, small claims, provincial offences, and LTB matters.' },
+      { question: 'Do you handle QEW and LINC tickets through Hamilton?', answer: 'Yes, we defend tickets issued on the QEW, Lincoln Alexander Parkway (LINC), Highway 403, Red Hill Valley Parkway, and all Hamilton area roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas in Hamilton do you serve?', answer: 'We serve Hamilton, Stoney Creek, Dundas, Ancaster, Flamborough, Waterdown, Mount Hope, and the wider Golden Horseshoe.' }
+    ]
+  },
+
+  '/locations/barrie': {
+    title: 'Barrie Paralegal | Legal Services Simcoe County',
+    description: 'Barrie paralegal services for Simcoe County. Traffic tickets on Highway 400/11, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal barrie, barrie legal services, barrie traffic ticket, simcoe county paralegal, barrie small claims court, innisfil paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Barrie', areaServed: ['Barrie', 'Innisfil', 'Orillia', 'Simcoe County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Barrie', url: '/locations/barrie' }],
+    faqs: [
+      { question: 'Do you appear at Barrie courthouse?', answer: 'Yes, we regularly appear at the Ontario Court of Justice in Barrie and Provincial Offences Court for traffic, small claims, and LTB matters.' },
+      { question: 'Do you handle Highway 400 speeding tickets?', answer: 'Yes, we defend all Highway 400 traffic offences including speeding, careless driving, stunt driving, and racing charges through Simcoe County.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas near Barrie do you serve?', answer: 'We serve Barrie, Innisfil, Angus, Orillia, Alliston, Midhurst, and surrounding Simcoe County communities.' }
+    ]
+  },
+
+  '/locations/stouffville': {
+    title: 'Stouffville Paralegal | Legal Services York Region',
+    description: 'Stouffville paralegal services for east York Region. Traffic tickets on Highway 404/48, Small Claims Court, LTB hearings. Free consultation. 226-272-5153.',
+    keywords: 'paralegal stouffville, stouffville legal services, stouffville traffic ticket, york region paralegal, uxbridge paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Stouffville', areaServed: ['Stouffville', 'Uxbridge', 'York Region', 'Ballantrae'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/services' }, { name: 'Stouffville', url: '/locations/stouffville' }],
+    faqs: [
+      { question: 'Where are Stouffville court matters heard?', answer: 'Stouffville matters are typically heard at Newmarket courthouse (Ontario Court of Justice) or York Region Provincial Offences Court.' },
+      { question: 'Do you handle Highway 404 and Highway 48 tickets?', answer: 'Yes, we defend tickets issued on Highway 404, Highway 48, Stouffville Road, and all Stouffville and east York Region roads.' },
+      { question: 'Do you offer evening or weekend appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request for clients with weekday conflicts.' },
+      { question: 'What areas near Stouffville do you serve?', answer: 'We serve Stouffville, Uxbridge, Ballantrae, Musselman Lake, Mount Albert, and surrounding east York Region.' }
+    ]
+  },
+
+  // ============================================
+  // NEW SERVICE PAGES - WSIB, BENEFITS, SPECIALTY
+  // ============================================
+
+  '/services/airline-disputes': {
+    title: 'Airline Disputes & Compensation Claims | Flight Delay, Cancellation, Lost Baggage | Ontario',
+    description: 'Fight airline compensation denials in Ontario. Flight delays ($400-$1,000), denied boarding ($900-$2,400), lost baggage (up to $2,900). APPR experts. CTA complaints filed. Free consultation.',
+    keywords: 'airline compensation canada, flight delay compensation, appr claim, denied boarding compensation, lost baggage claim, cta complaint, airline dispute ontario, flight cancellation refund',
+    schema: { type: 'LegalService', name: 'Airline Dispute Services', serviceType: 'Air Passenger Compensation Claims', areaServed: ['Ontario', 'Canada'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Airline Disputes', url: '/services/airline-disputes' }],
+    faqs: [
+      { question: 'How much compensation am I entitled to for a flight delay in Canada?', answer: 'Under the APPR, large airlines must pay $400 for 3-6 hour delays, $700 for 6-9 hours, and $1,000 for 9+ hours. Small airlines pay $125, $250, and $500 respectively. These are fixed amounts set by Canadian law.' },
+      { question: 'What compensation do I get for being bumped from a flight?', answer: 'Denied boarding compensation is $900 (under 6 hours late), $1,800 (6-9 hours late), or $2,400 (9+ hours late). Airlines must pay within 48 hours without requiring a formal claim.' },
+      { question: 'How do I file a complaint with the Canadian Transportation Agency?', answer: 'First submit a written claim to the airline and wait 30 days. If unresolved, file through the CTA online complaints portal with all documentation. A Complaints Resolution Officer will review and issue a binding decision.' },
+      { question: 'Can I claim compensation for lost luggage in Canada?', answer: 'Yes. Under the Montreal Convention, airlines are liable for up to approximately $2,900 CAD for lost baggage. For delayed bags, you can claim reimbursement for essential items purchased. Report damaged bags within 7 days and delayed bags within 21 days.' }
+    ]
+  },
+
+  '/services/wsib-claims': {
+    title: 'WSIB Claims & Appeals | Workplace Injury | London Ontario Paralegal',
+    description: 'WSIB claims representation in London, Ontario. Workplace injury benefits, denied claims appeals, WSIAT hearings. Get the benefits you deserve.',
+    keywords: 'wsib claims london, workplace injury ontario, wsib appeal, wsib denied claim, wsiat hearing, workplace safety',
+    schema: { type: 'LegalService', name: 'WSIB Claims Services', serviceType: 'WSIB Representation', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'WSIB Claims', url: '/services/wsib-claims' }],
+    faqs: [
+      { question: 'How long do I have to file a WSIB claim?', answer: 'You must report a workplace injury to your employer and file a WSIB claim within 6 months of the injury. Late claims may be accepted with valid reasons, but filing promptly protects your rights.' },
+      { question: 'What benefits does WSIB provide?', answer: 'WSIB provides loss of earnings benefits (85% of net pay), full healthcare coverage for your injury, labour market re-entry programs, and permanent impairment benefits if applicable.' },
+      { question: 'Can I appeal a denied WSIB claim?', answer: 'Yes. You can request an internal review by WSIB, then appeal to the Workplace Safety and Insurance Appeals Tribunal (WSIAT). A paralegal can represent you at both levels.' },
+      { question: 'Do I need a paralegal for a WSIB claim?', answer: 'While not required, professional representation significantly improves outcomes, especially for denied claims and appeals. We handle evidence gathering, medical documentation, and hearing advocacy.' }
+    ]
+  },
+
+  '/services/odsp-appeals': {
+    title: 'ODSP Appeals | Disability Benefits | London Ontario Paralegal',
+    description: 'ODSP appeal representation in London, Ontario. Ontario Disability Support Program denials, Social Benefits Tribunal hearings. Protect your disability benefits.',
+    keywords: 'odsp appeal london, disability benefits ontario, social benefits tribunal, odsp denied, odsp eligibility',
+    schema: { type: 'LegalService', name: 'ODSP Appeals Services', serviceType: 'Disability Benefits Appeals', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'ODSP Appeals', url: '/services/odsp-appeals' }],
+    faqs: [
+      { question: 'What qualifies as a disability for ODSP?', answer: 'ODSP requires a "substantial" physical or mental impairment that is continuous or recurrent, expected to last a year or more, and directly results in a substantial restriction in daily activities, self-care, or workplace function.' },
+      { question: 'How do I appeal an ODSP denial?', answer: 'First request an internal review within 30 days of the decision. If denied again, appeal to the Social Benefits Tribunal (SBT) within 30 days of the internal review decision.' },
+      { question: 'What evidence do I need for an ODSP appeal?', answer: 'Strong medical evidence is critical — specialist reports, treatment records, functional assessments, and supporting letters from healthcare providers documenting how your condition restricts daily activities.' },
+      { question: 'How long does the ODSP appeal process take?', answer: 'Internal review takes 4-8 weeks. SBT hearings are typically scheduled within 3-6 months of filing. The entire process can take 6-12 months from initial denial to final decision.' }
+    ]
+  },
+
+  '/services/ontario-works-appeals': {
+    title: 'Ontario Works Appeals | OW Benefits | London Ontario Paralegal',
+    description: 'Ontario Works appeal representation in London, Ontario. OW benefit denials, reduction appeals, Social Benefits Tribunal hearings.',
+    keywords: 'ontario works appeal london, ow benefits denied, social assistance appeal, ontario works eligibility',
+    schema: { type: 'LegalService', name: 'Ontario Works Appeals', serviceType: 'Social Assistance Appeals', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Ontario Works Appeals', url: '/services/ontario-works-appeals' }],
+    faqs: [
+      { question: 'Why was my Ontario Works cut off?', answer: 'Common reasons include missed participation requirements, unreported income, exceeding asset limits, or not completing required job search activities. You have the right to appeal any reduction or termination.' },
+      { question: 'Can I appeal an Ontario Works decision?', answer: 'Yes. Request an internal review within 30 days, then appeal to the Social Benefits Tribunal if the internal review is unsuccessful. Benefits may continue during the appeal process.' },
+      { question: 'What are Ontario Works participation requirements?', answer: 'OW requires participating in employment activities (job search, training, community placement) unless you have a valid exemption such as medical condition, caregiving responsibilities, or age.' },
+      { question: 'Do I need a paralegal for an OW appeal?', answer: 'Professional representation can significantly improve your chances, especially at the Social Benefits Tribunal. We handle evidence preparation, legal arguments, and hearing advocacy.' }
+    ]
+  },
+
+  '/services/workplace-harassment': {
+    title: 'Workplace Harassment | OHSA Complaints | London Ontario Paralegal',
+    description: 'Workplace harassment representation in London, Ontario. OHSA complaints, MOL investigations, Bill 132 compliance, constructive dismissal claims.',
+    keywords: 'workplace harassment london, ohsa complaint ontario, workplace bullying, constructive dismissal, bill 132',
+    schema: { type: 'LegalService', name: 'Workplace Harassment Services', serviceType: 'Employment Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Workplace Harassment', url: '/services/workplace-harassment' }],
+    faqs: [
+      { question: 'What qualifies as workplace harassment in Ontario?', answer: 'Under OHSA, workplace harassment is engaging in a course of vexatious comment or conduct that is known or ought reasonably to be known to be unwelcome. This includes bullying, intimidation, and repeated offensive behaviour.' },
+      { question: 'What are my employer obligations under Bill 132?', answer: 'Employers must have a harassment policy, investigation procedures, provide training, and investigate all complaints. Failure to comply can result in MOL orders and fines.' },
+      { question: 'Can I file a complaint with the Ministry of Labour?', answer: 'Yes. If your employer fails to investigate or address harassment, you can file a complaint with the MOL. An inspector will investigate and can order the employer to comply with OHSA requirements.' },
+      { question: 'What is constructive dismissal?', answer: 'When an employer makes working conditions so intolerable that a reasonable person would feel forced to resign. Unchecked harassment can constitute constructive dismissal, entitling you to severance.' }
+    ]
+  },
+
+  '/services/insurance-disputes': {
+    title: 'Insurance Disputes | Accident Benefits | London Ontario Paralegal',
+    description: 'Insurance dispute representation in London, Ontario. Denied accident benefits, SABS claims, LAT hearings. Fight denied insurance claims.',
+    keywords: 'insurance dispute london, denied accident benefits, sabs claim, lat hearing ontario, auto insurance dispute',
+    schema: { type: 'LegalService', name: 'Insurance Dispute Services', serviceType: 'Insurance Claims Advocacy', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Insurance Disputes', url: '/services/insurance-disputes' }],
+    faqs: [
+      { question: 'What are accident benefits in Ontario?', answer: 'Ontario has a no-fault accident benefits system (SABS) providing income replacement, medical/rehabilitation benefits, attendant care, and housekeeping benefits regardless of who caused the accident.' },
+      { question: 'Can I dispute a denied insurance claim?', answer: 'Yes. If your insurer denies benefits, you can apply to the Licence Appeal Tribunal (LAT) for a hearing. A paralegal can represent you through the dispute resolution process.' },
+      { question: 'What is the deadline to dispute a denied claim?', answer: 'You generally have 2 years from the date of the insurer denial to file a LAT application. However, acting quickly preserves evidence and strengthens your case.' },
+      { question: 'What does no-fault insurance mean?', answer: 'No-fault means you claim accident benefits from your own insurer regardless of who caused the accident. You may still sue the at-fault driver for additional damages through the courts.' }
+    ]
+  },
+
+  '/services/bylaw-infractions': {
+    title: 'Bylaw Infractions | Provincial Offences | London Ontario Paralegal',
+    description: 'Bylaw infraction defence in London, Ontario. Municipal bylaw violations, noise complaints, property standards, fire code violations, trespassing charges.',
+    keywords: 'bylaw infraction london, provincial offence defence, noise bylaw, property standards, fire code violation',
+    schema: { type: 'LegalService', name: 'Bylaw Infraction Defence', serviceType: 'Provincial Offences Defence', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Bylaw Infractions', url: '/services/bylaw-infractions' }],
+    faqs: [
+      { question: 'What are common bylaw infractions?', answer: 'Noise complaints, property standards violations, zoning infractions, parking bylaws, animal control, sign permits, business licensing, and fire code violations are the most common municipal bylaw charges.' },
+      { question: 'Can I fight a bylaw ticket?', answer: 'Yes. Bylaw infractions are prosecuted under the Provincial Offences Act and you have the right to a trial. Many tickets can be withdrawn, reduced, or dismissed with proper defence.' },
+      { question: 'What are the penalties for bylaw violations?', answer: 'Fines vary by municipality and offence type, from $100 to several thousand dollars. Some violations carry mandatory compliance orders. A conviction may also affect property insurance.' },
+      { question: 'How long do I have to respond to a bylaw ticket?', answer: 'You typically have 15 days from receiving the ticket to request a trial. Missing this deadline may result in a conviction being entered in your absence (ex parte).' }
+    ]
+  },
+
+  '/services/parking-tickets': {
+    title: 'Parking Ticket Disputes | Fight Parking Tickets | London Ontario Paralegal',
+    description: 'Parking ticket dispute representation in London, Ontario. Municipal parking tickets, private lot tickets, meter disputes. Fight unfair parking tickets.',
+    keywords: 'parking ticket dispute london, fight parking ticket ontario, parking fine appeal, meter dispute',
+    schema: { type: 'LegalService', name: 'Parking Ticket Defence', serviceType: 'Parking Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Parking Tickets', url: '/services/parking-tickets' }],
+    faqs: [
+      { question: 'Can I fight a parking ticket in Ontario?', answer: 'Yes. Municipal parking tickets can be disputed by requesting a trial within 15 days. Private lot tickets are contractual matters and have different dispute processes.' },
+      { question: 'What are common defences for parking tickets?', answer: 'Inadequate signage, broken meters, medical emergency, unclear road markings, permit display issues, and incorrect information on the ticket are all valid defences.' },
+      { question: 'What is the difference between municipal and private parking tickets?', answer: 'Municipal tickets are issued by the city and enforced through the courts. Private lot tickets are contractual and cannot affect your driving record or be enforced through licence plate denial.' },
+      { question: 'What happens if I ignore a parking ticket?', answer: 'Municipal tickets escalate — unpaid fines can result in licence plate renewal denial. Private tickets may be sent to collections but cannot affect your driving privileges.' }
+    ]
+  },
+
+  '/services/condo-disputes': {
+    title: 'Condo Disputes | CAT Tribunal | London Ontario Paralegal',
+    description: 'Condominium dispute representation in London, Ontario. CAT hearings, condo board disputes, common element issues, pet restrictions, records requests.',
+    keywords: 'condo dispute london, cat tribunal ontario, condo board dispute, common elements, condo records',
+    schema: { type: 'LegalService', name: 'Condo Dispute Services', serviceType: 'Condominium Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Condo Disputes', url: '/services/condo-disputes' }],
+    faqs: [
+      { question: 'What disputes does the CAT handle?', answer: 'The Condominium Authority Tribunal handles disputes about condo records access, pet restrictions, vehicle parking/storage, noise and nuisance, and compliance with governing documents.' },
+      { question: 'How does the CAT process work?', answer: 'CAT uses a three-stage online process: negotiation (free), mediation ($50 fee), then adjudication ($125 fee). Most disputes resolve before adjudication. The process is designed to be accessible.' },
+      { question: 'Can my condo board ban pets?', answer: 'It depends on the condo declaration. If the declaration prohibits pets, the restriction is generally enforceable. If only the rules restrict pets, the restriction may be challengeable as unreasonable.' },
+      { question: 'Can I access my condo corporation records?', answer: 'Yes. Owners have the right to access most condo corporation records within 30 days of request. If denied, the CAT can order disclosure. Some records require fees for copies.' }
+    ]
+  },
+
+  '/services/dangerous-dog-hearings': {
+    title: 'Dangerous Dog Hearings | Dog Owners Liability | London Ontario Paralegal',
+    description: 'Dangerous dog hearing representation in London, Ontario. Dog bite defence, muzzle orders, destruction order appeals, breed-specific legislation.',
+    keywords: 'dangerous dog hearing london, dog owners liability act, dog bite defence, muzzle order, pit bull ban ontario',
+    schema: { type: 'LegalService', name: 'Dangerous Dog Defence', serviceType: 'Animal Control Hearings', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Dangerous Dog Hearings', url: '/services/dangerous-dog-hearings' }],
+    faqs: [
+      { question: 'What happens at a dangerous dog hearing?', answer: 'The municipality presents evidence the dog is dangerous (bite history, aggression). The owner can present evidence including temperament assessments, training records, and witness testimony. A justice decides on orders.' },
+      { question: 'Can I appeal a destruction order for my dog?', answer: 'Yes. Destruction orders can be appealed. A strong appeal includes professional behaviour assessments, evidence of responsible ownership, and a plan to prevent future incidents.' },
+      { question: 'What is the pit bull ban in Ontario?', answer: 'Ontario banned pit bulls under the Dog Owners Liability Act. Existing pit bulls (pre-2005) must be neutered, muzzled in public, and leashed. New pit bulls cannot be brought into Ontario.' },
+      { question: 'What are the penalties under the Dog Owners Liability Act?', answer: 'Penalties include fines up to $10,000, muzzle and leash orders, confinement orders, and in serious cases, destruction orders. Owners may also face civil liability for damages caused by their dog.' }
+    ]
+  },
+
+  '/services/accessibility-complaints': {
+    title: 'Accessibility Complaints | AODA | Disability Accommodation | London Ontario',
+    description: 'Accessibility complaint representation in London, Ontario. AODA violations, duty to accommodate, Human Rights Tribunal disability discrimination claims.',
+    keywords: 'aoda complaint london, accessibility ontario, duty to accommodate, disability discrimination, human rights tribunal',
+    schema: { type: 'LegalService', name: 'Accessibility Complaint Services', serviceType: 'Disability Rights Advocacy', areaServed: ['London', 'Southwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Accessibility Complaints', url: '/services/accessibility-complaints' }],
+    faqs: [
+      { question: 'What is the duty to accommodate?', answer: 'Employers, landlords, and service providers must accommodate persons with disabilities to the point of undue hardship. This includes modifying policies, providing assistive devices, and adjusting physical spaces.' },
+      { question: 'How do I file an AODA complaint?', answer: 'Report AODA violations to the Accessibility Directorate of Ontario. For discrimination complaints, file with the Human Rights Tribunal of Ontario (HRTO) within one year of the incident.' },
+      { question: 'What is undue hardship?', answer: 'The legal threshold employers must meet to refuse accommodation. Cost alone is rarely sufficient. Factors include financial cost relative to the organization, health and safety risks, and impact on other employees.' },
+      { question: 'Can I file both an AODA and human rights complaint?', answer: 'Yes. AODA complaints address regulatory compliance while HRTO complaints address discrimination. They serve different purposes and can proceed simultaneously for maximum protection.' }
+    ]
+  },
+
+  // ============================================
+  // FORMS PAGES
+  // ============================================
+  '/resources/forms/ltb': {
+    title: 'Ontario LTB Forms Directory | All Landlord and Tenant Board Forms',
+    description: 'Complete directory of Ontario Landlord and Tenant Board (LTB) forms. Download L1-L10 landlord applications, T1-T6 tenant applications, N-series notices, and co-op forms with filing instructions.',
+    keywords: 'ltb forms ontario, landlord tenant board forms, L1 form ontario, T2 form ontario, N12 notice, N4 notice, eviction forms ontario, ltb application, tenant forms ontario, landlord forms ontario',
+    schema: { type: 'CollectionPage', name: 'Ontario LTB Forms Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/ltb' }, { name: 'LTB Forms', url: '/resources/forms/ltb' }],
+    faqs: [
+      { question: 'How do I file an LTB application online?', answer: 'L1, L2, L3, L4, L9, L10, T1, T2, T5, T6, C1, and C2 applications can be filed online through the Tribunals Ontario Portal. Other forms must be filed by email or mail.' },
+      { question: 'How much does it cost to file an LTB application?', answer: 'Landlord applications (L-series) cost $201.00 to file. Tenant applications (T-series) cost $53.00. Fees may be waived if you cannot afford them — ask the LTB about a fee waiver.' },
+      { question: 'What is the difference between an N12 and N13 notice?', answer: 'An N12 is served when the landlord, a purchaser, or family member needs the unit for personal use. An N13 is served when the landlord wants to demolish, do major repairs requiring vacancy, or convert the unit to non-residential use.' },
+      { question: 'Can a paralegal help me file an LTB form?', answer: 'Yes, licensed paralegals can prepare, file, and represent you at LTB hearings. Filing the wrong form or missing deadlines can hurt your case — a paralegal ensures everything is done correctly.' }
+    ]
+  },
+
+  '/resources/forms/small-claims': {
+    title: 'Ontario Small Claims Court Forms Directory | All SCC Forms & Fees',
+    description: 'Complete directory of Ontario Small Claims Court forms under O. Reg. 258/98. Download Plaintiff\'s Claim (7A), Defence (9A), enforcement forms (20-series), and more with filing fees and instructions.',
+    keywords: 'small claims court forms ontario, form 7A ontario, plaintiff claim form, defence form 9A, small claims enforcement, garnishment form 20E, writ of seizure, default judgment 11B, small claims court fees ontario, ontario court forms',
+    schema: { type: 'CollectionPage', name: 'Ontario Small Claims Court Forms Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/small-claims' }, { name: 'Small Claims Court Forms', url: '/resources/forms/small-claims' }],
+    faqs: [
+      { question: 'How do I file a Small Claims Court claim in Ontario?', answer: 'File a Plaintiff\'s Claim (Form 7A) at the Small Claims Court office nearest to where the defendant lives or where the dispute occurred. You can also file online through Ontario\'s e-filing portal. The filing fee is $108.00 for infrequent claimants.' },
+      { question: 'What is the maximum amount for Small Claims Court in Ontario?', answer: 'As of October 2025, the monetary limit for Small Claims Court in Ontario is $50,000 (previously $35,000). This includes claims for money owed, property damage, and return of personal property.' },
+      { question: 'How much does it cost to file in Small Claims Court?', answer: 'Key fees: Plaintiff\'s Claim filing is $108, Defence is $73, Notice of Motion is $127, requesting a trial date is $290, and most enforcement actions are $55. Frequent claimants (10+ claims/year) pay $218 to file a claim.' },
+      { question: 'Can a paralegal represent me in Small Claims Court?', answer: 'Yes, licensed paralegals can represent you in Small Claims Court for claims up to $50,000. They can prepare your forms, file your claim, negotiate settlements, and represent you at trial.' }
+    ]
+  },
+
+  '/resources/forms/traffic-tickets': {
+    title: 'Ontario Traffic Ticket Forms & Court Directory | POA Forms by City',
+    description: 'Complete directory of Ontario traffic ticket (POA) forms and city-by-city court information. Find your local court, pay or dispute your ticket online, and download Provincial Offences Act forms.',
+    keywords: 'traffic ticket forms ontario, POA forms, provincial offences act forms, pay traffic ticket online, fight traffic ticket ontario, notice of intention to appear, form 8 POA, early resolution, traffic court ontario, pay ticket london, pay ticket kitchener, pay ticket windsor, paytickets.ca',
+    schema: { type: 'CollectionPage', name: 'Ontario Traffic Ticket Forms & Court Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/traffic-tickets' }, { name: 'Traffic Ticket Forms', url: '/resources/forms/traffic-tickets' }],
+    faqs: [
+      { question: 'How long do I have to respond to a traffic ticket in Ontario?', answer: 'You have 15 calendar days from receiving the ticket to choose one of three options: pay the fine (guilty plea), request an early resolution meeting with the prosecutor, or request a trial by filing a Notice of Intention to Appear (Form 8).' },
+      { question: 'How do I fight a traffic ticket in Ontario?', answer: 'File a Notice of Intention to Appear (Form 8) within 15 days of receiving your ticket. This requests a trial date. A licensed paralegal can represent you at trial and may get the charge reduced or dismissed entirely.' },
+      { question: 'Can I pay my traffic ticket online in Ontario?', answer: 'Yes, most Ontario cities accept online payment through paytickets.ca or their own municipal portal. Toronto uses secure.toronto.ca/POAWeb. Check our city directory for your specific court\'s payment options.' },
+      { question: 'Can a paralegal represent me for a traffic ticket?', answer: 'Yes, licensed paralegals can represent you in Provincial Offences Court for all traffic tickets including speeding, red lights, careless driving, stunt driving, and more. They handle the entire process from filing to trial.' }
+    ]
+  },
+
+  '/resources/forms/hrto': {
+    title: 'HRTO Forms Directory | Human Rights Tribunal of Ontario Forms',
+    description: 'Complete directory of Human Rights Tribunal of Ontario (HRTO) forms. Download Application (Form 1), Response (Form 2), and all tribunal forms with filing instructions and deadlines.',
+    keywords: 'hrto forms, human rights tribunal ontario forms, form 1 hrto, discrimination complaint form, hrto application, human rights complaint ontario, hrto response form, form 2 hrto, hrto filing',
+    schema: { type: 'CollectionPage', name: 'HRTO Forms Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/hrto' }, { name: 'HRTO Forms', url: '/resources/forms/hrto' }],
+    faqs: [
+      { question: 'How do I file a human rights complaint in Ontario?', answer: 'Complete HRTO Form 1 (Application) and file it by email to HRTO.efile@ontario.ca within one year of the last incident of discrimination. Include details of the discriminatory conduct and the remedy you are seeking.' },
+      { question: 'What are the grounds for a human rights complaint in Ontario?', answer: 'The Ontario Human Rights Code protects against discrimination based on: race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, gender identity, age, marital status, family status, and disability.' },
+      { question: 'How long do I have to file an HRTO complaint?', answer: 'You must file within one year of the last incident of discrimination. The HRTO may accept late applications in exceptional circumstances, but it is best to file as soon as possible.' },
+      { question: 'Can a paralegal represent me at the HRTO?', answer: 'Yes, licensed paralegals can represent you at the Human Rights Tribunal of Ontario. They can help you complete the application, gather evidence, and present your case at mediation or hearing.' }
     ]
   },
 
@@ -3263,9 +3777,9 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/guides/ontario-landlord-rights': {
-    title: 'Ontario Landlord Rights | Complete Guide | LegalAssist',
-    description: 'Know your rights as a landlord in Ontario. Eviction process, rent collection, property access, and tenant screening. Comprehensive landlord guide.',
-    keywords: 'ontario landlord rights, landlord rights guide, eviction process ontario, landlord tenant law',
+    title: 'Complete Ontario Landlord Guide 2026 | RTA Rights, Evictions, Rent Rules',
+    description: 'The most comprehensive Ontario landlord guide. Covers your rights under the RTA, eviction notices (N4-N13), LTB applications (L1-L10), rent increases (2.1% for 2026), standard lease, tenant screening, and more.',
+    keywords: 'ontario landlord rights 2026, landlord guide ontario, eviction process ontario, n4 notice, ltb application, rent increase 2026, landlord tenant law ontario, n12 eviction',
     schema: { type: 'Article', name: 'Ontario Landlord Rights Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'Ontario Landlord Rights', url: '/guides/ontario-landlord-rights' }],
     faqs: [
@@ -3676,7 +4190,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/locations/london': {
     title: 'Paralegal Services London Ontario | LegalAssist',
-    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant, small claims court. Local expertise. Call 365-882-9515.',
+    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant, small claims court. Local expertise. Call 226-272-5153.',
     keywords: 'paralegal london ontario, lawyer london on, legal services london, court representation london',
     schema: { type: 'LocalBusiness', name: 'LegalAssist London', areaServed: ['London', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'London', url: '/locations/london' }],
@@ -4238,6 +4752,1584 @@ export const seoConfig: Record<string, SEOConfig> = {
       { name: 'Blog', url: '/blog' }
     ]
   },
+
+  // ============================================
+  // NEW 25 CITY LOCATION PAGES
+  // ============================================
+
+  '/locations/pembroke': {
+    title: 'Pembroke Paralegal | Legal Services Renfrew County | LegalAssist',
+    description: 'Licensed paralegal services in Pembroke and Renfrew County, Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal pembroke, pembroke lawyer, renfrew county legal services, traffic ticket pembroke, small claims pembroke, landlord tenant pembroke',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Pembroke', areaServed: ['Pembroke', 'Renfrew County', 'Petawawa', 'Deep River', 'Arnprior'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Pembroke', url: '/locations/pembroke' }],
+    faqs: [
+      { question: 'Do you serve Pembroke and Renfrew County?', answer: 'Yes, we provide paralegal services throughout Pembroke, Petawawa, Arnprior, Deep River, Renfrew, and all of Renfrew County.' },
+      { question: 'Where is the Pembroke Provincial Offences Court?', answer: 'The Renfrew County Provincial Offences Court is located at 7 International Drive, Pembroke, ON K8A 6W5. We regularly appear at this court.' },
+      { question: 'Can you fight a Highway 17 speeding ticket near Pembroke?', answer: 'Absolutely. We defend traffic tickets issued on Highway 17 (Trans-Canada) through Renfrew County, including speeding, careless driving, and stunt driving charges.' },
+      { question: 'Do you offer virtual consultations for Pembroke residents?', answer: 'Yes, we offer phone and video consultations for Renfrew County residents. Many matters including LTB hearings can be handled entirely remotely.' }
+    ]
+  },
+
+  '/locations/perth': {
+    title: 'Perth Paralegal | Legal Services Lanark County | LegalAssist',
+    description: 'Licensed paralegal services in Perth and Lanark County, Ontario. Traffic tickets, landlord-tenant disputes, small claims court. Serving Smiths Falls, Carleton Place. Free consultation.',
+    keywords: 'paralegal perth ontario, perth lawyer, lanark county legal services, traffic ticket perth, small claims perth, smiths falls paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Perth', areaServed: ['Perth', 'Lanark County', 'Smiths Falls', 'Carleton Place', 'Mississippi Mills'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Perth', url: '/locations/perth' }],
+    faqs: [
+      { question: 'Do you serve Perth and Lanark County?', answer: 'Yes, we serve Perth, Smiths Falls, Carleton Place, Mississippi Mills, and all communities throughout Lanark County.' },
+      { question: 'Where is the Perth Provincial Offences Court?', answer: 'The Lanark County Provincial Offences Court is at 80 Gore Street East, Perth, ON K7H 1H9.' },
+      { question: 'Can you help with Highway 7 traffic tickets?', answer: 'Yes, we regularly defend traffic tickets issued on Highway 7 and regional roads throughout Lanark County.' },
+      { question: 'Do you offer evening appointments?', answer: 'Yes, we offer flexible scheduling including evening and weekend appointments by request.' }
+    ]
+  },
+
+  '/locations/napanee': {
+    title: 'Napanee Paralegal | Legal Services Lennox & Addington | LegalAssist',
+    description: 'Licensed paralegal services in Napanee and Lennox & Addington County. Traffic ticket defence on Highway 401, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal napanee, napanee lawyer, lennox addington legal services, traffic ticket napanee, highway 401 ticket napanee',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Napanee', areaServed: ['Napanee', 'Lennox & Addington', 'Greater Napanee', 'Loyalist Township'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Napanee', url: '/locations/napanee' }],
+    faqs: [
+      { question: 'Do you serve Napanee and area?', answer: 'Yes, we serve Greater Napanee, Loyalist Township, and all of Lennox & Addington County.' },
+      { question: 'Can you fight Highway 401 tickets near Napanee?', answer: 'Yes, the 401 corridor through Lennox & Addington is heavily patrolled. We defend speeding, careless driving, and other HTA charges issued in this area.' },
+      { question: 'Where is the Napanee court?', answer: 'The Lennox & Addington Provincial Offences Court is at 97 Thomas Street East, Napanee, ON K7R 4B9.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, we provide phone and video consultations for all Lennox & Addington residents.' }
+    ]
+  },
+
+  '/locations/bracebridge': {
+    title: 'Bracebridge Paralegal | Legal Services Muskoka | LegalAssist',
+    description: 'Licensed paralegal services in Bracebridge and Muskoka District. Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal bracebridge, muskoka lawyer, muskoka legal services, traffic ticket bracebridge, highway 11 ticket muskoka',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Bracebridge', areaServed: ['Bracebridge', 'Muskoka', 'Gravenhurst', 'Huntsville', 'Lake of Bays'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Bracebridge', url: '/locations/bracebridge' }],
+    faqs: [
+      { question: 'Do you serve Bracebridge and Muskoka?', answer: 'Yes, we serve Bracebridge, Gravenhurst, Huntsville, Lake of Bays, Muskoka Lakes, and all six Muskoka municipalities.' },
+      { question: 'Where is the Muskoka Provincial Offences Court?', answer: 'The Muskoka District court is at 76 Pine Street, Bracebridge, ON P1L 0C4.' },
+      { question: 'Can you fight Highway 11 tickets in Muskoka?', answer: 'Yes, Highway 11 through Muskoka is a common area for traffic enforcement. We defend speeding, careless driving, and stunt driving charges.' },
+      { question: 'Do you handle cottage country disputes?', answer: 'Yes, we handle landlord-tenant disputes, property damage claims, and other legal matters common in cottage country.' }
+    ]
+  },
+
+  '/locations/parry-sound': {
+    title: 'Parry Sound Paralegal | Legal Services Parry Sound District | LegalAssist',
+    description: 'Licensed paralegal services in Parry Sound, Ontario. Traffic ticket defence on Highway 400/69, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal parry sound, parry sound lawyer, parry sound legal services, traffic ticket parry sound, highway 400 ticket',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Parry Sound', areaServed: ['Parry Sound', 'Parry Sound District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Parry Sound', url: '/locations/parry-sound' }],
+    faqs: [
+      { question: 'Do you serve Parry Sound?', answer: 'Yes, we serve the Town of Parry Sound and surrounding Parry Sound District communities.' },
+      { question: 'Can you fight Highway 400 tickets near Parry Sound?', answer: 'Yes, the Highway 400/69 corridor is heavily enforced. We defend speeding, careless driving, and stunt driving charges in this area.' },
+      { question: 'Where is the Parry Sound court?', answer: 'The Provincial Offences Court is at 52 Seguin Street, Parry Sound, ON P2A 1B4.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all Parry Sound District residents.' }
+    ]
+  },
+
+  '/locations/kenora': {
+    title: 'Kenora Paralegal | Legal Services Northwestern Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Kenora, Northwestern Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal kenora, kenora lawyer, northwestern ontario legal services, traffic ticket kenora, highway 17 ticket kenora',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kenora', areaServed: ['Kenora', 'Kenora District', 'Northwestern Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kenora', url: '/locations/kenora' }],
+    faqs: [
+      { question: 'Do you serve Kenora and Northwestern Ontario?', answer: 'Yes, we provide paralegal services to Kenora and surrounding communities throughout the Kenora District.' },
+      { question: 'Where is the Kenora court?', answer: 'The Provincial Offences Court is at 1 Main Street South, Kenora, ON P9N 3X2.' },
+      { question: 'Can you fight Highway 17 tickets near Kenora?', answer: 'Yes, we defend traffic tickets issued on the Trans-Canada Highway through Northwestern Ontario.' },
+      { question: 'Do you offer virtual consultations for remote communities?', answer: 'Yes, we offer phone and video consultations ideal for clients in Northwestern Ontario remote communities.' }
+    ]
+  },
+
+  '/locations/cochrane': {
+    title: 'Cochrane Paralegal | Legal Services Northeastern Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Cochrane, Northeastern Ontario. Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal cochrane ontario, cochrane lawyer, northeastern ontario legal services, traffic ticket cochrane, highway 11 ticket',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Cochrane', areaServed: ['Cochrane', 'Cochrane District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Cochrane', url: '/locations/cochrane' }],
+    faqs: [
+      { question: 'Do you serve Cochrane?', answer: 'Yes, we serve Cochrane and surrounding communities in Northeastern Ontario.' },
+      { question: 'Where is the Cochrane court?', answer: 'The Provincial Offences Court is at 171 Fourth Avenue, Cochrane, ON P0L 1C0.' },
+      { question: 'Can you fight Highway 11 tickets near Cochrane?', answer: 'Yes, we defend traffic tickets issued on Highway 11 through the Cochrane District.' },
+      { question: 'Do you offer virtual services?', answer: 'Yes, phone and video consultations are available for Cochrane and area residents.' }
+    ]
+  },
+
+  '/locations/dryden': {
+    title: 'Dryden Paralegal | Legal Services Northwestern Ontario | LegalAssist',
+    description: 'Licensed paralegal services in Dryden, Northwestern Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal dryden, dryden lawyer, dryden legal services, traffic ticket dryden, highway 17 ticket dryden',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Dryden', areaServed: ['Dryden', 'Dryden District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Dryden', url: '/locations/dryden' }],
+    faqs: [
+      { question: 'Do you serve Dryden?', answer: 'Yes, we serve the City of Dryden and surrounding communities in Northwestern Ontario.' },
+      { question: 'Where is the Dryden court?', answer: 'The Provincial Offences Court is at 30 Van Horne Avenue, Dryden, ON P8N 2A7.' },
+      { question: 'Can you fight Highway 17 tickets near Dryden?', answer: 'Yes, we defend traffic tickets issued on the Trans-Canada Highway through the Dryden area.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, we offer phone and video consultations for clients in Northwestern Ontario.' }
+    ]
+  },
+
+  '/locations/fort-frances': {
+    title: 'Fort Frances Paralegal | Legal Services Rainy River District | LegalAssist',
+    description: 'Licensed paralegal services in Fort Frances and Rainy River District. Traffic ticket defence, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal fort frances, fort frances lawyer, rainy river legal services, traffic ticket fort frances',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Fort Frances', areaServed: ['Fort Frances', 'Rainy River District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Fort Frances', url: '/locations/fort-frances' }],
+    faqs: [
+      { question: 'Do you serve Fort Frances?', answer: 'Yes, we serve Fort Frances and communities throughout the Rainy River District.' },
+      { question: 'Where is the Fort Frances court?', answer: 'The Provincial Offences Court is at 320 Portage Avenue, Fort Frances, ON P9A 3P9.' },
+      { question: 'Can you help with Highway 11 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 71 through Rainy River District.' },
+      { question: 'Do you offer remote consultations?', answer: 'Yes, phone and video consultations are available for all Fort Frances and area residents.' }
+    ]
+  },
+
+  '/locations/temiskaming-shores': {
+    title: 'Temiskaming Shores Paralegal | Legal Services Temiskaming District | LegalAssist',
+    description: 'Licensed paralegal services in Temiskaming Shores (Haileybury/New Liskeard). Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal temiskaming shores, haileybury lawyer, new liskeard legal services, traffic ticket temiskaming, highway 11 ticket',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Temiskaming Shores', areaServed: ['Temiskaming Shores', 'Haileybury', 'New Liskeard', 'Temiskaming District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Temiskaming Shores', url: '/locations/temiskaming-shores' }],
+    faqs: [
+      { question: 'Do you serve Temiskaming Shores?', answer: 'Yes, we serve Haileybury, New Liskeard, Cobalt, Englehart, and all of Temiskaming District.' },
+      { question: 'Where is the Temiskaming court?', answer: 'The Provincial Offences Court is at 325 Farr Drive, Haileybury, ON P0J 1K0.' },
+      { question: 'Can you fight Highway 11 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 11 through Temiskaming District.' },
+      { question: 'Do you offer virtual services?', answer: 'Yes, phone and video consultations are available for Temiskaming District residents.' }
+    ]
+  },
+
+  '/locations/espanola': {
+    title: 'Espanola Paralegal | Legal Services Sudbury District | LegalAssist',
+    description: 'Licensed paralegal services in Espanola and Sudbury District. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal espanola, espanola lawyer, espanola legal services, traffic ticket espanola, elliot lake paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Espanola', areaServed: ['Espanola', 'Elliot Lake', 'Blind River', 'Massey'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Espanola', url: '/locations/espanola' }],
+    faqs: [
+      { question: 'Do you serve Espanola and Elliot Lake?', answer: 'Yes, we serve Espanola, Elliot Lake, Blind River, Massey, and surrounding communities.' },
+      { question: 'Where is the Espanola court?', answer: 'The Provincial Offences Court is at 100 Tudhope Street, Suite 4, Espanola, ON P5E 1S6.' },
+      { question: 'Can you fight Highway 17 tickets?', answer: 'Yes, we defend traffic tickets on Highway 17 through the Espanola and North Shore corridor.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all clients in the region.' }
+    ]
+  },
+
+  '/locations/picton': {
+    title: 'Picton Paralegal | Legal Services Prince Edward County | LegalAssist',
+    description: 'Licensed paralegal services in Picton and Prince Edward County. Traffic ticket defence, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal picton, prince edward county lawyer, picton legal services, traffic ticket picton, PEC paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Picton', areaServed: ['Picton', 'Prince Edward County', 'Wellington', 'Bloomfield'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Picton', url: '/locations/picton' }],
+    faqs: [
+      { question: 'Do you serve Prince Edward County?', answer: 'Yes, we serve Picton, Wellington, Bloomfield, and all of Prince Edward County.' },
+      { question: 'Where is the Picton court?', answer: 'The Provincial Offences Court is at 332 Main Street, Picton, ON K0K 2T0.' },
+      { question: 'Can you help with tourism-area traffic tickets?', answer: 'Yes, Prince Edward County sees significant seasonal traffic enforcement. We defend tickets on County roads and Highway 49.' },
+      { question: 'Do you handle rental disputes in PEC?', answer: 'Yes, we represent both landlords and tenants in Prince Edward County rental disputes at the LTB.' }
+    ]
+  },
+
+  '/locations/hawkesbury': {
+    title: 'Hawkesbury Paralegal | Legal Services Prescott-Russell | LegalAssist',
+    description: 'Licensed paralegal services in Hawkesbury and Prescott-Russell. Traffic ticket defence on Highway 17/34, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal hawkesbury, hawkesbury lawyer, prescott russell legal services, traffic ticket hawkesbury',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Hawkesbury', areaServed: ['Hawkesbury', 'Prescott-Russell', 'Casselman', 'Rockland', 'Embrun'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Hawkesbury', url: '/locations/hawkesbury' }],
+    faqs: [
+      { question: 'Do you serve Hawkesbury and Prescott-Russell?', answer: 'Yes, we serve Hawkesbury, Casselman, Rockland, Embrun, and all of the Prescott-Russell region.' },
+      { question: 'Where is the court for Hawkesbury area?', answer: 'The Prescott-Russell court is at 28 Court Street, L\'Orignal, ON K0B 1K0.' },
+      { question: 'Can you help with Highway 17 and 34 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 17, Highway 34, and regional roads throughout Prescott-Russell.' },
+      { question: 'Do you offer bilingual services?', answer: 'We primarily operate in English but can arrange interpreter services for French-speaking clients. Contact us to discuss your needs.' }
+    ]
+  },
+
+  '/locations/petawawa': {
+    title: 'Petawawa Paralegal | Legal Services Renfrew County | LegalAssist',
+    description: 'Licensed paralegal services in Petawawa, Ontario. Traffic ticket defence, small claims court, landlord-tenant disputes. Serving CFB Petawawa military personnel. Free consultation.',
+    keywords: 'paralegal petawawa, petawawa lawyer, CFB petawawa legal services, traffic ticket petawawa, military paralegal petawawa',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Petawawa', areaServed: ['Petawawa', 'Renfrew County', 'CFB Petawawa', 'Deep River', 'Chalk River'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Petawawa', url: '/locations/petawawa' }],
+    faqs: [
+      { question: 'Do you serve Petawawa and CFB Petawawa?', answer: 'Yes, we serve Petawawa residents and military personnel stationed at CFB Petawawa for all paralegal matters.' },
+      { question: 'Where is the nearest court?', answer: 'The Renfrew County court is at 7 International Drive, Pembroke, ON K8A 6W5, approximately 15 minutes from Petawawa.' },
+      { question: 'Can you help with Highway 17 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 17 through Renfrew County.' },
+      { question: 'Do you offer flexible scheduling for military personnel?', answer: 'Yes, we understand the demands of military schedules and offer flexible and virtual consultation options.' }
+    ]
+  },
+
+  '/locations/smiths-falls': {
+    title: 'Smiths Falls Paralegal | Legal Services Lanark County | LegalAssist',
+    description: 'Licensed paralegal services in Smiths Falls, Ontario. Traffic ticket defence, small claims court, landlord-tenant disputes. Serving Rideau Lakes and area. Free consultation.',
+    keywords: 'paralegal smiths falls, smiths falls lawyer, lanark county legal services, traffic ticket smiths falls, rideau lakes paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Smiths Falls', areaServed: ['Smiths Falls', 'Lanark County', 'Rideau Lakes', 'Merrickville'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Smiths Falls', url: '/locations/smiths-falls' }],
+    faqs: [
+      { question: 'Do you serve Smiths Falls?', answer: 'Yes, we serve Smiths Falls, Merrickville, Rideau Lakes, and all Lanark County communities.' },
+      { question: 'Where is the court for Smiths Falls?', answer: 'The Lanark County court is at 80 Gore Street East, Perth, ON K7H 1H9.' },
+      { question: 'Can you help with Highway 15 and 29 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 15, Highway 29, and other roads in Lanark County.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all Smiths Falls and area residents.' }
+    ]
+  },
+
+  '/locations/gravenhurst': {
+    title: 'Gravenhurst Paralegal | Legal Services Muskoka | LegalAssist',
+    description: 'Licensed paralegal services in Gravenhurst, Muskoka. Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal gravenhurst, gravenhurst lawyer, muskoka legal services, traffic ticket gravenhurst, highway 11 ticket gravenhurst',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Gravenhurst', areaServed: ['Gravenhurst', 'Muskoka', 'Muskoka Lakes'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Gravenhurst', url: '/locations/gravenhurst' }],
+    faqs: [
+      { question: 'Do you serve Gravenhurst?', answer: 'Yes, we serve Gravenhurst, Muskoka Lakes, and the southern Muskoka area.' },
+      { question: 'Where is the court for Gravenhurst?', answer: 'The Muskoka District court is at 76 Pine Street, Bracebridge, ON P1L 0C4, approximately 15 minutes north.' },
+      { question: 'Can you fight Highway 11 tickets near Gravenhurst?', answer: 'Yes, the Highway 11 corridor through Gravenhurst sees heavy enforcement, especially in summer. We defend all traffic charges.' },
+      { question: 'Do you handle cottage rental disputes?', answer: 'Yes, we assist with rental disputes, property damage claims, and other legal matters common in Muskoka.' }
+    ]
+  },
+
+  '/locations/huntsville': {
+    title: 'Huntsville Paralegal | Legal Services Muskoka | LegalAssist',
+    description: 'Licensed paralegal services in Huntsville, Muskoka. Traffic ticket defence on Highway 11/60, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal huntsville, huntsville lawyer, muskoka legal services, traffic ticket huntsville, algonquin highlands paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Huntsville', areaServed: ['Huntsville', 'Muskoka', 'Lake of Bays', 'Algonquin Highlands'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Huntsville', url: '/locations/huntsville' }],
+    faqs: [
+      { question: 'Do you serve Huntsville and area?', answer: 'Yes, we serve Huntsville, Lake of Bays, Algonquin Highlands, and northern Muskoka communities.' },
+      { question: 'Where is the court for Huntsville?', answer: 'The Muskoka District court is at 76 Pine Street, Bracebridge, ON P1L 0C4.' },
+      { question: 'Can you fight Highway 11 and 60 tickets?', answer: 'Yes, we defend traffic tickets on Highway 11 and Highway 60 (Algonquin corridor) through the Huntsville area.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all Huntsville area residents.' }
+    ]
+  },
+
+  '/locations/carleton-place': {
+    title: 'Carleton Place Paralegal | Legal Services Lanark County | LegalAssist',
+    description: 'Licensed paralegal services in Carleton Place and Mississippi Mills. Traffic ticket defence on Highway 7, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal carleton place, carleton place lawyer, mississippi mills legal services, almonte paralegal, traffic ticket carleton place',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Carleton Place', areaServed: ['Carleton Place', 'Mississippi Mills', 'Almonte', 'Beckwith', 'Lanark County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Carleton Place', url: '/locations/carleton-place' }],
+    faqs: [
+      { question: 'Do you serve Carleton Place and Almonte?', answer: 'Yes, we serve Carleton Place, Almonte, Mississippi Mills, Beckwith, and all of Lanark County.' },
+      { question: 'Where is the court for Carleton Place?', answer: 'The Lanark County court is at 80 Gore Street East, Perth, ON K7H 1H9.' },
+      { question: 'Can you fight Highway 7 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 7, Highway 15, and regional roads in the Carleton Place area.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available. Many matters can be handled entirely remotely.' }
+    ]
+  },
+
+  '/locations/arnprior': {
+    title: 'Arnprior Paralegal | Legal Services Renfrew County | LegalAssist',
+    description: 'Licensed paralegal services in Arnprior, Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal arnprior, arnprior lawyer, renfrew county legal services, traffic ticket arnprior, highway 17 ticket arnprior',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Arnprior', areaServed: ['Arnprior', 'Renfrew County', 'McNab/Braeside', 'Greater Madawaska'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Arnprior', url: '/locations/arnprior' }],
+    faqs: [
+      { question: 'Do you serve Arnprior?', answer: 'Yes, we serve Arnprior, McNab/Braeside, Greater Madawaska, and surrounding Renfrew County communities.' },
+      { question: 'Where is the court for Arnprior?', answer: 'The Renfrew County court is at 7 International Drive, Pembroke, ON K8A 6W5.' },
+      { question: 'Can you fight Highway 17 tickets near Arnprior?', answer: 'Yes, we defend traffic tickets issued on the Trans-Canada Highway through the Arnprior area.' },
+      { question: 'Do you offer flexible scheduling?', answer: 'Yes, we offer evening and weekend consultations by request, plus virtual options.' }
+    ]
+  },
+
+  '/locations/bancroft': {
+    title: 'Bancroft Paralegal | Legal Services Hastings Highlands | LegalAssist',
+    description: 'Licensed paralegal services in Bancroft and Hastings Highlands. Traffic ticket defence on Highway 62/28, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal bancroft, bancroft lawyer, hastings highlands legal services, traffic ticket bancroft, highway 62 ticket',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Bancroft', areaServed: ['Bancroft', 'Hastings Highlands', 'Faraday', 'Wollaston'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Bancroft', url: '/locations/bancroft' }],
+    faqs: [
+      { question: 'Do you serve Bancroft and area?', answer: 'Yes, we serve Bancroft, Hastings Highlands, Faraday, Wollaston, and surrounding North Hastings communities.' },
+      { question: 'Where is the court for Bancroft?', answer: 'The Hastings County court is at 235 Pinnacle Street, Belleville, ON K8N 3A9, though satellite services may be available in Bancroft.' },
+      { question: 'Can you fight Highway 62 and 28 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 62, Highway 28, and other roads in North Hastings.' },
+      { question: 'Do you offer virtual services?', answer: 'Yes, phone and video consultations are ideal for Bancroft-area clients given the distance to courts.' }
+    ]
+  },
+
+  '/locations/haldimand-county': {
+    title: 'Haldimand County Paralegal | Legal Services Cayuga Caledonia Dunnville | LegalAssist',
+    description: 'Licensed paralegal services in Haldimand County. Traffic ticket defence on Highway 6, small claims court, landlord-tenant disputes. Serving Cayuga, Caledonia, Dunnville. Free consultation.',
+    keywords: 'paralegal haldimand county, cayuga lawyer, caledonia paralegal, dunnville legal services, traffic ticket haldimand',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Haldimand County', areaServed: ['Haldimand County', 'Cayuga', 'Caledonia', 'Dunnville', 'Hagersville'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Haldimand County', url: '/locations/haldimand-county' }],
+    faqs: [
+      { question: 'Do you serve Haldimand County?', answer: 'Yes, we serve Cayuga, Caledonia, Dunnville, Hagersville, Jarvis, and all of Haldimand County.' },
+      { question: 'Where is the Haldimand court?', answer: 'The Provincial Offences Court is at 53 Thorburn Street South, Cayuga, ON N0A 1E0.' },
+      { question: 'Can you fight Highway 6 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 6, Highway 54, and other roads throughout Haldimand County.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all Haldimand County residents.' }
+    ]
+  },
+
+  '/locations/alliston': {
+    title: 'Alliston Paralegal | Legal Services New Tecumseth | LegalAssist',
+    description: 'Licensed paralegal services in Alliston and New Tecumseth. Traffic ticket defence on Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal alliston, alliston lawyer, new tecumseth legal services, traffic ticket alliston, beeton paralegal, tottenham paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Alliston', areaServed: ['Alliston', 'New Tecumseth', 'Beeton', 'Tottenham', 'South Simcoe'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Alliston', url: '/locations/alliston' }],
+    faqs: [
+      { question: 'Do you serve Alliston and New Tecumseth?', answer: 'Yes, we serve Alliston, Beeton, Tottenham, and all of New Tecumseth in South Simcoe County.' },
+      { question: 'Where is the court for Alliston?', answer: 'The Provincial Offences Court serving Alliston is at 45 Cedar Pointe Drive, Barrie, ON.' },
+      { question: 'Can you fight Highway 89 tickets?', answer: 'Yes, we defend traffic tickets on Highway 89, County Road 10, and other South Simcoe roads.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all New Tecumseth residents.' }
+    ]
+  },
+
+  '/locations/wasaga-beach': {
+    title: 'Wasaga Beach Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Wasaga Beach and Simcoe County. Traffic ticket defence on Highway 26, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal wasaga beach, wasaga beach lawyer, simcoe county legal services, traffic ticket wasaga beach, clearview paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Wasaga Beach', areaServed: ['Wasaga Beach', 'Simcoe County', 'Stayner', 'Clearview Township', 'Collingwood'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Wasaga Beach', url: '/locations/wasaga-beach' }],
+    faqs: [
+      { question: 'Do you serve Wasaga Beach?', answer: 'Yes, we serve Wasaga Beach, Stayner, Clearview Township, and surrounding Simcoe County communities.' },
+      { question: 'Where is the court for Wasaga Beach?', answer: 'The Provincial Offences Court is at 45 Cedar Pointe Drive, Barrie, ON.' },
+      { question: 'Can you fight Highway 26 tickets?', answer: 'Yes, Highway 26 and 92 see heavy enforcement especially in summer. We defend all traffic charges in this area.' },
+      { question: 'Do you handle seasonal rental disputes?', answer: 'Yes, we handle landlord-tenant disputes including short-term and seasonal rental matters common in beach communities.' }
+    ]
+  },
+
+  '/locations/port-colborne': {
+    title: 'Port Colborne Paralegal | Legal Services Niagara Region | LegalAssist',
+    description: 'Licensed paralegal services in Port Colborne, Niagara Region. Traffic ticket defence on Highway 3, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal port colborne, port colborne lawyer, niagara legal services, traffic ticket port colborne, wainfleet paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Port Colborne', areaServed: ['Port Colborne', 'Wainfleet', 'Niagara Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Port Colborne', url: '/locations/port-colborne' }],
+    faqs: [
+      { question: 'Do you serve Port Colborne?', answer: 'Yes, we serve Port Colborne, Wainfleet, and surrounding Niagara Region communities.' },
+      { question: 'Where is the court for Port Colborne?', answer: 'The Niagara Region Provincial Offences Court is at 445 East Main Street, Welland, ON.' },
+      { question: 'Can you fight Highway 3 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 3, Highway 58, and other Niagara Region roads.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for Port Colborne area residents.' }
+    ]
+  },
+
+  '/locations/goderich': {
+    title: 'Goderich Paralegal | Legal Services Huron County | LegalAssist',
+    description: 'Licensed paralegal services in Goderich and Huron County. Traffic ticket defence on Highway 8/21, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal goderich, goderich lawyer, huron county legal services, traffic ticket goderich, clinton paralegal, seaforth paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Goderich', areaServed: ['Goderich', 'Huron County', 'Clinton', 'Seaforth', 'Exeter', 'Wingham'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Goderich', url: '/locations/goderich' }],
+    faqs: [
+      { question: 'Do you serve Goderich and Huron County?', answer: 'Yes, we serve Goderich, Clinton, Seaforth, Exeter, Wingham, and all communities throughout Huron County.' },
+      { question: 'Where is the Goderich court?', answer: 'The Huron County Provincial Offences Court is at 1 Courthouse Square, Goderich, ON N7A 1M2.' },
+      { question: 'Can you fight Highway 8 and 21 tickets?', answer: 'Yes, we defend traffic tickets issued on Highway 8, Highway 21, and rural roads throughout Huron County.' },
+      { question: 'Do you offer virtual consultations?', answer: 'Yes, phone and video consultations are available for all Huron County residents.' }
+    ]
+  },
+  // Additional Service Pages
+  '/services/parking-tickets': {
+    title: 'Parking Ticket Defence | Fight Parking Violations Ontario | LegalAssist',
+    description: 'Fight parking tickets in Ontario. Our licensed paralegals defend municipal parking violations, disputed fines, and parking by-law charges. Free consultation.',
+    keywords: 'parking ticket defence, fight parking ticket ontario, parking violation lawyer, parking by-law dispute',
+    schema: { type: 'LegalService', name: 'Parking Ticket Defence', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Parking Tickets', url: '/services/parking-tickets' }],
+    faqs: [
+      { question: 'Can you fight a parking ticket in Ontario?', answer: 'Yes, parking tickets can be disputed. Our paralegals review evidence and represent you at hearings to fight unfair parking violations.' },
+      { question: 'How much does it cost to fight a parking ticket?', answer: 'Contact us for a free consultation to discuss your parking ticket and our affordable representation fees.' },
+      { question: 'What is the deadline to dispute a parking ticket?', answer: 'Most Ontario parking tickets must be disputed within 15 days. Contact us immediately to avoid missing your deadline.' },
+      { question: 'Is it worth fighting a parking ticket?', answer: 'Many parking tickets have viable defences including signage issues, meter malfunctions, or procedural errors. We assess your case for free.' }
+    ]
+  },
+  '/services/debt-negotiation': {
+    title: 'Debt Negotiation Services Ontario | Debt Settlement | LegalAssist',
+    description: 'Professional debt negotiation and settlement services in Ontario. We negotiate with creditors to reduce your debt and arrange manageable payment plans.',
+    keywords: 'debt negotiation ontario, debt settlement, negotiate debt, reduce debt ontario, debt relief paralegal',
+    schema: { type: 'LegalService', name: 'Debt Negotiation Services', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Debt Negotiation', url: '/services/debt-negotiation' }],
+    faqs: [
+      { question: 'Can a paralegal help negotiate my debts?', answer: 'Yes, our paralegals negotiate with creditors on your behalf to reduce debt amounts and arrange affordable payment plans.' },
+      { question: 'How much can debt negotiation save me?', answer: 'Results vary, but many clients achieve significant reductions. Contact us for a free assessment of your situation.' },
+      { question: 'Will debt negotiation affect my credit score?', answer: 'Debt settlement may impact your credit temporarily, but resolving debts is often better than leaving them unpaid.' },
+      { question: 'What types of debt can you negotiate?', answer: 'We negotiate credit card debt, personal loans, lines of credit, unpaid invoices, and other consumer debts.' }
+    ]
+  },
+  '/services/airline-disputes': {
+    title: 'Airline Dispute Claims Ontario | Flight Compensation | LegalAssist',
+    description: 'Fight airline disputes in Ontario Small Claims Court. Compensation for cancelled flights, lost baggage, denied boarding, and booking issues up to $35,000.',
+    keywords: 'airline dispute ontario, flight compensation, cancelled flight claim, lost baggage compensation, airline small claims',
+    schema: { type: 'LegalService', name: 'Airline Dispute Claims', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Airline Disputes', url: '/services/airline-disputes' }],
+    faqs: [
+      { question: 'Can I sue an airline in Small Claims Court?', answer: 'Yes, you can file a claim against airlines for cancelled flights, lost baggage, denied boarding, and other issues up to $35,000 in Ontario Small Claims Court.' },
+      { question: 'What compensation can I get for a cancelled flight?', answer: 'Depending on circumstances, you may be entitled to rebooking, refund, compensation for expenses, and additional damages under Canadian air passenger protection.' },
+      { question: 'How long do I have to file an airline complaint?', answer: 'Time limits vary, but generally you should file within 2 years. Contact us promptly to preserve your claim.' },
+      { question: 'Do you handle Air Passenger Protection claims?', answer: 'Yes, we handle claims under the Canadian Transportation Agency Air Passenger Protection Regulations.' }
+    ]
+  },
+  '/services/insurance-disputes': {
+    title: 'Insurance Dispute Claims Ontario | Denied Claims | LegalAssist',
+    description: 'Fight denied insurance claims in Ontario. Our paralegals handle auto insurance disputes, home insurance denials, and accident benefit claims.',
+    keywords: 'insurance dispute ontario, denied insurance claim, auto insurance dispute, accident benefits, insurance claim lawyer',
+    schema: { type: 'LegalService', name: 'Insurance Dispute Claims', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Insurance Disputes', url: '/services/insurance-disputes' }],
+    faqs: [
+      { question: 'Can a paralegal help with a denied insurance claim?', answer: 'Yes, our paralegals represent clients in insurance disputes including denied auto claims, home insurance denials, and accident benefit disputes.' },
+      { question: 'What can I do if my insurance claim is denied?', answer: 'You can appeal the decision, file a complaint with the insurance ombudsman, or pursue a claim in Small Claims Court or through the LAT.' },
+      { question: 'How long do I have to dispute a denied claim?', answer: 'Limitation periods vary by type of claim. Contact us immediately after a denial to ensure you meet all deadlines.' },
+      { question: 'Do you handle accident benefit disputes?', answer: 'Yes, we represent clients at the Licence Appeal Tribunal (LAT) for accident benefit disputes under the Insurance Act.' }
+    ]
+  },
+  '/services/condo-disputes': {
+    title: 'Condo Dispute Resolution Ontario | Condominium Board Issues | LegalAssist',
+    description: 'Resolve condo disputes in Ontario. We handle condominium board conflicts, common element issues, condo fee disputes, and Condominium Authority Tribunal (CAT) matters.',
+    keywords: 'condo dispute ontario, condominium dispute, condo board issues, CAT tribunal, condo fee dispute',
+    schema: { type: 'LegalService', name: 'Condo Dispute Resolution', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Condo Disputes', url: '/services/condo-disputes' }],
+    faqs: [
+      { question: 'Can a paralegal represent me in a condo dispute?', answer: 'Yes, paralegals can represent you at the Condominium Authority Tribunal (CAT) and in Small Claims Court for condo-related disputes.' },
+      { question: 'What types of condo disputes do you handle?', answer: 'We handle common element access issues, noise complaints, condo fee disputes, pet restrictions, parking issues, and condo board governance matters.' },
+      { question: 'How does the Condominium Authority Tribunal work?', answer: 'The CAT is an online tribunal that resolves certain condo disputes. We guide you through the process and represent your interests.' },
+      { question: 'Can I dispute a condo special assessment?', answer: 'Special assessments can be challenged in certain circumstances. Contact us for a free consultation to assess your options.' }
+    ]
+  },
+  '/services/workplace-harassment': {
+    title: 'Workplace Harassment Claims Ontario | HRTO | LegalAssist',
+    description: 'Fight workplace harassment in Ontario. Our paralegals represent victims of workplace bullying, sexual harassment, and hostile work environments at the HRTO.',
+    keywords: 'workplace harassment ontario, workplace bullying lawyer, sexual harassment claim, hostile work environment, HRTO complaint',
+    schema: { type: 'LegalService', name: 'Workplace Harassment Claims', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Workplace Harassment', url: '/services/workplace-harassment' }],
+    faqs: [
+      { question: 'What constitutes workplace harassment in Ontario?', answer: 'Workplace harassment includes repeated, unwelcome conduct that a person knows or ought to know is unwelcome, including bullying, verbal abuse, and sexual harassment.' },
+      { question: 'How do I file a workplace harassment complaint?', answer: 'You can file an internal complaint, contact the Ministry of Labour, or file a human rights application at the HRTO. We guide you through the best approach.' },
+      { question: 'Can I be fired for reporting harassment?', answer: 'No. Ontario law protects employees from retaliation for reporting harassment. If you face reprisal, you may have additional legal claims.' },
+      { question: 'What damages can I recover?', answer: 'You may recover compensation for lost wages, general damages for injury to dignity, and in some cases, reinstatement to your position.' }
+    ]
+  },
+  '/services/odsp-appeals': {
+    title: 'ODSP Appeals Ontario | Disability Benefits Appeal | LegalAssist',
+    description: 'Appeal denied ODSP benefits in Ontario. Our paralegals represent clients at the Social Benefits Tribunal for Ontario Disability Support Program disputes.',
+    keywords: 'ODSP appeal ontario, disability benefits appeal, social benefits tribunal, ODSP denied, disability support program',
+    schema: { type: 'LegalService', name: 'ODSP Appeals', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'ODSP Appeals', url: '/services/odsp-appeals' }],
+    faqs: [
+      { question: 'Can you help if my ODSP application was denied?', answer: 'Yes, we represent clients appealing ODSP denials at the Social Benefits Tribunal. Many initially denied applications succeed on appeal.' },
+      { question: 'How long does an ODSP appeal take?', answer: 'ODSP appeals typically take 3-6 months from filing to hearing. We work to expedite the process where possible.' },
+      { question: 'What evidence do I need for an ODSP appeal?', answer: 'Medical evidence, treatment records, and detailed information about how your disability affects daily living are essential. We help gather and present this evidence.' },
+      { question: 'Can a paralegal represent me at the Social Benefits Tribunal?', answer: 'Yes, licensed paralegals are authorized to represent clients at the Social Benefits Tribunal for ODSP and Ontario Works appeals.' }
+    ]
+  },
+  '/services/ontario-works-appeals': {
+    title: 'Ontario Works Appeals | Social Assistance Disputes | LegalAssist',
+    description: 'Appeal Ontario Works decisions. Our paralegals represent clients at the Social Benefits Tribunal for OW benefit disputes, denial appeals, and overpayment challenges.',
+    keywords: 'ontario works appeal, OW appeal, social assistance dispute, social benefits tribunal, welfare appeal ontario',
+    schema: { type: 'LegalService', name: 'Ontario Works Appeals', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Ontario Works Appeals', url: '/services/ontario-works-appeals' }],
+    faqs: [
+      { question: 'Can I appeal an Ontario Works decision?', answer: 'Yes, you can request an internal review and then appeal to the Social Benefits Tribunal if you disagree with the decision.' },
+      { question: 'What Ontario Works decisions can be appealed?', answer: 'You can appeal benefit denials, reductions, overpayment decisions, and eligibility determinations.' },
+      { question: 'How long do I have to appeal?', answer: 'You generally have 30 days to request an internal review. Contact us immediately after receiving an unfavourable decision.' },
+      { question: 'Is there a cost to appeal?', answer: 'There is no filing fee for Social Benefits Tribunal appeals. Contact us for affordable representation options.' }
+    ]
+  },
+  '/services/wsib-claims': {
+    title: 'WSIB Claims Ontario | Workplace Injury Compensation | LegalAssist',
+    description: 'Fight denied WSIB claims in Ontario. Our paralegals represent injured workers appealing WSIB decisions at the Workplace Safety and Insurance Appeals Tribunal.',
+    keywords: 'WSIB claim ontario, workplace injury claim, WSIB appeal, WSIAT, workers compensation ontario',
+    schema: { type: 'LegalService', name: 'WSIB Claims', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'WSIB Claims', url: '/services/wsib-claims' }],
+    faqs: [
+      { question: 'Can a paralegal help with a WSIB claim?', answer: 'Yes, licensed paralegals can represent injured workers in WSIB disputes and appeals at the WSIAT tribunal.' },
+      { question: 'What if my WSIB claim was denied?', answer: 'You can appeal through the WSIB internal process and then to the Workplace Safety and Insurance Appeals Tribunal (WSIAT).' },
+      { question: 'How long do I have to appeal a WSIB decision?', answer: 'You generally have 30 days for internal objections and 6 months for WSIAT appeals. Contact us immediately after a denial.' },
+      { question: 'What benefits am I entitled to from WSIB?', answer: 'Depending on your injury, you may be entitled to loss of earnings benefits, health care coverage, labour market re-entry, and non-economic loss awards.' }
+    ]
+  },
+  '/services/bylaw-infractions': {
+    title: 'By-Law Infraction Defence Ontario | Municipal Charges | LegalAssist',
+    description: 'Defend by-law infractions in Ontario. Our paralegals fight municipal by-law charges including noise violations, property standards, and zoning offences.',
+    keywords: 'bylaw infraction defence, municipal bylaw charge, noise bylaw, property standards, zoning violation ontario',
+    schema: { type: 'LegalService', name: 'By-Law Infraction Defence', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'By-Law Infractions', url: '/services/bylaw-infractions' }],
+    faqs: [
+      { question: 'Can you fight a municipal by-law ticket?', answer: 'Yes, by-law infractions are prosecuted under the Provincial Offences Act. Our paralegals can defend you at court.' },
+      { question: 'What types of by-law charges do you handle?', answer: 'We handle noise violations, property standards orders, zoning infractions, sign by-laws, parking by-laws, and animal control charges.' },
+      { question: 'What are the penalties for a by-law conviction?', answer: 'Fines vary by municipality and offence but can range from hundreds to thousands of dollars. A conviction may also require compliance remedies.' },
+      { question: 'How do I defend a property standards order?', answer: 'You can appeal a property standards order to the Property Standards Committee. We represent property owners through this process.' }
+    ]
+  },
+  '/services/dangerous-dog-hearings': {
+    title: 'Dangerous Dog Hearing Defence Ontario | Dog Owner Rights | LegalAssist',
+    description: 'Defend against dangerous dog designations in Ontario. Our paralegals represent dog owners at municipal dangerous dog hearings and breed-specific challenges.',
+    keywords: 'dangerous dog hearing ontario, dog bite lawyer, pit bull ban, dangerous dog designation, dog owner rights',
+    schema: { type: 'LegalService', name: 'Dangerous Dog Hearing Defence', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Dangerous Dog Hearings', url: '/services/dangerous-dog-hearings' }],
+    faqs: [
+      { question: 'What happens at a dangerous dog hearing?', answer: 'A municipal hearing determines whether your dog should be designated as dangerous. This can result in muzzle orders, restrictions, or euthanasia orders.' },
+      { question: 'Can a paralegal represent me at a dog hearing?', answer: 'Yes, our paralegals represent dog owners at dangerous dog hearings and help challenge designations and orders.' },
+      { question: 'What defences are available?', answer: 'Defences may include provocation, trespassing by the complainant, mistaken identity, lack of evidence, or procedural errors in the hearing process.' },
+      { question: 'Can I appeal a dangerous dog order?', answer: 'Yes, dangerous dog orders can be appealed. Contact us immediately after receiving a notice to protect your rights and your pet.' }
+    ]
+  },
+  '/services/accessibility-complaints': {
+    title: 'Accessibility Complaints Ontario | AODA Violations | LegalAssist',
+    description: 'File accessibility complaints under AODA in Ontario. Our paralegals represent clients facing accessibility barriers in workplaces, services, and public spaces.',
+    keywords: 'accessibility complaint ontario, AODA violation, disability discrimination, barrier-free access, accessibility rights',
+    schema: { type: 'LegalService', name: 'Accessibility Complaints', areaServed: ['London', 'Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Accessibility Complaints', url: '/services/accessibility-complaints' }],
+    faqs: [
+      { question: 'What is AODA?', answer: 'The Accessibility for Ontarians with Disabilities Act (AODA) sets standards for accessibility in customer service, employment, information, transportation, and built environments.' },
+      { question: 'How do I file an accessibility complaint?', answer: 'You can file a complaint with the organization directly, contact the AODA compliance office, or file a human rights application at the HRTO.' },
+      { question: 'Can I file a human rights complaint for accessibility issues?', answer: 'Yes, if accessibility barriers constitute disability discrimination, you can file a human rights complaint at the HRTO for compensation and systemic remedies.' },
+      { question: 'What remedies are available?', answer: 'Remedies may include compensation, policy changes, barrier removal, training requirements, and compliance orders.' }
+    ]
+  },
+  '/resources/forms/traffic-tickets': {
+    title: 'Ontario Traffic Ticket Forms & Court Directory | LegalAssist',
+    description: 'Complete directory of Ontario Provincial Offences Act forms and traffic court locations. Find your local POA court, download forms, and access payment portals.',
+    keywords: 'ontario traffic ticket forms, POA court locations, provincial offences forms, traffic court ontario, pay traffic ticket online',
+    schema: { type: 'LegalService', name: 'Traffic Ticket Forms Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Traffic Ticket Forms', url: '/resources/forms/traffic-tickets' }],
+    faqs: [
+      { question: 'Where can I find my local traffic court?', answer: 'Our comprehensive directory lists all Provincial Offences Act courts across Ontario with addresses, phone numbers, hours, and payment portals.' },
+      { question: 'What forms do I need to fight a traffic ticket?', answer: 'Common forms include the Notice of Intention to Appear, Request for Trial, and Request for Reopening. Find all forms on our directory.' },
+      { question: 'Can I pay my traffic ticket online?', answer: 'Many Ontario municipalities offer online payment portals. Check our directory for your local court payment options.' },
+      { question: 'What is the deadline to respond to a traffic ticket?', answer: 'You generally have 15 days from receiving the ticket to file a Notice of Intention to Appear. Missing this deadline may result in conviction.' }
+    ]
+  },
+  '/resources/forms/ltb': {
+    title: 'Ontario Landlord and Tenant Board Forms | LTB Resources | LegalAssist',
+    description: 'Download Ontario LTB forms for landlords and tenants. Complete directory of Landlord and Tenant Board applications, notices, and filing guides.',
+    keywords: 'LTB forms ontario, landlord tenant board forms, T2 application, L1 application, eviction forms ontario',
+    schema: { type: 'LegalService', name: 'LTB Forms Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'LTB Forms', url: '/resources/forms/ltb' }],
+    faqs: [
+      { question: 'Where can I download LTB forms?', answer: 'Our directory provides direct links to all Landlord and Tenant Board forms on the Tribunals Ontario website.' },
+      { question: 'What LTB form do I need for eviction?', answer: 'Landlords use L1 (non-payment of rent) or L2 (other reasons) applications. The appropriate notice (N4, N5, N12, etc.) must be served first.' },
+      { question: 'What form does a tenant use to file a complaint?', answer: 'Tenants typically use T2 (tenant rights), T6 (maintenance), or T1 (rent rebate) applications depending on the issue.' },
+      { question: 'How much does it cost to file at the LTB?', answer: 'Filing fees vary by application type. Check the LTB website for current fees. Fee waivers are available for those who qualify.' }
+    ]
+  },
+  '/resources/forms/small-claims': {
+    title: 'Ontario Small Claims Court Forms | Filing Guide | LegalAssist',
+    description: 'Download Ontario Small Claims Court forms. Complete directory of plaintiff and defendant forms, filing instructions, and court locations for claims up to $35,000.',
+    keywords: 'small claims court forms ontario, plaintiff claim form, defence form, small claims filing, court forms download',
+    schema: { type: 'LegalService', name: 'Small Claims Court Forms', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Small Claims Forms', url: '/resources/forms/small-claims' }],
+    faqs: [
+      { question: 'What forms do I need to file a Small Claims Court claim?', answer: 'You need a Plaintiff\'s Claim (Form 7A) to start a lawsuit. Additional forms may be needed depending on your case.' },
+      { question: 'How much does it cost to file in Small Claims Court?', answer: 'Filing fees depend on whether you file electronically or in person. Current fees range from approximately $102 to $249.' },
+      { question: 'What is the Small Claims Court limit in Ontario?', answer: 'The monetary limit for Small Claims Court in Ontario is $35,000 (excluding interest and costs).' },
+      { question: 'How do I serve court documents?', answer: 'Documents can be served by personal service, courier, registered mail, or in some cases by email. Specific rules apply to each method.' }
+    ]
+  },
+  '/resources/forms/hrto': {
+    title: 'HRTO Application Forms Ontario | Human Rights Tribunal | LegalAssist',
+    description: 'Download Ontario Human Rights Tribunal forms. Application guides, response forms, and filing instructions for discrimination complaints at the HRTO.',
+    keywords: 'HRTO forms ontario, human rights tribunal forms, discrimination complaint form, HRTO application, human rights filing',
+    schema: { type: 'LegalService', name: 'HRTO Forms Directory', areaServed: ['Ontario'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'HRTO Forms', url: '/resources/forms/hrto' }],
+    faqs: [
+      { question: 'How do I file a human rights complaint in Ontario?', answer: 'File an Application (Form 1) with the Human Rights Tribunal of Ontario. We can help you complete and file your application.' },
+      { question: 'What is the deadline to file at the HRTO?', answer: 'You generally have one year from the date of the last incident of discrimination to file your application.' },
+      { question: 'Is there a fee to file at the HRTO?', answer: 'No, there is no filing fee to submit an application to the Human Rights Tribunal of Ontario.' },
+      { question: 'What happens after I file my HRTO application?', answer: 'The respondent has 35 days to file a response. The HRTO may then schedule mediation or a hearing.' }
+    ]
+  },
+
+  '/locations': {
+    title: 'Ontario Paralegal Services | All Locations | LegalAssist',
+    description: 'Licensed paralegal services across 150+ Ontario cities and towns. Find affordable legal representation near you for traffic tickets, small claims, landlord-tenant disputes, and more.',
+    keywords: 'ontario paralegal, paralegal near me, ontario legal services, find paralegal ontario, paralegal locations',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Ontario Locations', areaServed: ['Ontario', 'Southwestern Ontario', 'Greater Toronto Area', 'Eastern Ontario', 'Northern Ontario', 'Niagara Region', 'Ottawa'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }],
+    faqs: [
+      { question: 'Do you serve all of Ontario?', answer: 'Yes, LegalAssist provides paralegal services across 150+ Ontario communities from Windsor to Ottawa and Thunder Bay to Niagara Falls, including virtual consultations province-wide.' },
+      { question: 'Can you represent me if I live in a rural area?', answer: 'Absolutely. We offer phone and video consultations for clients throughout Ontario, and we attend courts across the province.' },
+      { question: 'How do I find the nearest LegalAssist location?', answer: 'Use the search feature on our locations page to find your city or region, or call us at 226-272-5153 for immediate assistance.' },
+      { question: 'What services do you offer province-wide?', answer: 'We handle traffic tickets, small claims court, landlord-tenant disputes, human rights complaints, and provincial offences across all Ontario jurisdictions.' }
+    ]
+  },
+  '/locations/brant': {
+    title: 'Brant Paralegal | Legal Services Brant County | LegalAssist',
+    description: 'Licensed paralegal services in Brant and Brant County. Traffic ticket defence on Highway 403 and Highway 24, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal brant, brant lawyer, brant county legal services, traffic ticket brant, paris paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Brant', areaServed: ['Paris', 'St. George', 'Burford', 'Mount Pleasant', 'Oakland', 'Brant County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brant', url: '/locations/brant' }],
+    faqs: [
+      { question: 'Do you serve Brant and Brant County?', answer: 'Yes, we serve Brant, Paris, St. George, Burford, and all communities throughout Brant County.' },
+      { question: 'Where is the nearest court for Brant residents?', answer: 'The nearest court is the Brantford courthouse at 70 Wellington Street.' },
+      { question: 'Can you fight traffic tickets on Highway 403 and Highway 24?', answer: 'Yes, we defend traffic tickets issued on Highway 403 and Highway 24 and all roads throughout Brant County.' },
+      { question: 'Do you offer virtual consultations for Brant?', answer: 'Yes, phone and video consultations are available for all Brant County residents.' }
+    ]
+  },
+  '/locations/clarence-rockland': {
+    title: 'Clarence-Rockland Paralegal | Legal Services Prescott & Russell | LegalAssist',
+    description: 'Licensed paralegal services in Clarence-Rockland and Prescott & Russell. Traffic ticket defence on Highway 17 and County Road 17, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal clarence rockland, clarence rockland lawyer, prescott & russell legal services, traffic ticket clarence rockland, rockland paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Clarence-Rockland', areaServed: ['Clarence-Rockland', 'Rockland', 'Clarence Creek', 'Bourget', 'Hammond', 'Wendover'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Clarence-Rockland', url: '/locations/clarence-rockland' }],
+    faqs: [
+      { question: 'Do you serve Clarence-Rockland and Prescott & Russell?', answer: 'Yes, we serve Clarence-Rockland, Rockland, Clarence Creek, Bourget, and all communities throughout Prescott & Russell.' },
+      { question: 'Where is the nearest court for Clarence-Rockland residents?', answer: 'The nearest court is the L\'Orignal courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 17 and County Road 17?', answer: 'Yes, we defend traffic tickets issued on Highway 17 and County Road 17 and all roads throughout Prescott & Russell.' },
+      { question: 'Do you offer virtual consultations for Clarence-Rockland?', answer: 'Yes, phone and video consultations are available for all Prescott & Russell residents.' }
+    ]
+  },
+  '/locations/elliot-lake': {
+    title: 'Elliot Lake Paralegal | Legal Services Algoma District | LegalAssist',
+    description: 'Licensed paralegal services in Elliot Lake and Algoma District. Traffic ticket defence on Highway 17 and Highway 108, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal elliot lake, elliot lake lawyer, algoma district legal services, traffic ticket elliot lake, blind river paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Elliot Lake', areaServed: ['Elliot Lake', 'Blind River', 'Thessalon', 'Iron Bridge', 'Algoma District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Elliot Lake', url: '/locations/elliot-lake' }],
+    faqs: [
+      { question: 'Do you serve Elliot Lake and Algoma District?', answer: 'Yes, we serve Elliot Lake, Blind River, Thessalon, Iron Bridge, and all communities throughout Algoma District.' },
+      { question: 'Where is the nearest court for Elliot Lake residents?', answer: 'The nearest court is the Elliot Lake courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 17 and Highway 108?', answer: 'Yes, we defend traffic tickets issued on Highway 17 and Highway 108 and all roads throughout Algoma District.' },
+      { question: 'Do you offer virtual consultations for Elliot Lake?', answer: 'Yes, phone and video consultations are available for all Algoma District residents.' }
+    ]
+  },
+  '/locations/prince-edward-county': {
+    title: 'Prince Edward County Paralegal | Legal Services Prince Edward County | LegalAssist',
+    description: 'Licensed paralegal services in Prince Edward County and Prince Edward County. Traffic ticket defence on Highway 49 and Highway 62, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal prince edward county, prince edward county lawyer, prince edward county legal services, traffic ticket prince edward county, picton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Prince Edward County', areaServed: ['Picton', 'Wellington', 'Bloomfield', 'Consecon', 'Ameliasburgh'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Prince Edward County', url: '/locations/prince-edward-county' }],
+    faqs: [
+      { question: 'Do you serve Prince Edward County and Prince Edward County?', answer: 'Yes, we serve Prince Edward County, Picton, Wellington, Bloomfield, and all communities throughout Prince Edward County.' },
+      { question: 'Where is the nearest court for Prince Edward County residents?', answer: 'The nearest court is the Picton courthouse at 332 Main Street.' },
+      { question: 'Can you fight traffic tickets on Highway 49 and Highway 62?', answer: 'Yes, we defend traffic tickets issued on Highway 49 and Highway 62 and all roads throughout Prince Edward County.' },
+      { question: 'Do you offer virtual consultations for Prince Edward County?', answer: 'Yes, phone and video consultations are available for all Prince Edward County residents.' }
+    ]
+  },
+  '/locations/quinte-west': {
+    title: 'Quinte West Paralegal | Legal Services Hastings County | LegalAssist',
+    description: 'Licensed paralegal services in Quinte West and Hastings County. Traffic ticket defence on Highway 401 and Highway 33, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal quinte west, quinte west lawyer, hastings county legal services, traffic ticket quinte west, trenton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Quinte West', areaServed: ['Trenton', 'Frankford', 'Batawa', 'Murray', 'Sidney', 'Quinte West'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Quinte West', url: '/locations/quinte-west' }],
+    faqs: [
+      { question: 'Do you serve Quinte West and Hastings County?', answer: 'Yes, we serve Quinte West, Trenton, Frankford, Batawa, and all communities throughout Hastings County.' },
+      { question: 'Where is the nearest court for Quinte West residents?', answer: 'The nearest court is the Belleville courthouse at 235 Pinnacle Street.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 33?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 33 and all roads throughout Hastings County.' },
+      { question: 'Do you offer virtual consultations for Quinte West?', answer: 'Yes, phone and video consultations are available for all Hastings County residents.' }
+    ]
+  },
+  '/locations/amherstburg': {
+    title: 'Amherstburg Paralegal | Legal Services Essex County | LegalAssist',
+    description: 'Licensed paralegal services in Amherstburg and Essex County. Traffic ticket defence on County Road 20 and Highway 18, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal amherstburg, amherstburg lawyer, essex county legal services, traffic ticket amherstburg, mcgregor paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Amherstburg', areaServed: ['Amherstburg', 'McGregor', 'Anderdon', 'Harrow', 'Essex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Amherstburg', url: '/locations/amherstburg' }],
+    faqs: [
+      { question: 'Do you serve Amherstburg and Essex County?', answer: 'Yes, we serve Amherstburg, McGregor, Harrow, Essex County, and all communities throughout Essex County.' },
+      { question: 'Where is the nearest court for Amherstburg residents?', answer: 'The nearest court is the Windsor courthouse at 245 Windsor Avenue.' },
+      { question: 'Can you fight traffic tickets on County Road 20 and Highway 18?', answer: 'Yes, we defend traffic tickets issued on County Road 20 and Highway 18 and all roads throughout Essex County.' },
+      { question: 'Do you offer virtual consultations for Amherstburg?', answer: 'Yes, phone and video consultations are available for all Essex County residents.' }
+    ]
+  },
+  '/locations/bradford-west-gwillimbury': {
+    title: 'Bradford West Gwillimbury Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Bradford West Gwillimbury and Simcoe County. Traffic ticket defence on Highway 400 and Highway 88, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal bradford west gwillimbury, bradford west gwillimbury lawyer, simcoe county legal services, traffic ticket bradford west gwillimbury, bradford paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Bradford West Gwillimbury', areaServed: ['Bradford', 'Bond Head', 'Newton Robinson', 'South Simcoe'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Bradford West Gwillimbury', url: '/locations/bradford-west-gwillimbury' }],
+    faqs: [
+      { question: 'Do you serve Bradford West Gwillimbury and Simcoe County?', answer: 'Yes, we serve Bradford West Gwillimbury, Bradford, Bond Head, Newton Robinson, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for Bradford West Gwillimbury residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 400 and Highway 88?', answer: 'Yes, we defend traffic tickets issued on Highway 400 and Highway 88 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for Bradford West Gwillimbury?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/east-gwillimbury': {
+    title: 'East Gwillimbury Paralegal | Legal Services York Region | LegalAssist',
+    description: 'Licensed paralegal services in East Gwillimbury and York Region. Traffic ticket defence on Highway 404 and Woodbine Avenue, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal east gwillimbury, east gwillimbury lawyer, york region legal services, traffic ticket east gwillimbury, holland landing paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist East Gwillimbury', areaServed: ['Holland Landing', 'Mount Albert', 'Sharon', 'Queensville', 'East Gwillimbury'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'East Gwillimbury', url: '/locations/east-gwillimbury' }],
+    faqs: [
+      { question: 'Do you serve East Gwillimbury and York Region?', answer: 'Yes, we serve East Gwillimbury, Holland Landing, Mount Albert, Sharon, and all communities throughout York Region.' },
+      { question: 'Where is the nearest court for East Gwillimbury residents?', answer: 'The nearest court is the Newmarket courthouse at 50 Eagle Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 404 and Woodbine Avenue?', answer: 'Yes, we defend traffic tickets issued on Highway 404 and Woodbine Avenue and all roads throughout York Region.' },
+      { question: 'Do you offer virtual consultations for East Gwillimbury?', answer: 'Yes, phone and video consultations are available for all York Region residents.' }
+    ]
+  },
+  '/locations/erin': {
+    title: 'Erin Paralegal | Legal Services Wellington County | LegalAssist',
+    description: 'Licensed paralegal services in Erin and Wellington County. Traffic ticket defence on Highway 24 and Highway 124, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal erin, erin lawyer, wellington county legal services, traffic ticket erin, hillsburgh paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Erin', areaServed: ['Erin', 'Hillsburgh', 'Ballinafad', 'Wellington County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Erin', url: '/locations/erin' }],
+    faqs: [
+      { question: 'Do you serve Erin and Wellington County?', answer: 'Yes, we serve Erin, Hillsburgh, Ballinafad, Acton, and all communities throughout Wellington County.' },
+      { question: 'Where is the nearest court for Erin residents?', answer: 'The nearest court is the Guelph courthouse at 74 Woolwich Street.' },
+      { question: 'Can you fight traffic tickets on Highway 24 and Highway 124?', answer: 'Yes, we defend traffic tickets issued on Highway 24 and Highway 124 and all roads throughout Wellington County.' },
+      { question: 'Do you offer virtual consultations for Erin?', answer: 'Yes, phone and video consultations are available for all Wellington County residents.' }
+    ]
+  },
+  '/locations/essex': {
+    title: 'Essex Paralegal | Legal Services Essex County | LegalAssist',
+    description: 'Licensed paralegal services in Essex and Essex County. Traffic ticket defence on Highway 3 and County Road 8, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal essex, essex lawyer, essex county legal services, traffic ticket essex, harrow paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Essex', areaServed: ['Essex', 'Harrow', 'Colchester', 'McGregor', 'Essex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Essex', url: '/locations/essex' }],
+    faqs: [
+      { question: 'Do you serve Essex and Essex County?', answer: 'Yes, we serve Essex, Harrow, Colchester, McGregor, and all communities throughout Essex County.' },
+      { question: 'Where is the nearest court for Essex residents?', answer: 'The nearest court is the Windsor courthouse at 245 Windsor Avenue.' },
+      { question: 'Can you fight traffic tickets on Highway 3 and County Road 8?', answer: 'Yes, we defend traffic tickets issued on Highway 3 and County Road 8 and all roads throughout Essex County.' },
+      { question: 'Do you offer virtual consultations for Essex?', answer: 'Yes, phone and video consultations are available for all Essex County residents.' }
+    ]
+  },
+  '/locations/fergus-elora': {
+    title: 'Fergus-Elora Paralegal | Legal Services Wellington County | LegalAssist',
+    description: 'Licensed paralegal services in Fergus-Elora and Wellington County. Traffic ticket defence on Highway 6 and Highway 7, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal fergus elora, fergus elora lawyer, wellington county legal services, traffic ticket fergus elora, fergus paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Fergus-Elora', areaServed: ['Fergus', 'Elora', 'Salem', 'Belwood', 'Centre Wellington'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Fergus-Elora', url: '/locations/fergus-elora' }],
+    faqs: [
+      { question: 'Do you serve Fergus-Elora and Wellington County?', answer: 'Yes, we serve Fergus-Elora, Fergus, Elora, Salem, and all communities throughout Wellington County.' },
+      { question: 'Where is the nearest court for Fergus-Elora residents?', answer: 'The nearest court is the Guelph courthouse at 74 Woolwich Street.' },
+      { question: 'Can you fight traffic tickets on Highway 6 and Highway 7?', answer: 'Yes, we defend traffic tickets issued on Highway 6 and Highway 7 and all roads throughout Wellington County.' },
+      { question: 'Do you offer virtual consultations for Fergus-Elora?', answer: 'Yes, phone and video consultations are available for all Wellington County residents.' }
+    ]
+  },
+  '/locations/fort-erie': {
+    title: 'Fort Erie Paralegal | Legal Services Niagara Region | LegalAssist',
+    description: 'Licensed paralegal services in Fort Erie and Niagara Region. Traffic ticket defence on QEW and Highway 3, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal fort erie, fort erie lawyer, niagara region legal services, traffic ticket fort erie, ridgeway paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Fort Erie', areaServed: ['Fort Erie', 'Ridgeway', 'Crystal Beach', 'Stevensville', 'South Niagara'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Fort Erie', url: '/locations/fort-erie' }],
+    faqs: [
+      { question: 'Do you serve Fort Erie and Niagara Region?', answer: 'Yes, we serve Fort Erie, Ridgeway, Crystal Beach, Stevensville, and all communities throughout Niagara Region.' },
+      { question: 'Where is the nearest court for Fort Erie residents?', answer: 'The nearest court is the Welland courthouse at 102 East Main Street.' },
+      { question: 'Can you fight traffic tickets on QEW and Highway 3?', answer: 'Yes, we defend traffic tickets issued on QEW and Highway 3 and all roads throughout Niagara Region.' },
+      { question: 'Do you offer virtual consultations for Fort Erie?', answer: 'Yes, phone and video consultations are available for all Niagara Region residents.' }
+    ]
+  },
+  '/locations/gananoque': {
+    title: 'Gananoque Paralegal | Legal Services Leeds and Grenville | LegalAssist',
+    description: 'Licensed paralegal services in Gananoque and Leeds and Grenville. Traffic ticket defence on Highway 401 and Highway 32, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal gananoque, gananoque lawyer, leeds and grenville legal services, traffic ticket gananoque, thousand islands paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Gananoque', areaServed: ['Gananoque', 'Thousand Islands', 'Leeds and Grenville'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Gananoque', url: '/locations/gananoque' }],
+    faqs: [
+      { question: 'Do you serve Gananoque and Leeds and Grenville?', answer: 'Yes, we serve Gananoque, Thousand Islands, Lansdowne, Ivy Lea, and all communities throughout Leeds and Grenville.' },
+      { question: 'Where is the nearest court for Gananoque residents?', answer: 'The nearest court is the Brockville courthouse at 7 Buell Street.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 32?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 32 and all roads throughout Leeds and Grenville.' },
+      { question: 'Do you offer virtual consultations for Gananoque?', answer: 'Yes, phone and video consultations are available for all Leeds and Grenville residents.' }
+    ]
+  },
+  '/locations/georgina': {
+    title: 'Georgina Paralegal | Legal Services York Region | LegalAssist',
+    description: 'Licensed paralegal services in Georgina and York Region. Traffic ticket defence on Highway 48 and Woodbine Avenue, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal georgina, georgina lawyer, york region legal services, traffic ticket georgina, keswick paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Georgina', areaServed: ['Keswick', 'Sutton', 'Pefferlaw', 'Jackson\'s Point', 'Georgina'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Georgina', url: '/locations/georgina' }],
+    faqs: [
+      { question: 'Do you serve Georgina and York Region?', answer: 'Yes, we serve Georgina, Keswick, Sutton, Pefferlaw, and all communities throughout York Region.' },
+      { question: 'Where is the nearest court for Georgina residents?', answer: 'The nearest court is the Newmarket courthouse at 50 Eagle Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 48 and Woodbine Avenue?', answer: 'Yes, we defend traffic tickets issued on Highway 48 and Woodbine Avenue and all roads throughout York Region.' },
+      { question: 'Do you offer virtual consultations for Georgina?', answer: 'Yes, phone and video consultations are available for all York Region residents.' }
+    ]
+  },
+  '/locations/innisfil': {
+    title: 'Innisfil Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Innisfil and Simcoe County. Traffic ticket defence on Highway 400 and Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal innisfil, innisfil lawyer, simcoe county legal services, traffic ticket innisfil, alcona paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Innisfil', areaServed: ['Innisfil', 'Alcona', 'Cookstown', 'Lefroy', 'Stroud', 'South Simcoe'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Innisfil', url: '/locations/innisfil' }],
+    faqs: [
+      { question: 'Do you serve Innisfil and Simcoe County?', answer: 'Yes, we serve Innisfil, Alcona, Cookstown, Lefroy, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for Innisfil residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 400 and Highway 89?', answer: 'Yes, we defend traffic tickets issued on Highway 400 and Highway 89 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for Innisfil?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/huron-county': {
+    title: 'Huron County Paralegal | Legal Services Huron County | LegalAssist',
+    description: 'Licensed paralegal services in Huron County and Huron County. Traffic ticket defence on Highway 8 and Highway 21, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal huron county, huron county lawyer, huron county legal services, traffic ticket huron county, goderich paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Huron County', areaServed: ['Goderich', 'Clinton', 'Seaforth', 'Exeter', 'Wingham', 'Huron County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Huron County', url: '/locations/huron-county' }],
+    faqs: [
+      { question: 'Do you serve Huron County and Huron County?', answer: 'Yes, we serve Huron County, Goderich, Clinton, Seaforth, and all communities throughout Huron County.' },
+      { question: 'Where is the nearest court for Huron County residents?', answer: 'The nearest court is the Goderich courthouse at 1 Courthouse Square.' },
+      { question: 'Can you fight traffic tickets on Highway 8 and Highway 21?', answer: 'Yes, we defend traffic tickets issued on Highway 8 and Highway 21 and all roads throughout Huron County.' },
+      { question: 'Do you offer virtual consultations for Huron County?', answer: 'Yes, phone and video consultations are available for all Huron County residents.' }
+    ]
+  },
+  '/locations/norfolk-county': {
+    title: 'Norfolk County Paralegal | Legal Services Norfolk County | LegalAssist',
+    description: 'Licensed paralegal services in Norfolk County and Norfolk County. Traffic ticket defence on Highway 3 and Highway 24, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal norfolk county, norfolk county lawyer, norfolk county legal services, traffic ticket norfolk county, simcoe paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Norfolk County', areaServed: ['Simcoe', 'Port Dover', 'Delhi', 'Waterford', 'Norfolk County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Norfolk County', url: '/locations/norfolk-county' }],
+    faqs: [
+      { question: 'Do you serve Norfolk County and Norfolk County?', answer: 'Yes, we serve Norfolk County, Simcoe, Port Dover, Delhi, and all communities throughout Norfolk County.' },
+      { question: 'Where is the nearest court for Norfolk County residents?', answer: 'The nearest court is the Simcoe courthouse at 50 Frederick Hobson VC Drive.' },
+      { question: 'Can you fight traffic tickets on Highway 3 and Highway 24?', answer: 'Yes, we defend traffic tickets issued on Highway 3 and Highway 24 and all roads throughout Norfolk County.' },
+      { question: 'Do you offer virtual consultations for Norfolk County?', answer: 'Yes, phone and video consultations are available for all Norfolk County residents.' }
+    ]
+  },
+  '/locations/hanover': {
+    title: 'Hanover Paralegal | Legal Services Grey County | LegalAssist',
+    description: 'Licensed paralegal services in Hanover and Grey County. Traffic ticket defence on Highway 4 and Highway 10, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal hanover, hanover lawyer, grey county legal services, traffic ticket hanover, walkerton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Hanover', areaServed: ['Hanover', 'Walkerton', 'Durham', 'Grey County', 'Bruce County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Hanover', url: '/locations/hanover' }],
+    faqs: [
+      { question: 'Do you serve Hanover and Grey County?', answer: 'Yes, we serve Hanover, Walkerton, Durham, Mount Forest, and all communities throughout Grey County.' },
+      { question: 'Where is the nearest court for Hanover residents?', answer: 'The nearest court is the Owen Sound courthouse at 611 9th Avenue East.' },
+      { question: 'Can you fight traffic tickets on Highway 4 and Highway 10?', answer: 'Yes, we defend traffic tickets issued on Highway 4 and Highway 10 and all roads throughout Grey County.' },
+      { question: 'Do you offer virtual consultations for Hanover?', answer: 'Yes, phone and video consultations are available for all Grey County residents.' }
+    ]
+  },
+  '/locations/hearst': {
+    title: 'Hearst Paralegal | Legal Services Cochrane District | LegalAssist',
+    description: 'Licensed paralegal services in Hearst and Cochrane District. Traffic ticket defence on Highway 11 and Highway 583, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal hearst, hearst lawyer, cochrane district legal services, traffic ticket hearst, kapuskasing paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Hearst', areaServed: ['Hearst', 'Kapuskasing', 'Mattice', 'Constance Lake', 'Cochrane District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Hearst', url: '/locations/hearst' }],
+    faqs: [
+      { question: 'Do you serve Hearst and Cochrane District?', answer: 'Yes, we serve Hearst, Kapuskasing, Mattice, Constance Lake, and all communities throughout Cochrane District.' },
+      { question: 'Where is the nearest court for Hearst residents?', answer: 'The nearest court is the Hearst courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 11 and Highway 583?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 583 and all roads throughout Cochrane District.' },
+      { question: 'Do you offer virtual consultations for Hearst?', answer: 'Yes, phone and video consultations are available for all Cochrane District residents.' }
+    ]
+  },
+  '/locations/kapuskasing': {
+    title: 'Kapuskasing Paralegal | Legal Services Cochrane District | LegalAssist',
+    description: 'Licensed paralegal services in Kapuskasing and Cochrane District. Traffic ticket defence on Highway 11 and Highway 581, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal kapuskasing, kapuskasing lawyer, cochrane district legal services, traffic ticket kapuskasing, smooth rock falls paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kapuskasing', areaServed: ['Kapuskasing', 'Smooth Rock Falls', 'Moonbeam', 'Opasatika', 'Cochrane District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kapuskasing', url: '/locations/kapuskasing' }],
+    faqs: [
+      { question: 'Do you serve Kapuskasing and Cochrane District?', answer: 'Yes, we serve Kapuskasing, Smooth Rock Falls, Moonbeam, Opasatika, and all communities throughout Cochrane District.' },
+      { question: 'Where is the nearest court for Kapuskasing residents?', answer: 'The nearest court is the Kapuskasing courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 11 and Highway 581?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 581 and all roads throughout Cochrane District.' },
+      { question: 'Do you offer virtual consultations for Kapuskasing?', answer: 'Yes, phone and video consultations are available for all Cochrane District residents.' }
+    ]
+  },
+  '/locations/kincardine': {
+    title: 'Kincardine Paralegal | Legal Services Bruce County | LegalAssist',
+    description: 'Licensed paralegal services in Kincardine and Bruce County. Traffic ticket defence on Highway 21 and Highway 9, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal kincardine, kincardine lawyer, bruce county legal services, traffic ticket kincardine, tiverton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kincardine', areaServed: ['Kincardine', 'Tiverton', 'Ripley', 'Lucknow', 'Bruce County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kincardine', url: '/locations/kincardine' }],
+    faqs: [
+      { question: 'Do you serve Kincardine and Bruce County?', answer: 'Yes, we serve Kincardine, Tiverton, Ripley, Lucknow, and all communities throughout Bruce County.' },
+      { question: 'Where is the nearest court for Kincardine residents?', answer: 'The nearest court is the Walkerton courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 21 and Highway 9?', answer: 'Yes, we defend traffic tickets issued on Highway 21 and Highway 9 and all roads throughout Bruce County.' },
+      { question: 'Do you offer virtual consultations for Kincardine?', answer: 'Yes, phone and video consultations are available for all Bruce County residents.' }
+    ]
+  },
+  '/locations/kingsville': {
+    title: 'Kingsville Paralegal | Legal Services Essex County | LegalAssist',
+    description: 'Licensed paralegal services in Kingsville and Essex County. Traffic ticket defence on County Road 20 and Highway 3, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal kingsville, kingsville lawyer, essex county legal services, traffic ticket kingsville, ruthven paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kingsville', areaServed: ['Kingsville', 'Ruthven', 'Cottam', 'Essex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kingsville', url: '/locations/kingsville' }],
+    faqs: [
+      { question: 'Do you serve Kingsville and Essex County?', answer: 'Yes, we serve Kingsville, Ruthven, Cottam, Leamington, and all communities throughout Essex County.' },
+      { question: 'Where is the nearest court for Kingsville residents?', answer: 'The nearest court is the Windsor courthouse at 245 Windsor Avenue.' },
+      { question: 'Can you fight traffic tickets on County Road 20 and Highway 3?', answer: 'Yes, we defend traffic tickets issued on County Road 20 and Highway 3 and all roads throughout Essex County.' },
+      { question: 'Do you offer virtual consultations for Kingsville?', answer: 'Yes, phone and video consultations are available for all Essex County residents.' }
+    ]
+  },
+  '/locations/kirkland-lake': {
+    title: 'Kirkland Lake Paralegal | Legal Services Timiskaming District | LegalAssist',
+    description: 'Licensed paralegal services in Kirkland Lake and Timiskaming District. Traffic ticket defence on Highway 11 and Highway 66, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal kirkland lake, kirkland lake lawyer, timiskaming district legal services, traffic ticket kirkland lake, larder lake paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kirkland Lake', areaServed: ['Kirkland Lake', 'Larder Lake', 'Englehart', 'Timiskaming District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kirkland Lake', url: '/locations/kirkland-lake' }],
+    faqs: [
+      { question: 'Do you serve Kirkland Lake and Timiskaming District?', answer: 'Yes, we serve Kirkland Lake, Larder Lake, Englehart, Swastika, and all communities throughout Timiskaming District.' },
+      { question: 'Where is the nearest court for Kirkland Lake residents?', answer: 'The nearest court is the Kirkland Lake courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 11 and Highway 66?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 66 and all roads throughout Timiskaming District.' },
+      { question: 'Do you offer virtual consultations for Kirkland Lake?', answer: 'Yes, phone and video consultations are available for all Timiskaming District residents.' }
+    ]
+  },
+  '/locations/lakeshore': {
+    title: 'Lakeshore Paralegal | Legal Services Essex County | LegalAssist',
+    description: 'Licensed paralegal services in Lakeshore and Essex County. Traffic ticket defence on Highway 401 and Highway 77, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal lakeshore, lakeshore lawyer, essex county legal services, traffic ticket lakeshore, belle river paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Lakeshore', areaServed: ['Belle River', 'Stoney Point', 'Comber', 'Tilbury', 'Lakeshore'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Lakeshore', url: '/locations/lakeshore' }],
+    faqs: [
+      { question: 'Do you serve Lakeshore and Essex County?', answer: 'Yes, we serve Lakeshore, Belle River, Stoney Point, Comber, and all communities throughout Essex County.' },
+      { question: 'Where is the nearest court for Lakeshore residents?', answer: 'The nearest court is the Windsor courthouse at 245 Windsor Avenue.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 77?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 77 and all roads throughout Essex County.' },
+      { question: 'Do you offer virtual consultations for Lakeshore?', answer: 'Yes, phone and video consultations are available for all Essex County residents.' }
+    ]
+  },
+  '/locations/lasalle': {
+    title: 'LaSalle Paralegal | Legal Services Essex County | LegalAssist',
+    description: 'Licensed paralegal services in LaSalle and Essex County. Traffic ticket defence on Highway 18 and Huron Church Road, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal lasalle, lasalle lawyer, essex county legal services, traffic ticket lasalle, windsor paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist LaSalle', areaServed: ['LaSalle', 'Windsor', 'Amherstburg', 'Essex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'LaSalle', url: '/locations/lasalle' }],
+    faqs: [
+      { question: 'Do you serve LaSalle and Essex County?', answer: 'Yes, we serve LaSalle, Windsor, Amherstburg, Essex, and all communities throughout Essex County.' },
+      { question: 'Where is the nearest court for LaSalle residents?', answer: 'The nearest court is the Windsor courthouse at 245 Windsor Avenue.' },
+      { question: 'Can you fight traffic tickets on Highway 18 and Huron Church Road?', answer: 'Yes, we defend traffic tickets issued on Highway 18 and Huron Church Road and all roads throughout Essex County.' },
+      { question: 'Do you offer virtual consultations for LaSalle?', answer: 'Yes, phone and video consultations are available for all Essex County residents.' }
+    ]
+  },
+  '/locations/lincoln': {
+    title: 'Lincoln Paralegal | Legal Services Niagara Region | LegalAssist',
+    description: 'Licensed paralegal services in Lincoln and Niagara Region. Traffic ticket defence on QEW and Highway 8, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal lincoln, lincoln lawyer, niagara region legal services, traffic ticket lincoln, beamsville paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Lincoln', areaServed: ['Beamsville', 'Vineland', 'Jordan', 'Lincoln', 'Niagara Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Lincoln', url: '/locations/lincoln' }],
+    faqs: [
+      { question: 'Do you serve Lincoln and Niagara Region?', answer: 'Yes, we serve Lincoln, Beamsville, Vineland, Jordan, and all communities throughout Niagara Region.' },
+      { question: 'Where is the nearest court for Lincoln residents?', answer: 'The nearest court is the St. Catharines courthouse at 59 Church Street.' },
+      { question: 'Can you fight traffic tickets on QEW and Highway 8?', answer: 'Yes, we defend traffic tickets issued on QEW and Highway 8 and all roads throughout Niagara Region.' },
+      { question: 'Do you offer virtual consultations for Lincoln?', answer: 'Yes, phone and video consultations are available for all Niagara Region residents.' }
+    ]
+  },
+  '/locations/marathon': {
+    title: 'Marathon Paralegal | Legal Services Thunder Bay District | LegalAssist',
+    description: 'Licensed paralegal services in Marathon and Thunder Bay District. Traffic ticket defence on Highway 17 (Trans-Canada) and Highway 626, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal marathon, marathon lawyer, thunder bay district legal services, traffic ticket marathon, white river paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Marathon', areaServed: ['Marathon', 'White River', 'Manitouwadge', 'Thunder Bay District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Marathon', url: '/locations/marathon' }],
+    faqs: [
+      { question: 'Do you serve Marathon and Thunder Bay District?', answer: 'Yes, we serve Marathon, White River, Manitouwadge, Terrace Bay, and all communities throughout Thunder Bay District.' },
+      { question: 'Where is the nearest court for Marathon residents?', answer: 'The nearest court is the Thunder Bay courthouse at 125 Brodie Street North.' },
+      { question: 'Can you fight traffic tickets on Highway 17 (Trans-Canada) and Highway 626?', answer: 'Yes, we defend traffic tickets issued on Highway 17 (Trans-Canada) and Highway 626 and all roads throughout Thunder Bay District.' },
+      { question: 'Do you offer virtual consultations for Marathon?', answer: 'Yes, phone and video consultations are available for all Thunder Bay District residents.' }
+    ]
+  },
+  '/locations/meaford': {
+    title: 'Meaford Paralegal | Legal Services Grey County | LegalAssist',
+    description: 'Licensed paralegal services in Meaford and Grey County. Traffic ticket defence on Highway 26 and County Road 7, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal meaford, meaford lawyer, grey county legal services, traffic ticket meaford, thornbury paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Meaford', areaServed: ['Meaford', 'Thornbury', 'Clarksburg', 'Grey County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Meaford', url: '/locations/meaford' }],
+    faqs: [
+      { question: 'Do you serve Meaford and Grey County?', answer: 'Yes, we serve Meaford, Thornbury, Clarksburg, Owen Sound, and all communities throughout Grey County.' },
+      { question: 'Where is the nearest court for Meaford residents?', answer: 'The nearest court is the Owen Sound courthouse at 611 9th Avenue East.' },
+      { question: 'Can you fight traffic tickets on Highway 26 and County Road 7?', answer: 'Yes, we defend traffic tickets issued on Highway 26 and County Road 7 and all roads throughout Grey County.' },
+      { question: 'Do you offer virtual consultations for Meaford?', answer: 'Yes, phone and video consultations are available for all Grey County residents.' }
+    ]
+  },
+  '/locations/mississippi-mills': {
+    title: 'Mississippi Mills Paralegal | Legal Services Lanark County | LegalAssist',
+    description: 'Licensed paralegal services in Mississippi Mills and Lanark County. Traffic ticket defence on Highway 7 and Highway 29, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal mississippi mills, mississippi mills lawyer, lanark county legal services, traffic ticket mississippi mills, almonte paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Mississippi Mills', areaServed: ['Almonte', 'Pakenham', 'Appleton', 'Lanark County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Mississippi Mills', url: '/locations/mississippi-mills' }],
+    faqs: [
+      { question: 'Do you serve Mississippi Mills and Lanark County?', answer: 'Yes, we serve Mississippi Mills, Almonte, Pakenham, Carleton Place, and all communities throughout Lanark County.' },
+      { question: 'Where is the nearest court for Mississippi Mills residents?', answer: 'The nearest court is the Perth courthouse at 43 Drummond Street East.' },
+      { question: 'Can you fight traffic tickets on Highway 7 and Highway 29?', answer: 'Yes, we defend traffic tickets issued on Highway 7 and Highway 29 and all roads throughout Lanark County.' },
+      { question: 'Do you offer virtual consultations for Mississippi Mills?', answer: 'Yes, phone and video consultations are available for all Lanark County residents.' }
+    ]
+  },
+  '/locations/mono': {
+    title: 'Mono Paralegal | Legal Services Dufferin County | LegalAssist',
+    description: 'Licensed paralegal services in Mono and Dufferin County. Traffic ticket defence on Highway 10 and Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal mono, mono lawyer, dufferin county legal services, traffic ticket mono, orangeville paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Mono', areaServed: ['Mono', 'Orangeville', 'Shelburne', 'Dufferin County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Mono', url: '/locations/mono' }],
+    faqs: [
+      { question: 'Do you serve Mono and Dufferin County?', answer: 'Yes, we serve Mono, Orangeville, Shelburne, Grand Valley, and all communities throughout Dufferin County.' },
+      { question: 'Where is the nearest court for Mono residents?', answer: 'The nearest court is the Orangeville courthouse at 10 Louisa Street.' },
+      { question: 'Can you fight traffic tickets on Highway 10 and Highway 89?', answer: 'Yes, we defend traffic tickets issued on Highway 10 and Highway 89 and all roads throughout Dufferin County.' },
+      { question: 'Do you offer virtual consultations for Mono?', answer: 'Yes, phone and video consultations are available for all Dufferin County residents.' }
+    ]
+  },
+  '/locations/new-tecumseth': {
+    title: 'New Tecumseth Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in New Tecumseth and Simcoe County. Traffic ticket defence on Highway 89 and Highway 400, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal new tecumseth, new tecumseth lawyer, simcoe county legal services, traffic ticket new tecumseth, alliston paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist New Tecumseth', areaServed: ['Alliston', 'Tottenham', 'Beeton', 'New Tecumseth', 'Simcoe County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'New Tecumseth', url: '/locations/new-tecumseth' }],
+    faqs: [
+      { question: 'Do you serve New Tecumseth and Simcoe County?', answer: 'Yes, we serve New Tecumseth, Alliston, Tottenham, Beeton, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for New Tecumseth residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 89 and Highway 400?', answer: 'Yes, we defend traffic tickets issued on Highway 89 and Highway 400 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for New Tecumseth?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/niagara-on-the-lake': {
+    title: 'Niagara-on-the-Lake Paralegal | Legal Services Niagara Region | LegalAssist',
+    description: 'Licensed paralegal services in Niagara-on-the-Lake and Niagara Region. Traffic ticket defence on Niagara Parkway and Highway 55, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal niagara on the lake, niagara on the lake lawyer, niagara region legal services, traffic ticket niagara on the lake, virgil paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Niagara-on-the-Lake', areaServed: ['Niagara-on-the-Lake', 'Virgil', 'St. Davids', 'Queenston', 'Niagara Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Niagara-on-the-Lake', url: '/locations/niagara-on-the-lake' }],
+    faqs: [
+      { question: 'Do you serve Niagara-on-the-Lake and Niagara Region?', answer: 'Yes, we serve Niagara-on-the-Lake, Virgil, St. Davids, Queenston, and all communities throughout Niagara Region.' },
+      { question: 'Where is the nearest court for Niagara-on-the-Lake residents?', answer: 'The nearest court is the St. Catharines courthouse at 59 Church Street.' },
+      { question: 'Can you fight traffic tickets on Niagara Parkway and Highway 55?', answer: 'Yes, we defend traffic tickets issued on Niagara Parkway and Highway 55 and all roads throughout Niagara Region.' },
+      { question: 'Do you offer virtual consultations for Niagara-on-the-Lake?', answer: 'Yes, phone and video consultations are available for all Niagara Region residents.' }
+    ]
+  },
+  '/locations/pelham': {
+    title: 'Pelham Paralegal | Legal Services Niagara Region | LegalAssist',
+    description: 'Licensed paralegal services in Pelham and Niagara Region. Traffic ticket defence on Highway 20 and Canboro Road, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal pelham, pelham lawyer, niagara region legal services, traffic ticket pelham, fonthill paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Pelham', areaServed: ['Fonthill', 'Fenwick', 'Ridgeville', 'Pelham', 'Niagara Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Pelham', url: '/locations/pelham' }],
+    faqs: [
+      { question: 'Do you serve Pelham and Niagara Region?', answer: 'Yes, we serve Pelham, Fonthill, Fenwick, Ridgeville, and all communities throughout Niagara Region.' },
+      { question: 'Where is the nearest court for Pelham residents?', answer: 'The nearest court is the Welland courthouse at 102 East Main Street.' },
+      { question: 'Can you fight traffic tickets on Highway 20 and Canboro Road?', answer: 'Yes, we defend traffic tickets issued on Highway 20 and Canboro Road and all roads throughout Niagara Region.' },
+      { question: 'Do you offer virtual consultations for Pelham?', answer: 'Yes, phone and video consultations are available for all Niagara Region residents.' }
+    ]
+  },
+  '/locations/penetanguishene': {
+    title: 'Penetanguishene Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Penetanguishene and Simcoe County. Traffic ticket defence on Highway 93 and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal penetanguishene, penetanguishene lawyer, simcoe county legal services, traffic ticket penetanguishene, midland paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Penetanguishene', areaServed: ['Penetanguishene', 'Midland', 'Tiny', 'North Simcoe'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Penetanguishene', url: '/locations/penetanguishene' }],
+    faqs: [
+      { question: 'Do you serve Penetanguishene and Simcoe County?', answer: 'Yes, we serve Penetanguishene, Midland, Tiny, Tay, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for Penetanguishene residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 93 and Highway 12?', answer: 'Yes, we defend traffic tickets issued on Highway 93 and Highway 12 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for Penetanguishene?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/petrolia': {
+    title: 'Petrolia Paralegal | Legal Services Lambton County | LegalAssist',
+    description: 'Licensed paralegal services in Petrolia and Lambton County. Traffic ticket defence on Highway 21 and County Road 4, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal petrolia, petrolia lawyer, lambton county legal services, traffic ticket petrolia, wyoming paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Petrolia', areaServed: ['Petrolia', 'Wyoming', 'Oil Springs', 'Lambton County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Petrolia', url: '/locations/petrolia' }],
+    faqs: [
+      { question: 'Do you serve Petrolia and Lambton County?', answer: 'Yes, we serve Petrolia, Wyoming, Oil Springs, Watford, and all communities throughout Lambton County.' },
+      { question: 'Where is the nearest court for Petrolia residents?', answer: 'The nearest court is the Sarnia courthouse at 700 North Christina Street.' },
+      { question: 'Can you fight traffic tickets on Highway 21 and County Road 4?', answer: 'Yes, we defend traffic tickets issued on Highway 21 and County Road 4 and all roads throughout Lambton County.' },
+      { question: 'Do you offer virtual consultations for Petrolia?', answer: 'Yes, phone and video consultations are available for all Lambton County residents.' }
+    ]
+  },
+  '/locations/plympton-wyoming': {
+    title: 'Plympton-Wyoming Paralegal | Legal Services Lambton County | LegalAssist',
+    description: 'Licensed paralegal services in Plympton-Wyoming and Lambton County. Traffic ticket defence on Highway 21 and Highway 402, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal plympton wyoming, plympton wyoming lawyer, lambton county legal services, traffic ticket plympton wyoming, wyoming paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Plympton-Wyoming', areaServed: ['Wyoming', 'Camlachie', 'Plympton-Wyoming', 'Lambton County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Plympton-Wyoming', url: '/locations/plympton-wyoming' }],
+    faqs: [
+      { question: 'Do you serve Plympton-Wyoming and Lambton County?', answer: 'Yes, we serve Plympton-Wyoming, Wyoming, Camlachie, Forest, and all communities throughout Lambton County.' },
+      { question: 'Where is the nearest court for Plympton-Wyoming residents?', answer: 'The nearest court is the Sarnia courthouse at 700 North Christina Street.' },
+      { question: 'Can you fight traffic tickets on Highway 21 and Highway 402?', answer: 'Yes, we defend traffic tickets issued on Highway 21 and Highway 402 and all roads throughout Lambton County.' },
+      { question: 'Do you offer virtual consultations for Plympton-Wyoming?', answer: 'Yes, phone and video consultations are available for all Lambton County residents.' }
+    ]
+  },
+  '/locations/prescott': {
+    title: 'Prescott Paralegal | Legal Services Leeds and Grenville | LegalAssist',
+    description: 'Licensed paralegal services in Prescott and Leeds and Grenville. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal prescott, prescott lawyer, leeds and grenville legal services, traffic ticket prescott, cardinal paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Prescott', areaServed: ['Prescott', 'Cardinal', 'Brockville', 'Leeds and Grenville'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Prescott', url: '/locations/prescott' }],
+    faqs: [
+      { question: 'Do you serve Prescott and Leeds and Grenville?', answer: 'Yes, we serve Prescott, Cardinal, Brockville, Spencerville, and all communities throughout Leeds and Grenville.' },
+      { question: 'Where is the nearest court for Prescott residents?', answer: 'The nearest court is the Brockville courthouse at 7 Buell Street.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 2?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 2 and all roads throughout Leeds and Grenville.' },
+      { question: 'Do you offer virtual consultations for Prescott?', answer: 'Yes, phone and video consultations are available for all Leeds and Grenville residents.' }
+    ]
+  },
+  '/locations/renfrew': {
+    title: 'Renfrew Paralegal | Legal Services Renfrew County | LegalAssist',
+    description: 'Licensed paralegal services in Renfrew and Renfrew County. Traffic ticket defence on Highway 17 and Highway 132, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal renfrew, renfrew lawyer, renfrew county legal services, traffic ticket renfrew, arnprior paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Renfrew', areaServed: ['Renfrew', 'Arnprior', 'Pembroke', 'Renfrew County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Renfrew', url: '/locations/renfrew' }],
+    faqs: [
+      { question: 'Do you serve Renfrew and Renfrew County?', answer: 'Yes, we serve Renfrew, Arnprior, Pembroke, Cobden, and all communities throughout Renfrew County.' },
+      { question: 'Where is the nearest court for Renfrew residents?', answer: 'The nearest court is the Pembroke courthouse at 297 Pembroke Street East.' },
+      { question: 'Can you fight traffic tickets on Highway 17 and Highway 132?', answer: 'Yes, we defend traffic tickets issued on Highway 17 and Highway 132 and all roads throughout Renfrew County.' },
+      { question: 'Do you offer virtual consultations for Renfrew?', answer: 'Yes, phone and video consultations are available for all Renfrew County residents.' }
+    ]
+  },
+  '/locations/saugeen-shores': {
+    title: 'Saugeen Shores Paralegal | Legal Services Bruce County | LegalAssist',
+    description: 'Licensed paralegal services in Saugeen Shores and Bruce County. Traffic ticket defence on Highway 21 and Highway 9, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal saugeen shores, saugeen shores lawyer, bruce county legal services, traffic ticket saugeen shores, port elgin paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Saugeen Shores', areaServed: ['Port Elgin', 'Southampton', 'Saugeen Shores', 'Bruce County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Saugeen Shores', url: '/locations/saugeen-shores' }],
+    faqs: [
+      { question: 'Do you serve Saugeen Shores and Bruce County?', answer: 'Yes, we serve Saugeen Shores, Port Elgin, Southampton, Paisley, and all communities throughout Bruce County.' },
+      { question: 'Where is the nearest court for Saugeen Shores residents?', answer: 'The nearest court is the Walkerton courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 21 and Highway 9?', answer: 'Yes, we defend traffic tickets issued on Highway 21 and Highway 9 and all roads throughout Bruce County.' },
+      { question: 'Do you offer virtual consultations for Saugeen Shores?', answer: 'Yes, phone and video consultations are available for all Bruce County residents.' }
+    ]
+  },
+  '/locations/shelburne': {
+    title: 'Shelburne Paralegal | Legal Services Dufferin County | LegalAssist',
+    description: 'Licensed paralegal services in Shelburne and Dufferin County. Traffic ticket defence on Highway 10 and Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal shelburne, shelburne lawyer, dufferin county legal services, traffic ticket shelburne, orangeville paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Shelburne', areaServed: ['Shelburne', 'Orangeville', 'Grand Valley', 'Dufferin County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Shelburne', url: '/locations/shelburne' }],
+    faqs: [
+      { question: 'Do you serve Shelburne and Dufferin County?', answer: 'Yes, we serve Shelburne, Orangeville, Grand Valley, Dundalk, and all communities throughout Dufferin County.' },
+      { question: 'Where is the nearest court for Shelburne residents?', answer: 'The nearest court is the Orangeville courthouse at 10 Louisa Street.' },
+      { question: 'Can you fight traffic tickets on Highway 10 and Highway 89?', answer: 'Yes, we defend traffic tickets issued on Highway 10 and Highway 89 and all roads throughout Dufferin County.' },
+      { question: 'Do you offer virtual consultations for Shelburne?', answer: 'Yes, phone and video consultations are available for all Dufferin County residents.' }
+    ]
+  },
+  '/locations/sioux-lookout': {
+    title: 'Sioux Lookout Paralegal | Legal Services Kenora District | LegalAssist',
+    description: 'Licensed paralegal services in Sioux Lookout and Kenora District. Traffic ticket defence on Highway 72 and Highway 664, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal sioux lookout, sioux lookout lawyer, kenora district legal services, traffic ticket sioux lookout, hudson paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Sioux Lookout', areaServed: ['Sioux Lookout', 'Hudson', 'Kenora District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Sioux Lookout', url: '/locations/sioux-lookout' }],
+    faqs: [
+      { question: 'Do you serve Sioux Lookout and Kenora District?', answer: 'Yes, we serve Sioux Lookout, Hudson, Kenora, Dryden, and all communities throughout Kenora District.' },
+      { question: 'Where is the nearest court for Sioux Lookout residents?', answer: 'The nearest court is the Sioux Lookout courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 72 and Highway 664?', answer: 'Yes, we defend traffic tickets issued on Highway 72 and Highway 664 and all roads throughout Kenora District.' },
+      { question: 'Do you offer virtual consultations for Sioux Lookout?', answer: 'Yes, phone and video consultations are available for all Kenora District residents.' }
+    ]
+  },
+  '/locations/south-bruce-peninsula': {
+    title: 'South Bruce Peninsula Paralegal | Legal Services Bruce County | LegalAssist',
+    description: 'Licensed paralegal services in South Bruce Peninsula and Bruce County. Traffic ticket defence on Highway 6 and Highway 21, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal south bruce peninsula, south bruce peninsula lawyer, bruce county legal services, traffic ticket south bruce peninsula, wiarton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist South Bruce Peninsula', areaServed: ['Wiarton', 'Sauble Beach', 'Hepworth', 'South Bruce Peninsula'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Bruce Peninsula', url: '/locations/south-bruce-peninsula' }],
+    faqs: [
+      { question: 'Do you serve South Bruce Peninsula and Bruce County?', answer: 'Yes, we serve South Bruce Peninsula, Wiarton, Sauble Beach, Hepworth, and all communities throughout Bruce County.' },
+      { question: 'Where is the nearest court for South Bruce Peninsula residents?', answer: 'The nearest court is the Owen Sound courthouse at 611 9th Avenue East.' },
+      { question: 'Can you fight traffic tickets on Highway 6 and Highway 21?', answer: 'Yes, we defend traffic tickets issued on Highway 6 and Highway 21 and all roads throughout Bruce County.' },
+      { question: 'Do you offer virtual consultations for South Bruce Peninsula?', answer: 'Yes, phone and video consultations are available for all Bruce County residents.' }
+    ]
+  },
+  '/locations/st-marys': {
+    title: 'St. Marys Paralegal | Legal Services Perth County | LegalAssist',
+    description: 'Licensed paralegal services in St. Marys and Perth County. Traffic ticket defence on Highway 7 and Highway 19, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal st marys, st marys lawyer, perth county legal services, traffic ticket st marys, stratford paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist St. Marys', areaServed: ['St. Marys', 'Stratford', 'Mitchell', 'Perth County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'St. Marys', url: '/locations/st-marys' }],
+    faqs: [
+      { question: 'Do you serve St. Marys and Perth County?', answer: 'Yes, we serve St. Marys, Stratford, Mitchell, Exeter, and all communities throughout Perth County.' },
+      { question: 'Where is the nearest court for St. Marys residents?', answer: 'The nearest court is the Stratford courthouse at 1 Huron Street.' },
+      { question: 'Can you fight traffic tickets on Highway 7 and Highway 19?', answer: 'Yes, we defend traffic tickets issued on Highway 7 and Highway 19 and all roads throughout Perth County.' },
+      { question: 'Do you offer virtual consultations for St. Marys?', answer: 'Yes, phone and video consultations are available for all Perth County residents.' }
+    ]
+  },
+  '/locations/tecumseh': {
+    title: 'Tecumseh Paralegal | Legal Services Essex County | LegalAssist',
+    description: 'Licensed paralegal services in Tecumseh and Essex County. Traffic ticket defence on Manning Road and County Road 22, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal tecumseh, tecumseh lawyer, essex county legal services, traffic ticket tecumseh, maidstone paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Tecumseh', areaServed: ['Tecumseh', 'Maidstone', 'St. Clair Beach', 'Essex County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Tecumseh', url: '/locations/tecumseh' }],
+    faqs: [
+      { question: 'Do you serve Tecumseh and Essex County?', answer: 'Yes, we serve Tecumseh, Maidstone, St. Clair Beach, Windsor, and all communities throughout Essex County.' },
+      { question: 'Where is the nearest court for Tecumseh residents?', answer: 'The nearest court is the Windsor courthouse at 245 Windsor Avenue.' },
+      { question: 'Can you fight traffic tickets on Manning Road and County Road 22?', answer: 'Yes, we defend traffic tickets issued on Manning Road and County Road 22 and all roads throughout Essex County.' },
+      { question: 'Do you offer virtual consultations for Tecumseh?', answer: 'Yes, phone and video consultations are available for all Essex County residents.' }
+    ]
+  },
+  '/locations/blue-mountains': {
+    title: 'The Blue Mountains Paralegal | Legal Services Grey County | LegalAssist',
+    description: 'Licensed paralegal services in The Blue Mountains and Grey County. Traffic ticket defence on Highway 26 and Grey Road 19, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal blue mountains, blue mountains lawyer, grey county legal services, traffic ticket blue mountains, thornbury paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist The Blue Mountains', areaServed: ['Thornbury', 'Clarksburg', 'Craigleith', 'The Blue Mountains', 'Grey County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'The Blue Mountains', url: '/locations/blue-mountains' }],
+    faqs: [
+      { question: 'Do you serve The Blue Mountains and Grey County?', answer: 'Yes, we serve The Blue Mountains, Thornbury, Clarksburg, Collingwood, and all communities throughout Grey County.' },
+      { question: 'Where is the nearest court for The Blue Mountains residents?', answer: 'The nearest court is the Owen Sound courthouse at 611 9th Avenue East.' },
+      { question: 'Can you fight traffic tickets on Highway 26 and Grey Road 19?', answer: 'Yes, we defend traffic tickets issued on Highway 26 and Grey Road 19 and all roads throughout Grey County.' },
+      { question: 'Do you offer virtual consultations for The Blue Mountains?', answer: 'Yes, phone and video consultations are available for all Grey County residents.' }
+    ]
+  },
+  '/locations/brighton': {
+    title: 'Brighton Paralegal | Legal Services Northumberland County | LegalAssist',
+    description: 'Licensed paralegal services in Brighton and Northumberland County. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal brighton, brighton lawyer, northumberland county legal services, traffic ticket brighton, trenton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Brighton', areaServed: ['Brighton', 'Presqu\'ile', 'Smithfield', 'Northumberland County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brighton', url: '/locations/brighton' }],
+    faqs: [
+      { question: 'Do you serve Brighton and Northumberland County?', answer: 'Yes, we serve Brighton, Trenton, Cobourg, Smithfield, and all communities throughout Northumberland County.' },
+      { question: 'Where is the nearest court for Brighton residents?', answer: 'The nearest court is the Cobourg courthouse at 860 William Street.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 2?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 2 and all roads throughout Northumberland County.' },
+      { question: 'Do you offer virtual consultations for Brighton?', answer: 'Yes, phone and video consultations are available for all Northumberland County residents.' }
+    ]
+  },
+  '/locations/port-hope': {
+    title: 'Port Hope Paralegal | Legal Services Northumberland County | LegalAssist',
+    description: 'Licensed paralegal services in Port Hope and Northumberland County. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal port hope, port hope lawyer, northumberland county legal services, traffic ticket port hope, cobourg paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Port Hope', areaServed: ['Port Hope', 'Cobourg', 'Northumberland County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Port Hope', url: '/locations/port-hope' }],
+    faqs: [
+      { question: 'Do you serve Port Hope and Northumberland County?', answer: 'Yes, we serve Port Hope, Cobourg, Campbellford, Bowmanville, and all communities throughout Northumberland County.' },
+      { question: 'Where is the nearest court for Port Hope residents?', answer: 'The nearest court is the Cobourg courthouse at 860 William Street.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 2?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 2 and all roads throughout Northumberland County.' },
+      { question: 'Do you offer virtual consultations for Port Hope?', answer: 'Yes, phone and video consultations are available for all Northumberland County residents.' }
+    ]
+  },
+  '/locations/kemptville': {
+    title: 'Kemptville Paralegal | Legal Services Leeds and Grenville | LegalAssist',
+    description: 'Licensed paralegal services in Kemptville and Leeds and Grenville. Traffic ticket defence on Highway 416 and Highway 43, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal kemptville, kemptville lawyer, leeds and grenville legal services, traffic ticket kemptville, oxford mills paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Kemptville', areaServed: ['Kemptville', 'North Grenville', 'Oxford Mills', 'Merrickville'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kemptville', url: '/locations/kemptville' }],
+    faqs: [
+      { question: 'Do you serve Kemptville and Leeds and Grenville?', answer: 'Yes, we serve Kemptville, Oxford Mills, Merrickville, Smiths Falls, and all communities throughout Leeds and Grenville.' },
+      { question: 'Where is the nearest court for Kemptville residents?', answer: 'The nearest court is the Brockville courthouse at 7 Buell Street.' },
+      { question: 'Can you fight traffic tickets on Highway 416 and Highway 43?', answer: 'Yes, we defend traffic tickets issued on Highway 416 and Highway 43 and all roads throughout Leeds and Grenville.' },
+      { question: 'Do you offer virtual consultations for Kemptville?', answer: 'Yes, phone and video consultations are available for all Leeds and Grenville residents.' }
+    ]
+  },
+  '/locations/uxbridge': {
+    title: 'Uxbridge Paralegal | Legal Services Durham Region | LegalAssist',
+    description: 'Licensed paralegal services in Uxbridge and Durham Region. Traffic ticket defence on Highway 47 and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal uxbridge, uxbridge lawyer, durham region legal services, traffic ticket uxbridge, port perry paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Uxbridge', areaServed: ['Uxbridge', 'Port Perry', 'Durham Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Uxbridge', url: '/locations/uxbridge' }],
+    faqs: [
+      { question: 'Do you serve Uxbridge and Durham Region?', answer: 'Yes, we serve Uxbridge, Port Perry, Stouffville, Brooklin, and all communities throughout Durham Region.' },
+      { question: 'Where is the nearest court for Uxbridge residents?', answer: 'The nearest court is the Oshawa courthouse at 150 Bond Street East.' },
+      { question: 'Can you fight traffic tickets on Highway 47 and Highway 12?', answer: 'Yes, we defend traffic tickets issued on Highway 47 and Highway 12 and all roads throughout Durham Region.' },
+      { question: 'Do you offer virtual consultations for Uxbridge?', answer: 'Yes, phone and video consultations are available for all Durham Region residents.' }
+    ]
+  },
+  '/locations/scugog': {
+    title: 'Scugog Paralegal | Legal Services Durham Region | LegalAssist',
+    description: 'Licensed paralegal services in Scugog and Durham Region. Traffic ticket defence on Highway 7A and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal scugog, scugog lawyer, durham region legal services, traffic ticket scugog, port perry paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Scugog', areaServed: ['Port Perry', 'Blackstock', 'Caesarea', 'Scugog', 'Durham Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Scugog', url: '/locations/scugog' }],
+    faqs: [
+      { question: 'Do you serve Scugog and Durham Region?', answer: 'Yes, we serve Scugog, Port Perry, Blackstock, Uxbridge, and all communities throughout Durham Region.' },
+      { question: 'Where is the nearest court for Scugog residents?', answer: 'The nearest court is the Oshawa courthouse at 150 Bond Street East.' },
+      { question: 'Can you fight traffic tickets on Highway 7A and Highway 12?', answer: 'Yes, we defend traffic tickets issued on Highway 7A and Highway 12 and all roads throughout Durham Region.' },
+      { question: 'Do you offer virtual consultations for Scugog?', answer: 'Yes, phone and video consultations are available for all Durham Region residents.' }
+    ]
+  },
+  '/locations/king': {
+    title: 'King Paralegal | Legal Services York Region | LegalAssist',
+    description: 'Licensed paralegal services in King and York Region. Traffic ticket defence on Highway 400 and King Road, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal king, king lawyer, york region legal services, traffic ticket king, king city paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist King', areaServed: ['King City', 'Nobleton', 'Schomberg', 'Kettleby', 'King Township'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'King', url: '/locations/king' }],
+    faqs: [
+      { question: 'Do you serve King and York Region?', answer: 'Yes, we serve King, King City, Nobleton, Schomberg, and all communities throughout York Region.' },
+      { question: 'Where is the nearest court for King residents?', answer: 'The nearest court is the Newmarket courthouse at 50 Eagle Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 400 and King Road?', answer: 'Yes, we defend traffic tickets issued on Highway 400 and King Road and all roads throughout York Region.' },
+      { question: 'Do you offer virtual consultations for King?', answer: 'Yes, phone and video consultations are available for all York Region residents.' }
+    ]
+  },
+  '/locations/oro-medonte': {
+    title: 'Oro-Medonte Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Oro-Medonte and Simcoe County. Traffic ticket defence on Highway 11 and Highway 93, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal oro medonte, oro medonte lawyer, simcoe county legal services, traffic ticket oro medonte, hawkestone paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Oro-Medonte', areaServed: ['Oro-Medonte', 'Hawkestone', 'Shanty Bay', 'Moonstone', 'Simcoe County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Oro-Medonte', url: '/locations/oro-medonte' }],
+    faqs: [
+      { question: 'Do you serve Oro-Medonte and Simcoe County?', answer: 'Yes, we serve Oro-Medonte, Hawkestone, Shanty Bay, Craighurst, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for Oro-Medonte residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 11 and Highway 93?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 93 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for Oro-Medonte?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/clearview': {
+    title: 'Clearview Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Clearview and Simcoe County. Traffic ticket defence on Highway 26 and Highway 91, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal clearview, clearview lawyer, simcoe county legal services, traffic ticket clearview, stayner paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Clearview', areaServed: ['Stayner', 'Creemore', 'Nottawa', 'Clearview', 'Simcoe County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Clearview', url: '/locations/clearview' }],
+    faqs: [
+      { question: 'Do you serve Clearview and Simcoe County?', answer: 'Yes, we serve Clearview, Stayner, Creemore, Nottawa, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for Clearview residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 26 and Highway 91?', answer: 'Yes, we defend traffic tickets issued on Highway 26 and Highway 91 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for Clearview?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/severn': {
+    title: 'Severn Paralegal | Legal Services Simcoe County | LegalAssist',
+    description: 'Licensed paralegal services in Severn and Simcoe County. Traffic ticket defence on Highway 11 and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal severn, severn lawyer, simcoe county legal services, traffic ticket severn, washago paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Severn', areaServed: ['Washago', 'Coldwater', 'Severn Bridge', 'Severn', 'Simcoe County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Severn', url: '/locations/severn' }],
+    faqs: [
+      { question: 'Do you serve Severn and Simcoe County?', answer: 'Yes, we serve Severn, Washago, Coldwater, Orillia, and all communities throughout Simcoe County.' },
+      { question: 'Where is the nearest court for Severn residents?', answer: 'The nearest court is the Barrie courthouse at 75 Mulcaster Street.' },
+      { question: 'Can you fight traffic tickets on Highway 11 and Highway 12?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 12 and all roads throughout Simcoe County.' },
+      { question: 'Do you offer virtual consultations for Severn?', answer: 'Yes, phone and video consultations are available for all Simcoe County residents.' }
+    ]
+  },
+  '/locations/trent-hills': {
+    title: 'Trent Hills Paralegal | Legal Services Northumberland County | LegalAssist',
+    description: 'Licensed paralegal services in Trent Hills and Northumberland County. Traffic ticket defence on Highway 30 and Highway 45, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal trent hills, trent hills lawyer, northumberland county legal services, traffic ticket trent hills, campbellford paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Trent Hills', areaServed: ['Campbellford', 'Hastings', 'Warkworth', 'Trent Hills'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Trent Hills', url: '/locations/trent-hills' }],
+    faqs: [
+      { question: 'Do you serve Trent Hills and Northumberland County?', answer: 'Yes, we serve Trent Hills, Campbellford, Hastings, Warkworth, and all communities throughout Northumberland County.' },
+      { question: 'Where is the nearest court for Trent Hills residents?', answer: 'The nearest court is the Cobourg courthouse at 860 William Street.' },
+      { question: 'Can you fight traffic tickets on Highway 30 and Highway 45?', answer: 'Yes, we defend traffic tickets issued on Highway 30 and Highway 45 and all roads throughout Northumberland County.' },
+      { question: 'Do you offer virtual consultations for Trent Hills?', answer: 'Yes, phone and video consultations are available for all Northumberland County residents.' }
+    ]
+  },
+  '/locations/norwich': {
+    title: 'Norwich Paralegal | Legal Services Oxford County | LegalAssist',
+    description: 'Licensed paralegal services in Norwich and Oxford County. Traffic ticket defence on Highway 59 and Highway 19, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal norwich, norwich lawyer, oxford county legal services, traffic ticket norwich, otterville paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Norwich', areaServed: ['Norwich', 'Otterville', 'Oxford County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Norwich', url: '/locations/norwich' }],
+    faqs: [
+      { question: 'Do you serve Norwich and Oxford County?', answer: 'Yes, we serve Norwich, Otterville, Tillsonburg, Woodstock, and all communities throughout Oxford County.' },
+      { question: 'Where is the nearest court for Norwich residents?', answer: 'The nearest court is the Woodstock courthouse at 415 Hunter Street.' },
+      { question: 'Can you fight traffic tickets on Highway 59 and Highway 19?', answer: 'Yes, we defend traffic tickets issued on Highway 59 and Highway 19 and all roads throughout Oxford County.' },
+      { question: 'Do you offer virtual consultations for Norwich?', answer: 'Yes, phone and video consultations are available for all Oxford County residents.' }
+    ]
+  },
+  '/locations/west-lincoln': {
+    title: 'West Lincoln Paralegal | Legal Services Niagara Region | LegalAssist',
+    description: 'Licensed paralegal services in West Lincoln and Niagara Region. Traffic ticket defence on Highway 20 and Regional Road 14, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal west lincoln, west lincoln lawyer, niagara region legal services, traffic ticket west lincoln, smithville paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist West Lincoln', areaServed: ['Smithville', 'Grimsby', 'West Lincoln', 'Niagara Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'West Lincoln', url: '/locations/west-lincoln' }],
+    faqs: [
+      { question: 'Do you serve West Lincoln and Niagara Region?', answer: 'Yes, we serve West Lincoln, Smithville, Grimsby, Beamsville, and all communities throughout Niagara Region.' },
+      { question: 'Where is the nearest court for West Lincoln residents?', answer: 'The nearest court is the Welland courthouse at 102 East Main Street.' },
+      { question: 'Can you fight traffic tickets on Highway 20 and Regional Road 14?', answer: 'Yes, we defend traffic tickets issued on Highway 20 and Regional Road 14 and all roads throughout Niagara Region.' },
+      { question: 'Do you offer virtual consultations for West Lincoln?', answer: 'Yes, phone and video consultations are available for all Niagara Region residents.' }
+    ]
+  },
+  '/locations/woolwich': {
+    title: 'Woolwich Paralegal | Legal Services Waterloo Region | LegalAssist',
+    description: 'Licensed paralegal services in Woolwich and Waterloo Region. Traffic ticket defence on Highway 85 and Arthur Street, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal woolwich, woolwich lawyer, waterloo region legal services, traffic ticket woolwich, elmira paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Woolwich', areaServed: ['Elmira', 'St. Jacobs', 'Breslau', 'Woolwich', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Woolwich', url: '/locations/woolwich' }],
+    faqs: [
+      { question: 'Do you serve Woolwich and Waterloo Region?', answer: 'Yes, we serve Woolwich, Elmira, St. Jacobs, Breslau, and all communities throughout Waterloo Region.' },
+      { question: 'Where is the nearest court for Woolwich residents?', answer: 'The nearest court is the Kitchener courthouse at 200 Frederick Street.' },
+      { question: 'Can you fight traffic tickets on Highway 85 and Arthur Street?', answer: 'Yes, we defend traffic tickets issued on Highway 85 and Arthur Street and all roads throughout Waterloo Region.' },
+      { question: 'Do you offer virtual consultations for Woolwich?', answer: 'Yes, phone and video consultations are available for all Waterloo Region residents.' }
+    ]
+  },
+  '/locations/wilmot': {
+    title: 'Wilmot Paralegal | Legal Services Waterloo Region | LegalAssist',
+    description: 'Licensed paralegal services in Wilmot and Waterloo Region. Traffic ticket defence on Highway 7/8 and Nafziger Road, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal wilmot, wilmot lawyer, waterloo region legal services, traffic ticket wilmot, new hamburg paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Wilmot', areaServed: ['New Hamburg', 'Baden', 'Wilmot', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Wilmot', url: '/locations/wilmot' }],
+    faqs: [
+      { question: 'Do you serve Wilmot and Waterloo Region?', answer: 'Yes, we serve Wilmot, New Hamburg, Baden, Wellesley, and all communities throughout Waterloo Region.' },
+      { question: 'Where is the nearest court for Wilmot residents?', answer: 'The nearest court is the Kitchener courthouse at 200 Frederick Street.' },
+      { question: 'Can you fight traffic tickets on Highway 7/8 and Nafziger Road?', answer: 'Yes, we defend traffic tickets issued on Highway 7/8 and Nafziger Road and all roads throughout Waterloo Region.' },
+      { question: 'Do you offer virtual consultations for Wilmot?', answer: 'Yes, phone and video consultations are available for all Waterloo Region residents.' }
+    ]
+  },
+  '/locations/north-dumfries': {
+    title: 'North Dumfries Paralegal | Legal Services Waterloo Region | LegalAssist',
+    description: 'Licensed paralegal services in North Dumfries and Waterloo Region. Traffic ticket defence on Highway 401 and Fountain Street, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal north dumfries, north dumfries lawyer, waterloo region legal services, traffic ticket north dumfries, ayr paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist North Dumfries', areaServed: ['Ayr', 'North Dumfries', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Dumfries', url: '/locations/north-dumfries' }],
+    faqs: [
+      { question: 'Do you serve North Dumfries and Waterloo Region?', answer: 'Yes, we serve North Dumfries, Ayr, Cambridge, Paris, and all communities throughout Waterloo Region.' },
+      { question: 'Where is the nearest court for North Dumfries residents?', answer: 'The nearest court is the Kitchener courthouse at 200 Frederick Street.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Fountain Street?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Fountain Street and all roads throughout Waterloo Region.' },
+      { question: 'Do you offer virtual consultations for North Dumfries?', answer: 'Yes, phone and video consultations are available for all Waterloo Region residents.' }
+    ]
+  },
+  '/locations/centre-wellington': {
+    title: 'Centre Wellington Paralegal | Legal Services Wellington County | LegalAssist',
+    description: 'Licensed paralegal services in Centre Wellington and Wellington County. Traffic ticket defence on Highway 6 and Highway 7, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal centre wellington, centre wellington lawyer, wellington county legal services, traffic ticket centre wellington, fergus paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Centre Wellington', areaServed: ['Fergus', 'Elora', 'Salem', 'Centre Wellington', 'Wellington County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Centre Wellington', url: '/locations/centre-wellington' }],
+    faqs: [
+      { question: 'Do you serve Centre Wellington and Wellington County?', answer: 'Yes, we serve Centre Wellington, Fergus, Elora, Arthur, and all communities throughout Wellington County.' },
+      { question: 'Where is the nearest court for Centre Wellington residents?', answer: 'The nearest court is the Guelph courthouse at 74 Woolwich Street.' },
+      { question: 'Can you fight traffic tickets on Highway 6 and Highway 7?', answer: 'Yes, we defend traffic tickets issued on Highway 6 and Highway 7 and all roads throughout Wellington County.' },
+      { question: 'Do you offer virtual consultations for Centre Wellington?', answer: 'Yes, phone and video consultations are available for all Wellington County residents.' }
+    ]
+  },
+  '/locations/mapleton': {
+    title: 'Mapleton Paralegal | Legal Services Wellington County | LegalAssist',
+    description: 'Licensed paralegal services in Mapleton and Wellington County. Traffic ticket defence on Highway 6 and Wellington Road 7, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal mapleton, mapleton lawyer, wellington county legal services, traffic ticket mapleton, drayton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Mapleton', areaServed: ['Drayton', 'Moorefield', 'Alma', 'Mapleton', 'Wellington County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Mapleton', url: '/locations/mapleton' }],
+    faqs: [
+      { question: 'Do you serve Mapleton and Wellington County?', answer: 'Yes, we serve Mapleton, Drayton, Moorefield, Alma, and all communities throughout Wellington County.' },
+      { question: 'Where is the nearest court for Mapleton residents?', answer: 'The nearest court is the Guelph courthouse at 74 Woolwich Street.' },
+      { question: 'Can you fight traffic tickets on Highway 6 and Wellington Road 7?', answer: 'Yes, we defend traffic tickets issued on Highway 6 and Wellington Road 7 and all roads throughout Wellington County.' },
+      { question: 'Do you offer virtual consultations for Mapleton?', answer: 'Yes, phone and video consultations are available for all Wellington County residents.' }
+    ]
+  },
+  '/locations/wellesley': {
+    title: 'Wellesley Paralegal | Legal Services Waterloo Region | LegalAssist',
+    description: 'Licensed paralegal services in Wellesley and Waterloo Region. Traffic ticket defence on Lobsinger Line and Ament Line, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal wellesley, wellesley lawyer, waterloo region legal services, traffic ticket wellesley, st. clements paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Wellesley', areaServed: ['Wellesley', 'St. Clements', 'Linwood', 'Crosshill', 'Waterloo Region'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Wellesley', url: '/locations/wellesley' }],
+    faqs: [
+      { question: 'Do you serve Wellesley and Waterloo Region?', answer: 'Yes, we serve Wellesley, St. Clements, Linwood, Heidelberg, and all communities throughout Waterloo Region.' },
+      { question: 'Where is the nearest court for Wellesley residents?', answer: 'The nearest court is the Kitchener courthouse at 200 Frederick Street.' },
+      { question: 'Can you fight traffic tickets on Lobsinger Line and Ament Line?', answer: 'Yes, we defend traffic tickets issued on Lobsinger Line and Ament Line and all roads throughout Waterloo Region.' },
+      { question: 'Do you offer virtual consultations for Wellesley?', answer: 'Yes, phone and video consultations are available for all Waterloo Region residents.' }
+    ]
+  },
+  '/locations/west-grey': {
+    title: 'West Grey Paralegal | Legal Services Grey County | LegalAssist',
+    description: 'Licensed paralegal services in West Grey and Grey County. Traffic ticket defence on Highway 4 and Highway 6, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal west grey, west grey lawyer, grey county legal services, traffic ticket west grey, durham paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist West Grey', areaServed: ['Durham', 'Neustadt', 'Ayton', 'West Grey', 'Grey County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'West Grey', url: '/locations/west-grey' }],
+    faqs: [
+      { question: 'Do you serve West Grey and Grey County?', answer: 'Yes, we serve West Grey, Durham, Neustadt, Ayton, and all communities throughout Grey County.' },
+      { question: 'Where is the nearest court for West Grey residents?', answer: 'The nearest court is the Owen Sound courthouse at 611 9th Avenue East.' },
+      { question: 'Can you fight traffic tickets on Highway 4 and Highway 6?', answer: 'Yes, we defend traffic tickets issued on Highway 4 and Highway 6 and all roads throughout Grey County.' },
+      { question: 'Do you offer virtual consultations for West Grey?', answer: 'Yes, phone and video consultations are available for all Grey County residents.' }
+    ]
+  },
+  '/locations/brockton': {
+    title: 'Brockton Paralegal | Legal Services Bruce County | LegalAssist',
+    description: 'Licensed paralegal services in Brockton and Bruce County. Traffic ticket defence on Highway 4 and Highway 9, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal brockton, brockton lawyer, bruce county legal services, traffic ticket brockton, walkerton paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Brockton', areaServed: ['Walkerton', 'Cargill', 'Elmwood', 'Brockton', 'Bruce County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brockton', url: '/locations/brockton' }],
+    faqs: [
+      { question: 'Do you serve Brockton and Bruce County?', answer: 'Yes, we serve Brockton, Walkerton, Cargill, Elmwood, and all communities throughout Bruce County.' },
+      { question: 'Where is the nearest court for Brockton residents?', answer: 'The nearest court is the Walkerton courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 4 and Highway 9?', answer: 'Yes, we defend traffic tickets issued on Highway 4 and Highway 9 and all roads throughout Bruce County.' },
+      { question: 'Do you offer virtual consultations for Brockton?', answer: 'Yes, phone and video consultations are available for all Bruce County residents.' }
+    ]
+  },
+  '/locations/south-huron': {
+    title: 'South Huron Paralegal | Legal Services Huron County | LegalAssist',
+    description: 'Licensed paralegal services in South Huron and Huron County. Traffic ticket defence on Highway 4 and Highway 83, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal south huron, south huron lawyer, huron county legal services, traffic ticket south huron, exeter paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist South Huron', areaServed: ['Exeter', 'Huron Park', 'South Huron', 'Huron County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Huron', url: '/locations/south-huron' }],
+    faqs: [
+      { question: 'Do you serve South Huron and Huron County?', answer: 'Yes, we serve South Huron, Exeter, Huron Park, Dashwood, and all communities throughout Huron County.' },
+      { question: 'Where is the nearest court for South Huron residents?', answer: 'The nearest court is the Goderich courthouse at 1 Courthouse Square.' },
+      { question: 'Can you fight traffic tickets on Highway 4 and Highway 83?', answer: 'Yes, we defend traffic tickets issued on Highway 4 and Highway 83 and all roads throughout Huron County.' },
+      { question: 'Do you offer virtual consultations for South Huron?', answer: 'Yes, phone and video consultations are available for all Huron County residents.' }
+    ]
+  },
+  '/locations/north-perth': {
+    title: 'North Perth Paralegal | Legal Services Perth County | LegalAssist',
+    description: 'Licensed paralegal services in North Perth and Perth County. Traffic ticket defence on Highway 23 and Highway 86, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal north perth, north perth lawyer, perth county legal services, traffic ticket north perth, listowel paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist North Perth', areaServed: ['Listowel', 'Atwood', 'Monkton', 'North Perth', 'Perth County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Perth', url: '/locations/north-perth' }],
+    faqs: [
+      { question: 'Do you serve North Perth and Perth County?', answer: 'Yes, we serve North Perth, Listowel, Atwood, Monkton, and all communities throughout Perth County.' },
+      { question: 'Where is the nearest court for North Perth residents?', answer: 'The nearest court is the Stratford courthouse at 1 Huron Street.' },
+      { question: 'Can you fight traffic tickets on Highway 23 and Highway 86?', answer: 'Yes, we defend traffic tickets issued on Highway 23 and Highway 86 and all roads throughout Perth County.' },
+      { question: 'Do you offer virtual consultations for North Perth?', answer: 'Yes, phone and video consultations are available for all Perth County residents.' }
+    ]
+  },
+  '/locations/zorra': {
+    title: 'Zorra Paralegal | Legal Services Oxford County | LegalAssist',
+    description: 'Licensed paralegal services in Zorra and Oxford County. Traffic ticket defence on Highway 19 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal zorra, zorra lawyer, oxford county legal services, traffic ticket zorra, embro paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Zorra', areaServed: ['Embro', 'Thamesford', 'Lakeside', 'Zorra', 'Oxford County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Zorra', url: '/locations/zorra' }],
+    faqs: [
+      { question: 'Do you serve Zorra and Oxford County?', answer: 'Yes, we serve Zorra, Embro, Thamesford, Woodstock, and all communities throughout Oxford County.' },
+      { question: 'Where is the nearest court for Zorra residents?', answer: 'The nearest court is the Woodstock courthouse at 415 Hunter Street.' },
+      { question: 'Can you fight traffic tickets on Highway 19 and Highway 2?', answer: 'Yes, we defend traffic tickets issued on Highway 19 and Highway 2 and all roads throughout Oxford County.' },
+      { question: 'Do you offer virtual consultations for Zorra?', answer: 'Yes, phone and video consultations are available for all Oxford County residents.' }
+    ]
+  },
+  '/locations/south-stormont': {
+    title: 'South Stormont Paralegal | Legal Services SDG Counties | LegalAssist',
+    description: 'Licensed paralegal services in South Stormont and SDG Counties. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal south stormont, south stormont lawyer, sdg counties legal services, traffic ticket south stormont, long sault paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist South Stormont', areaServed: ['Long Sault', 'Ingleside', 'South Stormont', 'SDG Counties'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Stormont', url: '/locations/south-stormont' }],
+    faqs: [
+      { question: 'Do you serve South Stormont and SDG Counties?', answer: 'Yes, we serve South Stormont, Long Sault, Ingleside, Cornwall, and all communities throughout SDG Counties.' },
+      { question: 'Where is the nearest court for South Stormont residents?', answer: 'The nearest court is the Cornwall courthouse at 29 Second Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 2?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 2 and all roads throughout SDG Counties.' },
+      { question: 'Do you offer virtual consultations for South Stormont?', answer: 'Yes, phone and video consultations are available for all SDG Counties residents.' }
+    ]
+  },
+  '/locations/russell': {
+    title: 'Russell Paralegal | Legal Services Prescott and Russell | LegalAssist',
+    description: 'Licensed paralegal services in Russell and Prescott and Russell. Traffic ticket defence on Highway 417 and Highway 138, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal russell, russell lawyer, prescott and russell legal services, traffic ticket russell, embrun paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Russell', areaServed: ['Russell', 'Embrun', 'Limoges', 'Prescott and Russell'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Russell', url: '/locations/russell' }],
+    faqs: [
+      { question: 'Do you serve Russell and Prescott and Russell?', answer: 'Yes, we serve Russell, Embrun, Limoges, Vars, and all communities throughout Prescott and Russell.' },
+      { question: 'Where is the nearest court for Russell residents?', answer: 'The nearest court is the Ottawa courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 417 and Highway 138?', answer: 'Yes, we defend traffic tickets issued on Highway 417 and Highway 138 and all roads throughout Prescott and Russell.' },
+      { question: 'Do you offer virtual consultations for Russell?', answer: 'Yes, phone and video consultations are available for all Prescott and Russell residents.' }
+    ]
+  },
+  '/locations/south-dundas': {
+    title: 'South Dundas Paralegal | Legal Services SDG Counties | LegalAssist',
+    description: 'Licensed paralegal services in South Dundas and SDG Counties. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal south dundas, south dundas lawyer, sdg counties legal services, traffic ticket south dundas, morrisburg paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist South Dundas', areaServed: ['Morrisburg', 'Iroquois', 'South Dundas', 'SDG Counties'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Dundas', url: '/locations/south-dundas' }],
+    faqs: [
+      { question: 'Do you serve South Dundas and SDG Counties?', answer: 'Yes, we serve South Dundas, Morrisburg, Iroquois, Chesterville, and all communities throughout SDG Counties.' },
+      { question: 'Where is the nearest court for South Dundas residents?', answer: 'The nearest court is the Cornwall courthouse at 29 Second Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 2?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 2 and all roads throughout SDG Counties.' },
+      { question: 'Do you offer virtual consultations for South Dundas?', answer: 'Yes, phone and video consultations are available for all SDG Counties residents.' }
+    ]
+  },
+  '/locations/north-glengarry': {
+    title: 'North Glengarry Paralegal | Legal Services SDG Counties | LegalAssist',
+    description: 'Licensed paralegal services in North Glengarry and SDG Counties. Traffic ticket defence on Highway 34 and Highway 43, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal north glengarry, north glengarry lawyer, sdg counties legal services, traffic ticket north glengarry, alexandria paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist North Glengarry', areaServed: ['Alexandria', 'Maxville', 'North Glengarry', 'SDG Counties'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Glengarry', url: '/locations/north-glengarry' }],
+    faqs: [
+      { question: 'Do you serve North Glengarry and SDG Counties?', answer: 'Yes, we serve North Glengarry, Alexandria, Maxville, Dalkeith, and all communities throughout SDG Counties.' },
+      { question: 'Where is the nearest court for North Glengarry residents?', answer: 'The nearest court is the Cornwall courthouse at 29 Second Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 34 and Highway 43?', answer: 'Yes, we defend traffic tickets issued on Highway 34 and Highway 43 and all roads throughout SDG Counties.' },
+      { question: 'Do you offer virtual consultations for North Glengarry?', answer: 'Yes, phone and video consultations are available for all SDG Counties residents.' }
+    ]
+  },
+  '/locations/south-glengarry': {
+    title: 'South Glengarry Paralegal | Legal Services SDG Counties | LegalAssist',
+    description: 'Licensed paralegal services in South Glengarry and SDG Counties. Traffic ticket defence on Highway 401 and Highway 34, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal south glengarry, south glengarry lawyer, sdg counties legal services, traffic ticket south glengarry, lancaster paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist South Glengarry', areaServed: ['Lancaster', 'Williamstown', 'Glen Walter', 'South Glengarry', 'SDG Counties'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Glengarry', url: '/locations/south-glengarry' }],
+    faqs: [
+      { question: 'Do you serve South Glengarry and SDG Counties?', answer: 'Yes, we serve South Glengarry, Lancaster, Williamstown, Glen Walter, and all communities throughout SDG Counties.' },
+      { question: 'Where is the nearest court for South Glengarry residents?', answer: 'The nearest court is the Cornwall courthouse at 29 Second Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 34?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 34 and all roads throughout SDG Counties.' },
+      { question: 'Do you offer virtual consultations for South Glengarry?', answer: 'Yes, phone and video consultations are available for all SDG Counties residents.' }
+    ]
+  },
+  '/locations/loyalist': {
+    title: 'Loyalist Paralegal | Legal Services Lennox and Addington | LegalAssist',
+    description: 'Licensed paralegal services in Loyalist and Lennox and Addington. Traffic ticket defence on Highway 401 and Highway 33, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal loyalist, loyalist lawyer, lennox and addington legal services, traffic ticket loyalist, bath paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Loyalist', areaServed: ['Bath', 'Amherstview', 'Odessa', 'Loyalist', 'Lennox and Addington'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Loyalist', url: '/locations/loyalist' }],
+    faqs: [
+      { question: 'Do you serve Loyalist and Lennox and Addington?', answer: 'Yes, we serve Loyalist, Bath, Amherstview, Odessa, and all communities throughout Lennox and Addington.' },
+      { question: 'Where is the nearest court for Loyalist residents?', answer: 'The nearest court is the Napanee courthouse at 41 Dundas Street West.' },
+      { question: 'Can you fight traffic tickets on Highway 401 and Highway 33?', answer: 'Yes, we defend traffic tickets issued on Highway 401 and Highway 33 and all roads throughout Lennox and Addington.' },
+      { question: 'Do you offer virtual consultations for Loyalist?', answer: 'Yes, phone and video consultations are available for all Lennox and Addington residents.' }
+    ]
+  },
+  '/locations/blind-river': {
+    title: 'Blind River Paralegal | Legal Services Algoma District | LegalAssist',
+    description: 'Licensed paralegal services in Blind River and Algoma District. Traffic ticket defence on Highway 17 (Trans-Canada), small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal blind river, blind river lawyer, algoma district legal services, traffic ticket blind river, thessalon paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Blind River', areaServed: ['Blind River', 'Thessalon', 'Iron Bridge', 'Algoma District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Blind River', url: '/locations/blind-river' }],
+    faqs: [
+      { question: 'Do you serve Blind River and Algoma District?', answer: 'Yes, we serve Blind River, Thessalon, Iron Bridge, Espanola, and all communities throughout Algoma District.' },
+      { question: 'Where is the nearest court for Blind River residents?', answer: 'The nearest court is the Blind River courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 17 (Trans-Canada)?', answer: 'Yes, we defend traffic tickets issued on Highway 17 (Trans-Canada) and all roads throughout Algoma District.' },
+      { question: 'Do you offer virtual consultations for Blind River?', answer: 'Yes, phone and video consultations are available for all Algoma District residents.' }
+    ]
+  },
+  '/locations/atikokan': {
+    title: 'Atikokan Paralegal | Legal Services Rainy River District | LegalAssist',
+    description: 'Licensed paralegal services in Atikokan and Rainy River District. Traffic ticket defence on Highway 11 and Highway 622, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal atikokan, atikokan lawyer, rainy river district legal services, traffic ticket atikokan, fort frances paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Atikokan', areaServed: ['Atikokan', 'Rainy River District'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Atikokan', url: '/locations/atikokan' }],
+    faqs: [
+      { question: 'Do you serve Atikokan and Rainy River District?', answer: 'Yes, we serve Atikokan, Fort Frances, Thunder Bay, Rainy River, and all communities throughout Rainy River District.' },
+      { question: 'Where is the nearest court for Atikokan residents?', answer: 'The nearest court is the Fort Frances courthouse.' },
+      { question: 'Can you fight traffic tickets on Highway 11 and Highway 622?', answer: 'Yes, we defend traffic tickets issued on Highway 11 and Highway 622 and all roads throughout Rainy River District.' },
+      { question: 'Do you offer virtual consultations for Atikokan?', answer: 'Yes, phone and video consultations are available for all Rainy River District residents.' }
+    ]
+  },
+  '/locations/deep-river': {
+    title: 'Deep River Paralegal | Legal Services Renfrew County | LegalAssist',
+    description: 'Licensed paralegal services in Deep River and Renfrew County. Traffic ticket defence on Highway 17 and Highway 62, small claims court, landlord-tenant disputes. Free consultation.',
+    keywords: 'paralegal deep river, deep river lawyer, renfrew county legal services, traffic ticket deep river, chalk river paralegal',
+    schema: { type: 'LocalBusiness', name: 'LegalAssist Deep River', areaServed: ['Deep River', 'Chalk River', 'Petawawa', 'Renfrew County'] },
+    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Deep River', url: '/locations/deep-river' }],
+    faqs: [
+      { question: 'Do you serve Deep River and Renfrew County?', answer: 'Yes, we serve Deep River, Chalk River, Petawawa, Pembroke, and all communities throughout Renfrew County.' },
+      { question: 'Where is the nearest court for Deep River residents?', answer: 'The nearest court is the Pembroke courthouse at 297 Pembroke Street East.' },
+      { question: 'Can you fight traffic tickets on Highway 17 and Highway 62?', answer: 'Yes, we defend traffic tickets issued on Highway 17 and Highway 62 and all roads throughout Renfrew County.' },
+      { question: 'Do you offer virtual consultations for Deep River?', answer: 'Yes, phone and video consultations are available for all Renfrew County residents.' }
+    ]
+  },
 };
 
 // ============================================
@@ -4330,7 +6422,7 @@ export function generateServiceSchema(config: SEOConfig, canonicalUrl: string): 
     "description": config.description,
     "provider": {
       "@type": "LegalService",
-      "@id": "https://legalassist.london/#organization",
+      "@id": "https://www.legalassist.london/#organization",
       "name": businessInfo.name,
       "url": businessInfo.url
     },
@@ -4355,6 +6447,7 @@ export function generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[], baseUrl:
       "name": item.name,
       "item": `${baseUrl}${item.url}`
     }))
+
   };
 }
 

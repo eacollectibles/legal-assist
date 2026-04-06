@@ -23,6 +23,5 @@ export const guideRoutes = [
   { path: '/guides/what-to-do-when-sued', element: BeingSuedGuidePage },
   { path: '/guides/what-is-a-paralegal', element: WhatIsAParalegalPage },
   { path: '/guides/paralegal-vs-lawyer', element: ParalegalVsLawyerPage },
-  { path: '/paralegal-vs-lawyer', element: ParalegalVsLawyerPage },
-  { path: '/what-is-a-paralegal', element: WhatIsAParalegalPage },
+  // Legacy URLs redirected to canonical /guides/ paths (handled in Router.tsx)
 ];

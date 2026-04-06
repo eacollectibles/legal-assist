@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle, CheckCircle, Loader, Save, Lock } from 'lucide-react';
+import { AlertCircle, CheckCircle, Loader, Save, Lock, Shield, Briefcase, Building2, FileCheck, AlertTriangle, Mail, Phone, Calendar, MapPin, User, Heart, Clock } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { changePassword } from '@/lib/auth-service';
 import { ClientProfile, CurrentUser } from './types';
@@ -43,19 +43,28 @@ export default function ProfileTab({
     setIsSavingProfile(true);
 
     try {
-      const profileId = userAccountId || currentUser?.email || crypto.randomUUID();
+      const profileId = currentUser?.clientId || profile?._id || userAccountId || currentUser?.email || crypto.randomUUID();
       
+      const form = e.target as any;
       const profileData: ClientProfile = {
         _id: profileId,
-        firstName: (e.target as any).firstName.value,
-        lastName: (e.target as any).lastName.value,
-        streetAddress: (e.target as any).streetAddress.value,
-        city: (e.target as any).city.value,
-        state: (e.target as any).state.value,
-        zipCode: (e.target as any).zipCode.value,
-        phoneNumber: (e.target as any).phoneNumber.value,
-        emergencyContactName: (e.target as any).emergencyContactName.value,
-        emergencyContactPhone: (e.target as any).emergencyContactPhone.value,
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        preferredName: form.preferredName?.value || '',
+        dateOfBirth: form.dateOfBirth?.value || undefined,
+        preferredLanguage: form.preferredLanguage?.value || '',
+        phoneNumber: form.phoneNumber.value,
+        alternatePhone: form.alternatePhone?.value || '',
+        preferredContactMethod: form.preferredContactMethod?.value || '',
+        bestTimeToContact: form.bestTimeToContact?.value || '',
+        streetAddress: form.streetAddress.value,
+        unitNumber: form.unitNumber?.value || '',
+        city: form.city.value,
+        state: form.state.value,
+        zipCode: form.zipCode.value,
+        emergencyContactName: form.emergencyContactName.value,
+        emergencyContactPhone: form.emergencyContactPhone.value,
+        emergencyContactRelationship: form.emergencyContactRelationship?.value || '',
       };
 
       if (profile) {
@@ -171,6 +180,7 @@ export default function ProfileTab({
           <div className="space-y-8">
             {/* Personal Information Form */}
             <form onSubmit={handleSaveProfile} className="space-y-6">
+              {/* Basic Identity */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="firstName" className="block font-paragraph font-semibold text-foreground mb-2">
@@ -199,78 +209,213 @@ export default function ProfileTab({
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="streetAddress" className="block font-paragraph font-semibold text-foreground mb-2">
-                  Street Address
-                </label>
-                <Input
-                  id="streetAddress"
-                  name="streetAddress"
-                  defaultValue={profile?.streetAddress || ''}
-                  placeholder="Enter your street address"
-                  className="border-gray-300"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="city" className="block font-paragraph font-semibold text-foreground mb-2">
-                    City
+                  <label htmlFor="preferredName" className="block font-paragraph font-semibold text-foreground mb-2">
+                    Preferred Name
                   </label>
                   <Input
-                    id="city"
-                    name="city"
-                    defaultValue={profile?.city || ''}
-                    placeholder="City"
+                    id="preferredName"
+                    name="preferredName"
+                    defaultValue={profile?.preferredName || ''}
+                    placeholder="Name you prefer to be called"
                     className="border-gray-300"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="state" className="block font-paragraph font-semibold text-foreground mb-2">
-                    State/Province
+                  <label htmlFor="dateOfBirth" className="block font-paragraph font-semibold text-foreground mb-2">
+                    Date of Birth
                   </label>
                   <Input
-                    id="state"
-                    name="state"
-                    defaultValue={profile?.state || ''}
-                    placeholder="State/Province"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    type="date"
+                    defaultValue={profile?.dateOfBirth ? new Date(profile.dateOfBirth).toISOString().split('T')[0] : ''}
                     className="border-gray-300"
                   />
+                </div>
+              </div>
+
+              {/* Email (read-only from account) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block font-paragraph font-semibold text-foreground mb-2">
+                    Email Address
+                  </label>
+                  <Input
+                    value={currentUser?.email || ''}
+                    readOnly
+                    className="border-gray-300 bg-gray-50 text-foreground/70"
+                  />
+                  <p className="text-xs text-foreground/50 mt-1">Email is linked to your account and cannot be changed here.</p>
                 </div>
 
                 <div>
-                  <label htmlFor="zipCode" className="block font-paragraph font-semibold text-foreground mb-2">
-                    Zip/Postal Code
+                  <label htmlFor="preferredLanguage" className="block font-paragraph font-semibold text-foreground mb-2">
+                    Preferred Language
                   </label>
                   <Input
-                    id="zipCode"
-                    name="zipCode"
-                    defaultValue={profile?.zipCode || ''}
-                    placeholder="Zip Code"
+                    id="preferredLanguage"
+                    name="preferredLanguage"
+                    defaultValue={profile?.preferredLanguage || ''}
+                    placeholder="e.g., English, French"
                     className="border-gray-300"
                   />
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="phoneNumber" className="block font-paragraph font-semibold text-foreground mb-2">
-                  Phone Number
-                </label>
-                <Input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="tel"
-                  defaultValue={profile?.phoneNumber || ''}
-                  placeholder="(555) 123-4567"
-                  className="border-gray-300"
-                />
-              </div>
-
+              {/* Contact Information */}
               <div className="pt-6 border-t border-gray-200">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-4">Emergency Contact</h3>
-                
+                <h3 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                  <Phone className="w-5 h-5 text-primary" />
+                  Contact Information
+                </h3>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phoneNumber" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Phone Number
+                    </label>
+                    <Input
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      type="tel"
+                      defaultValue={profile?.phoneNumber || ''}
+                      placeholder="(555) 123-4567"
+                      className="border-gray-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="alternatePhone" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Alternate Phone
+                    </label>
+                    <Input
+                      id="alternatePhone"
+                      name="alternatePhone"
+                      type="tel"
+                      defaultValue={profile?.alternatePhone || ''}
+                      placeholder="(555) 123-4567"
+                      className="border-gray-300"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                  <div>
+                    <label htmlFor="preferredContactMethod" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Preferred Contact Method
+                    </label>
+                    <Input
+                      id="preferredContactMethod"
+                      name="preferredContactMethod"
+                      defaultValue={profile?.preferredContactMethod || ''}
+                      placeholder="e.g., Phone, Email, Text"
+                      className="border-gray-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="bestTimeToContact" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Best Time to Contact
+                    </label>
+                    <Input
+                      id="bestTimeToContact"
+                      name="bestTimeToContact"
+                      defaultValue={profile?.bestTimeToContact || ''}
+                      placeholder="e.g., Mornings, Evenings"
+                      className="border-gray-300"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Address */}
+              <div className="pt-6 border-t border-gray-200">
+                <h3 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-primary" />
+                  Address
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="md:col-span-2">
+                    <label htmlFor="streetAddress" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Street Address
+                    </label>
+                    <Input
+                      id="streetAddress"
+                      name="streetAddress"
+                      defaultValue={profile?.streetAddress || ''}
+                      placeholder="Enter your street address"
+                      className="border-gray-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="unitNumber" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Unit/Apt #
+                    </label>
+                    <Input
+                      id="unitNumber"
+                      name="unitNumber"
+                      defaultValue={profile?.unitNumber || ''}
+                      placeholder="Unit #"
+                      className="border-gray-300"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                  <div>
+                    <label htmlFor="city" className="block font-paragraph font-semibold text-foreground mb-2">
+                      City
+                    </label>
+                    <Input
+                      id="city"
+                      name="city"
+                      defaultValue={profile?.city || ''}
+                      placeholder="City"
+                      className="border-gray-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="state" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Province
+                    </label>
+                    <Input
+                      id="state"
+                      name="state"
+                      defaultValue={profile?.state || ''}
+                      placeholder="Province"
+                      className="border-gray-300"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="zipCode" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Postal Code
+                    </label>
+                    <Input
+                      id="zipCode"
+                      name="zipCode"
+                      defaultValue={profile?.zipCode || ''}
+                      placeholder="Postal Code"
+                      className="border-gray-300"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Emergency Contact */}
+              <div className="pt-6 border-t border-gray-200">
+                <h3 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-primary" />
+                  Emergency Contact
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <label htmlFor="emergencyContactName" className="block font-paragraph font-semibold text-foreground mb-2">
                       Contact Name
@@ -297,8 +442,53 @@ export default function ProfileTab({
                       className="border-gray-300"
                     />
                   </div>
+
+                  <div>
+                    <label htmlFor="emergencyContactRelationship" className="block font-paragraph font-semibold text-foreground mb-2">
+                      Relationship
+                    </label>
+                    <Input
+                      id="emergencyContactRelationship"
+                      name="emergencyContactRelationship"
+                      defaultValue={profile?.emergencyContactRelationship || ''}
+                      placeholder="e.g., Spouse, Parent"
+                      className="border-gray-300"
+                    />
+                  </div>
                 </div>
               </div>
+
+              {/* Availability (read-only from intake) */}
+              {(profile?.preferredDays || profile?.preferredTimes) && (
+                <div className="pt-6 border-t border-gray-200">
+                  <h3 className="font-heading text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    Availability
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {profile?.preferredDays && (
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Preferred Days</p>
+                        <p className="text-sm text-gray-900">{profile.preferredDays}</p>
+                      </div>
+                    )}
+                    {profile?.preferredTimes && (
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Preferred Times</p>
+                        <p className="text-sm text-gray-900">{profile.preferredTimes}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* How They Heard About Us */}
+              {profile?.howHeardAboutUs && (
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">How They Heard About Us</p>
+                  <p className="text-sm text-gray-900">{profile.howHeardAboutUs}</p>
+                </div>
+              )}
 
               <Button
                 type="submit"
@@ -309,6 +499,134 @@ export default function ProfileTab({
                 {isSavingProfile ? 'Saving...' : 'Save Profile'}
               </Button>
             </form>
+
+            {/* LSO Compliance Information — Read Only (collected during intake) */}
+            {profile?.occupation && (
+              <div className="pt-8 border-t border-gray-200">
+                <h3 className="font-heading text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-primary" />
+                  LSO Compliance Information
+                </h3>
+                <p className="font-paragraph text-sm text-foreground/60 mb-6">
+                  The following information was collected during your intake process as required by the Law Society of Ontario.
+                  To update this information, please contact our office.
+                </p>
+
+                <div className="space-y-6">
+                  {/* Occupation & Business */}
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="font-heading text-sm font-semibold text-gray-600 mb-3 flex items-center gap-2">
+                      <Briefcase className="w-4 h-4" /> Occupation & Employment
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-gray-400 uppercase tracking-wider">Occupation</p>
+                        <p className="text-sm text-gray-900 font-medium">{profile.occupation}</p>
+                      </div>
+                      {profile?.businessAddress && (
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Business Address</p>
+                          <p className="text-sm text-gray-900">{profile?.businessAddress}</p>
+                        </div>
+                      )}
+                      {profile?.businessPhone && (
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Business Phone</p>
+                          <p className="text-sm text-gray-900">{profile?.businessPhone}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Identity Verification */}
+                  {profile?.idType && (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-heading text-sm font-semibold text-gray-600 mb-3 flex items-center gap-2">
+                        <FileCheck className="w-4 h-4" /> Identity Verification
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">ID Type</p>
+                          <p className="text-sm text-gray-900 font-medium">{profile?.idType}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Verification Consent</p>
+                          <p className="text-sm text-gray-900">
+                            {profile?.idVerificationConsent ? '✓ Consent given' : 'Pending'}
+                          </p>
+                        </div>
+                        {profile?.idIssuingAuthority && (
+                          <div>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider">Issuing Authority</p>
+                            <p className="text-sm text-gray-900">{profile?.idIssuingAuthority}</p>
+                          </div>
+                        )}
+                        {profile?.idExpiryDate && (
+                          <div>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider">Expiry Date</p>
+                            <p className="text-sm text-gray-900">{new Date(profile?.idExpiryDate).toLocaleDateString('en-CA')}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Organization Info */}
+                  {profile?.isOrganization && (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-heading text-sm font-semibold text-gray-600 mb-3 flex items-center gap-2">
+                        <Building2 className="w-4 h-4" /> Organization Details
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Organization Name</p>
+                          <p className="text-sm text-gray-900 font-medium">{profile?.orgName || 'Not provided'}</p>
+                        </div>
+                        {profile?.orgIncorporationNumber && (
+                          <div>
+                            <p className="text-xs text-gray-400 uppercase tracking-wider">Incorporation Number</p>
+                            <p className="text-sm text-gray-900">{profile?.orgIncorporationNumber}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Conflict Check Status */}
+                  {profile?.conflictCheckCompleted && (
+                    <div className={`rounded-lg p-4 ${
+                      profile?.conflictCheckStatus === 'flagged' ? 'bg-amber-50 border border-amber-200' : 'bg-green-50 border border-green-200'
+                    }`}>
+                      <h4 className={`font-heading text-sm font-semibold mb-3 flex items-center gap-2 ${
+                        profile?.conflictCheckStatus === 'flagged' ? 'text-amber-700' : 'text-green-700'
+                      }`}>
+                        {profile?.conflictCheckStatus === 'flagged'
+                          ? <><AlertTriangle className="w-4 h-4" /> Conflict Check — Under Review</>
+                          : <><CheckCircle className="w-4 h-4" /> Conflict Check — Passed</>
+                        }
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Date Checked</p>
+                          <p className="text-sm text-gray-900">
+                            {profile?.conflictCheckDate ? new Date(profile?.conflictCheckDate).toLocaleDateString('en-CA') : 'N/A'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Status</p>
+                          <p className="text-sm text-gray-900 font-medium">
+                            {profile?.conflictCheckStatus === 'flagged'
+                              ? 'Flagged for review — our paralegal will discuss at consultation'
+                              : 'No conflicts found'
+                            }
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Password Change Section */}
             <div className="pt-8 border-t border-gray-200">

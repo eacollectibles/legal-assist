@@ -1,8 +1,7 @@
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { CheckCircle, Phone } from 'lucide-react';
+import { CheckCircle, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Image } from '@/components/ui/image';
@@ -12,7 +11,6 @@ import AutoSEO from '@/components/AutoSEO';
 import { TrustSignals } from '@/components/TrustSignals';
 import { WhatHappensNext } from '@/components/WhatHappensNext';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
-// ... keep existing code (imports)
 
 interface AuthorityItem {
   title: string;
@@ -48,38 +46,36 @@ interface ServicePageLayoutProps {
   faqSection?: React.ReactNode;
 }
 
-// Default authority items
 const defaultAuthorityItems: AuthorityItem[] = [
   {
     title: 'Licensed & Experienced',
-    description: 'Our team consists of licensed paralegals with extensive experience in this practice area.'
+    description: 'Every matter is handled by a licensed paralegal with direct experience in this practice area.'
   },
   {
-    title: 'Proven Track Record',
-    description: 'We have successfully represented hundreds of clients with favorable outcomes.'
+    title: 'Strategic Representation',
+    description: 'We assess the merits of your case and develop a focused strategy tailored to your situation.'
   },
   {
     title: 'Client-Focused Approach',
-    description: 'We prioritize your needs and work tirelessly to achieve the best possible results for your case.'
+    description: 'Clear communication, transparent fees, and responsive service throughout your matter.'
   }
 ];
 
-// Default reassurance items
 const defaultReassuranceItems: ReassuranceItem[] = [
   {
-    icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />,
+    icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" aria-hidden="true" />,
     title: 'Transparent Communication',
-    description: 'We keep you informed every step of the way with clear, honest communication about your case.'
+    description: 'We keep you informed at every stage with clear, honest updates about your matter.'
   },
   {
-    icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />,
-    title: 'Affordable Rates',
-    description: 'We offer competitive pricing with flexible payment options to make legal representation accessible.'
+    icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" aria-hidden="true" />,
+    title: 'Accessible Rates',
+    description: 'Fees are discussed upfront during your free consultation. No surprises, no hidden costs.'
   },
   {
-    icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />,
+    icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" aria-hidden="true" />,
     title: 'Dedicated Support',
-    description: 'Our team is committed to providing you with the support and guidance you need throughout your case.'
+    description: 'Your matter receives focused attention. We are responsive and committed to moving your case forward.'
   }
 ];
 
@@ -105,71 +101,67 @@ export default function ServicePageLayout({
       />
 
       <Header />
-      <div className="max-w-[100rem] mx-auto px-4 md:px-8 pt-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-4">
         <Breadcrumbs />
       </div>
 
-      {/* Section 1: Problem Recognition (Hero) */}
+      {/* ── Section 1: Hero ── */}
       <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
-              <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
+              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
                 {problemHeadline}
               </h1>
-              <p className="font-paragraph text-lg text-foreground/80 mb-8">
+              <p className="font-paragraph text-lg text-foreground/80 mb-8 leading-relaxed">
                 {problemDescription}
               </p>
-              {/* Dominant CTA (site-wide consistent) */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <PrimaryCTA variant="button" className="w-full sm:w-auto" />
                 <a
                   href={PHONE_HREF}
-                  className="text-primary font-medium sm:text-left text-center flex items-center sm:justify-start justify-center gap-2 py-2"
+                  className="text-primary font-semibold flex items-center gap-2 py-3 sm:py-0 justify-center sm:justify-start min-h-[48px] hover:text-primary/80 transition-colors"
+                  aria-label={`Call ${PHONE_DISPLAY}`}
                 >
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4" aria-hidden="true" />
                   Call {PHONE_DISPLAY}
                 </a>
               </div>
             </div>
-            <div className="rounded-lg overflow-hidden shadow-lg">
-              <Image src={heroImage.src} alt={heroImage.alt} className="w-full h-auto" />
+            <div className="rounded-xl overflow-hidden shadow-lg">
+              <Image src={heroImage.src} alt={heroImage.alt} className="w-full h-auto" originWidth={800} originHeight={600} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* CONVERSION STRIP */}
-      <ConversionStrip 
-        outcome="Expert representation & favorable outcomes"
-        timeline="Quick resolution with clear timelines"
-        pricing="Transparent fees with no hidden costs"
-      />
+      {/* ── Conversion Strip ── */}
+      <ConversionStrip />
 
-      {/* TRUST SIGNALS */}
+      {/* ── Trust Signals + What Happens Next ── */}
       <section className="py-8 md:py-12 bg-background">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 space-y-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-4">
           <TrustSignals />
           <WhatHappensNext />
         </div>
       </section>
 
-      {/* Section 2: Authority */}
+      {/* ── Authority Section ── */}
       <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-12">
             Why Choose Our Services
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {authorityItems.map((item, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-lg p-6 border border-pastelbeige">
+              <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-xl p-6 border border-pastelbeige">
                 <div className="flex gap-4">
-                  <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" aria-hidden="true" />
                   <div>
                     <h3 className="font-heading text-xl font-bold text-foreground mb-2">
                       {item.title}
                     </h3>
-                    <p className="font-paragraph text-foreground/80">
+                    <p className="font-paragraph text-foreground/80 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -180,23 +172,23 @@ export default function ServicePageLayout({
         </div>
       </section>
 
-      {/* Section 3: Process */}
+      {/* ── Process Section ── */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-12">
             Our Process
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {processSteps.map((item, idx) => (
               <div key={idx} className="relative">
-                <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
-                  <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-lg mb-4">
+                <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm h-full">
+                  <div className="w-12 h-12 bg-matte text-gold rounded-full flex items-center justify-center font-heading font-bold text-lg mb-4">
                     {item.step}
                   </div>
                   <h3 className="font-heading text-xl font-bold text-foreground mb-3">
                     {item.title}
                   </h3>
-                  <p className="font-paragraph text-foreground/80">
+                  <p className="font-paragraph text-foreground/80 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -206,22 +198,22 @@ export default function ServicePageLayout({
         </div>
       </section>
 
-      {/* Section 4: Reassurance */}
+      {/* ── Reassurance Section ── */}
       <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-12">
             What You Can Expect
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reassuranceItems.map((item, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-lg p-6 border border-pastelbeige">
+              <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-xl p-6 border border-pastelbeige">
                 <div className="flex gap-4">
                   {item.icon}
                   <div>
                     <h3 className="font-heading text-xl font-bold text-foreground mb-2">
                       {item.title}
                     </h3>
-                    <p className="font-paragraph text-foreground/80">
+                    <p className="font-paragraph text-foreground/80 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -232,48 +224,31 @@ export default function ServicePageLayout({
         </div>
       </section>
 
-      {/* Section 5: Pricing/Next Step */}
+      {/* Custom content slot */}
       {children}
 
-      {/* Section 6: FAQ */}
+      {/* FAQ Section */}
       {faqSection}
 
-      {/* Section 7: Action CTA */}
-      <section className="w-full py-16 md:py-24 bg-gradient-to-r from-primary/10 to-pastelbeige/30">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-6">
+      {/* ── Final CTA — Dark premium band ── */}
+      <section className="w-full py-16 md:py-24 bg-matte">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-12 text-center">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight">
             Find Out Where You Stand
           </h2>
-          <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-            Schedule a consultation with our experienced team to discuss your case and learn about your options.
+          <p className="font-paragraph text-lg text-white/60 mb-10 max-w-xl mx-auto leading-relaxed">
+            Contact us for a free, no-obligation case review. We&rsquo;ll assess your situation and explain your options clearly.
           </p>
-          {/* Mobile: Single primary CTA + text link */}
-          <div className="flex flex-col gap-3 sm:hidden max-w-sm mx-auto">
-            <Link to="/contact" className="w-full">
-              <Button className="bg-primary hover:bg-primary/90 text-white w-full h-12">
-                Find Out Where You Stand
-              </Button>
-            </Link>
-            <a 
+          <PrimaryCTA variant="footer" />
+          <div className="mt-6">
+            <a
               href={PHONE_HREF}
-              className="text-primary font-medium text-center flex items-center justify-center gap-2 py-2"
+              className="inline-flex items-center gap-2 text-gold-light hover:text-gold transition-colors font-medium"
+              aria-label={`Call ${PHONE_DISPLAY}`}
             >
-              <Phone className="w-4 h-4" />
-              Call {PHONE_DISPLAY}
+              <Phone className="w-4 h-4" aria-hidden="true" />
+              <span>{PHONE_DISPLAY}</span>
             </a>
-          </div>
-          {/* Desktop: Two buttons side by side */}
-          <div className="hidden sm:flex flex-row gap-4 justify-center">
-            <Link to="/contact">
-              <Button className="bg-primary hover:bg-primary/90 text-white">
-                Find Out Where You Stand
-              </Button>
-            </Link>
-            <Link to="/services">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">
-                Back to Services
-              </Button>
-            </Link>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Clock, Calendar, Phone } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -29,10 +30,52 @@ export default function BlogPostPage() {
     return <Navigate to="/blog" replace />;
   }
 
+  const blogPostSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    url: `https://www.legalassist.london/blog/${post.slug}`,
+    author: {
+      '@type': 'Organization',
+      name: 'LegalAssist Paralegal Services',
+    },
+    publisher: {
+      '@type': 'LegalService',
+      name: 'LegalAssist Paralegal Services',
+      url: 'https://www.legalassist.london',
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{post.title} | LegalAssist Blog</title>
+        <meta name="description" content={post.description} />
+        <link rel="canonical" href={`https://www.legalassist.london/blog/${post.slug}`} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.description} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://www.legalassist.london/blog/${post.slug}`} />
+        <meta property="og:image" content="https://www.legalassist.london/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={post.title} />
+        <meta property="og:locale" content="en_CA" />
+        <meta property="og:site_name" content="LegalAssist Paralegal Services" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.description} />
+        <meta name="twitter:image" content="https://www.legalassist.london/og-image.jpg" />
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:section" content={post.category} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostSchema)}
+        </script>
+      </Helmet>
       <Header />
-      
+
       {/* Breadcrumb */}
       <div className="bg-secondary/5 border-b border-secondary/10">
         <div className="max-w-4xl mx-auto px-6 py-4">
@@ -122,11 +165,11 @@ export default function BlogPostPage() {
               Get a free consultation with a licensed Ontario paralegal.
             </p>
             <a 
-              href="tel:+13658829515"
+              href="tel:+12262725153"
               className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg font-paragraph font-medium"
             >
               <Phone className="w-5 h-5" />
-              Call 365-882-9515
+              Call 226-272-5153
             </a>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Bookings } from '@/entities';
 import { BaseCrudService } from '@/integrations';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BackToDashboard from '@/components/BackToDashboard';
 import MeetingCard from '@/components/MeetingCard';
 import RescheduleDialog from '@/components/RescheduleDialog';
 import CancelDialog from '@/components/CancelDialog';
@@ -24,7 +25,7 @@ interface BookingFormData {
   clientNotes: string;
 }
 
-export default function MeetingDashboardPage() {
+export default function MeetingDashboardPage({ embedded }: { embedded?: boolean } = {}) {
   const [bookings, setBookings] = useState<Bookings[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -187,11 +188,11 @@ export default function MeetingDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div className={embedded ? '' : 'min-h-screen bg-background'}>
+      {!embedded && <><Header /><BackToDashboard /></>}
 
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
+      {!embedded && <section className="w-full bg-gradient-to-br from-primary/10 to-pastelbeige/30 py-16 md:py-24">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="text-center">
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
@@ -202,11 +203,11 @@ export default function MeetingDashboardPage() {
             </p>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Dashboard Section */}
-      <section className="w-full py-16 md:py-24 bg-white">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+      <section className={embedded ? '' : 'w-full py-16 md:py-24 bg-white'}>
+        <div className={embedded ? '' : 'max-w-[100rem] mx-auto px-4 md:px-8'}>
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex gap-3 mb-8">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
@@ -539,7 +540,7 @@ export default function MeetingDashboardPage() {
         onSuccess={handleSuccess}
       />
 
-      <Footer />
+      {!embedded && <Footer />}
     </div>
   );
 }

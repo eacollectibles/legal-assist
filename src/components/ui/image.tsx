@@ -68,7 +68,7 @@ const WixImage = forwardRef<HTMLImageElement, WixImageProps>(
     if (!size) {
       const { uri, ...placeholder } = getPlaceholder(fittingType ?? 'fit', data, { htmlTag: 'img' })
       // @ts-expect-error placeholder.css.img properties are not typed correctly.
-      return <img ref={ref} src={`${STATIC_MEDIA_URL}${uri}`} style={placeholder.css.img} {...placeholder.attr}  {...imgProps} />
+      return <img ref={ref} src={`${STATIC_MEDIA_URL}${uri}`} style={placeholder.css.img} {...placeholder.attr} decoding="async" {...imgProps} />
     }
 
     const scale = fittingType === 'fit' ? sdk.getScaleToFitImageURL : sdk.getScaleToFillImageURL
@@ -77,7 +77,7 @@ const WixImage = forwardRef<HTMLImageElement, WixImageProps>(
     const transformOptions: ImageTransformOptions = focalPoint ? { focalPoint } : undefined
     const src = scale(data.id, data.width, data.height, targetWidth, targetHeight, transformOptions)
 
-    return <img ref={ref} {...imgProps} src={src} />
+    return <img ref={ref} {...imgProps} src={src} decoding="async" loading="lazy" />
   }
 )
 WixImage.displayName = 'WixImage'
@@ -103,7 +103,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(({ src, ...props }
   const imageData = getImageData(imgSrc, imageProps)
 
   if (!imageData) {
-    return <img data-error-image={imgSrc === FALLBACK_IMAGE_URL} ref={ref} src={imgSrc} {...imageProps} />
+    return <img data-error-image={imgSrc === FALLBACK_IMAGE_URL} ref={ref} src={imgSrc} decoding="async" loading="lazy" {...imageProps} />
   }
 
   return <WixImage ref={ref} data={imageData} {...imageProps} />

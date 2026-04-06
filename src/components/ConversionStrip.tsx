@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Clock, DollarSign } from 'lucide-react';
+import { CheckCircle2, Clock, DollarSign, ArrowRight } from 'lucide-react';
 import PrimaryCTA from '@/components/PrimaryCTA';
 
 interface ConversionStripProps {
@@ -10,57 +10,58 @@ interface ConversionStripProps {
 }
 
 export default function ConversionStrip({
-  outcome = "Expert representation & favorable outcomes",
-  timeline = "Quick resolution with clear timelines",
-  pricing = "Transparent fees with no hidden costs",
+  outcome = "Professional representation focused on achieving strong outcomes",
+  timeline = "Clear timelines and proactive case management",
+  pricing = "Transparent fees discussed upfront — no hidden costs",
   className = ""
 }: ConversionStripProps) {
   return (
-    <section className={`w-full py-12 md:py-16 bg-gradient-to-r from-secondary to-secondary/95 ${className}`}>
-      <div className="max-w-[100rem] mx-auto px-6 lg:px-12">
+    <section className={`w-full py-12 md:py-16 bg-matte ${className}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
           {/* Outcome */}
           <div className="flex items-start gap-4">
-            <div className="p-2 bg-primary/20 rounded-full flex-shrink-0">
-              <CheckCircle2 className="w-6 h-6 text-primary" />
+            <div className="p-2.5 bg-gold/15 rounded-xl flex-shrink-0">
+              <CheckCircle2 className="w-6 h-6 text-gold" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-heading text-lg text-white mb-1">Proven Outcomes</h3>
-              <p className="font-paragraph text-sm text-white/80">{outcome}</p>
+              <h3 className="font-heading text-lg text-white font-bold mb-1">Results-Focused</h3>
+              <p className="font-paragraph text-sm text-white/60 leading-relaxed">{outcome}</p>
             </div>
           </div>
 
           {/* Timeline */}
           <div className="flex items-start gap-4">
-            <div className="p-2 bg-primary/20 rounded-full flex-shrink-0">
-              <Clock className="w-6 h-6 text-primary" />
+            <div className="p-2.5 bg-gold/15 rounded-xl flex-shrink-0">
+              <Clock className="w-6 h-6 text-gold" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-heading text-lg text-white mb-1">Clear Timeline</h3>
-              <p className="font-paragraph text-sm text-white/80">{timeline}</p>
+              <h3 className="font-heading text-lg text-white font-bold mb-1">Clear Timeline</h3>
+              <p className="font-paragraph text-sm text-white/60 leading-relaxed">{timeline}</p>
             </div>
           </div>
 
           {/* Pricing */}
           <div className="flex items-start gap-4">
-            <div className="p-2 bg-primary/20 rounded-full flex-shrink-0">
-              <DollarSign className="w-6 h-6 text-primary" />
+            <div className="p-2.5 bg-gold/15 rounded-xl flex-shrink-0">
+              <DollarSign className="w-6 h-6 text-gold" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-heading text-lg text-white mb-1">Transparent Fees</h3>
-              <p className="font-paragraph text-sm text-white/80">{pricing}</p>
+              <h3 className="font-heading text-lg text-white font-bold mb-1">Transparent Fees</h3>
+              <p className="font-paragraph text-sm text-white/60 leading-relaxed">{pricing}</p>
             </div>
           </div>
         </div>
 
-        {/* CTA Buttons */}
+        {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-          <PrimaryCTA variant="button" size="lg" />
-          <Link 
+          <PrimaryCTA variant="footer" size="lg" />
+          <Link
             to="/services"
-            className="btn-shine btn-lift border border-white/30 text-white font-paragraph px-8 py-4 text-base rounded-lg inline-block text-center hover:bg-white/10 transition-colors"
+            className="min-h-[52px] px-8 py-4 text-base border-2 border-white/20 text-white font-paragraph font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-colors focus-ring"
           >
-            See Services
+            View All Services
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Link>
         </div>
       </div>

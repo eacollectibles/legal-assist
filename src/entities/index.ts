@@ -193,6 +193,56 @@ export interface ClientProfiles {
   emergencyContactName?: string;
   /** @wixFieldType text */
   emergencyContactPhone?: string;
+
+  // LSO By-Law 7.1 s.23(1) - Occupation & Business Info
+  /** @wixFieldType text */
+  occupation?: string;
+  /** @wixFieldType boolean */
+  hasBusinessInfo?: boolean;
+  /** @wixFieldType text */
+  businessAddress?: string;
+  /** @wixFieldType text */
+  businessPhone?: string;
+
+  // LSO By-Law 7.1 s.23(1) - Organization/Third Party
+  /** @wixFieldType boolean */
+  isOrganization?: boolean;
+  /** @wixFieldType text */
+  orgName?: string;
+  /** @wixFieldType text */
+  orgIncorporationNumber?: string;
+  /** @wixFieldType boolean */
+  actingForThirdParty?: boolean;
+  /** @wixFieldType text */
+  thirdPartyName?: string;
+
+  // LSO By-Law 7.1 s.23(4) - Identity Verification
+  /** @wixFieldType text */
+  idType?: string;
+  /** @wixFieldType text */
+  idNumber?: string;
+  /** @wixFieldType text */
+  idIssuingAuthority?: string;
+  /** @wixFieldType date */
+  idExpiryDate?: Date | string;
+  /** @wixFieldType boolean */
+  idVerificationConsent?: boolean;
+  /** @wixFieldType boolean */
+  isMinor?: boolean;
+  /** @wixFieldType text */
+  parentGuardianName?: string;
+  /** @wixFieldType text */
+  parentGuardianPhone?: string;
+
+  // Ticket Quote fields
+  /** @wixFieldType boolean */
+  ticketQuoteCompleted?: boolean;
+  /** @wixFieldType text */
+  ticketOffenceType?: string;
+  /** @wixFieldType number */
+  ticketServiceFee?: number;
+  /** @wixFieldType text */
+  ticketRecommendation?: string;
 }
 
 
@@ -299,6 +349,10 @@ export interface GeneratedDocuments {
   documentUrl?: string;
   /** @wixFieldType url */
   signedDocumentUrl?: string;
+  /** @wixFieldType text - Stores the full HTML template content for regeneration */
+  documentContent?: string;
+  /** @wixFieldType text - Template ID used to generate this document */
+  templateId?: string;
 }
 
 
@@ -509,6 +563,396 @@ export interface UploadTokens {
   revokedBy?: string;
   /** @wixFieldType text */
   notes?: string;
+}
+
+
+// ============================================================
+// LSO BY-LAW 7.1 COMPLIANCE — CLIENT FILE SYSTEM ENTITIES
+// ============================================================
+
+/**
+ * Collection ID: clientfiles
+ * Main client file record — one per matter/retainer
+ * Maps to LSO By-Law 7.1 file management requirements
+ */
+export interface ClientFiles {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text - Auto-generated: LA-YYYY-NNNN */
+  fileNumber?: string;
+  /** @wixFieldType text - Reference to clientprofiles */
+  clientId?: string;
+  /** @wixFieldType text - Denormalized client name for quick display */
+  clientName?: string;
+  /** @wixFieldType text - Reference to useraccounts */
+  clientEmail?: string;
+  /** @wixFieldType text - traffic|ltb|small_claims|criminal|hrto|employment|debt_collection */
+  matterType?: string;
+  /** @wixFieldType text */
+  matterDescription?: string;
+  /** @wixFieldType text - Tribunal or court name */
+  tribunal?: string;
+  /** @wixFieldType text - JSON array of opposing party objects */
+  opposingParties?: string;
+  /** @wixFieldType text - Reference to paralegal */
+  assignedParalegalId?: string;
+  /** @wixFieldType text */
+  assignedParalegalName?: string;
+  /** @wixFieldType text - active|closed|archived|pending */
+  fileStatus?: string;
+  /** @wixFieldType datetime */
+  dateOpened?: Date | string;
+  /** @wixFieldType datetime */
+  dateClosed?: Date | string;
+  /** @wixFieldType datetime - 6 years after closing per s.23(14) */
+  retentionExpiryDate?: Date | string;
+  /** @wixFieldType number - 0-100 overall compliance percentage */
+  complianceScore?: number;
+  /** @wixFieldType datetime */
+  lastAuditDate?: Date | string;
+  /** @wixFieldType text */
+  courtFileNumber?: string;
+  /** @wixFieldType text - passed|flagged */
+  conflictStatus?: string;
+  /** @wixFieldType text */
+  notes?: string;
+  // LSO Compliance section booleans — tracks per-section completeness
+  /** @wixFieldType boolean */ sectionFileOpening?: boolean;
+  /** @wixFieldType boolean */ sectionClientIdentification?: boolean;
+  /** @wixFieldType boolean */ sectionClientVerification?: boolean;
+  /** @wixFieldType boolean */ sectionSourceOfFunds?: boolean;
+  /** @wixFieldType boolean */ sectionConflictCheck?: boolean;
+  /** @wixFieldType boolean */ sectionRetainerAgreement?: boolean;
+  /** @wixFieldType boolean */ sectionFinancialRecords?: boolean;
+  /** @wixFieldType boolean */ sectionCommunicationLog?: boolean;
+  /** @wixFieldType boolean */ sectionCaseDocuments?: boolean;
+  /** @wixFieldType boolean */ sectionFileClosing?: boolean;
+  /** @wixFieldType boolean */ sectionContingencyPlan?: boolean;
+}
+
+/**
+ * Collection ID: clientidentification
+ * LSO By-Law 7.1, s.23(1) — Client identification when retained
+ */
+export interface ClientIdentification {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType text - Full legal name as on ID */
+  fullLegalName?: string;
+  /** @wixFieldType text */
+  homeAddress?: string;
+  /** @wixFieldType text */
+  homePhone?: string;
+  /** @wixFieldType text */
+  businessAddress?: string;
+  /** @wixFieldType text */
+  businessPhone?: string;
+  /** @wixFieldType text - s.23(1)5 */
+  occupation?: string;
+  /** @wixFieldType date */
+  dateOfBirth?: Date | string;
+  /** @wixFieldType text */
+  email?: string;
+  /** @wixFieldType text */
+  preferredLanguage?: string;
+  /** @wixFieldType boolean - Is client an organization */
+  isOrganization?: boolean;
+  /** @wixFieldType text - s.23(1)4 */
+  orgIncorporationNumber?: string;
+  /** @wixFieldType text */
+  orgPlaceOfIssue?: string;
+  /** @wixFieldType text - JSON array of director names */
+  orgDirectors?: string;
+  /** @wixFieldType text - s.23(1)7 - JSON array */
+  authorizedIndividuals?: string;
+  /** @wixFieldType text - s.23(1)6 */
+  orgNatureOfBusiness?: string;
+  /** @wixFieldType boolean - s.23(1)8 */
+  actingForThirdParty?: boolean;
+  /** @wixFieldType text - JSON object with third party info */
+  thirdPartyInfo?: string;
+  /** @wixFieldType datetime - s.23(12.1) */
+  dateCollected?: Date | string;
+  /** @wixFieldType text */
+  collectedBy?: string;
+}
+
+/**
+ * Collection ID: clientverification
+ * LSO By-Law 7.1, s.23(4)-(15) — Client verification for funds activities
+ */
+export interface ClientVerification {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType text - drivers_licence|passport|health_card|citizenship_card|other */
+  idType?: string;
+  /** @wixFieldType text */
+  idNumber?: string;
+  /** @wixFieldType text */
+  idIssuingAuthority?: string;
+  /** @wixFieldType date */
+  idExpiryDate?: Date | string;
+  /** @wixFieldType url - Uploaded copy of ID per s.23(13) */
+  idDocumentUrl?: string;
+  /** @wixFieldType text - in_person|agent|credit_file|dual_source */
+  verificationMethod?: string;
+  /** @wixFieldType datetime */
+  dateVerified?: Date | string;
+  /** @wixFieldType text */
+  verifiedBy?: string;
+  /** @wixFieldType boolean */
+  alternativeVerificationUsed?: boolean;
+  /** @wixFieldType text */
+  alternativeVerificationDetails?: string;
+  /** @wixFieldType boolean - s.23(9)-(10) */
+  isMinor?: boolean;
+  /** @wixFieldType text - JSON for parent/guardian verification */
+  parentGuardianVerification?: string;
+  /** @wixFieldType boolean */
+  verificationComplete?: boolean;
+}
+
+/**
+ * Collection ID: fundsource
+ * LSO By-Law 7.1, s.23(2) and s.23.1 — Source of funds and monitoring
+ */
+export interface FundSource {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType boolean - Is licensee handling funds per s.22(1)(b) */
+  handlingFunds?: boolean;
+  /** @wixFieldType text - s.23(2) */
+  sourceDescription?: string;
+  /** @wixFieldType text - s.23(2.1) - JSON */
+  orgOwnershipInfo?: string;
+  /** @wixFieldType text - s.23.1 - JSON array of monitoring entries */
+  monitoringRecords?: string;
+  /** @wixFieldType text */
+  riskAssessmentResults?: string;
+  /** @wixFieldType datetime */
+  riskAssessmentDate?: Date | string;
+  /** @wixFieldType text */
+  assessedBy?: string;
+}
+
+/**
+ * Collection ID: retaineragreements
+ * Retainer agreements — Paralegal Rules of Conduct
+ */
+export interface RetainerAgreements {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType url */
+  documentUrl?: string;
+  /** @wixFieldType datetime */
+  dateSigned?: Date | string;
+  /** @wixFieldType text */
+  scopeOfServices?: string;
+  /** @wixFieldType text - hourly|flat_fee|contingency|block_fee */
+  feeArrangementType?: string;
+  /** @wixFieldType text */
+  feeAmount?: string;
+  /** @wixFieldType boolean */
+  trustAccountDisclosure?: boolean;
+  /** @wixFieldType boolean */
+  clientAcknowledgment?: boolean;
+  /** @wixFieldType boolean */
+  scopeLimitationsAcknowledged?: boolean;
+  /** @wixFieldType text - draft|sent|signed|amended|terminated */
+  retainerStatus?: string;
+  /** @wixFieldType text - JSON array of amendment records */
+  amendments?: string;
+}
+
+/**
+ * Collection ID: financialrecords
+ * LSO By-Law 7.1 — Financial record keeping (Forms 9A-9E)
+ */
+export interface FinancialRecords {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType text - trust_deposit|trust_withdrawal|billing|payment|disbursement|refund */
+  transactionType?: string;
+  /** @wixFieldType number */
+  amount?: number;
+  /** @wixFieldType datetime */
+  transactionDate?: Date | string;
+  /** @wixFieldType text */
+  description?: string;
+  /** @wixFieldType text */
+  referenceNumber?: string;
+  /** @wixFieldType text */
+  trustAccountId?: string;
+  /** @wixFieldType text */
+  invoiceNumber?: string;
+  /** @wixFieldType text */
+  paymentMethod?: string;
+  /** @wixFieldType text */
+  recordedBy?: string;
+}
+
+/**
+ * Collection ID: communicationlog
+ * Communication tracking for client file — s.23(14) retention
+ */
+export interface CommunicationLog {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType text - email|phone|in_person|letter|court_notice|portal_message */
+  communicationType?: string;
+  /** @wixFieldType datetime */
+  communicationDate?: Date | string;
+  /** @wixFieldType text */
+  summary?: string;
+  /** @wixFieldType text */
+  details?: string;
+  /** @wixFieldType text */
+  author?: string;
+  /** @wixFieldType text - Reference to messages collection */
+  linkedMessageId?: string;
+  /** @wixFieldType text - inbound|outbound */
+  direction?: string;
+}
+
+/**
+ * Collection ID: casedocuments
+ * Case documents — evidence, filings, correspondence tracked per file
+ */
+export interface CaseDocuments {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text - Reference to clientfiles */
+  fileId?: string;
+  /** @wixFieldType text */
+  fileName?: string;
+  /** @wixFieldType text - court_filing|evidence|correspondence|agreement|notice|affidavit|photo_video|other */
+  category?: string;
+  /** @wixFieldType text */
+  description?: string;
+  /** @wixFieldType date */
+  dateAdded?: Date | string;
+  /** @wixFieldType text */
+  addedBy?: string;
+  /** @wixFieldType text */
+  fileSize?: string;
+  /** @wixFieldType url */
+  fileUrl?: string;
+  /** @wixFieldType text */
+  notes?: string;
+  /** @wixFieldType boolean */
+  isPrivileged?: boolean;
+  /** @wixFieldType number */
+  version?: number;
+}
+
+/**
+ * Collection ID: fileclosing
+ * File closing records — retention per s.23(14)
+ */
+export interface FileClosing {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType text - Matter outcome */
+  disposition?: string;
+  /** @wixFieldType datetime */
+  dateClosed?: Date | string;
+  /** @wixFieldType url */
+  finalAccountUrl?: string;
+  /** @wixFieldType text - Description of trust fund disposition */
+  trustFundDisposition?: string;
+  /** @wixFieldType text - JSON array of documents returned */
+  documentsReturnedList?: string;
+  /** @wixFieldType datetime */
+  retentionStartDate?: Date | string;
+  /** @wixFieldType number - Minimum 6 per s.23(14) */
+  retentionPeriodYears?: number;
+  /** @wixFieldType boolean */
+  closingChecklistCompleted?: boolean;
+  /** @wixFieldType boolean */
+  clientNotified?: boolean;
+  /** @wixFieldType datetime */
+  clientNotifiedDate?: Date | string;
+  /** @wixFieldType text - JSON checklist items with completion status */
+  closingChecklist?: string;
+}
+
+/**
+ * Collection ID: compliancechecklist
+ * Tracks completion status of each LSO compliance section per file
+ */
+export interface ComplianceChecklist {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  fileId?: string;
+  /** @wixFieldType text */
+  clientId?: string;
+  /** @wixFieldType boolean - Section A: File Opening */
+  sectionA_complete?: boolean;
+  /** @wixFieldType boolean - Section B: Client Identification */
+  sectionB_complete?: boolean;
+  /** @wixFieldType boolean - Section C: Client Verification */
+  sectionC_complete?: boolean;
+  /** @wixFieldType boolean - Section D: Source of Funds */
+  sectionD_complete?: boolean;
+  /** @wixFieldType boolean - Section E: Conflict Check */
+  sectionE_complete?: boolean;
+  /** @wixFieldType boolean - Section F: Retainer Agreement */
+  sectionF_complete?: boolean;
+  /** @wixFieldType boolean - Section G: Financial Records */
+  sectionG_complete?: boolean;
+  /** @wixFieldType boolean - Section H: Communication Log */
+  sectionH_complete?: boolean;
+  /** @wixFieldType boolean - Section I: Case Documents */
+  sectionI_complete?: boolean;
+  /** @wixFieldType boolean - Section J: File Closing */
+  sectionJ_complete?: boolean;
+  /** @wixFieldType boolean - Section K: Contingency Plan */
+  sectionK_complete?: boolean;
+  /** @wixFieldType number */
+  overallCompliancePercent?: number;
+  /** @wixFieldType datetime */
+  lastCheckedDate?: Date | string;
+  /** @wixFieldType text */
+  checkedBy?: string;
 }
 
 

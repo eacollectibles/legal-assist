@@ -42,10 +42,10 @@ export default function CriminalMattersPage() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://static.wixstatic.com/media/99571b_435bddb0469946d3a00f5601e7879951~mv2.png?originWidth=1152&originHeight=768"
-                alt="Professional Canadian courtroom interior with wooden judge's bench, witness stand, and Canadian maple leaf flags representing Ontario Provincial Court proceedings"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Old_Toronto_City_Hall_Courtroom121.jpg/1200px-Old_Toronto_City_Hall_Courtroom121.jpg"
+                alt="Interior of Old Toronto City Hall courtroom in Ontario showing wooden gallery seating, judge's bench, and classic Canadian courthouse architecture"
                 width={600}
-                height={400}
+                height={450}
                 className="w-full h-auto"
               />
             </div>

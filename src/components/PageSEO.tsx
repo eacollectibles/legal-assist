@@ -34,7 +34,7 @@ export function PageSEO({
   noindex = false,
 }: PageSEOProps) {
   const location = useLocation();
-  const baseUrl = 'https://legalassist.london';
+  const baseUrl = 'https://www.legalassist.london';
   
   // Generate canonical URL from current path if not provided
   const canonicalUrl = canonical || `${baseUrl}${location.pathname}`;

@@ -62,6 +62,18 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
       try {
         updateState({ isLoading: true, error: null });
 
+        // Check if user is authenticated via custom auth (non-Wix member system)
+        // If so, skip the Wix member lookup which will always fail with PERMISSION_DENIED
+        const hasCustomAuth = typeof window !== 'undefined' && !!localStorage.getItem('authToken');
+        if (hasCustomAuth) {
+          updateState({
+            member: null,
+            isAuthenticated: false,
+            isLoading: false,
+          });
+          return;
+        }
+
         const member = await getCurrentMember();
 
         if (member) {
@@ -78,11 +90,13 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
           });
         }
       } catch (err) {
+        // Silently handle the expected PERMISSION_DENIED error when using custom auth
+        // This prevents console spam from the Wix member system
         updateState({
-          error: err instanceof Error ? err.message : 'Failed to load member',
           member: null,
           isAuthenticated: false,
           isLoading: false,
+          error: null,
         });
       }
     }, [updateState]),

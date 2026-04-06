@@ -50,6 +50,33 @@ export interface ClientProfile {
   additionalNotes?: string;
   preferredDays?: string;
   preferredTimes?: string;
+
+  // LSO By-Law 7.1 fields
+  occupation?: string;
+  hasBusinessInfo?: boolean;
+  businessAddress?: string;
+  businessPhone?: string;
+  isOrganization?: boolean;
+  orgName?: string;
+  orgIncorporationNumber?: string;
+  actingForThirdParty?: boolean;
+  thirdPartyName?: string;
+  idType?: string;
+  idNumber?: string;
+  idIssuingAuthority?: string;
+  idExpiryDate?: Date | string;
+  idVerificationConsent?: boolean;
+  isMinor?: boolean;
+  parentGuardianName?: string;
+  parentGuardianPhone?: string;
+  conflictCheckCompleted?: boolean;
+  conflictCheckDate?: Date | string;
+  conflictCheckStatus?: string;
+  conflictMatchesFound?: string;
+  conflictAcknowledged?: boolean;
+  conflictMatterCity?: string;
+  opposingPartyNames?: string;
+  opposingPartyRelationship?: string;
 }
 
 export interface PaymentRecord {

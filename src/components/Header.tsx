@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
-import { Menu, X, LogOut, ChevronDown, AlertTriangle } from 'lucide-react';
+import { Menu, X, LogOut, ChevronDown } from 'lucide-react';
 import { useMember } from '@/integrations';
 import { useAuth } from '@/hooks/use-auth';
 import PrimaryCTA from '@/components/PrimaryCTA';
@@ -13,7 +13,6 @@ export default function Header() {
   const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
-  const [bannerDismissed, setBannerDismissed] = useState(false);
   const { isAuthenticated, member, actions, isLoading } = useMember();
   const { user, isAuthenticated: isAuthenticatedLocal, isAdmin: userIsAdmin, logout: logoutLocal } = useAuth();
   
@@ -22,10 +21,10 @@ export default function Header() {
   };
 
   const isResourcesActive = () => {
-    return location.pathname.startsWith('/guides') || 
+    return location.pathname.startsWith('/guides') ||
            location.pathname.startsWith('/blog') ||
-           location.pathname === '/legal-news' || 
-           location.pathname === '/resources';
+           location.pathname.startsWith('/resources') ||
+           location.pathname === '/legal-news';
   };
 
   // Lock body scroll when mobile menu is open
@@ -69,28 +68,6 @@ export default function Header() {
   }, []);
 
   return (
-    <>
-      {/* Coming Soon Banner */}
-      {!bannerDismissed && (
-        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white relative">
-          <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-2 sm:py-2.5">
-            <div className="flex items-center justify-center gap-2 text-center pr-8">
-              <AlertTriangle className="w-4 h-4 flex-shrink-0 hidden sm:block" />
-              <p className="font-paragraph text-xs sm:text-sm font-medium">
-                <span className="font-bold">Coming Soon:</span> LegalAssist is not yet open. We are not currently accepting clients or providing legal services.
-              </p>
-            </div>
-            <button
-              onClick={() => setBannerDismissed(true)}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white/20 rounded-lg transition-colors focus-ring"
-              aria-label="Dismiss banner"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      )}
-      
       <header className="bg-background border-b border-secondary/10 sticky top-0 z-50" role="banner">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-4 lg:py-6">
           <div className="flex items-center justify-between">
@@ -104,7 +81,7 @@ export default function Header() {
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-lg sm:text-2xl text-secondary font-bold leading-tight">LegalAssist</span>
-                <span className="font-paragraph text-[10px] sm:text-sm text-secondary/60 font-normal leading-tight">Paralegal Services</span>
+                <span className="font-paragraph text-xs sm:text-sm text-secondary/60 font-normal leading-tight">Paralegal Services</span>
               </div>
             </Link>
             
@@ -129,7 +106,7 @@ export default function Header() {
               >
                 <button 
                   className={`font-paragraph text-base transition-colors flex items-center gap-1 focus-ring rounded px-2 py-1 -mx-2 ${
-                    isActive('/about') || isActive('/about/team') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
+                    isActive('/about') || isActive('/about/team') || isActive('/about/student-placement') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
                       ? 'text-primary font-semibold' 
                       : 'text-secondary hover:text-primary'
                   }`}
@@ -162,6 +139,16 @@ export default function Header() {
                         }`}
                       >
                         Meet Our Team
+                      </Link>
+                      <Link
+                        to="/about/student-placement"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/about/student-placement')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Student Placements
                       </Link>
                       <Link
                         to="/guides/what-is-a-paralegal"
@@ -250,6 +237,50 @@ export default function Header() {
                         }`}
                       >
                         Recent Legal Decisions
+                      </Link>
+                      <div className="border-t border-secondary/10 my-2" />
+                      <span className="block px-4 py-1 font-paragraph text-xs text-secondary/50 uppercase tracking-wider">
+                        Forms
+                      </span>
+                      <Link
+                        to="/resources/forms/ltb"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/resources/forms/ltb')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        LTB Forms Directory
+                      </Link>
+                      <Link
+                        to="/resources/forms/small-claims"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/resources/forms/small-claims')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Small Claims Court Forms
+                      </Link>
+                      <Link
+                        to="/resources/forms/traffic-tickets"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/resources/forms/traffic-tickets')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        Traffic Ticket Forms
+                      </Link>
+                      <Link
+                        to="/resources/forms/hrto"
+                        className={`block px-4 py-2 font-paragraph text-sm transition-colors ${
+                          isActive('/resources/forms/hrto')
+                            ? 'text-primary font-semibold bg-primary/5'
+                            : 'text-secondary hover:text-primary hover:bg-pastelbeige/50'
+                        }`}
+                      >
+                        HRTO Forms
                       </Link>
                       <div className="border-t border-secondary/10 my-2" />
                       <span className="block px-4 py-1 font-paragraph text-xs text-secondary/50 uppercase tracking-wider">
@@ -407,7 +438,7 @@ export default function Header() {
                   <button
                     onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
                     className={`font-paragraph text-base min-h-[48px] flex items-center justify-between px-4 rounded-lg transition-colors focus-ring ${
-                      isActive('/about') || isActive('/about/team') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
+                      isActive('/about') || isActive('/about/team') || isActive('/about/student-placement') || isActive('/guides/what-is-a-paralegal') || isActive('/guides/paralegal-vs-lawyer')
                         ? 'text-primary font-semibold' 
                         : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
                     }`}
@@ -430,19 +461,30 @@ export default function Header() {
                       >
                         About Us
                       </Link>
-                      <Link 
-                        to="/about/team" 
+                      <Link
+                        to="/about/team"
                         onClick={handleMobileLinkClick}
                         className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
-                          isActive('/about/team') 
-                            ? 'bg-primary text-primary-foreground font-semibold' 
+                          isActive('/about/team')
+                            ? 'bg-primary text-primary-foreground font-semibold'
                             : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
                         }`}
                       >
                         Meet Our Team
                       </Link>
-                      <Link 
-                        to="/guides/what-is-a-paralegal" 
+                      <Link
+                        to="/about/student-placement"
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/about/student-placement')
+                            ? 'bg-primary text-primary-foreground font-semibold'
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Student Placements
+                      </Link>
+                      <Link
+                        to="/guides/what-is-a-paralegal"
                         onClick={handleMobileLinkClick}
                         className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
                           isActive('/guides/what-is-a-paralegal') 
@@ -530,12 +572,56 @@ export default function Header() {
                       >
                         Recent Legal Decisions
                       </Link>
-                      <Link 
-                        to="/guides/ontario-tenant-rights" 
+                      <Link
+                        to="/resources/forms/ltb"
                         onClick={handleMobileLinkClick}
                         className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
-                          isActive('/guides/ontario-tenant-rights') 
-                            ? 'bg-primary text-primary-foreground font-semibold' 
+                          isActive('/resources/forms/ltb')
+                            ? 'bg-primary text-primary-foreground font-semibold'
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        LTB Forms Directory
+                      </Link>
+                      <Link
+                        to="/resources/forms/small-claims"
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/resources/forms/small-claims')
+                            ? 'bg-primary text-primary-foreground font-semibold'
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Small Claims Court Forms
+                      </Link>
+                      <Link
+                        to="/resources/forms/traffic-tickets"
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/resources/forms/traffic-tickets')
+                            ? 'bg-primary text-primary-foreground font-semibold'
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        Traffic Ticket Forms
+                      </Link>
+                      <Link
+                        to="/resources/forms/hrto"
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/resources/forms/hrto')
+                            ? 'bg-primary text-primary-foreground font-semibold'
+                            : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
+                        }`}
+                      >
+                        HRTO Forms
+                      </Link>
+                      <Link
+                        to="/guides/ontario-tenant-rights"
+                        onClick={handleMobileLinkClick}
+                        className={`font-paragraph text-base min-h-[44px] flex items-center px-4 rounded-lg transition-colors focus-ring ${
+                          isActive('/guides/ontario-tenant-rights')
+                            ? 'bg-primary text-primary-foreground font-semibold'
                             : 'text-secondary hover:bg-pastelbeige active:bg-pastelbeige'
                         }`}
                       >
@@ -629,6 +715,5 @@ export default function Header() {
           )}
         </div>
       </header>
-    </>
   );
 }

@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 import PrimaryCTA from '@/components/PrimaryCTA';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 // Guide data for the cards
 const GUIDES = [
@@ -131,7 +133,7 @@ export default function ResourcesPage() {
     '@type': 'CollectionPage',
     name: 'Legal Resources & Guides | LegalAssist',
     description: 'Free legal guides and resources for Ontario residents. Learn about tenant rights, small claims court, human rights complaints, and more.',
-    url: 'https://legalassist.ca/resources',
+    url: 'https://www.legalassist.london/resources',
     publisher: {
       '@type': 'LegalService',
       name: 'LegalAssist Paralegal Services',
@@ -151,7 +153,7 @@ export default function ResourcesPage() {
           '@type': 'Article',
           name: guide.title,
           description: guide.description,
-          url: `https://legalassist.ca${guide.href}`
+          url: `https://www.legalassist.london${guide.href}`
         }
       }))
     }
@@ -166,13 +168,14 @@ export default function ResourcesPage() {
           content="Free legal guides and resources for Ontario residents. Learn about tenant rights, small claims court, human rights, employment law, and more." 
         />
         <meta name="keywords" content="Ontario legal guides, tenant rights, small claims court, LTB hearing, human rights complaint, paralegal resources" />
-        <link rel="canonical" href="https://legalassist.ca/resources" />
+        <link rel="canonical" href="https://www.legalassist.london/resources" />
         <script type="application/ld+json">
           {JSON.stringify(schemaMarkup)}
         </script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
+        <Header />
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-secondary to-secondary/90 text-secondary-foreground py-16 sm:py-20 px-4">
           <div className="max-w-5xl mx-auto">
@@ -274,6 +277,55 @@ export default function ResourcesPage() {
           </div>
         </section>
 
+        {/* Forms Directory Banner */}
+        <section className="bg-white py-12 px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gradient-to-r from-primary/5 to-pastelbeige/30 rounded-xl border border-primary/20 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <FileText className="w-8 h-8 text-primary" />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <h3 className="font-heading text-xl font-bold text-secondary mb-2">
+                  Ontario Legal Forms
+                </h3>
+                <p className="font-paragraph text-secondary/70">
+                  Download official court and tribunal forms with filing instructions, fees, and step-by-step guidance.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  to="/resources/forms/ltb"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-colors whitespace-nowrap min-h-[48px]"
+                >
+                  LTB Forms
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/resources/forms/small-claims"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary hover:bg-primary/5 rounded-lg font-semibold transition-colors whitespace-nowrap min-h-[48px]"
+                >
+                  Small Claims Forms
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/resources/forms/traffic-tickets"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary hover:bg-primary/5 rounded-lg font-semibold transition-colors whitespace-nowrap min-h-[48px]"
+                >
+                  Traffic Ticket Forms
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/resources/forms/hrto"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary hover:bg-primary/5 rounded-lg font-semibold transition-colors whitespace-nowrap min-h-[48px]"
+                >
+                  HRTO Forms
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* All Guides */}
         <section className="max-w-6xl mx-auto px-4 py-12 sm:py-16">
           <h2 className="font-heading text-2xl sm:text-3xl font-bold text-secondary mb-8">
@@ -342,6 +394,7 @@ export default function ResourcesPage() {
             </p>
           </div>
         </section>
+        <Footer />
       </div>
     </>
   );

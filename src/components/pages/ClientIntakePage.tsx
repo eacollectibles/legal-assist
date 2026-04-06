@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { BaseCrudService } from '@/integrations';
 import { ClientProfiles, ClientDocuments, FileAssignments } from '@/entities';
-import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle, ExternalLink, Car, Home, Scale, HelpCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Calendar, User, MapPin, Phone, Briefcase, Clock, Shield, AlertTriangle, CheckCircle, Search, CheckCircle2, Loader, Plus, XCircle, ExternalLink, Car, Home, Scale, HelpCircle, FileCheck, Building2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import TicketQuoteCalculator from '@/components/TicketQuoteCalculator';
@@ -67,6 +67,31 @@ interface FormData {
   conflictAcknowledged: boolean;
   conflictMatterCity: string;
   
+  // LSO By-Law 7.1 s.23(1) - Occupation
+  occupation: string;
+
+  // LSO By-Law 7.1 s.23(1) - Business Information (if applicable)
+  hasBusinessInfo: boolean;
+  businessAddress: string;
+  businessPhone: string;
+
+  // LSO By-Law 7.1 s.23(1) - Organization/Third Party
+  isOrganization: boolean;
+  orgName: string;
+  orgIncorporationNumber: string;
+  actingForThirdParty: boolean;
+  thirdPartyName: string;
+
+  // LSO By-Law 7.1 s.23(4) - Identity Verification
+  idType: string;
+  idNumber: string;
+  idIssuingAuthority: string;
+  idExpiryDate: string;
+  idVerificationConsent: boolean;
+  isMinor: boolean;
+  parentGuardianName: string;
+  parentGuardianPhone: string;
+
   // Ticket Quote (for traffic tickets)
   ticketQuoteCompleted: boolean;
   ticketOffenceType: string;
@@ -78,11 +103,12 @@ const sections = [
   { id: 'service', title: 'Service Type', icon: Car },                  // STEP 0 (NEW)
   { id: 'conflict', title: 'Conflict of Interest', icon: Shield },      // STEP 1
   { id: 'personal', title: 'Personal Information', icon: User },        // STEP 2
-  { id: 'contact', title: 'Contact Information', icon: Phone },         // STEP 3
-  { id: 'address', title: 'Address', icon: MapPin },                    // STEP 4
-  { id: 'emergency', title: 'Emergency Contact', icon: Phone },         // STEP 5
-  { id: 'case', title: 'Case Information', icon: Briefcase },           // STEP 6
-  { id: 'booking', title: 'Book Consultation', icon: Calendar },         // STEP 7
+  { id: 'identity', title: 'Identity Verification', icon: FileCheck },  // STEP 3 (LSO s.23(4))
+  { id: 'contact', title: 'Contact Information', icon: Phone },         // STEP 4
+  { id: 'address', title: 'Address', icon: MapPin },                    // STEP 5
+  { id: 'emergency', title: 'Emergency Contact', icon: Phone },         // STEP 6
+  { id: 'case', title: 'Case Information', icon: Briefcase },           // STEP 7
+  { id: 'booking', title: 'Book Consultation', icon: Calendar },         // STEP 8
 ];
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -142,6 +168,23 @@ export default function ClientIntakePage() {
     conflictMatchesFound: '',
     conflictAcknowledged: false,
     conflictMatterCity: '',
+    occupation: '',
+    hasBusinessInfo: false,
+    businessAddress: '',
+    businessPhone: '',
+    isOrganization: false,
+    orgName: '',
+    orgIncorporationNumber: '',
+    actingForThirdParty: false,
+    thirdPartyName: '',
+    idType: '',
+    idNumber: '',
+    idIssuingAuthority: '',
+    idExpiryDate: '',
+    idVerificationConsent: false,
+    isMinor: false,
+    parentGuardianName: '',
+    parentGuardianPhone: '',
     ticketQuoteCompleted: false,
     ticketOffenceType: '',
     ticketServiceFee: 0,
@@ -214,6 +257,27 @@ export default function ClientIntakePage() {
           conflictMatchesFound: profile.conflictMatchesFound || '',
           conflictAcknowledged: profile.conflictAcknowledged || false,
           conflictMatterCity: profile.conflictMatterCity || '',
+          occupation: profile.occupation || '',
+          hasBusinessInfo: profile.hasBusinessInfo || false,
+          businessAddress: profile.businessAddress || '',
+          businessPhone: profile.businessPhone || '',
+          isOrganization: profile.isOrganization || false,
+          orgName: profile.orgName || '',
+          orgIncorporationNumber: profile.orgIncorporationNumber || '',
+          actingForThirdParty: profile.actingForThirdParty || false,
+          thirdPartyName: profile.thirdPartyName || '',
+          idType: profile.idType || '',
+          idNumber: profile.idNumber || '',
+          idIssuingAuthority: profile.idIssuingAuthority || '',
+          idExpiryDate: profile.idExpiryDate ? new Date(profile.idExpiryDate).toISOString().split('T')[0] : '',
+          idVerificationConsent: profile.idVerificationConsent || false,
+          isMinor: profile.isMinor || false,
+          parentGuardianName: profile.parentGuardianName || '',
+          parentGuardianPhone: profile.parentGuardianPhone || '',
+          ticketQuoteCompleted: profile.ticketQuoteCompleted || false,
+          ticketOffenceType: profile.ticketOffenceType || '',
+          ticketServiceFee: profile.ticketServiceFee || 0,
+          ticketRecommendation: profile.ticketRecommendation || '',
         });
         
         if (profile.conflictCheckCompleted) {
@@ -383,9 +447,9 @@ export default function ClientIntakePage() {
         )
       );
 
-      // Determine status
+      // Determine status — never block, just flag for paralegal review
       const hasConflict = uniqueMatches.length > 0;
-      const status: 'passed' | 'blocked' = hasConflict ? 'blocked' : 'passed';
+      const status: 'passed' | 'flagged' = hasConflict ? 'flagged' : 'passed';
       const checkedDate = new Date().toISOString();
 
       // Save to database
@@ -399,6 +463,34 @@ export default function ClientIntakePage() {
         conflictMatterCity: matterCity.trim(),
         conflictMatchesFound: JSON.stringify(uniqueMatches),
       });
+
+      // Auto-mark Section E (Conflict Check) in LSO compliance file
+      try {
+        const { items: clientFiles } = await BaseCrudService.getAll<any>('clientfiles');
+        const matchingFile = clientFiles?.find((f: any) => f.clientId === clientId);
+        if (matchingFile) {
+          // Calculate new compliance score
+          const sectionKeys = [
+            'sectionFileOpening', 'sectionClientIdentification', 'sectionClientVerification',
+            'sectionSourceOfFunds', 'sectionConflictCheck', 'sectionRetainerAgreement',
+            'sectionFinancialRecords', 'sectionCommunicationLog', 'sectionCaseDocuments',
+            'sectionFileClosing', 'sectionContingencyPlan'
+          ];
+          const completedCount = sectionKeys.filter(k =>
+            k === 'sectionConflictCheck' ? true : !!matchingFile[k]
+          ).length;
+          const newScore = Math.round((completedCount / sectionKeys.length) * 100);
+
+          await BaseCrudService.update('clientfiles', {
+            _id: matchingFile._id,
+            sectionConflictCheck: true,
+            conflictStatus: status,
+            complianceScore: newScore,
+          } as any);
+        }
+      } catch (fileErr) {
+        console.warn('Could not auto-update LSO compliance Section E:', fileErr);
+      }
 
       // Update local state
       setConflictCheckResult({
@@ -418,9 +510,8 @@ export default function ClientIntakePage() {
 
       if (hasConflict) {
         toast({
-          title: 'Potential Conflict Detected',
-          description: 'We found matching records. Please contact our office to proceed.',
-          variant: 'destructive',
+          title: 'Conflict Check Complete',
+          description: 'Potential matches found and recorded. You may continue — our team will review.',
         });
       } else {
         toast({
@@ -489,20 +580,18 @@ export default function ClientIntakePage() {
 
   const validateSection = (sectionIndex: number): boolean => {
     const section = sections[sectionIndex].id;
-    
+
     switch (section) {
       case 'service':
-        // Service type must be selected, and if traffic ticket, quote should be completed OR skipped
         return !!selectedServiceType;
       case 'conflict':
-        // Can only proceed if passed AND acknowledged
-        // BLOCKED status = cannot proceed at all
-        if (formData.conflictCheckStatus === 'blocked') {
-          return false; // Never valid, cannot proceed
-        }
+        // Always allow proceeding — conflicts are flagged for paralegal review, never block
         return formData.conflictCheckCompleted && formData.conflictAcknowledged;
       case 'personal':
-        return !!(formData.firstName && formData.lastName);
+        return !!(formData.firstName && formData.lastName && formData.occupation);
+      case 'identity':
+        // LSO s.23(4): Must provide ID type and consent to verification
+        return !!(formData.idType && formData.idVerificationConsent);
       case 'contact':
         return !!formData.phoneNumber;
       case 'address':
@@ -512,7 +601,7 @@ export default function ClientIntakePage() {
       case 'case':
         return !!(formData.caseType && formData.caseDescription);
       case 'booking':
-        return true; // Cal.com handles booking validation
+        return true;
       default:
         return true;
     }
@@ -544,19 +633,39 @@ export default function ClientIntakePage() {
   };
 
   const saveProgress = async () => {
-    if (!clientId) return;
+    if (!clientId) {
+      console.warn('saveProgress called without clientId — skipping save');
+      return;
+    }
 
     try {
-      await BaseCrudService.update<ClientProfiles>('clientprofiles', {
+      // Build the update payload, converting arrays to comma-separated strings
+      // and removing empty date strings that would cause Wix CMS errors
+      const updatePayload: Record<string, any> = {
         _id: clientId,
         ...formData,
         dateOfBirth: formData.dateOfBirth || undefined,
         courtDeadline: formData.courtDeadline || undefined,
+        idExpiryDate: formData.idExpiryDate || undefined,
         preferredDays: formData.preferredDays.join(', '),
         preferredTimes: formData.preferredTimes.join(', '),
+      };
+
+      // Remove undefined values to avoid sending them to CMS
+      Object.keys(updatePayload).forEach(key => {
+        if (updatePayload[key] === undefined) {
+          delete updatePayload[key];
+        }
       });
+
+      await BaseCrudService.update<ClientProfiles>('clientprofiles', updatePayload as any);
     } catch (error) {
       console.error('Error saving progress:', error);
+      toast({
+        title: 'Save Warning',
+        description: 'Some data may not have been saved. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -569,6 +678,7 @@ export default function ClientIntakePage() {
         ...formData,
         dateOfBirth: formData.dateOfBirth || undefined,
         courtDeadline: formData.courtDeadline || undefined,
+        idExpiryDate: formData.idExpiryDate || undefined,
         preferredDays: formData.preferredDays.join(', '),
         preferredTimes: formData.preferredTimes.join(', '),
         intakeCompleted: true,
@@ -677,11 +787,12 @@ export default function ClientIntakePage() {
                     {currentSection === 0 && 'Select the type of legal service you need'}
                     {currentSection === 1 && 'Conflict of Interest Check (LSO Compliance)'}
                     {currentSection === 2 && 'Tell us about yourself'}
-                    {currentSection === 3 && 'How can we reach you?'}
-                    {currentSection === 4 && 'Where do you live?'}
-                    {currentSection === 5 && 'Who should we contact in case of emergency?'}
-                    {currentSection === 6 && 'Tell us about your legal matter'}
-                    {currentSection === 7 && 'Schedule your consultation appointment'}
+                    {currentSection === 3 && 'Identity verification required by the Law Society of Ontario'}
+                    {currentSection === 4 && 'How can we reach you?'}
+                    {currentSection === 5 && 'Where do you live?'}
+                    {currentSection === 6 && 'Who should we contact in case of emergency?'}
+                    {currentSection === 7 && 'Tell us about your legal matter'}
+                    {currentSection === 8 && 'Schedule your consultation appointment'}
                   </CardDescription>
                 </div>
               </div>
@@ -892,9 +1003,9 @@ export default function ClientIntakePage() {
                         <div className={`border-2 rounded-lg p-6 ${
                           formData.conflictCheckStatus === 'passed'
                             ? 'bg-green-50 border-green-400'
-                            : 'bg-red-50 border-red-400'
+                            : 'bg-amber-50 border-amber-400'
                         }`}>
-                          {/* PASSED */}
+                          {/* PASSED — No conflicts */}
                           {formData.conflictCheckStatus === 'passed' && (
                             <>
                               <div className="flex items-center gap-3 mb-4">
@@ -920,7 +1031,6 @@ export default function ClientIntakePage() {
                                 </div>
                               </div>
 
-                              {/* Acknowledgment for passed */}
                               {!formData.conflictAcknowledged && (
                                 <div className="flex items-start space-x-3 pt-4 border-t border-green-200">
                                   <Checkbox
@@ -929,7 +1039,7 @@ export default function ClientIntakePage() {
                                     onCheckedChange={(checked) => handleInputChange('conflictAcknowledged', checked)}
                                   />
                                   <Label htmlFor="conflictAcknowledge" className="font-paragraph text-sm cursor-pointer leading-relaxed">
-                                    I confirm that I have provided accurate names for all opposing parties. I understand 
+                                    I confirm that I have provided accurate names for all opposing parties. I understand
                                     LegalAssist has checked for conflicts of interest and I may proceed.
                                   </Label>
                                 </div>
@@ -944,108 +1054,62 @@ export default function ClientIntakePage() {
                             </>
                           )}
 
-                          {/* BLOCKED - CONFLICT FOUND */}
-                          {formData.conflictCheckStatus === 'blocked' && (
+                          {/* FLAGGED — Potential conflict recorded for paralegal review */}
+                          {formData.conflictCheckStatus === 'flagged' && (
                             <>
-                              {/* Status Header */}
                               <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">
                                   <AlertTriangle className="w-7 h-7 text-white" />
                                 </div>
                                 <div>
-                                  <h4 className="font-heading font-bold text-xl text-amber-800">POTENTIAL CONFLICT DETECTED</h4>
-                                  <p className="text-sm text-amber-700">Additional review required before proceeding</p>
+                                  <h4 className="font-heading font-bold text-xl text-amber-800">POTENTIAL MATCH RECORDED</h4>
+                                  <p className="text-sm text-amber-700">Flagged for our team to review — you may continue</p>
                                 </div>
                               </div>
 
-                              {/* Simple Explanation - NO DETAILS */}
-                              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                              <div className="bg-white/60 border border-amber-200 rounded-lg p-4 mb-4">
                                 <p className="text-sm text-amber-800">
-                                  Potential matching records exist in our system. To ensure compliance with the Law Society 
-                                  of Ontario's conflict of interest rules, we are unable to proceed with online registration 
-                                  at this time.
+                                  Our system found a potential match in our records. This has been recorded and our
+                                  paralegal will review it before your consultation. This does not necessarily mean
+                                  there is a conflict — many matches are coincidental (similar names, common businesses, etc.).
                                 </p>
                               </div>
 
-                              {/* Schedule Callback */}
-                              <div className="bg-primary/10 border-2 border-primary rounded-lg p-6 text-center mb-6">
-                                <h4 className="font-heading font-bold text-lg text-foreground mb-2">
-                                  Schedule a Callback
-                                </h4>
-                                <p className="font-paragraph text-sm text-foreground/80 mb-4">
-                                  Please contact our office to discuss your matter. We will review the situation and 
-                                  advise you on next steps.
-                                </p>
-                                <a 
-                                  href="/contact" 
-                                  className="inline-flex items-center justify-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
-                                >
-                                  <Phone className="w-5 h-5" />
-                                  Schedule a Callback
-                                </a>
-                                <p className="text-xs text-foreground/60 mt-3">
-                                  Or call us directly at: <strong>365-882-9515</strong>
-                                </p>
-                              </div>
-
-                              {/* Referral Resources - Required by LSO */}
-                              <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
-                                <h5 className="font-heading font-semibold text-foreground mb-3">
-                                  Alternative Legal Resources
-                                </h5>
-                                <p className="text-sm text-foreground/70 mb-4">
-                                  If we are unable to assist you, the following resources can help you find alternative representation:
-                                </p>
-                                
-                                <div className="space-y-3 text-sm">
-                                  <div className="flex items-start gap-3">
-                                    <ExternalLink className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                                    <div>
-                                      <a 
-                                        href="https://lso.ca/public-resources/finding-a-lawyer-or-paralegal/law-society-referral-service"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="font-medium text-primary hover:underline"
-                                      >
-                                        Law Society of Ontario Referral Service
-                                      </a>
-                                      <p className="text-foreground/60">Free 30-minute consultation — 1-800-268-8326</p>
-                                    </div>
+                              <div className="bg-white/50 rounded-lg p-4 space-y-2 text-sm mb-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div>
+                                    <p className="text-foreground/60">Opposing Parties Checked</p>
+                                    <p className="font-medium">{formData.opposingPartyNames}</p>
                                   </div>
-
-                                  <div className="flex items-start gap-3">
-                                    <ExternalLink className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                                    <div>
-                                      <a 
-                                        href="https://www.legalaid.on.ca/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="font-medium text-primary hover:underline"
-                                      >
-                                        Legal Aid Ontario
-                                      </a>
-                                      <p className="text-foreground/60">Free legal help if you qualify — 1-800-668-8258</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="flex items-start gap-3">
-                                    <ExternalLink className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                                    <div>
-                                      <a 
-                                        href="https://www.legalaid.on.ca/legal-clinics/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="font-medium text-primary hover:underline"
-                                      >
-                                        Community Legal Clinics
-                                      </a>
-                                      <p className="text-foreground/60">Free services for eligible individuals in your area</p>
-                                    </div>
+                                  <div>
+                                    <p className="text-foreground/60">City/Location</p>
+                                    <p className="font-medium">{formData.conflictMatterCity}</p>
                                   </div>
                                 </div>
                               </div>
 
-                              {/* Footer Notice */}
+                              {!formData.conflictAcknowledged && (
+                                <div className="flex items-start space-x-3 pt-4 border-t border-amber-200">
+                                  <Checkbox
+                                    id="conflictAcknowledge"
+                                    checked={formData.conflictAcknowledged}
+                                    onCheckedChange={(checked) => handleInputChange('conflictAcknowledged', checked)}
+                                  />
+                                  <Label htmlFor="conflictAcknowledge" className="font-paragraph text-sm cursor-pointer leading-relaxed">
+                                    I confirm that I have provided accurate names for all opposing parties. I understand
+                                    a potential match has been recorded and will be reviewed by the paralegal before my
+                                    consultation. I may continue with the intake process.
+                                  </Label>
+                                </div>
+                              )}
+
+                              {formData.conflictAcknowledged && (
+                                <div className="flex items-center gap-2 pt-4 border-t border-amber-200 text-amber-700">
+                                  <CheckCircle2 className="w-5 h-5" />
+                                  <span className="font-medium">Acknowledged — Click "Save & Continue" to proceed</span>
+                                </div>
+                              )}
+
                               <p className="text-xs text-center text-foreground/50 mt-4">
                                 This check has been recorded as required by the Law Society of Ontario.
                               </p>
@@ -1257,6 +1321,20 @@ export default function ClientIntakePage() {
                         </Select>
                       </div>
                       <div>
+                        <Label htmlFor="occupation" className="font-paragraph">
+                          Occupation <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                          id="occupation"
+                          value={formData.occupation}
+                          onChange={(e) => handleInputChange('occupation', e.target.value)}
+                          className="mt-1"
+                          placeholder="e.g., Retail Manager, Nurse, Student, Retired"
+                          required
+                        />
+                        <p className="text-xs text-foreground/50 mt-1">Required by the Law Society of Ontario (By-Law 7.1, s.23(1))</p>
+                      </div>
+                      <div>
                         <Label htmlFor="howHeardAboutUs" className="font-paragraph">
                           How did you hear about us?
                         </Label>
@@ -1276,11 +1354,283 @@ export default function ClientIntakePage() {
                           </SelectContent>
                         </Select>
                       </div>
+
+                      {/* Business Information (LSO s.23(1)) */}
+                      <div className="md:col-span-2">
+                        <div className="flex items-center space-x-2 mb-3">
+                          <Checkbox
+                            id="hasBusinessInfo"
+                            checked={formData.hasBusinessInfo}
+                            onCheckedChange={(checked) => handleInputChange('hasBusinessInfo', checked)}
+                          />
+                          <Label htmlFor="hasBusinessInfo" className="font-paragraph cursor-pointer">
+                            I have a business address/phone to provide
+                          </Label>
+                        </div>
+                        {formData.hasBusinessInfo && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-primary/20">
+                            <div>
+                              <Label htmlFor="businessAddress" className="font-paragraph">Business Address</Label>
+                              <Input
+                                id="businessAddress"
+                                value={formData.businessAddress}
+                                onChange={(e) => handleInputChange('businessAddress', e.target.value)}
+                                className="mt-1"
+                                placeholder="Business street address"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="businessPhone" className="font-paragraph">Business Phone</Label>
+                              <Input
+                                id="businessPhone"
+                                type="tel"
+                                value={formData.businessPhone}
+                                onChange={(e) => handleInputChange('businessPhone', e.target.value)}
+                                className="mt-1"
+                                placeholder="Business phone number"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 
-                  {/* Contact Information - NOW SECTION 3 */}
+                  {/* Identity Verification - SECTION 3 (LSO By-Law 7.1 s.23(4)) */}
                   {currentSection === 3 && (
+                    <div className="space-y-6">
+                      {/* LSO Compliance Notice */}
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
+                        <h4 className="font-heading font-bold text-blue-900 mb-2 flex items-center gap-2">
+                          <FileCheck className="w-5 h-5" />
+                          Identity Verification (LSO By-Law 7.1)
+                        </h4>
+                        <p className="font-paragraph text-sm text-blue-800">
+                          The Law Society of Ontario requires paralegals to verify client identity using
+                          government-issued photo identification. Please provide your ID details below.
+                          You will be asked to present your original ID at your first consultation.
+                        </p>
+                      </div>
+
+                      {/* ID Type */}
+                      <div>
+                        <Label htmlFor="idType" className="font-paragraph font-medium">
+                          Government-Issued Photo ID Type <span className="text-destructive">*</span>
+                        </Label>
+                        <Select
+                          value={formData.idType}
+                          onValueChange={(value) => handleInputChange('idType', value)}
+                        >
+                          <SelectTrigger className="mt-2 h-12">
+                            <SelectValue placeholder="Select your ID type..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Ontario Driver's Licence">Ontario Driver's Licence</SelectItem>
+                            <SelectItem value="Ontario Photo Card">Ontario Photo Card</SelectItem>
+                            <SelectItem value="Canadian Passport">Canadian Passport</SelectItem>
+                            <SelectItem value="Permanent Resident Card">Permanent Resident Card</SelectItem>
+                            <SelectItem value="Canadian Citizenship Card (photo)">Canadian Citizenship Card (with photo)</SelectItem>
+                            <SelectItem value="BYID (Canadian Forces ID)">BYID (Canadian Forces ID)</SelectItem>
+                            <SelectItem value="Foreign Passport">Foreign Passport</SelectItem>
+                            <SelectItem value="Other Government Photo ID">Other Government Photo ID</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* ID Details */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <Label htmlFor="idNumber" className="font-paragraph">
+                            ID Number
+                          </Label>
+                          <Input
+                            id="idNumber"
+                            value={formData.idNumber}
+                            onChange={(e) => handleInputChange('idNumber', e.target.value)}
+                            className="mt-1"
+                            placeholder="e.g., D1234-56789-01234"
+                          />
+                          <p className="text-xs text-foreground/50 mt-1">Optional now — will be verified at consultation</p>
+                        </div>
+                        <div>
+                          <Label htmlFor="idIssuingAuthority" className="font-paragraph">
+                            Issuing Authority
+                          </Label>
+                          <Select
+                            value={formData.idIssuingAuthority}
+                            onValueChange={(value) => handleInputChange('idIssuingAuthority', value)}
+                          >
+                            <SelectTrigger className="mt-1">
+                              <SelectValue placeholder="Select issuing authority" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Province of Ontario">Province of Ontario</SelectItem>
+                              <SelectItem value="Government of Canada">Government of Canada</SelectItem>
+                              <SelectItem value="Other Province/Territory">Other Province/Territory</SelectItem>
+                              <SelectItem value="Foreign Government">Foreign Government</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label htmlFor="idExpiryDate" className="font-paragraph">
+                            ID Expiry Date
+                          </Label>
+                          <Input
+                            id="idExpiryDate"
+                            type="date"
+                            value={formData.idExpiryDate}
+                            onChange={(e) => handleInputChange('idExpiryDate', e.target.value)}
+                            className="mt-1"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Minor Check (LSO s.23(9)-(10)) */}
+                      <div className="border border-foreground/10 rounded-lg p-4">
+                        <div className="flex items-center space-x-2 mb-3">
+                          <Checkbox
+                            id="isMinor"
+                            checked={formData.isMinor}
+                            onCheckedChange={(checked) => handleInputChange('isMinor', checked)}
+                          />
+                          <Label htmlFor="isMinor" className="font-paragraph cursor-pointer font-medium">
+                            The client is under 18 years of age
+                          </Label>
+                        </div>
+                        {formData.isMinor && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-primary/20 mt-3">
+                            <div>
+                              <Label htmlFor="parentGuardianName" className="font-paragraph">
+                                Parent/Guardian Full Name <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="parentGuardianName"
+                                value={formData.parentGuardianName}
+                                onChange={(e) => handleInputChange('parentGuardianName', e.target.value)}
+                                className="mt-1"
+                                placeholder="Parent or legal guardian full name"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="parentGuardianPhone" className="font-paragraph">
+                                Parent/Guardian Phone <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="parentGuardianPhone"
+                                type="tel"
+                                value={formData.parentGuardianPhone}
+                                onChange={(e) => handleInputChange('parentGuardianPhone', e.target.value)}
+                                className="mt-1"
+                                placeholder="Parent or guardian phone number"
+                              />
+                            </div>
+                            <div className="md:col-span-2">
+                              <p className="text-sm text-foreground/60">
+                                Per LSO By-Law 7.1 s.23(9)-(10), identity of a minor client must be verified
+                                through a parent or guardian who provides their own government-issued photo ID.
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Organization / Third Party (LSO s.23(1)) */}
+                      <div className="border border-foreground/10 rounded-lg p-4">
+                        <div className="flex items-center space-x-2 mb-3">
+                          <Checkbox
+                            id="isOrganization"
+                            checked={formData.isOrganization}
+                            onCheckedChange={(checked) => handleInputChange('isOrganization', checked)}
+                          />
+                          <Label htmlFor="isOrganization" className="font-paragraph cursor-pointer font-medium">
+                            <Building2 className="w-4 h-4 inline mr-1" />
+                            I am representing a business or organization
+                          </Label>
+                        </div>
+                        {formData.isOrganization && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-primary/20 mt-3">
+                            <div>
+                              <Label htmlFor="orgName" className="font-paragraph">
+                                Organization Name <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="orgName"
+                                value={formData.orgName}
+                                onChange={(e) => handleInputChange('orgName', e.target.value)}
+                                className="mt-1"
+                                placeholder="Business or organization name"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="orgIncorporationNumber" className="font-paragraph">
+                                Incorporation/Business Number
+                              </Label>
+                              <Input
+                                id="orgIncorporationNumber"
+                                value={formData.orgIncorporationNumber}
+                                onChange={(e) => handleInputChange('orgIncorporationNumber', e.target.value)}
+                                className="mt-1"
+                                placeholder="e.g., BN 123456789"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="border border-foreground/10 rounded-lg p-4">
+                        <div className="flex items-center space-x-2 mb-3">
+                          <Checkbox
+                            id="actingForThirdParty"
+                            checked={formData.actingForThirdParty}
+                            onCheckedChange={(checked) => handleInputChange('actingForThirdParty', checked)}
+                          />
+                          <Label htmlFor="actingForThirdParty" className="font-paragraph cursor-pointer font-medium">
+                            I am acting on behalf of another person (third party)
+                          </Label>
+                        </div>
+                        {formData.actingForThirdParty && (
+                          <div className="pl-6 border-l-2 border-primary/20 mt-3">
+                            <div>
+                              <Label htmlFor="thirdPartyName" className="font-paragraph">
+                                Third Party Full Name <span className="text-destructive">*</span>
+                              </Label>
+                              <Input
+                                id="thirdPartyName"
+                                value={formData.thirdPartyName}
+                                onChange={(e) => handleInputChange('thirdPartyName', e.target.value)}
+                                className="mt-1"
+                                placeholder="Full legal name of the person you are acting for"
+                              />
+                              <p className="text-xs text-foreground/50 mt-1">
+                                Per LSO By-Law 7.1 s.23(1), we are required to identify all third parties.
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Verification Consent */}
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
+                        <div className="flex items-start space-x-3">
+                          <Checkbox
+                            id="idVerificationConsent"
+                            checked={formData.idVerificationConsent}
+                            onCheckedChange={(checked) => handleInputChange('idVerificationConsent', checked)}
+                          />
+                          <Label htmlFor="idVerificationConsent" className="font-paragraph text-sm cursor-pointer leading-relaxed">
+                            <span className="text-destructive">*</span> I understand that the Law Society of Ontario
+                            requires identity verification for all clients. I consent to providing my government-issued
+                            photo ID for verification at my first consultation, and I confirm that the information
+                            provided above is accurate. I understand a copy of my ID will be kept on file as required
+                            by By-Law 7.1, s.23(4)-(15).
+                          </Label>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Contact Information - NOW SECTION 4 */}
+                  {currentSection === 4 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <Label htmlFor="phoneNumber" className="font-paragraph">
@@ -1347,8 +1697,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Address Information - NOW SECTION 4 */}
-                  {currentSection === 4 && (
+                  {/* Address Information - NOW SECTION 5 */}
+                  {currentSection === 5 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="md:col-span-2">
                         <Label htmlFor="streetAddress" className="font-paragraph">
@@ -1412,8 +1762,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Emergency Contact - NOW SECTION 5 */}
-                  {currentSection === 5 && (
+                  {/* Emergency Contact - NOW SECTION 6 */}
+                  {currentSection === 6 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <Label htmlFor="emergencyContactName" className="font-paragraph">
@@ -1455,8 +1805,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Case Information - NOW SECTION 6 */}
-                  {currentSection === 6 && (
+                  {/* Case Information - NOW SECTION 7 */}
+                  {currentSection === 7 && (
                     <div className="space-y-6">
                       {/* LSO Compliance Disclaimer */}
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -1580,8 +1930,8 @@ export default function ClientIntakePage() {
                     </div>
                   )}
 
-                  {/* Book Consultation - SECTION 7 */}
-                  {currentSection === 7 && (
+                  {/* Book Consultation - SECTION 8 */}
+                  {currentSection === 8 && (
                     <div className="space-y-6">
                       <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                         <p className="font-paragraph text-foreground/80 text-sm">
@@ -1612,6 +1962,7 @@ export default function ClientIntakePage() {
                 <div className="flex gap-3 w-full sm:w-auto order-1 sm:order-2">
                   {currentSection > 0 && (
                     <Button
+                      type="button"
                       variant="outline"
                       onClick={handleBack}
                       className="flex-1 sm:flex-none"
@@ -1620,26 +1971,25 @@ export default function ClientIntakePage() {
                       Back
                     </Button>
                   )}
-                  {/* Only show Save & Continue if NOT blocked */}
-                  {!(currentSection === 1 && formData.conflictCheckStatus === 'blocked') && (
-                    <Button
-                      onClick={handleNext}
-                      disabled={isLoading}
-                      className="flex-1 sm:flex-none"
-                    >
-                      {currentSection === sections.length - 1 ? (
-                        <>
-                          {isLoading ? 'Submitting...' : 'Complete'}
-                          <Check className="w-4 h-4 ml-2" />
-                        </>
-                      ) : (
-                        <>
-                          Save & Continue
-                          <ChevronRight className="w-4 h-4 ml-2" />
-                        </>
-                      )}
-                    </Button>
-                  )}
+                  {/* Save & Continue — always shown (conflicts are flagged, never blocked) */}
+                  <Button
+                    type="button"
+                    onClick={handleNext}
+                    disabled={isLoading}
+                    className="flex-1 sm:flex-none"
+                  >
+                    {currentSection === sections.length - 1 ? (
+                      <>
+                        {isLoading ? 'Submitting...' : 'Complete'}
+                        <Check className="w-4 h-4 ml-2" />
+                      </>
+                    ) : (
+                      <>
+                        Save & Continue
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                      </>
+                    )}
+                  </Button>
                 </div>
               </div>
             </CardContent>

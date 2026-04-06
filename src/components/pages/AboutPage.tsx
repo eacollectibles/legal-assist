@@ -70,6 +70,7 @@ export default function AboutPage() {
                 alt="LegalAssist team providing professional paralegal services"
                 width={600}
                 height={400}
+                loading="lazy"
                 className="w-full h-auto"
               />
             </div>

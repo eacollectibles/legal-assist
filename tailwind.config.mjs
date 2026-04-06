@@ -72,6 +72,7 @@ export default {
                 paragraph: "'DM Sans', sans-serif"
             },
             colors: {
+                // Existing palette — kept intact for 100+ service pages
                 pastellavender: '#D6D0DD',
                 pastelbeige: '#E6D6C4',
                 pastelgreen: '#DCE6CD',
@@ -86,7 +87,17 @@ export default {
                 primary: '#B94A1F',
                 accent: '#D4612A',
                 dark: '#1A1512',
-                'dark-foreground': '#F9F5F0'
+                'dark-foreground': '#F9F5F0',
+                // Premium dark theme — used in hero, CTA, and conversion sections only
+                gold: '#C9A86C',
+                'gold-light': '#E8D5A8',
+                'gold-dark': '#A68B4B',
+                matte: '#1A1A1A',
+                'matte-light': '#2A2A2A',
+                'matte-dark': '#0D0D0D',
+                slate: '#F5F5F5',
+                'slate-dark': '#E5E5E5',
+                'warm-white': '#FAFAF8',
             },
         },
     },

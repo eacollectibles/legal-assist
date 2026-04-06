@@ -78,7 +78,7 @@ html {
 html.hydrated {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
 }
 
 /* Ensure body is also hidden during hydration */
@@ -94,7 +94,7 @@ body {
 html.hydrated body {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
 }
 
 /* Scroll lock for mobile menu */
@@ -496,7 +496,7 @@ body.menu-open {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(
@@ -505,12 +505,14 @@ body.menu-open {
     rgba(255, 255, 255, 0.2),
     transparent
   );
-  transition: left 0.5s ease;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .btn-shine:hover::before {
-    left: 100%;
+    transform: translateX(100%);
   }
 }
 
@@ -560,19 +562,22 @@ body.menu-open {
   position: absolute;
   bottom: -4px;
   left: 0;
-  width: 60px;
+  width: 100%;
   height: 3px;
   background: #B94A1F;
+  transform: scaleX(0.3);
+  transform-origin: left;
 }
 
-/* Expanding underline on hover */
+/* Expanding underline on hover - uses transform for GPU compositing */
 .heading-underline-grow::after {
-  transition: width 0.4s ease;
+  transition: transform 0.4s ease;
+  will-change: transform;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .heading-underline-grow:hover::after {
-    width: 100%;
+    transform: scaleX(1);
   }
 }
 

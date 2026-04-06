@@ -23,12 +23,12 @@ const pathname = Astro.url.pathname;
 const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
 
 // Check if this is a private route (noindex)
-const isPrivateRoute = /^\/(admin|dashboard|login|signup|intake|booking|upload)/.test(normalizedPath);
+const isPrivateRoute = /^\/(admin|dashboard|client-dashboard|login|signup|client-login|client-signup|intake|booking|upload|paralegal-dashboard|meeting-request|meeting-dashboard|forgot-password|reset-password|conflict-detected)/.test(normalizedPath);
 
 // Get SEO config for this path, or use defaults
 const pageConfig = seoConfig[normalizedPath] || {
   title: 'LegalAssist Paralegal Services | London Ontario',
-  description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 365-882-9515.',
+  description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 226-272-5153.',
   keywords: 'paralegal london ontario, legal services, traffic ticket lawyer, LTB paralegal, small claims court'
 };
 
@@ -51,18 +51,18 @@ const schemaData = {
   "@graph": [
     {
       "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
-      "@id": "https://legalassist.london/#organization",
+      "@id": "https://www.legalassist.london/#organization",
       "name": "LegalAssist Paralegal Services",
       "alternateName": "LegalAssist",
       "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
-      "url": "https://legalassist.london",
+      "url": "https://www.legalassist.london",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://legalassist.london/logo.png",
+        "url": "https://www.legalassist.london/logo.png",
         "width": 512,
         "height": 512
       },
-      "image": "https://legalassist.london/og-image.jpg",
+      "image": "https://www.legalassist.london/og-image.jpg",
       "telephone": PHONE_TEL,
       "email": "info@legalassist.london",
       "address": {
@@ -110,18 +110,18 @@ const schemaData = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://legalassist.london/#website",
-      "url": "https://legalassist.london",
+      "@id": "https://www.legalassist.london/#website",
+      "url": "https://www.legalassist.london",
       "name": "LegalAssist Paralegal Services",
       "description": "Licensed paralegal services in London, Ontario",
       "publisher": {
-        "@id": "https://legalassist.london/#organization"
+        "@id": "https://www.legalassist.london/#organization"
       },
       "inLanguage": "en-CA"
     },
     {
       "@type": "ContactPoint",
-      "@id": "https://legalassist.london/#contact",
+      "@id": "https://www.legalassist.london/#contact",
       "telephone": PHONE_TEL,
       "contactType": "customer service",
       "availableLanguage": "English",
@@ -160,13 +160,23 @@ const currentYear = new Date().getFullYear();
       crossorigin="anonymous"
     />
     
-    <!-- DNS Prefetch for external resources -->
-    <link rel="dns-prefetch" href="https://static.wixstatic.com" />
+    <!-- Preconnect for critical third-party origins (upgrades DNS+TCP+TLS in one step) -->
+    <link rel="preconnect" href="https://static.wixstatic.com" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://static.parastorage.com" crossorigin="anonymous" />
+
+    <!-- Preload LCP hero image for instant rendering -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      imagesrcset="https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_480,h_360,al_c,q_80,enc_avif/banner.webp 480w, https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_768,h_576,al_c,q_80,enc_avif/banner.webp 768w, https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1024,h_768,al_c,q_80,enc_avif/banner.webp 1024w"
+      imagesizes="(max-width: 768px) 100vw, 50vw"
+      fetchpriority="high"
+    />
+
+    <!-- DNS Prefetch for non-critical external resources -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-    
-    <!-- Preconnect for critical third-party origins -->
-    <link rel="preconnect" href="https://static.parastorage.com" crossorigin="anonymous" />
     
     <!-- SERVER-SIDE SEO: Title -->
     <title>{pageConfig.title}</title>
@@ -263,39 +273,35 @@ const currentYear = new Date().getFullYear();
     </style>
   </head>
   <body class="w-full h-full">
-    <!-- Loading indicator (shows while JS loads) -->
-    <div id="loading-indicator" class="fixed inset-0 bg-background z-[9999] flex items-center justify-center" aria-hidden="true">
-      <div class="flex flex-col items-center gap-4">
-        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-          <span class="text-primary font-heading font-bold text-xl">LA</span>
-        </div>
-        <div class="w-32 h-1 bg-secondary/10 rounded-full overflow-hidden">
-          <div class="h-full bg-primary rounded-full" style="animation: loading 1s ease-in-out infinite; width: 30%;"></div>
-        </div>
-      </div>
-      <style>
-        @keyframes loading {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(400%); }
-        }
-      </style>
-    </div>
-    
     <div id="root" class="w-full h-full bg-background">
+      <!-- SSR Hero Placeholder: Paints LCP image before React hydrates, then React replaces #root contents -->
+      <div id="ssr-hero-placeholder" style="position:relative;width:100%;min-height:60vh;overflow:hidden;background:#F9F5F0;">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_480,h_360,al_c,q_80,enc_avif/banner.webp 480w, https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_768,h_576,al_c,q_80,enc_avif/banner.webp 768w, https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1024,h_768,al_c,q_80,enc_avif/banner.webp 1024w"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          <img
+            src="https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_768,h_576,al_c,q_80/banner.jpeg"
+            srcset="https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_480,h_360,al_c,q_75/banner.jpeg 480w, https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_768,h_576,al_c,q_80/banner.jpeg 768w, https://static.wixstatic.com/media/99571b_8e05531429e9472d888eec555c78c9f4~mv2.jpeg/v1/fill/w_1024,h_768,al_c,q_80/banner.jpeg 1024w"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            alt="Paralegal consultation in London Ontario"
+            width="768"
+            height="576"
+            fetchpriority="high"
+            decoding="async"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+          />
+        </picture>
+      </div>
       <AppRouter client:only="react" />
     </div>
     
     <script>
-      // CRITICAL: Fast hydration marker
+      // CRITICAL: Fast hydration marker - reveals page content
       const markHydrated = () => {
         document.documentElement.classList.add('hydrated');
-        // Hide loading indicator
-        const loader = document.getElementById('loading-indicator');
-        if (loader) {
-          loader.style.opacity = '0';
-          loader.style.transition = 'opacity 0.2s ease-out';
-          setTimeout(() => loader.remove(), 200);
-        }
       };
       
       // Mark immediately
@@ -313,6 +319,21 @@ const currentYear = new Date().getFullYear();
       // Fallback timeouts
       setTimeout(markHydrated, 100);
       setTimeout(markHydrated, 1000);
+
+      // Remove SSR hero placeholder once React renders content (fade to avoid CLS)
+      const observer = new MutationObserver(() => {
+        const placeholder = document.getElementById('ssr-hero-placeholder');
+        const root = document.getElementById('root');
+        if (placeholder && root && root.children.length > 1) {
+          placeholder.style.transition = 'opacity 0.2s ease-out';
+          placeholder.style.opacity = '0';
+          placeholder.style.position = 'absolute';
+          placeholder.style.pointerEvents = 'none';
+          setTimeout(() => placeholder.remove(), 250);
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.getElementById('root'), { childList: true, subtree: true });
       
       // Emergency fallback
       setTimeout(() => {
