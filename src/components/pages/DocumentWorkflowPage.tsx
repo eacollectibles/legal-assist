@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BaseCrudService } from '@/integrations';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BackToDashboard from '@/components/BackToDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -18,7 +19,7 @@ import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generat
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 import UploadLinkGenerator from '@/components/UploadLinkGenerator';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
-import { sendSignedDocumentEmail, EmailActivityLog } from '@/lib/email-service';
+import { sendSignedDocumentEmail, sendDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 
 interface DocumentTemplate {
   _id: string;
@@ -62,7 +63,7 @@ interface UserAccount {
   lastName?: string;
 }
 
-export default function DocumentWorkflowPage() {
+export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean } = {}) {
   const [templates, setTemplates] = useState<DocumentTemplate[]>([]);
   const [generatedDocs, setGeneratedDocs] = useState<GeneratedDocument[]>([]);
   const [clients, setClients] = useState<ClientProfile[]>([]);
@@ -85,6 +86,11 @@ export default function DocumentWorkflowPage() {
   const [selectedClientId, setSelectedClientId] = useState('');
   const [documentName, setDocumentName] = useState('');
   const [requiresSignature, setRequiresSignature] = useState(true);
+
+  // Retainer-specific fields
+  const [selectedFeeModel, setSelectedFeeModel] = useState('Hourly Retainer');
+  const [retainerAmount, setRetainerAmount] = useState('');
+  const [hourlyRate, setHourlyRate] = useState('');
 
   // Send document dialog state
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
@@ -232,12 +238,24 @@ export default function DocumentWorkflowPage() {
       let documentContent = template.templateContent || '';
       documentContent = documentContent.replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim() || '—');
       documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '—');
+      documentContent = documentContent.replace(/\{CLIENT_EMAIL\}/g, clientEmailAddress || '—');
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE1\}/g, client.streetAddress || '—');
+      documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE2\}/g, client.unit || client.addressLine2 || '—');
       documentContent = documentContent.replace(/\{CLIENT_CITY\}/g, client.city || '—');
       documentContent = documentContent.replace(/\{CLIENT_PROVINCE\}/g, client.state || '—');
       documentContent = documentContent.replace(/\{CLIENT_POSTAL_CODE\}/g, client.zipCode || '—');
       documentContent = documentContent.replace(/\{MATTER_REFERENCE\}/g, '—'); // No matter reference field in current schema
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
+
+      // Retainer-specific field replacements
+      documentContent = documentContent.replace(/\{SELECTED_FEE_MODEL\}/g, selectedFeeModel || '—');
+      documentContent = documentContent.replace(/\{RETAINER_AMOUNT\}/g, retainerAmount || '—');
+      documentContent = documentContent.replace(/\{HOURLY_RATE\}/g, hourlyRate || '—');
+      documentContent = documentContent.replace(/\{FLAT_FEE\}/g, '—');
+      documentContent = documentContent.replace(/\{HYBRID_FLAT_FEE\}/g, '—');
+      documentContent = documentContent.replace(/\{HYBRID_HOURLY_RATE\}/g, '—');
+      documentContent = documentContent.replace(/\{CONTINGENCY_PERCENT\}/g, '—');
+      documentContent = documentContent.replace(/\{LTB_MATTER_TYPE\}/g, '—');
 
       // Generate PDF from content
       const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;
@@ -254,6 +272,7 @@ export default function DocumentWorkflowPage() {
         status: 'draft',
         requiresSignature: requiresSignature,
         documentUrl: pdfDataUrl,
+        documentContent: documentContent,
         _createdDate: new Date()
       };
 
@@ -266,6 +285,9 @@ export default function DocumentWorkflowPage() {
       setSelectedClientId('');
       setDocumentName('');
       setRequiresSignature(true);
+      setSelectedFeeModel('Hourly Retainer');
+      setRetainerAmount('');
+      setHourlyRate('');
     } catch (error) {
       console.error('Error generating document:', error);
       loadData();
@@ -621,10 +643,10 @@ export default function DocumentWorkflowPage() {
   const completionRate = totalDocuments > 0 ? Math.round((completedDocs / totalDocuments) * 100) : 0;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Header />
-      
-      <main className="flex-1 w-full max-w-[120rem] mx-auto px-6 py-12">
+    <div className={embedded ? '' : 'min-h-screen flex flex-col bg-background'}>
+      {!embedded && <><Header /><BackToDashboard /></>}
+
+      <main className={embedded ? '' : 'flex-1 w-full max-w-[120rem] mx-auto px-6 py-12'}>
         {/* Enhanced Header with Analytics */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
@@ -816,6 +838,52 @@ export default function DocumentWorkflowPage() {
                       <Label htmlFor="requiresSignature">Requires Client Signature</Label>
                     </div>
 
+                    {/* Retainer-specific fields — shown when a Retainer Agreement template is selected */}
+                    {(() => {
+                      const selectedTemplate = templates.find(t => t._id === selectedTemplateId);
+                      const isRetainer = selectedTemplate?.templateType === 'Retainer Agreement' || selectedTemplate?.templateName?.toLowerCase().includes('retainer');
+                      if (!isRetainer) return null;
+                      return (
+                        <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/30">
+                          <p className="text-sm font-semibold text-foreground">Retainer Details</p>
+                          <div className="space-y-2">
+                            <Label htmlFor="feeModel">Fee Model</Label>
+                            <Select value={selectedFeeModel} onValueChange={setSelectedFeeModel}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select fee model" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Hourly Retainer">Hourly Retainer</SelectItem>
+                                <SelectItem value="Flat Fee">Flat Fee</SelectItem>
+                                <SelectItem value="Hybrid Retainer">Hybrid Retainer</SelectItem>
+                                <SelectItem value="Contingency Fee">Contingency Fee</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="retainerAmount">Retainer Deposit Amount ($)</Label>
+                            <Input
+                              id="retainerAmount"
+                              type="number"
+                              value={retainerAmount}
+                              onChange={(e) => setRetainerAmount(e.target.value)}
+                              placeholder="e.g. 1500"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
+                            <Input
+                              id="hourlyRate"
+                              type="number"
+                              value={hourlyRate}
+                              onChange={(e) => setHourlyRate(e.target.value)}
+                              placeholder="e.g. 175"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
+
                     <Button onClick={handleGenerateDocument} className="w-full" disabled={!selectedTemplateId || !selectedClientId}>
                       Generate Document
                     </Button>
@@ -892,12 +960,26 @@ export default function DocumentWorkflowPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => {
-                            const urlToView = doc.status === 'signed' && doc.signedDocumentUrl 
-                              ? doc.signedDocumentUrl 
+                          onClick={async () => {
+                            const urlToView = doc.status === 'signed' && doc.signedDocumentUrl
+                              ? doc.signedDocumentUrl
                               : doc.documentUrl;
-                            if (urlToView) {
+                            if (urlToView && (urlToView.startsWith('http') || urlToView.startsWith('data:'))) {
                               window.open(urlToView, '_blank');
+                            } else if (doc.documentContent) {
+                              // Regenerate PDF from stored content
+                              try {
+                                const pdfDataUrl = await generatePDF(doc.documentContent, doc.documentName || 'Document');
+                                window.open(pdfDataUrl, '_blank');
+                                // Cache for next time
+                                await BaseCrudService.update('generateddocuments', { _id: doc._id, documentUrl: pdfDataUrl } as any);
+                                setGeneratedDocs(prev => prev.map(d => d._id === doc._id ? { ...d, documentUrl: pdfDataUrl } : d));
+                              } catch (err) {
+                                console.error('Error regenerating document:', err);
+                                alert('Unable to generate document. Please try again.');
+                              }
+                            } else {
+                              alert('Document content is unavailable. Please regenerate this document.');
                             }
                           }}
                           className="gap-2"
@@ -945,29 +1027,31 @@ export default function DocumentWorkflowPage() {
                         )}
 
                         {doc.status === 'signed' && doc.signedDocumentUrl && (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {
-                                if (doc.signedDocumentUrl) {
-                                  window.open(doc.signedDocumentUrl, '_blank');
-                                }
-                              }}
-                              className="gap-2 border-green-600 text-green-700 hover:bg-green-50"
-                            >
-                              <CheckCircle className="h-4 w-4" />
-                              View Signed
-                            </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => openEmailDialog(doc)}
-                              className="gap-2 bg-blue-600 hover:bg-blue-700 text-white"
-                            >
-                              <Mail className="h-4 w-4" />
-                              Email Signed Document
-                            </Button>
-                          </>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              if (doc.signedDocumentUrl) {
+                                window.open(doc.signedDocumentUrl, '_blank');
+                              }
+                            }}
+                            className="gap-2 border-green-600 text-green-700 hover:bg-green-50"
+                          >
+                            <CheckCircle className="h-4 w-4" />
+                            View Signed
+                          </Button>
+                        )}
+
+                        {/* Email Document — available at ANY status (draft, sent, signed) */}
+                        {(doc.documentUrl || doc.signedDocumentUrl) && (
+                          <Button
+                            size="sm"
+                            onClick={() => openEmailDialog(doc)}
+                            className="gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                          >
+                            <Mail className="h-4 w-4" />
+                            {doc.status === 'signed' ? 'Email Signed Document' : 'Email Document'}
+                          </Button>
                         )}
 
                         {(doc.status === 'sent' || doc.status === 'signed') && doc.uploadToken && (
@@ -1464,7 +1548,7 @@ export default function DocumentWorkflowPage() {
         />
       </main>
 
-      <Footer />
+      {!embedded && <Footer />}
     </div>
   );
 }
