@@ -35,14 +35,19 @@ const pageConfig = seoConfig[normalizedPath] || {
 // Build canonical URL
 const canonicalUrl = `${businessInfo.url}${normalizedPath === '/' ? '' : normalizedPath}`;
 
+// Derive an H1 from the title (strip brand/city suffixes after separators)
+const ssrH1 = pageConfig.title
+  .split(/\s*\|\s*/)[0]
+  .trim() || 'LegalAssist Paralegal Services';
+
 // Generate JSON-LD for FAQs if present
-const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0 
-  ? generateFAQSchema(pageConfig.faqs) 
+const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0
+  ? generateFAQSchema(pageConfig.faqs)
   : null;
 
 // Generate JSON-LD for breadcrumbs if present
-const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0 
-  ? generateBreadcrumbSchema(pageConfig.breadcrumbs, businessInfo.url) 
+const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0
+  ? generateBreadcrumbSchema(pageConfig.breadcrumbs, businessInfo.url)
   : null;
 
 // Schema.org structured data
@@ -270,6 +275,8 @@ const currentYear = new Date().getFullYear();
       @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
       /* Prevent layout shift */
       #root{min-height:100vh;display:flex;flex-direction:column}
+      /* SSR SEO content: keep in DOM for crawlers, visually offscreen; auto-removed when React hydrates */
+      #ssr-seo-content{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
     </style>
   </head>
   <body class="w-full h-full">
@@ -294,6 +301,46 @@ const currentYear = new Date().getFullYear();
             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
           />
         </picture>
+      </div>
+      <!--
+        SSR SEO Content: rendered server-side for crawlers.
+        React (client:only) replaces #root contents on hydration so users never see this.
+        Without this block, every page served the same empty shell to Googlebot, causing
+        Soft 404 / Crawled-not-indexed / Discovered-not-indexed issues across the site.
+      -->
+      <div id="ssr-seo-content" aria-hidden="true">
+        <h1>{ssrH1}</h1>
+        <p>{pageConfig.description}</p>
+        {pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0 && (
+          <nav aria-label="Breadcrumb">
+            <ol>
+              {pageConfig.breadcrumbs.map((bc) => (
+                <li><a href={bc.url}>{bc.name}</a></li>
+              ))}
+            </ol>
+          </nav>
+        )}
+        {pageConfig.faqs && pageConfig.faqs.length > 0 && (
+          <section>
+            <h2>Frequently Asked Questions</h2>
+            {pageConfig.faqs.map((faq) => (
+              <div>
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
+              </div>
+            ))}
+          </section>
+        )}
+        <section>
+          <h2>Contact LegalAssist</h2>
+          <p>
+            LegalAssist Paralegal Services &mdash; Licensed by the Law Society of Ontario.
+            Serving London, Ontario and Southwestern Ontario. Call
+            <a href={`tel:${PHONE_TEL}`}>{businessInfo.telephoneDisplay}</a>
+            or email <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
+            for a free consultation.
+          </p>
+        </section>
       </div>
       <AppRouter client:only="react" />
     </div>
@@ -320,16 +367,25 @@ const currentYear = new Date().getFullYear();
       setTimeout(markHydrated, 100);
       setTimeout(markHydrated, 1000);
 
-      // Remove SSR hero placeholder once React renders content (fade to avoid CLS)
+      // Remove SSR hero placeholder and SSR SEO content once React renders (fade to avoid CLS)
       const observer = new MutationObserver(() => {
         const placeholder = document.getElementById('ssr-hero-placeholder');
+        const seoContent = document.getElementById('ssr-seo-content');
         const root = document.getElementById('root');
-        if (placeholder && root && root.children.length > 1) {
-          placeholder.style.transition = 'opacity 0.2s ease-out';
-          placeholder.style.opacity = '0';
-          placeholder.style.position = 'absolute';
-          placeholder.style.pointerEvents = 'none';
-          setTimeout(() => placeholder.remove(), 250);
+        // Wait until React has rendered its own content (more than just our SSR placeholders)
+        const reactReady = root && root.children.length > (placeholder ? 1 : 0) + (seoContent ? 1 : 0);
+        if (reactReady) {
+          if (placeholder) {
+            placeholder.style.transition = 'opacity 0.2s ease-out';
+            placeholder.style.opacity = '0';
+            placeholder.style.position = 'absolute';
+            placeholder.style.pointerEvents = 'none';
+            setTimeout(() => placeholder.remove(), 250);
+          }
+          // SSR SEO content is already offscreen; just remove it to keep DOM lean.
+          if (seoContent) {
+            seoContent.remove();
+          }
           observer.disconnect();
         }
       });
