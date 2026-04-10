@@ -88,7 +88,7 @@ Yours truly,
 ${paralegalName}
 LegalAssist Paralegal Services
 London, Ontario
-info@legalassist.london`
+jeanfrancois@legalassist.london`
         : `RE: ${docName}
 
 Please find the following document for your review:
@@ -108,7 +108,7 @@ Yours truly,
 ${paralegalName}
 LegalAssist Paralegal Services
 London, Ontario
-info@legalassist.london`;
+jeanfrancois@legalassist.london`;
 
       setFormData({
         to: document.clientEmail || '',
