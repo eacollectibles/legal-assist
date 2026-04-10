@@ -35,7 +35,7 @@ export const businessInfo = {
   url: 'https://legalassist.london',
   telephone: '+12262725153',
   telephoneDisplay: '226-272-5153',
-  email: 'info@legalassist.london',
+  email: 'jeanfrancois@legalassist.london',
   address: {
     streetAddress: 'P.O Box 1000',
     addressLocality: 'London',

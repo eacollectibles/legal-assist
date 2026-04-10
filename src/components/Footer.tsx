@@ -167,13 +167,13 @@ export default function Footer() {
               </a>
 
               <a
-                href="mailto:info@legalassist.london"
+                href="mailto:jeanfrancois@legalassist.london"
                 className="flex items-center gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors group focus-ring"
-                aria-label="Email us at info@legalassist.london"
+                aria-label="Email us at jeanfrancois@legalassist.london"
               >
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true" />
                 <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 group-hover:text-primary-foreground group-active:text-primary transition-colors break-all">
-                  info@legalassist.london
+                  jeanfrancois@legalassist.london
                 </span>
               </a>
             </div>

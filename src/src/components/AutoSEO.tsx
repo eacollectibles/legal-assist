@@ -25,7 +25,7 @@ const localBusinessSchema = {
   "name": "LegalAssist Paralegal Services",
   "url": "https://legalassist.london",
   "telephone": "226-272-5153",
-  "email": "info@legalassist.london",
+  "email": "jeanfrancois@legalassist.london",
   "logo": "https://legalassist.london/logo.png",
   "image": "https://legalassist.london/og-image.jpg",
   "priceRange": "$$",

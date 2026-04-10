@@ -447,7 +447,7 @@ export default function ContactPage() {
       title: 'Send an Email',
       description: 'Have questions? Send us an email and we\'ll respond within 24 business hours.',
       action: 'Email Us',
-      actionHref: 'mailto:info@legalassist.london',
+      actionHref: 'mailto:jeanfrancois@legalassist.london',
       color: 'bg-pastelpeach',
       delay: 200
     },
@@ -545,8 +545,8 @@ export default function ContactPage() {
                   <p className="font-paragraph text-secondary-foreground/80 mb-2">
                     We respond within 24 hours
                   </p>
-                  <a href="mailto:info@legalassist.london" className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
-                    info@legalassist.london
+                  <a href="mailto:jeanfrancois@legalassist.london" className="font-paragraph font-semibold text-primary hover:text-primary/80 transition-colors">
+                    jeanfrancois@legalassist.london
                   </a>
                 </div>
               </div>

@@ -153,7 +153,7 @@ export default function BookingPage() {
                 <div className="space-y-3 font-paragraph text-foreground/80 text-sm">
                   <p>
                     <strong>Email:</strong><br />
-                    info@legalassist.london
+                    jeanfrancois@legalassist.london
                   </p>
                   <p>
                     <strong>Office Hours:</strong><br />

@@ -38,7 +38,7 @@ export const FIRM_INFO: ParalegalInfo = {
   paralegalName: 'Jean-Francois Demers',
   lsoLicenseNumber: 'P12345', // TODO: Replace with real LSO number
   phone: '226-272-5153',
-  email: 'info@legalassist.london',
+  email: 'jeanfrancois@legalassist.london',
   address: '123 Main Street, Suite 200', // TODO: Replace with real address
   city: 'London',
   province: 'ON',

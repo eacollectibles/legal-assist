@@ -80,7 +80,7 @@ Yours truly,
 ${paralegalName}
 LegalAssist Paralegal Services
 London, Ontario
-info@legalassist.london`;
+jeanfrancois@legalassist.london`;
 
       setFormData({
         to: document.clientEmail || '',

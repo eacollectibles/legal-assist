@@ -38,7 +38,7 @@ export const Head = () => {
         },
         "image": "https://www.legalassist.london/og-image.jpg",
         "telephone": PHONE_TEL,
-        "email": "info@legalassist.london",
+        "email": "jeanfrancois@legalassist.london",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "P.O Box 1000",

@@ -168,7 +168,7 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
   // Return an activity log for tracking
   return {
     _id: `email_${Date.now()}`,
-    senderEmail: 'info@legalassist.london',
+    senderEmail: 'jeanfrancois@legalassist.london',
     senderName: payload.paralegalName,
     recipientEmails: [payload.to],
     subject: payload.subject,
@@ -323,7 +323,7 @@ export const sendDocumentEmail = async (payload: EmailDocumentPayload): Promise<
 
   return {
     _id: `email_${Date.now()}`,
-    senderEmail: 'info@legalassist.london',
+    senderEmail: 'jeanfrancois@legalassist.london',
     senderName: payload.paralegalName,
     recipientEmails: [payload.to],
     subject: payload.subject,
