@@ -36,7 +36,7 @@ export interface ParalegalInfo {
 export const FIRM_INFO: ParalegalInfo = {
   firmName: 'LegalAssist Paralegal Services',
   paralegalName: 'Jean-Francois Demers',
-  lsoLicenseNumber: 'P12345', // TODO: Replace with real LSO number
+  lsoLicenseNumber: 'P22020',
   phone: '226-272-5153',
   email: 'jeanfrancois@legalassist.london',
   address: '123 Main Street, Suite 200', // TODO: Replace with real address
