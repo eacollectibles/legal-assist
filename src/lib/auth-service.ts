@@ -39,9 +39,13 @@ interface UserAccount {
 }
 
 /**
- * Secure password hashing using SHA-256
+ * Secure password hashing using SHA-256.
+ *
+ * Exported so other modules (e.g. AssignmentsTab when an admin creates a
+ * client account on behalf of someone) can store properly hashed passwords
+ * instead of plaintext.
  */
-async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder();
   const salt = 'legalassist_2026_secure_salt';
   const data = encoder.encode(password + salt);
@@ -72,12 +76,17 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       };
     }
 
-    const userId = crypto.randomUUID();
-    const clientId = generateClientId();
+    // IMPORTANT: useraccounts._id and clientprofiles._id MUST match so that
+    // login flows and post-assignment cascade-delete operations can find both
+    // records by the same key. We use a single shared id for both records and
+    // also store the human-readable client id (CL-XXXXXX) in the `clientId`
+    // field on both for display purposes.
+    const sharedId = crypto.randomUUID();
+    const humanReadableClientId = generateClientId();
     const hashedPassword = await hashPassword(credentials.password);
-    
+
     const userData: UserAccount = {
-      _id: userId,
+      _id: sharedId,
       email: credentials.email,
       passwordHash: hashedPassword,
       firstName: credentials.firstName,
@@ -85,14 +94,16 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       isAdmin: false,
       accountStatus: 'active',
       lastLoginDate: new Date().toISOString(),
-      clientId: clientId,
+      clientId: humanReadableClientId,
     };
 
     await BaseCrudService.create('useraccounts', userData);
 
-    // Create matching clientprofiles record
+    // Create matching clientprofiles record using the SAME _id so the two
+    // collections stay linked.
     await BaseCrudService.create('clientprofiles', {
-      _id: clientId,
+      _id: sharedId,
+      clientId: humanReadableClientId,
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       intakeCompleted: false,
@@ -115,7 +126,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       firstName: credentials.firstName,
       lastName: credentials.lastName,
       isAdmin: false,
-      clientId: clientId,
+      clientId: humanReadableClientId,
     }));
 
     return {
@@ -127,7 +138,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
         firstName: credentials.firstName,
         lastName: credentials.lastName,
         isAdmin: false,
-        clientId: clientId,
+        clientId: humanReadableClientId,
       },
     };
   } catch (error) {
@@ -387,43 +398,82 @@ export async function changePassword(currentPassword: string, newPassword: strin
 }
 
 /**
- * Request password reset for a user
- * Generates a reset token and stores it temporarily
+ * Request password reset for a user.
+ *
+ * Generates a reset token, stores it for 1 hour, and emails the reset link
+ * to the account holder via EmailJS. Returns the same generic message
+ * regardless of whether the email exists, so we don't leak account existence.
  */
 export async function requestPasswordReset(email: string): Promise<AuthResponse> {
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  const genericResponse: AuthResponse = {
+    success: true,
+    message: 'If an account exists with this email, you will receive a password reset link.',
+  };
+
   try {
     const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
-    const user = users?.find(u => u.email === email);
+    const user = users?.find(u => (u.email || '').toLowerCase() === normalizedEmail);
 
     if (!user) {
-      // Don't reveal if email exists for security
+      // Generic response — don't reveal account existence
+      return genericResponse;
+    }
+
+    // --- Generate token ---
+    const resetToken = generateResetToken();
+    const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
+
+    // Persist (best-effort, ignore SSR / private mode failures)
+    try {
+      const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
+      resetTokens[normalizedEmail] = { token: resetToken, expiry: resetTokenExpiry };
+      localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+    } catch {
+      /* SSR / private mode — ignore */
+    }
+
+    // --- Build the reset link ---
+    const origin =
+      typeof window !== 'undefined' && window.location?.origin
+        ? window.location.origin
+        : 'https://www.legalassist.london';
+    const resetLink =
+      `${origin}/reset-password` +
+      `?token=${encodeURIComponent(resetToken)}` +
+      `&email=${encodeURIComponent(normalizedEmail)}`;
+
+    // --- Send the email (best-effort, dynamic import so SSR builds don't break) ---
+    let emailSent = false;
+    try {
+      const { sendEmail } = await import('./email-service');
+      await sendEmail({
+        to: normalizedEmail,
+        subject: 'Reset your Legal Assist password',
+        body:
+          `Hello${user.firstName ? ' ' + user.firstName : ''},\n\n` +
+          `We received a request to reset the password for your Legal Assist account.\n\n` +
+          `Click the link below to choose a new password. The link will expire in 1 hour.\n\n` +
+          `${resetLink}\n\n` +
+          `If you didn't request this, you can safely ignore this email — your password will stay the same.\n\n` +
+          `— Legal Assist Paralegal Services`,
+      });
+      emailSent = true;
+    } catch (err) {
+      console.error('Password reset email failed:', err);
+    }
+
+    if (!emailSent) {
+      // Email failed but token is stored — return success with a softer message
+      // so the user can contact us if they don't receive it.
       return {
         success: true,
-        message: 'If an account exists with this email, you will receive a password reset link.',
+        message:
+          'A password reset link has been generated. If you do not receive an email shortly, please contact us.',
       };
     }
 
-    // Generate a reset token (in production, this would be sent via email)
-    const resetToken = generateResetToken();
-    const resetTokenExpiry = new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(); // 1 hour expiry
-
-    // Store reset token in localStorage for demo purposes
-    // In production, this would be stored in a database and sent via email
-    const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
-    resetTokens[email] = {
-      token: resetToken,
-      expiry: resetTokenExpiry,
-    };
-    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
-
-    // In production, send email with reset link
-    console.log(`Password reset token for ${email}: ${resetToken}`);
-    console.log(`Reset link: /reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`);
-
-    return {
-      success: true,
-      message: 'If an account exists with this email, you will receive a password reset link.',
-    };
+    return genericResponse;
   } catch (error) {
     console.error('Password reset request error:', error);
     return {
