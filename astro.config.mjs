@@ -49,6 +49,15 @@ export default defineConfig({
         ],
       },
     } : undefined,
+    // Tell Vite's SSR build to NEVER bundle wix-secrets-backend.
+    // The Wix runtime injects this module at request time. If Vite/Rollup
+    // tries to resolve it during build it gets rewritten to a relative
+    // path (e.g. "pages/api/square/wix-secrets-backend") which then fails
+    // at runtime with "No such module". Belt-and-suspenders together with
+    // the existing rollupOptions.external below.
+    ssr: {
+      external: ['wix-secrets-backend'],
+    },
     // Pre-bundle heavy deps so Rollup doesn't re-process them
     optimizeDeps: {
       include: ['lucide-react', 'react', 'react-dom', 'react-router-dom', 'date-fns'],

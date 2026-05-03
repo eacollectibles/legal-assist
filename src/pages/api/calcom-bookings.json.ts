@@ -11,11 +11,18 @@ import { fetchCalComBookings } from '@/lib/calcom-service';
  * 2. Environment variable via import.meta.env (local dev .env.local)
  */
 async function getCalcomApiKey(): Promise<string> {
-  // Try Wix Secrets Manager first (works in production)
+  // Try Wix Secrets Manager first (works in production).
   try {
-    const { getSecret } = await import('wix-secrets-backend');
-    const secret = await getSecret('CALCOM_API_KEY');
-    if (secret) return secret;
+    // Hide the specifier behind a runtime variable so Vite/Rollup does not
+    // try to resolve `wix-secrets-backend` at build time. Otherwise the
+    // bundler rewrites the path and the Wix runtime cannot find the module.
+    const moduleName = 'wix-secrets-backend';
+    const mod: any = await import(/* @vite-ignore */ moduleName);
+    const getSecret = mod?.getSecret || mod?.default?.getSecret;
+    if (typeof getSecret === 'function') {
+      const secret = await getSecret('CALCOM_API_KEY');
+      if (secret) return secret;
+    }
   } catch {
     // wix-secrets-backend not available (local dev) — fall through
   }
