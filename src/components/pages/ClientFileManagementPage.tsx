@@ -3808,6 +3808,17 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         clientPostalCode: profile.zipCode || '',
         matterReference: file.fileNumber || '',
         matterType: file.matterType || '',
+        // Drive matter-profile selection (LTB / Provincial Offences /
+        // Small Claims / HRT / WSIB / Employment / Other) from the file's
+        // matter type so the generated retainer renders with the correct
+        // wording, scope, exclusions, and disbursements list. If the
+        // agreement carries an explicit templateName override, prefer that.
+        templateName: agreement.templateName || file.matterType || '',
+        // Optional fields — passed through if the agreement has them,
+        // otherwise the generator falls back to a placeholder for the
+        // nature of matter and the firm's default paralegal (P22020).
+        natureOfMatter: agreement.natureOfMatter || '',
+        paralegalId: agreement.paralegalId || '',
         feeArrangementType: agreement.feeArrangementType || 'flat_fee',
         hourlyRate: agreement.hourlyRate || '',
         flatFeeAmount: agreement.flatFeeAmount || '',

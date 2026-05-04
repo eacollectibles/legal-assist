@@ -1,19 +1,37 @@
 /**
  * Retainer Agreement HTML Generator
  *
- * Takes the form field values from the retainer agreement form,
- * populates the Tenant LTB Retainer HTML template with those values,
- * auto-signs with "Jean-Francois Demers" + generation date,
- * and returns the final HTML string as a data URL.
+ * Generates a fully-populated retainer agreement HTML document for any
+ * matter type the firm handles (LTB Tenant, LTB Landlord, Provincial
+ * Offences, Traffic Tickets, Small Claims, Human Rights Tribunal, WSIB,
+ * Employment, Other).
+ *
+ * Each matter type has a profile that controls:
+ *   - Document title and footer
+ *   - Matter-reference label (e.g. "POA #" vs "Court File #")
+ *   - Nature-of-matter label (e.g. "Nature of Claim" vs "Nature of Charge")
+ *   - Scope of services / exclusions
+ *   - Disbursements list (matter-specific filing fees + standard items)
+ *   - Conduct clause (landlord / opposing party / prosecutor variants)
+ *   - LTB-only clauses (rent obligations, "no free rent")
+ *
+ * The signature block is auto-populated from the selected paralegal in
+ * `src/lib/paralegals.ts` — name, LSO licence number, electronic signature,
+ * and credential line. If no paralegal is supplied, the firm default is used.
+ *
+ * Backwards compatible: the only required fields are the ones already used
+ * by existing callers (ClientFileManagementPage). All new fields are optional.
  */
 
 import { format } from 'date-fns';
+import { getParalegalById, getDefaultParalegal } from './paralegals';
 
 // ============================================================
 // TYPES
 // ============================================================
 
 export interface RetainerHTMLData {
+  // ---- Client ----
   clientName: string;
   clientEmail: string;
   clientPhone?: string;
@@ -22,15 +40,27 @@ export interface RetainerHTMLData {
   clientCity?: string;
   clientProvince?: string;
   clientPostalCode?: string;
+
+  // ---- Matter ----
   matterReference?: string;
-  matterType?: string;         // e.g. "T2 – Maintenance"
-  feeArrangementType: string;  // 'hourly' | 'flat_fee' | 'hybrid' | 'contingency'
+  matterType?: string;
+  /** Free-text describing the claim/charge/dispute. Optional. */
+  natureOfMatter?: string;
+  /** Selects which retainer template to render. Optional — defaults to LTB Tenant. */
+  templateName?: string;
+
+  // ---- Fees ----
+  feeArrangementType: string;
   hourlyRate?: string;
   flatFeeAmount?: string;
   hybridFlatFee?: string;
   hybridHourlyRate?: string;
   contingencyPercent?: string;
   retainerDeposit?: string;
+
+  // ---- Paralegal (signing) ----
+  /** Id from `paralegals.ts`. Defaults to firm primary if omitted. */
+  paralegalId?: string;
 }
 
 // ============================================================
@@ -45,326 +75,428 @@ const FEE_MODEL_LABELS: Record<string, string> = {
 };
 
 // ============================================================
-// THE HTML TEMPLATE (your Tenant LTB Retainer)
+// MATTER PROFILES
 // ============================================================
 
-function getRetainerTemplate(): string {
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tenant Retainer Agreement – LegalAssist Paralegal Services</title>
-<style>
-  :root{
-    --ink:#111827;
-    --muted:#6B7280;
-    --line:#E5E7EB;
-    --paper:#FFFFFF;
-    --bg:#F9FAFB;
+interface MatterProfile {
+  documentTitle: string;
+  subtitle: string;
+  pageTitle: string;
+  matterReferenceLabel: string;
+  matterTypeLabel: string;
+  natureOfMatterLabel: string;
+  retainerSentence: string;
+  scopeItems: string[];
+  exclusions: string[];
+  disbursementItems: string[];
+  decisionMaker: string;
+  footerCaption: string;
+  showRentObligations: boolean;
+  showFreeRentClause: boolean;
+  conductReferent: 'landlord' | 'opposing_party' | 'prosecutor';
+}
+
+function getMatterProfile(templateName?: string): MatterProfile {
+  const name = (templateName || '').toLowerCase();
+
+  // -------------------- Provincial Offences / Traffic Ticket --------------------
+  if (name.includes('provincial offence') || name.includes('traffic ticket') || name.includes('poa')) {
+    const isTraffic = name.includes('traffic');
+    const heading = isTraffic ? 'Traffic Ticket Retainer Agreement' : 'Provincial Offences Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: isTraffic
+        ? heading + ' &ndash; Provincial Offences Court Matters'
+        : heading + ' &ndash; Provincial Offences Act Matters',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: isTraffic ? 'Ticket / Offence #:' : 'POA / Offence #:',
+      matterTypeLabel: 'Charge / Offence:',
+      natureOfMatterLabel: 'Nature of the Charge',
+      retainerSentence: isTraffic
+        ? 'The Client retains the Paralegal to provide legal services in connection with a traffic ticket or related offence under the <em>Provincial Offences Act</em>, including representation at the Ontario Court of Justice (Provincial Offences Court).'
+        : 'The Client retains the Paralegal to provide legal services in connection with a charge under the <em>Provincial Offences Act</em>, including representation at the Ontario Court of Justice (Provincial Offences Court).',
+      scopeItems: [
+        'Legal advice and case assessment in respect of the charge(s)',
+        'Review of the certificate of offence, disclosure, and any officer notes',
+        'Filing the Notice of Intention to Appear and any required forms',
+        'Negotiation with the prosecutor regarding plea, charge reduction, or fine reduction',
+        'Representation at early resolution meetings, pre-trials, and trial',
+        'Advice on demerit points, insurance impact, and licence consequences',
+      ],
+      exclusions: [
+        'Appeals to the Ontario Court of Justice (appellate division) or higher courts',
+        'Civil claims arising from the underlying incident',
+        'Criminal Code charges (indictable offences) or related criminal proceedings',
+        'Reinstatement of a suspended licence outside this matter',
+        'Advice relating to tax, immigration, family, or other unrelated legal issues',
+      ],
+      disbursementItems: [
+        'Provincial Offences Court filing or transcript fees',
+        'Disclosure request fees and copies of officer notes',
+        'Process server fees, courier, printing, scanning, postage',
+        'Witness or expert fees (e.g., accident reconstruction) if required',
+      ],
+      decisionMaker: 'Justice of the Peace or Provincial Offences Court',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'prosecutor',
+    };
   }
-  *{ box-sizing:border-box; }
-  body{
-    margin:0;
-    padding:24px;
-    background:var(--bg);
-    color:var(--ink);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size:14px;
-    line-height:1.55;
+
+  // -------------------- Small Claims Court --------------------
+  if (name.includes('small claim')) {
+    const heading = 'Small Claims Court Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Ontario Small Claims Court Matters',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'Court File #:',
+      matterTypeLabel: 'Type of Claim:',
+      natureOfMatterLabel: 'Nature of the Claim',
+      retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with a Small Claims Court matter under the <em>Courts of Justice Act</em> and the <em>Rules of the Small Claims Court</em>.',
+      scopeItems: [
+        'Legal advice and case assessment within Small Claims Court jurisdiction',
+        'Drafting of Plaintiff&rsquo;s Claim, Defence, Defendant&rsquo;s Claim, or related pleadings',
+        'Service of documents and filing with the court',
+        'Representation at settlement conferences, motions, and trial',
+        'Negotiation and settlement discussions with the opposing party or counsel',
+      ],
+      exclusions: [
+        'Appeals to the Divisional Court or higher courts',
+        'Enforcement of judgments beyond initial steps',
+        'Matters exceeding the monetary jurisdiction of the Small Claims Court',
+        'Advice relating to tax, immigration, criminal, or family law issues',
+      ],
+      disbursementItems: [
+        'Small Claims Court filing, motion, and trial fees',
+        'Process server fees and service of documents',
+        'Transcript or recording fees',
+        'Courier, printing, scanning, document production costs',
+        'Witness or expert reports if required',
+      ],
+      decisionMaker: 'Small Claims Court Deputy Judge',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
   }
-  .page{
-    max-width:920px;
-    margin:0 auto;
-    background:var(--paper);
-    border:1px solid #000;
-    padding:24px;
+
+  // -------------------- Human Rights Tribunal --------------------
+  if (name.includes('human right') || name.includes('hrto')) {
+    const heading = 'Human Rights Tribunal Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Human Rights Tribunal of Ontario Matters',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'HRTO File #:',
+      matterTypeLabel: 'Ground(s) of Discrimination:',
+      natureOfMatterLabel: 'Nature of the Complaint',
+      retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with a complaint under the <em>Ontario Human Rights Code</em> before the Human Rights Tribunal of Ontario.',
+      scopeItems: [
+        'Legal advice and case assessment under the <em>Human Rights Code</em>',
+        'Preparation and filing of the HRTO Application (Form 1) or Response (Form 2)',
+        'Communication with the opposing party or counsel',
+        'Negotiation, mediation, and settlement discussions',
+        'Representation at case management conferences, mediations, and hearings',
+      ],
+      exclusions: [
+        'Appeals or judicial review proceedings',
+        'Civil litigation arising from the same facts (Small Claims, Superior Court)',
+        'Criminal Code matters',
+        'Advice relating to tax, immigration, or family law issues',
+      ],
+      disbursementItems: [
+        'Tribunal filing fees (currently no fee at HRTO)',
+        'Process server fees, courier, postage',
+        'Medical, expert, or witness reports',
+        'Transcripts, printing, scanning, document production',
+      ],
+      decisionMaker: 'Human Rights Tribunal of Ontario',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
   }
-  header{ margin-bottom:14px; }
-  .toprow{
-    display:flex;
-    justify-content:space-between;
-    gap:16px;
-    flex-wrap:wrap;
+
+  // -------------------- WSIB / WSIAT --------------------
+  if (name.includes('wsib') || name.includes('wsiat') || name.includes('workplace injury')) {
+    const heading = 'WSIB / WSIAT Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Workplace Safety and Insurance Matters',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'WSIB Claim #:',
+      matterTypeLabel: 'Type of Claim:',
+      natureOfMatterLabel: 'Nature of the Workplace Injury / Claim',
+      retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with a claim under the <em>Workplace Safety and Insurance Act, 1997</em> before the Workplace Safety and Insurance Board (WSIB) and, where applicable, the Workplace Safety and Insurance Appeals Tribunal (WSIAT).',
+      scopeItems: [
+        'Legal advice and case assessment under the <em>Workplace Safety and Insurance Act, 1997</em>',
+        'Preparation and filing of WSIB initial claims, objections, and appeal forms',
+        'Review of medical records and case file disclosure',
+        'Communication with the WSIB case manager and the Appeals Resolution Officer',
+        'Representation at WSIB hearings and at WSIAT hearings where applicable',
+      ],
+      exclusions: [
+        'Civil claims against employers or third parties (right of action issues)',
+        'Long-term disability claims with private insurers',
+        'CPP-Disability or other federal benefit claims',
+        'Advice relating to tax, immigration, or family law issues',
+      ],
+      disbursementItems: [
+        'Medical record retrieval fees and physician report fees',
+        'Translation services for medical documents if required',
+        'Photocopies, scanning, courier, and postage',
+        'Expert opinion or independent medical examination fees',
+      ],
+      decisionMaker: 'Workplace Safety and Insurance Board / WSIAT',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
   }
-  h1{ font-size:19px; margin:0 0 4px; }
-  .subtitle{ font-size:13px; color:var(--muted); margin:0; }
-  .meta{ font-size:13px; min-width:260px; }
-  .meta strong{ font-weight:700; }
-  hr{ border:none; border-top:1px solid #000; margin:16px 0; }
-  h2{ font-size:13px; margin:16px 0 8px; text-transform:uppercase; letter-spacing:.06em; }
-  h3{ font-size:14px; margin:12px 0 6px; }
-  p{ margin:8px 0; }
-  ul{ margin:8px 0 8px 18px; }
-  li{ margin:6px 0; }
-  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }
-  .field{ border-bottom:1px solid #000; padding:4px 0; min-height:24px; }
-  .field span{ font-weight:700; }
-  .checkline{ margin:6px 0; }
-  .checkline.inactive{ display:none; }
-  .note-box{ border:1px solid #000; padding:12px; margin:12px 0; background:#fff; }
-  .sig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px; }
-  .sig-card{ border:1px solid #000; padding:14px; min-height:150px; }
-  .sig-title{ font-weight:700; margin:0 0 10px; }
-  .sig-line{ border-bottom:1px solid #000; min-height:24px; margin-top:20px; }
-  .sig-label{ font-size:12px; color:var(--muted); margin-top:4px; }
-  .sig-typed{
-    font-family: 'Segoe Script', 'Brush Script MT', 'Lucida Handwriting', cursive;
-    font-size:20px;
-    color:#111;
-    padding:8px 0;
+
+  // -------------------- Employment / Wrongful Dismissal --------------------
+  if (name.includes('employment') || name.includes('wrongful dismissal')) {
+    const heading = 'Employment Matter Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Employment Standards and Wrongful Dismissal Matters',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'File Ref:',
+      matterTypeLabel: 'Type of Matter:',
+      natureOfMatterLabel: 'Nature of the Employment Dispute',
+      retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with an employment matter, including claims under the <em>Employment Standards Act, 2000</em> and common-law wrongful dismissal matters within Small Claims Court jurisdiction.',
+      scopeItems: [
+        'Legal advice and case assessment under the <em>Employment Standards Act, 2000</em>',
+        'Filing of an Employment Standards complaint with the Ministry of Labour',
+        'Drafting of demand letters and severance negotiation',
+        'Representation in Small Claims Court for monetary recovery within jurisdiction',
+        'Negotiation and settlement discussions with the employer',
+      ],
+      exclusions: [
+        'Wrongful dismissal claims exceeding Small Claims Court jurisdiction (Superior Court)',
+        'Class actions and unionized labour matters (referrals available)',
+        'Human Rights Tribunal applications (separate retainer)',
+        'Advice relating to tax, immigration, criminal, or family law issues',
+      ],
+      disbursementItems: [
+        'Filing fees (Ministry of Labour or Small Claims Court)',
+        'Process server fees and service of documents',
+        'Photocopies, courier, printing, scanning, postage',
+        'Expert reports (e.g., income loss calculation) if required',
+      ],
+      decisionMaker: 'Ministry of Labour or Small Claims Court',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
   }
-  .sig-date{ font-size:13px; color:var(--ink); margin-top:4px; }
-  footer{ margin-top:18px; font-size:12px; text-align:center; color:var(--muted); }
-  @media (max-width:720px){ .grid,.sig-grid{ grid-template-columns:1fr; } }
-  @media print{ body{ background:#fff; padding:0; } .page{ border:none; } }
-</style>
-</head>
-<body>
-  <div class="page">
-    <header>
-      <div class="toprow">
-        <div>
-          <h1>LegalAssist Paralegal Services</h1>
-          <p class="subtitle">Tenant Retainer Agreement &ndash; Landlord and Tenant Board Matters</p>
-        </div>
-        <div class="meta">
-          <div><strong>Client:</strong> {CLIENT_NAME}</div>
-          <div><strong>File Ref:</strong> {MATTER_REFERENCE}</div>
-          <div><strong>Date:</strong> {DATE}</div>
-        </div>
-      </div>
-    </header>
-    <hr>
-    <h2>1. Parties</h2>
-    <div class="grid">
-      <div class="field"><span>Client Name:</span> {CLIENT_NAME}</div>
-      <div class="field"><span>Phone:</span> {CLIENT_PHONE}</div>
-      <div class="field"><span>Email:</span> {CLIENT_EMAIL}</div>
-      <div class="field"><span>File Ref:</span> {MATTER_REFERENCE}</div>
-      <div class="field"><span>Address:</span> {CLIENT_ADDRESS_LINE1}</div>
-      <div class="field"><span>Unit:</span> {CLIENT_ADDRESS_LINE2}</div>
-      <div class="field"><span>City:</span> {CLIENT_CITY}</div>
-      <div class="field"><span>Province:</span> {CLIENT_PROVINCE}</div>
-      <div class="field"><span>Postal Code:</span> {CLIENT_POSTAL_CODE}</div>
-      <div class="field"><span>Tribunal Matter:</span> {LTB_MATTER_TYPE}</div>
-    </div>
-    <p>
-      This Retainer Agreement is entered into between <strong>LegalAssist Paralegal Services</strong>
-      (the &ldquo;Paralegal&rdquo;) and <strong>{CLIENT_NAME}</strong> (the &ldquo;Client&rdquo;).
-    </p>
-    <h2>2. Retainer and Relationship</h2>
-    <p>
-      The Client retains the Paralegal to provide legal services in connection with a tenant-side matter before the
-      Landlord and Tenant Board in Ontario.
-    </p>
-    <p>
-      No paralegal-client relationship exists until this agreement is signed and the required retainer payment,
-      if any, has been received.
-    </p>
-    <h2>3. Scope of Services</h2>
-    <p>The Paralegal may provide services including, where applicable:</p>
-    <ul>
-      <li>Legal advice and case assessment under the <em>Residential Tenancies Act, 2006</em></li>
-      <li>Preparation of tenant applications, responses, evidence briefs, and written submissions</li>
-      <li>Communication with the landlord or the landlord&rsquo;s representative</li>
-      <li>Negotiation and settlement discussions</li>
-      <li>Representation at mediation, case management, and hearings, whether virtual or in person</li>
-    </ul>
-    <div class="note-box">
-      <strong>Important:</strong> This retainer applies only to the specific matter described above, unless expanded in writing.
-    </div>
-    <h2>4. Excluded Services</h2>
-    <p>This retainer does not include, unless separately agreed in writing:</p>
-    <ul>
-      <li>Appeals or judicial review proceedings</li>
-      <li>Enforcement of orders</li>
-      <li>Sheriff coordination or post-order enforcement work</li>
-      <li>Matters outside the jurisdiction of the Landlord and Tenant Board</li>
-      <li>Advice relating to tax, immigration, criminal, or family law issues</li>
-    </ul>
-    <h2>5. Fee Structure</h2>
-    <p>The Client and Paralegal agree to the following billing model:</p>
-    {FEE_CHECKLINES}
-    <p>
-      The selected billing model for this matter is: <strong>{SELECTED_FEE_MODEL}</strong>
-    </p>
-    <h3>Retainer Deposit</h3>
-    <p>
-      The Client agrees to pay an initial retainer deposit of <strong>$ {RETAINER_AMOUNT} + HST</strong>.
-      No work is required to begin until payment has been received.
-    </p>
-    <h3>Disbursements</h3>
-    <p>The Client remains responsible for all reasonable disbursements, including but not limited to:</p>
-    <ul>
-      <li>Landlord and Tenant Board filing fees</li>
-      <li>Courier, service, printing, scanning, or document production costs</li>
-      <li>Third-party reports, records, or other external expenses</li>
-    </ul>
-    <h3>Payment Terms</h3>
-    <ul>
-      <li>Invoices are due upon receipt unless otherwise stated in writing</li>
-      <li>Interest may be charged on overdue accounts at 2% per month (24% annually)</li>
-      <li>The Paralegal may suspend services or withdraw if accounts are not kept current, subject to professional obligations</li>
-    </ul>
-    <h2>6. Contingency Fee Terms (If Applicable)</h2>
-    <p>
-      Any contingency arrangement applies only to monetary recovery actually obtained for the Client,
-      such as compensation or a rent abatement awarded or secured by settlement. A contingency fee does not apply
-      to avoiding eviction, delaying eviction, or obtaining non-monetary relief only.
-    </p>
-    <p>
-      If the Client settles independently, withdraws the matter, fails to cooperate with the recovery process,
-      or otherwise prevents completion of the file, the Paralegal may be entitled to fees based on the fair value
-      of services performed, in addition to disbursements.
-    </p>
-    <h2>7. Client Responsibilities</h2>
-    <p>The Client agrees to:</p>
-    <ul>
-      <li>Provide complete, accurate, and truthful information</li>
-      <li>Promptly provide documents, records, and instructions when requested</li>
-      <li>Review draft materials and advise of any corrections promptly</li>
-      <li>Attend all scheduled meetings, mediations, and hearings</li>
-      <li>Keep contact information current</li>
-    </ul>
-    <h2>8. Evidence Requirements</h2>
-    <p>
-      The Client acknowledges that tenant claims often depend heavily on evidence, including photographs,
-      videos, notices, written communications, repair requests, receipts, inspection records, and witness information.
-      The Paralegal does not create evidence and cannot guarantee a successful outcome where evidence is incomplete,
-      unavailable, inconsistent, or weak.
-    </p>
-    <p>
-      If the Client fails to provide sufficient evidence or instructions, the Paralegal may limit services,
-      recommend against proceeding, or withdraw where appropriate.
-    </p>
-    <h2>9. Ongoing Rent Obligations</h2>
-    <p>
-      The Client understands that starting or defending a Landlord and Tenant Board matter does not automatically
-      suspend rent obligations. Unless specifically advised otherwise, the Client remains responsible for complying
-      with tenancy obligations, including payment of rent when due.
-    </p>
-    <h2>10. Urgent or Last-Minute Matters</h2>
-    <p>
-      If the Client retains the Paralegal close to a hearing date, after a deadline has nearly expired,
-      or in other urgent circumstances, preparation time may be limited and strategy may be restricted by available time,
-      evidence, and tribunal scheduling.
-    </p>
-    <p>
-      The Paralegal is not responsible for prejudice caused by late retention, delayed disclosure,
-      or incomplete instructions received shortly before a deadline or hearing.
-    </p>
-    <h2>11. Hearing Attendance and Participation</h2>
-    <p>
-      The Client must attend all hearings, be available during any virtual proceeding, and cooperate with hearing preparation.
-      Failure to attend or remain available may result in dismissal of claims, orders being made in the Client&rsquo;s absence,
-      or other adverse consequences.
-    </p>
-    <h2>12. Client Conduct</h2>
-    <p>The Client agrees not to:</p>
-    <ul>
-      <li>Harass, threaten, or intimidate the landlord or any witness</li>
-      <li>Send communications that undermine legal strategy</li>
-      <li>Misrepresent facts or conceal relevant information</li>
-      <li>Take unilateral steps that materially affect the matter without informing the Paralegal</li>
-    </ul>
-    <p>
-      Serious misconduct, dishonesty, abuse, or a breakdown in trust may result in withdrawal,
-      subject to professional obligations.
-    </p>
-    <h2>13. Settlement</h2>
-    <p>
-      The Client acknowledges that settlement may involve compromise. The Paralegal will provide advice,
-      but the final decision whether to accept or reject a settlement remains with the Client unless the Client has given
-      express written settlement authority.
-    </p>
-    <h2>14. No Guarantee and No &ldquo;Free Rent&rdquo; Expectation</h2>
-    <p>
-      The Client acknowledges that no result has been promised or guaranteed. Filing a claim or defending an application
-      does not entitle the Client to free rent, full compensation, or any particular remedy. Outcomes depend on the law,
-      the evidence, credibility findings, and the decision of the adjudicator.
-    </p>
-    <h2>15. Communication Policy</h2>
-    <ul>
-      <li>Normal response time is approximately 1 to 2 business days</li>
-      <li>Immediate responses are not guaranteed</li>
-      <li>Communication must remain respectful and reasonable in frequency</li>
-    </ul>
-    <p>
-      Excessive, abusive, or inappropriate communication may be grounds for withdrawal,
-      subject to professional obligations.
-    </p>
-    <h2>16. File Abandonment</h2>
-    <p>
-      If the Client stops responding, fails to provide instructions, or does not supply requested materials within a reasonable time,
-      the Paralegal may close the file or withdraw. Fees and disbursements incurred to that point remain payable.
-    </p>
-    <h2>17. Social Media and Public Statements</h2>
-    <p>
-      The Client is advised not to post online about the landlord, the dispute, the evidence, or the proceeding,
-      as social media and public statements may become relevant evidence.
-    </p>
-    <h2>18. No Action Without Funding</h2>
-    <p>
-      The Paralegal is not required to begin or continue work unless required funds have been paid and the account remains current.
-      The Paralegal may decline to file materials, attend hearings, or continue services where payment obligations are not met,
-      subject to professional obligations.
-    </p>
-    <h2>19. Withdrawal</h2>
-    <p>The Paralegal may withdraw if:</p>
-    <ul>
-      <li>Fees remain unpaid</li>
-      <li>The Client fails to cooperate or provide proper instructions</li>
-      <li>The Client insists on a dishonest, improper, or unethical course of conduct</li>
-      <li>Professional obligations require withdrawal</li>
-    </ul>
-    <h2>20. Limitation of Liability</h2>
-    <p>
-      To the extent permitted by law, the Paralegal is not responsible for delays, tribunal scheduling issues,
-      technology failures outside the Paralegal&rsquo;s control, third-party acts, or the ultimate decision of the Landlord and Tenant Board.
-    </p>
-    <h2>21. Indemnity</h2>
-    <p>
-      The Client agrees to indemnify and hold the Paralegal harmless from claims, losses, or expenses arising from false,
-      misleading, incomplete, or concealed information provided by the Client, or from unauthorized actions taken by the Client.
-    </p>
-    <h2>22. Electronic Communication and Signatures</h2>
-    <p>
-      The Client consents to communication by email and other electronic means, electronic document exchange,
-      digital storage of the file, and the use of electronic signatures. Electronic copies shall be treated as effective originals.
-    </p>
-    <h2>23. Governing Law</h2>
-    <p>
-      This agreement shall be governed by the laws of the Province of Ontario.
-    </p>
-    <h2>24. Acknowledgment</h2>
-    <p>
-      By signing below, the Client confirms that they have read and understood this agreement,
-      had the opportunity to ask questions, and agree to its terms.
-    </p>
-    <hr>
-    <div class="sig-grid">
-      <div class="sig-card">
-        <div class="sig-title">Client Electronic Signature</div>
-        <div class="sig-line"></div>
-        <div class="sig-label">Client Signature</div>
-        <div class="sig-line"></div>
-        <div class="sig-label">Date</div>
-      </div>
-      <div class="sig-card">
-        <div class="sig-title">Paralegal Signature</div>
-        <div class="sig-typed">{PARALEGAL_SIGNATURE}</div>
-        <div class="sig-label">Jean-Francois Demers, Licensed Paralegal</div>
-        <div class="sig-date">{PARALEGAL_SIGN_DATE}</div>
-        <div class="sig-label">Date</div>
-      </div>
-    </div>
-    <footer>
-      LegalAssist Paralegal Services &bull; Tenant Retainer Agreement &bull; www.legalassist.london
-    </footer>
-  </div>
-</body>
-</html>`;
+
+  // -------------------- LTB Landlord --------------------
+  if (name.includes('ltb landlord') || name.includes('landlord retainer')) {
+    const heading = 'Landlord Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Landlord and Tenant Board Matters',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'File Ref:',
+      matterTypeLabel: 'Tribunal Matter:',
+      natureOfMatterLabel: 'Nature of the Dispute',
+      retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with a landlord-side matter before the Landlord and Tenant Board in Ontario.',
+      scopeItems: [
+        'Legal advice and case assessment under the <em>Residential Tenancies Act, 2006</em>',
+        'Preparation of landlord applications (L1, L2, L3, L4, L5, L9, L10), notices (N4, N5, N12, N13), and evidence briefs',
+        'Communication with the tenant or the tenant&rsquo;s representative',
+        'Negotiation, mediation, and settlement discussions',
+        'Representation at case management and hearings, whether virtual or in person',
+      ],
+      exclusions: [
+        'Appeals or judicial review proceedings',
+        'Sheriff coordination or post-order enforcement work',
+        'Matters outside the jurisdiction of the Landlord and Tenant Board',
+        'Civil claims for amounts beyond LTB monetary jurisdiction',
+        'Advice relating to tax, immigration, criminal, or family law issues',
+      ],
+      disbursementItems: [
+        'Landlord and Tenant Board filing fees',
+        'Process server fees and service of notices',
+        'Courier, printing, scanning, postage',
+        'Background or compliance reports if required',
+      ],
+      decisionMaker: 'Landlord and Tenant Board',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
+  }
+
+  // -------------------- Other / Catch-all --------------------
+  if (name.includes('other')) {
+    const heading = 'Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Legal Services',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'File Ref:',
+      matterTypeLabel: 'Type of Matter:',
+      natureOfMatterLabel: 'Nature of the Matter',
+      retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with the matter described in this retainer agreement, within the scope of practice of a Licensed Paralegal regulated by the Law Society of Ontario.',
+      scopeItems: [
+        'Legal advice and case assessment within paralegal scope of practice',
+        'Preparation of any required pleadings, applications, responses, or correspondence',
+        'Communication with the opposing party or counsel',
+        'Negotiation and settlement discussions',
+        'Representation before the appropriate adjudicating body',
+      ],
+      exclusions: [
+        'Matters outside paralegal scope of practice as defined by the Law Society of Ontario',
+        'Appeals or judicial review proceedings',
+        'Advice relating to tax, immigration, criminal, or family law issues',
+      ],
+      disbursementItems: [
+        'Filing fees, motion fees, or hearing fees as applicable',
+        'Process server fees and service of documents',
+        'Courier, printing, scanning, postage',
+        'Expert or witness reports if required',
+      ],
+      decisionMaker: 'the appropriate court or tribunal',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
+  }
+
+  // -------------------- DEFAULT: LTB Tenant --------------------
+  return {
+    documentTitle: 'Tenant Retainer Agreement',
+    subtitle: 'Tenant Retainer Agreement &ndash; Landlord and Tenant Board Matters',
+    pageTitle: 'Tenant Retainer Agreement – Legal Assist Paralegal Services',
+    matterReferenceLabel: 'File Ref:',
+    matterTypeLabel: 'Tribunal Matter:',
+    natureOfMatterLabel: 'Nature of the Dispute',
+    retainerSentence: 'The Client retains the Paralegal to provide legal services in connection with a tenant-side matter before the Landlord and Tenant Board in Ontario.',
+    scopeItems: [
+      'Legal advice and case assessment under the <em>Residential Tenancies Act, 2006</em>',
+      'Preparation of tenant applications, responses, evidence briefs, and written submissions',
+      'Communication with the landlord or the landlord&rsquo;s representative',
+      'Negotiation and settlement discussions',
+      'Representation at mediation, case management, and hearings, whether virtual or in person',
+    ],
+    exclusions: [
+      'Appeals or judicial review proceedings',
+      'Enforcement of orders',
+      'Sheriff coordination or post-order enforcement work',
+      'Matters outside the jurisdiction of the Landlord and Tenant Board',
+      'Advice relating to tax, immigration, criminal, or family law issues',
+    ],
+    disbursementItems: [
+      'Landlord and Tenant Board filing fees',
+      'Process server fees, courier, printing, scanning, postage',
+      'Third-party reports, records, or other external expenses',
+    ],
+    decisionMaker: 'Landlord and Tenant Board',
+    footerCaption: 'Legal Assist Paralegal Services &bull; Tenant Retainer Agreement &bull; www.legalassist.london',
+    showRentObligations: true,
+    showFreeRentClause: true,
+    conductReferent: 'landlord',
+  };
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+
+function bulletList(items: string[]): string {
+  return items.map((i) => '      <li>' + i + '</li>').join('\n');
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ============================================================
+// THE HTML TEMPLATE
+// ============================================================
+
+function getRetainerTemplate(profile: MatterProfile): string {
+  const conductLandlordItems = '      <li>Harass, threaten, or intimidate the landlord or any witness</li>\n' +
+    '      <li>Send communications that undermine legal strategy</li>\n' +
+    '      <li>Misrepresent facts or conceal relevant information</li>\n' +
+    '      <li>Take unilateral steps that materially affect the matter without informing the Paralegal</li>';
+  const conductOpposingPartyItems = '      <li>Harass, threaten, or intimidate the opposing party, their representative, or any witness</li>\n' +
+    '      <li>Send communications that undermine legal strategy</li>\n' +
+    '      <li>Misrepresent facts or conceal relevant information</li>\n' +
+    '      <li>Take unilateral steps that materially affect the matter without informing the Paralegal</li>';
+  const conductProsecutorItems = '      <li>Contact the prosecutor, the issuing officer, or any witness directly without the Paralegal&rsquo;s knowledge</li>\n' +
+    '      <li>Send communications that undermine legal strategy</li>\n' +
+    '      <li>Misrepresent facts or conceal relevant information</li>\n' +
+    '      <li>Take unilateral steps that materially affect the matter without informing the Paralegal</li>';
+  const conductItems =
+    profile.conductReferent === 'prosecutor'
+      ? conductProsecutorItems
+      : profile.conductReferent === 'opposing_party'
+      ? conductOpposingPartyItems
+      : conductLandlordItems;
+
+  const socialMediaTarget =
+    profile.conductReferent === 'prosecutor'
+      ? 'the charge, the officer, the prosecution'
+      : profile.conductReferent === 'opposing_party'
+      ? 'the opposing party, the dispute, the evidence'
+      : 'the landlord, the dispute, the evidence';
+
+  const rentObligationsSection = profile.showRentObligations
+    ? '    <h2>9. Ongoing Rent Obligations</h2>\n' +
+      '    <p>\n' +
+      '      The Client understands that starting or defending a Landlord and Tenant Board matter does not automatically\n' +
+      '      suspend rent obligations. Unless specifically advised otherwise, the Client remains responsible for complying\n' +
+      '      with tenancy obligations, including payment of rent when due.\n' +
+      '    </p>'
+    : profile.conductReferent === 'prosecutor'
+    ? '    <h2>9. Continuing Obligations Pending Resolution</h2>\n' +
+      '    <p>\n' +
+      '      The Client understands that retaining the Paralegal does not stay the matter, suspend any deadlines,\n' +
+      '      or eliminate underlying obligations. The Client remains responsible for complying with the law, any\n' +
+      '      applicable conditions of release, demerit-point consequences, and any insurance reporting obligations\n' +
+      '      until the matter is finally resolved.\n' +
+      '    </p>'
+    : '    <h2>9. Continuing Obligations Pending Resolution</h2>\n' +
+      '    <p>\n' +
+      '      The Client understands that retaining the Paralegal does not stay the matter, suspend any deadlines,\n' +
+      '      or eliminate the Client&rsquo;s underlying obligations. The Client remains responsible for complying\n' +
+      '      with all contractual, statutory, or court-imposed obligations until the matter is finally resolved.\n' +
+      '    </p>';
+
+  const freeRentSection = profile.showFreeRentClause
+    ? '    <h2>14. No Guarantee and No &ldquo;Free Rent&rdquo; Expectation</h2>\n' +
+      '    <p>\n' +
+      '      The Client acknowledges that no result has been promised or guaranteed. Filing a claim or defending an application\n' +
+      '      does not entitle the Client to free rent, full compensation, or any particular remedy. Outcomes depend on the law,\n' +
+      '      the evidence, credibility findings, and the decision of the adjudicator.\n' +
+      '    </p>'
+    : '    <h2>14. No Guarantee of Outcome</h2>\n' +
+      '    <p>\n' +
+      '      The Client acknowledges that no result has been promised or guaranteed. Outcomes depend on the law,\n' +
+      '      the evidence, credibility findings, and the decision of the adjudicator.\n' +
+      '    </p>';
+
+  const head = '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>' + profile.pageTitle + '</title>\n<style>\n  :root{ --ink:#111827; --muted:#6B7280; --line:#E5E7EB; --paper:#FFFFFF; --bg:#F9FAFB; }\n  *{ box-sizing:border-box; }\n  body{ margin:0; padding:24px; background:var(--bg); color:var(--ink); font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; }\n  .page{ max-width:920px; margin:0 auto; background:var(--paper); border:1px solid #000; padding:24px; }\n  header{ margin-bottom:14px; }\n  .toprow{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }\n  h1{ font-size:19px; margin:0 0 4px; }\n  .subtitle{ font-size:13px; color:var(--muted); margin:0; }\n  .meta{ font-size:13px; min-width:260px; }\n  .meta strong{ font-weight:700; }\n  hr{ border:none; border-top:1px solid #000; margin:16px 0; }\n  h2{ font-size:13px; margin:16px 0 8px; text-transform:uppercase; letter-spacing:.06em; }\n  h3{ font-size:14px; margin:12px 0 6px; }\n  p{ margin:8px 0; }\n  ul{ margin:8px 0 8px 18px; }\n  li{ margin:6px 0; }\n  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }\n  .field{ border-bottom:1px solid #000; padding:4px 0; min-height:24px; }\n  .field span{ font-weight:700; }\n  .nature-box{ border:1px solid #000; padding:12px; margin:12px 0; background:#fff; }\n  .nature-box .nature-label{ font-weight:700; text-transform:uppercase; font-size:12px; letter-spacing:.06em; margin:0 0 6px; }\n  .checkline{ margin:6px 0; }\n  .checkline.inactive{ display:none; }\n  .note-box{ border:1px solid #000; padding:12px; margin:12px 0; background:#fff; }\n  .sig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px; }\n  .sig-card{ border:1px solid #000; padding:14px; min-height:150px; }\n  .sig-title{ font-weight:700; margin:0 0 10px; }\n  .sig-line{ border-bottom:1px solid #000; min-height:24px; margin-top:20px; }\n  .sig-label{ font-size:12px; color:var(--muted); margin-top:4px; }\n  .sig-typed{ font-family: \'Segoe Script\', \'Brush Script MT\', \'Lucida Handwriting\', cursive; font-size:20px; color:#111; padding:8px 0; }\n  .sig-date{ font-size:13px; color:var(--ink); margin-top:4px; }\n  footer{ margin-top:18px; font-size:12px; text-align:center; color:var(--muted); }\n  @media (max-width:720px){ .grid,.sig-grid{ grid-template-columns:1fr; } }\n  @media print{ body{ background:#fff; padding:0; } .page{ border:none; } }\n</style>\n</head>';
+
+  const body = '<body>\n  <div class="page">\n    <header>\n      <div class="toprow">\n        <div>\n          <h1>Legal Assist Paralegal Services</h1>\n          <p class="subtitle">' + profile.subtitle + '</p>\n        </div>\n        <div class="meta">\n          <div><strong>Client:</strong> {CLIENT_NAME}</div>\n          <div><strong>' + profile.matterReferenceLabel + '</strong> {MATTER_REFERENCE}</div>\n          <div><strong>Date:</strong> {DATE}</div>\n        </div>\n      </div>\n    </header>\n    <hr>\n    <h2>1. Parties</h2>\n    <div class="grid">\n      <div class="field"><span>Client Name:</span> {CLIENT_NAME}</div>\n      <div class="field"><span>Phone:</span> {CLIENT_PHONE}</div>\n      <div class="field"><span>Email:</span> {CLIENT_EMAIL}</div>\n      <div class="field"><span>' + profile.matterReferenceLabel + '</span> {MATTER_REFERENCE}</div>\n      <div class="field"><span>Address:</span> {CLIENT_ADDRESS_LINE1}</div>\n      <div class="field"><span>Unit:</span> {CLIENT_ADDRESS_LINE2}</div>\n      <div class="field"><span>City:</span> {CLIENT_CITY}</div>\n      <div class="field"><span>Province:</span> {CLIENT_PROVINCE}</div>\n      <div class="field"><span>Postal Code:</span> {CLIENT_POSTAL_CODE}</div>\n      <div class="field"><span>' + profile.matterTypeLabel + '</span> {LTB_MATTER_TYPE}</div>\n    </div>\n    <p>\n      This Retainer Agreement is entered into between <strong>Legal Assist Paralegal Services</strong>\n      (the &ldquo;Paralegal&rdquo;) and <strong>{CLIENT_NAME}</strong> (the &ldquo;Client&rdquo;).\n    </p>\n    <h2>2. Retainer and Relationship</h2>\n    <p>\n      ' + profile.retainerSentence + '\n    </p>\n    <p>\n      No paralegal-client relationship exists until this agreement is signed and the required retainer payment,\n      if any, has been received.\n    </p>\n    <div class="nature-box">\n      <p class="nature-label">' + profile.natureOfMatterLabel + '</p>\n      <p>{NATURE_OF_MATTER}</p>\n    </div>\n    <h2>3. Scope of Services</h2>\n    <p>The Paralegal may provide services including, where applicable:</p>\n    <ul>\n' + bulletList(profile.scopeItems) + '\n    </ul>\n    <div class="note-box">\n      <strong>Important:</strong> This retainer applies only to the specific matter described above, unless expanded in writing.\n    </div>\n    <h2>4. Excluded Services</h2>\n    <p>This retainer does not include, unless separately agreed in writing:</p>\n    <ul>\n' + bulletList(profile.exclusions) + '\n    </ul>\n    <h2>5. Fee Structure</h2>\n    <p>The Client and Paralegal agree to the following billing model:</p>\n    {FEE_CHECKLINES}\n    <p>\n      The selected billing model for this matter is: <strong>{SELECTED_FEE_MODEL}</strong>\n    </p>\n    <h3>Retainer Deposit</h3>\n    <p>\n      The Client agrees to pay an initial retainer deposit of <strong>$ {RETAINER_AMOUNT} + HST</strong>.\n      No work is required to begin until payment has been received.\n    </p>\n    <h3>Disbursements</h3>\n    <p>\n      Disbursements are out-of-pocket expenses we incur on the Client&rsquo;s behalf and are billed in\n      addition to legal fees, at cost. Typical disbursements in this matter may include:\n    </p>\n    <ul>\n' + bulletList(profile.disbursementItems) + '\n    </ul>\n    <p>\n      The Paralegal will provide an estimate where reasonably possible and notify the Client in advance of any\n      disbursement exceeding $250. HST is charged on legal fees and on taxable disbursements (court filing fees\n      that are exempt from HST will not be charged HST).\n    </p>\n    <h3>Payment Terms</h3>\n    <ul>\n      <li>Invoices are due upon receipt unless otherwise stated in writing</li>\n      <li>Interest may be charged on overdue accounts at 2% per month (24% annually)</li>\n      <li>The Paralegal may suspend services or withdraw if accounts are not kept current, subject to professional obligations</li>\n    </ul>\n    <h2>6. Contingency Fee Terms (If Applicable)</h2>\n    <p>\n      Any contingency arrangement applies only to monetary recovery actually obtained for the Client.\n      A contingency fee does not apply to non-monetary relief, dismissal of charges, avoidance of penalty,\n      or other purely defensive outcomes.\n    </p>\n    <p>\n      If the Client settles independently, withdraws the matter, fails to cooperate with the recovery process,\n      or otherwise prevents completion of the file, the Paralegal may be entitled to fees based on the fair value\n      of services performed, in addition to disbursements.\n    </p>\n    <h2>7. Client Responsibilities</h2>\n    <p>The Client agrees to:</p>\n    <ul>\n      <li>Provide complete, accurate, and truthful information</li>\n      <li>Promptly provide documents, records, and instructions when requested</li>\n      <li>Review draft materials and advise of any corrections promptly</li>\n      <li>Attend all scheduled meetings, mediations, and hearings</li>\n      <li>Keep contact information current</li>\n    </ul>\n    <h2>8. Evidence Requirements</h2>\n    <p>\n      The Client acknowledges that outcomes often depend heavily on evidence, including documents,\n      photographs, videos, written communications, receipts, records, and witness information.\n      The Paralegal does not create evidence and cannot guarantee a successful outcome where evidence is incomplete,\n      unavailable, inconsistent, or weak.\n    </p>\n    <p>\n      If the Client fails to provide sufficient evidence or instructions, the Paralegal may limit services,\n      recommend against proceeding, or withdraw where appropriate.\n    </p>\n' + rentObligationsSection + '\n    <h2>10. Urgent or Last-Minute Matters</h2>\n    <p>\n      If the Client retains the Paralegal close to a hearing date, after a deadline has nearly expired,\n      or in other urgent circumstances, preparation time may be limited and strategy may be restricted.\n    </p>\n    <p>\n      The Paralegal is not responsible for prejudice caused by late retention, delayed disclosure,\n      or incomplete instructions received shortly before a deadline or hearing.\n    </p>\n    <h2>11. Hearing Attendance and Participation</h2>\n    <p>\n      The Client must attend all hearings, be available during any virtual proceeding, and cooperate with hearing preparation.\n      Failure to attend or remain available may result in dismissal of claims, orders being made in the Client&rsquo;s absence,\n      or other adverse consequences.\n    </p>\n    <h2>12. Client Conduct</h2>\n    <p>The Client agrees not to:</p>\n    <ul>\n' + conductItems + '\n    </ul>\n    <p>\n      Serious misconduct, dishonesty, abuse, or a breakdown in trust may result in withdrawal,\n      subject to professional obligations.\n    </p>\n    <h2>13. Settlement</h2>\n    <p>\n      The Client acknowledges that settlement may involve compromise. The Paralegal will provide advice,\n      but the final decision whether to accept or reject a settlement remains with the Client unless the Client has given\n      express written settlement authority.\n    </p>\n' + freeRentSection + '\n    <h2>15. Communication Policy</h2>\n    <ul>\n      <li>Normal response time is approximately 1 to 2 business days</li>\n      <li>Immediate responses are not guaranteed</li>\n      <li>Communication must remain respectful and reasonable in frequency</li>\n    </ul>\n    <p>\n      Excessive, abusive, or inappropriate communication may be grounds for withdrawal,\n      subject to professional obligations.\n    </p>\n    <h2>16. File Abandonment</h2>\n    <p>\n      If the Client stops responding, fails to provide instructions, or does not supply requested materials within a reasonable time,\n      the Paralegal may close the file or withdraw. Fees and disbursements incurred to that point remain payable.\n    </p>\n    <h2>17. Social Media and Public Statements</h2>\n    <p>\n      The Client is advised not to post online about ' + socialMediaTarget + ', or the proceeding,\n      as social media and public statements may become relevant evidence.\n    </p>\n    <h2>18. No Action Without Funding</h2>\n    <p>\n      The Paralegal is not required to begin or continue work unless required funds have been paid and the account remains current.\n    </p>\n    <h2>19. Withdrawal</h2>\n    <p>The Paralegal may withdraw if:</p>\n    <ul>\n      <li>Fees remain unpaid</li>\n      <li>The Client fails to cooperate or provide proper instructions</li>\n      <li>The Client insists on a dishonest, improper, or unethical course of conduct</li>\n      <li>Professional obligations require withdrawal</li>\n    </ul>\n    <h2>20. Limitation of Liability</h2>\n    <p>\n      To the extent permitted by law, the Paralegal is not responsible for delays, scheduling issues,\n      technology failures outside the Paralegal&rsquo;s control, third-party acts, or the ultimate decision of ' + profile.decisionMaker + '.\n    </p>\n    <h2>21. Indemnity</h2>\n    <p>\n      The Client agrees to indemnify and hold the Paralegal harmless from claims, losses, or expenses arising from false,\n      misleading, incomplete, or concealed information provided by the Client, or from unauthorized actions taken by the Client.\n    </p>\n    <h2>22. Electronic Communication and Signatures</h2>\n    <p>\n      The Client consents to communication by email and other electronic means, electronic document exchange,\n      digital storage of the file, and the use of electronic signatures. Electronic copies shall be treated as effective originals.\n    </p>\n    <h2>23. Governing Law</h2>\n    <p>\n      This agreement shall be governed by the laws of the Province of Ontario.\n    </p>\n    <h2>24. Acknowledgment</h2>\n    <p>\n      By signing below, the Client confirms that they have read and understood this agreement,\n      had the opportunity to ask questions, and agree to its terms.\n    </p>\n    <hr>\n    <div class="sig-grid">\n      <div class="sig-card">\n        <div class="sig-title">Client Electronic Signature</div>\n        <div class="sig-line"></div>\n        <div class="sig-label">Client Signature</div>\n        <div class="sig-line"></div>\n        <div class="sig-label">Date</div>\n      </div>\n      <div class="sig-card">\n        <div class="sig-title">Paralegal Signature</div>\n        <div class="sig-typed">{PARALEGAL_SIGNATURE}</div>\n        <div class="sig-label">{PARALEGAL_NAME}, {PARALEGAL_CREDENTIAL}</div>\n        <div class="sig-label">LSO #{PARALEGAL_LSO}</div>\n        <div class="sig-date">{PARALEGAL_SIGN_DATE}</div>\n        <div class="sig-label">Date</div>\n      </div>\n    </div>\n    <footer>\n      ' + profile.footerCaption + '\n    </footer>\n  </div>\n</body>\n</html>';
+
+  return head + '\n' + body;
 }
 
 // ============================================================
@@ -375,30 +507,18 @@ function buildFeeChecklines(data: RetainerHTMLData): string {
   const type = data.feeArrangementType;
 
   const lines: { key: string; label: string }[] = [
-    {
-      key: 'hourly',
-      label: `<strong>Hourly Retainer:</strong> $ ${data.hourlyRate || '___'} per hour + HST`,
-    },
-    {
-      key: 'flat_fee',
-      label: `<strong>Flat Fee:</strong> $ ${data.flatFeeAmount || '___'} + HST`,
-    },
-    {
-      key: 'hybrid',
-      label: `<strong>Hybrid Retainer:</strong> Initial flat fee of $ ${data.hybridFlatFee || '___'} + HST, then $ ${data.hybridHourlyRate || '___'} per hour + HST`,
-    },
-    {
-      key: 'contingency',
-      label: `<strong>Contingency Fee (tenant monetary claims only):</strong> ${data.contingencyPercent || '___'}% of monetary recovery obtained, plus HST where applicable`,
-    },
+    { key: 'hourly', label: '<strong>Hourly Retainer:</strong> $ ' + (data.hourlyRate || '___') + ' per hour + HST' },
+    { key: 'flat_fee', label: '<strong>Flat Fee:</strong> $ ' + (data.flatFeeAmount || '___') + ' + HST' },
+    { key: 'hybrid', label: '<strong>Hybrid Retainer:</strong> Initial flat fee of $ ' + (data.hybridFlatFee || '___') + ' + HST, then $ ' + (data.hybridHourlyRate || '___') + ' per hour + HST' },
+    { key: 'contingency', label: '<strong>Contingency Fee (monetary claims only):</strong> ' + (data.contingencyPercent || '___') + '% of monetary recovery obtained, plus HST where applicable' },
   ];
 
   return lines
     .map((l) => {
       const isSelected = l.key === type;
-      const checkbox = isSelected ? '\u2611' : '\u2610'; // ☑ vs ☐
+      const checkbox = isSelected ? '☑' : '☐';
       const cls = isSelected ? 'checkline' : 'checkline inactive';
-      return `    <div class="${cls}">${checkbox} ${l.label}</div>`;
+      return '    <div class="' + cls + '">' + checkbox + ' ' + l.label + '</div>';
     })
     .join('\n');
 }
@@ -407,14 +527,6 @@ function buildFeeChecklines(data: RetainerHTMLData): string {
 // MAIN GENERATOR
 // ============================================================
 
-/**
- * Generates a fully-populated retainer agreement HTML document.
- *
- * - Replaces all {PLACEHOLDER} tokens with real values
- * - Shows only the selected fee type checkbox
- * - Auto-signs the paralegal signature block with typed name + date
- * - Returns { html, dataUrl, filename }
- */
 export function generateRetainerHTML(data: RetainerHTMLData): {
   html: string;
   dataUrl: string;
@@ -423,35 +535,47 @@ export function generateRetainerHTML(data: RetainerHTMLData): {
   const now = new Date();
   const dateFormatted = format(now, 'MMMM d, yyyy');
 
-  let html = getRetainerTemplate();
+  const profile = getMatterProfile(data.templateName);
+  const paralegal = getParalegalById(data.paralegalId) || getDefaultParalegal();
+
+  let html = getRetainerTemplate(profile);
 
   // --- Client fields ---
-  html = html.replace(/\{CLIENT_NAME\}/g, data.clientName || '\u2014');
-  html = html.replace(/\{CLIENT_EMAIL\}/g, data.clientEmail || '\u2014');
-  html = html.replace(/\{CLIENT_PHONE\}/g, data.clientPhone || '\u2014');
-  html = html.replace(/\{CLIENT_ADDRESS_LINE1\}/g, data.clientAddress || '\u2014');
-  html = html.replace(/\{CLIENT_ADDRESS_LINE2\}/g, data.clientUnit || '\u2014');
-  html = html.replace(/\{CLIENT_CITY\}/g, data.clientCity || '\u2014');
+  html = html.replace(/\{CLIENT_NAME\}/g, data.clientName || '—');
+  html = html.replace(/\{CLIENT_EMAIL\}/g, data.clientEmail || '—');
+  html = html.replace(/\{CLIENT_PHONE\}/g, data.clientPhone || '—');
+  html = html.replace(/\{CLIENT_ADDRESS_LINE1\}/g, data.clientAddress || '—');
+  html = html.replace(/\{CLIENT_ADDRESS_LINE2\}/g, data.clientUnit || '—');
+  html = html.replace(/\{CLIENT_CITY\}/g, data.clientCity || '—');
   html = html.replace(/\{CLIENT_PROVINCE\}/g, data.clientProvince || 'Ontario');
-  html = html.replace(/\{CLIENT_POSTAL_CODE\}/g, data.clientPostalCode || '\u2014');
-  html = html.replace(/\{MATTER_REFERENCE\}/g, data.matterReference || '\u2014');
-  html = html.replace(/\{LTB_MATTER_TYPE\}/g, data.matterType || '\u2014');
+  html = html.replace(/\{CLIENT_POSTAL_CODE\}/g, data.clientPostalCode || '—');
+  html = html.replace(/\{MATTER_REFERENCE\}/g, data.matterReference || '—');
+  html = html.replace(/\{LTB_MATTER_TYPE\}/g, data.matterType || '—');
   html = html.replace(/\{DATE\}/g, dateFormatted);
+
+  // --- Nature of Matter ---
+  const natureText = data.natureOfMatter && data.natureOfMatter.trim()
+    ? escapeHtml(data.natureOfMatter.trim())
+    : '<em>(To be provided by the Client.)</em>';
+  html = html.replace(/\{NATURE_OF_MATTER\}/g, natureText);
 
   // --- Fee structure ---
   html = html.replace(/\{FEE_CHECKLINES\}/g, buildFeeChecklines(data));
-  html = html.replace(/\{SELECTED_FEE_MODEL\}/g, FEE_MODEL_LABELS[data.feeArrangementType] || '\u2014');
+  html = html.replace(/\{SELECTED_FEE_MODEL\}/g, FEE_MODEL_LABELS[data.feeArrangementType] || '—');
   html = html.replace(/\{RETAINER_AMOUNT\}/g, data.retainerDeposit || '___');
 
   // --- Auto-signature (paralegal) ---
-  html = html.replace(/\{PARALEGAL_SIGNATURE\}/g, 'Jean-Francois Demers');
+  html = html.replace(/\{PARALEGAL_SIGNATURE\}/g, paralegal.electronicSignatureText);
+  html = html.replace(/\{PARALEGAL_NAME\}/g, paralegal.displayName);
+  html = html.replace(/\{PARALEGAL_LSO\}/g, paralegal.lsoNumber);
+  html = html.replace(/\{PARALEGAL_CREDENTIAL\}/g, paralegal.credentialLine);
   html = html.replace(/\{PARALEGAL_SIGN_DATE\}/g, dateFormatted);
 
   // --- Build data URL ---
   const blob = new Blob([html], { type: 'text/html' });
   const dataUrl = URL.createObjectURL(blob);
   const safeName = (data.clientName || 'Client').replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/\s+/g, '_');
-  const filename = `Retainer_Agreement_${safeName}_${format(now, 'yyyy-MM-dd')}.html`;
+  const filename = 'Retainer_Agreement_' + safeName + '_' + format(now, 'yyyy-MM-dd') + '.html';
 
   return { html, dataUrl, filename };
 }
