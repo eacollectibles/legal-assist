@@ -14,6 +14,262 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'cpp-disability-appeal-denied-social-security-tribunal',
+    title: 'CPP Disability Denied? Your Options at the Social Security Tribunal',
+    description: 'Service Canada denied your CPP Disability claim? You have appeal rights through reconsideration, the SST General Division, and the Appeal Division. Here is how each stage works.',
+    category: 'general',
+    date: '2026-05-01',
+    readTime: '6 min',
+    content: `
+      <p>If Service Canada has denied your Canada Pension Plan Disability (CPP-D) application, you are not out of options. The federal appeal process gives you three distinct opportunities to overturn the decision, but each stage has strict deadlines and procedural rules. Missing a deadline by even one day can end your appeal.</p>
+
+      <h2>Step 1: Reconsideration at Service Canada</h2>
+      <p>This is your first appeal stage and is mandatory before going to the Tribunal. You have <strong>90 days</strong> from the date of the denial letter to file a Request for Reconsideration. A different Service Canada decision-maker will review your file, and you can submit new medical evidence at this stage.</p>
+      <p>Most denials are upheld at reconsideration, but it is a critical step because it lets you build the evidentiary record that the Tribunal will eventually review.</p>
+
+      <h2>Step 2: General Division of the Social Security Tribunal</h2>
+      <p>If reconsideration is denied, you have <strong>90 days</strong> to file a Notice of Appeal with the General Division of the Social Security Tribunal of Canada (SST-GD). The General Division is a fresh hearing &mdash; they look at the evidence, hear from you and any witnesses or medical experts, and make their own decision.</p>
+      <p>To succeed at the General Division, you generally need to prove two things under the <em>Canada Pension Plan</em>:</p>
+      <ul>
+        <li><strong>Severe disability:</strong> your condition makes you incapable regularly of pursuing any substantially gainful occupation.</li>
+        <li><strong>Prolonged disability:</strong> your condition is of indefinite duration or likely to result in death.</li>
+      </ul>
+      <p>You also need to have made enough CPP contributions in the qualifying period before your disability began. The exact contribution requirement depends on your age and work history.</p>
+
+      <h2>Step 3: Appeal Division of the Social Security Tribunal</h2>
+      <p>If the General Division decision goes against you, you can apply for leave to appeal to the Appeal Division. You have <strong>90 days</strong> to file. Unlike the General Division, the Appeal Division is <strong>not</strong> a fresh hearing &mdash; it is a review of legal errors only.</p>
+      <p>Section 58(1) of the <em>Department of Employment and Social Development Act</em> sets out the only three grounds for appeal:</p>
+      <ul>
+        <li>The General Division failed to observe a principle of natural justice.</li>
+        <li>The General Division made an error in law (a misapplication of the legal test).</li>
+        <li>The General Division made an erroneous finding of fact in a perverse or capricious manner, or without regard to the material before it.</li>
+      </ul>
+      <p>You first need to obtain leave (permission to appeal). The Appeal Division must be satisfied that the appeal has a reasonable chance of success before granting leave. Many applications for leave are denied &mdash; this is the highest-stakes stage and where representation matters most.</p>
+
+      <h2>Common Mistakes That Sink Appeals</h2>
+      <ul>
+        <li><strong>Missing the 90-day deadline.</strong> Late filings require an extension that the Tribunal may refuse.</li>
+        <li><strong>Failing to update medical evidence.</strong> Your most recent specialist reports, treatment records, and functional capacity assessments are critical.</li>
+        <li><strong>Not addressing every reason for the denial.</strong> Read the decision carefully &mdash; sometimes the issue is contributions, not severity.</li>
+        <li><strong>Treating the Appeal Division as a second chance.</strong> It is not. The Appeal Division will only intervene if the General Division made a legal error.</li>
+      </ul>
+
+      <h2>Getting Help</h2>
+      <p>The Social Security Tribunal allows representation by a paralegal, lawyer, or other representative. The work is detailed, evidence-heavy, and the legal tests are technical &mdash; particularly at the Appeal Division stage where leave to appeal is often the difference between a win and a loss.</p>
+      <p>Need help with a CPP Disability appeal? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. CPP-D rules, deadlines, and benefit amounts are updated periodically by Service Canada. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'How long does a CPP-Disability appeal take?', a: 'The General Division typically takes 9 to 18 months from filing to decision. Adding the Appeal Division stage can extend the process by another 6 to 12 months. Reconsideration at Service Canada usually takes 3 to 6 months.' },
+      { q: 'Is there a fee to appeal at the Social Security Tribunal?', a: 'No. There is no filing fee for either the General Division or Appeal Division. You may have costs related to obtaining medical evidence and, if you choose, paying for representation.' },
+      { q: 'Can I submit new medical evidence at the Appeal Division?', a: 'Generally, no. The Appeal Division reviews the record that was before the General Division to determine whether a legal error was made. New evidence is only accepted in narrow circumstances.' },
+      { q: 'Can I work while my CPP-D appeal is pending?', a: 'You can attempt work, but Service Canada considers the legal test of "substantially gainful" occupation. Earnings above an annually-updated threshold can affect both eligibility and any retroactive benefits awarded if your appeal succeeds.' },
+      { q: 'What if I miss the 90-day deadline?', a: 'You can apply for an extension, but the Tribunal will only grant it in limited circumstances. You generally need to show a continuing intention to pursue the appeal, a reasonable explanation for the delay, that the other party will not be prejudiced, and that there is an arguable case.' }
+    ]
+  },
+  {
+    slug: 'n4-n12-n13-eviction-notices-ontario-difference',
+    title: 'N4, N12, or N13? Understanding Ontario Eviction Notices',
+    description: 'Your landlord just served you an N4, N12, or N13 notice — what does each one mean? A plain-English breakdown of the most common Ontario eviction notices and how to respond.',
+    category: 'ltb',
+    date: '2026-05-01',
+    readTime: '5 min',
+    content: `
+      <p>Ontario landlords cannot evict a tenant on their own. They must serve the correct notice, wait the proper notice period, and (in most cases) apply to the Landlord and Tenant Board (LTB) for an eviction order. The form number on the notice tells you why your landlord wants you to leave &mdash; and what defences you have.</p>
+
+      <h2>N4 &mdash; Non-Payment of Rent</h2>
+      <p>This is the most common eviction notice in Ontario. Your landlord serves an N4 when rent is unpaid.</p>
+      <ul>
+        <li><strong>Notice period:</strong> 14 days for monthly tenancies, 7 days for weekly or daily.</li>
+        <li><strong>What it requires:</strong> the landlord must list the rental period(s) unpaid and the exact amount owing.</li>
+        <li><strong>Voiding the notice:</strong> if you pay the full amount owing (rent plus any LTB filing fee already paid) before the eviction hearing, the notice is void and you can stay. This right to void exists every time you receive an N4 unless the landlord has obtained a previous LTB order on the same grounds.</li>
+      </ul>
+
+      <h2>N12 &mdash; Landlord, Purchaser, or Family Personal Use</h2>
+      <p>An N12 is served when the landlord, the landlord&rsquo;s family, a purchaser, or a caregiver intends to move into the unit.</p>
+      <ul>
+        <li><strong>Notice period:</strong> at least 60 days, with the termination date falling at the end of a rental period.</li>
+        <li><strong>Compensation:</strong> historically, the landlord had to give you one month&rsquo;s rent in compensation or offer a comparable unit. Under recent legislative changes (Bill 60), if the landlord provides at least 120 days notice, the one-month compensation requirement no longer applies.</li>
+        <li><strong>Bad-faith protection:</strong> if the landlord, family member, or purchaser does not actually move in and use the unit for at least 12 months, you may have a claim for damages including up to 12 months of the difference in rent at a new comparable unit.</li>
+      </ul>
+
+      <h2>N13 &mdash; Demolition, Repairs, or Conversion</h2>
+      <p>An N13 is served when the landlord plans to demolish the unit, do extensive repairs requiring the unit to be empty, or convert the unit to non-residential use.</p>
+      <ul>
+        <li><strong>Notice period:</strong> at least 120 days, with the termination date falling at the end of a rental period.</li>
+        <li><strong>Compensation:</strong> depending on the size of the building and reason for the notice, you may be entitled to one month&rsquo;s rent or up to three months&rsquo; rent in compensation, or the right to return to the unit at the same rent after repairs.</li>
+        <li><strong>Required permits:</strong> for demolition or major repairs, the landlord must hold the necessary municipal permits before the notice is enforceable.</li>
+      </ul>
+
+      <h2>What Happens After You Receive a Notice</h2>
+      <p>A notice is not an eviction. To actually remove you, the landlord must:</p>
+      <ol>
+        <li>Wait until after the notice period expires.</li>
+        <li>File an application with the Landlord and Tenant Board (L1 for non-payment, L2 for most other terminations).</li>
+        <li>Attend a hearing where you can raise defences.</li>
+        <li>Receive an eviction order from the LTB.</li>
+        <li>If you do not leave by the order date, the landlord must hire the Sheriff &mdash; only the Sheriff can physically evict you.</li>
+      </ol>
+
+      <h2>Common Defences</h2>
+      <ul>
+        <li><strong>N4:</strong> the rent was paid, the amount listed is wrong, or you can pay the arrears in full before the hearing.</li>
+        <li><strong>N12:</strong> the landlord is acting in bad faith, the named occupant has no genuine intention to live in the unit, or compensation rules were not followed.</li>
+        <li><strong>N13:</strong> required permits are missing, the work does not require the unit to be empty, or compensation rules were not followed.</li>
+      </ul>
+
+      <h2>If You Have Been Served</h2>
+      <p>Do not ignore the notice. Even if you intend to fight it, you must continue paying rent and attending any hearing the LTB schedules. Missing the hearing typically results in an eviction order being issued against you in your absence.</p>
+      <p>Need help responding to an LTB notice? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. LTB rules and forms are updated periodically. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'How long do I have to leave after receiving an N4?', a: 'Technically, the N4 gives you 14 days for monthly tenancies. But you do not have to leave on that date. Your landlord must still apply to the LTB and obtain an order. Most non-payment evictions take several weeks to several months from notice to actual eviction.' },
+      { q: 'Can my landlord evict me without a notice?', a: 'No. Except in very narrow circumstances (such as a court order in a domestic violence situation under specific legislation), Ontario landlords cannot evict residential tenants without a written notice and an LTB order.' },
+      { q: 'What is the difference between an N12 and a regular eviction notice for cause?', a: 'An N12 is a no-fault eviction. The landlord is not alleging that you did anything wrong. They are simply saying the unit is needed for personal use. Notices for cause, like an N5 (for damage or interfering with reasonable enjoyment), require the landlord to prove specific behaviour.' },
+      { q: 'My landlord served an N12 but never moved in. What can I do?', a: 'You can file a T5 application at the LTB for bad faith eviction. If the LTB finds the landlord acted in bad faith, you may be entitled to up to 12 months in damages, return of moving expenses, and other remedies. The application must be filed within one year of the eviction.' },
+      { q: 'Do I have to leave if I disagree with the notice?', a: 'No. The notice itself does not require you to leave. You can dispute the notice at the LTB hearing. You should continue paying rent and attend the hearing prepared with your defence.' }
+    ]
+  },
+  {
+    slug: 'wsib-claim-denied-ontario-appeal-options',
+    title: 'WSIB Denied Your Workplace Injury Claim? Here Is What to Do',
+    description: 'A WSIB denial is not the end. You have the right to object, escalate to the Appeals Resolution Officer, and ultimately bring your case to WSIAT. Here is the path through the system.',
+    category: 'employment',
+    date: '2026-05-01',
+    readTime: '5 min',
+    content: `
+      <p>The Workplace Safety and Insurance Board (WSIB) denies a significant share of initial workplace injury claims in Ontario. If you have received a denial, the system gives you a structured appeal path &mdash; but it is rule-bound and time-sensitive.</p>
+
+      <h2>Why WSIB Denies Claims</h2>
+      <ul>
+        <li><strong>Causation:</strong> WSIB is not satisfied that the injury arose out of and in the course of employment.</li>
+        <li><strong>Pre-existing condition:</strong> WSIB attributes the disability to a non-work-related condition.</li>
+        <li><strong>Late reporting:</strong> the worker failed to report the injury to the employer or to file the Form 6 within prescribed timelines.</li>
+        <li><strong>Insufficient medical evidence:</strong> the Functional Abilities Form, treating physician notes, or specialist reports do not support the claimed injury or impairment.</li>
+        <li><strong>Independent contractor status:</strong> WSIB determines the worker was not covered employment under the <em>Workplace Safety and Insurance Act, 1997</em>.</li>
+      </ul>
+
+      <h2>Step 1: Object Within the Deadline</h2>
+      <p>WSIB decisions can be objected to, but the deadlines are strict and depend on what was decided:</p>
+      <ul>
+        <li><strong>30 days</strong> for return-to-work and labour market re-entry decisions.</li>
+        <li><strong>6 months</strong> for most other decisions, including initial entitlement, loss of earnings benefits, and non-economic loss awards.</li>
+      </ul>
+      <p>The objection is filed using an Intent to Object form (or by letter) and goes to the original decision-maker for review.</p>
+
+      <h2>Step 2: Appeals Resolution Officer (ARO)</h2>
+      <p>If the original decision is upheld on objection, your file moves to an Appeals Resolution Officer at the WSIB Appeals Services Division. The ARO reviews the file, may request additional medical evidence, and either holds an oral hearing or decides on the written record. ARO decisions are binding within WSIB.</p>
+
+      <h2>Step 3: WSIAT</h2>
+      <p>If the ARO decision goes against you, you can appeal to the Workplace Safety and Insurance Appeals Tribunal (WSIAT) &mdash; an independent body that reviews WSIB decisions. You have <strong>6 months</strong> from the date of the ARO decision to file a Notice of Appeal with WSIAT.</p>
+      <p>WSIAT hearings are typically more formal than ARO reviews, and most appellants are represented. The Tribunal can confirm, vary, or set aside the ARO decision.</p>
+
+      <h2>Building a Strong Appeal</h2>
+      <p>WSIB and WSIAT decisions turn on medical evidence and causation. The following materials carry the most weight:</p>
+      <ul>
+        <li>Treating physician reports specifically addressing whether work caused or substantially contributed to the injury.</li>
+        <li>Specialist consultation reports (orthopaedic, occupational medicine, physiatrist, psychiatrist, etc.).</li>
+        <li>Diagnostic imaging (MRI, X-ray, CT) and lab results dated close to the injury.</li>
+        <li>Functional capacity evaluations.</li>
+        <li>Witness statements from co-workers about the mechanism of injury.</li>
+        <li>Employer records of the incident report, modified duties offered, and any incident investigation.</li>
+      </ul>
+
+      <h2>What Paralegals and Lawyers Can Do</h2>
+      <p>Both Ontario Licensed Paralegals and lawyers can represent injured workers at WSIB and WSIAT. The Office of the Worker Adviser (OWA) also provides free representation to certain non-unionized workers with claims under a specific value &mdash; this is worth exploring before paying for representation.</p>
+      <p>Need help with a WSIB appeal? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation. We can also let you know if your case is a fit for the OWA.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. WSIB and WSIAT procedures, deadlines, and benefit amounts are updated periodically. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'How long does a WSIB appeal take?', a: 'A standard objection at the Appeals Resolution Officer level often takes 6 to 12 months. A WSIAT appeal can take an additional 12 to 24 months from filing to decision, depending on the complexity of the medical evidence and whether an oral hearing is held.' },
+      { q: 'Do I need to keep going to my doctor while my appeal is pending?', a: 'Yes. Continued medical documentation strengthens your claim and is often essential evidence on appeal. Gaps in treatment can be used by WSIB to argue the injury has resolved or was not as serious as claimed.' },
+      { q: 'Can I sue my employer instead of going through WSIB?', a: 'Generally, no. The WSIB system is a no-fault scheme that replaces the right to sue your employer for most workplace injuries (this is called the "historic trade-off"). There are limited exceptions for intentional acts and certain third-party claims.' },
+      { q: 'Is there a fee to appeal at WSIB or WSIAT?', a: 'No. There is no filing fee for objections, ARO appeals, or WSIAT appeals.' },
+      { q: 'What is the Office of the Worker Adviser?', a: 'The OWA is a publicly-funded agency that provides free advice and representation to non-unionized injured workers in Ontario. Income and claim-value criteria apply. Their services are an excellent option if you qualify.' }
+    ]
+  },
+  {
+    slug: 'provincial-offences-vs-criminal-code-charges-ontario',
+    title: 'Provincial Offences vs. Criminal Code Charges: What is the Difference?',
+    description: 'Got a ticket or a charge in Ontario but unsure if it is criminal? Provincial offences and Criminal Code charges go to different courts, carry different consequences, and need different defences.',
+    category: 'general',
+    date: '2026-05-01',
+    readTime: '5 min',
+    content: `
+      <p>If you have been charged in Ontario, the first thing to figure out is whether you are facing a <strong>provincial offence</strong> or a <strong>Criminal Code offence</strong>. The two systems run on parallel tracks &mdash; different courts, different consequences, different rules &mdash; and confusing one for the other can cost you money, time, and even your record.</p>
+
+      <h2>Provincial Offences</h2>
+      <p>Provincial offences are violations of Ontario laws (and certain federal regulatory laws prosecuted by the Province) that fall under the <em>Provincial Offences Act</em>. They include:</p>
+      <ul>
+        <li>Highway Traffic Act offences (speeding, distracted driving, careless driving, stunt driving, suspended driving)</li>
+        <li>Compulsory Automobile Insurance Act offences (driving without insurance)</li>
+        <li>Liquor Licence and Control Act offences (open liquor, supplying minors)</li>
+        <li>Trespass to Property Act offences</li>
+        <li>Smoke-Free Ontario Act offences</li>
+        <li>Workplace Safety regulatory offences</li>
+        <li>Municipal by-law offences</li>
+      </ul>
+      <p>These charges are heard in the <strong>Ontario Court of Justice (Provincial Offences Court)</strong>. Decisions are made by Justices of the Peace. The penalties are typically fines, demerit points, and licence suspensions &mdash; not jail. You do not get a criminal record from a provincial offence conviction.</p>
+
+      <h2>Criminal Code Offences</h2>
+      <p>Criminal Code offences are violations of the federal <em>Criminal Code of Canada</em>. Examples include:</p>
+      <ul>
+        <li>Impaired driving and driving over 80</li>
+        <li>Dangerous operation of a motor vehicle</li>
+        <li>Theft, mischief, fraud</li>
+        <li>Assault</li>
+        <li>Drug offences (under the <em>Controlled Drugs and Substances Act</em>, prosecuted alongside the Criminal Code)</li>
+        <li>Failure to appear or breach of conditions</li>
+      </ul>
+      <p>Criminal Code charges are heard in the <strong>Ontario Court of Justice (criminal)</strong> or, for serious matters, the Superior Court of Justice. Decisions are made by judges. The consequences include fines, probation, jail, and a criminal record that follows you in employment, travel, and immigration applications.</p>
+
+      <h2>Key Differences at a Glance</h2>
+      <ul>
+        <li><strong>Source of law:</strong> provincial statutes vs. federal Criminal Code.</li>
+        <li><strong>Court:</strong> Provincial Offences Court vs. criminal court.</li>
+        <li><strong>Decision-maker:</strong> Justice of the Peace vs. judge.</li>
+        <li><strong>Penalties:</strong> fines, demerits, licence suspensions vs. fines, probation, conditional sentences, jail.</li>
+        <li><strong>Criminal record:</strong> no vs. yes.</li>
+        <li><strong>Burden of proof:</strong> beyond a reasonable doubt in both, but the procedural rules differ significantly.</li>
+        <li><strong>Disclosure:</strong> POA disclosure is generally limited to the officer&rsquo;s notes and the certificate of offence. Criminal disclosure is much broader, governed by <em>R. v. Stinchcombe</em>.</li>
+      </ul>
+
+      <h2>When the Same Incident Triggers Both</h2>
+      <p>Some incidents result in both types of charges. For example, a single accident might generate:</p>
+      <ul>
+        <li>An impaired driving charge under the Criminal Code (criminal court),</li>
+        <li>An HTA charge of careless driving under the Provincial Offences Act (POA Court),</li>
+        <li>A regulatory charge under the Compulsory Automobile Insurance Act if the driver was uninsured.</li>
+      </ul>
+      <p>Each charge is handled separately, in its own court, with its own outcome possible.</p>
+
+      <h2>Who Can Represent You</h2>
+      <p>Ontario Licensed Paralegals can represent you in:</p>
+      <ul>
+        <li>All matters in Provincial Offences Court.</li>
+        <li>Criminal Code summary conviction matters where the maximum penalty does not exceed 6 months in jail (per the Law Society of Ontario&rsquo;s scope of practice rules).</li>
+      </ul>
+      <p>For more serious Criminal Code matters &mdash; indictable offences, hybrid offences proceeded with by indictment, or summary offences with maximum penalties above 6 months &mdash; you need a lawyer.</p>
+
+      <h2>Why It Matters</h2>
+      <p>Defence strategies, plea options, and consequences differ enormously between the two systems. Treating a careless driving charge like an impaired driving charge (or vice versa) can cost you. If you are unsure which type of charge you are facing, look at the document you were served &mdash; a Provincial Offences Notice or summons names the statute. A Criminal Code matter typically involves an Information sworn under the Criminal Code and is followed by a court date in criminal court.</p>
+      <p>Need help figuring out which kind of charge you are facing? Call <a href="tel:+12262725153">226-272-5153</a> for a free consultation. If your matter is outside paralegal scope, we will tell you and refer you to a criminal lawyer.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. The rules of paralegal scope of practice and statutory penalties are updated periodically. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'Will a Highway Traffic Act conviction give me a criminal record?', a: 'No. Highway Traffic Act offences are provincial offences, not Criminal Code offences. They appear on your driving record and may affect insurance, but they do not create a criminal record.' },
+      { q: 'Can a paralegal represent me on an impaired driving charge?', a: 'Generally, no. Impaired driving (operation while impaired) is a Criminal Code offence. While paralegals can handle Criminal Code summary conviction matters with a maximum penalty of 6 months, impaired driving charges typically exceed that and require a lawyer.' },
+      { q: 'I was charged with careless driving causing bodily harm. Is that criminal?', a: 'No. Careless driving causing bodily harm is a Highway Traffic Act offence, not a Criminal Code offence. It is heard in Provincial Offences Court. The penalties are higher than regular careless driving (including possible jail and a longer suspension), but it does not create a criminal record. It is, however, often charged alongside Criminal Code offences in serious accidents.' },
+      { q: 'What is a hybrid offence?', a: 'A hybrid (or "Crown elect") offence is a Criminal Code offence the Crown can prosecute either summarily (less serious procedure, less serious penalties) or by indictment (more serious procedure, more serious penalties). The Crown chooses how to proceed based on the seriousness of the alleged conduct.' },
+      { q: 'Should I just pay the ticket?', a: 'For minor provincial offences, paying might be the simplest option. But a guilty plea can have insurance and licence consequences for years. For anything carrying demerits, a possible suspension, or significant fines, get advice before paying.' }
+    ]
+  },
+  {
     slug: 'ontario-bill-60-tenant-landlord-changes-2026',
     title: 'Ontario Bill 60: What Tenants and Landlords Need to Know in 2026',
     description: 'Bill 60 brings major changes to Ontario\'s rental laws including faster evictions, new notice rules, and changes to tenant defences. Here\'s the full breakdown.',

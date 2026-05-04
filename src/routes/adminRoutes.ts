@@ -16,6 +16,16 @@ const MeetingRequestPage = lazy(() => import('@/components/pages/MeetingRequestP
 const BookingPage = lazy(() => import('@/components/pages/BookingPage'));
 const ClientFileManagementPage = lazy(() => import('@/components/pages/ClientFileManagementPage'));
 
+// LSO compliance + paralegal-facing tools (sidebar links)
+const TrustAccountingPage = lazy(() => import('@/components/pages/TrustAccountingPage'));
+const PaymentsPage = lazy(() => import('@/components/pages/PaymentsPage'));
+const TimeBillingPage = lazy(() => import('@/components/pages/TimeBillingPage'));
+const DeadlineTrackerPage = lazy(() => import('@/components/pages/DeadlineTrackerPage'));
+const TicklerTaskPage = lazy(() => import('@/components/pages/TicklerTaskPage'));
+const ConflictSearchPage = lazy(() => import('@/components/pages/ConflictSearchPage'));
+const ReportsAnalyticsPage = lazy(() => import('@/components/pages/ReportsAnalyticsPage'));
+const PayPage = lazy(() => import('@/components/pages/PayPage'));
+
 export const adminRoutes = [
   // Main Paralegal Dashboard
   { path: '/paralegal-dashboard', element: ParalegalDashboardPage },
@@ -41,4 +51,16 @@ export const adminRoutes = [
   { path: '/meeting-dashboard', element: MeetingDashboardPage },
   { path: '/meeting-request', element: MeetingRequestPage },
   { path: '/booking', element: BookingPage },
+
+  // LSO Compliance — Paralegal-facing tools
+  { path: '/admin/trust-accounting', element: TrustAccountingPage },
+  { path: '/admin/payments', element: PaymentsPage },
+  { path: '/admin/time-billing', element: TimeBillingPage },
+  { path: '/admin/deadlines', element: DeadlineTrackerPage },
+  { path: '/admin/tickler', element: TicklerTaskPage },
+  { path: '/admin/conflict-search', element: ConflictSearchPage },
+  { path: '/admin/reports', element: ReportsAnalyticsPage },
+
+  // Public-facing payment page (clients pay invoices via Square)
+  { path: '/pay', element: PayPage },
 ];

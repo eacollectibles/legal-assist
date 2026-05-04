@@ -25,6 +25,7 @@ import {
   Link2, Settings, ChevronLeft, ChevronRight, Search,
   Bell, Phone, Menu, X, LogOut, Clock, AlertTriangle,
   CheckCircle, TrendingUp, Briefcase, Shield, ExternalLink,
+  DollarSign, CreditCard, BarChart3,
 } from 'lucide-react';
 import { ParalegalDashboardProvider, useParalegalDashboard } from './paralegal-dashboard/ParalegalDashboardContext';
 import { BaseCrudService } from '@/integrations';
@@ -45,9 +46,16 @@ import SettingsTab from './paralegal-dashboard/SettingsTab';
 // The sidebar navigates to their routes instead of embedding them.
 const EXTERNAL_MODULES: Record<string, string> = {
   clientfiles: '/admin/client-files',
+  trustaccounting: '/admin/trust-accounting',
+  payments: '/admin/payments',
+  timebilling: '/admin/time-billing',
+  deadlines: '/admin/deadlines',
+  tickler: '/admin/tickler',
+  conflictsearch: '/admin/conflict-search',
   docworkflow: '/admin/documents',
   meetings: '/meeting-dashboard',
   uploadtokens: '/admin/upload-tokens',
+  reports: '/admin/reports',
 };
 
 // ============================================================
@@ -269,9 +277,16 @@ function DashboardShell() {
     { id: 'assignments', label: 'Assignments', icon: Users, section: 'clients' },
     { id: 'messages', label: 'Messages', icon: MessageSquare, badge: unreadCount || undefined, section: 'clients' },
     { id: 'clientfiles', label: 'Client Files', icon: Scale, section: 'compliance' },
+    { id: 'trustaccounting', label: 'Trust Accounting', icon: DollarSign, section: 'compliance' },
+    { id: 'payments', label: 'Payments', icon: CreditCard, section: 'compliance' },
+    { id: 'timebilling', label: 'Time & Billing', icon: Clock, section: 'compliance' },
+    { id: 'deadlines', label: 'Deadlines', icon: AlertTriangle, section: 'compliance' },
+    { id: 'tickler', label: 'Tasks / Tickler', icon: CheckCircle, section: 'compliance' },
+    { id: 'conflictsearch', label: 'Conflict Search', icon: Search, section: 'compliance' },
     { id: 'signatures', label: 'Signatures', icon: FileSignature, badge: pendingSignatures || undefined, section: 'documents' },
     { id: 'filemanagement', label: 'File Management', icon: FolderOpen, section: 'documents' },
     { id: 'docworkflow', label: 'Document Workflow', icon: FileText, section: 'documents' },
+    { id: 'reports', label: 'Reports', icon: BarChart3, section: 'admin' },
     { id: 'meetings', label: 'Meetings', icon: Video, section: 'admin' },
     { id: 'uploadtokens', label: 'Upload Links', icon: Link2, section: 'admin' },
     { id: 'settings', label: 'Settings', icon: Settings, section: 'admin' },
