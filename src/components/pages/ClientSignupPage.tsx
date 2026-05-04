@@ -107,9 +107,15 @@ export default function ClientSignupPage() {
         return;
       }
 
-      // Store clientId in sessionStorage for intake form
-      if (result.user?.clientId) {
-        sessionStorage.setItem('clientId', result.user.clientId);
+      // Store the clientprofiles row `_id` in sessionStorage so the intake
+      // form (and every subsequent page that calls
+      // `BaseCrudService.getById('clientprofiles', ...)`) can locate the
+      // freshly-created profile row. We intentionally use `_id` here, NOT
+      // `clientId` (CL-XXXXXX), because the latter is just a display label
+      // and is not the row primary key.
+      const profileRowId = result.user?._id || result.user?.clientId;
+      if (profileRowId) {
+        sessionStorage.setItem('clientId', profileRowId);
       }
 
       // Account created successfully and user is authenticated
@@ -380,20 +386,4 @@ export default function ClientSignupPage() {
                 </div>
 
                 <Button
-                  onClick={() => setShowSignupForm(false)}
-                  variant="outline"
-                  className="w-full mt-8 border-gray-300 text-foreground hover:bg-gray-50"
-                >
-                  Back
-                </Button>
-              </div>
-            </div>
-          </div>
-          )}
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+             

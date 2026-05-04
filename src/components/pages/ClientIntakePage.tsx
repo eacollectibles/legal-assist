@@ -207,10 +207,34 @@ export default function ClientIntakePage() {
       return;
     }
 
-    setClientId(storedClientId);
-
     try {
-      const profile = await BaseCrudService.getById<ClientProfiles>('clientprofiles', storedClientId);
+      // Try fetching by `_id` first (the correct, current behaviour).
+      let profile = await BaseCrudService.getById<ClientProfiles>('clientprofiles', storedClientId);
+
+      // Backwards-compat fallback: older sessions cached the human-readable
+      // `CL-XXXXXX` display id under `sessionStorage.clientId` instead of the
+      // row primary key. If `getById` came up empty, scan the collection for
+      // a row whose `clientId` field matches, and silently re-cache the real
+      // `_id` so all subsequent calls work.
+      if (!profile) {
+        try {
+          const { items: allProfiles } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+          const match = allProfiles?.find((p: any) => p.clientId === storedClientId);
+          if (match?._id) {
+            profile = match;
+            sessionStorage.setItem('clientId', match._id);
+            // eslint-disable-next-line no-console
+            console.info('Recovered clientprofile by display clientId; cached row _id.');
+          }
+        } catch {
+          /* swallow; handled below */
+        }
+      }
+
+      // Use whichever id actually resolved to a row, otherwise fall back to
+      // the stored value so the form can still attempt updates.
+      const resolvedId = (profile as any)?._id || storedClientId;
+      setClientId(resolvedId);
       
       if (profile?.intakeCompleted) {
         toast({
@@ -1964,40 +1988,4 @@ export default function ClientIntakePage() {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={handleBack}
-                      className="flex-1 sm:flex-none"
-                    >
-                      <ChevronLeft className="w-4 h-4 mr-2" />
-                      Back
-                    </Button>
-                  )}
-                  {/* Save & Continue — always shown (conflicts are flagged, never blocked) */}
-                  <Button
-                    type="button"
-                    onClick={handleNext}
-                    disabled={isLoading}
-                    className="flex-1 sm:flex-none"
-                  >
-                    {currentSection === sections.length - 1 ? (
-                      <>
-                        {isLoading ? 'Submitting...' : 'Complete'}
-                        <Check className="w-4 h-4 ml-2" />
-                      </>
-                    ) : (
-                      <>
-                        Save & Continue
-                        <ChevronRight className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-}
+                 

@@ -18,10 +18,22 @@ export interface AuthResponse {
   message: string;
   token?: string;
   user?: {
+    /**
+     * Primary key (`_id`) of the matching row in the `clientprofiles`
+     * collection. This is the value the intake form / dashboard / file-
+     * lookup code uses when it calls `BaseCrudService.getById('clientprofiles', _id)`.
+     * It is NOT the human-readable `CL-XXXXXX` id.
+     */
+    _id?: string;
     email: string;
     firstName?: string;
     lastName?: string;
     isAdmin?: boolean;
+    /**
+     * Display-only client identifier (e.g. `CL-A1B2C3`). Shown in the UI
+     * and on retainer documents. Do NOT use this as a CMS row key — for
+     * that, use `_id` (above).
+     */
     clientId?: string;
   };
 }
@@ -134,6 +146,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       message: 'Account created successfully',
       token,
       user: {
+        _id: sharedId,
         email: credentials.email,
         firstName: credentials.firstName,
         lastName: credentials.lastName,
@@ -204,6 +217,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       message: 'Logged in successfully',
       token,
       user: {
+        _id: user._id,
         email: user.email || '',
         firstName: user.firstName,
         lastName: user.lastName,
@@ -534,26 +548,4 @@ export async function resetPassword(email: string, token: string, newPassword: s
 
     // Clear the reset token
     delete resetTokens[email];
-    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
-
-    return {
-      success: true,
-      message: 'Password reset successfully. You can now log in with your new password.',
-    };
-  } catch (error) {
-    console.error('Password reset error:', error);
-    return {
-      success: false,
-      message: 'Failed to reset password. Please try again.',
-    };
-  }
-}
-
-/**
- * Generate a random reset token
- */
-function generateResetToken(): string {
-  const array = new Uint8Array(32);
-  crypto.getRandomValues(array);
-  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-}
+    localStorage.setItem('resetTokens', JSON.stringify(resetToken

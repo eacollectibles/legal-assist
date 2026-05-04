@@ -77,9 +77,14 @@ export default function ClientLoginPage() {
         return;
       }
 
-      // Store clientId in sessionStorage for intake form and dashboard
-      if (result.user?.clientId) {
-        sessionStorage.setItem('clientId', result.user.clientId);
+      // Store the clientprofiles row `_id` in sessionStorage so subsequent
+      // pages (intake form, dashboard, file lookups) can call
+      // `BaseCrudService.getById('clientprofiles', ...)` against it.
+      // We intentionally use `_id` (the row primary key) here, NOT
+      // `clientId` (CL-XXXXXX), because the latter is just a display label.
+      const profileRowId = result.user?._id || result.user?.clientId;
+      if (profileRowId) {
+        sessionStorage.setItem('clientId', profileRowId);
       }
 
       // Login successful
@@ -275,16 +280,4 @@ export default function ClientLoginPage() {
 
                 <div className="mt-8 pt-8 border-t border-pastelbeige">
                   <p className="font-paragraph text-sm text-foreground/80">
-                    <strong>Need help?</strong> Contact our support team at <a href="mailto:support@legalassist.com" className="text-primary hover:underline">support@legalassist.com</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+                    <strong>Ne

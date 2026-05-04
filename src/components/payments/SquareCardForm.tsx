@@ -103,8 +103,18 @@ export default function SquareCardForm({
         if (!window.Square) throw new Error('Square SDK did not initialize.');
 
         // 3) Create a Payments instance + Card and attach to our div.
+        //
+        //    NOTE on `postalCode`: by default the Square Web Payments SDK
+        //    derives the postal-code field's label from the *buyer's*
+        //    browser locale, not from the merchant location. That means
+        //    a US-locale buyer paying a Canadian firm sees "ZIP". We
+        //    enable `includeInputLabels: true` so Square renders explicit
+        //    text labels above each field — those labels say "Postal
+        //    Code" (not "ZIP") for our Canadian merchant location, which
+        //    is the correct terminology for our clients.
         const payments = window.Square.payments(cfg.applicationId, cfg.locationId);
         card = await payments.card({
+          includeInputLabels: true,
           style: {
             input: {
               fontSize: '16px',
@@ -119,6 +129,12 @@ export default function SquareCardForm({
             },
             '.input-container.is-error': {
               borderColor: '#DC2626',
+            },
+            '.message-text': {
+              color: '#6B7280',
+            },
+            '.message-icon': {
+              color: '#6B7280',
             },
           },
         });
@@ -170,29 +186,4 @@ export default function SquareCardForm({
             'Card details are not valid. Please double-check and try again.';
           return { token: null, errorMessage: msg };
         } catch (err: any) {
-          return { token: null, errorMessage: err?.message || 'Failed to tokenize card.' };
-        }
-      },
-    };
-    return () => {
-      if (handleRef.current) handleRef.current = null;
-    };
-  }, [handleRef]);
-
-  return (
-    <div className={className}>
-      {status === 'loading' && (
-        <div className="text-sm text-foreground/60 py-3">Loading secure card form…</div>
-      )}
-      {status === 'error' && (
-        <div className="text-sm text-destructive py-3">
-          {errorMessage || 'Could not load card form.'}
-        </div>
-      )}
-      <div ref={containerRef} />
-      <p className="mt-2 text-xs text-foreground/50">
-        Your card details are encrypted and tokenized by Square. They never touch Legal Assist&rsquo;s servers.
-      </p>
-    </div>
-  );
-}
+          return { token: nul
