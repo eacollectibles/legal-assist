@@ -11,7 +11,7 @@ export default function SocialBenefitsTribunalPage() {
     <div className="min-h-screen bg-background">
       <SEO 
         title="Social Benefits Tribunal | ODSP & OW Appeals | London Ontario"
-        description="Expert representation at Social Benefits Tribunal in London, Ontario. ODSP appeals, Ontario Works disputes & disability benefit hearings. Protect your rights."
+        description="Professional representation at Social Benefits Tribunal in London, Ontario. ODSP appeals, Ontario Works disputes & disability benefit hearings. Protect your rights."
         canonical="https://www.legalassist.london/services/social-benefits-tribunal"
       />
       <Header />
@@ -25,7 +25,7 @@ export default function SocialBenefitsTribunalPage() {
                 Social Benefits Tribunal
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Expert representation for social assistance and disability support appeals. We help you navigate the Social Benefits Tribunal to secure the benefits you deserve.
+                Professional representation for social assistance and disability support appeals. We help you navigate the Social Benefits Tribunal to secure the benefits you deserve.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">

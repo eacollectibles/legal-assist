@@ -37,7 +37,7 @@ const ALLOWED_ORIGINS = new Set<string>([
 /** Hard upper bound on a single charge — 25,000 CAD (in cents). */
 const MAX_AMOUNT_CENTS = 25_000_00;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   // 1) Origin / Referer check. Browsers always send Origin on POSTs from
   //    a different page; a missing origin (e.g. server-to-server) is
   //    rejected for this endpoint, since the only legitimate caller is
@@ -99,7 +99,7 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ success: false, error: 'Invalid idempotencyKey.' }, 400);
   }
 
-  const result = await createPayment(body as CreatePaymentInput);
+  const result = await createPayment(body as CreatePaymentInput, locals);
 
   if (!result.ok) {
     return json({ success: false, error: result.errorMessage, code: result.errorCode }, 200);

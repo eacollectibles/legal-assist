@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function DrivingWhileSuspendedPage() {
   const authorityItems = [
-    { title: 'Serious Charge Expertise', description: 'Driving while suspended is one of the most serious traffic offences—potential jail time, vehicle impound, and extended suspensions. I understand what\'s at stake.' },
+    { title: 'Serious Charge Experience', description: 'Driving while suspended is one of the most serious traffic offences—potential jail time, vehicle impound, and extended suspensions. I understand what\'s at stake.' },
     { title: 'Defence Strategies', description: 'Many driving suspended charges involve notice issues. If you didn\'t know about the suspension, or notice was defective, defences exist.' },
     { title: 'Realistic Assessment', description: 'I\'ll tell you honestly whether you have a defence, what outcomes are possible, and what you\'re facing if convicted.' }
   ];

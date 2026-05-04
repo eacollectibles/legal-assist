@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export default function BylawInfractionsPage() {
   const authorityItems = [
     { title: 'Provincial Offences Act Experience', description: 'I handle bylaw infraction charges under the POA—property standards, noise bylaws, fire code violations, and more.' },
-    { title: 'Municipal Bylaw Expertise', description: 'Familiar with London municipal bylaws and enforcement patterns. I know what defences work and what municipalities prosecute hardest.' },
+    { title: 'Municipal Bylaw Experience', description: 'Familiar with London municipal bylaws and enforcement patterns. I know what defences work and what municipalities prosecute hardest.' },
     { title: 'Strong Defence Strategy', description: 'Bylaw cases often hinge on proof of violation, notice, and procedural errors. I challenge weak prosecutions.' }
   ];
 

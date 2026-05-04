@@ -42,7 +42,7 @@ export default function WaterlooParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 85, Highway 401, and Waterloo-area tickets. Speeding, stunt driving, and distracted driving charges.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Contract disputes, debt recovery, and property damage claims up to $35,000 at Kitchener courthouse.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Contract disputes, debt recovery, and property damage claims up to $50,000 at Kitchener courthouse.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance orders for Waterloo student housing and residential tenancies.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations and regulatory offences at Kitchener Provincial Offences Court.', link: '/services/provincial-offences' }
             ].map((service, index) => (

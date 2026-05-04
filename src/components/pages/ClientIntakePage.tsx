@@ -899,7 +899,7 @@ export default function ClientIntakePage() {
                               <div className="flex-1">
                                 <h4 className="font-heading font-bold text-foreground mb-1">Small Claims Court</h4>
                                 <p className="font-paragraph text-sm text-foreground/60">
-                                  Debt collection, contract disputes, property damage, consumer complaints, and claims up to $35,000.
+                                  Debt collection, contract disputes, property damage, consumer complaints, and claims up to $50,000.
                                 </p>
                               </div>
                               {selectedServiceType === 'small_claims' && (

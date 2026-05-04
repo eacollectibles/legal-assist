@@ -137,7 +137,7 @@ export default function HumanRightsComplaintGuidePage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What You Can Get</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
-              { remedy: 'Monetary Compensation', desc: 'For lost wages, expenses, and injury to dignity (typically $5,000-$35,000 for dignity)' },
+              { remedy: 'Monetary Compensation', desc: 'For lost wages, expenses, and injury to dignity (typically $5,000-$50,000 for dignity)' },
               { remedy: 'Reinstatement', desc: 'Getting your job back if wrongfully terminated' },
               { remedy: 'Policy Changes', desc: 'Requiring the organization to change discriminatory policies' },
               { remedy: 'Training', desc: 'Ordering human rights training for the respondent' },

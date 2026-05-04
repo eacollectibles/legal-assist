@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function NoInsuranceDefencePage() {
   const authorityItems = [
-    { title: 'Serious Charge Expertise', description: 'Driving without insurance carries minimum fines of $5,000 and licence suspension. I understand the defences and how to minimize consequences.' },
+    { title: 'Serious Charge Experience', description: 'Driving without insurance carries minimum fines of $5,000 and licence suspension. I understand the defences and how to minimize consequences.' },
     { title: 'Coverage Verification', description: 'Many "no insurance" charges are wrongful—you had coverage but couldn\'t produce proof. I investigate coverage status and rectify errors.' },
     { title: 'Realistic Assessment', description: 'If you genuinely had no coverage, I\'ll tell you what to expect. If you did, I\'ll fight to prove it.' }
   ];

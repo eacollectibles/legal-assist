@@ -25,7 +25,7 @@ export default function CriminalMattersPage() {
                 Criminal Matters: Summary Conviction Offences
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Expert paralegal representation for summary conviction offences in Ontario. Our licensed paralegals provide skilled defense for criminal charges within our scope of practice, helping you navigate the criminal justice system with confidence.
+                Licensed paralegal representation for summary conviction offences in Ontario. Our licensed paralegals provide skilled defense for criminal charges within our scope of practice, helping you navigate the criminal justice system with confidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
@@ -64,7 +64,7 @@ export default function CriminalMattersPage() {
               Summary conviction offences are less serious criminal charges that are tried in Provincial Court without a jury. These offences carry maximum sentences of up to 2 years less a day imprisonment and/or fines. They represent the majority of criminal charges and are handled more quickly than indictable offences.
             </p>
             <p className="font-paragraph text-lg text-foreground/80 mb-6">
-              Our firm specializes in representing individuals charged with summary conviction offences. We provide comprehensive defense strategies to protect your rights, minimize consequences, and achieve the best possible outcome in your case.
+              We concentrate our practice on representing individuals charged with summary conviction offences. We provide comprehensive defense strategies to protect your rights, minimize consequences, and achieve the best possible outcome in your case.
             </p>
             <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-6 mt-8">
               <div className="flex gap-4">
@@ -224,7 +224,7 @@ export default function CriminalMattersPage() {
               {
                 icon: <CheckCircle className="w-6 h-6" />,
                 title: 'Disclosure Review',
-                description: 'Expert analysis of Crown disclosure (evidence) to identify weaknesses, inconsistencies, and opportunities for defense.'
+                description: 'Detailed analysis of Crown disclosure (evidence) to identify weaknesses, inconsistencies, and opportunities for defense.'
               },
               {
                 icon: <AlertCircle className="w-6 h-6" />,

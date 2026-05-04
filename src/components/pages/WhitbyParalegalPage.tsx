@@ -35,7 +35,7 @@ export default function WhitbyParalegalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 401, Highway 12, Brock Street, Whitby streets. Careless driving, stunt driving, licence suspensions.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage up to $35,000. Oshawa courthouse.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage up to $50,000. Oshawa courthouse.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues for Durham Region properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, regulatory offences at Whitby/Oshawa court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -96,7 +96,7 @@ export default function WhitbyParalegalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { icon: Shield, title: 'LSO Licensed', desc: 'Fully regulated by the Law Society of Ontario for your protection.' },
-              { icon: MapPin, title: 'Local Expertise', desc: 'Deep knowledge of Oshawa courthouse and Durham Region procedures.' },
+              { icon: MapPin, title: 'Local Experience', desc: 'Deep knowledge of Oshawa courthouse and Durham Region procedures.' },
               { icon: Clock, title: 'Fast Results', desc: 'Quick turnaround times and responsive communication throughout your case.' },
             ].map((item, index) => (
               <div key={index} className="text-center">

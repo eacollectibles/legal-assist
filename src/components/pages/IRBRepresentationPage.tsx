@@ -11,7 +11,7 @@ export default function IRBRepresentationPage() {
     <div className="min-h-screen bg-background">
       <SEO 
         title="Immigration & Refugee Board (IRB) Representation | Paralegal Services | London Ontario"
-        description="Professional paralegal representation for Immigration & Refugee Board (IRB) matters in London, Ontario. Expert support for refugee claims, appeals, and immigration proceedings."
+        description="Professional paralegal representation for Immigration & Refugee Board (IRB) matters in London, Ontario. Professional support for refugee claims, appeals, and immigration proceedings."
         canonical="https://www.legalassist.london/services/irb-representation"
       />
       <Header />
@@ -25,7 +25,7 @@ export default function IRBRepresentationPage() {
                 Immigration & Refugee Board (IRB) Representation
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Expert paralegal representation for Immigration & Refugee Board proceedings in Ontario. Our licensed paralegals provide skilled support for refugee claims, appeals, and immigration matters within paralegal scope of practice.
+                Licensed paralegal representation for Immigration & Refugee Board proceedings in Ontario. Our licensed paralegals provide skilled support for refugee claims, appeals, and immigration matters within paralegal scope of practice.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/contact">

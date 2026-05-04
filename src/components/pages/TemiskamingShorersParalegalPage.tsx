@@ -21,7 +21,7 @@ export default function TemiskamingShorersParalegalPage() {
               Temiskaming Shores Paralegal Services
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Expert paralegal services for Temiskaming Shores (Haileybury and New Liskeard) and the Temiskaming District. We provide comprehensive representation for traffic tickets, Small Claims Court matters, landlord-tenant disputes, and provincial offences along Highway 11.
+              Licensed paralegal services for Temiskaming Shores (Haileybury and New Liskeard) and the Temiskaming District. We provide comprehensive representation for traffic tickets, Small Claims Court matters, landlord-tenant disputes, and provincial offences along Highway 11.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
@@ -42,7 +42,7 @@ export default function TemiskamingShorersParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 11 traffic violations, speeding charges, and vehicle safety infractions. Experienced careless driving and licence suspension defence in Temiskaming Shores.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt recovery, contract disputes, and property damage claims up to $35,000. Professional representation at Temiskaming Shores Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt recovery, contract disputes, and property damage claims up to $50,000. Professional representation at Temiskaming Shores Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance claim representation. Experienced LTB advocacy for Temiskaming District properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'Municipal by-law violations, trespass charges, and regulatory offences. Vigorous defence at Temiskaming Shores Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (

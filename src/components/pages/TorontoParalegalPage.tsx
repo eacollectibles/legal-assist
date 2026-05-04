@@ -36,12 +36,12 @@ export default function TorontoParalegalPage() {
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Home className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Landlord-Tenant Board</h3>
-              <p className="font-paragraph text-foreground/70">Expert representation for eviction defence, rent disputes, and housing issues before the LTB. Protecting Toronto renters across all neighbourhoods.</p>
+              <p className="font-paragraph text-foreground/70">Professional representation for eviction defence, rent disputes, and housing issues before the LTB. Protecting Toronto renters across all neighbourhoods.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Scale className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Small Claims Court</h3>
-              <p className="font-paragraph text-foreground/70">Claims up to $35,000. Representation at Old City Hall and 2201 Finch Ave W courthouse locations.</p>
+              <p className="font-paragraph text-foreground/70">Claims up to $50,000. Representation at Old City Hall and 2201 Finch Ave W courthouse locations.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Gavel className="w-8 h-8 text-primary mb-4" />

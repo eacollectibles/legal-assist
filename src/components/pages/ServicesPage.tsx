@@ -56,7 +56,7 @@ We understand that small claims disputes can be stressful and time-consuming. Ou
     id: 'landlord-tenant',
     name: 'Landlord and Tenant Board',
     tribunal: 'Landlord and Tenant Board (LTB)',
-    shortDescription: 'Expert representation for residential tenancy disputes and eviction proceedings.',
+    shortDescription: 'Professional representation for residential tenancy disputes and eviction proceedings.',
     icon: <Home className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=landlord-tenant-board',
     learnMore: `The Landlord and Tenant Board (LTB) handles disputes between landlords and tenants in Ontario. Whether you're facing eviction, dealing with maintenance issues, or disputing rent increases, our paralegals provide skilled representation.
@@ -180,7 +180,7 @@ Note: For family law mediation (divorce, custody, support), please consult a fam
     id: 'criminal-matters',
     name: 'Criminal Matters',
     tribunal: 'Provincial Court - Summary Conviction',
-    shortDescription: 'Expert paralegal representation for summary conviction offences in Ontario.',
+    shortDescription: 'Licensed paralegal representation for summary conviction offences in Ontario.',
     icon: <Shield className="w-8 h-8" />,
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Old_Toronto_City_Hall_Courtroom121.jpg/1200px-Old_Toronto_City_Hall_Courtroom121.jpg',
     learnMore: `Criminal charges can have serious consequences for your future. Our licensed paralegals provide skilled defense representation for summary conviction offences in Provincial Court, helping you navigate the criminal justice system with confidence.
@@ -277,7 +277,7 @@ When you swear an oath before our Commissioner of Oaths, you are making a legall
     id: 'social-benefits-tribunal',
     name: 'Social Benefits Tribunal',
     tribunal: 'Social Benefits Tribunal (SBT)',
-    shortDescription: 'Expert representation for social assistance and disability support appeals in Ontario.',
+    shortDescription: 'Professional representation for social assistance and disability support appeals in Ontario.',
     icon: <Landmark className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_faf5f604ad2e4e5580802a20f563e710~mv2.png?id=social-benefits-tribunal',
     learnMore: `The Social Benefits Tribunal (SBT) hears appeals from individuals denied social assistance or disability support benefits in Ontario. If your Ontario Works or ODSP application has been denied or terminated, we can help you appeal that decision.
@@ -306,10 +306,10 @@ We handle appeals for:
     id: 'defamation-slander',
     name: 'Defamation & Slander',
     tribunal: 'Small Claims Court or Superior Court',
-    shortDescription: 'Expert guidance on defamation claims and reputation protection. Paralegal support for pre-litigation matters and Small Claims Court representation.',
+    shortDescription: 'Professional guidance on defamation claims and reputation protection. Paralegal support for pre-litigation matters and Small Claims Court representation.',
     icon: <Gavel className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_42444ec42c4a427db445d028d3149b76~mv2.png?id=defamation-slander',
-    learnMore: `Defamation is a false statement that damages your reputation. Whether spoken (slander) or written (libel), defamation can have serious consequences for your personal and professional life. We provide expert guidance on pursuing defamation claims and protecting your reputation.
+    learnMore: `Defamation is a false statement that damages your reputation. Whether spoken (slander) or written (libel), defamation can have serious consequences for your personal and professional life. We provide professional guidance on pursuing defamation claims and protecting your reputation.
 
 While Ontario paralegals cannot represent you in defamation lawsuits, we provide valuable pre-litigation support including:
 

@@ -44,7 +44,7 @@ export default function PerthParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Speeding and Highway 7 violations, careless driving charges, and licence suspension defence for Lanark County drivers.' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $35,000. Representation at Perth Small Claims Court.' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $50,000. Representation at Perth Small Claims Court.' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance issue resolution. LTB representation for Lanark County properties.' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, and regulatory offences. Defence at Perth Provincial Offences Court.' },
             ].map((service, index) => (

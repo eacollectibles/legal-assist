@@ -138,7 +138,7 @@ export default function TrafficTicketLondonPage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><MapPin className="w-8 h-8 text-primary" /></div>
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Local Expertise</h3>
+              <h3 className="font-heading text-lg font-bold text-foreground mb-2">Local Experience</h3>
               <p className="font-paragraph text-foreground/70 text-sm">We know the London Provincial Offences Court, local prosecutors, and the most effective defence strategies for tickets issued in this jurisdiction.</p>
             </div>
             <div className="text-center">

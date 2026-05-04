@@ -44,7 +44,7 @@ export default function NapaneeParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 401 speeding tickets, careless driving charges, and stunt driving defence for Lennox & Addington County drivers.' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, and property damage claims up to $35,000. Representation at Napanee Small Claims Court.' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, and property damage claims up to $50,000. Representation at Napanee Small Claims Court.' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance issues. LTB representation for residential properties in the region.' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, and regulatory offences. Defence at Napanee Provincial Offences Court.' },
             ].map((service, index) => (

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function CommercialVehicleViolationsPage() {
   const authorityItems = [
-    { title: 'Commercial Vehicle Expertise', description: 'Commercial vehicle violations have serious consequences for your CVOR, employment, and livelihood. I understand the unique stakes.' },
+    { title: 'Commercial Vehicle Experience', description: 'Commercial vehicle violations have serious consequences for your CVOR, employment, and livelihood. I understand the unique stakes.' },
     { title: 'CVOR Protection', description: 'Every conviction affects your carrier\'s safety rating. I fight to protect your CVOR standing and keep you on the road.' },
     { title: 'Employment Focus', description: 'Your CDL is your livelihood. I prioritize outcomes that protect your ability to work.' }
   ];

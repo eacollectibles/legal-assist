@@ -42,7 +42,7 @@ export default function OttawaParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 417, Queensway, and Ottawa-area tickets. Speeding, careless driving, stunt driving, and red light camera violations.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Contract disputes, unpaid debts, and property damage claims up to $35,000. Representation at Ottawa Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Contract disputes, unpaid debts, and property damage claims up to $50,000. Representation at Ottawa Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance orders, and above-guideline increases. LTB hearings for Ottawa properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law infractions, trespass charges, and regulatory offences. Defence at Ottawa Provincial Offences Court.', link: '/services/provincial-offences' }
             ].map((service, index) => (

@@ -81,7 +81,7 @@ export default function WhatIsAParalegalPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Notary Public Services:</strong> Document certification and witnessing</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Commissioner of Oaths Services:</strong> Document certification and witnessing</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />

@@ -90,7 +90,7 @@ export default function UnpaidWagesPage() {
                     <td className="px-6 py-4 font-medium">Small Claims Court</td>
                     <td className="px-6 py-4 text-sm">Higher cap, faster, more control</td>
                     <td className="px-6 py-4 text-sm">Filing fees, more work required</td>
-                    <td className="px-6 py-4 text-center">$35,000</td>
+                    <td className="px-6 py-4 text-center">$50,000</td>
                   </tr>
                 </tbody>
               </table>

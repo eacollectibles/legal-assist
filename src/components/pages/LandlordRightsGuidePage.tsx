@@ -485,7 +485,7 @@ export default function LandlordRightsGuidePage() {
                     { action: 'Harass or Intimidate Tenant to Leave', penalty: 'Section 23 of the RTA prohibits harassment, coercion, threats, or interference. Heavy penalties apply.', severity: 'high' },
                     { action: 'Restrict Pets Through Lease Terms', penalty: 'No-pet clauses are void under RTA s.14. You can only evict for a pet if it causes allergic reaction, damage, noise, or safety issues (N5 notice).', severity: 'medium' },
                     { action: 'Refuse Guests or Overnight Visitors', penalty: 'Tenants have the right to have guests. You cannot restrict who visits or stays overnight.', severity: 'medium' },
-                    { action: 'Discriminate in Tenant Selection', penalty: 'Ontario Human Rights Code violations can result in HRTO complaints with substantial damages ($10,000-$35,000+).', severity: 'high' },
+                    { action: 'Discriminate in Tenant Selection', penalty: 'Ontario Human Rights Code violations can result in HRTO complaints with substantial damages ($10,000-$50,000+).', severity: 'high' },
                   ].map((item, i) => (
                     <div key={i} className={`p-4 rounded-lg border-l-4 ${item.severity === 'critical' ? 'border-red-500 bg-red-50' : item.severity === 'high' ? 'border-orange-400 bg-orange-50' : 'border-yellow-400 bg-yellow-50'}`}>
                       <h4 className={`font-heading text-sm font-bold mb-1 ${item.severity === 'critical' ? 'text-red-800' : item.severity === 'high' ? 'text-orange-800' : 'text-yellow-800'}`}>{item.action}</h4>

@@ -53,14 +53,14 @@ export default function TenantDamageClaimsPage() {
                     <li>• Claims against former tenants</li>
                     <li>• Damage beyond normal wear</li>
                     <li>• Unpaid rent after move-out</li>
-                    <li>• Up to $35,000 claims</li>
+                    <li>• Up to $50,000 claims</li>
                   </ul>
                 </div>
                 <div className="bg-red-50 p-4 rounded-lg">
                   <h3 className="font-heading font-bold text-red-800 mb-2">✗ LTB</h3>
                   <ul className="font-paragraph text-red-800 space-y-1 text-sm">
                     <li>• Only current tenancies</li>
-                    <li>• Limited to $35,000</li>
+                    <li>• Limited to $50,000</li>
                     <li>• Can't pursue after move-out</li>
                     <li>• Different procedures</li>
                   </ul>
@@ -217,7 +217,7 @@ export default function TenantDamageClaimsPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Paralegal services for claims up to $35,000
+            Licensed by the Law Society of Ontario | Paralegal services for claims up to $50,000
           </p>
         </div>
       </section>

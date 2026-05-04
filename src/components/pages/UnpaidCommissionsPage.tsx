@@ -28,7 +28,7 @@ export default function UnpaidCommissionsPage() {
     { question: "I don't have a written commission agreement. Can I still claim?", answer: "Yes, but it's harder. You'll need to prove the terms through: emails discussing commissions, past commission payments (showing pattern), testimony about verbal agreements, industry standards if applicable." },
     { question: "My employer says I wasn't 'employed' when the sale closed. Valid?", answer: "Depends on your agreement. Many commission structures pay on sale closing regardless of employment status at closing. Others require active employment. Review your agreement terms—if unclear, argue for reasonable interpretation." },
     { question: "What if they changed the commission structure after I made sales?", answer: "Retroactive changes to reduce earned commissions are problematic. If you made sales under one structure, you're generally entitled to be paid under that structure. Changes typically apply to future sales only." },
-    { question: "How much can I recover through the Ministry of Labour?", answer: "MOL can order up to $15,000 in unpaid wages. For amounts over $15,000, you'll need to go to civil court (Small Claims up to $35,000, Superior Court above that). Sometimes both paths are used." },
+    { question: "How much can I recover through the Ministry of Labour?", answer: "MOL can order up to $15,000 in unpaid wages. For amounts over $15,000, you'll need to go to civil court (Small Claims up to $50,000, Superior Court above that). Sometimes both paths are used." },
     { question: "My employer is disputing which sales I'm entitled to. What do I do?", answer: "Documentation is key. Gather: sales records with your name, CRM data showing your involvement, email threads about deals, client confirmations. The more you can prove your role, the stronger your claim." }
   ];
 
@@ -88,7 +88,7 @@ export default function UnpaidCommissionsPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   <tr><td className="px-6 py-4 font-medium">Ministry of Labour</td><td className="px-6 py-4">Up to $15,000</td><td className="px-6 py-4 text-sm">Several months</td><td className="px-6 py-4 text-sm">Smaller amounts, clear violations</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">Small Claims Court</td><td className="px-6 py-4">Up to $35,000</td><td className="px-6 py-4 text-sm">6-12 months</td><td className="px-6 py-4 text-sm">Larger amounts, complex disputes</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Small Claims Court</td><td className="px-6 py-4">Up to $50,000</td><td className="px-6 py-4 text-sm">6-12 months</td><td className="px-6 py-4 text-sm">Larger amounts, complex disputes</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Superior Court</td><td className="px-6 py-4">No limit</td><td className="px-6 py-4 text-sm">1-2+ years</td><td className="px-6 py-4 text-sm">Very large claims (lawyer territory)</td></tr>
                 </tbody>
               </table>

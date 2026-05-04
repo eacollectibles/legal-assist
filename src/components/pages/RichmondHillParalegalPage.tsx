@@ -31,7 +31,7 @@ export default function RichmondHillParalegalPage() {
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Car className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Traffic Offences</h3>
-              <p className="font-paragraph text-foreground/70">Expert representation for speeding, stunt driving, and careless driving violations. Serving Highway 404, Highway 407, and Yonge Street corridor.</p>
+              <p className="font-paragraph text-foreground/70">Professional representation for speeding, stunt driving, and careless driving violations. Serving Highway 404, Highway 407, and Yonge Street corridor.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Home className="w-8 h-8 text-primary mb-4" />
@@ -41,7 +41,7 @@ export default function RichmondHillParalegalPage() {
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Scale className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Small Claims Court</h3>
-              <p className="font-paragraph text-foreground/70">Claims up to $35,000. Representation at Newmarket courthouse for York Region residents.</p>
+              <p className="font-paragraph text-foreground/70">Claims up to $50,000. Representation at Newmarket courthouse for York Region residents.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Gavel className="w-8 h-8 text-primary mb-4" />
@@ -67,7 +67,7 @@ export default function RichmondHillParalegalPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12">Local Knowledge & Experience</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">Richmond Hill & York Region Expertise</h3>
+              <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">Richmond Hill & York Region Experience</h3>
               <p className="font-paragraph text-foreground/70 mb-6">Serving Richmond Hill, Thornhill, Oak Ridges, Jefferson, and Langstaff. Extensive experience with Newmarket courts and York Region legal proceedings.</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">

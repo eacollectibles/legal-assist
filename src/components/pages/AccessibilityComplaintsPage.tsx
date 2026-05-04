@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function AccessibilityComplaintsPage() {
   const authorityItems = [
-    { title: 'AODA Compliance Expertise', description: 'I help people with disabilities challenge violations of Ontario\'s Accessibility for Ontarians with Disabilities Act (AODA). Employers and providers often fail these duties.' },
+    { title: 'AODA Compliance Experience', description: 'I help people with disabilities challenge violations of Ontario\'s Accessibility for Ontarians with Disabilities Act (AODA). Employers and providers often fail these duties.' },
     { title: 'Human Rights Code Knowledge', description: 'Discrimination based on disability is illegal under the Human Rights Code. I guide clients through complaints and tribunal representation.' },
     { title: 'Duty to Accommodate Practice', description: 'Employers must accommodate disabilities unless it causes undue hardship. I build cases showing inadequate accommodation.' }
   ];

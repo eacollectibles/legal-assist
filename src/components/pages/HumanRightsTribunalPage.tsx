@@ -25,7 +25,7 @@ export default function HumanRightsTribunalPage() {
                 Human Rights Tribunal Paralegal in Ontario
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Expert representation for discrimination and human rights violations in employment, housing, and services. We advocate for your rights and help you seek justice through the HRTO process.
+                Professional representation for discrimination and human rights violations in employment, housing, and services. We advocate for your rights and help you seek justice through the HRTO process.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
@@ -64,7 +64,7 @@ export default function HumanRightsTribunalPage() {
               The Human Rights Tribunal of Ontario (HRTO) is an independent tribunal that addresses complaints of discrimination based on protected grounds under the Ontario Human Rights Code. These grounds include race, ancestry, place of origin, political belief, colour, ethnic origin, creed, sex, sexual orientation, gender identity, gender expression, age, record of offences, marital status, family status, and disability.
             </p>
             <p className="font-paragraph text-lg text-foreground/80">
-              Our firm specializes in representing individuals who have experienced discrimination in employment, housing, services, and other areas covered by the Code. We understand the sensitive nature of human rights matters and provide compassionate, professional advocacy throughout the HRTO process.
+              We concentrate our practice on representing individuals who have experienced discrimination in employment, housing, services, and other areas covered by the Code. We understand the sensitive nature of human rights matters and provide compassionate, professional advocacy throughout the HRTO process.
             </p>
           </div>
 
@@ -224,7 +224,7 @@ export default function HumanRightsTribunalPage() {
                       Evidence Gathering & Organization
                     </h3>
                     <p className="font-paragraph text-foreground/80">
-                      Expert guidance on collecting, organizing, and presenting evidence that supports your discrimination claim.
+                      Professional guidance on collecting, organizing, and presenting evidence that supports your discrimination claim.
                     </p>
                   </div>
                 </div>
@@ -439,7 +439,7 @@ export default function HumanRightsTribunalPage() {
                       Appeal Representation
                     </h3>
                     <p className="font-paragraph text-foreground/80">
-                      Expert support for appeals if you believe the decision was unjust or based on legal errors.
+                      Professional support for appeals if you believe the decision was unjust or based on legal errors.
                     </p>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function N12PersonalUsePage() {
   const authorityItems = [
-    { title: 'N12 Defence Expertise', description: 'N12 "landlord\'s own use" evictions are frequently abused. I know the defences that work and how to identify bad faith.' },
+    { title: 'N12 Defence Experience', description: 'N12 "landlord\'s own use" evictions are frequently abused. I know the defences that work and how to identify bad faith.' },
     { title: 'Compensation Focus', description: 'Even if the N12 is valid, you\'re entitled to compensation. I ensure you receive everything owed.' },
     { title: 'Bad Faith Investigation', description: 'If the landlord re-rents shortly after you leave, you may be entitled to 12 months\' rent compensation.' }
   ];

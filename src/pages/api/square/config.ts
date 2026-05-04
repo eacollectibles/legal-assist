@@ -8,9 +8,9 @@ import { loadPublicSquareConfig } from '@/lib/square-service';
  * Web Payments SDK card form: environment, application id, location id,
  * and the SDK CDN url. Never returns the access token.
  */
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ locals }) => {
   try {
-    const cfg = await loadPublicSquareConfig();
+    const cfg = await loadPublicSquareConfig(locals);
     if (!cfg.applicationId || !cfg.locationId) {
       return new Response(
         JSON.stringify({

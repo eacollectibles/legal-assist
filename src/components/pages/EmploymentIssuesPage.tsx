@@ -25,7 +25,7 @@ export default function EmploymentIssuesPage() {
                 Employment Issues & Workplace Disputes
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Expert guidance on employment disputes, wrongful dismissal, severance packages, and workplace rights violations. Our licensed paralegals help you navigate complex employment matters and protect your rights.
+                Professional guidance on employment disputes, wrongful dismissal, severance packages, and workplace rights violations. Our licensed paralegals help you navigate complex employment matters and protect your rights.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
@@ -64,7 +64,7 @@ export default function EmploymentIssuesPage() {
               Employment disputes can arise from various situations including wrongful dismissal, constructive dismissal, severance package disputes, and violations of workplace rights. These matters can be complex, emotionally challenging, and have significant financial implications.
             </p>
             <p className="font-paragraph text-lg text-foreground/80">
-              Our licensed paralegals understand Ontario's Employment Standards Act and common law employment principles. We provide expert guidance to help you understand your rights, negotiate fair settlements, and pursue claims through appropriate channels. Whether you're an employee facing termination or an employer dealing with employment disputes, we're here to help.
+              Our licensed paralegals understand Ontario's Employment Standards Act and common law employment principles. We provide professional guidance to help you understand your rights, negotiate fair settlements, and pursue claims through appropriate channels. Whether you're an employee facing termination or an employer dealing with employment disputes, we're here to help.
             </p>
           </div>
 
@@ -108,7 +108,7 @@ export default function EmploymentIssuesPage() {
               },
               {
                 title: 'Severance Package Review',
-                description: 'Expert analysis of severance offers to ensure you receive fair compensation. We negotiate on your behalf to maximize your settlement.'
+                description: 'Detailed analysis of severance offers to ensure you receive fair compensation. We negotiate on your behalf to maximize your settlement.'
               },
               {
                 title: 'Termination Without Cause',

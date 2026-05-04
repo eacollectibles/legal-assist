@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function RedLightDefencePage() {
   const authorityItems = [
-    { title: 'Red Light Expertise', description: 'I understand the difference between camera tickets (no points) and officer-issued tickets (3 points)—and how to handle each.' },
+    { title: 'Red Light Experience', description: 'I understand the difference between camera tickets (no points) and officer-issued tickets (3 points)—and how to handle each.' },
     { title: 'Intersection Evidence', description: 'Red light cases depend on timing, visibility, and circumstances. I challenge the evidence and the officer\'s vantage point.' },
     { title: 'Insurance Focus', description: 'Officer-issued red light tickets carry demerit points and insurance increases. Every strategy aims to minimize or eliminate the impact.' }
   ];

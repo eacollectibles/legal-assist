@@ -54,7 +54,7 @@ export default function DebtCollectionPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-green-800 mb-2">Step 2: Court</h4>
-                    <p className="text-green-900 text-sm">File Small Claims claim (up to $35,000). Most debt cases settle or result in default judgment.</p>
+                    <p className="text-green-900 text-sm">File Small Claims claim (up to $50,000). Most debt cases settle or result in default judgment.</p>
                   </div>
                   <div>
                     <h4 className="font-bold text-green-800 mb-2">Step 3: Enforce</h4>

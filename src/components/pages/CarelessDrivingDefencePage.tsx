@@ -12,7 +12,7 @@ import {
 export default function CarelessDrivingDefencePage() {
   const authorityItems = [
     {
-      title: 'Serious Charge Expertise',
+      title: 'Serious Charge Experience',
       description: 'Careless driving is one of the most serious non-criminal traffic charges. I understand what\'s at stake and how to build an effective defence.'
     },
     {

@@ -851,7 +851,7 @@ export const blogPosts: BlogPost[] = [
       <p><strong>$1,000 - $3,000+</strong> for application preparation and representation. These matters often involve significant document preparation and multiple hearing dates.</p>
       
       <h2>Why Paralegals Cost Less Than Lawyers</h2>
-      <p>Licensed paralegals can handle the same matters as lawyers within our scope of practice, but our overhead is lower and we specialize in these specific areas. You're not paying for services you don't need.</p>
+      <p>Licensed paralegals can handle the same matters as lawyers within our scope of practice, but our overhead is lower and we concentrate our practice on these specific areas. You're not paying for services you don't need.</p>
       
       <h2>Payment Options</h2>
       <p>At LegalAssist, we offer:</p>
@@ -878,7 +878,7 @@ export const blogPosts: BlogPost[] = [
     date: '2026-01-12',
     readTime: '3 min',
     content: `
-      <p>Yes, a licensed paralegal can absolutely represent you in Small Claims Court in Ontario. In fact, paralegals handle the majority of Small Claims cases because we specialize in this area and offer more affordable rates than lawyers.</p>
+      <p>Yes, a licensed paralegal can absolutely represent you in Small Claims Court in Ontario. In fact, paralegals handle the majority of Small Claims cases because we concentrate our practice on this area and offer more affordable rates than lawyers.</p>
       
       <h2>What Paralegals Can Do in Small Claims Court</h2>
       <ul>

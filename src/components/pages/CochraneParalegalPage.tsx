@@ -42,7 +42,7 @@ export default function CochraneParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 11 traffic violations, speeding tickets, stunt driving charges. Careless driving and unsafe equipment defence in Cochrane.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt recovery, contract disputes, and personal injury claims up to $35,000. Strong representation at Cochrane Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt recovery, contract disputes, and personal injury claims up to $50,000. Strong representation at Cochrane Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent withholding disputes, and habitability issues. Experienced LTB representation for Cochrane properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'Municipal by-law violations, trespass charges, and regulatory offences. Vigorous defence at Cochrane Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -113,7 +113,7 @@ export default function CochraneParalegalPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Why Cochrane Residents Choose Us</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
             {[
-              { title: 'Affordable Rates', desc: 'Paralegal services cost significantly less than lawyers while providing expert representation in Cochrane.' },
+              { title: 'Affordable Rates', desc: 'Paralegal services cost significantly less than lawyers while providing professional representation in Cochrane.' },
               { title: 'Flexible Scheduling', desc: 'Evening and weekend consultations available. We accommodate the schedules of Cochrane District residents.' },
               { title: 'Virtual Options', desc: 'Many matters can be handled remotely—phone and video consultations available for Cochrane clients.' },
             ].map((item, index) => (

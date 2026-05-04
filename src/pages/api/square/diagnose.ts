@@ -82,7 +82,46 @@ function tryReadFromEnv(name: string): string {
   return (import.meta.env[name] as string | undefined) || '';
 }
 
-export const GET: APIRoute = async () => {
+function tryReadFromLocalsRuntimeEnv(locals: any, name: string): string {
+  try {
+    const env = locals?.runtime?.env;
+    if (env && typeof env === 'object') {
+      const v = env[name];
+      if (typeof v === 'string') return v;
+    }
+  } catch {
+    /* ignore */
+  }
+  return '';
+}
+
+function tryReadFromGlobalProcessEnv(name: string): string {
+  try {
+    const proc = (globalThis as any)?.process;
+    if (proc?.env && typeof proc.env === 'object') {
+      const v = proc.env[name];
+      if (typeof v === 'string') return v;
+    }
+  } catch {
+    /* ignore */
+  }
+  return '';
+}
+
+function listAvailableKeys(obj: any, prefix?: string): string[] {
+  try {
+    if (!obj || typeof obj !== 'object') return [];
+    const keys = Object.keys(obj);
+    if (prefix) {
+      return keys.filter(k => k.startsWith(prefix));
+    }
+    return keys;
+  } catch {
+    return [];
+  }
+}
+
+export const GET: APIRoute = async ({ locals }) => {
   // 1) Probe whether wix-secrets-backend is even loadable in this runtime.
   let moduleLoadError: string | null = null;
   try {
@@ -91,6 +130,23 @@ export const GET: APIRoute = async () => {
   } catch (err: any) {
     moduleLoadError = err?.message || String(err);
   }
+
+  // 1b) Probe what's actually available in the Astro/Wix/Cloudflare runtime.
+  // This tells us where secrets MIGHT be reachable from inside this endpoint.
+  const runtimeProbe = {
+    hasLocals: !!locals,
+    hasLocalsRuntime: !!(locals as any)?.runtime,
+    hasLocalsRuntimeEnv: !!(locals as any)?.runtime?.env,
+    localsRuntimeEnvType: typeof (locals as any)?.runtime?.env,
+    localsRuntimeEnvKeyCount: listAvailableKeys((locals as any)?.runtime?.env).length,
+    localsRuntimeEnvSquareKeys: listAvailableKeys((locals as any)?.runtime?.env, 'SQUARE'),
+    localsRuntimeEnvAllKeys: listAvailableKeys((locals as any)?.runtime?.env).slice(0, 50),
+    hasProcess: typeof (globalThis as any)?.process !== 'undefined',
+    hasProcessEnv: !!(globalThis as any)?.process?.env,
+    processEnvKeyCount: listAvailableKeys((globalThis as any)?.process?.env).length,
+    processEnvSquareKeys: listAvailableKeys((globalThis as any)?.process?.env, 'SQUARE'),
+    importMetaEnvSquareKeys: Object.keys((import.meta as any).env || {}).filter(k => k.startsWith('SQUARE')),
+  };
 
   // 2) For each known secret name, try Wix first, then env var fallback.
   // We track the raw value internally only long enough to derive the
@@ -110,10 +166,25 @@ export const GET: APIRoute = async () => {
       value = wix.value;
     } else {
       if (wix.error) errorWhenReading = wix.error;
-      const envV = tryReadFromEnv(name);
-      if (envV && envV.length > 0) {
-        source = 'import.meta.env';
-        value = envV;
+      // Try Cloudflare Worker bindings (most likely in Wix/Cloudflare context).
+      const localsV = tryReadFromLocalsRuntimeEnv(locals, name);
+      if (localsV && localsV.length > 0) {
+        source = 'locals.runtime.env' as any;
+        value = localsV;
+      } else {
+        // Try globalThis.process.env (in case Wix injects them globally).
+        const procV = tryReadFromGlobalProcessEnv(name);
+        if (procV && procV.length > 0) {
+          source = 'process.env' as any;
+          value = procV;
+        } else {
+          // Try Vite's import.meta.env (build-time inlined env).
+          const envV = tryReadFromEnv(name);
+          if (envV && envV.length > 0) {
+            source = 'import.meta.env';
+            value = envV;
+          }
+        }
       }
     }
     if (name === 'SQUARE_ENVIRONMENT') {
@@ -166,6 +237,7 @@ export const GET: APIRoute = async () => {
           hasCryptoRandomUUID: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function',
           hasFetch: typeof fetch === 'function',
         },
+        runtimeProbe,
         chain: {
           activeEnvironment,
           activeEnvironmentSecret: 'SQUARE_ENVIRONMENT',

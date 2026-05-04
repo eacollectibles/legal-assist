@@ -62,7 +62,7 @@ const services = [
   {
     icon: Gavel,
     title: 'Small Claims Court',
-    description: 'Pursue or defend claims up to $35,000 with experienced representation that protects your interests.',
+    description: 'Pursue or defend claims up to $50,000 with experienced representation that protects your interests.',
     link: '/services/small-claims-court',
   },
   {
@@ -95,7 +95,7 @@ const faqs = [
   },
   {
     q: 'Do I need a lawyer for Small Claims Court?',
-    a: 'In Ontario, you do not need a lawyer for Small Claims Court. Licensed paralegals are authorized to represent you in claims up to $35,000. Many clients prefer paralegal representation because it offers professional advocacy at a lower cost.',
+    a: 'In Ontario, you do not need a lawyer for Small Claims Court. Licensed paralegals are authorized to represent you in claims up to $50,000. Many clients prefer paralegal representation because it offers professional advocacy at a lower cost.',
   },
   {
     q: 'Can a paralegal represent me at the Landlord and Tenant Board?',
@@ -152,7 +152,7 @@ export default function HomePageNew() {
               Legal help<br/><span className="text-primary">without</span> the<br/>lawyer price tag.
             </h2>
             <p className="text-white/70 font-paragraph text-lg mb-10 max-w-md">
-              Expert representation for traffic tickets, landlord-tenant disputes, small claims court, and more throughout Ontario.
+              Professional representation for traffic tickets, landlord-tenant disputes, small claims court, and more throughout Ontario.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href={PHONE_HREF} className="bg-primary text-white px-8 py-4 rounded-lg font-paragraph text-center flex items-center justify-center gap-2">

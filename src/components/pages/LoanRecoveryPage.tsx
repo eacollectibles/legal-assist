@@ -34,7 +34,7 @@ export default function LoanRecoveryPage() {
 
   return (
     <>
-      <SEO title="Loan Recovery Paralegal Ontario | Personal Loan Collection" description="Licensed paralegal recovering personal loans in Ontario. Friends, family, acquaintances who won't repay. Up to $35,000. Free consultation." canonical="https://www.legalassist.london/services/loan-recovery" />
+      <SEO title="Loan Recovery Paralegal Ontario | Personal Loan Collection" description="Licensed paralegal recovering personal loans in Ontario. Friends, family, acquaintances who won't repay. Up to $50,000. Free consultation." canonical="https://www.legalassist.london/services/loan-recovery" />
       <ServicePageLayout seoTitle="Loan Recovery | Ontario" seoDescription="Personal loan recovery in Ontario." canonical="https://www.legalassist.london/services/loan-recovery" problemHeadline="Personal Loan Recovery" problemDescription="Lent money to a friend, family member, or acquaintance and they won't pay it back? It's awkward, but your money is your money. I can help." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Loan recovery" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">

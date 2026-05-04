@@ -118,7 +118,7 @@ export default function WorkplaceDiscriminationPage() {
                   <tr><td className="px-6 py-4 font-medium">Lost Wages</td><td className="px-6 py-4 text-sm">Actual losses</td><td className="px-6 py-4 text-sm">Past and future if job loss</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Injury to Dignity (minor)</td><td className="px-6 py-4 text-sm">$5,000-15,000</td><td className="px-6 py-4 text-sm">Isolated incidents, quick resolution</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Injury to Dignity (moderate)</td><td className="px-6 py-4 text-sm">$15,000-35,000</td><td className="px-6 py-4 text-sm">Pattern of discrimination, significant impact</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">Injury to Dignity (serious)</td><td className="px-6 py-4 text-sm">$35,000-75,000+</td><td className="px-6 py-4 text-sm">Severe impact, malicious conduct, trauma</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Injury to Dignity (serious)</td><td className="px-6 py-4 text-sm">$50,000-75,000+</td><td className="px-6 py-4 text-sm">Severe impact, malicious conduct, trauma</td></tr>
                 </tbody>
               </table>
             </div>

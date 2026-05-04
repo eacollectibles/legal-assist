@@ -8,7 +8,7 @@ export default function WrongfulTerminationPage() {
   const authorityItems = [
     { title: 'Severance Assessment', description: 'Most termination offers are too low. I calculate what you\'re actually entitled to under the law.' },
     { title: 'Negotiation', description: 'Before court, I negotiate with employers to get you a better package—often significantly more.' },
-    { title: 'Legal Action', description: 'If negotiation fails, I pursue your claim through Small Claims Court (up to $35,000).' }
+    { title: 'Legal Action', description: 'If negotiation fails, I pursue your claim through Small Claims Court (up to $50,000).' }
   ];
 
   const processSteps = [
@@ -20,7 +20,7 @@ export default function WrongfulTerminationPage() {
   const reassuranceItems = [
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Common Law Notice', description: 'Often much more than ESA minimums.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Negotiation Works', description: 'Most cases settle without court.' },
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $35,000', description: 'Small Claims handles substantial claims.' }
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $50,000', description: 'Small Claims handles substantial claims.' }
   ];
 
   const honestFAQs = [

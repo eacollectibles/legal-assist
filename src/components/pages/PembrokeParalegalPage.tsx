@@ -44,7 +44,7 @@ export default function PembrokeParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Speeding tickets on Highway 17 Trans-Canada, Highway 148, and local Pembroke roads. Careless driving, stunt driving, and licence suspension defense.' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $35,000. We represent clients at Pembroke Small Claims Court.' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $50,000. We represent clients at Pembroke Small Claims Court.' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues. LTB representation for residential properties throughout Renfrew County.' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, regulatory offences. Defence at Pembroke Provincial Offences Court.' },
             ].map((service, index) => (

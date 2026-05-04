@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function DistractedDrivingDefencePage() {
   const authorityItems = [
-    { title: 'Distracted Driving Expertise', description: 'Distracted driving charges are increasingly common and heavily penalized. I know the defences that work and when to fight versus negotiate.' },
+    { title: 'Distracted Driving Experience', description: 'Distracted driving charges are increasingly common and heavily penalized. I know the defences that work and when to fight versus negotiate.' },
     { title: 'Evidence Analysis', description: 'Many distracted driving charges rely on officer observation. I challenge the evidence, circumstances, and whether the device was actually being used.' },
     { title: 'Insurance Focus', description: 'Insurers treat distracted driving like serious moving violations. Every strategy aims to protect your insurance rates.' }
   ];

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function LoanDisputesPage() {
   const authorityItems = [
-    { title: 'Personal Loan Recovery', description: 'Lent money to a friend or family member who won\'t pay back? I help recover personal loans up to $35,000 in Small Claims Court.' },
+    { title: 'Personal Loan Recovery', description: 'Lent money to a friend or family member who won\'t pay back? I help recover personal loans up to $50,000 in Small Claims Court.' },
     { title: 'Documentation Matters', description: 'Written agreements are ideal, but text messages, emails, and bank transfers can also prove a loan existed.' },
     { title: 'Realistic Recovery', description: 'Even with judgment, collecting can be challenging. I help assess whether pursuing the claim makes practical sense.' }
   ];
@@ -14,7 +14,7 @@ export default function LoanDisputesPage() {
   const processSteps = [
     { step: '1', title: 'Gather Evidence', description: 'Texts, emails, transfers, any written agreement.' },
     { step: '2', title: 'Demand Payment', description: 'Formal demand letter with deadline.' },
-    { step: '3', title: 'Sue if Needed', description: 'Small Claims Court for amounts up to $35,000.' }
+    { step: '3', title: 'Sue if Needed', description: 'Small Claims Court for amounts up to $50,000.' }
   ];
 
   const reassuranceItems = [

@@ -35,7 +35,7 @@ export default function MarkhamParalegalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 404, Highway 7, Markham Road, Kennedy Road. Speeding, careless driving, stunt driving.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Up to $35,000 at Newmarket courthouse. Debt collection, contract disputes.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Up to $50,000 at Newmarket courthouse. Debt collection, contract disputes.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'York Region rental disputes, eviction defence, maintenance orders.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, regulatory offences at Markham/Newmarket POA.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -96,7 +96,7 @@ export default function MarkhamParalegalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { icon: Shield, title: 'LSO Licensed', desc: 'Fully regulated by the Law Society of Ontario for your protection.' },
-              { icon: MapPin, title: 'Local Expertise', desc: 'Deep knowledge of Newmarket courthouse and York Region procedures.' },
+              { icon: MapPin, title: 'Local Experience', desc: 'Deep knowledge of Newmarket courthouse and York Region procedures.' },
               { icon: Clock, title: 'Fast Results', desc: 'Quick turnaround times and responsive communication throughout your case.' },
             ].map((item, index) => (
               <div key={index} className="text-center">

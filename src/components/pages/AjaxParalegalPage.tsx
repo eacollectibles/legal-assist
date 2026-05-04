@@ -36,12 +36,12 @@ export default function AjaxParalegalPage() {
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Home className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Landlord-Tenant Board</h3>
-              <p className="font-paragraph text-foreground/70">Expert representation for eviction defence and rent disputes. Protecting Ajax and Pickering renters.</p>
+              <p className="font-paragraph text-foreground/70">Professional representation for eviction defence and rent disputes. Protecting Ajax and Pickering renters.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Scale className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Small Claims Court</h3>
-              <p className="font-paragraph text-foreground/70">Claims up to $35,000. Representation at Oshawa courthouse for Durham Region residents.</p>
+              <p className="font-paragraph text-foreground/70">Claims up to $50,000. Representation at Oshawa courthouse for Durham Region residents.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Gavel className="w-8 h-8 text-primary mb-4" />
@@ -67,7 +67,7 @@ export default function AjaxParalegalPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12">Local Knowledge & Experience</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">Ajax & Durham Region Expertise</h3>
+              <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">Ajax & Durham Region Experience</h3>
               <p className="font-paragraph text-foreground/70 mb-6">Serving Ajax, Pickering Village, South Ajax, and North Ajax. Familiar with Oshawa courthouse and Durham Region legal procedures.</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">

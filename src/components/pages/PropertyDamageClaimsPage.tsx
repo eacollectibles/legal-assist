@@ -18,7 +18,7 @@ export default function PropertyDamageClaimsPage() {
   ];
 
   const reassuranceItems = [
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $35,000', description: 'Small Claims handles substantial property damage.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $50,000', description: 'Small Claims handles substantial property damage.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Multiple Defendants', description: 'Can pursue all responsible parties.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Consequential Damages', description: 'May recover rental costs, lost use, etc.' }
   ];
@@ -34,8 +34,8 @@ export default function PropertyDamageClaimsPage() {
 
   return (
     <>
-      <SEO title="Property Damage Claims Paralegal Ontario | Vehicle & Home Damage" description="Licensed paralegal for property damage claims in Ontario. Vehicle damage, home damage, insurance disputes. Up to $35,000. Free consultation." canonical="https://www.legalassist.london/services/property-damage-claims" />
-      <ServicePageLayout seoTitle="Property Damage Claims | Ontario" seoDescription="Property damage claims in Ontario Small Claims Court." canonical="https://www.legalassist.london/services/property-damage-claims" problemHeadline="Property Damage Claims" problemDescription="Someone damaged your vehicle, home, or property? I help recover repair costs and consequential damages—up to $35,000 in Small Claims Court." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Property damage claims" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+      <SEO title="Property Damage Claims Paralegal Ontario | Vehicle & Home Damage" description="Licensed paralegal for property damage claims in Ontario. Vehicle damage, home damage, insurance disputes. Up to $50,000. Free consultation." canonical="https://www.legalassist.london/services/property-damage-claims" />
+      <ServicePageLayout seoTitle="Property Damage Claims | Ontario" seoDescription="Property damage claims in Ontario Small Claims Court." canonical="https://www.legalassist.london/services/property-damage-claims" problemHeadline="Property Damage Claims" problemDescription="Someone damaged your vehicle, home, or property? I help recover repair costs and consequential damages—up to $50,000 in Small Claims Court." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Property damage claims" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">

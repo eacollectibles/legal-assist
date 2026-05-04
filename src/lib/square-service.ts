@@ -89,13 +89,42 @@ export interface CreatePaymentResult {
  * Reads a value from Wix Secrets Manager first, then falls back to
  * `import.meta.env` for local-dev parity with the Cal.com integration.
  */
-async function readSecret(name: string): Promise<string> {
+/**
+ * Reads a secret from whichever source is available at runtime. Tries (in order):
+ *   1. `locals.runtime.env` — Cloudflare Worker bindings (most likely on Wix)
+ *   2. `globalThis.process.env` — node-style env vars
+ *   3. `wix-secrets-backend` via runtime dynamic import (blocked by Cloudflare CSP, but try anyway)
+ *   4. `import.meta.env` — Vite build-time env (works in local dev)
+ *
+ * The `locals` parameter is passed from the Astro endpoint. Pass `undefined` if
+ * called outside of a request context (in which case sources 1-2 are skipped).
+ */
+async function readSecret(name: string, locals?: any): Promise<string> {
+  // 1) Cloudflare Worker bindings via Astro locals
   try {
-    // Build the dynamic import via a Function constructor so the import
-    // string only exists at runtime. This is invisible to ALL bundlers
-    // (Vite, Rollup, Wix's pipeline) — they cannot statically analyze
-    // it, so they cannot rewrite "wix-secrets-backend" into a relative
-    // path like "pages/api/square/wix-secrets-backend".
+    const env = locals?.runtime?.env;
+    if (env && typeof env === 'object') {
+      const v = env[name];
+      if (typeof v === 'string' && v.length > 0) return v;
+    }
+  } catch {
+    /* ignore */
+  }
+
+  // 2) globalThis.process.env (node-style env vars)
+  try {
+    const proc = (globalThis as any)?.process;
+    if (proc?.env && typeof proc.env === 'object') {
+      const v = proc.env[name];
+      if (typeof v === 'string' && v.length > 0) return v;
+    }
+  } catch {
+    /* ignore */
+  }
+
+  // 3) wix-secrets-backend dynamic import (blocked by Cloudflare CSP in
+  //    most contexts, but try anyway — works for local dev / non-Wix runs).
+  try {
     const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
     const mod: any = await importer('wix-secrets-backend');
     const getSecret = mod?.getSecret || mod?.default?.getSecret;
@@ -104,8 +133,10 @@ async function readSecret(name: string): Promise<string> {
       if (secret) return secret;
     }
   } catch {
-    // wix-secrets-backend isn't bound in local dev — fall through.
+    /* ignore — wix-secrets-backend not available or blocked */
   }
+
+  // 4) Vite build-time env (local dev .env.local)
   // @ts-expect-error import.meta.env is dynamic
   return (import.meta.env[name] as string | undefined) || '';
 }
@@ -119,17 +150,17 @@ async function readSecret(name: string): Promise<string> {
  *   1. Environment-specific secret (e.g. `SQUARE_APPLICATION_ID_SANDBOX`)
  *   2. Generic secret (e.g. `SQUARE_APPLICATION_ID`)
  */
-export async function loadSquareConfig(): Promise<SquareConfig> {
-  const envRaw = (await readSecret('SQUARE_ENVIRONMENT')).toLowerCase();
+export async function loadSquareConfig(locals?: any): Promise<SquareConfig> {
+  const envRaw = (await readSecret('SQUARE_ENVIRONMENT', locals)).toLowerCase();
   const environment: SquareEnvironment = envRaw === 'production' ? 'production' : 'sandbox';
   const suffix = environment === 'production' ? '' : '_SANDBOX';
 
   const applicationId =
-    (await readSecret(`SQUARE_APPLICATION_ID${suffix}`)) ||
-    (await readSecret('SQUARE_APPLICATION_ID'));
+    (await readSecret(`SQUARE_APPLICATION_ID${suffix}`, locals)) ||
+    (await readSecret('SQUARE_APPLICATION_ID', locals));
   const locationId =
-    (await readSecret(`SQUARE_LOCATION_ID${suffix}`)) ||
-    (await readSecret('SQUARE_LOCATION_ID'));
+    (await readSecret(`SQUARE_LOCATION_ID${suffix}`, locals)) ||
+    (await readSecret('SQUARE_LOCATION_ID', locals));
 
   const apiBaseUrl =
     environment === 'production'
@@ -149,8 +180,8 @@ export async function loadSquareConfig(): Promise<SquareConfig> {
  * module — the access token is read on demand inside {@link createPayment}
  * and never leaves the server).
  */
-export async function loadPublicSquareConfig(): Promise<PublicSquareConfig> {
-  const cfg = await loadSquareConfig();
+export async function loadPublicSquareConfig(locals?: any): Promise<PublicSquareConfig> {
+  const cfg = await loadSquareConfig(locals);
   return {
     environment: cfg.environment,
     applicationId: cfg.applicationId,
@@ -168,12 +199,12 @@ export async function loadPublicSquareConfig(): Promise<PublicSquareConfig> {
  *   1. `SQUARE_ACCESS_TOKEN_SANDBOX` (when env is sandbox)
  *   2. `SQUARE_ACCESS_TOKEN` (production, or as a generic fallback)
  */
-async function readAccessToken(env: SquareEnvironment): Promise<string> {
+async function readAccessToken(env: SquareEnvironment, locals?: any): Promise<string> {
   if (env === 'sandbox') {
-    const sandbox = await readSecret('SQUARE_ACCESS_TOKEN_SANDBOX');
+    const sandbox = await readSecret('SQUARE_ACCESS_TOKEN_SANDBOX', locals);
     if (sandbox) return sandbox;
   }
-  return await readSecret('SQUARE_ACCESS_TOKEN');
+  return await readSecret('SQUARE_ACCESS_TOKEN', locals);
 }
 
 /**
@@ -196,7 +227,7 @@ function genIdempotencyKey(): string {
  * The `sourceId` must come from the Web Payments SDK's `card.tokenize()`
  * call on the client. Raw card data must never reach this server.
  */
-export async function createPayment(input: CreatePaymentInput): Promise<CreatePaymentResult> {
+export async function createPayment(input: CreatePaymentInput, locals?: any): Promise<CreatePaymentResult> {
   if (!input.sourceId) {
     return { ok: false, errorMessage: 'Missing sourceId (card token).' };
   }
@@ -204,7 +235,7 @@ export async function createPayment(input: CreatePaymentInput): Promise<CreatePa
     return { ok: false, errorMessage: 'Amount must be a positive number of cents.' };
   }
 
-  const cfg = await loadSquareConfig();
+  const cfg = await loadSquareConfig(locals);
   if (!cfg.applicationId || !cfg.locationId) {
     return {
       ok: false,
@@ -213,7 +244,7 @@ export async function createPayment(input: CreatePaymentInput): Promise<CreatePa
     };
   }
 
-  const accessToken = await readAccessToken(cfg.environment);
+  const accessToken = await readAccessToken(cfg.environment, locals);
   if (!accessToken) {
     return {
       ok: false,

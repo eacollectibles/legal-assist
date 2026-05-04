@@ -41,7 +41,7 @@ export default function NewmarketParalegalPage() {
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Scale className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Small Claims Court</h3>
-              <p className="font-paragraph text-foreground/70">Claims up to $35,000. Representation at Ontario Court of Justice - Newmarket.</p>
+              <p className="font-paragraph text-foreground/70">Claims up to $50,000. Representation at Ontario Court of Justice - Newmarket.</p>
             </div>
             <div className="p-6 rounded-lg border border-border hover:shadow-lg transition-shadow">
               <Gavel className="w-8 h-8 text-primary mb-4" />
@@ -67,7 +67,7 @@ export default function NewmarketParalegalPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12">Local Knowledge & Experience</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">Newmarket Court Expertise</h3>
+              <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">Newmarket Court Experience</h3>
               <p className="font-paragraph text-foreground/70 mb-6">Serving Newmarket, Aurora, East Gwillimbury, Holland Landing, and Sharon. In-depth knowledge of Newmarket Ontario Court of Justice and Provincial Offences Court.</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">

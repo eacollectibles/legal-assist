@@ -42,7 +42,7 @@ export default function PeterboroughParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 115, Highway 7, and Peterborough-area tickets. Speeding, stunt driving, and distracted driving charges.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Disputes up to $35,000 including debt recovery and contract claims. Representation at Peterborough courthouse.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Disputes up to $50,000 including debt recovery and contract claims. Representation at Peterborough courthouse.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance issues. LTB hearings for Peterborough and area tenancies.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, regulatory offences, and trespass matters at Peterborough Provincial Offences Court.', link: '/services/provincial-offences' }
             ].map((service, index) => (

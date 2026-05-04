@@ -38,7 +38,7 @@ export default function AboutPage() {
                 At LegalAssist, we believe that everyone deserves access to quality legal representation. Our mission is to provide professional, affordable, and compassionate paralegal services that empower individuals and small businesses to navigate Ontario's legal system with confidence.
               </p>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                We specialize in a broad range of legal matters within the authorized scope of paralegal practice, from criminal defense to landlord-tenant disputes, human rights matters, and small claims court representation.
+                We concentrate our practice on a broad range of legal matters within the authorized scope of paralegal practice, from criminal defense to landlord-tenant disputes, human rights matters, and small claims court representation.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
@@ -114,7 +114,7 @@ export default function AboutPage() {
                 <Briefcase className="w-6 h-6" />
               </div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">
-                Broad Expertise
+                Broad Experience
               </h3>
               <p className="font-paragraph text-foreground/80">
                 We handle a wide range of legal matters within the paralegal scope of practice across Ontario.
@@ -359,7 +359,7 @@ export default function AboutPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Notary Public Services:</strong> Document certification and witnessing</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Commissioner of Oaths Services:</strong> Document certification and witnessing</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
