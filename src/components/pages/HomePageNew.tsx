@@ -147,7 +147,7 @@ export default function HomePageNew() {
         {/* Left: Text Side */}
         <div className="bg-secondary flex items-center p-8 lg:p-16 xl:p-24 order-2 lg:order-1">
           <div className="max-w-xl">
-            <span className="text-primary font-paragraph text-sm tracking-widest uppercase mb-6 block">Licensed Ontario Paralegals</span>
+            <span className="text-primary font-paragraph text-sm tracking-widest uppercase mb-6 block">Licensed Ontario Paralegals · LSO #P22020 &amp; #P21479</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-heading leading-tight mb-8">
               Legal help<br/><span className="text-primary">without</span> the<br/>lawyer price tag.
             </h2>

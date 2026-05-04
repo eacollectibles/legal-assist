@@ -41,10 +41,8 @@ export const Head = () => {
         "email": "jeanfrancois@legalassist.london",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "P.O Box 1000",
           "addressLocality": "London",
           "addressRegion": "ON",
-          "postalCode": "N6A 2L1",
           "addressCountry": "CA"
         },
         "geo": {
@@ -81,15 +79,30 @@ export const Head = () => {
         "slogan": "Affordable Legal Help When You Need It Most",
         "foundingDate": "2024",
         "legalName": "LegalAssist Paralegal Services",
-        "hasCredential": {
-          "@type": "EducationalOccupationalCredential",
-          "credentialCategory": "Professional License",
-          "recognizedBy": {
-            "@type": "Organization",
-            "name": "Law Society of Ontario",
-            "url": "https://lso.ca"
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "Professional License",
+            "identifier": "P22020",
+            "name": "Licensed Paralegal — Jean-Francois Demers",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Law Society of Ontario",
+              "url": "https://lso.ca"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "Professional License",
+            "identifier": "P21479",
+            "name": "Licensed Paralegal — Candice Fogarty",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Law Society of Ontario",
+              "url": "https://lso.ca"
+            }
           }
-        },
+        ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Paralegal Services",

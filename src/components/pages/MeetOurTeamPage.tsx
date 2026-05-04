@@ -112,9 +112,9 @@ export default function MeetOurTeamPage() {
                   <Mail className="w-5 h-5 text-primary" aria-hidden="true" />
                   <span className="font-paragraph text-sm">candice@legalassist.london</span>
                 </a>
-                <a href="tel:2262725153" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                <a href="tel:+12262725153" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
                   <Phone className="w-5 h-5 text-primary" aria-hidden="true" />
-                  <span className="font-paragraph text-sm">(365) 882-9515</span>
+                  <span className="font-paragraph text-sm">226-272-5153</span>
                 </a>
               </div>
             </div>
@@ -176,7 +176,7 @@ export default function MeetOurTeamPage() {
         </div>
       </section>
 
-      {/* Johnny Demers - Licensing Candidate */}
+      {/* Jean-Francois "Johnny" Demers - Licensed Paralegal (LSO #P22020) */}
       <section id="johnny-demers" className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
@@ -185,7 +185,7 @@ export default function MeetOurTeamPage() {
                 <div className="rounded-xl overflow-hidden shadow-xl aspect-[3/4] bg-pastellavender/30">
                   <Image
                     src="https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png"
-                    alt="Johnny Demers, Paralegal Licensing Candidate at LegalAssist"
+                    alt="Jean-Francois 'Johnny' Demers, Licensed Paralegal at LegalAssist"
                     width={400}
                     height={533}
                     className="w-full h-full object-cover"
@@ -194,8 +194,8 @@ export default function MeetOurTeamPage() {
                 </div>
                 <div className="absolute -bottom-3 -left-3 bg-white rounded-lg shadow-lg p-2 border border-gray-100">
                   <div className="flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-primary" aria-hidden="true" />
-                    <span className="text-xs font-bold text-foreground">Licensing Candidate</span>
+                    <Scale className="w-4 h-4 text-primary" aria-hidden="true" />
+                    <span className="text-xs font-bold text-foreground">Licensed Paralegal</span>
                   </div>
                 </div>
               </div>
@@ -205,23 +205,23 @@ export default function MeetOurTeamPage() {
                   <Mail className="w-5 h-5 text-primary" aria-hidden="true" />
                   <span className="font-paragraph text-sm">jeanfrancois@legalassist.london</span>
                 </a>
-                <a href="tel:2262725153" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                <a href="tel:+12262725153" className="flex items-center gap-3 text-foreground/80 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
                   <Phone className="w-5 h-5 text-primary" aria-hidden="true" />
-                  <span className="font-paragraph text-sm">(365) 882-9515</span>
+                  <span className="font-paragraph text-sm">226-272-5153</span>
                 </a>
               </div>
             </div>
             <div className="lg:col-span-2 lg:order-1">
               <div className="flex flex-wrap items-center gap-3 mb-4">
-                <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-paragraph font-medium">Paralegal Licensing Candidate</span>
+                <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-paragraph font-medium">Licensed Paralegal (Law Society of Ontario) — LSO #P22020</span>
               </div>
-              <h2 className="font-heading text-4xl font-bold text-foreground mb-2">Johnny Demers</h2>
-              <p className="font-paragraph text-xl text-primary font-medium mb-2">Paralegal Licensing Candidate</p>
+              <h2 className="font-heading text-4xl font-bold text-foreground mb-2">Jean-Francois "Johnny" Demers</h2>
+              <p className="font-paragraph text-xl text-primary font-medium mb-2">Licensed Paralegal</p>
               <p className="font-paragraph text-sm text-foreground/60 mb-6 italic">
-                Johnny is a paralegal licensing candidate and does not provide legal services independently. He works under the supervision of licensed paralegals in accordance with Law Society of Ontario rules.
+                Law Society of Ontario licence verified — LSO #P22020
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Johnny Demers is a paralegal licensing candidate at LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny is dedicated to providing professional legal support to individuals and small businesses across Southwestern Ontario.
+                Jean-Francois "Johnny" Demers is a Licensed Paralegal with the Law Society of Ontario at LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny is dedicated to providing professional legal representation to individuals and small businesses across Ontario.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
                 Drawing on his background in law enforcement, Johnny brings a unique perspective to legal matters. His approach emphasizes clear communication, thorough preparation, and a strong understanding of procedural requirements. Johnny takes pride in demystifying the legal process for clients and ensuring they understand their rights at every stage.
@@ -230,7 +230,7 @@ export default function MeetOurTeamPage() {
                 <p className="font-paragraph text-foreground/90 italic">
                   "I'm passionate about helping clients navigate the legal system with clarity and confidence. My background in law enforcement gives me a unique understanding of the legal process."
                 </p>
-                <footer className="mt-3 font-heading font-bold text-foreground">— Johnny Demers</footer>
+                <footer className="mt-3 font-heading font-bold text-foreground">— Jean-Francois "Johnny" Demers, Licensed Paralegal</footer>
               </blockquote>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
@@ -254,7 +254,8 @@ export default function MeetOurTeamPage() {
                     <h3 className="font-heading font-bold text-foreground">Background</h3>
                   </div>
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Paralegal Licensing Candidate</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Licensed Paralegal (LSO #P22020)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Law Society of Ontario Member in Good Standing</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Law Enforcement Diploma</li>
                   </ul>
                 </div>

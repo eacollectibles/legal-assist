@@ -91,13 +91,13 @@ export interface CreatePaymentResult {
  */
 async function readSecret(name: string): Promise<string> {
   try {
-    // Hide the module specifier behind a runtime variable so Vite/Rollup
-    // does not try to resolve it at build time. Otherwise the bundler
-    // rewrites the path to something like
-    // `pages/api/square/wix-secrets-backend` and the Wix runtime cannot
-    // find the module.
-    const moduleName = 'wix-secrets-backend';
-    const mod: any = await import(/* @vite-ignore */ moduleName);
+    // Build the dynamic import via a Function constructor so the import
+    // string only exists at runtime. This is invisible to ALL bundlers
+    // (Vite, Rollup, Wix's pipeline) — they cannot statically analyze
+    // it, so they cannot rewrite "wix-secrets-backend" into a relative
+    // path like "pages/api/square/wix-secrets-backend".
+    const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
+    const mod: any = await importer('wix-secrets-backend');
     const getSecret = mod?.getSecret || mod?.default?.getSecret;
     if (typeof getSecret === 'function') {
       const secret = await getSecret(name);

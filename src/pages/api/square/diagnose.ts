@@ -62,10 +62,10 @@ function expectedPrefixFor(name: string): string | undefined {
 
 async function tryReadFromWix(name: string): Promise<{ value: string | null; error?: string }> {
   try {
-    // Hide the specifier behind a runtime variable so the bundler does not
-    // rewrite `wix-secrets-backend` into a relative path.
-    const moduleName = 'wix-secrets-backend';
-    const mod: any = await import(/* @vite-ignore */ moduleName);
+    // Build the dynamic import via a Function constructor — invisible to
+    // all bundlers because the import string only exists at runtime.
+    const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
+    const mod: any = await importer('wix-secrets-backend');
     const getSecret = mod?.getSecret || mod?.default?.getSecret;
     if (typeof getSecret !== 'function') {
       return { value: null, error: 'wix-secrets-backend loaded but getSecret is not a function' };
@@ -86,8 +86,8 @@ export const GET: APIRoute = async () => {
   // 1) Probe whether wix-secrets-backend is even loadable in this runtime.
   let moduleLoadError: string | null = null;
   try {
-    const moduleName = 'wix-secrets-backend';
-    await import(/* @vite-ignore */ moduleName);
+    const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
+    await importer('wix-secrets-backend');
   } catch (err: any) {
     moduleLoadError = err?.message || String(err);
   }

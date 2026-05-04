@@ -13,11 +13,10 @@ import { fetchCalComBookings } from '@/lib/calcom-service';
 async function getCalcomApiKey(): Promise<string> {
   // Try Wix Secrets Manager first (works in production).
   try {
-    // Hide the specifier behind a runtime variable so Vite/Rollup does not
-    // try to resolve `wix-secrets-backend` at build time. Otherwise the
-    // bundler rewrites the path and the Wix runtime cannot find the module.
-    const moduleName = 'wix-secrets-backend';
-    const mod: any = await import(/* @vite-ignore */ moduleName);
+    // Build the dynamic import via a Function constructor — invisible to
+    // all bundlers because the import string only exists at runtime.
+    const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
+    const mod: any = await importer('wix-secrets-backend');
     const getSecret = mod?.getSecret || mod?.default?.getSecret;
     if (typeof getSecret === 'function') {
       const secret = await getSecret('CALCOM_API_KEY');

@@ -267,7 +267,7 @@ export default function Footer() {
             or AI-generated and do not represent actual clients, cases, or outcomes.
           </p>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
-            &copy; 2026 LegalAssist Paralegal Services. Operated by XXXXX XXXXX, Licensed Paralegal (Law Society of Ontario), Licence No. [LSO Licence #]. All rights reserved.
+            &copy; 2026 LegalAssist Paralegal Services. Operated by Jean-Francois &ldquo;Johnny&rdquo; Demers, Licensed Paralegal (Law Society of Ontario), Licence No. P22020, and Candice Fogarty, Licensed Paralegal (Law Society of Ontario), Licence No. P21479. All rights reserved.
           </p>
         </div>
       </div>
