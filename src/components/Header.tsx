@@ -77,7 +77,7 @@ export default function Header() {
               aria-label="LegalAssist home"
             >
               <div className="w-10 h-10 sm:w-11 sm:h-11 bg-primary rounded-sm flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">LA</span>
+                <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">L.A</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-lg sm:text-2xl text-secondary font-bold leading-tight">LegalAssist</span>
