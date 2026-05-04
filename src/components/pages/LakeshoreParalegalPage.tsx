@@ -42,7 +42,7 @@ export default function LakeshoreParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Speeding tickets on Highway 401, Highway 77, County Road 22, and Essex County roads.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $35,000 at Windsor Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $50,000 at Windsor Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues. LTB representation for Essex County properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, regulatory offences. Defence at Windsor Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (

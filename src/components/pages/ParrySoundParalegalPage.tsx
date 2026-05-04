@@ -44,7 +44,7 @@ export default function ParrySoundParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 400/69 speeding tickets, careless driving charges, and licence suspension defence for Parry Sound District drivers.' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, and property damage claims up to $35,000. Representation at Parry Sound Small Claims Court.' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, and property damage claims up to $50,000. Representation at Parry Sound Small Claims Court.' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance issues. LTB representation for residential properties in Parry Sound District.' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, and regulatory offences. Defence at Parry Sound Provincial Offences Court.' },
             ].map((service, index) => (
@@ -152,12 +152,4 @@ export default function ParrySoundParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Serving Parry Sound & District
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+            L

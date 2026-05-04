@@ -42,7 +42,7 @@ export default function TemiskamingShorersParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 11 traffic violations, speeding charges, and vehicle safety infractions. Experienced careless driving and licence suspension defence in Temiskaming Shores.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt recovery, contract disputes, and property damage claims up to $35,000. Professional representation at Temiskaming Shores Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt recovery, contract disputes, and property damage claims up to $50,000. Professional representation at Temiskaming Shores Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance claim representation. Experienced LTB advocacy for Temiskaming District properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'Municipal by-law violations, trespass charges, and regulatory offences. Vigorous defence at Temiskaming Shores Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -150,12 +150,4 @@ export default function TemiskamingShorersParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Serving Temiskaming Shores & Temiskaming District
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+            Licensed by the Law Soci

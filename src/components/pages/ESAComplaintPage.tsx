@@ -27,7 +27,7 @@ export default function ESAComplaintPage() {
     { question: "What can I complain to the Ministry of Labour about?", answer: "ESA violations: unpaid wages, overtime, vacation pay, public holiday pay, termination pay, severance pay. Also: hours of work violations, leave denials, reprisal for asserting ESA rights. NOT covered: wrongful dismissal damages (that's civil court), human rights (that's HRTO)." },
     { question: "How long do I have to file an MOL complaint?", answer: "Generally 2 years from when wages were due or violation occurred. But file as soon as possible—evidence gets stale, employers may become harder to collect from, and you want your money sooner." },
     { question: "What happens after I file?", answer: "An Employment Standards Officer is assigned. They may: try to mediate settlement, investigate by contacting your employer, review records, and interview parties. Then they issue an order (to pay) or refuse the claim." },
-    { question: "My claim is over $15,000. What do I do?", answer: "MOL can only order up to $15,000. For amounts over that, you need to go to civil court (Small Claims up to $35,000). You can file MOL complaint for $15K AND sue for the rest, or just sue for everything. Get advice on best approach." },
+    { question: "My claim is over $15,000. What do I do?", answer: "MOL can only order up to $15,000. For amounts over that, you need to go to civil court (Small Claims up to $50,000). You can file MOL complaint for $15K AND sue for the rest, or just sue for everything. Get advice on best approach." },
     { question: "Can I file MOL complaint AND sue my employer?", answer: "Generally you must choose one path for the same wages. But: you can file MOL for ESA minimums and sue for additional damages (like common law notice). Strategy depends on your situation—get advice." },
     { question: "What if my employer ignores the MOL order?", answer: "If employer doesn't pay the order, MOL can: file the order with court (becomes enforceable judgment), suspend business licences, add the employer to public 'wall of shame,' and pursue collection. They have enforcement tools." }
   ];
@@ -84,7 +84,7 @@ export default function ESAComplaintPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   <tr className="bg-green-50"><td className="px-6 py-4 font-medium">Cost to file</td><td className="px-6 py-4 text-green-700 font-bold">Free</td><td className="px-6 py-4">$102-$275</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">Maximum recovery</td><td className="px-6 py-4">$15,000</td><td className="px-6 py-4 text-green-700 font-bold">$35,000 (Small Claims)</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Maximum recovery</td><td className="px-6 py-4">$15,000</td><td className="px-6 py-4 text-green-700 font-bold">$50,000 (Small Claims)</td></tr>
                   <tr className="bg-green-50"><td className="px-6 py-4 font-medium">Who investigates</td><td className="px-6 py-4 text-green-700 font-bold">MOL Officer</td><td className="px-6 py-4">You (with evidence)</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Timeline</td><td className="px-6 py-4">Several months</td><td className="px-6 py-4">6-12+ months</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Common law damages</td><td className="px-6 py-4 text-red-700">No</td><td className="px-6 py-4 text-green-700 font-bold">Yes</td></tr>
@@ -128,3 +128,4 @@ export default function ESAComplaintPage() {
     </>
   );
 }
+                                                                                                                                   

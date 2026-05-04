@@ -18,7 +18,7 @@ export default function SmallClaimsProcessPage() {
   ];
 
   const reassuranceItems = [
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $35,000', description: 'Substantial claims without Superior Court complexity.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $50,000', description: 'Substantial claims without Superior Court complexity.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Simpler Rules', description: 'Designed for accessibility, not lawyers.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Faster Resolution', description: 'Months, not years.' }
   ];
@@ -152,3 +152,4 @@ export default function SmallClaimsProcessPage() {
     </>
   );
 }
+      

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function BeingSuedGuidePage() {
   const authorityItems = [
-    { title: 'Defence Representation', description: 'I help people respond to Small Claims Court claims and defend against lawsuits up to $35,000.' },
+    { title: 'Defence Representation', description: 'I help people respond to Small Claims Court claims and defend against lawsuits up to $50,000.' },
     { title: 'Deadline Protection', description: 'You have limited time to respond. Missing deadlines can result in automatic judgment against you.' },
     { title: 'Strategic Options', description: 'Dispute the claim, counterclaim, negotiate settlement, or challenge jurisdiction.' }
   ];
@@ -155,3 +155,4 @@ export default function BeingSuedGuidePage() {
     </>
   );
 }
+                                           

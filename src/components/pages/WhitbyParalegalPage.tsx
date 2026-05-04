@@ -35,7 +35,7 @@ export default function WhitbyParalegalPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 401, Highway 12, Brock Street, Whitby streets. Careless driving, stunt driving, licence suspensions.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage up to $35,000. Oshawa courthouse.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage up to $50,000. Oshawa courthouse.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues for Durham Region properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, regulatory offences at Whitby/Oshawa court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -122,11 +122,4 @@ export default function WhitbyParalegalPage() {
 
       <section className="py-8 md:py-12 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/70">Licensed by the Law Society of Ontario | Serving Whitby &amp; Durham Region</p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+          <p className="font-paragraph text-sm text-foreground/70">Licensed by the Law Societ

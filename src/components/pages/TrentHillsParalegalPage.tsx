@@ -42,7 +42,7 @@ export default function TrentHillsParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Speeding tickets on Highway 30, Highway 45, and county roads.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $35,000 at Cobourg Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $50,000 at Cobourg Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues. LTB representation for Northumberland County properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, regulatory offences. Defence at Cobourg Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -138,12 +138,4 @@ export default function TrentHillsParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Serving Trent Hills & Northumberland County
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+            Licensed by the Law Society 

@@ -44,7 +44,7 @@ export default function BracebridgeParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 11 speeding tickets, careless driving charges, and licence suspension defence for Muskoka region drivers.' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, and property damage claims up to $35,000. Representation at Bracebridge Small Claims Court.' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, and property damage claims up to $50,000. Representation at Bracebridge Small Claims Court.' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, and maintenance issues. LTB representation for residential properties in Muskoka.' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, and regulatory offences. Defence at Bracebridge Provincial Offences Court.' },
             ].map((service, index) => (

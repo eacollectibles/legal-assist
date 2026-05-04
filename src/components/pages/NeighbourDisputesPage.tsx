@@ -97,8 +97,8 @@ export default function NeighbourDisputesPage() {
                 <tbody className="divide-y divide-border">
                   <tr><td className="px-6 py-4 font-medium">Demand Letter</td><td className="px-6 py-4 text-sm">Initial attempt, reasonable neighbours</td><td className="px-6 py-4 text-sm">Often resolves without court</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Bylaw Enforcement</td><td className="px-6 py-4 text-sm">Noise, property standards violations</td><td className="px-6 py-4 text-sm">Fines, orders to comply</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">Small Claims Court</td><td className="px-6 py-4 text-sm">Property damage, money claims</td><td className="px-6 py-4 text-sm">Damages up to $35,000</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">Superior Court</td><td className="px-6 py-4 text-sm">Injunctions, over $35,000</td><td className="px-6 py-4 text-sm">Court orders to stop conduct</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Small Claims Court</td><td className="px-6 py-4 text-sm">Property damage, money claims</td><td className="px-6 py-4 text-sm">Damages up to $50,000</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">Superior Court</td><td className="px-6 py-4 text-sm">Injunctions, over $50,000</td><td className="px-6 py-4 text-sm">Court orders to stop conduct</td></tr>
                 </tbody>
               </table>
             </div>

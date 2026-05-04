@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function UnpaidInvoicesBusinessPage() {
   const authorityItems = [
-    { title: 'Business Invoice Recovery', description: 'Clients won\'t pay your invoices? I help small businesses and freelancers recover unpaid invoices up to $35,000 in Small Claims Court.' },
+    { title: 'Business Invoice Recovery', description: 'Clients won\'t pay your invoices? I help small businesses and freelancers recover unpaid invoices up to $50,000 in Small Claims Court.' },
     { title: 'Documentation Key', description: 'Contracts, invoices, emails, and work product documentation build strong collection cases.' },
     { title: 'Cost-Effective Process', description: 'Small Claims Court is designed for businesses to collect without spending more than the debt is worth.' }
   ];
@@ -93,7 +93,7 @@ export default function UnpaidInvoicesBusinessPage() {
                 <tbody className="divide-y divide-border">
                   <tr><td className="px-6 py-4 font-medium">Up to $3,500</td><td className="px-6 py-4">$102</td><td className="px-6 py-4 text-green-700">Yes</td></tr>
                   <tr><td className="px-6 py-4 font-medium">$3,500 - $10,000</td><td className="px-6 py-4">$157</td><td className="px-6 py-4 text-green-700">Yes</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">$10,000 - $35,000</td><td className="px-6 py-4">$275</td><td className="px-6 py-4 text-green-700">Yes</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">$10,000 - $50,000</td><td className="px-6 py-4">$275</td><td className="px-6 py-4 text-green-700">Yes</td></tr>
                 </tbody>
               </table>
             </div>
@@ -129,8 +129,4 @@ export default function UnpaidInvoicesBusinessPage() {
             <a href="/contact" className="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-colors">Get a Free Assessment</a>
           </div>
         </div>
-        <RelatedServices services={relatedServicesConfig.smallClaims} />
-      </ServicePageLayout>
-    </>
-  );
-}
+      

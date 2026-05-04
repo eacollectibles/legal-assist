@@ -44,7 +44,7 @@ export default function WindsorParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 401, E.C. Row Expressway, and Windsor street tickets. Speeding, careless driving, red lights, and commercial vehicle violations.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage. Representation at Windsor Small Claims Court for claims up to $35,000.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage. Representation at Windsor Small Claims Court for claims up to $50,000.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues. LTB representation for Windsor and Essex County properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass, regulatory offences. Defence at Windsor Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -114,12 +114,4 @@ export default function WindsorParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Serving Windsor & Essex County
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+            Licensed by the Law Society of Ontario 

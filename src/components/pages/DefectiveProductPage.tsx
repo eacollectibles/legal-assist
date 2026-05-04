@@ -82,7 +82,7 @@ export default function DefectiveProductPage() {
                 <li><span className="font-bold">2. Escalate to management/corporate:</span> If frontline staff refuse, go higher.</li>
                 <li><span className="font-bold">3. Credit card dispute:</span> If paid by card, file chargeback for defective merchandise.</li>
                 <li><span className="font-bold">4. Consumer protection complaint:</span> Ontario Ministry of Government and Consumer Services.</li>
-                <li><span className="font-bold">5. Small Claims Court:</span> For claims up to $35,000 including damages.</li>
+                <li><span className="font-bold">5. Small Claims Court:</span> For claims up to $50,000 including damages.</li>
               </ol>
             </div>
 

@@ -3699,7 +3699,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/small-claims' }, { name: 'Small Claims Court Forms', url: '/resources/forms/small-claims' }],
     faqs: [
       { question: 'How do I file a Small Claims Court claim in Ontario?', answer: 'File a Plaintiff\'s Claim (Form 7A) at the Small Claims Court office nearest to where the defendant lives or where the dispute occurred. You can also file online through Ontario\'s e-filing portal. The filing fee is $108.00 for infrequent claimants.' },
-      { question: 'What is the maximum amount for Small Claims Court in Ontario?', answer: 'As of October 2025, the monetary limit for Small Claims Court in Ontario is $50,000 (previously $35,000). This includes claims for money owed, property damage, and return of personal property.' },
+      { question: 'What is the maximum amount for Small Claims Court in Ontario?', answer: 'As of October 2025, the monetary limit for Small Claims Court in Ontario is $50,000 (previously $50,000). This includes claims for money owed, property damage, and return of personal property.' },
       { question: 'How much does it cost to file in Small Claims Court?', answer: 'Key fees: Plaintiff\'s Claim filing is $108, Defence is $73, Notice of Motion is $127, requesting a trial date is $290, and most enforcement actions are $55. Frequent claimants (10+ claims/year) pay $218 to file a claim.' },
       { question: 'Can a paralegal represent me in Small Claims Court?', answer: 'Yes, licensed paralegals can represent you in Small Claims Court for claims up to $50,000. They can prepare your forms, file your claim, negotiate settlements, and represent you at trial.' }
     ]
@@ -5187,12 +5187,12 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/services/airline-disputes': {
     title: 'Airline Dispute Claims Ontario | Flight Compensation | LegalAssist',
-    description: 'Fight airline disputes in Ontario Small Claims Court. Compensation for cancelled flights, lost baggage, denied boarding, and booking issues up to $35,000.',
+    description: 'Fight airline disputes in Ontario Small Claims Court. Compensation for cancelled flights, lost baggage, denied boarding, and booking issues up to $50,000.',
     keywords: 'airline dispute ontario, flight compensation, cancelled flight claim, lost baggage compensation, airline small claims',
     schema: { type: 'LegalService', name: 'Airline Dispute Claims', areaServed: ['London', 'Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Airline Disputes', url: '/services/airline-disputes' }],
     faqs: [
-      { question: 'Can I sue an airline in Small Claims Court?', answer: 'Yes, you can file a claim against airlines for cancelled flights, lost baggage, denied boarding, and other issues up to $35,000 in Ontario Small Claims Court.' },
+      { question: 'Can I sue an airline in Small Claims Court?', answer: 'Yes, you can file a claim against airlines for cancelled flights, lost baggage, denied boarding, and other issues up to $50,000 in Ontario Small Claims Court.' },
       { question: 'What compensation can I get for a cancelled flight?', answer: 'Depending on circumstances, you may be entitled to rebooking, refund, compensation for expenses, and additional damages under Canadian air passenger protection.' },
       { question: 'How long do I have to file an airline complaint?', answer: 'Time limits vary, but generally you should file within 2 years. Contact us promptly to preserve your claim.' },
       { question: 'Do you handle Air Passenger Protection claims?', answer: 'Yes, we handle claims under the Canadian Transportation Agency Air Passenger Protection Regulations.' }
@@ -5343,14 +5343,14 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/resources/forms/small-claims': {
     title: 'Ontario Small Claims Court Forms | Filing Guide | LegalAssist',
-    description: 'Download Ontario Small Claims Court forms. Complete directory of plaintiff and defendant forms, filing instructions, and court locations for claims up to $35,000.',
+    description: 'Download Ontario Small Claims Court forms. Complete directory of plaintiff and defendant forms, filing instructions, and court locations for claims up to $50,000.',
     keywords: 'small claims court forms ontario, plaintiff claim form, defence form, small claims filing, court forms download',
     schema: { type: 'LegalService', name: 'Small Claims Court Forms', areaServed: ['Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Small Claims Forms', url: '/resources/forms/small-claims' }],
     faqs: [
       { question: 'What forms do I need to file a Small Claims Court claim?', answer: 'You need a Plaintiff\'s Claim (Form 7A) to start a lawsuit. Additional forms may be needed depending on your case.' },
       { question: 'How much does it cost to file in Small Claims Court?', answer: 'Filing fees depend on whether you file electronically or in person. Current fees range from approximately $102 to $249.' },
-      { question: 'What is the Small Claims Court limit in Ontario?', answer: 'The monetary limit for Small Claims Court in Ontario is $35,000 (excluding interest and costs).' },
+      { question: 'What is the Small Claims Court limit in Ontario?', answer: 'The monetary limit for Small Claims Court in Ontario is $50,000 (excluding interest and costs).' },
       { question: 'How do I serve court documents?', answer: 'Documents can be served by personal service, courier, registered mail, or in some cases by email. Specific rules apply to each method.' }
     ]
   },
@@ -6505,3 +6505,4 @@ export function generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[], baseUrl:
 
 // Export total count for reference
 export const totalConfiguredPages = Object.keys(seoConfig).length;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

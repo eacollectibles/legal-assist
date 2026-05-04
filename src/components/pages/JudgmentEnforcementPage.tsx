@@ -128,7 +128,7 @@ export default function JudgmentEnforcementPage() {
 
             <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg">
               <h4 className="font-bold text-yellow-800 mb-2">The Honest Reality</h4>
-              <p className="text-yellow-900 text-sm">Some people are genuinely "judgment proof"—no job, no assets, no property. You can have a $35,000 judgment and collect $0 if there's nothing to collect. I assess collectability before taking enforcement steps.</p>
+              <p className="text-yellow-900 text-sm">Some people are genuinely "judgment proof"—no job, no assets, no property. You can have a $50,000 judgment and collect $0 if there's nothing to collect. I assess collectability before taking enforcement steps.</p>
             </div>
           </div>
         </div>
@@ -162,3 +162,4 @@ export default function JudgmentEnforcementPage() {
     </>
   );
 }
+                                        

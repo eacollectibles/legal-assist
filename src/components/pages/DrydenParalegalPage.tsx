@@ -42,7 +42,7 @@ export default function DrydenParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Highway 17 violations, speeding tickets, and commercial vehicle infractions. Licensed suspension and careless driving defence in Dryden.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection matters, contract breaches, and damage claims up to $35,000. Dedicated representation at Dryden Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection matters, contract breaches, and damage claims up to $50,000. Dedicated representation at Dryden Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction hearings, rent disputes, and maintenance claim defence. Virtual and in-person LTB representation for Dryden residents.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law infractions, trespass prosecution defence, and regulatory violations. Strong advocacy at Dryden Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (

@@ -44,7 +44,7 @@ export default function PetawawaParalegalPage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {[
               { icon: Car, title: 'Traffic Ticket Defence', desc: 'Speeding tickets on Highway 17, Highway 29, and Petawawa city streets. Careless driving, stunt driving, and licence suspensions.', link: '/services/traffic-tickets' },
-              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $35,000. We represent clients at Pembroke Small Claims Court.', link: '/services/small-claims' },
+              { icon: Scale, title: 'Small Claims Court', desc: 'Debt collection, contract disputes, property damage claims up to $50,000. We represent clients at Pembroke Small Claims Court.', link: '/services/small-claims' },
               { icon: Home, title: 'Landlord & Tenant Board', desc: 'Eviction defence, rent disputes, maintenance issues. Representation at LTB hearings for Renfrew County properties.', link: '/services/landlord-tenant' },
               { icon: Gavel, title: 'Provincial Offences', desc: 'By-law violations, trespass charges, regulatory offences. Defence at Pembroke Provincial Offences Court.', link: '/services/provincial-offences' },
             ].map((service, index) => (
@@ -152,12 +152,4 @@ export default function PetawawaParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <p className="font-paragraph text-sm text-foreground/60">
             <Shield className="w-4 h-4 inline mr-1" />
-            Licensed by the Law Society of Ontario | Serving Petawawa & Renfrew County
-          </p>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
+            Lice

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function ContractDisputesPage() {
   const authorityItems = [
-    { title: 'Contract Expertise', description: 'I help with contracts for services, goods, rentals, and more. Claims up to $35,000 in Small Claims Court.' },
+    { title: 'Contract Expertise', description: 'I help with contracts for services, goods, rentals, and more. Claims up to $50,000 in Small Claims Court.' },
     { title: 'Breach Analysis', description: 'I identify contract breaches, assess damages, and build compelling cases for recovery.' },
     { title: 'Efficient Process', description: 'Small Claims Court is designed to be accessible. I handle the legal work while keeping costs reasonable.' }
   ];
@@ -18,7 +18,7 @@ export default function ContractDisputesPage() {
   ];
 
   const reassuranceItems = [
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $35,000', description: 'Small Claims Court handles substantial amounts.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Up to $50,000', description: 'Small Claims Court handles substantial amounts.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Written Contracts Not Required', description: 'Oral agreements can be enforced.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Cost-Effective', description: 'Lower legal costs than Superior Court.' }
   ];
@@ -34,8 +34,8 @@ export default function ContractDisputesPage() {
 
   return (
     <>
-      <SEO title="Contract Dispute Paralegal Ontario | Small Claims Breach of Contract" description="Licensed paralegal for contract disputes in Ontario Small Claims Court. Breach of contract, damages recovery, up to $35,000. Free consultation." canonical="https://www.legalassist.london/services/contract-disputes" />
-      <ServicePageLayout seoTitle="Contract Disputes | Small Claims Ontario" seoDescription="Contract dispute help in Ontario Small Claims Court." canonical="https://www.legalassist.london/services/contract-disputes" problemHeadline="Contract Disputes in Small Claims Court" problemDescription="Someone didn't hold up their end of a deal? Whether it's services not delivered, payment not made, or work done poorly, I help recover what you're owed—up to $35,000." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Contract disputes" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
+      <SEO title="Contract Dispute Paralegal Ontario | Small Claims Breach of Contract" description="Licensed paralegal for contract disputes in Ontario Small Claims Court. Breach of contract, damages recovery, up to $50,000. Free consultation." canonical="https://www.legalassist.london/services/contract-disputes" />
+      <ServicePageLayout seoTitle="Contract Disputes | Small Claims Ontario" seoDescription="Contract dispute help in Ontario Small Claims Court." canonical="https://www.legalassist.london/services/contract-disputes" problemHeadline="Contract Disputes in Small Claims Court" problemDescription="Someone didn't hold up their end of a deal? Whether it's services not delivered, payment not made, or work done poorly, I help recover what you're owed—up to $50,000." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Contract disputes" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
@@ -146,3 +146,4 @@ export default function ContractDisputesPage() {
     </>
   );
 }
+    

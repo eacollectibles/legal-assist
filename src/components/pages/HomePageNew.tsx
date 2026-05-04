@@ -62,7 +62,7 @@ const services = [
   {
     icon: Gavel,
     title: 'Small Claims Court',
-    description: 'Pursue or defend claims up to $35,000 with experienced representation that protects your interests.',
+    description: 'Pursue or defend claims up to $50,000 with experienced representation that protects your interests.',
     link: '/services/small-claims-court',
   },
   {
@@ -95,7 +95,7 @@ const faqs = [
   },
   {
     q: 'Do I need a lawyer for Small Claims Court?',
-    a: 'In Ontario, you do not need a lawyer for Small Claims Court. Licensed paralegals are authorized to represent you in claims up to $35,000. Many clients prefer paralegal representation because it offers professional advocacy at a lower cost.',
+    a: 'In Ontario, you do not need a lawyer for Small Claims Court. Licensed paralegals are authorized to represent you in claims up to $50,000. Many clients prefer paralegal representation because it offers professional advocacy at a lower cost.',
   },
   {
     q: 'Can a paralegal represent me at the Landlord and Tenant Board?',
@@ -540,3 +540,4 @@ export default function HomePageNew() {
     </div>
   );
 }
+                                                                                                                                           

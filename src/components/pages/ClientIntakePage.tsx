@@ -899,7 +899,7 @@ export default function ClientIntakePage() {
                               <div className="flex-1">
                                 <h4 className="font-heading font-bold text-foreground mb-1">Small Claims Court</h4>
                                 <p className="font-paragraph text-sm text-foreground/60">
-                                  Debt collection, contract disputes, property damage, consumer complaints, and claims up to $35,000.
+                                  Debt collection, contract disputes, property damage, consumer complaints, and claims up to $50,000.
                                 </p>
                               </div>
                               {selectedServiceType === 'small_claims' && (
@@ -1946,58 +1946,4 @@ export default function ClientIntakePage() {
                           src="https://cal.com/jeanfrancois-demers/30min"
                           frameBorder="0"
                           style={{ width: '100%', height: '600px', border: 'none' }}
-                          title="Book a consultation"
-                          allow="camera; microphone"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Navigation Buttons */}
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-foreground/10">
-                {/* Skip for Now option removed */}
-
-                <div className="flex gap-3 w-full sm:w-auto order-1 sm:order-2">
-                  {currentSection > 0 && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleBack}
-                      className="flex-1 sm:flex-none"
-                    >
-                      <ChevronLeft className="w-4 h-4 mr-2" />
-                      Back
-                    </Button>
-                  )}
-                  {/* Save & Continue — always shown (conflicts are flagged, never blocked) */}
-                  <Button
-                    type="button"
-                    onClick={handleNext}
-                    disabled={isLoading}
-                    className="flex-1 sm:flex-none"
-                  >
-                    {currentSection === sections.length - 1 ? (
-                      <>
-                        {isLoading ? 'Submitting...' : 'Complete'}
-                        <Check className="w-4 h-4 ml-2" />
-                      </>
-                    ) : (
-                      <>
-                        Save & Continue
-                        <ChevronRight className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-}
+                          title=
