@@ -6371,7 +6371,7 @@ function SectionContingencyPlan({ file, editing, editValues, onChange }: Section
         { key: 'adminEmail', label: 'Email Address', type: 'text' as const },
         { key: 'adminConsent', label: 'Written Consent Obtained', type: 'select' as const, options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }, { value: 'pending', label: 'Pending' }] },
       ],
-      defaults: { adminName: 'Candice Fogarty', adminLicense: 'P12345', adminPhone: '519-555-0102', adminEmail: 'candice@legalassist.london', adminConsent: 'yes' },
+      defaults: { adminName: 'Candice Fogarty', adminLicense: 'P21479', adminPhone: '519-555-0102', adminEmail: 'candice@legalassist.london', adminConsent: 'yes' },
     },
     {
       id: 'alternateAdmin',
