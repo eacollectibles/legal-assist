@@ -25,7 +25,7 @@ export default function CriminalMattersPage() {
                 Criminal Matters: Summary Conviction Offences
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Licensed paralegal representation for summary conviction offences in Ontario. Our licensed paralegals provide skilled defense for criminal charges within our scope of practice, helping you navigate the criminal justice system with confidence.
+                Licensed paralegal representation for summary conviction offences in the Ontario Court of Justice. We act on charges within our authorized scope of practice and refer matters that require a lawyer (indictable charges, jury trials, Superior Court matters) to defence counsel.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
@@ -94,7 +94,7 @@ export default function CriminalMattersPage() {
               <p className="font-paragraph text-foreground/80">Resolution vs. Indictable Offences</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Expert</div>
+              <div className="text-4xl font-bold text-primary mb-2">Licensed</div>
               <p className="font-paragraph text-foreground/80">Paralegal Representation Available</p>
             </div>
           </div>
@@ -104,34 +104,97 @@ export default function CriminalMattersPage() {
       {/* Types of Summary Conviction Offences */}
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-4xl font-bold text-foreground mb-12">
-            Types of Summary Conviction Offences We Represent
+          <h2 className="font-heading text-4xl font-bold text-foreground mb-4">
+            Summary Conviction Offences We May Represent
           </h2>
+          <p className="font-paragraph text-base text-foreground/70 mb-6 max-w-4xl">
+            Licensed Ontario paralegals are authorized under LSO By-Law 4 to act on
+            <strong> summary conviction matters in the Ontario Court of Justice</strong>. Many
+            of the offences listed below are <em>hybrid</em> &mdash; the Crown can elect to
+            proceed by indictment or summarily. We can only represent you if the Crown
+            elects to proceed summarily and the matter stays in the OCJ.
+          </p>
+
+          {/* Crown-election disclaimer — LSO By-Law 4 / s.802.1 Criminal Code */}
+          <div className="rounded-xl border-2 border-amber-300 bg-amber-50 p-5 md:p-6 mb-10 max-w-4xl">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-6 h-6 text-amber-700 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-paragraph font-semibold text-amber-900 mb-2">
+                  Important: Crown election determines whether we can act
+                </p>
+                <p className="font-paragraph text-sm md:text-base text-amber-900/90 leading-relaxed mb-2">
+                  Many of the categories below (assault, theft, mischief, fraud-under-$5,000,
+                  impaired/dangerous operation, failure to remain) are <strong>hybrid offences</strong>.
+                  Until the Crown formally elects to proceed summarily and the matter remains
+                  in the Ontario Court of Justice, a paralegal cannot represent you on it.
+                </p>
+                <p className="font-paragraph text-sm md:text-base text-amber-900/90 leading-relaxed">
+                  If the Crown elects to proceed by indictment &mdash; or you face a charge that
+                  is purely indictable (murder, robbery, sexual assault, aggravated assault,
+                  break and enter of a dwelling, etc.) &mdash; you need a <strong>lawyer</strong>.
+                  We&rsquo;ll tell you that honestly at first meeting and refer you to defence
+                  counsel rather than take on a matter we can&rsquo;t finish.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 title: 'Assault & Violence Offences',
-                items: ['Simple assault', 'Assault with weapon', 'Threatening behaviour', 'Harassment and stalking']
+                items: [
+                  'Simple assault (s.266) — hybrid; only if Crown elects summary',
+                  'Assault with weapon (s.267) — hybrid; usually indictable, paralegal scope rare',
+                  'Threatening behaviour (s.264.1) — hybrid; only if Crown elects summary',
+                  'Criminal harassment (s.264) — hybrid; only if Crown elects summary',
+                ]
               },
               {
                 title: 'Property Offences',
-                items: ['Theft under $5,000', 'Mischief/Vandalism', 'Trespassing', 'Possession of stolen property']
+                items: [
+                  'Theft under $5,000 (s.334(b)) — hybrid; only if Crown elects summary',
+                  'Mischief under $5,000 (s.430(4)) — hybrid; only if Crown elects summary',
+                  'Trespassing at night (s.177) — summary',
+                  'Possession of stolen property under $5,000 — hybrid; only if Crown elects summary',
+                ]
               },
               {
-                title: 'Driving Offences',
-                items: ['Impaired operation (summary)', 'Driving with suspended license', 'Failure to remain at accident scene', 'Dangerous operation of motor vehicle']
+                title: 'Driving Offences (Criminal Code)',
+                items: [
+                  'Impaired operation (s.320.14) — hybrid; only if Crown elects summary',
+                  'Driving while disqualified (s.320.18) — hybrid; only if Crown elects summary',
+                  'Failure to stop at accident (s.320.16) — hybrid; only if Crown elects summary',
+                  'Dangerous operation (s.320.13) — hybrid; only if Crown elects summary',
+                ]
               },
               {
                 title: 'Public Order Offences',
-                items: ['Disorderly conduct', 'Causing disturbance', 'Failure to comply with court orders', 'Breach of recognizance']
+                items: [
+                  'Causing disturbance (s.175) — summary',
+                  'Failure to comply with release order (s.145) — hybrid; only if Crown elects summary',
+                  'Breach of probation (s.733.1) — hybrid; only if Crown elects summary',
+                  'Disturbing religious worship (s.176) — hybrid; only if Crown elects summary',
+                ]
               },
               {
                 title: 'Fraud & Dishonesty',
-                items: ['Fraud under $5,000', 'Obtaining credit by false pretense', 'Uttering forged documents', 'False statements']
+                items: [
+                  'Fraud under $5,000 (s.380(1)(b)) — hybrid; only if Crown elects summary',
+                  'False pretences under $5,000 (s.362) — hybrid; only if Crown elects summary',
+                  'Uttering forged documents (s.368) — hybrid; only if Crown elects summary',
+                  'Personation (s.403) — hybrid; only if Crown elects summary',
+                ]
               },
               {
                 title: 'Other Common Offences',
-                items: ['Possession of cannabis (summary)', 'Failure to appear in court', 'Resisting arrest', 'Obstruction of justice']
+                items: [
+                  'Possession of cannabis over personal limit (Cannabis Act) — generally summary',
+                  'Failure to appear (s.145(4)) — hybrid; only if Crown elects summary',
+                  'Resisting peace officer (s.129) — hybrid; only if Crown elects summary',
+                  'Obstructing peace officer (s.129) — hybrid; only if Crown elects summary',
+                ]
               }
             ].map((category, idx) => (
               <div key={idx} className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
@@ -414,7 +477,7 @@ export default function CriminalMattersPage() {
             Facing Criminal Charges?
           </h2>
           <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-            Don't face the criminal justice system alone. Our experienced paralegals are here to protect your rights and fight for the best possible outcome in your case.
+            Don&rsquo;t face the criminal justice system alone. Our licensed paralegals are here to advocate for your interests within our scope of practice and refer you to defence counsel if your matter falls outside it.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/booking">

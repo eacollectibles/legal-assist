@@ -160,7 +160,7 @@ export default function AboutPage() {
                 </h3>
               </div>
               <p className="font-paragraph text-foreground/80 mb-4">
-                Whether you're dealing with a traffic ticket, provincial offence, or summary conviction criminal charge, we provide expert defense representation. We help you understand the charges, navigate the court system, and work toward the best possible outcome.
+                Whether you&rsquo;re dealing with a traffic ticket, provincial offence, or summary-conviction criminal charge, we provide licensed paralegal defence representation within our scope of practice. We help you understand the charges, navigate the court system, and pursue your matter diligently.
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-3">

@@ -414,9 +414,17 @@ export default function Header() {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <nav 
+            <nav
               id="mobile-menu"
-              className="lg:hidden mobile-menu-enter"
+              // Scrollable mobile menu container.
+              // The body has `position:fixed` while the menu is open (so the
+              // page underneath doesn't scroll), which means the menu itself
+              // must own its own scroll. We cap height to the viewport minus
+              // the header (~5rem) and enable touch-friendly y-scroll. Without
+              // this, the Resources accordion's items can fall below the fold
+              // and become unreachable on small phones.
+              className="lg:hidden mobile-menu-enter overflow-y-auto overscroll-contain"
+              style={{ maxHeight: 'calc(100vh - 5rem)', WebkitOverflowScrolling: 'touch' }}
               aria-label="Mobile navigation"
             >
               <div className="mt-4 pb-4 flex flex-col gap-1 border-t border-secondary/10 pt-4">

@@ -205,7 +205,7 @@ export default function MediationServicesPage() {
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-heading text-lg font-bold text-foreground mb-2">Cost-Effective</h3>
-                    <p className="font-paragraph text-foreground/80">Mediation typically costs 50-70% less than litigation, with faster resolution and lower legal fees.</p>
+                    <p className="font-paragraph text-foreground/80">Mediation is often less costly and faster than litigation, depending on the matter, with reduced legal-fee exposure.</p>
                   </div>
                 </div>
               </div>

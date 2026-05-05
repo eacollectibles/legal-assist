@@ -149,7 +149,7 @@ export default function HomePageNew() {
           <div className="max-w-xl">
             <span className="text-primary font-paragraph text-sm tracking-widest uppercase mb-6 block">Licensed Ontario Paralegals · LSO #P22020 &amp; #P21479</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-heading leading-tight mb-8">
-              Legal help<br/><span className="text-primary">without</span> the<br/>lawyer price tag.
+              Licensed paralegal<br/>representation,<br/><span className="text-primary">on your side.</span>
             </h2>
             <p className="text-white/70 font-paragraph text-lg mb-10 max-w-md">
               Professional representation for traffic tickets, landlord-tenant disputes, small claims court, and more throughout Ontario.

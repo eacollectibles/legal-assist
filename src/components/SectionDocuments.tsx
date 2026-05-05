@@ -17,6 +17,10 @@ import {
   AlertCircle, CheckCircle
 } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
+// @wix/media is the proper Wix path for files larger than the CMS field
+// limit (256 KB). It uploads to Wix's CDN and returns a permanent URL.
+// Imported lazily inside the upload handler so older builds without the
+// package still compile.
 
 // ============================================================
 // TYPES
@@ -175,26 +179,216 @@ export default function SectionDocuments({
   };
 
   // ── SAVE UPLOAD ──────────────────────────────────────────
+  //
+  // The Wix CMS stores the file as a base64 data URL inside a text field
+  // (`fileUrl`). Wix text fields cap at 256 KB; once base64 inflation
+  // (~33%) is factored in, that means an effective per-file ceiling
+  // around 180 KB raw. Anything larger is rejected by the CMS with the
+  // generic error `WDE0009: Document is too large`.
+  //
+  // Until the upload path is migrated to the Wix Media API, this handler:
+  //   1. Validates the file size up-front so we fail fast with a clear
+  //      message instead of a cryptic CMS error.
+  //   2. Auto-downscales images that are over the limit so they squeeze
+  //      under it (90% JPEG, 1600 px on the long edge).
+  //   3. For non-image files that are too big, points the user to the
+  //      "Add link" option (URL upload) so they can host the document
+  //      on Google Drive / OneDrive / etc. and just file the link here.
+  //
+  // Tunables — keep WIX_FIELD_LIMIT slightly under the real 256 KB ceiling
+  // because the CMS layer adds its own JSON overhead.
+  const WIX_FIELD_LIMIT = 240 * 1024;            // ~240 KB after encoding
+  const RAW_FILE_LIMIT  = Math.floor(WIX_FIELD_LIMIT * 0.74);  // ~178 KB raw
+
+  /** Compress an image File to a JPEG data URL under target bytes. */
+  const compressImage = async (file: File, targetBytes: number): Promise<string> => {
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result as string);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = reject;
+      i.src = dataUrl;
+    });
+    // Iteratively shrink dimensions + quality until under target.
+    let maxEdge = 1600;
+    let quality = 0.85;
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const scale = Math.min(1, maxEdge / Math.max(img.width, img.height));
+      const w = Math.max(1, Math.round(img.width * scale));
+      const h = Math.max(1, Math.round(img.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas not supported.');
+      ctx.drawImage(img, 0, 0, w, h);
+      const out = canvas.toDataURL('image/jpeg', quality);
+      // Approximate decoded size of the base64 payload
+      const approxBytes = Math.ceil(out.length * 0.75);
+      if (approxBytes <= targetBytes) return out;
+      // Try again with smaller dimensions / lower quality
+      maxEdge = Math.round(maxEdge * 0.8);
+      quality = Math.max(0.5, quality - 0.1);
+    }
+    throw new Error('Image is still too large after compression. Please pick a smaller picture or use the Add Link option.');
+  };
+
+  /**
+   * Try to upload via Wix Media (which handles arbitrarily large files
+   * by storing them on Wix's CDN). Returns a permanent URL on success
+   * or null if the SDK is unavailable / rejects the upload — caller
+   * falls back to the base64 path for small files.
+   */
+  const tryWixMediaUpload = async (file: File): Promise<{ url: string; mediaId?: string } | null> => {
+    try {
+      const wixMedia: any = await import('@wix/media').catch(() => null);
+      if (!wixMedia) return null;
+
+      // Wix Media's typical browser-side upload pattern is a two-step:
+      // 1) Generate a presigned upload URL via the SDK
+      // 2) PUT/POST the file binary to that URL
+      // The exact symbol varies across SDK versions; we probe a few.
+      const filesApi =
+        wixMedia.files ||
+        wixMedia.default?.files ||
+        wixMedia;
+
+      const generate =
+        filesApi?.generateFileUploadUrl ||
+        filesApi?.uploadFile ||
+        null;
+
+      if (typeof generate !== 'function') return null;
+
+      // First-shot: direct upload (newer SDK versions)
+      if (filesApi.uploadFile) {
+        const result = await filesApi.uploadFile({
+          mimeType: file.type || 'application/octet-stream',
+          fileName: file.name,
+          file,
+        });
+        const url = result?.file?.url || result?.fileUrl || result?.url;
+        const mediaId = result?.file?.id || result?._id || result?.id;
+        if (url) return { url, mediaId };
+      }
+
+      // Fallback: presigned-URL flow
+      if (filesApi.generateFileUploadUrl) {
+        const presigned = await filesApi.generateFileUploadUrl({
+          mimeType: file.type || 'application/octet-stream',
+          fileName: file.name,
+        });
+        const uploadUrl = presigned?.uploadUrl || presigned?.url;
+        if (!uploadUrl) return null;
+
+        const fd = new FormData();
+        fd.append('file', file);
+        const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
+        if (!resp.ok) return null;
+        const data = await resp.json().catch(() => ({}));
+        const url = data?.file?.url || data?.fileUrl || data?.url;
+        const mediaId = data?.file?.id || data?._id || data?.id;
+        if (url) return { url, mediaId };
+      }
+
+      return null;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn('Wix Media upload failed, will fall back to inline base64:', err);
+      return null;
+    }
+  };
+
   const handleSaveUpload = async () => {
     if (!uploadFile) return;
     setSaving(true);
+    setSaveMsg(null);
     try {
-      // Convert file to base64 data URL for storage
-      // In production with Wix Media, you'd use the Wix Media API instead
-      const reader = new FileReader();
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(uploadFile);
-      });
+      const isImage = (uploadFile.type || '').startsWith('image/');
+
+      // ---- 1) Try Wix Media first (no size limit). ----
+      // This handles the realistic case: 1-50 MB PDFs, scans, photos.
+      const media = await tryWixMediaUpload(uploadFile);
+      if (media?.url) {
+        const payload = {
+          _id: crypto.randomUUID(),
+          documentName: uploadFile.name,
+          fileUrl: media.url,
+          uploadDate: new Date().toISOString(),
+          fileType: uploadFile.type || uploadFile.name.split('.').pop() || 'unknown',
+          fileSize: uploadFile.size,
+          notes: uploadNotes.trim(),
+          documentCategory: categoryKey,
+          clientId,
+          // Stash the media id so we could later delete the file from Wix
+          // Media when the document row is removed (best-effort).
+          ...(media.mediaId ? { wixMediaId: media.mediaId } : {}),
+        };
+        await BaseCrudService.create(COLLECTION, payload);
+        setDocuments(prev => [{
+          ...payload,
+          source: 'upload' as const,
+        }, ...prev]);
+        resetForm();
+        setSaveMsg({ type: 'success', text: `"${uploadFile.name}" uploaded successfully.` });
+        return;
+      }
+
+      // ---- 2) Fall back to inline base64 (for small files only). ----
+      // Wix Media wasn't available or rejected the upload; we use the
+      // legacy path with the same size guards as before.
+      let dataUrl: string;
+      let storedSize = uploadFile.size;
+      let storedType = uploadFile.type || uploadFile.name.split('.').pop() || 'unknown';
+      let storedName = uploadFile.name;
+
+      if (uploadFile.size > RAW_FILE_LIMIT) {
+        if (isImage) {
+          // eslint-disable-next-line no-console
+          console.info(`Image exceeds ${RAW_FILE_LIMIT} bytes — auto-compressing`);
+          dataUrl = await compressImage(uploadFile, RAW_FILE_LIMIT);
+          storedSize = Math.ceil(dataUrl.length * 0.75);
+          storedType = 'image/jpeg';
+          if (!/\.jpe?g$/i.test(storedName)) {
+            storedName = storedName.replace(/\.[^.]+$/, '') + '_compressed.jpg';
+          }
+        } else {
+          throw new Error(
+            `This file is ${(uploadFile.size / 1024 / 1024).toFixed(2)} MB. ` +
+            `Wix Media upload is unavailable in this environment, and the ` +
+            `inline-storage fallback is limited to ~${Math.floor(RAW_FILE_LIMIT / 1024)} KB. ` +
+            `Use the "Add Link" option above and host the document on Google ` +
+            `Drive / OneDrive / Dropbox, then paste the share link here.`
+          );
+        }
+      } else {
+        dataUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(uploadFile);
+        });
+      }
+
+      if (dataUrl.length > WIX_FIELD_LIMIT) {
+        throw new Error(
+          `Encoded file is ${(dataUrl.length / 1024).toFixed(0)} KB which exceeds ` +
+          `the ${Math.floor(WIX_FIELD_LIMIT / 1024)} KB CMS field limit. ` +
+          `Use the Add Link option for this file.`
+        );
+      }
 
       const payload = {
         _id: crypto.randomUUID(),
-        documentName: uploadFile.name,
+        documentName: storedName,
         fileUrl: dataUrl,
         uploadDate: new Date().toISOString(),
-        fileType: uploadFile.type || uploadFile.name.split('.').pop() || 'unknown',
-        fileSize: uploadFile.size,
+        fileType: storedType,
+        fileSize: storedSize,
         notes: uploadNotes.trim(),
         documentCategory: categoryKey,
         clientId,
@@ -205,10 +399,15 @@ export default function SectionDocuments({
         source: 'upload' as const,
       }, ...prev]);
       resetForm();
-      setSaveMsg({ type: 'success', text: `"${uploadFile.name}" uploaded successfully.` });
+      setSaveMsg({ type: 'success', text: `"${storedName}" uploaded successfully.` });
     } catch (err: any) {
+      // eslint-disable-next-line no-console
       console.error('Error uploading document:', err);
-      setSaveMsg({ type: 'error', text: `Upload failed: ${err?.message || 'Unknown error'}` });
+      const raw = err?.message || 'Unknown error';
+      const friendly = /WDE0009|too large|exceeds maximum/i.test(raw)
+        ? `Upload failed: file is too large for direct upload. Try compressing the file or use the "Add Link" option above and host it on Google Drive / OneDrive / Dropbox.`
+        : `Upload failed: ${raw}`;
+      setSaveMsg({ type: 'error', text: friendly });
     } finally {
       setSaving(false);
     }
@@ -327,6 +526,7 @@ export default function SectionDocuments({
                     <Upload className="w-5 h-5 text-gray-400 mx-auto mb-1" />
                     <p className="text-xs text-gray-500">Click to select a file</p>
                     <p className="text-[10px] text-gray-400 mt-0.5">PDF, images, Word, Excel, text</p>
+                    <p className="text-[10px] text-gray-400 mt-0.5">If upload fails, try <strong>Add Link</strong> with a Google Drive / OneDrive URL.</p>
                   </div>
                 )}
               </div>

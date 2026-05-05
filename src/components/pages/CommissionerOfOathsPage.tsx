@@ -33,7 +33,7 @@ export default function CommissionerOfOathsPage() {
                 Commissioner of Oaths
               </h1>
               <p className="font-paragraph text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-                Official administration of oaths and statutory declarations for legal proceedings with certified expertise and legal compliance.
+                Administration of oaths and witnessing of statutory declarations for Ontario legal proceedings &mdash; provided by Licensed Paralegals (LSO #P22020 and #P21479) appointed Commissioners for Taking Affidavits.
               </p>
             </motion.div>
           </div>

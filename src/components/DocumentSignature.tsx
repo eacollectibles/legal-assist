@@ -36,30 +36,92 @@ export default function DocumentSignature({
     fetchIPAddress();
   }, []);
 
-  // Dynamic canvas sizing for better mobile experience
+  // Dynamic canvas sizing for better mobile experience.
+  //
+  // The canvas is rendered with `width="700" height="200"` so the internal
+  // bitmap matches a desktop default — but the element is styled `w-full`
+  // so the displayed width on a phone may be ~360px. Without resizing, a
+  // touch at displayed-x=180 would land at internal-x=350 (the canvas
+  // middle), the cursor and the drawn ink end up in different places, and
+  // the result looks "messed up". We resize the canvas's internal bitmap
+  // to match its displayed size (× devicePixelRatio for crispness) so 1
+  // displayed pixel = 1 logical drawing pixel.
+  //
+  // The earlier implementation only resized on mount + on window resize.
+  // That misses several real cases:
+  //   1. Modal/dialog opens — the canvas renders at 0×0 first, then gets
+  //      its real size when the dialog finishes its mount transition.
+  //   2. Phone rotated — fires `resize` but on iOS Safari the `getBoundingClientRect`
+  //      reads stale values until after a paint.
+  //   3. Tablet split-screen change — same issue.
+  //
+  // Fix: use a ResizeObserver on the canvas itself, plus a one-shot
+  // post-paint retry, so the bitmap always matches the real displayed size.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
+      // Skip if not yet laid out (modal still mounting)
+      if (rect.width === 0 || rect.height === 0) return;
       const dpr = window.devicePixelRatio || 1;
-      
-      // Set internal resolution to match displayed size * device pixel ratio
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      
-      // Scale context to account for device pixel ratio
+
+      // Stash any existing strokes so we don't wipe the user's ink on resize
       const ctx = canvas.getContext('2d');
+      const oldImage = ctx && (canvas.width > 0 && canvas.height > 0)
+        ? canvas.toDataURL()
+        : null;
+
+      // Set internal resolution to match displayed size × DPR
+      canvas.width  = Math.round(rect.width  * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+
+      // Reset transform and re-apply the DPR scale (resetTransform first
+      // because a previous resize already applied a scale to the context)
       if (ctx) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(dpr, dpr);
+        // Re-stroke style after resize (canvas state is reset on resize)
+        ctx.strokeStyle = '#1F2D5C';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // Restore any prior drawing
+        if (oldImage) {
+          const img = new Image();
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, rect.width, rect.height);
+          };
+          img.src = oldImage;
+        }
       }
     };
 
+    // Initial size
     resizeCanvas();
+
+    // Re-run after the next paint to catch modal-open / iOS-stale cases.
+    const raf = requestAnimationFrame(resizeCanvas);
+
+    // ResizeObserver picks up element-size changes that don't fire `resize`
+    // (modal mount, container reflow, parent layout change).
+    const ro = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(() => resizeCanvas())
+      : null;
+    if (ro) ro.observe(canvas);
+
+    // Window resize for desktop window resize / phone rotation
     window.addEventListener('resize', resizeCanvas);
-    
-    return () => window.removeEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', resizeCanvas);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      if (ro) ro.disconnect();
+      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('orientationchange', resizeCanvas);
+    };
   }, []);
 
   const fetchIPAddress = async () => {
@@ -253,9 +315,21 @@ export default function DocumentSignature({
           <div className="border-2 border-dashed border-primary/40 rounded-lg overflow-hidden bg-white shadow-sm hover:border-primary/60 transition-colors">
             <canvas
               ref={canvasRef}
+              // The width/height attrs are initial values only — the
+              // useEffect above overrides them with the real displayed
+              // size × DPR so 1 touch pixel = 1 drawing pixel.
               width={700}
-              height={200}
-              style={{ touchAction: 'none' }}
+              height={220}
+              // touchAction:none so the browser doesn't try to scroll/zoom
+              // while the user is signing. Min-height keeps the box
+              // usable on phones; aspect-ratio gives a consistent feel
+              // across viewports.
+              style={{
+                touchAction: 'none',
+                minHeight: '180px',
+                aspectRatio: '700 / 220',
+                display: 'block',
+              }}
               className="w-full cursor-crosshair"
               onMouseDown={startDrawing}
               onMouseMove={draw}

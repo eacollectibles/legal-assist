@@ -162,7 +162,7 @@ We offer mediation for matters within paralegal scope:
 • Community and interpersonal conflicts
 • Small Claims Court settlement conferences
 
-Our mediators create a safe, neutral environment where both parties can express their concerns and work toward creative solutions. Mediation typically costs 50-70% less than litigation and resolves in weeks or months rather than years.
+Our mediators create a safe, neutral environment where both parties can express their concerns and work toward creative solutions. Mediation is often less costly and faster than litigation, depending on the matter.
 
 Note: For family law mediation (divorce, custody, support), please consult a family lawyer or certified family mediator. Paralegal scope of practice does not include family law matters unless the paralegal holds a Family Legal Services Provider (FLSP) license.`,
     keyPoints: [
@@ -183,26 +183,25 @@ Note: For family law mediation (divorce, custody, support), please consult a fam
     shortDescription: 'Licensed paralegal representation for summary conviction offences in Ontario.',
     icon: <Shield className="w-8 h-8" />,
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Old_Toronto_City_Hall_Courtroom121.jpg/1200px-Old_Toronto_City_Hall_Courtroom121.jpg',
-    learnMore: `Criminal charges can have serious consequences for your future. Our licensed paralegals provide skilled defense representation for summary conviction offences in Provincial Court, helping you navigate the criminal justice system with confidence.
+    learnMore: `Criminal charges can have serious consequences for your future. Our licensed paralegals provide defence representation for summary conviction offences in the Ontario Court of Justice, within the scope authorized by LSO By-Law 4.
 
-We represent clients charged with:
+We may represent clients on:
 
-• Assault and violence offences
-• Property crimes (theft, mischief)
-• Driving offences (impaired, suspended license)
-• Public order violations
-• Fraud and dishonesty offences
-• Breach of court orders and conditions
+• Assault, threats, and harassment (where Crown elects summary)
+• Property offences such as theft under $5,000 and mischief under $5,000 (where Crown elects summary)
+• Criminal Code driving offences such as impaired/dangerous operation (where Crown elects summary)
+• Public-order offences such as causing disturbance and breach of court orders
+• Fraud-under-$5,000 and similar dishonesty offences (where Crown elects summary)
 
-Our approach includes thorough case assessment, disclosure review, Crown negotiations, and vigorous trial representation when necessary. We work to minimize consequences and achieve the best possible outcome for your situation.
+Our approach includes thorough case assessment, disclosure review, Crown negotiation, and trial representation when appropriate.
 
-IMPORTANT: We can only represent you for summary conviction offences in Provincial Court. For indictable offences or matters in Superior Court, you will need to retain a lawyer.`,
+IMPORTANT: Many of these offences are hybrid. A paralegal can only act if the Crown elects to proceed summarily and the matter remains in the Ontario Court of Justice. For indictable offences, jury trials, or any Superior Court of Justice matter, you must retain a lawyer. We will tell you honestly at the first meeting whether we can act, and refer you to defence counsel if we cannot.`,
     keyPoints: [
-      'Summary conviction offence expertise',
-      'Provincial Court representation',
+      'Summary conviction representation in OCJ',
+      'Disclosure review and case assessment',
       'Crown negotiation and plea advice',
-      'Trial defense representation',
-      'Case assessment and strategy'
+      'Trial representation within paralegal scope',
+      'Honest referral to a lawyer for matters outside scope'
     ],
     costInfo: 'Flexible fee arrangements available. Hourly rates and fixed fees for specific services. Discuss your budget during consultation.',
     timeline: 'Summary conviction cases typically resolve within 3-12 months depending on complexity and court scheduling.',
@@ -210,35 +209,30 @@ IMPORTANT: We can only represent you for summary conviction offences in Provinci
   },
   {
     id: 'notary-public',
-    name: 'Notary Public Services',
-    tribunal: 'Notary Public',
-    shortDescription: 'Professional notarization of documents, affidavits, and statutory declarations.',
+    name: 'Notary Public — What You Need to Know',
+    tribunal: 'Information page',
+    shortDescription: 'Looking for a Notary Public in Ontario? Read this first — paralegals are NOT Notaries Public.',
     icon: <Stamp className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_df17fea496c94fbfa4d9b440d3a97917~mv2.png?id=notary-public-services',
-    learnMore: `A notary public is an official authorized to witness the signing of documents, administer oaths, and certify the authenticity of signatures. Notarization adds a layer of legal credibility to important documents and is often required for international transactions, real estate matters, and legal proceedings.
+    learnMore: `IMPORTANT: Licensed paralegals in Ontario are NOT Notaries Public. We are appointed Commissioners for Taking Affidavits under the Commissioners for Taking Affidavits Act, R.S.O. 1990, c. C.17 — a different role with narrower authority.
 
-Our notary public services include:
+Many people use the phrase "notary public" for any document signing, but in Ontario the two roles are distinct:
 
-• Document notarization and witnessing
-• Affidavit preparation and administration
-• Statutory declaration witnessing
-• Signature verification and certification
-• Document authentication for international use
-• Certified copies of original documents
-• Power of attorney witnessing
-• Loan document notarization
+• A Commissioner of Oaths (which we are) administers oaths and witnesses signatures on Ontario-domestic affidavits and statutory declarations. Use this for affidavits filed with the LTB, Small Claims Court, HRTO, or other Ontario tribunals.
 
-We provide professional, efficient notary services at competitive rates. Whether you need a single document notarized or multiple documents for a transaction, our experienced notary public is available to assist you.`,
+• A Notary Public (typically a lawyer) can do everything a Commissioner can, plus notarize documents — meaning certifying signatures, true copies, and documents for use outside Ontario. You need a Notary Public for international documents, apostilles, certified copies of passports, Powers of Attorney for use abroad, and real estate notarizations.
+
+If your document genuinely needs notarization, we will refer you to a lawyer or another appointed Notary Public — we will not pretend we can do it. Visit our Commissioner of Oaths page if you need an Ontario affidavit or statutory declaration sworn.`,
     keyPoints: [
-      'Document notarization',
-      'Affidavit administration',
-      'Signature verification',
-      'International document authentication',
-      'Quick turnaround service'
+      'Paralegals are NOT Notaries Public in Ontario',
+      'We are Commissioners for Taking Affidavits',
+      'We swear Ontario affidavits and statutory declarations',
+      'For notarization, see a lawyer',
+      'We refer honestly when a matter is outside our scope'
     ],
-    costInfo: 'Affordable per-document notarization fees. Volume discounts available for multiple documents. Rates are competitive and transparent.',
-    timeline: 'Most notarizations completed same-day or within 24 hours. Appointments available for your convenience.',
-    eligibility: 'Open to anyone requiring notarization services. Bring valid government-issued ID and the documents requiring notarization.'
+    costInfo: 'See Commissioner of Oaths services for our oath/affidavit fees. For notarization, contact a lawyer (typical lawyer notary fees vary by document and document complexity).',
+    timeline: 'Same-day Commissioner of Oaths appointments often available. Notarization timelines depend on the lawyer/notary you engage.',
+    eligibility: 'Information for anyone trying to determine whether they need a Commissioner of Oaths or a Notary Public.'
   },
   {
     id: 'commissioner-of-oaths',

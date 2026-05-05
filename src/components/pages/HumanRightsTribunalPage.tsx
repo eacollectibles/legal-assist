@@ -11,7 +11,7 @@ export default function HumanRightsTribunalPage() {
     <div className="min-h-screen bg-background">
       <SEO 
         title="Human Rights Tribunal Paralegal | HRTO Representation | London Ontario"
-        description="Expert Human Rights Tribunal of Ontario representation. Discrimination complaints, workplace harassment & accommodation issues. Licensed paralegal in London, ON."
+        description="Licensed paralegal Human Rights Tribunal of Ontario representation. Discrimination complaints, workplace harassment & accommodation issues. Licensed paralegal in London, ON."
         canonical="https://www.legalassist.london/services/human-rights-tribunal"
       />
       <Header />
@@ -83,7 +83,7 @@ export default function HumanRightsTribunalPage() {
               <p className="font-paragraph text-foreground/80">Filing Fees</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Expert</div>
+              <div className="text-4xl font-bold text-primary mb-2">Licensed</div>
               <p className="font-paragraph text-foreground/80">Tribunal Advocates</p>
             </div>
           </div>
@@ -554,7 +554,7 @@ export default function HumanRightsTribunalPage() {
             Advocate for Your Human Rights
           </h2>
           <p className="font-paragraph text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-            Whether you've experienced discrimination or need to defend against a complaint, our experienced team is here to guide you through the HRTO process with compassion and expertise.
+            Whether you've experienced discrimination or need to defend against a complaint, our experienced team is here to guide you through the HRTO process with care and professionalism.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/booking">

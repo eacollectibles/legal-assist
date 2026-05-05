@@ -79,7 +79,7 @@ export default function EmploymentIssuesPage() {
               <p className="font-paragraph text-foreground/80">Small Claims Court Limit</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Expert</div>
+              <div className="text-4xl font-bold text-primary mb-2">Licensed</div>
               <p className="font-paragraph text-foreground/80">Employment Law Guidance</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
@@ -197,16 +197,16 @@ export default function EmploymentIssuesPage() {
               </h3>
               <div className="space-y-4">
                 {[
-                  'Deep knowledge of Employment Standards Act',
-                  'Understanding of common law employment principles',
-                  'Experience with severance negotiations',
-                  'Skilled negotiators on your behalf',
-                  'Compassionate approach to employment disputes',
-                  'Transparent fee structures',
-                  'Proven track record of successful settlements',
-                  'Access to employment law resources',
-                  'Support throughout the entire process',
-                  'Commitment to protecting your rights'
+                  'Working knowledge of the Employment Standards Act, 2000',
+                  'Familiarity with common-law employment principles relevant to Small Claims matters',
+                  'Experience handling severance and ESA-complaint negotiations within paralegal scope',
+                  'Plain-language guidance through unfamiliar processes',
+                  'Compassionate approach to workplace disputes',
+                  'Transparent fee structures and trust-accounting compliance',
+                  'Experience with employment-related Small Claims and HRTO matters',
+                  'Access to up-to-date employment-law resources',
+                  'Consistent communication throughout the matter',
+                  'Commitment to advocating for your interests within paralegal scope'
                 ].map((item, idx) => (
                   <div key={idx} className="bg-pastellavender/20 rounded-lg p-4 border border-pastellavender/30">
                     <p className="font-paragraph text-foreground/80">{item}</p>

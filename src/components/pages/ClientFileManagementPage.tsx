@@ -428,18 +428,110 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
       const updatedSections = { ...selectedFile.sections, [editingSection]: true };
       const newScore = calcComplianceScore(updatedSections);
 
+      // ---- Split editValues into file-fields vs profile-fields ----
+      // Section B (Client Identification) and others edit fields that live
+      // on the clientprofiles row (address, occupation, dateOfBirth,
+      // phoneNumber, etc.) NOT on the clientfiles row. If we dump every
+      // editValue into both updates, Wix's clientfiles update ignores or
+      // rejects the unknown fields, and the profile update silently fails
+      // because of UUID-mismatch. So we route fields explicitly.
+      const PROFILE_FIELDS = new Set([
+        'firstName', 'lastName', 'preferredName', 'dateOfBirth',
+        'preferredLanguage', 'phoneNumber', 'alternatePhone',
+        'preferredContactMethod', 'bestTimeToContact',
+        'streetAddress', 'unitNumber', 'city', 'state', 'zipCode',
+        'businessAddress', 'businessPhone', 'businessName',
+        'occupation', 'employer', 'emergencyContactName',
+        'emergencyContactPhone', 'emergencyContactRelationship',
+        'thirdPartyName', 'thirdPartyRelationship', 'actingForThirdParty',
+        'orgName', 'orgIncorporationNumber', 'orgNatureOfBusiness',
+        'isOrganization', 'isMinor', 'parentGuardianName',
+        'parentGuardianPhone', 'idType', 'idNumber',
+        'idIssuingAuthority', 'idExpiryDate', 'idVerificationConsent',
+      ]);
+      const FILE_FIELDS = new Set([
+        'fileNumber', 'matterType', 'matterDescription', 'tribunal',
+        'opposingParties', 'fileStatus', 'courtFileNumber',
+        'conflictStatus', 'notes', 'conflictNotes',
+      ]);
+
+      // Helper: coerce date-string inputs to Date so Wix datetime fields
+      // accept them. Pass-through anything else (incl. empty string).
+      const coerce = (k: string, v: any) => {
+        const dateKeys = ['dateOfBirth', 'idExpiryDate', 'dateOpened',
+                          'dateClosed', 'retentionExpiryDate'];
+        if (dateKeys.includes(k) && typeof v === 'string' && v.trim()) {
+          const d = new Date(v);
+          return isNaN(d.getTime()) ? v : d;
+        }
+        return v;
+      };
+
+      const fileUpdates: Record<string, any> = {};
+      const profileUpdates: Record<string, any> = {};
+      Object.entries(editValues).forEach(([k, v]) => {
+        const cv = coerce(k, v);
+        if (PROFILE_FIELDS.has(k)) profileUpdates[k] = cv;
+        else if (FILE_FIELDS.has(k)) fileUpdates[k] = cv;
+        else {
+          // Unknown key — best-effort: try profile first since most
+          // editable fields in the wizard live there.
+          profileUpdates[k] = cv;
+        }
+      });
+
+      // 1) Update the file row (mark section complete + any file-level fields)
       await BaseCrudService.update(CLIENT_FILES_COLLECTION, {
         _id: selectedFile._id,
         [cmsFieldKey]: true,
         complianceScore: newScore,
-        ...editValues,
+        ...fileUpdates,
       } as any);
 
-      // Also update client profile if it exists
-      try {
-        await BaseCrudService.update('clientprofiles', { _id: selectedFile.clientId, ...editValues } as any);
-      } catch {
-        // Client profile may not exist yet — that's okay
+      // 2) Update the client profile — but only if we have a real row id.
+      //    Try by row _id first; fall back to scanning by display clientId.
+      if (Object.keys(profileUpdates).length > 0 && selectedFile.clientId) {
+        let profileRow: any = null;
+        try {
+          profileRow = await BaseCrudService.getById<any>(
+            'clientprofiles', selectedFile.clientId
+          );
+        } catch { /* fall through */ }
+        if (!profileRow) {
+          try {
+            // Pass limit:1000 — default getAll() only returns 50 items,
+            // which silently misses any profile past the first page.
+            const { items } = await BaseCrudService.getAll<any>(
+              'clientprofiles', undefined, { limit: 1000 }
+            );
+            profileRow = items?.find((p: any) =>
+              p.clientId === selectedFile.clientId
+            ) || null;
+          } catch { /* still null */ }
+        }
+
+        if (profileRow?._id) {
+          try {
+            await BaseCrudService.update('clientprofiles', {
+              _id: profileRow._id,
+              ...profileUpdates,
+            } as any);
+          } catch (err: any) {
+            // eslint-disable-next-line no-console
+            console.error('clientprofiles update failed:', err);
+            // Surface the real error so the user knows what happened.
+            throw new Error(
+              `Could not save profile fields: ${err?.message || 'unknown error'}`
+            );
+          }
+        } else {
+          // eslint-disable-next-line no-console
+          console.warn(
+            'No clientprofiles row found for file.clientId =',
+            selectedFile.clientId,
+            '— profile fields not saved'
+          );
+        }
       }
 
       // Mark section as complete in local state
@@ -455,9 +547,14 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
       });
       setEditingSection(null);
       setEditValues({});
-    } catch (error) {
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
       console.error('Error saving section:', error);
-      alert('Failed to save section data. Please try again.');
+      alert(
+        error?.message
+          ? `Failed to save section: ${error.message}`
+          : 'Failed to save section data. Please try again.'
+      );
     } finally {
       setSaving(false);
     }
@@ -1782,7 +1879,18 @@ function SectionClientIdentification({ file, editing, editValues, onChange }: Se
 
   const loadProfile = async () => {
     try {
-      const data = await BaseCrudService.getById<any>('clientprofiles', file.clientId);
+      // Try by row primary key first. If that misses because the file's
+      // clientId is the display label (CL-XXXXXX) rather than the row
+      // _id, fall back to scanning by the clientprofiles.clientId field.
+      // limit:1000 because the default 50-row page silently hides
+      // profiles past page 1.
+      let data = await BaseCrudService.getById<any>('clientprofiles', file.clientId);
+      if (!data) {
+        const { items } = await BaseCrudService.getAll<any>(
+          'clientprofiles', undefined, { limit: 1000 }
+        );
+        data = items?.find((p: any) => p.clientId === file.clientId) || null;
+      }
       setProfile(data);
     } catch (error) {
       console.error('Error loading profile:', error);
@@ -1982,64 +2090,156 @@ function SectionClientVerification({ file, editing, editValues, onChange }: Sect
   const handleSubmitVerification = async () => {
     setSubmitting(true);
     setSubmitError('');
+
+    // Helper: convert "YYYY-MM-DD" form input to a Date the Wix CMS will
+    // accept for datetime fields. Pass-through if already empty/Date.
+    const toDate = (v: unknown): Date | undefined => {
+      if (!v) return undefined;
+      if (v instanceof Date) return v;
+      if (typeof v === 'string' && v.trim()) {
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? undefined : d;
+      }
+      return undefined;
+    };
+
     try {
-      // Save verification data to client profile
-      await BaseCrudService.update('clientprofiles', {
-        _id: file.clientId,
-        idType: formData.idType,
-        idNumber: formData.idNumber,
-        idIssuingAuthority: formData.idIssuingAuthority,
-        idExpiryDate: formData.idExpiryDate,
-        idVerificationConsent: formData.consentGiven,
-        isMinor: formData.isMinor,
-        parentGuardianName: formData.parentGuardianName,
-        parentGuardianPhone: formData.parentGuardianPhone,
-      } as any);
+      if (!file?.clientId) {
+        setSubmitError(
+          'Cannot save verification: this file has no client linked. ' +
+          'Re-open the file from the Files list and try again.'
+        );
+        setSubmitting(false);
+        return;
+      }
 
-      // Create verification record
-      await BaseCrudService.create('clientverification', {
-        clientId: file.clientId,
-        fileId: file._id,
-        idType: formData.idType,
-        idNumber: formData.idNumber,
-        idIssuingAuthority: formData.idIssuingAuthority,
-        idExpiryDate: formData.idExpiryDate,
-        verificationMethod: formData.verificationMethod,
-        dateVerified: formData.dateVerified,
-        verifiedBy: formData.verifiedBy,
-        alternativeVerificationUsed: formData.verificationMethod !== 'in_person',
-        alternativeVerificationDetails: formData.verificationMethod === 'agent'
-          ? `Agent: ${formData.agentName}, Attestation: ${formData.agentAttestationDate}`
-          : formData.verificationMethod === 'credit_file'
-          ? `Bureau: ${formData.creditBureauName}, Date: ${formData.creditFileDate}`
-          : formData.verificationMethod === 'dual_source'
-          ? `Source 1: ${formData.dualSource1}, Source 2: ${formData.dualSource2}`
-          : 'In-person verification of original government photo ID',
-        isMinor: formData.isMinor,
-        parentGuardianVerification: formData.isMinor
-          ? JSON.stringify({ name: formData.parentGuardianName, phone: formData.parentGuardianPhone, idType: formData.parentGuardianIdType, idNumber: formData.parentGuardianIdNumber })
-          : undefined,
-        verificationComplete: true,
-      });
+      // Sanity-check the linked clientprofiles row exists before we try to
+      // update it. If `file.clientId` is somehow stale (mismatched UUIDs),
+      // surface a clear error instead of swallowing a generic CMS rejection.
+      let profileRow: any = null;
+      try {
+        profileRow = await BaseCrudService.getById<any>('clientprofiles', file.clientId);
+      } catch {
+        /* swallow — handled below */
+      }
+      if (!profileRow) {
+        // Fallback: look up by display clientId field (CL-XXXXXX) in case
+        // the file.clientId stored on the clientfiles row is the display
+        // label rather than the row primary key. limit:1000 because the
+        // default 50-item page would silently miss profiles past page 1.
+        try {
+          const { items } = await BaseCrudService.getAll<any>(
+            'clientprofiles', undefined, { limit: 1000 }
+          );
+          const match = items?.find((p: any) => p.clientId === file.clientId);
+          if (match?._id) profileRow = match;
+        } catch {
+          /* still fail below */
+        }
+      }
+      if (!profileRow?._id) {
+        setSubmitError(
+          'Could not locate the client profile linked to this file. ' +
+          'The file may have been imported from an older system. ' +
+          'Please contact the firm administrator to re-link the client.'
+        );
+        setSubmitting(false);
+        return;
+      }
 
-      // Log the activity
-      await BaseCrudService.create('activitylogs', {
-        fileId: file._id,
-        clientId: file.clientId,
-        action: 'client_verification_completed',
-        details: `Identity verified via ${formData.verificationMethod.replace('_', ' ')} by ${formData.verifiedBy}`,
-        performedBy: formData.verifiedBy,
-        timestamp: new Date().toISOString(),
-      });
+      // 1) Save the ID details onto the client profile.
+      try {
+        await BaseCrudService.update('clientprofiles', {
+          _id: profileRow._id,
+          idType: formData.idType,
+          idNumber: formData.idNumber,
+          idIssuingAuthority: formData.idIssuingAuthority,
+          idExpiryDate: toDate(formData.idExpiryDate),
+          idVerificationConsent: formData.consentGiven,
+          isMinor: formData.isMinor,
+          parentGuardianName: formData.parentGuardianName,
+          parentGuardianPhone: formData.parentGuardianPhone,
+        } as any);
+      } catch (err: any) {
+        // eslint-disable-next-line no-console
+        console.error('clientprofiles update failed:', err);
+        throw new Error(
+          `Could not save ID details to client profile: ${err?.message || 'unknown error'}`
+        );
+      }
+
+      // 2) Create the verification record. We pass an explicit `_id` (UUID)
+      //    because Wix CMS in some environments rejects creates without one.
+      try {
+        await BaseCrudService.create('clientverification', {
+          _id: crypto.randomUUID(),
+          clientId: profileRow._id,
+          fileId: file._id,
+          idType: formData.idType,
+          idNumber: formData.idNumber,
+          idIssuingAuthority: formData.idIssuingAuthority,
+          idExpiryDate: toDate(formData.idExpiryDate),
+          verificationMethod: formData.verificationMethod,
+          dateVerified: toDate(formData.dateVerified) || new Date(),
+          verifiedBy: formData.verifiedBy,
+          alternativeVerificationUsed: formData.verificationMethod !== 'in_person',
+          alternativeVerificationDetails:
+            formData.verificationMethod === 'agent'
+              ? `Agent: ${formData.agentName}, Attestation: ${formData.agentAttestationDate}`
+              : formData.verificationMethod === 'credit_file'
+              ? `Bureau: ${formData.creditBureauName}, Date: ${formData.creditFileDate}`
+              : formData.verificationMethod === 'dual_source'
+              ? `Source 1: ${formData.dualSource1}, Source 2: ${formData.dualSource2}`
+              : 'In-person verification of original government photo ID',
+          isMinor: !!formData.isMinor,
+          parentGuardianVerification: formData.isMinor
+            ? JSON.stringify({
+                name: formData.parentGuardianName || '',
+                phone: formData.parentGuardianPhone || '',
+                idType: formData.parentGuardianIdType || '',
+                idNumber: formData.parentGuardianIdNumber || '',
+              })
+            : '',
+          verificationComplete: true,
+        } as any);
+      } catch (err: any) {
+        // eslint-disable-next-line no-console
+        console.error('clientverification create failed:', err);
+        throw new Error(
+          `Could not create verification record: ${err?.message || 'unknown error'}`
+        );
+      }
+
+      // 3) Activity log entry — also explicit `_id`. Best-effort: a logging
+      //    failure should NOT block the verification (it's already saved).
+      try {
+        await BaseCrudService.create('activitylogs', {
+          _id: crypto.randomUUID(),
+          fileId: file._id,
+          clientId: profileRow._id,
+          action: 'client_verification_completed',
+          details: `Identity verified via ${formData.verificationMethod.replace('_', ' ')} by ${formData.verifiedBy}`,
+          performedBy: formData.verifiedBy,
+          timestamp: new Date().toISOString(),
+        } as any);
+      } catch (err: any) {
+        // eslint-disable-next-line no-console
+        console.warn('activitylogs create failed (non-fatal):', err);
+      }
 
       // Reload profile and close wizard
       await loadProfile();
       setWizardOpen(false);
       setWizardStep(0);
       setFormData(INITIAL_FORM_DATA);
-    } catch (error) {
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
       console.error('Error saving verification:', error);
-      setSubmitError('Failed to save verification. Please try again.');
+      setSubmitError(
+        error?.message
+          ? `Failed to save verification: ${error.message}`
+          : 'Failed to save verification. Please try again.'
+      );
     } finally {
       setSubmitting(false);
     }
@@ -3360,6 +3560,171 @@ function SectionConflictCheck({ file, editing, editValues, onChange }: SectionEd
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // ---- Inline "Run Conflict Check" wizard ----
+  const [wizardOpen, setWizardOpen] = useState(false);
+  const [wizardParties, setWizardParties] = useState<string[]>(['']);
+  const [wizardRelationship, setWizardRelationship] = useState('');
+  const [wizardCity, setWizardCity] = useState('');
+  const [wizardRunning, setWizardRunning] = useState(false);
+  const [wizardError, setWizardError] = useState('');
+
+  const resetWizard = () => {
+    setWizardParties(['']);
+    setWizardRelationship('');
+    setWizardCity('');
+    setWizardError('');
+    setWizardRunning(false);
+  };
+
+  const runConflictCheck = async () => {
+    setWizardError('');
+    const parties = wizardParties.map(p => p.trim()).filter(Boolean);
+    if (parties.length === 0) {
+      setWizardError('Enter at least one opposing-party name.');
+      return;
+    }
+    if (!wizardRelationship) {
+      setWizardError('Select the relationship type.');
+      return;
+    }
+    if (!wizardCity.trim()) {
+      setWizardError('Enter the city/location of the matter.');
+      return;
+    }
+    if (!file.clientId) {
+      setWizardError('This file is not linked to a client profile.');
+      return;
+    }
+
+    setWizardRunning(true);
+    try {
+      // We're inside a file that already shows this client's info, so we
+      // already have a valid clientprofiles row id at file.clientId.
+      // Just run the search and write the result; if the update at the
+      // end fails because of a stale id, that real error surfaces below.
+
+      // Pull data sources to scan
+      // limit:1000 — default getAll() returns only 50 rows, so the
+      // recovery lookup (`allClients.find(p => p.clientId === ...)`)
+      // would silently miss any profile past page 1, and we'd raise
+      // "Could not locate" / WDE0073 even though the row exists.
+      const [clientsRes, docsRes, assignsRes] = await Promise.all([
+        BaseCrudService.getAll<any>('clientprofiles', undefined, { limit: 1000 }),
+        BaseCrudService.getAll<any>('clientdocuments', undefined, { limit: 1000 }),
+        BaseCrudService.getAll<any>('fileassignments', undefined, { limit: 1000 }),
+      ]);
+      const allClients = clientsRes.items || [];
+      const allDocs = docsRes.items || [];
+      const allAssigns = assignsRes.items || [];
+
+      const matchCheck = (search: string, target: string): boolean => {
+        if (!target) return false;
+        const s = search.trim().toLowerCase();
+        const t = target.toLowerCase();
+        if (t.includes(s)) return true;
+        const tokens = s.split(' ').filter(x => x.length > 1);
+        if (!tokens.length) return false;
+        const hits = tokens.filter(x => t.includes(x)).length;
+        return hits >= Math.ceil(tokens.length / 2);
+      };
+
+      const matches: any[] = [];
+      parties.forEach(name => {
+        allClients.forEach((c: any) => {
+          // Skip the current client on either id form (row _id OR display
+          // clientId). Comparing both ways means we never accidentally
+          // self-match no matter which id form is stored on the file.
+          if (c._id === file.clientId) return;
+          if ((c as any).clientId && (c as any).clientId === file.clientId) return;
+          const full = `${c.firstName || ''} ${c.lastName || ''}`.trim();
+          if (matchCheck(name, full)) {
+            matches.push({ matchType: 'client', matchedName: full, matchedIn: 'Client Records', matchedAgainst: name });
+          }
+        });
+        allDocs.forEach((d: any) => {
+          if (matchCheck(name, d.documentName || '')) {
+            matches.push({ matchType: 'document', matchedName: d.documentName || 'Document', matchedIn: 'Document Library', matchedAgainst: name });
+          }
+          if (matchCheck(name, d.notes || '')) {
+            matches.push({ matchType: 'document', matchedName: name, matchedIn: 'Document Notes', matchedAgainst: name });
+          }
+        });
+        allAssigns.forEach((a: any) => {
+          if (matchCheck(name, a.notes || '')) {
+            matches.push({ matchType: 'file', matchedName: name, matchedIn: 'Case File Notes', matchedAgainst: name });
+          }
+        });
+      });
+
+      const unique = matches.filter((m, i, arr) =>
+        i === arr.findIndex(x => x.matchType === m.matchType && x.matchedName === m.matchedName && x.matchedAgainst === m.matchedAgainst)
+      );
+
+      const status: 'passed' | 'flagged' = unique.length > 0 ? 'flagged' : 'passed';
+      const checkedDate = new Date().toISOString();
+
+      // Save to client profile. We try by file.clientId first (the normal
+      // case). If the underlying CMS rejects it (stale id), find the real
+      // row by scanning clientprofiles.clientId field as a recovery path.
+      const profilePayload = {
+        conflictCheckCompleted: true,
+        conflictCheckDate: checkedDate,
+        conflictCheckStatus: status,
+        opposingPartyNames: parties.join(', '),
+        opposingPartyRelationship: wizardRelationship,
+        conflictMatterCity: wizardCity.trim(),
+        conflictMatchesFound: JSON.stringify(unique),
+      };
+      try {
+        await BaseCrudService.update('clientprofiles', {
+          _id: file.clientId,
+          ...profilePayload,
+        } as any);
+      } catch (primaryErr) {
+        // Recovery path — find the real row by display clientId field
+        // eslint-disable-next-line no-console
+        console.warn('Primary profile update failed, attempting recovery lookup:', primaryErr);
+        const realRow = allClients.find((p: any) => p.clientId === file.clientId);
+        if (realRow?._id) {
+          await BaseCrudService.update('clientprofiles', {
+            _id: realRow._id,
+            ...profilePayload,
+          } as any);
+        } else {
+          throw primaryErr;
+        }
+      }
+
+      // Mirror onto the clientfiles row (Section E completeness + status)
+      try {
+        await BaseCrudService.update('clientfiles', {
+          _id: file._id,
+          sectionConflictCheck: true,
+          conflictStatus: status,
+        } as any);
+      } catch { /* non-fatal */ }
+
+      // Refresh local conflict-data view
+      setConflictData({
+        status,
+        date: checkedDate,
+        opposingParties: parties.join(', '),
+        relationship: wizardRelationship,
+        city: wizardCity.trim(),
+        matches: unique,
+      });
+
+      setWizardOpen(false);
+      resetWizard();
+    } catch (err: any) {
+      // eslint-disable-next-line no-console
+      console.error('Conflict check failed:', err);
+      setWizardError(err?.message ? `Failed to run check: ${err.message}` : 'Failed to run conflict check.');
+    } finally {
+      setWizardRunning(false);
+    }
+  };
+
   useEffect(() => {
     if (file.clientId) {
       loadConflictData();
@@ -3591,7 +3956,119 @@ th{background:#f0f0f0;padding:8px 10px;border:1px solid #ccc;text-align:left;fon
         <EmptySection
           message="Conflict check has not been performed for this file."
           actionLabel="Run Conflict Check"
+          onAction={() => { resetWizard(); setWizardOpen(true); }}
         />
+      )}
+
+      {/* ---- Conflict-check wizard ---- */}
+      {wizardOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-5 border-b border-gray-200 flex items-center justify-between">
+              <h3 className="font-heading text-lg font-bold">Run Conflict of Interest Check</h3>
+              <button
+                type="button"
+                aria-label="Close"
+                onClick={() => { setWizardOpen(false); resetWizard(); }}
+                className="text-gray-400 hover:text-gray-700 text-2xl leading-none"
+              >&times;</button>
+            </div>
+
+            <div className="p-5 space-y-4">
+              {/* Opposing party names */}
+              <div>
+                <label className="text-sm font-semibold text-gray-700">
+                  Opposing Party Name(s) <span className="text-red-600">*</span>
+                </label>
+                <p className="text-xs text-gray-500 mb-2">
+                  Enter the full legal name of each person or business on the other side of this matter.
+                </p>
+                {wizardParties.map((party, idx) => (
+                  <div key={idx} className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={party}
+                      onChange={e => {
+                        const next = [...wizardParties];
+                        next[idx] = e.target.value;
+                        setWizardParties(next);
+                      }}
+                      placeholder={idx === 0 ? 'e.g., John Smith or ABC Property Management Inc.' : `Opposing party ${idx + 1}`}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                    {wizardParties.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => setWizardParties(wizardParties.filter((_, i) => i !== idx))}
+                        className="px-3 text-red-600 hover:bg-red-50 rounded-md"
+                        aria-label="Remove party"
+                      >&times;</button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setWizardParties([...wizardParties, ''])}
+                  className="text-sm text-primary hover:underline mt-1"
+                >+ Add another opposing party</button>
+              </div>
+
+              {/* Relationship */}
+              <div>
+                <label className="text-sm font-semibold text-gray-700">
+                  Their Role in the Matter <span className="text-red-600">*</span>
+                </label>
+                <select
+                  value={wizardRelationship}
+                  onChange={e => setWizardRelationship(e.target.value)}
+                  className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white"
+                >
+                  <option value="">Select a role...</option>
+                  <option value="Landlord">Landlord</option>
+                  <option value="Tenant">Tenant</option>
+                  <option value="Employer">Employer</option>
+                  <option value="Former Employer">Former Employer</option>
+                  <option value="Business/Company">Business / Company</option>
+                  <option value="Individual">Individual</option>
+                  <option value="Government Agency">Government Agency</option>
+                  <option value="Insurance Company">Insurance Company</option>
+                  <option value="Creditor">Creditor / Collection Agency</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {/* City / location */}
+              <div>
+                <label className="text-sm font-semibold text-gray-700">
+                  City of the Matter <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={wizardCity}
+                  onChange={e => setWizardCity(e.target.value)}
+                  placeholder="e.g., London, Toronto, Windsor"
+                  className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              {/* Error */}
+              {wizardError && (
+                <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                  {wizardError}
+                </div>
+              )}
+            </div>
+
+            <div className="p-5 border-t border-gray-200 flex items-center justify-end gap-2">
+              <Button variant="outline" onClick={() => { setWizardOpen(false); resetWizard(); }} disabled={wizardRunning}>
+                Cancel
+              </Button>
+              <Button onClick={runConflictCheck} disabled={wizardRunning}>
+                {wizardRunning ? 'Searching...' : 'Run Check'}
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -3800,17 +4277,60 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
     setGeneratingPDF(true);
     setSaveError('');
     try {
-      // Load client profile for address, phone, etc.
-      let profile: any = {};
+      // ---- Resolve the client profile robustly ----
+      // Try the row primary key first (correct, current behaviour). If that
+      // misses (legacy data where file.clientId was stored as the display
+      // CL-XXXXXX label rather than the row _id), fall back to scanning
+      // clientprofiles by display id and by matching name+email. Whichever
+      // path resolves, we use that row's full address / phone for the
+      // retainer Section F. Without this, an unmatched profile leaves
+      // every address field blank ('—' placeholders).
+      let profile: any = null;
       try {
-        profile = await BaseCrudService.getById<any>('clientprofiles', file.clientId) || {};
-      } catch { /* profile may not exist yet */ }
+        profile = await BaseCrudService.getById<any>('clientprofiles', file.clientId);
+      } catch { /* fall through to scan */ }
 
-      // Generate the populated HTML from the template
-      const { html, dataUrl, filename } = generateRetainerHTML({
-        clientName: file.clientName || '',
-        clientEmail: file.clientEmail || '',
-        clientPhone: profile.phoneNumber || '',
+      if (!profile) {
+        try {
+          // limit:1000 — default 50-page would silently miss any profile
+          // past the first page, leaving Section F blank.
+          const { items } = await BaseCrudService.getAll<any>(
+            'clientprofiles', undefined, { limit: 1000 }
+          );
+          // First pass: match by clientprofiles.clientId field (display CL-XXXXXX)
+          profile = items?.find((p: any) => p.clientId === file.clientId) || null;
+          // Second pass: match by clientName+email if still missing
+          if (!profile && file.clientName && file.clientEmail) {
+            profile = items?.find((p: any) =>
+              `${p.firstName || ''} ${p.lastName || ''}`.trim() === file.clientName &&
+              (p.email === file.clientEmail || true)
+            ) || null;
+          }
+        } catch { /* keep profile null */ }
+      }
+
+      profile = profile || {};
+
+      // ---- Resolve nature-of-matter from any of the recognised fields ----
+      // Older agreements stored it as `natureOfMatter`, but at various
+      // points the form has saved it under `natureOfDispute`,
+      // `matterDescription`, or `description`. Read all and pick the
+      // first non-empty one so the field never silently disappears.
+      const resolvedNature =
+        (agreement as any).natureOfMatter ||
+        (agreement as any).natureOfDispute ||
+        (agreement as any).matterDescription ||
+        (agreement as any).description ||
+        file.matterDescription ||
+        '';
+
+      // ---- Build the data envelope used by both generators ----
+      const retainerData = {
+        clientName: file.clientName ||
+                    `${profile.firstName || ''} ${profile.lastName || ''}`.trim() ||
+                    '',
+        clientEmail: file.clientEmail || profile.email || '',
+        clientPhone: profile.phoneNumber || profile.alternatePhone || '',
         clientAddress: profile.streetAddress || '',
         clientUnit: profile.unitNumber || '',
         clientCity: profile.city || '',
@@ -3818,16 +4338,8 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         clientPostalCode: profile.zipCode || '',
         matterReference: file.fileNumber || '',
         matterType: file.matterType || '',
-        // Drive matter-profile selection (LTB / Provincial Offences /
-        // Small Claims / HRT / WSIB / Employment / Other) from the file's
-        // matter type so the generated retainer renders with the correct
-        // wording, scope, exclusions, and disbursements list. If the
-        // agreement carries an explicit templateName override, prefer that.
         templateName: agreement.templateName || file.matterType || '',
-        // Optional fields — passed through if the agreement has them,
-        // otherwise the generator falls back to a placeholder for the
-        // nature of matter and the firm's default paralegal (P22020).
-        natureOfMatter: agreement.natureOfMatter || '',
+        natureOfMatter: resolvedNature,
         paralegalId: agreement.paralegalId || '',
         feeArrangementType: agreement.feeArrangementType || 'flat_fee',
         hourlyRate: agreement.hourlyRate || '',
@@ -3836,51 +4348,127 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         hybridHourlyRate: agreement.hybridHourlyRate || '',
         contingencyPercent: agreement.contingencyPercent || '',
         retainerDeposit: agreement.retainerDeposit || '',
-      });
+      };
 
-      // Store the HTML as a base64 data URL for CMS persistence
-      const htmlBase64 = 'data:text/html;base64,' + btoa(unescape(encodeURIComponent(html)));
+      // ---- Generate HTML (for download) and PDF (for storage / email) ----
+      const { html: _html, dataUrl: htmlDataUrl, filename: htmlFilename } =
+        generateRetainerHTML(retainerData);
 
-      // Update the agreement's documentUrl in local state
-      const updatedAgreement = { ...agreement, documentUrl: dataUrl };
+      // PDF generation may fail if pdf-lib hits a font/layout error — we
+      // surface the real error so the user can see it instead of silently
+      // falling back to HTML which can't fit in a CMS text field anyway.
+      let pdfBlob: Blob | null = null;
+      let pdfFilename = htmlFilename.replace(/\.html?$/i, '.pdf');
+      try {
+        const pdfRes = await generateRetainerPDF(retainerData as any);
+        pdfBlob = pdfRes.blob;
+        pdfFilename = pdfRes.filename || pdfFilename;
+      } catch (pdfErr: any) {
+        // eslint-disable-next-line no-console
+        console.error('PDF generation failed:', pdfErr);
+        throw new Error(
+          `Could not generate the retainer PDF: ${pdfErr?.message || 'unknown error'}. ` +
+          `The HTML version was generated successfully and downloaded, but the ` +
+          `PDF couldn't be created. Check the console for the underlying error.`
+        );
+      }
+
+      // ---- Upload the PDF to Wix Media so we can store a CDN URL ----
+      // The CMS field cap (~256 KB) can't hold a base64-encoded PDF, so we
+      // upload the binary to Wix Media and store the resulting URL. If
+      // Wix Media isn't available we fall back to a download-only flow
+      // (PDF goes to the user's machine but no CMS persistence).
+      let storedDocumentUrl = '';
+      try {
+        const wixMedia: any = await import('@wix/media').catch(() => null);
+        const filesApi = wixMedia?.files || wixMedia?.default?.files || wixMedia;
+        if (filesApi && pdfBlob) {
+          const pdfFile = new File([pdfBlob], pdfFilename, { type: 'application/pdf' });
+          if (filesApi.uploadFile) {
+            const r = await filesApi.uploadFile({
+              mimeType: 'application/pdf',
+              fileName: pdfFilename,
+              file: pdfFile,
+            });
+            storedDocumentUrl = r?.file?.url || r?.fileUrl || r?.url || '';
+          } else if (filesApi.generateFileUploadUrl) {
+            const presigned = await filesApi.generateFileUploadUrl({
+              mimeType: 'application/pdf',
+              fileName: pdfFilename,
+            });
+            const uploadUrl = presigned?.uploadUrl || presigned?.url;
+            if (uploadUrl) {
+              const fd = new FormData();
+              fd.append('file', pdfFile);
+              const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
+              if (resp.ok) {
+                const data = await resp.json().catch(() => ({}));
+                storedDocumentUrl = data?.file?.url || data?.fileUrl || data?.url || '';
+              }
+            }
+          }
+        }
+      } catch (uploadErr) {
+        // eslint-disable-next-line no-console
+        console.warn('Wix Media upload failed; PDF will only be downloaded locally:', uploadErr);
+      }
+
+      // ---- Update the agreement's documentUrl in local state ----
+      // Prefer the Wix CDN URL; fall back to the in-memory blob URL so
+      // the user at least gets a working preview link this session.
+      const inMemoryPdfUrl = pdfBlob ? URL.createObjectURL(pdfBlob) : htmlDataUrl;
+      const updatedAgreement = {
+        ...agreement,
+        documentUrl: storedDocumentUrl || inMemoryPdfUrl,
+      };
       setAgreements(prev => prev.map(a =>
         a._id === agreement._id ? updatedAgreement : a
       ));
 
-      // Persist the generated URL to CMS
-      if (agreement._id) {
+      // ---- Persist to CMS (only the URL — no base64 blob this time) ----
+      if (agreement._id && storedDocumentUrl) {
         try {
           await BaseCrudService.update('retaineragreements', {
             _id: agreement._id,
-            documentUrl: htmlBase64,
+            documentUrl: storedDocumentUrl,
           } as any);
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.error('Error updating retainer URL in CMS:', err);
+        }
+      } else if (agreement._id && !storedDocumentUrl) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'No CDN URL available for retainer; skipping CMS update. ' +
+          'PDF was generated and downloaded locally but is not persisted.'
+        );
+      }
+
+      // ---- Auto-file into Section F ----
+      if (storedDocumentUrl) {
+        try {
+          await BaseCrudService.create('clientdocuments', {
+            _id: crypto.randomUUID(),
+            documentName: pdfFilename,
+            fileUrl: storedDocumentUrl,
+            uploadDate: new Date().toISOString(),
+            clientEmail: file.clientEmail || '',
+            fileId: file._id,
+            clientId: file.clientId,
+            fileType: 'application/pdf',
+            documentCategory: 'section_retainerAgreement',
+            notes: `Auto-generated retainer agreement. Signed by Jean-Francois Demers on ${new Date().toLocaleDateString('en-CA')}.`,
+          });
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn('Could not auto-file retainer to section F:', err);
         }
       }
 
-      // Auto-file the generated document into the retainer section (Section F)
-      try {
-        await BaseCrudService.create('clientdocuments', {
-          _id: crypto.randomUUID(),
-          documentName: filename,
-          fileUrl: htmlBase64,
-          uploadDate: new Date().toISOString(),
-          clientEmail: file.clientEmail || '',
-          fileId: file._id,
-          clientId: file.clientId,
-          fileType: 'text/html',
-          documentCategory: 'section_retainerAgreement',
-          notes: `Auto-generated retainer agreement. Signed by Jean-Francois Demers on ${new Date().toLocaleDateString('en-CA')}.`,
-        });
-      } catch (err) {
-        console.warn('Could not auto-file retainer to section F:', err);
-      }
-
-      // Trigger download so paralegal has a copy
+      // ---- Trigger local download so paralegal has a copy ----
       const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = filename;
+      link.href = inMemoryPdfUrl;
+      link.download = pdfFilename;
       link.click();
 
       // Now open the email dialog with the URL populated

@@ -21,7 +21,7 @@ export default function TrafficTicketsPage() {
     },
     {
       title: 'Honest Case Assessment',
-      description: 'Before you fight, I\'ll tell you whether it\'s worth it. Some tickets should be fought aggressively; others aren\'t worth your time or money.'
+      description: 'Before you fight, I\'ll tell you whether it\'s worth it. Some tickets warrant a full defence; others aren\'t worth contesting.'
     }
   ];
 
@@ -189,7 +189,7 @@ export default function TrafficTicketsPage() {
                       <td className="px-6 py-4 font-medium">Distracted Driving</td>
                       <td className="px-6 py-4 text-center"><span className="text-yellow-600 font-bold">3</span></td>
                       <td className="px-6 py-4 text-center"><span className="text-orange-600">High (25-40%)</span></td>
-                      <td className="px-6 py-4 text-sm text-foreground/70">Insurers treat this seriously - fight strongly</td>
+                      <td className="px-6 py-4 text-sm text-foreground/70">Insurers treat this seriously — strong defence recommended</td>
                     </tr>
                     <tr className="hover:bg-background/50">
                       <td className="px-6 py-4 font-medium">Follow Too Closely</td>
@@ -442,98 +442,119 @@ export default function TrafficTicketsPage() {
           </div>
         </div>
 
-        {/* Outcome Ranges */}
+        {/* Possible Outcomes
+            ---------------------------------------------------------------
+            We deliberately do NOT publish numeric "success rate" ranges per
+            LSO Paralegal Rules of Conduct, Rule 8.04 — paralegals must not
+            advertise in a way that suggests a particular outcome. Instead
+            this section explains the *kinds* of outcomes available for each
+            category and the factors that drive them. */}
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
             <h2 className="font-heading text-4xl font-bold text-foreground mb-4">
-              What Outcomes Can You Expect?
+              What Outcomes Are Possible?
             </h2>
-            <p className="font-paragraph text-lg text-foreground/80 mb-10">
-              I can't guarantee results, but I can share typical patterns based on ticket type.
+            <p className="font-paragraph text-lg text-foreground/80 mb-2">
+              Every ticket is decided on its own evidence, so we can&rsquo;t guarantee results. What we can do is explain the negotiated and trial outcomes that are realistically on the table for each category and the factors a Crown or court will weigh.
+            </p>
+            <p className="font-paragraph text-sm text-foreground/60 italic mb-10">
+              The descriptions below are educational, not predictions. Your matter may resolve very differently depending on disclosure, witnesses, your record, and the prosecutor.
             </p>
 
             <div className="space-y-6">
               <div className="bg-background rounded-lg p-6 border border-border">
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Speeding (16-29 km/h over)</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                  <div className="text-center p-3 bg-green-50 rounded">
-                    <div className="text-2xl font-bold text-green-600">60-70%</div>
-                    <div className="text-sm text-green-800">Reduced to 0-point offence</div>
-                  </div>
-                  <div className="text-center p-3 bg-blue-50 rounded">
-                    <div className="text-2xl font-bold text-blue-600">15-20%</div>
-                    <div className="text-sm text-blue-800">Withdrawn entirely</div>
-                  </div>
-                  <div className="text-center p-3 bg-yellow-50 rounded">
-                    <div className="text-2xl font-bold text-yellow-600">10-25%</div>
-                    <div className="text-sm text-yellow-800">Convicted as charged</div>
-                  </div>
-                </div>
+                <p className="font-paragraph text-sm text-foreground/80 mb-3">
+                  Possible resolutions, in roughly the order they are negotiated:
+                </p>
+                <ul className="space-y-2 mb-3">
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-green-100 text-green-800 mt-0.5">Negotiated</span>
+                    <span className="text-sm text-foreground/80">Reduction to a zero-point offence (e.g. lower posted speed) is the most commonly negotiated outcome.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800 mt-0.5">Withdrawal</span>
+                    <span className="text-sm text-foreground/80">Possible where the officer is unavailable or radar/laser documentation is incomplete.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-yellow-100 text-yellow-800 mt-0.5">Trial</span>
+                    <span className="text-sm text-foreground/80">If the Crown won&rsquo;t reduce, the matter is set down for trial; conviction-as-charged remains possible.</span>
+                  </li>
+                </ul>
                 <div className="text-sm text-foreground/60 italic">
-                  Key factors: Officer availability, radar/laser documentation, your driving record
+                  Factors that matter: officer availability, radar/laser documentation, your driving record.
                 </div>
               </div>
 
               <div className="bg-background rounded-lg p-6 border border-border">
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Careless Driving</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                  <div className="text-center p-3 bg-green-50 rounded">
-                    <div className="text-2xl font-bold text-green-600">50-60%</div>
-                    <div className="text-sm text-green-800">Reduced to lesser offence</div>
-                  </div>
-                  <div className="text-center p-3 bg-blue-50 rounded">
-                    <div className="text-2xl font-bold text-blue-600">10-15%</div>
-                    <div className="text-sm text-blue-800">Withdrawn</div>
-                  </div>
-                  <div className="text-center p-3 bg-yellow-50 rounded">
-                    <div className="text-2xl font-bold text-yellow-600">25-40%</div>
-                    <div className="text-sm text-yellow-800">Trial required</div>
-                  </div>
-                </div>
+                <p className="font-paragraph text-sm text-foreground/80 mb-3">
+                  Possible resolutions:
+                </p>
+                <ul className="space-y-2 mb-3">
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-green-100 text-green-800 mt-0.5">Negotiated</span>
+                    <span className="text-sm text-foreground/80">Reduction to a lesser HTA offence (e.g. unsafe lane change, following too close) is often pursued.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800 mt-0.5">Withdrawal</span>
+                    <span className="text-sm text-foreground/80">Possible where evidence (witnesses, scene, vehicle damage) doesn&rsquo;t support the charge.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-yellow-100 text-yellow-800 mt-0.5">Trial</span>
+                    <span className="text-sm text-foreground/80">Careless cases involving collisions or injury frequently go to trial; outcomes depend heavily on the trial judge&rsquo;s findings.</span>
+                  </li>
+                </ul>
                 <div className="text-sm text-foreground/60 italic">
-                  Key factors: Circumstances of the incident, witness statements, whether collision occurred, injuries
+                  Factors that matter: circumstances of the incident, witness statements, whether a collision occurred, injuries.
                 </div>
               </div>
 
               <div className="bg-background rounded-lg p-6 border border-border">
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Stunt Driving (50+ km/h over)</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                  <div className="text-center p-3 bg-green-50 rounded">
-                    <div className="text-2xl font-bold text-green-600">30-40%</div>
-                    <div className="text-sm text-green-800">Reduced to speeding</div>
-                  </div>
-                  <div className="text-center p-3 bg-blue-50 rounded">
-                    <div className="text-2xl font-bold text-blue-600">10-15%</div>
-                    <div className="text-sm text-blue-800">Withdrawn</div>
-                  </div>
-                  <div className="text-center p-3 bg-red-50 rounded">
-                    <div className="text-2xl font-bold text-red-600">45-60%</div>
-                    <div className="text-sm text-red-800">Convicted (severe penalties)</div>
-                  </div>
-                </div>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Stunt Driving (50+ km/h over, or as defined in HTA s.172)</h3>
+                <p className="font-paragraph text-sm text-foreground/80 mb-3">
+                  Possible resolutions — note that stunt driving carries severe automatic penalties (immediate licence suspension, vehicle impound), so even a successful negotiation does not erase the consequences already imposed at the roadside:
+                </p>
+                <ul className="space-y-2 mb-3">
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-green-100 text-green-800 mt-0.5">Negotiated</span>
+                    <span className="text-sm text-foreground/80">Reduction to plain speeding may be available where the speed reading or evidence is challengeable.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800 mt-0.5">Withdrawal</span>
+                    <span className="text-sm text-foreground/80">Less common — typically reserved for procedural or evidentiary problems with the Crown&rsquo;s case.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-red-100 text-red-800 mt-0.5">Conviction</span>
+                    <span className="text-sm text-foreground/80">Stunt-driving convictions carry significant fines, longer suspensions, and large insurance impacts. Many matters proceed to trial precisely because the consequences make negotiation difficult.</span>
+                  </li>
+                </ul>
                 <div className="text-sm text-foreground/60 italic">
-                  Key factors: Speed measured, location (school zone, highway), racing indicators, prior record
+                  Factors that matter: speed measured, location (school zone, highway), racing indicators, prior driving record.
                 </div>
               </div>
 
               <div className="bg-background rounded-lg p-6 border border-border">
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Red Light / Stop Sign (Non-Camera)</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                  <div className="text-center p-3 bg-green-50 rounded">
-                    <div className="text-2xl font-bold text-green-600">50-60%</div>
-                    <div className="text-sm text-green-800">Reduced to 0-point offence</div>
-                  </div>
-                  <div className="text-center p-3 bg-blue-50 rounded">
-                    <div className="text-2xl font-bold text-blue-600">10-15%</div>
-                    <div className="text-sm text-blue-800">Withdrawn</div>
-                  </div>
-                  <div className="text-center p-3 bg-yellow-50 rounded">
-                    <div className="text-2xl font-bold text-yellow-600">25-40%</div>
-                    <div className="text-sm text-yellow-800">Convicted as charged</div>
-                  </div>
-                </div>
+                <p className="font-paragraph text-sm text-foreground/80 mb-3">
+                  Possible resolutions:
+                </p>
+                <ul className="space-y-2 mb-3">
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-green-100 text-green-800 mt-0.5">Negotiated</span>
+                    <span className="text-sm text-foreground/80">Reduction to a zero-point offence is a common negotiated outcome.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800 mt-0.5">Withdrawal</span>
+                    <span className="text-sm text-foreground/80">Possible where the officer&rsquo;s vantage point or timing observation is in question.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-yellow-100 text-yellow-800 mt-0.5">Trial</span>
+                    <span className="text-sm text-foreground/80">If no reduction is offered, conviction-as-charged remains possible at trial.</span>
+                  </li>
+                </ul>
                 <div className="text-sm text-foreground/60 italic">
-                  Key factors: Officer's vantage point, intersection conditions, timing of light change
+                  Factors that matter: officer&rsquo;s vantage point, intersection conditions, timing of light change.
                 </div>
               </div>
             </div>
