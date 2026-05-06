@@ -18,6 +18,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL_PRIMARY, EMAIL_HREF } from '@/lib/contact';
 
 // Team member data for easy management and SEO
 const teamMembers = [
@@ -510,8 +511,8 @@ export default function MeetOurTeamPage() {
           
           {/* Contact Info Cards */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a 
-              href="tel:5195550100" 
+            <a
+              href={PHONE_HREF}
               className="flex items-center gap-3 bg-white rounded-xl px-6 py-4 shadow-md hover:shadow-lg transition-shadow"
             >
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
@@ -519,11 +520,11 @@ export default function MeetOurTeamPage() {
               </div>
               <div className="text-left">
                 <p className="font-paragraph text-xs text-foreground/60 uppercase tracking-wider">Call Us</p>
-                <p className="font-heading font-bold text-foreground">(519) 555-0100</p>
+                <p className="font-heading font-bold text-foreground">{PHONE_DISPLAY}</p>
               </div>
             </a>
-            <a 
-              href="mailto:info@legalassist.ca" 
+            <a
+              href={EMAIL_HREF}
               className="flex items-center gap-3 bg-white rounded-xl px-6 py-4 shadow-md hover:shadow-lg transition-shadow"
             >
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
@@ -531,7 +532,7 @@ export default function MeetOurTeamPage() {
               </div>
               <div className="text-left">
                 <p className="font-paragraph text-xs text-foreground/60 uppercase tracking-wider">Email Us</p>
-                <p className="font-heading font-bold text-foreground">info@legalassist.ca</p>
+                <p className="font-heading font-bold text-foreground">{EMAIL_PRIMARY}</p>
               </div>
             </a>
           </div>

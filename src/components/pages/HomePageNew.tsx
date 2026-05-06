@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PrimaryCTA from '@/components/PrimaryCTA';
-import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL_HREF, SMS_HREF } from '@/lib/contact';
 
 /* ============================================================
    TESTIMONIALS DATA
@@ -359,20 +359,37 @@ export default function HomePageNew() {
               </div>
             </div>
 
-            {/* Trust metrics */}
+            {/* Trust metrics — the Service-Areas tile is also a link to
+                the contact page so visitors looking for an "address" can
+                click through to find office / contact details. */}
             <div className="grid grid-cols-2 gap-6">
               {[
-                { label: 'Response Time', value: '< 24hrs', icon: Clock },
-                { label: 'Free Consultation', value: '30 min', icon: MessageSquare },
-                { label: 'LSO Regulated', value: 'Licensed', icon: Shield },
-                { label: 'Service Areas', value: 'Ontario', icon: MapPin },
-              ].map((stat, i) => (
-                <div key={i} className="bg-matte-light rounded-2xl p-8 text-center">
-                  <stat.icon className="w-6 h-6 text-gold mx-auto mb-4" aria-hidden="true" />
-                  <div className="font-heading text-2xl font-bold text-gold mb-1">{stat.value}</div>
-                  <div className="text-sm text-white/40">{stat.label}</div>
-                </div>
-              ))}
+                { label: 'Response Time', value: '< 24hrs', icon: Clock, to: null as string | null },
+                { label: 'Free Consultation', value: '30 min', icon: MessageSquare, to: '/booking' },
+                { label: 'LSO Regulated', value: 'Licensed', icon: Shield, to: null },
+                { label: 'Service Areas', value: 'Ontario', icon: MapPin, to: '/contact' },
+              ].map((stat, i) => {
+                const inner = (
+                  <>
+                    <stat.icon className="w-6 h-6 text-gold mx-auto mb-4" aria-hidden="true" />
+                    <div className="font-heading text-2xl font-bold text-gold mb-1">{stat.value}</div>
+                    <div className="text-sm text-white/40">{stat.label}</div>
+                  </>
+                );
+                return stat.to ? (
+                  <Link
+                    key={i}
+                    to={stat.to}
+                    className="bg-matte-light rounded-2xl p-8 text-center hover:bg-matte-light/80 transition-colors block"
+                  >
+                    {inner}
+                  </Link>
+                ) : (
+                  <div key={i} className="bg-matte-light rounded-2xl p-8 text-center">
+                    {inner}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -526,10 +543,10 @@ export default function HomePageNew() {
           <Phone className="w-5 h-5" /> Call Now - Free Consultation
         </a>
         <div className="flex gap-2">
-          <a href="mailto:info@legalassist.ca" className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
+          <a href={EMAIL_HREF} className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
             <Mail className="w-4 h-4" /> Email
           </a>
-          <a href="sms:+12262725153" className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
+          <a href={SMS_HREF} className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">
             <MessageCircle className="w-4 h-4" /> Text
           </a>
           <Link to="/booking" className="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white py-2.5 rounded-lg font-paragraph text-sm">

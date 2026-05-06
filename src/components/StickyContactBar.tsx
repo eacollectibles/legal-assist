@@ -1,5 +1,5 @@
 import { Mail, MessageCircle, Calendar } from 'lucide-react';
-import { PHONE_TEL } from '@/lib/contact';
+import { EMAIL_HREF, SMS_HREF } from '@/lib/contact';
 import PrimaryCTA from '@/components/PrimaryCTA';
 
 interface StickyContactBarProps {
@@ -29,18 +29,19 @@ export default function StickyContactBar({ isVisible = true }: StickyContactBarP
           {/* Secondary Contact Options - Three equal width buttons */}
           <div className="flex gap-2">
             {/* Email Tap - 48px touch target */}
-            <a 
-              href="mailto:info@legalassist.ca"
+            <a
+              href={EMAIL_HREF}
               className="flex-1 min-h-[48px] flex items-center justify-center gap-2 px-3 text-sm font-paragraph font-medium text-secondary bg-white/60 hover:bg-white/80 active:bg-white active:scale-[0.98] rounded-xl border border-secondary/10 transition-all duration-150 focus-ring"
               aria-label="Email us"
             >
               <Mail className="w-5 h-5 text-primary" />
               <span className="font-semibold">Email</span>
             </a>
-            
-            {/* Text Tap - 48px touch target */}
-            <a 
-              href={`sms:${PHONE_TEL}`}
+
+            {/* Text Tap - 48px touch target — uses SMS_HREF (separate
+                SMS-only number) not the voice line. */}
+            <a
+              href={SMS_HREF}
               className="flex-1 min-h-[48px] flex items-center justify-center gap-2 px-3 text-sm font-paragraph font-medium text-secondary bg-white/60 hover:bg-white/80 active:bg-white active:scale-[0.98] rounded-xl border border-secondary/10 transition-all duration-150 focus-ring"
               aria-label="Text us"
             >
