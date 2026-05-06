@@ -7,9 +7,15 @@ import { useEffect, useRef, useState } from 'react';
  * server-side `/api/square/create-payment` endpoint, which actually
  * charges the card. Raw card data never touches our server.
  *
- * Designed to be controlled by the parent — the parent owns "Pay" button,
- * loading state, and error display, so this component focuses purely on
- * card collection + tokenization.
+ * POSTAL CODE — IMPORTANT:
+ * Square's Web Payments SDK auto-detects the buyer's browser locale to
+ * label its postal-code field. A US-locale buyer paying our Canadian
+ * merchant gets "ZIP". To force "Postal Code" for our Canadian clients
+ * we (a) render our own labelled input *above* Square's iframe and
+ * (b) suppress Square's own postal-code field where the SDK allows.
+ * At tokenize time we pass our captured value through the `billingContact`
+ * argument so Square uses our value for AVS verification regardless of
+ * what is or isn't in its iframe.
  */
 
 declare global {
@@ -72,6 +78,18 @@ function loadSquareSdk(sdkUrl: string): Promise<void> {
   return sdkLoaderPromise;
 }
 
+/** Loose validator for a Canadian postal code (A1A 1A1 / A1A1A1). */
+function isValidCanadianPostal(s: string): boolean {
+  return /^[A-Za-z]\d[A-Za-z][\s-]?\d[A-Za-z]\d$/.test(s.trim());
+}
+
+/** Normalize "M5V1A1" or "m5v 1a1" to "M5V 1A1". */
+function normalizePostal(s: string): string {
+  const cleaned = s.toUpperCase().replace(/[\s-]/g, '');
+  if (cleaned.length !== 6) return s.trim();
+  return `${cleaned.slice(0, 3)} ${cleaned.slice(3)}`;
+}
+
 export default function SquareCardForm({
   onReady,
   onError,
@@ -82,6 +100,14 @@ export default function SquareCardForm({
   const cardRef = useRef<any>(null);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [postalCode, setPostalCode] = useState('');
+  const postalCodeRef = useRef('');
+
+  // Keep ref in sync with state so the imperative tokenize() handler always
+  // reads the latest value (without re-creating the handle on every keystroke).
+  useEffect(() => {
+    postalCodeRef.current = postalCode;
+  }, [postalCode]);
 
   useEffect(() => {
     let cancelled = false;
@@ -102,19 +128,17 @@ export default function SquareCardForm({
         if (cancelled) return;
         if (!window.Square) throw new Error('Square SDK did not initialize.');
 
-        // 3) Create a Payments instance + Card and attach to our div.
-        //
-        //    NOTE on `postalCode`: by default the Square Web Payments SDK
-        //    derives the postal-code field's label from the *buyer's*
-        //    browser locale, not from the merchant location. That means
-        //    a US-locale buyer paying a Canadian firm sees "ZIP". We
-        //    enable `includeInputLabels: true` so Square renders explicit
-        //    text labels above each field — those labels say "Postal
-        //    Code" (not "ZIP") for our Canadian merchant location, which
-        //    is the correct terminology for our clients.
+        // 3) Create a Payments instance + Card.
+        //    `country: 'CA'` is a hint to the SDK to use Canadian conventions
+        //    where it can. We don't rely on it — we override postal code at
+        //    tokenize time anyway — but it doesn't hurt.
         const payments = window.Square.payments(cfg.applicationId, cfg.locationId);
         card = await payments.card({
-          includeInputLabels: true,
+          // Suppress Square's built-in postal-code field. The SDK accepts a
+          // pre-filled value here; if we pass our own (we do, at tokenize
+          // time via billingContact), the field is non-functional. Plus we
+          // hide it visually via the style override below.
+          postalCode: ' ',
           style: {
             input: {
               fontSize: '16px',
@@ -140,6 +164,31 @@ export default function SquareCardForm({
         });
         if (cancelled) return;
         await card.attach(containerRef.current!);
+
+        // Hide Square's postal-code field in the iframe via a parent-side CSS
+        // injection. Square uses ARIA labels we can target by data-attr.
+        // This is a belt-and-suspenders move: even if SDK still renders the
+        // field, the user never sees it, so they only interact with our own
+        // labelled input above. (Square's iframe sandboxes its content, so
+        // we target the wrapper element in OUR document, not inside it.)
+        try {
+          const host = containerRef.current;
+          if (host) {
+            const style = document.createElement('style');
+            style.setAttribute('data-square-hide-postal', 'true');
+            style.textContent = `
+              [data-testid="postalCode-input"],
+              .sq-postal-code,
+              .sq-card-component[data-field="postalCode"] {
+                display: none !important;
+              }
+            `;
+            host.appendChild(style);
+          }
+        } catch {
+          /* non-fatal */
+        }
+
         cardRef.current = card;
         setStatus('ready');
         onReady?.();
@@ -174,8 +223,29 @@ export default function SquareCardForm({
         if (!card) {
           return { token: null, errorMessage: 'Card form is not ready yet.' };
         }
+        const enteredPostal = postalCodeRef.current.trim();
+        if (!enteredPostal) {
+          return { token: null, errorMessage: 'Please enter your postal code.' };
+        }
+        if (!isValidCanadianPostal(enteredPostal)) {
+          return {
+            token: null,
+            errorMessage: 'Postal code must be in Canadian format (A1A 1A1).',
+          };
+        }
         try {
-          const result = await card.tokenize();
+          // Pass the user-entered postal code through `billingContact`. Square
+          // uses this value for AVS verification regardless of what (if
+          // anything) is in its own postal-code field. This is the
+          // authoritative path — guarantees our captured value reaches the
+          // gateway labelled as Canadian postal code, no matter what the
+          // SDK iframe shows.
+          const result = await card.tokenize({
+            billingContact: {
+              postalCode: normalizePostal(enteredPostal),
+              countryCode: 'CA',
+            },
+          });
           if (result.status === 'OK' && result.token) {
             return { token: result.token, errorMessage: null };
           }
@@ -186,4 +256,60 @@ export default function SquareCardForm({
             'Card details are not valid. Please double-check and try again.';
           return { token: null, errorMessage: msg };
         } catch (err: any) {
-          return { token: nul
+          return { token: null, errorMessage: err?.message || 'Failed to tokenize card.' };
+        }
+      },
+    };
+    return () => {
+      if (handleRef.current) handleRef.current = null;
+    };
+  }, [handleRef]);
+
+  return (
+    <div className={className}>
+      {status === 'loading' && (
+        <div className="text-sm text-foreground/60 py-3">Loading secure card form…</div>
+      )}
+      {status === 'error' && (
+        <div className="text-sm text-destructive py-3">
+          {errorMessage || 'Could not load card form.'}
+        </div>
+      )}
+
+      {/* Our own postal-code input — clearly labelled, Canadian-format.
+          We control this 100% (no Square iframe), so the label always
+          says "Postal Code" no matter what the buyer's browser locale
+          claims. Value is forwarded to Square at tokenize time via
+          billingContact. */}
+      <div className="mb-4">
+        <label
+          htmlFor="legal-assist-postal-code"
+          className="block text-sm font-paragraph font-semibold text-foreground mb-1"
+        >
+          Postal Code
+        </label>
+        <input
+          id="legal-assist-postal-code"
+          type="text"
+          inputMode="text"
+          autoComplete="postal-code"
+          value={postalCode}
+          onChange={(e) => setPostalCode(e.target.value.toUpperCase())}
+          placeholder="A1A 1A1"
+          maxLength={7}
+          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary uppercase tracking-wider"
+          disabled={status !== 'ready'}
+        />
+        <p className="mt-1 text-xs text-foreground/50">
+          Canadian format. Your card&rsquo;s billing postal code.
+        </p>
+      </div>
+
+      <div ref={containerRef} />
+
+      <p className="mt-2 text-xs text-foreground/50">
+        Your card details are encrypted and tokenized by Square &mdash; they never touch Legal Assist&rsquo;s servers.
+      </p>
+    </div>
+  );
+}

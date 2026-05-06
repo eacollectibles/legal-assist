@@ -386,4 +386,20 @@ export default function ClientSignupPage() {
                 </div>
 
                 <Button
-             
+                  onClick={() => setShowSignupForm(false)}
+                  variant="outline"
+                  className="w-full mt-8 border-gray-300 text-foreground hover:bg-gray-50"
+                >
+                  Back
+                </Button>
+              </div>
+            </div>
+          </div>
+          )}
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

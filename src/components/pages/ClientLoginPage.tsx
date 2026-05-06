@@ -280,4 +280,16 @@ export default function ClientLoginPage() {
 
                 <div className="mt-8 pt-8 border-t border-pastelbeige">
                   <p className="font-paragraph text-sm text-foreground/80">
-                    <strong>Ne
+                    <strong>Need help?</strong> Contact our support team at <a href="mailto:support@legalassist.com" className="text-primary hover:underline">support@legalassist.com</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

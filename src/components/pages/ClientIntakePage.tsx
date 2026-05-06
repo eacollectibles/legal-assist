@@ -1988,4 +1988,40 @@ export default function ClientIntakePage() {
                     <Button
                       type="button"
                       variant="outline"
-                 
+                      onClick={handleBack}
+                      className="flex-1 sm:flex-none"
+                    >
+                      <ChevronLeft className="w-4 h-4 mr-2" />
+                      Back
+                    </Button>
+                  )}
+                  {/* Save & Continue — always shown (conflicts are flagged, never blocked) */}
+                  <Button
+                    type="button"
+                    onClick={handleNext}
+                    disabled={isLoading}
+                    className="flex-1 sm:flex-none"
+                  >
+                    {currentSection === sections.length - 1 ? (
+                      <>
+                        {isLoading ? 'Submitting...' : 'Complete'}
+                        <Check className="w-4 h-4 ml-2" />
+                      </>
+                    ) : (
+                      <>
+                        Save & Continue
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

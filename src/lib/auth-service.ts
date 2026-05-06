@@ -548,4 +548,26 @@ export async function resetPassword(email: string, token: string, newPassword: s
 
     // Clear the reset token
     delete resetTokens[email];
-    localStorage.setItem('resetTokens', JSON.stringify(resetToken
+    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+
+    return {
+      success: true,
+      message: 'Password reset successfully. You can now log in with your new password.',
+    };
+  } catch (error) {
+    console.error('Password reset error:', error);
+    return {
+      success: false,
+      message: 'Failed to reset password. Please try again.',
+    };
+  }
+}
+
+/**
+ * Generate a random reset token
+ */
+function generateResetToken(): string {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+}

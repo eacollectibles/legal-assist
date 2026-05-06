@@ -2007,7 +2007,21 @@ function SectionClientIdentification({ file, editing, editValues, onChange }: Se
   }
 
   const fullName = profile ? `${profile.firstName || ''} ${profile.lastName || ''}`.trim() : file.clientName;
-  const fullAddress = profile ? `${profile.streetAddress || ''}${profile.unitNumber ? ', Unit ' + profile.unitNumber : ''}, ${profile.city || ''} ${profile.state || ''} ${profile.zipCode || ''}`.trim() : '';
+  // Display-only "address summary" string for the view mode of the address
+  // block. In edit mode we expose street / unit / city / province / postal
+  // as separate inputs so each maps cleanly to the retainer template's
+  // CLIENT_ADDRESS_LINE1, CLIENT_CITY, CLIENT_PROVINCE, CLIENT_POSTAL_CODE
+  // placeholders.
+  const fullAddress = profile
+    ? [
+        profile.streetAddress || '',
+        profile.unitNumber ? `Unit ${profile.unitNumber}` : '',
+        [profile.city, profile.state].filter(Boolean).join(', '),
+        profile.zipCode || '',
+      ]
+        .filter(s => (s || '').trim())
+        .join(', ')
+    : '';
 
   return (
     <div className="space-y-6">
@@ -2017,17 +2031,50 @@ function SectionClientIdentification({ file, editing, editValues, onChange }: Se
           occupation, and if organization — incorporation number, nature of business, and authorized individuals.
         </p>
       </div>
+
+      {/* Identity row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <EditableField label="Full Legal Name" value={fullName} fieldKey="clientName" icon={User} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Email" value={file.clientEmail} fieldKey="clientEmail" icon={Mail} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Home Address" value={fullAddress} fieldKey="streetAddress" icon={MapPin} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Home Phone" value={profile?.phoneNumber} fieldKey="phoneNumber" icon={Phone} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Business Address" value={profile?.businessAddress || 'N/A'} fieldKey="businessAddress" icon={Building2} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Business Phone" value={profile?.businessPhone || 'N/A'} fieldKey="businessPhone" icon={Phone} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Date of Birth" value={profile?.dateOfBirth ? new Date(profile.dateOfBirth).toLocaleDateString('en-CA') : undefined} fieldKey="dateOfBirth" icon={Calendar} editing={editing} editValues={editValues} onChange={onChange} type="date" />
-        <EditableField label="Occupation(s)" value={profile?.occupation} fieldKey="occupation" icon={Briefcase} editing={editing} editValues={editValues} onChange={onChange} />
-        <EditableField label="Preferred Language" value={profile?.preferredLanguage} fieldKey="preferredLanguage" icon={MessageCircle} editing={editing} editValues={editValues} onChange={onChange} />
-        <Field label="Date Collected" value={profile?.intakeCompletedDate ? new Date(profile.intakeCompletedDate).toLocaleDateString('en-CA') : undefined} icon={Calendar} />
+        <EditableField label="Email" value={profile?.email || file.clientEmail} fieldKey="email" icon={Mail} editing={editing} editValues={editValues} onChange={onChange} />
+      </div>
+
+      {/* ---- Address block ---- */}
+      {/* In view mode: show a compact summary line. In edit mode: expand
+          into separate inputs so the retainer template's address
+          placeholders populate correctly (street, unit, city, province,
+          postal code). Without this split the user could only edit one
+          combined field, and city/province/postal code stayed blank on
+          the retainer. */}
+      <div className="border-t border-gray-100 pt-4">
+        <h3 className="font-heading text-sm font-semibold text-gray-700 mb-3">Home Address</h3>
+        {!editing ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Field label="Address" value={fullAddress || undefined} icon={MapPin} />
+            <Field label="Home Phone" value={profile?.phoneNumber} icon={Phone} />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <EditableField label="Street Address" value={profile?.streetAddress} fieldKey="streetAddress" icon={MapPin} editing={editing} editValues={editValues} onChange={onChange} />
+            <EditableField label="Unit / Suite (optional)" value={profile?.unitNumber} fieldKey="unitNumber" editing={editing} editValues={editValues} onChange={onChange} />
+            <EditableField label="City" value={profile?.city} fieldKey="city" editing={editing} editValues={editValues} onChange={onChange} />
+            <EditableField label="Province" value={profile?.state || 'Ontario'} fieldKey="state" editing={editing} editValues={editValues} onChange={onChange} />
+            <EditableField label="Postal Code" value={profile?.zipCode} fieldKey="zipCode" editing={editing} editValues={editValues} onChange={onChange} />
+            <EditableField label="Home Phone" value={profile?.phoneNumber} fieldKey="phoneNumber" icon={Phone} editing={editing} editValues={editValues} onChange={onChange} />
+          </div>
+        )}
+      </div>
+
+      {/* Business + personal details */}
+      <div className="border-t border-gray-100 pt-4">
+        <h3 className="font-heading text-sm font-semibold text-gray-700 mb-3">Other Details</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <EditableField label="Business Address" value={profile?.businessAddress || 'N/A'} fieldKey="businessAddress" icon={Building2} editing={editing} editValues={editValues} onChange={onChange} />
+          <EditableField label="Business Phone" value={profile?.businessPhone || 'N/A'} fieldKey="businessPhone" icon={Phone} editing={editing} editValues={editValues} onChange={onChange} />
+          <EditableField label="Date of Birth" value={profile?.dateOfBirth ? new Date(profile.dateOfBirth).toLocaleDateString('en-CA') : undefined} fieldKey="dateOfBirth" icon={Calendar} editing={editing} editValues={editValues} onChange={onChange} type="date" />
+          <EditableField label="Occupation(s)" value={profile?.occupation} fieldKey="occupation" icon={Briefcase} editing={editing} editValues={editValues} onChange={onChange} />
+          <EditableField label="Preferred Language" value={profile?.preferredLanguage} fieldKey="preferredLanguage" icon={MessageCircle} editing={editing} editValues={editValues} onChange={onChange} />
+          <Field label="Date Collected" value={profile?.intakeCompletedDate ? new Date(profile.intakeCompletedDate).toLocaleDateString('en-CA') : undefined} icon={Calendar} />
+        </div>
       </div>
 
       <div className="border-t border-gray-100 pt-4">
@@ -4422,19 +4469,40 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         file.matterDescription ||
         '';
 
+      // ---- Validate and resolve email + matter reference ----
+      // Pick the first value that actually looks like an email. Wix can
+      // sometimes hand back a UUID-looking string in clientEmail when the
+      // schema field was repurposed; we'd rather render "—" than print a
+      // hex blob in the retainer's Email field.
+      const looksLikeEmail = (s?: string) =>
+        !!s && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
+      const resolvedEmail = [
+        file.clientEmail,
+        (profile as any).email,
+      ].find(looksLikeEmail) || '';
+
+      // Matter reference: prefer the file number (LA-YYYY-NNNN), then the
+      // client's display id (CL-XXXXXX) — never the underlying _id UUID.
+      const profileClientId = (profile as any).clientId;
+      const resolvedMatterRef =
+        file.fileNumber ||
+        (typeof profileClientId === 'string' && profileClientId.startsWith('CL-')
+          ? profileClientId : '') ||
+        '';
+
       // ---- Build the data envelope used by both generators ----
       const retainerData = {
         clientName: file.clientName ||
                     `${profile.firstName || ''} ${profile.lastName || ''}`.trim() ||
                     '',
-        clientEmail: file.clientEmail || profile.email || '',
+        clientEmail: resolvedEmail,
         clientPhone: profile.phoneNumber || profile.alternatePhone || '',
         clientAddress: profile.streetAddress || '',
         clientUnit: profile.unitNumber || '',
         clientCity: profile.city || '',
         clientProvince: profile.state || 'Ontario',
         clientPostalCode: profile.zipCode || '',
-        matterReference: file.fileNumber || '',
+        matterReference: resolvedMatterRef,
         matterType: file.matterType || '',
         templateName: agreement.templateName || file.matterType || '',
         natureOfMatter: resolvedNature,
