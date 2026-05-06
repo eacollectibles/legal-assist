@@ -4691,11 +4691,41 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
   };
 
   const handleDelete = async (id: string) => {
+    if (!id) return;
+    if (!window.confirm('Permanently delete this retainer agreement? This cannot be undone.')) {
+      return;
+    }
     try {
+      // Actually delete from CMS — the previous version only updated local
+      // state, so deletions disappeared from the UI but reappeared on the
+      // next reload because the row was still in retaineragreements.
+      try {
+        await BaseCrudService.delete('retaineragreements', id);
+      } catch (cmsErr: any) {
+        // BaseCrudService.delete may not exist on all SDK versions; fall
+        // back to a soft-delete by marking status='terminated' so the row
+        // stops counting against compliance / display.
+        // eslint-disable-next-line no-console
+        console.warn('Hard delete failed, falling back to soft-delete:', cmsErr);
+        try {
+          await BaseCrudService.update('retaineragreements', {
+            _id: id,
+            retainerStatus: 'terminated',
+            documentUrl: '',
+          } as any);
+        } catch (softErr: any) {
+          // eslint-disable-next-line no-console
+          console.error('Soft-delete also failed:', softErr);
+          throw new Error(`Could not delete: ${softErr?.message || cmsErr?.message || 'unknown error'}`);
+        }
+      }
       setAgreements(prev => prev.filter(a => a._id !== id));
       setViewingAgreement(null);
-    } catch (err) {
+      setSaveSuccess('Retainer agreement deleted.');
+    } catch (err: any) {
+      // eslint-disable-next-line no-console
       console.error('Error removing retainer agreement:', err);
+      setSaveError(`Could not delete retainer: ${err?.message || 'Unknown error'}`);
     }
   };
 
@@ -4801,37 +4831,108 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
           )}
 
           {/* Document actions — view, download, print */}
-          {viewingAgreement.documentUrl ? (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          {viewingAgreement.documentUrl ? (() => {
+            // Helpers — figure out what kind of URL we have so we can pick
+            // the right extension and warn about dead blob: URLs (which
+            // are session-scoped and useless after a reload).
+            const url = viewingAgreement.documentUrl || '';
+            const isHtml = url.startsWith('data:text/html');
+            const isBlob = url.startsWith('blob:');
+            const ext = isHtml ? 'html' : 'pdf';
+            const safeClientName = (file.clientName || '').replace(/\s+/g, '-');
+            const dlName = `Retainer-${file.fileNumber || 'agreement'}-${safeClientName}.${ext}`;
+            const handleStaleBlobOrAct = (act: () => void) => {
+              if (isBlob) {
+                if (window.confirm(
+                  'This retainer\'s document link is from a previous session and may not work. ' +
+                  'Click OK to regenerate the retainer now (recommended), or Cancel to try the existing link anyway.'
+                )) {
+                  handleGenerateAndEmail(viewingAgreement);
+                  return;
+                }
+              }
+              act();
+            };
+            return (
+            <div className={`${isBlob ? 'bg-amber-50 border-amber-200' : 'bg-blue-50 border-blue-200'} border rounded-lg p-4 mb-4`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-medium text-blue-600 uppercase tracking-wider mb-1">Retainer Document</p>
-                  <p className="text-sm text-blue-800">PDF generated and available for review</p>
+                  <p className={`text-xs font-medium ${isBlob ? 'text-amber-600' : 'text-blue-600'} uppercase tracking-wider mb-1`}>
+                    Retainer Document {isHtml && '(HTML)'}{isBlob && '— Session-only link, may be expired'}
+                  </p>
+                  <p className={`text-sm ${isBlob ? 'text-amber-800' : 'text-blue-800'}`}>
+                    {isBlob
+                      ? 'Generated this session — link will not survive page reload. Click Send or regenerate to persist.'
+                      : `${ext.toUpperCase()} generated and available for review`}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" onClick={() => window.open(viewingAgreement.documentUrl, '_blank')} title="View Document">
-                    <Eye className="w-3.5 h-3.5 mr-1" /> View
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => {
-                    const link = document.createElement('a');
-                    link.href = viewingAgreement.documentUrl || '';
-                    link.download = `Retainer-${file.fileNumber}-${file.clientName?.replace(/\s+/g, '-')}.pdf`;
-                    link.click();
-                  }} title="Download Document">
-                    <Download className="w-3.5 h-3.5 mr-1" /> Download
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => {
-                    const printWindow = window.open(viewingAgreement.documentUrl, '_blank');
-                    if (printWindow) {
-                      printWindow.onload = () => printWindow.print();
-                    }
-                  }} title="Print Document">
+                  {/* View — rendered as a real <a> element so iOS/Android
+                      browsers don't block it as a programmatic popup.
+                      window.open() from a JS handler is blocked on mobile
+                      unless the synchronous click context is preserved,
+                      which doesn't survive a window.confirm. A regular
+                      anchor link sidesteps the whole popup-blocker mess. */}
+                  {isBlob ? (
+                    <Button variant="outline" size="sm" title="View Document"
+                      onClick={() => handleStaleBlobOrAct(() => window.open(url, '_blank'))}>
+                      <Eye className="w-3.5 h-3.5 mr-1" /> View
+                    </Button>
+                  ) : (
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View Document"
+                      className="inline-flex items-center px-3 h-9 text-sm border border-input bg-background rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                      <Eye className="w-3.5 h-3.5 mr-1" /> View
+                    </a>
+                  )}
+
+                  {/* Download — anchor with download attribute. Same mobile
+                      reasoning as View; programmatic createElement('a') +
+                      click() is fragile on iOS, a real anchor is solid. */}
+                  {isBlob ? (
+                    <Button variant="outline" size="sm" title="Download Document"
+                      onClick={() => handleStaleBlobOrAct(() => {
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = dlName;
+                        link.click();
+                      })}>
+                      <Download className="w-3.5 h-3.5 mr-1" /> Download
+                    </Button>
+                  ) : (
+                    <a
+                      href={url}
+                      download={dlName}
+                      title="Download Document"
+                      className="inline-flex items-center px-3 h-9 text-sm border border-input bg-background rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                      <Download className="w-3.5 h-3.5 mr-1" /> Download
+                    </a>
+                  )}
+
+                  {/* Print — still uses window.open because we need to call
+                      .print() after the new tab loads. Desktop will work;
+                      mobile users typically use the system share-sheet
+                      from the View tab to print, which is why we keep
+                      View/Download as the primary mobile actions. */}
+                  <Button variant="outline" size="sm" title="Print Document"
+                    onClick={() => handleStaleBlobOrAct(() => {
+                      const printWindow = window.open(url, '_blank');
+                      if (printWindow) {
+                        printWindow.onload = () => printWindow.print();
+                      }
+                    })}>
                     <Printer className="w-3.5 h-3.5 mr-1" /> Print
                   </Button>
                 </div>
               </div>
             </div>
-          ) : (
+            );
+          })() : (
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
               <p className="text-sm text-gray-500">No document generated yet. Click <strong>Generate &amp; Email</strong> above to create the retainer PDF.</p>
             </div>
@@ -5110,17 +5211,48 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
                       <Eye className="w-3.5 h-3.5 mr-1" /> View
                     </Button>
                     {agreement.documentUrl && (
-                      <Button variant="outline" size="sm" onClick={() => {
+                      <Button variant="outline" size="sm" title="Download" onClick={() => {
+                        const url = agreement.documentUrl || '';
+                        // Detect URL kind so we can pick the right extension.
+                        // - data:application/pdf  → .pdf
+                        // - data:text/html         → .html
+                        // - blob:                  → only valid this session
+                        // - https:                 → trust the URL
+                        let ext = 'pdf';
+                        if (url.startsWith('data:text/html')) ext = 'html';
+                        else if (url.startsWith('data:application/pdf')) ext = 'pdf';
+
+                        // blob: URLs from a previous session are dead. Warn
+                        // and offer to regenerate.
+                        if (url.startsWith('blob:')) {
+                          if (window.confirm(
+                            'This retainer\'s document link is from a previous session and may not work. ' +
+                            'Click OK to regenerate the retainer now (recommended), or Cancel to try the existing link anyway.'
+                          )) {
+                            handleGenerateAndEmail(agreement);
+                            return;
+                          }
+                        }
+
                         const link = document.createElement('a');
-                        link.href = agreement.documentUrl || '';
-                        link.download = `Retainer-${file.fileNumber}.pdf`;
+                        link.href = url;
+                        link.download = `Retainer-${file.fileNumber || 'agreement'}.${ext}`;
                         link.click();
                       }}>
                         <Download className="w-3.5 h-3.5" />
                       </Button>
                     )}
-                    <Button variant="outline" size="sm" onClick={() => handleEdit(agreement)}>
+                    <Button variant="outline" size="sm" title="Edit" onClick={() => handleEdit(agreement)}>
                       <Edit3 className="w-3.5 h-3.5" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      title="Delete retainer"
+                      className="text-red-600 border-red-200 hover:bg-red-50"
+                      onClick={() => handleDelete(agreement._id || '')}
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
                     </Button>
                   </div>
                 </div>

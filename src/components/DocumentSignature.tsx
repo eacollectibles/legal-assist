@@ -137,30 +137,47 @@ export default function DocumentSignature({
     }
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  // ----------------------------------------------------------------
+  // Drawing state — kept in refs (not React state) so the native event
+  // handlers attached below see fresh values without re-binding on every
+  // render. React state setters still fire so the rest of the UI updates.
+  // ----------------------------------------------------------------
+  const isDrawingRef = useRef(false);
+
+  /**
+   * Get a touch/mouse point in canvas display coordinates. Returns null
+   * if no point is available (e.g. touchend with no targetTouches).
+   */
+  const getCanvasPoint = (e: MouseEvent | TouchEvent): { x: number; y: number } | null => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    let clientX: number | undefined;
+    let clientY: number | undefined;
+    if ('touches' in e) {
+      const t = e.touches[0] || e.changedTouches?.[0];
+      if (!t) return null;
+      clientX = t.clientX;
+      clientY = t.clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  };
+
+  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    // Mouse path only — touch is handled by the native listener below.
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    // Prevent page scrolling during touch events
-    if ('touches' in e) {
-      e.preventDefault();
-    }
-
     try {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-
+      isDrawingRef.current = true;
       setIsDrawing(true);
       const rect = canvas.getBoundingClientRect();
-      
-      // Get raw coordinates
-      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-      
-      // Calculate coordinates relative to canvas display
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
       ctx.beginPath();
       ctx.moveTo(x, y);
     } catch (error) {
@@ -168,38 +185,22 @@ export default function DocumentSignature({
     }
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-    if (!isDrawing) return;
-
+  const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    // Prevent page scrolling during touch events
-    if ('touches' in e) {
-      e.preventDefault();
-    }
-
     try {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-
       const rect = canvas.getBoundingClientRect();
-      
-      // Get raw coordinates
-      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-      
-      // Calculate coordinates relative to canvas display
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
       ctx.lineTo(x, y);
-      ctx.strokeStyle = '#000000';
+      ctx.strokeStyle = '#1F2D5C';
       ctx.lineWidth = 2;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.stroke();
-
       setHasSignature(true);
     } catch (error) {
       console.error('Error drawing:', error);
@@ -207,8 +208,76 @@ export default function DocumentSignature({
   };
 
   const stopDrawing = () => {
+    isDrawingRef.current = false;
     setIsDrawing(false);
   };
+
+  // ----------------------------------------------------------------
+  // Native touch listeners with { passive: false }.
+  //
+  // React's onTouchStart / onTouchMove / onTouchEnd attach as PASSIVE
+  // listeners by default in modern browsers. On a passive listener,
+  // e.preventDefault() is a silent no-op, which means the browser still
+  // treats finger movement on the canvas as a scroll gesture — and on
+  // some devices it never even delivers the touchmove events to the
+  // React handler because it decides early that the gesture is a scroll.
+  //
+  // The fix is to bypass React for touch and attach DOM listeners
+  // directly with passive:false, so preventDefault actually stops the
+  // scroll. Mouse events stay on the React side (no passive issue
+  // there) so desktop signing keeps working as-is.
+  // ----------------------------------------------------------------
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const onTouchStart = (e: TouchEvent) => {
+      // CRITICAL: preventDefault stops the page from interpreting this
+      // touch as a scroll/tap. Must be passive:false for this to work.
+      e.preventDefault();
+      const ctx = canvas.getContext('2d');
+      const pt = getCanvasPoint(e);
+      if (!ctx || !pt) return;
+      isDrawingRef.current = true;
+      setIsDrawing(true);
+      ctx.beginPath();
+      ctx.moveTo(pt.x, pt.y);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDrawingRef.current) return;
+      e.preventDefault();
+      const ctx = canvas.getContext('2d');
+      const pt = getCanvasPoint(e);
+      if (!ctx || !pt) return;
+      ctx.lineTo(pt.x, pt.y);
+      ctx.strokeStyle = '#1F2D5C';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      setHasSignature(true);
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      e.preventDefault();
+      isDrawingRef.current = false;
+      setIsDrawing(false);
+    };
+
+    // passive:false is the key — without it preventDefault is a no-op.
+    canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+    canvas.addEventListener('touchend', onTouchEnd, { passive: false });
+    canvas.addEventListener('touchcancel', onTouchEnd, { passive: false });
+
+    return () => {
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+      canvas.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, []);
 
   const clearSignature = () => {
     const canvas = canvasRef.current;
@@ -330,14 +399,16 @@ export default function DocumentSignature({
                 aspectRatio: '700 / 220',
                 display: 'block',
               }}
-              className="w-full cursor-crosshair"
+              className="w-full cursor-crosshair touch-none select-none"
               onMouseDown={startDrawing}
               onMouseMove={draw}
               onMouseUp={stopDrawing}
               onMouseLeave={stopDrawing}
-              onTouchStart={startDrawing}
-              onTouchMove={draw}
-              onTouchEnd={stopDrawing}
+              // Touch is handled by native listeners (see useEffect above)
+              // because React touch events are passive — preventDefault is
+              // a no-op on them so the browser still treats finger
+              // movement as a scroll gesture. Don't add onTouchStart/
+              // onTouchMove/onTouchEnd here or we'll double-handle.
             />
           </div>
           <div className="flex items-center justify-between">
