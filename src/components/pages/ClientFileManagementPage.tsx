@@ -5,7 +5,7 @@
  * into LSO compliance sections. Supports file opening, tracking,
  * compliance scoring, and audit readiness.
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -489,24 +489,50 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
       } as any);
 
       // 2) Update the client profile — but only if we have a real row id.
-      //    Try by row _id first; fall back to scanning by display clientId.
-      if (Object.keys(profileUpdates).length > 0 && selectedFile.clientId) {
+      //    Three-tier resolution because file.clientId is unreliable across
+      //    creation paths (AssignmentsTab vs self-signup vs imported data,
+      //    plus a stale `item.clientId || item._id` fallback in loadFiles
+      //    that hands back the FILE's own id when clientId is missing).
+      if (Object.keys(profileUpdates).length > 0) {
         let profileRow: any = null;
-        try {
-          profileRow = await BaseCrudService.getById<any>(
-            'clientprofiles', selectedFile.clientId
-          );
-        } catch { /* fall through */ }
+
+        // Tier 1: by row primary key (the happy path for AssignmentsTab files)
+        if (selectedFile.clientId) {
+          try {
+            profileRow = await BaseCrudService.getById<any>(
+              'clientprofiles', selectedFile.clientId
+            );
+          } catch { /* fall through */ }
+        }
+
+        // Tiers 2 & 3: scan clientprofiles. limit:1000 because the default
+        // 50-row page would silently miss any profile past page 1.
         if (!profileRow) {
           try {
-            // Pass limit:1000 — default getAll() only returns 50 items,
-            // which silently misses any profile past the first page.
             const { items } = await BaseCrudService.getAll<any>(
               'clientprofiles', undefined, { limit: 1000 }
             );
-            profileRow = items?.find((p: any) =>
-              p.clientId === selectedFile.clientId
-            ) || null;
+            // Tier 2: match by clientprofiles.clientId field (CL-XXXXXX style)
+            if (selectedFile.clientId) {
+              profileRow = items?.find((p: any) =>
+                p.clientId === selectedFile.clientId
+              ) || null;
+            }
+            // Tier 3: match by full name + email — works even when the file's
+            // clientId is broken or points at the file's own _id (which is
+            // what the loadFiles `|| item._id` fallback hands back when the
+            // CMS row has no clientId set).
+            if (!profileRow && selectedFile.clientName) {
+              const targetName = selectedFile.clientName.trim().toLowerCase();
+              const targetEmail = (selectedFile.clientEmail || '').trim().toLowerCase();
+              profileRow = items?.find((p: any) => {
+                const pName = `${p.firstName || ''} ${p.lastName || ''}`.trim().toLowerCase();
+                const pEmail = (p.email || '').trim().toLowerCase();
+                if (pName && pName === targetName) return true;
+                if (targetEmail && pEmail && pEmail === targetEmail) return true;
+                return false;
+              }) || null;
+            }
           } catch { /* still null */ }
         }
 
@@ -525,12 +551,49 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
             );
           }
         } else {
+          // No matching profile found after all three resolution tiers.
+          // Auto-create one (self-healing). This handles orphaned files
+          // — files where the original clientprofiles row was never
+          // created, was deleted, or has name/email that don't match.
+          // We seed the new row with whatever we have on the file plus
+          // the user's edits, and link it via clientfiles.clientId so
+          // subsequent loads/saves resolve normally.
+          const [seedFirst, ...seedRestParts] = (selectedFile.clientName || '').trim().split(/\s+/);
+          const seedLast = seedRestParts.join(' ').trim();
+          const newProfileId = crypto.randomUUID();
+          const seedPayload: any = {
+            _id: newProfileId,
+            firstName: profileUpdates.firstName ?? seedFirst ?? '',
+            lastName: profileUpdates.lastName ?? seedLast ?? '',
+            email: selectedFile.clientEmail || '',
+            ...profileUpdates,
+            // Make sure the right id wins even if profileUpdates spread above it
+            _id: newProfileId,
+          };
+          try {
+            await BaseCrudService.create('clientprofiles', seedPayload);
+          } catch (err: any) {
+            // eslint-disable-next-line no-console
+            console.error('Auto-create clientprofiles failed:', err);
+            throw new Error(
+              `Could not create or update the client profile: ${err?.message || 'unknown error'}. ` +
+              `File id: ${selectedFile._id}.`
+            );
+          }
+          // Re-link the file to the freshly-created profile so subsequent
+          // loads find it via tier 1 (getById).
+          try {
+            await BaseCrudService.update(CLIENT_FILES_COLLECTION, {
+              _id: selectedFile._id,
+              clientId: newProfileId,
+            } as any);
+            selectedFile.clientId = newProfileId;
+          } catch (err: any) {
+            // eslint-disable-next-line no-console
+            console.warn('Could not re-link file to new profile (non-fatal):', err);
+          }
           // eslint-disable-next-line no-console
-          console.warn(
-            'No clientprofiles row found for file.clientId =',
-            selectedFile.clientId,
-            '— profile fields not saved'
-          );
+          console.info('Auto-created clientprofiles row for orphan file:', selectedFile._id, '→ profile', newProfileId);
         }
       }
 
@@ -1872,24 +1935,59 @@ function SectionFileOpening({ file, editing, editValues, onChange }: SectionEdit
 function SectionClientIdentification({ file, editing, editValues, onChange }: SectionEditProps) {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  // Track edit transitions so we can refetch the profile right after a
+  // save (when `editing` flips false). Without this the section keeps
+  // showing the stale pre-save data and looks like nothing persisted —
+  // the actual write to CMS succeeded, the UI just never re-read.
+  const wasEditingRef = useRef(false);
 
   useEffect(() => {
     loadProfile();
   }, [file.clientId]);
 
+  // Refetch when edit mode closes (after a save).
+  useEffect(() => {
+    if (wasEditingRef.current && !editing) {
+      loadProfile();
+    }
+    wasEditingRef.current = editing;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editing]);
+
   const loadProfile = async () => {
     try {
-      // Try by row primary key first. If that misses because the file's
-      // clientId is the display label (CL-XXXXXX) rather than the row
-      // _id, fall back to scanning by the clientprofiles.clientId field.
-      // limit:1000 because the default 50-row page silently hides
-      // profiles past page 1.
-      let data = await BaseCrudService.getById<any>('clientprofiles', file.clientId);
+      // Three-tier resolution to find this file's client profile:
+      //   1. Direct getById on file.clientId — works for AssignmentsTab files
+      //      where clientId IS the profile row's _id.
+      //   2. Scan clientprofiles by `clientId` field — works for self-signup
+      //      files where the file's clientId is the display CL-XXXXXX label.
+      //   3. Match by clientName+email — works for orphaned files where
+      //      `loadFiles` fell back to `item._id` because clientId was empty.
+      // Without all three tiers, broken-link files silently show blank.
+      let data: any = null;
+      if (file.clientId) {
+        try {
+          data = await BaseCrudService.getById<any>('clientprofiles', file.clientId);
+        } catch { /* fall through */ }
+      }
       if (!data) {
         const { items } = await BaseCrudService.getAll<any>(
           'clientprofiles', undefined, { limit: 1000 }
         );
-        data = items?.find((p: any) => p.clientId === file.clientId) || null;
+        if (file.clientId) {
+          data = items?.find((p: any) => p.clientId === file.clientId) || null;
+        }
+        if (!data && file.clientName) {
+          const targetName = file.clientName.trim().toLowerCase();
+          const targetEmail = (file.clientEmail || '').trim().toLowerCase();
+          data = items?.find((p: any) => {
+            const pName = `${p.firstName || ''} ${p.lastName || ''}`.trim().toLowerCase();
+            const pEmail = (p.email || '').trim().toLowerCase();
+            if (pName && pName === targetName) return true;
+            if (targetEmail && pEmail && pEmail === targetEmail) return true;
+            return false;
+          }) || null;
+        }
       }
       setProfile(data);
     } catch (error) {
