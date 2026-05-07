@@ -1,11 +1,29 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle, CheckCircle, Pen, X } from 'lucide-react';
+import { AlertCircle, CheckCircle, Pen, X, Sparkles } from 'lucide-react';
+import {
+  getActiveParalegals,
+  getParalegalById,
+  DEFAULT_PARALEGAL_ID,
+} from '@/lib/paralegals';
 
 interface DocumentSignatureProps {
   documentId: string;
   documentName: string;
+  /**
+   * If supplied, the Quick Sign tab pre-selects this paralegal. Falls back
+   * to DEFAULT_PARALEGAL_ID otherwise. The dropdown is always available so
+   * either Jean-Francois or Candice can sign on the spot.
+   */
+  defaultParalegalId?: string;
+  /**
+   * Whether to show the "Quick Sign (cursive)" tab. Paralegals get this
+   * to electronically sign with their cursive name; clients should sign
+   * manually so we hide the tab in client-facing dialogs by passing
+   * false. Defaults to true (paralegal-style).
+   */
+  enableQuickSign?: boolean;
   onSignatureComplete: (signatureData: SignatureData) => void;
   onCancel: () => void;
 }
@@ -16,11 +34,33 @@ export interface SignatureData {
   signedTime: string;
   ipAddress: string;
   timestamp: Date;
+  /** Identifier of the paralegal who signed (when Quick Sign was used). */
+  signedByParalegalId?: string;
+  /** Display name of the signer (cursive auto-sign or typed). */
+  signedByParalegalName?: string;
+  /** 'cursive' for auto-typed Allura signature, 'drawn' for canvas ink. */
+  signatureMethod?: 'cursive' | 'drawn';
+}
+
+// Inject the Allura Google Font once per page so the cursive mode can
+// render the paralegal's name in a flowing script. Using a stable id
+// avoids inserting duplicate <link> tags if the dialog re-mounts.
+const ALLURA_LINK_ID = 'cowork-allura-cursive-font';
+function ensureAlluraLoaded() {
+  if (typeof document === 'undefined') return;
+  if (document.getElementById(ALLURA_LINK_ID)) return;
+  const link = document.createElement('link');
+  link.id = ALLURA_LINK_ID;
+  link.rel = 'stylesheet';
+  link.href = 'https://fonts.googleapis.com/css2?family=Allura&display=swap';
+  document.head.appendChild(link);
 }
 
 export default function DocumentSignature({
   documentId,
   documentName,
+  defaultParalegalId,
+  enableQuickSign = true,
   onSignatureComplete,
   onCancel,
 }: DocumentSignatureProps) {
@@ -31,9 +71,36 @@ export default function DocumentSignature({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Quick-sign (cursive auto-signature) state.
+  //   signMode: 'quick' = pick a paralegal, render their cursive name on
+  //     the canvas, and sign in one click. 'draw' = the existing manual
+  //     stylus / mouse / finger flow.
+  //   signedMethod: tracks how the current canvas ink got there so the
+  //     downstream record knows whether it's drawn or typed.
+  const [signMode, setSignMode] = useState<'quick' | 'draw'>(
+    enableQuickSign ? 'quick' : 'draw'
+  );
+  // Resolve the initial paralegal id once. The caller often passes
+  // `currentParalegalId` (a Wix user _id) or a doc.paralegalId that may
+  // not match any kebab-case id in our PARALEGALS table — in that case
+  // the <select> visually shows the first option (Jean-Francois) but
+  // selectedParalegalId stays stuck on the bad value, and "Sign as ..."
+  // throws "please choose a paralegal". Snap to a real id up front.
+  const [selectedParalegalId, setSelectedParalegalId] = useState<string>(() => {
+    if (defaultParalegalId && getParalegalById(defaultParalegalId)) {
+      return defaultParalegalId;
+    }
+    if (getParalegalById(DEFAULT_PARALEGAL_ID)) {
+      return DEFAULT_PARALEGAL_ID;
+    }
+    return getActiveParalegals()[0]?.id || '';
+  });
+  const [signedMethod, setSignedMethod] = useState<'cursive' | 'drawn' | null>(null);
+
   // Fetch IP address on mount
   useEffect(() => {
     fetchIPAddress();
+    ensureAlluraLoaded();
   }, []);
 
   // Dynamic canvas sizing for better mobile experience.
@@ -289,8 +356,89 @@ export default function DocumentSignature({
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       setHasSignature(false);
+      setSignedMethod(null);
     } catch (error) {
       console.error('Error clearing signature:', error);
+    }
+  };
+
+  /**
+   * Render the chosen paralegal's display name on the canvas in flowing
+   * Allura cursive. Auto-fits the font size so even long names stay
+   * inside the box. Returns true on success.
+   */
+  const paintCursiveSignature = async (name: string): Promise<boolean> => {
+    const canvas = canvasRef.current;
+    if (!canvas || !name) return false;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return false;
+
+    // Wait for Allura to actually be ready — otherwise the first paint
+    // falls back to a generic cursive and looks rough.
+    if (typeof (document as any).fonts?.load === 'function') {
+      try {
+        await (document as any).fonts.load('72px "Allura"');
+        await (document as any).fonts.ready;
+      } catch {
+        // Non-fatal — we'll still get a script-style fallback.
+      }
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+
+    // Clear any prior ink before stamping the cursive name.
+    ctx.clearRect(0, 0, w, h);
+
+    // Auto-shrink the font until the name fits within the canvas with a
+    // sensible side margin. Starts at the natural size; longer names land
+    // at smaller sizes automatically.
+    const sideMargin = 24;
+    const fontStack = '"Allura", "Segoe Script", "Brush Script MT", cursive';
+    let size = Math.min(96, Math.floor(h * 0.72));
+    ctx.fillStyle = '#1F2D5C';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    while (size > 24) {
+      ctx.font = `${size}px ${fontStack}`;
+      const measured = ctx.measureText(name).width;
+      if (measured <= w - sideMargin * 2) break;
+      size -= 4;
+    }
+    ctx.font = `${size}px ${fontStack}`;
+    ctx.fillText(name, w / 2, h / 2);
+
+    setHasSignature(true);
+    setSignedMethod('cursive');
+    return true;
+  };
+
+  /** "Quick Sign" tab handler — paint the selected paralegal's cursive name. */
+  const handleQuickPaint = async () => {
+    // Be forgiving: if selectedParalegalId got out of sync with the
+    // option list (defaultParalegalId from caller didn't match any
+    // known id), fall back to the first active paralegal instead of
+    // throwing "please choose a paralegal" at the user. We also stamp
+    // selectedParalegalId so the SignatureData payload carries the
+    // right id downstream.
+    let paralegal = getParalegalById(selectedParalegalId);
+    if (!paralegal) {
+      paralegal =
+        getParalegalById(DEFAULT_PARALEGAL_ID) ||
+        getActiveParalegals()[0];
+      if (paralegal) setSelectedParalegalId(paralegal.id);
+    }
+    if (!paralegal) {
+      setError('No paralegals are configured for electronic signing.');
+      return;
+    }
+    setError('');
+    const ok = await paintCursiveSignature(paralegal.displayName);
+    if (!ok) {
+      setError(
+        'Could not render the cursive signature. Please try again or use Draw mode.'
+      );
     }
   };
 
@@ -326,12 +474,22 @@ export default function DocumentSignature({
         hour12: true,
       });
 
+      // Tag the signature with which paralegal signed and how (cursive
+      // auto-sign vs hand-drawn). Downstream code can use this to log
+      // who signed and to render an attestation block.
+      const paralegal = signedMethod === 'cursive'
+        ? getParalegalById(selectedParalegalId)
+        : undefined;
+
       const signatureData: SignatureData = {
         signatureDataUrl,
         signedDate,
         signedTime,
         ipAddress,
         timestamp: now,
+        signedByParalegalId: paralegal?.id,
+        signedByParalegalName: paralegal?.displayName,
+        signatureMethod: signedMethod || 'drawn',
       };
 
       onSignatureComplete(signatureData);
@@ -362,24 +520,114 @@ export default function DocumentSignature({
           </div>
         )}
 
-        {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="font-heading text-base font-bold text-foreground mb-2 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-blue-600" />
-            How to Sign
-          </h3>
-          <ul className="font-paragraph text-sm text-foreground/80 space-y-1 ml-7">
-            <li>• Use your mouse or finger to draw your signature in the box below</li>
-            <li>• Sign naturally as you would on paper</li>
-            <li>• Click "Clear" if you want to start over</li>
-            <li>• Click "Sign Document" when you're satisfied with your signature</li>
-          </ul>
+        {/* Mode toggle — Quick Sign (cursive) vs Draw Manually. Hidden
+            for client-facing signing flows where Quick Sign isn't
+            appropriate (the cursive list is paralegal names). */}
+        {enableQuickSign && (
+        <div className="inline-flex rounded-lg border border-gray-200 p-1 bg-gray-50">
+          <button
+            type="button"
+            onClick={() => {
+              setSignMode('quick');
+              setError('');
+            }}
+            className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+              signMode === 'quick'
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-foreground/60 hover:text-foreground'
+            }`}
+          >
+            <Sparkles className="w-4 h-4 inline-block mr-1.5 -mt-0.5" />
+            Quick Sign (cursive)
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSignMode('draw');
+              setError('');
+            }}
+            className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+              signMode === 'draw'
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-foreground/60 hover:text-foreground'
+            }`}
+          >
+            <Pen className="w-4 h-4 inline-block mr-1.5 -mt-0.5" />
+            Draw Manually
+          </button>
         </div>
+        )}
 
-        {/* Signature Canvas */}
+        {signMode === 'quick' ? (
+          // ---- Quick Sign — pick paralegal, click button, done ----
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-4">
+            <div>
+              <h3 className="font-heading text-base font-bold text-foreground mb-1 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-blue-600" />
+                Sign electronically with your cursive signature
+              </h3>
+              <p className="font-paragraph text-sm text-foreground/70">
+                Choose which paralegal is signing and click the button —
+                your name will appear in flowing cursive on the document.
+                You can preview it below before submitting.
+              </p>
+            </div>
+            <div className="flex flex-col md:flex-row gap-3 md:items-end">
+              <div className="flex-1 space-y-1">
+                <label className="block font-paragraph font-semibold text-sm text-foreground">
+                  Sign as
+                </label>
+                <select
+                  value={selectedParalegalId}
+                  onChange={(e) => {
+                    setSelectedParalegalId(e.target.value);
+                    // If they already painted a cursive signature, repaint
+                    // with the new name so the preview stays in sync.
+                    if (signedMethod === 'cursive') {
+                      const next = getParalegalById(e.target.value);
+                      if (next) paintCursiveSignature(next.displayName);
+                    }
+                  }}
+                  className="w-full text-sm border border-gray-300 rounded-lg p-2 bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                >
+                  {getActiveParalegals().map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.displayName} (LSO #{p.lsoNumber})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <Button
+                type="button"
+                onClick={handleQuickPaint}
+                className="bg-primary hover:bg-primary/90 text-white font-semibold flex items-center gap-2"
+              >
+                <Sparkles className="w-4 h-4" />
+                Sign as {(getParalegalById(selectedParalegalId)?.firstName) || 'paralegal'}
+              </Button>
+            </div>
+          </div>
+        ) : (
+          // ---- Draw mode — original mouse/touch instructions ----
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="font-heading text-base font-bold text-foreground mb-2 flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-blue-600" />
+              How to Sign
+            </h3>
+            <ul className="font-paragraph text-sm text-foreground/80 space-y-1 ml-7">
+              <li>• Use your mouse or finger to draw your signature in the box below</li>
+              <li>• Sign naturally as you would on paper</li>
+              <li>• Click "Clear" if you want to start over</li>
+              <li>• Click "Sign Document" when you're satisfied with your signature</li>
+            </ul>
+          </div>
+        )}
+
+        {/* Signature Canvas — used by BOTH modes (cursive paints into it,
+             manual drawing also writes into it). */}
         <div className="space-y-3">
           <label className="block font-paragraph font-semibold text-foreground text-lg">
-            Your Signature *
+            {signMode === 'quick' ? 'Signature Preview *' : 'Your Signature *'}
           </label>
           <div className="border-2 border-dashed border-primary/40 rounded-lg overflow-hidden bg-white shadow-sm hover:border-primary/60 transition-colors">
             <canvas
@@ -389,21 +637,24 @@ export default function DocumentSignature({
               // size × DPR so 1 touch pixel = 1 drawing pixel.
               width={700}
               height={220}
-              // touchAction:none so the browser doesn't try to scroll/zoom
-              // while the user is signing. Min-height keeps the box
-              // usable on phones; aspect-ratio gives a consistent feel
-              // across viewports.
+              // In Quick Sign mode the canvas is read-only (no drawing);
+              // we still set touchAction so a scroll gesture inside the
+              // box scrolls the page instead of getting captured.
               style={{
-                touchAction: 'none',
+                touchAction: signMode === 'quick' ? 'auto' : 'none',
                 minHeight: '180px',
                 aspectRatio: '700 / 220',
                 display: 'block',
               }}
-              className="w-full cursor-crosshair touch-none select-none"
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={stopDrawing}
-              onMouseLeave={stopDrawing}
+              className={`w-full select-none ${
+                signMode === 'draw'
+                  ? 'cursor-crosshair touch-none'
+                  : 'cursor-default'
+              }`}
+              onMouseDown={signMode === 'draw' ? startDrawing : undefined}
+              onMouseMove={signMode === 'draw' ? draw : undefined}
+              onMouseUp={signMode === 'draw' ? stopDrawing : undefined}
+              onMouseLeave={signMode === 'draw' ? stopDrawing : undefined}
               // Touch is handled by native listeners (see useEffect above)
               // because React touch events are passive — preventDefault is
               // a no-op on them so the browser still treats finger
@@ -416,8 +667,12 @@ export default function DocumentSignature({
               {hasSignature ? (
                 <span className="text-green-600 font-semibold flex items-center gap-1">
                   <CheckCircle className="w-4 h-4" />
-                  Signature captured
+                  {signedMethod === 'cursive'
+                    ? `Cursive signature ready for ${getParalegalById(selectedParalegalId)?.displayName || 'paralegal'}`
+                    : 'Signature captured'}
                 </span>
+              ) : signMode === 'quick' ? (
+                'Click "Sign as ..." above to render your cursive signature here'
               ) : (
                 'Draw your signature in the box above'
               )}

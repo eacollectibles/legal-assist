@@ -78,8 +78,10 @@ export async function createUploadToken(params: CreateUploadTokenParams): Promis
     allowedPurpose: params.allowedPurpose || 'UPLOAD_TO_CLIENT_PORTAL',
     expiryDate: expiryDate.toISOString(),
     isActive: true,
-    maxFileSize: params.maxFileSize || 10485760, // 10MB default
-    allowedFileTypes: params.allowedFileTypes || 'pdf,doc,docx,jpg,jpeg,png',
+    maxFileSize: params.maxFileSize || 104857600, // 100MB default
+    allowedFileTypes:
+      params.allowedFileTypes ||
+      'pdf,doc,docx,xls,xlsx,csv,txt,rtf,jpg,jpeg,png,gif,webp,heic,heif,bmp,tif,tiff,mp4,mov',
     usageCount: 0,
     maxUsageCount: params.maxUsageCount || 0, // 0 = unlimited
     createdDate: now.toISOString(),

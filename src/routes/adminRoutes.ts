@@ -11,6 +11,7 @@ const GrantAdminPage = lazy(() => import('@/components/pages/GrantAdminPage'));
 const DocumentWorkflowPage = lazy(() => import('@/components/pages/DocumentWorkflowPage'));
 const UploadTokenManagementPage = lazy(() => import('@/components/pages/UploadTokenManagementPage'));
 const PublicUploadPage = lazy(() => import('@/components/pages/PublicUploadPage'));
+const PublicSignPage = lazy(() => import('@/components/pages/PublicSignPage'));
 const MeetingDashboardPage = lazy(() => import('@/components/pages/MeetingDashboardPage'));
 const MeetingRequestPage = lazy(() => import('@/components/pages/MeetingRequestPage'));
 const BookingPage = lazy(() => import('@/components/pages/BookingPage'));
@@ -46,6 +47,8 @@ export const adminRoutes = [
   { path: '/admin/documents', element: DocumentWorkflowPage },
   { path: '/admin/upload-tokens', element: UploadTokenManagementPage },
   { path: '/upload/:token', element: PublicUploadPage },
+  // Public e-signing — no account required, mints from sign-token-service
+  { path: '/sign/:token', element: PublicSignPage },
   
   // Meeting/Booking Management
   { path: '/meeting-dashboard', element: MeetingDashboardPage },

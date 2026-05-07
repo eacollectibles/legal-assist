@@ -59,12 +59,25 @@ export default function SignaturesTab() {
         signingDocument.documentName || 'Document'
       );
 
+      const signerName =
+        signatureData.signedByParalegalName || 'Paralegal';
+      const signerId =
+        signatureData.signedByParalegalId || currentParalegalId;
+      const methodLabel =
+        signatureData.signatureMethod === 'cursive'
+          ? 'cursive electronic signature'
+          : 'hand-drawn electronic signature';
+
       const updatedDoc: GeneratedDocuments = {
         ...signingDocument,
         status: 'Signed',
         signedDate: signatureData.timestamp,
         signedDocumentUrl: signedPdfDataUrl,
-      };
+        // Persist who signed so the row's badge / audit log can show it.
+        signedByParalegalId: signerId,
+        signedByParalegalName: signerName,
+        signatureMethod: signatureData.signatureMethod || 'drawn',
+      } as any;
 
       await BaseCrudService.update('generateddocuments', updatedDoc);
 
@@ -74,11 +87,12 @@ export default function SignaturesTab() {
 
       await BaseCrudService.create('activitylogs', {
         _id: crypto.randomUUID(),
-        userId: currentParalegalId,
+        userId: signerId,
         activityType: 'document_signed',
-        activityDescription: `Document "${signingDocument.documentName}" was electronically signed by paralegal`,
+        activityDescription:
+          `Document "${signingDocument.documentName}" was signed by ${signerName} using a ${methodLabel}`,
         performedBy: 'paralegal@legalservices.com',
-        performedByName: 'Paralegal',
+        performedByName: signerName,
         timestamp: signatureData.timestamp.toISOString(),
         relatedItemId: signingDocument._id
       });
@@ -448,6 +462,12 @@ export default function SignaturesTab() {
         <DocumentSignature
           documentId={signingDocument._id}
           documentName={signingDocument.documentName || 'Document'}
+          // If the document was generated for a specific paralegal (auto-
+          // sign at generation time), pre-select that paralegal in the
+          // signing dialog. Otherwise default to whoever's logged in.
+          defaultParalegalId={
+            (signingDocument as any).paralegalId || currentParalegalId
+          }
           onSignatureComplete={handleSignatureComplete}
           onCancel={() => setSigningDocument(null)}
         />

@@ -363,6 +363,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
             <DocumentSignature
               documentId={signingDocument._id}
               documentName={signingDocument.documentName || 'Untitled Document'}
+              // Clients sign manually — Quick Sign is paralegal-only.
+              enableQuickSign={false}
               onSignatureComplete={handleSignatureComplete}
               onCancel={() => setSigningDocument(null)}
             />

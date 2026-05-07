@@ -41,7 +41,7 @@ export default function UploadLinkGenerator({
   const [expiryHours, setExpiryHours] = useState('72');
   const [maxUsageCount, setMaxUsageCount] = useState('0');
   const [allowedFileTypes, setAllowedFileTypes] = useState('pdf,doc,docx,jpg,jpeg,png');
-  const [maxFileSize, setMaxFileSize] = useState('10485760');
+  const [maxFileSize, setMaxFileSize] = useState('104857600');
   const [purpose, setPurpose] = useState('UPLOAD_TO_CLIENT_PORTAL');
 
   const handleGenerate = async () => {
@@ -202,6 +202,7 @@ export default function UploadLinkGenerator({
                   <SelectItem value="10485760">10 MB</SelectItem>
                   <SelectItem value="20971520">20 MB</SelectItem>
                   <SelectItem value="52428800">50 MB</SelectItem>
+                  <SelectItem value="104857600">100 MB</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -42,3 +42,13 @@ docs/*
 !.yarn/sdks
 !.yarn/versions
 push-to-github.bat 
+
+# Local-only generated artifacts (PDFs, signatures, scratch).
+outputs/
+
+
+# Python bytecode caches
+__pycache__/
+*.pyc
+*.pyo
+

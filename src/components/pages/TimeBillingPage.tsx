@@ -87,6 +87,8 @@ const BILLING_MODELS = [
   { value: 'hourly', label: 'Hourly', color: 'bg-blue-100 text-blue-800' },
   { value: 'fixed', label: 'Fixed Fee', color: 'bg-purple-100 text-purple-800' },
   { value: 'contingency', label: 'Contingency', color: 'bg-amber-100 text-amber-800' },
+  { value: 'retainer_replenishment', label: 'Retainer Replenishment', color: 'bg-emerald-100 text-emerald-800' },
+  { value: 'custom', label: 'Custom / One-time', color: 'bg-slate-100 text-slate-800' },
 ];
 
 const INVOICE_STATUSES = [
@@ -426,11 +428,17 @@ export default function TimeBillingPage() {
   // GENERATE INVOICE
   // ============================================================
 
+  // Invoice form. `billingModel` is an OVERRIDE — null/empty means
+  // "use whatever the file's RateConfig says". `lineItems` lets the
+  // paralegal describe what the invoice is for ("Demand letter — $250",
+  // "Hearing prep — $400") instead of always charging from the docket.
   const [invoiceForm, setInvoiceForm] = useState({
     fileId: '',
     notes: '',
     includeHst: true,
     dueInDays: 30,
+    billingModel: '' as string,         // '' = inherit from file rate
+    lineItems: [] as { description: string; amount: number }[],
   });
 
   const unbilledForFile = useMemo(() => {
@@ -465,21 +473,39 @@ export default function TimeBillingPage() {
 
     const fileRate = getFileRate(invoiceForm.fileId);
     const rateMeta = fileRate ? parseRateMeta(fileRate) : {};
-    const model = rateMeta.billingModel || 'hourly';
+    // Override > file's rate model > 'hourly' default.
+    const model =
+      invoiceForm.billingModel ||
+      rateMeta.billingModel ||
+      'hourly';
 
     let subtotal = 0;
     const entryIds: string[] = [];
 
+    // Sum any user-supplied line items first — this is the "what is this
+    // invoice for?" portion. Works alongside any model.
+    const lineItemTotal = invoiceForm.lineItems.reduce(
+      (s, li) => s + (Number(li.amount) || 0),
+      0
+    );
+    subtotal += lineItemTotal;
+
     if (model === 'fixed') {
-      subtotal = rateMeta.fixedFeeAmount || 0;
+      // For fixed-fee, charge the configured fee unless line items already
+      // describe a different amount (e.g. paralegal billing only a portion).
+      if (lineItemTotal === 0) subtotal += rateMeta.fixedFeeAmount || 0;
     } else if (model === 'hourly') {
+      // Roll any unbilled docket entries into the invoice.
       unbilledForFile.forEach(d => {
         subtotal += d.amount || 0;
         entryIds.push(d._id);
       });
     } else if (model === 'contingency') {
-      // Contingency amount is entered manually at resolution
-      subtotal = 0;
+      // Contingency amount is paralegal-entered as a line item at
+      // resolution time — already counted in lineItemTotal above.
+    } else if (model === 'retainer_replenishment' || model === 'custom') {
+      // These models depend entirely on the line items the paralegal
+      // typed. lineItemTotal already counted above.
     }
 
     const hstAmount = invoiceForm.includeHst ? subtotal * HST_RATE : 0;
@@ -509,6 +535,11 @@ export default function TimeBillingPage() {
           notes: invoiceForm.notes,
           billingModel: model,
           dueInDays: invoiceForm.dueInDays,
+          // Persist the explicit "what this invoice is for" lines so
+          // they show up in the invoice detail view & on the PDF.
+          customLineItems: invoiceForm.lineItems.filter(
+            li => li.description.trim() || (Number(li.amount) || 0) > 0
+          ),
         }),
         paymentMethod: model,
         recordedBy: 'paralegal',
@@ -530,7 +561,14 @@ export default function TimeBillingPage() {
 
       showFeedback('success', `Invoice ${invoiceNumber} generated.`);
       setShowInvoiceDialog(false);
-      setInvoiceForm({ fileId: '', notes: '', includeHst: true, dueInDays: 30 });
+      setInvoiceForm({
+        fileId: '',
+        notes: '',
+        includeHst: true,
+        dueInDays: 30,
+        billingModel: '',
+        lineItems: [],
+      });
       loadData();
     } catch (err: any) {
       showFeedback('error', err.message || 'Failed to generate invoice.');
@@ -1451,53 +1489,228 @@ export default function TimeBillingPage() {
                 </select>
               </div>
 
-              {invoiceForm.fileId && (
-                <>
-                  {(() => {
-                    const rate = getFileRate(invoiceForm.fileId);
-                    const meta = rate ? parseRateMeta(rate) : {};
-                    const model = meta.billingModel || 'hourly';
+              {invoiceForm.fileId && (() => {
+                const rate = getFileRate(invoiceForm.fileId);
+                const meta = rate ? parseRateMeta(rate) : {};
+                const fileModel = meta.billingModel || 'hourly';
+                const effectiveModel = invoiceForm.billingModel || fileModel;
+                const lineItemTotal = invoiceForm.lineItems.reduce(
+                  (s, li) => s + (Number(li.amount) || 0),
+                  0
+                );
+                const docketTotal = unbilledForFile.reduce(
+                  (s, d) => s + (d.amount || 0),
+                  0
+                );
+                const fixedFee =
+                  effectiveModel === 'fixed' && lineItemTotal === 0
+                    ? meta.fixedFeeAmount || 0
+                    : 0;
+                const previewSubtotal =
+                  lineItemTotal +
+                  (effectiveModel === 'hourly' ? docketTotal : 0) +
+                  fixedFee;
 
-                    return (
-                      <div className="bg-[#F0EBE3] rounded-lg p-4 space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-[#6B5B50]">Billing model:</span>
-                          <Badge className={BILLING_MODELS.find(m => m.value === model)?.color || ''}>
-                            {model}
-                          </Badge>
-                        </div>
-                        {model === 'hourly' && (
-                          <>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-[#6B5B50]">Unbilled entries:</span>
-                              <span className="font-medium">{unbilledForFile.length}</span>
-                            </div>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-[#6B5B50]">Subtotal:</span>
-                              <span className="font-bold text-[#4A2C23]">
-                                {formatCurrency(unbilledForFile.reduce((s, d) => s + (d.amount || 0), 0))}
-                              </span>
-                            </div>
-                          </>
+                return (
+                  <>
+                    {/* Billing model picker (override). */}
+                    <div>
+                      <label className="text-sm font-medium text-[#4A2C23] block mb-1">
+                        Billing model *
+                      </label>
+                      <select
+                        value={invoiceForm.billingModel || fileModel}
+                        onChange={(e) =>
+                          setInvoiceForm((f) => ({
+                            ...f,
+                            billingModel: e.target.value,
+                          }))
+                        }
+                        className="w-full border border-[#D4C5B9] rounded-lg px-3 py-2 bg-white"
+                      >
+                        {BILLING_MODELS.map((m) => (
+                          <option key={m.value} value={m.value}>
+                            {m.label}
+                            {m.value === fileModel ? ' (file default)' : ''}
+                          </option>
+                        ))}
+                      </select>
+                      {invoiceForm.billingModel &&
+                        invoiceForm.billingModel !== fileModel && (
+                          <p className="text-xs text-amber-700 mt-1">
+                            Overriding the file's billing model
+                            (was: {BILLING_MODELS.find((m) => m.value === fileModel)?.label}).
+                          </p>
                         )}
-                        {model === 'fixed' && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-[#6B5B50]">Fixed fee:</span>
-                            <span className="font-bold text-[#4A2C23]">
-                              {formatCurrency(meta.fixedFeeAmount || 0)}
-                            </span>
-                          </div>
-                        )}
-                        {model === 'contingency' && (
-                          <div className="text-sm text-amber-700">
-                            Contingency ({meta.contingencyPercent || 0}%) — amount calculated at resolution.
-                          </div>
-                        )}
+                    </div>
+
+                    {/* What is this invoice for? line items. */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-sm font-medium text-[#4A2C23]">
+                          What is this invoice for?
+                        </label>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            setInvoiceForm((f) => ({
+                              ...f,
+                              lineItems: [
+                                ...f.lineItems,
+                                { description: '', amount: 0 },
+                              ],
+                            }))
+                          }
+                          className="border-[#D4C5B9] text-[#4A2C23] h-7 px-2 text-xs"
+                        >
+                          + Add line item
+                        </Button>
                       </div>
-                    );
-                  })()}
-                </>
-              )}
+                      {invoiceForm.lineItems.length === 0 ? (
+                        <p className="text-xs italic text-[#6B5B50] px-3 py-2 bg-[#F0EBE3]/50 rounded-lg">
+                          {effectiveModel === 'hourly'
+                            ? `No line items added — invoice will use ${unbilledForFile.length} unbilled docket entr${unbilledForFile.length === 1 ? 'y' : 'ies'}.`
+                            : effectiveModel === 'fixed'
+                              ? `No line items added — invoice will use the configured fixed fee of ${formatCurrency(meta.fixedFeeAmount || 0)}.`
+                              : 'Add at least one line item describing what is being billed.'}
+                        </p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {invoiceForm.lineItems.map((li, idx) => (
+                            <li
+                              key={idx}
+                              className="flex gap-2 items-start"
+                            >
+                              <Input
+                                value={li.description}
+                                onChange={(e) =>
+                                  setInvoiceForm((f) => ({
+                                    ...f,
+                                    lineItems: f.lineItems.map((x, i) =>
+                                      i === idx
+                                        ? { ...x, description: e.target.value }
+                                        : x
+                                    ),
+                                  }))
+                                }
+                                placeholder='e.g. "Demand letter — drafting and service"'
+                                className="flex-1 border-[#D4C5B9]"
+                              />
+                              <Input
+                                type="number"
+                                min={0}
+                                step="0.01"
+                                value={li.amount || ''}
+                                onChange={(e) =>
+                                  setInvoiceForm((f) => ({
+                                    ...f,
+                                    lineItems: f.lineItems.map((x, i) =>
+                                      i === idx
+                                        ? {
+                                            ...x,
+                                            amount: parseFloat(e.target.value) || 0,
+                                          }
+                                        : x
+                                    ),
+                                  }))
+                                }
+                                placeholder="Amount"
+                                className="w-28 border-[#D4C5B9]"
+                              />
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                onClick={() =>
+                                  setInvoiceForm((f) => ({
+                                    ...f,
+                                    lineItems: f.lineItems.filter(
+                                      (_, i) => i !== idx
+                                    ),
+                                  }))
+                                }
+                                className="border-red-200 text-red-700 hover:bg-red-50 h-9 px-2"
+                              >
+                                ×
+                              </Button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    {/* Live summary panel — adapts to selected model. */}
+                    <div className="bg-[#F0EBE3] rounded-lg p-4 space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-[#6B5B50]">Effective model:</span>
+                        <Badge
+                          className={
+                            BILLING_MODELS.find((m) => m.value === effectiveModel)
+                              ?.color || ''
+                          }
+                        >
+                          {BILLING_MODELS.find((m) => m.value === effectiveModel)
+                            ?.label || effectiveModel}
+                        </Badge>
+                      </div>
+                      {effectiveModel === 'hourly' && (
+                        <div className="flex justify-between text-sm">
+                          <span className="text-[#6B5B50]">
+                            Unbilled docket entries:
+                          </span>
+                          <span className="font-medium">
+                            {unbilledForFile.length} ({formatCurrency(docketTotal)})
+                          </span>
+                        </div>
+                      )}
+                      {effectiveModel === 'fixed' && lineItemTotal === 0 && (
+                        <div className="flex justify-between text-sm">
+                          <span className="text-[#6B5B50]">Fixed fee:</span>
+                          <span className="font-medium">
+                            {formatCurrency(meta.fixedFeeAmount || 0)}
+                          </span>
+                        </div>
+                      )}
+                      {effectiveModel === 'contingency' && lineItemTotal === 0 && (
+                        <div className="text-xs text-amber-700">
+                          Contingency ({meta.contingencyPercent || 0}%) —
+                          add a line item with the resolved amount when ready.
+                        </div>
+                      )}
+                      {invoiceForm.lineItems.length > 0 && (
+                        <div className="flex justify-between text-sm">
+                          <span className="text-[#6B5B50]">Line items:</span>
+                          <span className="font-medium">
+                            {formatCurrency(lineItemTotal)}
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex justify-between text-sm pt-2 border-t border-[#D4C5B9]">
+                        <span className="text-[#6B5B50]">Subtotal:</span>
+                        <span className="font-bold text-[#4A2C23]">
+                          {formatCurrency(previewSubtotal)}
+                        </span>
+                      </div>
+                      {invoiceForm.includeHst && (
+                        <div className="flex justify-between text-xs text-[#6B5B50]">
+                          <span>HST (13%):</span>
+                          <span>{formatCurrency(previewSubtotal * HST_RATE)}</span>
+                        </div>
+                      )}
+                      {invoiceForm.includeHst && (
+                        <div className="flex justify-between text-sm font-bold text-[#4A2C23]">
+                          <span>Total:</span>
+                          <span>
+                            {formatCurrency(previewSubtotal * (1 + HST_RATE))}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -1585,6 +1798,31 @@ export default function TimeBillingPage() {
                       <div className="text-sm">{formatDate(meta.dueDate)}</div>
                     </div>
                   </div>
+
+                  {/* Custom "what is this invoice for" line items */}
+                  {Array.isArray(meta.customLineItems) && meta.customLineItems.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-semibold text-[#4A2C23] mb-2">What this invoice is for</h4>
+                      <table className="w-full text-xs">
+                        <thead className="bg-[#F0EBE3]">
+                          <tr>
+                            <th className="text-left p-2">Description</th>
+                            <th className="text-right p-2">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#E8DDD3]">
+                          {meta.customLineItems.map((li: any, i: number) => (
+                            <tr key={i}>
+                              <td className="p-2">{li.description || '—'}</td>
+                              <td className="p-2 text-right font-mono">
+                                {formatCurrency(Number(li.amount) || 0)}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
 
                   {/* Line items */}
                   {lineItems.length > 0 && (

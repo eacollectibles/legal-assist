@@ -453,6 +453,8 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
         'fileNumber', 'matterType', 'matterDescription', 'tribunal',
         'opposingParties', 'fileStatus', 'courtFileNumber',
         'conflictStatus', 'notes', 'conflictNotes',
+        // Section A — assigned paralegal lives on the file row
+        'assignedParalegalName', 'assignedParalegalId',
       ]);
 
       // Helper: coerce date-string inputs to Date so Wix datetime fields
@@ -597,14 +599,18 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
         }
       }
 
-      // Mark section as complete in local state
+      // Mark section as complete in local state — and merge in any
+      // file-level edits (matterType, tribunal, assignedParalegalName,
+      // assignedParalegalId, etc.) so the UI shows the new values right
+      // away without needing a hard refresh.
       setFiles(prev => prev.map(f =>
         f._id === selectedFile._id
-          ? { ...f, sections: updatedSections, complianceScore: newScore }
+          ? { ...f, ...fileUpdates, sections: updatedSections, complianceScore: newScore }
           : f
       ));
       setSelectedFile({
         ...selectedFile,
+        ...fileUpdates,
         sections: updatedSections,
         complianceScore: newScore,
       });
@@ -1871,21 +1877,75 @@ function SectionFileOpening({ file, editing, editValues, onChange }: SectionEdit
     }
   };
 
+  // Build dropdown option lists once per render.
+  const matterTypeOptions = Object.entries(MATTER_TYPES).map(([key, { label }]) => ({
+    value: key,
+    label,
+  }));
+  const paralegalOptions = getActiveParalegals().map((p) => ({
+    value: p.displayName,
+    label: `${p.displayName} (LSO #${p.lsoNumber})`,
+  }));
+
+  // Tribunal/Court suggestion list — paralegals can free-type but we
+  // give them the common Ontario options as a dropdown via <datalist>.
+  const tribunalOptions = [
+    'Ontario Court of Justice',
+    'Superior Court of Justice',
+    'Small Claims Court',
+    'Landlord and Tenant Board',
+    'Human Rights Tribunal of Ontario',
+    'Social Benefits Tribunal',
+    'License Appeal Tribunal',
+    'Workplace Safety and Insurance Appeals Tribunal',
+    'Provincial Offences Court',
+    'Other / N/A',
+  ];
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field label="File Number" value={file.fileNumber} icon={FileText} />
         <Field label="Date Opened" value={new Date(file.dateOpened).toLocaleDateString('en-CA')} icon={Calendar} />
-        <Field label="Matter Type" value={MATTER_TYPES[file.matterType]?.label} icon={Scale} />
         <EditableField
-          label="Tribunal/Court"
-          value={file.tribunal}
-          fieldKey="tribunal"
-          icon={Building2}
+          label="Matter Type"
+          value={MATTER_TYPES[file.matterType]?.label || file.matterType}
+          fieldKey="matterType"
+          icon={Scale}
           editing={editing}
           editValues={editValues}
           onChange={onChange}
+          type="select"
+          options={matterTypeOptions}
         />
+        {editing ? (
+          <div className="space-y-1">
+            <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Tribunal/Court</label>
+            <input
+              list="tribunal-options"
+              type="text"
+              value={editValues['tribunal'] ?? file.tribunal ?? ''}
+              onChange={(e) => onChange('tribunal', e.target.value)}
+              placeholder="Choose or type the tribunal/court"
+              className="w-full text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            />
+            <datalist id="tribunal-options">
+              {tribunalOptions.map((t) => (
+                <option key={t} value={t} />
+              ))}
+            </datalist>
+          </div>
+        ) : (
+          <EditableField
+            label="Tribunal/Court"
+            value={file.tribunal}
+            fieldKey="tribunal"
+            icon={Building2}
+            editing={editing}
+            editValues={editValues}
+            onChange={onChange}
+          />
+        )}
         <EditableField
           label="Assigned Paralegal"
           value={file.assignedParalegalName}
@@ -1893,7 +1953,19 @@ function SectionFileOpening({ file, editing, editValues, onChange }: SectionEdit
           icon={User}
           editing={editing}
           editValues={editValues}
-          onChange={onChange}
+          onChange={(k, v) => {
+            // When the paralegal is changed, also stamp the paralegal id
+            // so downstream features (retainer signing, document workflow)
+            // can resolve back to the licence record without re-matching
+            // by name. Both fields are whitelisted in handleSaveSection.
+            onChange(k, v);
+            const match = getActiveParalegals().find(
+              (p) => p.displayName === v
+            );
+            onChange('assignedParalegalId', match?.id || '');
+          }}
+          type="select"
+          options={paralegalOptions}
         />
         <Field label="File Status" value={file.fileStatus.charAt(0).toUpperCase() + file.fileStatus.slice(1)} icon={FolderOpen} />
       </div>

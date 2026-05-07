@@ -20,12 +20,41 @@ import DocumentSignature, { SignatureData } from '@/components/DocumentSignature
 import UploadLinkGenerator from '@/components/UploadLinkGenerator';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
 import { sendSignedDocumentEmail, sendDocumentEmail, EmailActivityLog } from '@/lib/email-service';
+import { getActiveParalegals, DEFAULT_PARALEGAL_ID, getParalegalById } from '@/lib/paralegals';
+
+// ============================================================
+// LSO BY-LAW 7.1 SECTIONS (A–K)
+// ============================================================
+// Templates are grouped by which compliance section they support so
+// paralegals can find the right template quickly when working a file.
+// A: File Opening, B: Client ID, C: Verification, D: Source of Funds,
+// E: Conflict, F: Retainer, G: Financials, H: Communications,
+// I: Documents, J: File Closing, K: Contingency.
+export const LSO_SECTIONS: { value: string; label: string }[] = [
+  { value: 'A', label: 'A — File Opening' },
+  { value: 'B', label: 'B — Client Identification' },
+  { value: 'C', label: 'C — Client Verification' },
+  { value: 'D', label: 'D — Source of Funds' },
+  { value: 'E', label: 'E — Conflict of Interest' },
+  { value: 'F', label: 'F — Retainer Agreement' },
+  { value: 'G', label: 'G — Financial Records' },
+  { value: 'H', label: 'H — Communication Log' },
+  { value: 'I', label: 'I — Case Documents' },
+  { value: 'J', label: 'J — File Closing' },
+  { value: 'K', label: 'K — Contingency Plan' },
+  { value: 'OTHER', label: 'Uncategorized' },
+];
+
+const sectionLabel = (v?: string) =>
+  LSO_SECTIONS.find(s => s.value === (v || 'OTHER'))?.label || 'Uncategorized';
 
 interface DocumentTemplate {
   _id: string;
   templateName?: string;
   templateType?: string;
   templateContent?: string;
+  /** LSO By-Law 7.1 section this template belongs to (A-K, or 'OTHER'). */
+  lsoSection?: string;
   createdBy?: string;
   isActive?: boolean;
   _createdDate?: Date | string;
@@ -77,6 +106,8 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
     templateName: '',
     templateType: 'Authorization Letter',
     templateContent: '',
+    /** LSO By-Law 7.1 section this template belongs to */
+    lsoSection: 'OTHER',
     isActive: true
   });
 
@@ -86,6 +117,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const [selectedClientId, setSelectedClientId] = useState('');
   const [documentName, setDocumentName] = useState('');
   const [requiresSignature, setRequiresSignature] = useState(true);
+
+  // Paralegal selector for the generate flow — drives the auto-cursive
+  // signature block when "Auto-sign on behalf of paralegal" is checked.
+  const [selectedParalegalId, setSelectedParalegalId] = useState<string>(DEFAULT_PARALEGAL_ID);
+  const [autoSignAsParalegal, setAutoSignAsParalegal] = useState<boolean>(false);
 
   // Retainer-specific fields
   const [selectedFeeModel, setSelectedFeeModel] = useState('Hourly Retainer');
@@ -105,9 +141,75 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const [isSignatureDialogOpen, setIsSignatureDialogOpen] = useState(false);
   const [documentToSign, setDocumentToSign] = useState<GeneratedDocument | null>(null);
 
+  // ----------------------------------------------------------------
+  // Send-to-Client-File state
+  // ----------------------------------------------------------------
+  // Lets the paralegal route a (typically signed) generated document
+  // into the LSO Compliance section of a client file. Picks which file
+  // and which compliance section (A–K) it belongs to.
+  const [isFileDispatchOpen, setIsFileDispatchOpen] = useState(false);
+  const [dispatchingDocument, setDispatchingDocument] =
+    useState<GeneratedDocument | null>(null);
+  const [dispatchClientFiles, setDispatchClientFiles] = useState<any[]>([]);
+  const [dispatchTargetFileId, setDispatchTargetFileId] = useState('');
+  const [dispatchSectionKey, setDispatchSectionKey] = useState('retainerAgreement');
+  const [dispatchNotes, setDispatchNotes] = useState('');
+  const [isDispatching, setIsDispatching] = useState(false);
+
+  // ----------------------------------------------------------------
+  // Send-Sign-Link state — public e-signature flow.
+  // ----------------------------------------------------------------
+  const [isSignLinkOpen, setIsSignLinkOpen] = useState(false);
+  const [signLinkDocument, setSignLinkDocument] =
+    useState<GeneratedDocument | null>(null);
+  const [signLinkRecipientName, setSignLinkRecipientName] = useState('');
+  const [signLinkRecipientEmail, setSignLinkRecipientEmail] = useState('');
+  const [signLinkExpiryDays, setSignLinkExpiryDays] = useState(7);
+  const [signLinkBuilding, setSignLinkBuilding] = useState(false);
+  const [signLinkResult, setSignLinkResult] = useState<string | null>(null);
+
+  // ----------------------------------------------------------------
+  // LSO compliance sections (matches ClientFileManagementPage's A–K
+  // section keys — used as documentCategory: section_<key> in
+  // clientdocuments). Keep in sync with that file's LSO_SECTIONS.
+  // ----------------------------------------------------------------
+  const FILE_LSO_SECTIONS: { key: string; label: string }[] = [
+    { key: 'fileOpening', label: 'A — File Opening & Matter Info' },
+    { key: 'clientIdentification', label: 'B — Client Identification' },
+    { key: 'clientVerification', label: 'C — Client Verification' },
+    { key: 'sourceOfFunds', label: 'D — Source of Funds' },
+    { key: 'conflictCheck', label: 'E — Conflict of Interest' },
+    { key: 'retainerAgreement', label: 'F — Retainer Agreement' },
+    { key: 'financialRecords', label: 'G — Financial Records' },
+    { key: 'communicationLog', label: 'H — Communication Log' },
+    { key: 'caseDocuments', label: 'I — Case Documents' },
+    { key: 'fileClosing', label: 'J — File Closing' },
+    { key: 'contingencyPlan', label: 'K — Contingency Plan' },
+  ];
+
   useEffect(() => {
     loadData();
   }, []);
+
+  // ----------------------------------------------------------------
+  // Strip legacy <form> scaffolding from a template body. Returns the
+  // cleaned string and a `changed` flag so the caller knows whether to
+  // PATCH the CMS row. Used both at generation time (defensive) and at
+  // load time (one-pass migration that fixes templates at source).
+  // ----------------------------------------------------------------
+  const cleanTemplateContent = (raw: string): { cleaned: string; changed: boolean } => {
+    if (!raw) return { cleaned: '', changed: false };
+    const before = raw;
+    const cleaned = raw
+      .replace(/<form[\s\S]*?<\/form>/gi, '')
+      .replace(/<input\b[^>]*\/?>/gi, '')
+      .replace(/<button\b[\s\S]*?<\/button>/gi, '')
+      .replace(/<select\b[\s\S]*?<\/select>/gi, '')
+      .replace(/<textarea\b[\s\S]*?<\/textarea>/gi, '')
+      .replace(/CONFIGURE\s+FEE\s+STRUCTURE/gi, '')
+      .replace(/Select\s+the\s+fee\s+type\s+and\s+enter\s+the\s+details\s+below\.?/gi, '');
+    return { cleaned, changed: cleaned !== before };
+  };
 
   const loadData = async () => {
     setIsLoading(true);
@@ -118,13 +220,290 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         BaseCrudService.getAll<ClientProfile>('clientprofiles')
       ]);
 
-      setTemplates(templatesRes.items);
+      // -----------------------------------------------------------
+      // ONE-PASS TEMPLATE CLEANUP
+      //
+      // If any saved template still has the legacy "CONFIGURE FEE
+      // STRUCTURE" <form> block, rewrite it in the CMS now so we
+      // never have to ask paralegals to fix it manually. Idempotent
+      // — running again does nothing because cleanTemplateContent
+      // returns changed:false on already-clean content.
+      // -----------------------------------------------------------
+      const incomingTemplates = templatesRes.items || [];
+      const cleanups: Promise<unknown>[] = [];
+      const cleanedTemplates = incomingTemplates.map((t) => {
+        const { cleaned, changed } = cleanTemplateContent(t.templateContent || '');
+        if (changed) {
+          cleanups.push(
+            BaseCrudService.update('documenttemplates', {
+              _id: t._id,
+              templateContent: cleaned,
+            } as any).catch((err) => {
+              // eslint-disable-next-line no-console
+              console.warn(`Could not auto-clean template "${t.templateName}":`, err);
+            })
+          );
+          return { ...t, templateContent: cleaned };
+        }
+        return t;
+      });
+      if (cleanups.length > 0) {
+        // eslint-disable-next-line no-console
+        console.info(
+          `Document Workflow: cleaned ${cleanups.length} template(s) of legacy form scaffolding.`
+        );
+        await Promise.allSettled(cleanups);
+      }
+
+      setTemplates(cleanedTemplates);
       setGeneratedDocs(docsRes.items);
       setClients(clientsRes.items);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // ----------------------------------------------------------------
+  // SEND TO CLIENT FILE — open dialog
+  // ----------------------------------------------------------------
+  const openFileDispatch = async (doc: GeneratedDocument) => {
+    setDispatchingDocument(doc);
+    // Default the section pick based on the template the doc came from:
+    // retainers -> Section F, everything else -> Section I (Case Documents).
+    const tpl = templates.find(t => t._id === doc.templateId);
+    const tplType = (tpl?.templateType || '').toLowerCase();
+    const tplLso = (tpl?.lsoSection || '').toUpperCase();
+    let defaultKey = 'caseDocuments';
+    if (tplType.includes('retainer') || tplLso === 'F') defaultKey = 'retainerAgreement';
+    else if (tplLso === 'A') defaultKey = 'fileOpening';
+    else if (tplLso === 'B') defaultKey = 'clientIdentification';
+    else if (tplLso === 'C') defaultKey = 'clientVerification';
+    else if (tplLso === 'D') defaultKey = 'sourceOfFunds';
+    else if (tplLso === 'E') defaultKey = 'conflictCheck';
+    else if (tplLso === 'G') defaultKey = 'financialRecords';
+    else if (tplLso === 'H') defaultKey = 'communicationLog';
+    else if (tplLso === 'I') defaultKey = 'caseDocuments';
+    else if (tplLso === 'J') defaultKey = 'fileClosing';
+    else if (tplLso === 'K') defaultKey = 'contingencyPlan';
+    setDispatchSectionKey(defaultKey);
+    setDispatchNotes('');
+
+    // Pull the paralegal's client files. Files for THIS doc's client
+    // float to the top so the right one is one click away. limit:1000
+    // because BaseCrudService default is 50.
+    try {
+      const { items } = await BaseCrudService.getAll<any>(
+        'clientfiles', undefined, { limit: 1000 }
+      );
+      const sortedFiles = (items || []).slice().sort((a: any, b: any) => {
+        const aMatch = a.clientId === doc.clientId ? 0 : 1;
+        const bMatch = b.clientId === doc.clientId ? 0 : 1;
+        if (aMatch !== bMatch) return aMatch - bMatch;
+        return (b._createdDate ? new Date(b._createdDate).getTime() : 0) -
+               (a._createdDate ? new Date(a._createdDate).getTime() : 0);
+      });
+      setDispatchClientFiles(sortedFiles);
+
+      // Pre-select the most recently created file for this client.
+      const matchingFile = sortedFiles.find((f: any) => f.clientId === doc.clientId);
+      setDispatchTargetFileId(matchingFile?._id || sortedFiles[0]?._id || '');
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Could not load client files for dispatch:', err);
+      setDispatchClientFiles([]);
+      setDispatchTargetFileId('');
+    }
+
+    setIsFileDispatchOpen(true);
+  };
+
+  // ----------------------------------------------------------------
+  // SEND TO CLIENT FILE — write the clientdocuments row
+  // ----------------------------------------------------------------
+  const handleSendToClientFile = async () => {
+    if (!dispatchingDocument || !dispatchTargetFileId || !dispatchSectionKey) {
+      alert('Please choose a client file and an LSO section.');
+      return;
+    }
+    const targetFile = dispatchClientFiles.find(f => f._id === dispatchTargetFileId);
+    if (!targetFile) {
+      alert('Selected client file no longer exists.');
+      return;
+    }
+    setIsDispatching(true);
+    try {
+      // Prefer the signed PDF URL; fall back to the unsigned one.
+      const fileUrl =
+        dispatchingDocument.signedDocumentUrl ||
+        dispatchingDocument.documentUrl ||
+        '';
+      const isSigned = !!dispatchingDocument.signedDocumentUrl;
+      const baseName =
+        dispatchingDocument.documentName || 'Generated Document';
+      const docName = isSigned ? `${baseName} (signed)` : baseName;
+
+      const sectionLabelText =
+        FILE_LSO_SECTIONS.find(s => s.key === dispatchSectionKey)?.label ||
+        dispatchSectionKey;
+
+      const payload: any = {
+        _id: crypto.randomUUID(),
+        documentName: docName,
+        fileUrl,
+        uploadDate: new Date().toISOString(),
+        fileType: fileUrl.startsWith('data:')
+          ? fileUrl.slice(5, fileUrl.indexOf(';')) || 'application/pdf'
+          : 'application/pdf',
+        fileSize: 0,
+        notes:
+          dispatchNotes.trim() ||
+          `Sent from Document Workflow on ${new Date().toLocaleDateString('en-CA')}` +
+          (isSigned ? ' (electronically signed)' : ''),
+        // Match the convention SectionDocuments uses on the file page:
+        //   documentCategory: section_<sectionKey>
+        documentCategory: `section_${dispatchSectionKey}`,
+        // Tie to the file's clientprofile so SectionDocuments can find
+        // it via its `clientId === clientId` filter.
+        clientId: targetFile.clientId,
+        // Bookkeeping for traceability.
+        sourceGeneratedDocumentId: dispatchingDocument._id,
+        clientFileId: targetFile._id,
+        attachedToSection: dispatchSectionKey,
+        attachedToSectionLabel: sectionLabelText,
+        signed: isSigned,
+        _createdDate: new Date(),
+      };
+
+      await BaseCrudService.create('clientdocuments', payload);
+
+      // Activity log so the paralegal can see who routed what.
+      try {
+        await BaseCrudService.create('activitylogs', {
+          _id: crypto.randomUUID(),
+          activityType: 'document_routed_to_file',
+          activityDescription:
+            `${docName} attached to ${targetFile.fileNumber || targetFile._id} ` +
+            `under ${sectionLabelText}`,
+          relatedItemId: targetFile._id,
+          timestamp: new Date().toISOString(),
+        });
+      } catch { /* non-fatal */ }
+
+      setIsFileDispatchOpen(false);
+      setDispatchingDocument(null);
+      setDispatchNotes('');
+      alert(
+        `Sent "${docName}" to file ${targetFile.fileNumber || targetFile._id} under ${sectionLabelText}.`
+      );
+    } catch (err: any) {
+      // eslint-disable-next-line no-console
+      console.error('Send to client file failed:', err);
+      alert(
+        err?.message
+          ? `Failed to send to client file: ${err.message}`
+          : 'Failed to send to client file. Please try again.'
+      );
+    } finally {
+      setIsDispatching(false);
+    }
+  };
+
+  // ----------------------------------------------------------------
+  // SEND SIGN LINK — open dialog (pre-fills recipient name/email)
+  // ----------------------------------------------------------------
+  const openSignLinkDialog = (doc: GeneratedDocument) => {
+    setSignLinkDocument(doc);
+    setSignLinkResult(null);
+    const client = clients.find((c) => c._id === doc.clientId) as any;
+    const name = client
+      ? `${client.firstName || ''} ${client.lastName || ''}`.trim()
+      : '';
+    setSignLinkRecipientName(name);
+    setSignLinkRecipientEmail(doc.clientEmail || '');
+    setSignLinkExpiryDays(7);
+    setIsSignLinkOpen(true);
+  };
+
+  // ----------------------------------------------------------------
+  // SEND SIGN LINK — mint token, persist, build the public URL.
+  // (Email delivery: paralegal can paste/email the link manually,
+  // or click Email Document afterward — body includes the link.)
+  // ----------------------------------------------------------------
+  const handleCreateSignLink = async () => {
+    if (!signLinkDocument) return;
+    if (!signLinkRecipientName.trim() || !signLinkRecipientEmail.trim()) {
+      alert('Please enter both the recipient name and email.');
+      return;
+    }
+    setSignLinkBuilding(true);
+    try {
+      const { createSignToken, generateSignLink } = await import(
+        '@/lib/sign-token-service'
+      );
+      const currentUser = localStorage.getItem('currentUser');
+      const userEmail = currentUser
+        ? JSON.parse(currentUser).email
+        : 'admin@legalservices.com';
+      const userName = currentUser
+        ? `${JSON.parse(currentUser).firstName || ''} ${JSON.parse(currentUser).lastName || ''}`.trim()
+        : 'Paralegal';
+
+      const token = await createSignToken({
+        documentId: signLinkDocument._id,
+        documentName: signLinkDocument.documentName,
+        intendedRecipientName: signLinkRecipientName.trim(),
+        intendedRecipientEmail: signLinkRecipientEmail.trim(),
+        clientId: signLinkDocument.clientId,
+        createdByParalegalId: userEmail,
+        createdByParalegalName: userName || 'Paralegal',
+        expiryHours: Math.max(1, signLinkExpiryDays) * 24,
+      });
+
+      const link = generateSignLink(token.token!);
+
+      // Stamp the doc with email + status if we have those fields
+      try {
+        await BaseCrudService.update('generateddocuments', {
+          _id: signLinkDocument._id,
+          clientEmail: signLinkRecipientEmail.trim(),
+          status: 'sent',
+          sentDate: new Date().toISOString(),
+          signTokenId: token._id,
+        } as any);
+        setGeneratedDocs((prev) =>
+          prev.map((d) =>
+            d._id === signLinkDocument._id
+              ? {
+                  ...d,
+                  clientEmail: signLinkRecipientEmail.trim(),
+                  status: 'sent',
+                  sentDate: new Date().toISOString(),
+                }
+              : d
+          )
+        );
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('Could not stamp generateddocuments with sign info:', e);
+      }
+
+      setSignLinkResult(link);
+      // Best-effort copy to clipboard
+      try {
+        await navigator.clipboard.writeText(link);
+      } catch { /* ignore */ }
+    } catch (err: any) {
+      // eslint-disable-next-line no-console
+      console.error('Sign link creation failed:', err);
+      alert(
+        err?.message
+          ? `Could not create sign link: ${err.message}`
+          : 'Could not create sign link. Please try again.'
+      );
+    } finally {
+      setSignLinkBuilding(false);
     }
   };
 
@@ -183,6 +562,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       templateName: template.templateName || '',
       templateType: template.templateType || 'Authorization Letter',
       templateContent: template.templateContent || '',
+      lsoSection: template.lsoSection || 'OTHER',
       isActive: template.isActive ?? true
     });
     setIsTemplateDialogOpen(true);
@@ -234,8 +614,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const clientAccount = userAccounts.find(u => u._id === selectedClientId);
       const clientEmailAddress = clientAccount?.email || selectedClientId;
 
-      // Replace placeholders in template content
-      let documentContent = template.templateContent || '';
+      // Replace placeholders in template content. cleanTemplateContent
+      // strips any legacy <form> scaffolding ("CONFIGURE FEE STRUCTURE"
+      // etc.) — same helper that runs on load so even a template that
+      // somehow slipped past the cleanup pass renders cleanly.
+      let documentContent = cleanTemplateContent(template.templateContent || '').cleaned;
       documentContent = documentContent.replace(/\{CLIENT_NAME\}/g, `${client.firstName || ''} ${client.lastName || ''}`.trim() || '—');
       documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '—');
       documentContent = documentContent.replace(/\{CLIENT_EMAIL\}/g, clientEmailAddress || '—');
@@ -244,7 +627,14 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{CLIENT_CITY\}/g, client.city || '—');
       documentContent = documentContent.replace(/\{CLIENT_PROVINCE\}/g, client.state || '—');
       documentContent = documentContent.replace(/\{CLIENT_POSTAL_CODE\}/g, client.zipCode || '—');
-      documentContent = documentContent.replace(/\{MATTER_REFERENCE\}/g, '—'); // No matter reference field in current schema
+      // Matter reference: prefer the client's display id (CL-XXXXXX) or
+      // the document name; falling back to a dash only if nothing exists.
+      const matterRef =
+        (client as any).clientId ||
+        (client as any).fileNumber ||
+        documentName ||
+        '—';
+      documentContent = documentContent.replace(/\{MATTER_REFERENCE\}/g, matterRef);
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
 
       // Retainer-specific field replacements
@@ -256,6 +646,40 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{HYBRID_HOURLY_RATE\}/g, '—');
       documentContent = documentContent.replace(/\{CONTINGENCY_PERCENT\}/g, '—');
       documentContent = documentContent.replace(/\{LTB_MATTER_TYPE\}/g, '—');
+
+      // ---- Paralegal cursive auto-signature ----
+      // When the "Auto-sign on behalf of paralegal" checkbox is on, swap
+      // the {PARALEGAL_*} placeholders with the chosen paralegal's display
+      // name in flowing Allura cursive (via inline <span> styling) plus
+      // their printed name, LSO licence number and credential line below.
+      // Templates can include any/all of these placeholders depending on
+      // how the signature block is laid out.
+      const signParalegal = getParalegalById(selectedParalegalId);
+      const todayFormatted = format(new Date(), 'MMMM d, yyyy');
+      if (autoSignAsParalegal && signParalegal) {
+        const cursiveBlock =
+          `<span style="font-family:'Allura','Segoe Script','Brush Script MT',cursive;` +
+          `font-size:32px;color:#1F2D5C;line-height:1.1;display:inline-block;` +
+          `padding:4px 0 0;">${signParalegal.displayName}</span>`;
+        documentContent = documentContent.replace(/\{PARALEGAL_SIGNATURE\}/g, cursiveBlock);
+        documentContent = documentContent.replace(/\{PARALEGAL_NAME\}/g, signParalegal.displayName);
+        documentContent = documentContent.replace(/\{PARALEGAL_LSO\}/g, signParalegal.lsoNumber);
+        documentContent = documentContent.replace(/\{PARALEGAL_CREDENTIAL\}/g, signParalegal.credentialLine);
+        documentContent = documentContent.replace(/\{PARALEGAL_SIGN_DATE\}/g, todayFormatted);
+      } else {
+        // Even when not auto-signing, we still fill in the printed-name
+        // metadata so the rendered PDF shows who's responsible. The
+        // {PARALEGAL_SIGNATURE} placeholder gets replaced with a blank
+        // line that the paralegal can sign over after printing.
+        documentContent = documentContent.replace(
+          /\{PARALEGAL_SIGNATURE\}/g,
+          '<span style="display:inline-block;border-bottom:1px solid #000;min-width:240px;height:24px;"></span>'
+        );
+        documentContent = documentContent.replace(/\{PARALEGAL_NAME\}/g, signParalegal?.displayName || '—');
+        documentContent = documentContent.replace(/\{PARALEGAL_LSO\}/g, signParalegal?.lsoNumber || '—');
+        documentContent = documentContent.replace(/\{PARALEGAL_CREDENTIAL\}/g, signParalegal?.credentialLine || '—');
+        documentContent = documentContent.replace(/\{PARALEGAL_SIGN_DATE\}/g, todayFormatted);
+      }
 
       // Generate PDF from content
       const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;
@@ -273,6 +697,10 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         requiresSignature: requiresSignature,
         documentUrl: pdfDataUrl,
         documentContent: documentContent,
+        // Persist which paralegal signed (or was selected) so re-opens know
+        paralegalId: signParalegal?.id || selectedParalegalId,
+        paralegalName: signParalegal?.displayName || '',
+        autoSigned: !!(autoSignAsParalegal && signParalegal),
         _createdDate: new Date()
       };
 
@@ -288,6 +716,8 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       setSelectedFeeModel('Hourly Retainer');
       setRetainerAmount('');
       setHourlyRate('');
+      setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
+      setAutoSignAsParalegal(false);
     } catch (error) {
       console.error('Error generating document:', error);
       loadData();
@@ -773,7 +1203,21 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
               <h2 className="font-heading text-3xl font-bold text-foreground">
                 Generated Documents
               </h2>
-              <Dialog open={isGenerateDialogOpen} onOpenChange={setIsGenerateDialogOpen}>
+              <Dialog open={isGenerateDialogOpen} onOpenChange={(open) => {
+                setIsGenerateDialogOpen(open);
+                if (!open) {
+                  // Reset Generate dialog state on close (incl. cancel)
+                  setSelectedTemplateId('');
+                  setSelectedClientId('');
+                  setDocumentName('');
+                  setRequiresSignature(true);
+                  setSelectedFeeModel('Hourly Retainer');
+                  setRetainerAmount('');
+                  setHourlyRate('');
+                  setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
+                  setAutoSignAsParalegal(false);
+                }
+              }}>
                 <DialogTrigger asChild>
                   <Button className="gap-2">
                     <Plus className="h-4 w-4" />
@@ -836,6 +1280,55 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                         className="w-4 h-4"
                       />
                       <Label htmlFor="requiresSignature">Requires Client Signature</Label>
+                    </div>
+
+                    {/* ---- Paralegal selector + auto-cursive sign ---- */}
+                    {/* Drives whose name appears in the cursive signature
+                        block on the generated document (when "Auto-sign on
+                        behalf of paralegal" is checked). Mirrors the
+                        retainer-flow pattern in ClientFileManagementPage so
+                        the experience is consistent across the app. */}
+                    <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
+                      <p className="text-sm font-semibold text-foreground">Paralegal Signature</p>
+                      <div className="space-y-2">
+                        <Label htmlFor="documentParalegal">Generated by</Label>
+                        <Select
+                          value={selectedParalegalId}
+                          onValueChange={setSelectedParalegalId}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {getActiveParalegals().map(pl => (
+                              <SelectItem key={pl.id} value={pl.id}>
+                                {pl.displayName} (LSO #{pl.lsoNumber})
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <input
+                          type="checkbox"
+                          id="autoSignAsParalegal"
+                          checked={autoSignAsParalegal}
+                          onChange={(e) => setAutoSignAsParalegal(e.target.checked)}
+                          className="w-4 h-4 mt-0.5"
+                        />
+                        <div>
+                          <Label htmlFor="autoSignAsParalegal" className="cursor-pointer">
+                            Auto-sign on behalf of paralegal
+                          </Label>
+                          <p className="text-xs text-foreground/60 mt-0.5">
+                            Embeds the selected paralegal&apos;s cursive signature
+                            (Allura) at the document&apos;s {'{PARALEGAL_SIGNATURE}'} placeholder,
+                            with their printed name and LSO licence number below.
+                            Leave unchecked if the paralegal will sign the
+                            generated document by hand or via the canvas later.
+                          </p>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Retainer-specific fields — shown when a Retainer Agreement template is selected */}
@@ -1026,6 +1519,23 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                           </Button>
                         )}
 
+                        {/* Public e-sign link — recipient signs without
+                            creating an account; system auto-creates
+                            their clientprofile on submit. Available for
+                            documents that need a signature and aren't
+                            already signed. */}
+                        {doc.requiresSignature && doc.status !== 'signed' && doc.documentUrl && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => openSignLinkDialog(doc)}
+                            className="gap-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50"
+                          >
+                            <PenTool className="h-4 w-4" />
+                            Send Sign Link
+                          </Button>
+                        )}
+
                         {doc.status === 'signed' && doc.signedDocumentUrl && (
                           <Button
                             size="sm"
@@ -1039,6 +1549,23 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                           >
                             <CheckCircle className="h-4 w-4" />
                             View Signed
+                          </Button>
+                        )}
+
+                        {/* Send to Client File — files the document into
+                            the LSO compliance section of a client file.
+                            Available for signed documents and for any
+                            generated doc that has a stored URL (so
+                            paralegals can also route unsigned drafts). */}
+                        {(doc.signedDocumentUrl || doc.documentUrl) && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => openFileDispatch(doc)}
+                            className="gap-2 border-indigo-600 text-indigo-700 hover:bg-indigo-50"
+                          >
+                            <Archive className="h-4 w-4" />
+                            Send to Client File
                           </Button>
                         )}
 
@@ -1113,6 +1640,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                     templateName: '',
                     templateType: 'Authorization Letter',
                     templateContent: '',
+                    lsoSection: 'OTHER',
                     isActive: true
                   });
                 }
@@ -1138,24 +1666,46 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="templateType">Template Type</Label>
-                      <Select
-                        value={newTemplate.templateType}
-                        onValueChange={(value) => setNewTemplate({ ...newTemplate, templateType: value })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Authorization Letter">Authorization Letter</SelectItem>
-                          <SelectItem value="Direction Letter">Direction Letter</SelectItem>
-                          <SelectItem value="Retainer Agreement">Retainer Agreement</SelectItem>
-                          <SelectItem value="Consent Form">Consent Form</SelectItem>
-                          <SelectItem value="Notice">Notice</SelectItem>
-                          <SelectItem value="Other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="templateType">Template Type</Label>
+                        <Select
+                          value={newTemplate.templateType}
+                          onValueChange={(value) => setNewTemplate({ ...newTemplate, templateType: value })}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Authorization Letter">Authorization Letter</SelectItem>
+                            <SelectItem value="Direction Letter">Direction Letter</SelectItem>
+                            <SelectItem value="Retainer Agreement">Retainer Agreement</SelectItem>
+                            <SelectItem value="Consent Form">Consent Form</SelectItem>
+                            <SelectItem value="Notice">Notice</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      {/* LSO By-Law 7.1 section — drives the grouping in the
+                          template list so paralegals can find the right
+                          template by compliance section (A: File Opening,
+                          B: Client ID, ...). */}
+                      <div className="space-y-2">
+                        <Label htmlFor="lsoSection">LSO Section</Label>
+                        <Select
+                          value={newTemplate.lsoSection}
+                          onValueChange={(value) => setNewTemplate({ ...newTemplate, lsoSection: value })}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {LSO_SECTIONS.map(s => (
+                              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
 
                     <div className="space-y-2">
@@ -1405,7 +1955,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
               </Dialog>
             </div>
 
-            <div className="grid gap-4" style={{ minHeight: '400px' }}>
+            {/* Templates grouped by LSO By-Law 7.1 section. The previous
+                flat list made it hard to find the right template by
+                compliance section; grouping mirrors the structure of the
+                client-file Section A-K tabs paralegals work with daily. */}
+            <div className="space-y-6" style={{ minHeight: '400px' }}>
               {isLoading ? null : templates.length === 0 ? (
                 <Card>
                   <CardContent className="flex flex-col items-center justify-center py-12">
@@ -1415,70 +1969,331 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                     </p>
                   </CardContent>
                 </Card>
-              ) : (
-                templates.map((template) => (
-                  <Card key={template._id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <CardTitle className="font-heading text-2xl mb-2">
-                            {template.templateName}
-                          </CardTitle>
-                          <div className="flex flex-wrap gap-2">
-                            <Badge variant="outline">{template.templateType}</Badge>
-                            <Badge className={template.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}>
-                              {template.isActive ? 'Active' : 'Inactive'}
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <p className="font-paragraph text-sm text-foreground/80 whitespace-pre-wrap line-clamp-4">
-                          {template.templateContent}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-foreground/60">
-                        <span>Created by: {template.createdBy}</span>
-                        <span>•</span>
-                        <span>{template._createdDate ? format(new Date(template._createdDate), 'MMM d, yyyy') : 'N/A'}</span>
-                      </div>
-                      <div className="flex gap-2 pt-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleEditTemplate(template)}
-                          className="gap-2"
-                        >
-                          <Edit className="h-4 w-4" />
-                          Edit Template
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleToggleTemplateStatus(template._id, template.isActive ?? true)}
-                          className="gap-2"
-                        >
-                          {template.isActive ? 'Deactivate' : 'Activate'}
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleDeleteTemplate(template._id)}
-                          className="gap-2"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          Delete
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
+              ) : (() => {
+                // Bucket templates by LSO section (with stable ordering)
+                const buckets = new Map<string, DocumentTemplate[]>();
+                LSO_SECTIONS.forEach(s => buckets.set(s.value, []));
+                templates.forEach(t => {
+                  const key = (t.lsoSection && buckets.has(t.lsoSection)) ? t.lsoSection : 'OTHER';
+                  buckets.get(key)!.push(t);
+                });
+                return LSO_SECTIONS.filter(s => (buckets.get(s.value) || []).length > 0).map(section => (
+                  <div key={section.value}>
+                    <h3 className="font-heading text-lg font-bold text-foreground mb-3 flex items-center gap-2 sticky top-0 bg-background py-1 z-10 border-b border-gray-100">
+                      {section.label}
+                      <Badge variant="outline" className="text-xs">
+                        {buckets.get(section.value)!.length}
+                      </Badge>
+                    </h3>
+                    <div className="grid gap-4">
+                      {buckets.get(section.value)!.map((template) => (
+                        <Card key={template._id} className="hover:shadow-lg transition-shadow">
+                          <CardHeader>
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1">
+                                <CardTitle className="font-heading text-2xl mb-2">
+                                  {template.templateName}
+                                </CardTitle>
+                                <div className="flex flex-wrap gap-2">
+                                  <Badge variant="outline">{template.templateType}</Badge>
+                                  <Badge variant="secondary" className="text-xs">
+                                    {sectionLabel(template.lsoSection)}
+                                  </Badge>
+                                  <Badge className={template.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}>
+                                    {template.isActive ? 'Active' : 'Inactive'}
+                                  </Badge>
+                                </div>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-3">
+                            <div className="bg-gray-50 rounded-lg p-4">
+                              <p className="font-paragraph text-sm text-foreground/80 whitespace-pre-wrap line-clamp-4">
+                                {template.templateContent}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-foreground/60">
+                              <span>Created by: {template.createdBy}</span>
+                              <span>•</span>
+                              <span>{template._createdDate ? format(new Date(template._createdDate), 'MMM d, yyyy') : 'N/A'}</span>
+                            </div>
+                            <div className="flex gap-2 pt-2">
+                              <Button size="sm" variant="outline" onClick={() => handleEditTemplate(template)} className="gap-2">
+                                <Edit className="h-4 w-4" /> Edit Template
+                              </Button>
+                              <Button size="sm" variant="outline" onClick={() => handleToggleTemplateStatus(template._id, template.isActive ?? true)} className="gap-2">
+                                {template.isActive ? 'Deactivate' : 'Activate'}
+                              </Button>
+                              <Button size="sm" variant="destructive" onClick={() => handleDeleteTemplate(template._id)} className="gap-2">
+                                <Trash2 className="h-4 w-4" /> Delete
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                ));
+              })()}
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Send Sign Link Dialog — public e-signing without account */}
+        <Dialog
+          open={isSignLinkOpen}
+          onOpenChange={(open) => {
+            setIsSignLinkOpen(open);
+            if (!open) {
+              setSignLinkDocument(null);
+              setSignLinkResult(null);
+              setSignLinkRecipientName('');
+              setSignLinkRecipientEmail('');
+              setSignLinkExpiryDays(7);
+            }
+          }}
+        >
+          <DialogContent className="max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Send public signing link</DialogTitle>
+            </DialogHeader>
+            {!signLinkResult ? (
+              <div className="space-y-4 py-2">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-sm text-emerald-900">
+                  <p className="font-semibold">
+                    {signLinkDocument?.documentName || 'Document'}
+                  </p>
+                  <p className="text-xs mt-1">
+                    The recipient will receive a link, sign online without
+                    creating an account, and the system will automatically
+                    create their client profile and attach the signed
+                    document.
+                  </p>
+                </div>
+                <div>
+                  <Label htmlFor="signLinkName">Recipient name *</Label>
+                  <Input
+                    id="signLinkName"
+                    value={signLinkRecipientName}
+                    onChange={(e) => setSignLinkRecipientName(e.target.value)}
+                    placeholder="Full legal name as it will appear on the signature"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="signLinkEmail">Recipient email *</Label>
+                  <Input
+                    id="signLinkEmail"
+                    type="email"
+                    value={signLinkRecipientEmail}
+                    onChange={(e) => setSignLinkRecipientEmail(e.target.value)}
+                    placeholder="client@example.com"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="signLinkExpiry">Link expires in (days)</Label>
+                  <Input
+                    id="signLinkExpiry"
+                    type="number"
+                    min={1}
+                    max={60}
+                    value={signLinkExpiryDays}
+                    onChange={(e) =>
+                      setSignLinkExpiryDays(parseInt(e.target.value) || 7)
+                    }
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    The link can only be used once. After successful signing it
+                    is automatically deactivated.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3 py-2">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-sm text-emerald-900">
+                  <p className="font-semibold flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" /> Signing link created
+                  </p>
+                  <p className="text-xs mt-1">
+                    The link has been copied to your clipboard. Paste it into
+                    your email to {signLinkRecipientEmail}, or use the
+                    &ldquo;Email Document&rdquo; button on the document row to
+                    send it from inside the app.
+                  </p>
+                </div>
+                <div className="font-mono text-xs break-all bg-gray-50 border border-gray-200 rounded-lg p-3">
+                  {signLinkResult}
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    if (signLinkResult) {
+                      navigator.clipboard
+                        .writeText(signLinkResult)
+                        .catch(() => {});
+                    }
+                  }}
+                  className="gap-2"
+                >
+                  <Copy className="h-4 w-4" />
+                  Copy link again
+                </Button>
+              </div>
+            )}
+            <DialogFooter>
+              {!signLinkResult ? (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsSignLinkOpen(false)}
+                    disabled={signLinkBuilding}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleCreateSignLink}
+                    disabled={
+                      signLinkBuilding ||
+                      !signLinkRecipientName.trim() ||
+                      !signLinkRecipientEmail.trim()
+                    }
+                    className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+                  >
+                    <PenTool className="h-4 w-4" />
+                    {signLinkBuilding ? 'Creating link…' : 'Create signing link'}
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  onClick={() => setIsSignLinkOpen(false)}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                >
+                  Done
+                </Button>
+              )}
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Send to Client File Dialog */}
+        <Dialog
+          open={isFileDispatchOpen}
+          onOpenChange={(open) => {
+            setIsFileDispatchOpen(open);
+            if (!open) {
+              setDispatchingDocument(null);
+              setDispatchNotes('');
+            }
+          }}
+        >
+          <DialogContent className="max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Send to Client File</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-2">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
+                <p className="text-blue-900 font-semibold mb-1">
+                  {dispatchingDocument?.documentName || 'Document'}
+                  {dispatchingDocument?.signedDocumentUrl && (
+                    <Badge className="ml-2 bg-green-100 text-green-800 border-green-300">
+                      Signed
+                    </Badge>
+                  )}
+                </p>
+                <p className="text-blue-700 text-xs">
+                  This will attach the document to the LSO compliance
+                  section of the chosen client file.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Client File *</Label>
+                <Select
+                  value={dispatchTargetFileId}
+                  onValueChange={setDispatchTargetFileId}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose the client file to attach to" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {dispatchClientFiles.length === 0 ? (
+                      <SelectItem value="__none__" disabled>
+                        No client files available
+                      </SelectItem>
+                    ) : (
+                      dispatchClientFiles.map((f: any) => (
+                        <SelectItem key={f._id} value={f._id}>
+                          {f.fileNumber || f._id} —{' '}
+                          {f.clientName || 'No client name'}
+                          {f.matterType ? ` (${f.matterType})` : ''}
+                          {f.clientId === dispatchingDocument?.clientId
+                            ? '  ✓ same client'
+                            : ''}
+                        </SelectItem>
+                      ))
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label>LSO Compliance Section *</Label>
+                <Select
+                  value={dispatchSectionKey}
+                  onValueChange={setDispatchSectionKey}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose section A–K" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {FILE_LSO_SECTIONS.map((s) => (
+                      <SelectItem key={s.key} value={s.key}>
+                        {s.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-gray-500">
+                  Signed retainers usually belong in Section F. Court
+                  filings, evidence, and correspondence usually belong
+                  in Section I.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dispatchNotes">Note (optional)</Label>
+                <Textarea
+                  id="dispatchNotes"
+                  value={dispatchNotes}
+                  onChange={(e) => setDispatchNotes(e.target.value)}
+                  placeholder="Any context for the file (e.g. 'Client signed via portal on Apr 14')"
+                  rows={3}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setIsFileDispatchOpen(false)}
+                disabled={isDispatching}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSendToClientFile}
+                className="gap-2 bg-indigo-600 hover:bg-indigo-700 text-white"
+                disabled={
+                  isDispatching ||
+                  !dispatchTargetFileId ||
+                  !dispatchSectionKey
+                }
+              >
+                <Archive className="h-4 w-4" />
+                {isDispatching ? 'Sending…' : 'Send to Client File'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         {/* Send Document Dialog */}
         <Dialog open={isSendDialogOpen} onOpenChange={setIsSendDialogOpen}>

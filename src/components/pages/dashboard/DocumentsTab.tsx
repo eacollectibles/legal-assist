@@ -15,6 +15,81 @@ interface DocumentsTabProps {
   isLoading: boolean;
 }
 
+// Maximum size we'll accept per file. Wix Media handles much larger
+// uploads (multi-GB), but a 100 MB cap keeps the UX honest — phone
+// photos, scans, and most contracts/PDFs fit comfortably under this.
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
+
+// Inline-base64 fallback ceiling — only used if Wix Media is unavailable.
+// Wix CMS text fields cap around 256 KB; we leave headroom for the
+// surrounding payload.
+const RAW_FALLBACK_LIMIT = 175 * 1024;
+
+// Accepted file types (browser hint). The actual MIME check is more
+// permissive — we accept anything matching common doc/image/video types.
+const ACCEPT_ATTR =
+  '.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.rtf,' +
+  '.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.bmp,.tif,.tiff,' +
+  '.mp4,.mov,.m4v';
+
+/**
+ * Try to upload a file via Wix Media (CDN-backed, multi-MB ceiling).
+ * Returns the permanent URL on success, or null if the SDK isn't
+ * available — caller falls back to the inline-base64 path for small
+ * files. Mirrors the helper in SectionDocuments.tsx so behaviour stays
+ * consistent across paralegal-side and client-side upload flows.
+ */
+const tryWixMediaUpload = async (
+  file: File
+): Promise<{ url: string; mediaId?: string } | null> => {
+  try {
+    const wixMedia: any = await import('@wix/media').catch(() => null);
+    if (!wixMedia) return null;
+
+    const filesApi =
+      wixMedia.files || wixMedia.default?.files || wixMedia;
+
+    if (filesApi.uploadFile) {
+      const result = await filesApi.uploadFile({
+        mimeType: file.type || 'application/octet-stream',
+        fileName: file.name,
+        file,
+      });
+      const url = result?.file?.url || result?.fileUrl || result?.url;
+      const mediaId = result?.file?.id || result?._id || result?.id;
+      if (url) return { url, mediaId };
+    }
+
+    if (filesApi.generateFileUploadUrl) {
+      const presigned = await filesApi.generateFileUploadUrl({
+        mimeType: file.type || 'application/octet-stream',
+        fileName: file.name,
+      });
+      const uploadUrl = presigned?.uploadUrl || presigned?.url;
+      if (!uploadUrl) return null;
+      const fd = new FormData();
+      fd.append('file', file);
+      const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
+      if (!resp.ok) return null;
+      const data = await resp.json().catch(() => ({}));
+      const url = data?.file?.url || data?.fileUrl || data?.url;
+      const mediaId = data?.file?.id || data?._id || data?.id;
+      if (url) return { url, mediaId };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+const fileToDataUrl = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
 export default function DocumentsTab({ currentUser, documents, setDocuments, isLoading }: DocumentsTabProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -22,87 +97,153 @@ export default function DocumentsTab({ currentUser, documents, setDocuments, isL
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showUploadForm, setShowUploadForm] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<string>('');
   const [uploadFormData, setUploadFormData] = useState({
     documentName: '',
     documentCategory: 'other',
     notes: '',
-    file: null as File | null,
+    files: [] as File[],
   });
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 10 * 1024 * 1024) {
-        setUploadError('File size must be less than 10MB');
-        return;
-      }
+    const picked = Array.from(e.target.files || []);
+    if (picked.length === 0) return;
 
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
-      if (!allowedTypes.includes(file.type)) {
-        setUploadError('Only PDF, DOC, DOCX, JPG, and PNG files are allowed');
-        return;
-      }
-
-      setUploadFormData(prev => ({ ...prev, file }));
-      setUploadError('');
+    const tooBig = picked.find((f) => f.size > MAX_FILE_SIZE);
+    if (tooBig) {
+      const sizeMB = (tooBig.size / 1024 / 1024).toFixed(1);
+      setUploadError(
+        `"${tooBig.name}" is ${sizeMB} MB which exceeds the 100 MB per-file limit. ` +
+        `If you need to upload something larger, please reach out to your paralegal.`
+      );
+      return;
     }
+
+    setUploadFormData((prev) => ({ ...prev, files: [...prev.files, ...picked] }));
+    setUploadError('');
+  };
+
+  const removeQueuedFile = (index: number) => {
+    setUploadFormData((prev) => ({
+      ...prev,
+      files: prev.files.filter((_, i) => i !== index),
+    }));
   };
 
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploadError('');
 
-    if (!uploadFormData.documentName.trim()) {
+    if (uploadFormData.files.length === 0) {
+      setUploadError('Please select at least one file to upload');
+      return;
+    }
+
+    // Document name only required when a single file is uploaded — for
+    // bulk uploads we use each file's own filename.
+    if (uploadFormData.files.length === 1 && !uploadFormData.documentName.trim()) {
       setUploadError('Document name is required');
       return;
     }
 
-    if (!uploadFormData.file) {
-      setUploadError('Please select a file to upload');
-      return;
-    }
-
     setIsUploading(true);
+    setUploadProgress('');
+
+    const uploaded: ClientDocument[] = [];
+    const failed: string[] = [];
 
     try {
-      const fileDataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(uploadFormData.file!);
-      });
+      for (let i = 0; i < uploadFormData.files.length; i++) {
+        const file = uploadFormData.files[i];
+        setUploadProgress(
+          `Uploading ${i + 1} of ${uploadFormData.files.length}: ${file.name}`
+        );
 
-      const documentId = crypto.randomUUID();
-      const newDocument: ClientDocument = {
-        _id: documentId,
-        documentName: uploadFormData.documentName,
-        fileUrl: fileDataUrl,
-        uploadDate: new Date(),
-        clientEmail: currentUser?.email || '',
-        fileType: uploadFormData.file.type,
-        fileSize: uploadFormData.file.size,
-        documentCategory: uploadFormData.documentCategory,
-        notes: uploadFormData.notes,
-      };
+        // 1) Try Wix Media first (preferred path — no CMS field-size limit).
+        let fileUrl: string | null = null;
+        let wixMediaId: string | undefined;
+        const media = await tryWixMediaUpload(file);
+        if (media?.url) {
+          fileUrl = media.url;
+          wixMediaId = media.mediaId;
+        } else if (file.size <= RAW_FALLBACK_LIMIT) {
+          // 2) Fall back to inline base64 only for small files.
+          fileUrl = await fileToDataUrl(file);
+        } else {
+          failed.push(
+            `${file.name}: file is too large for the inline fallback. ` +
+            `Try again in a moment, or contact your paralegal.`
+          );
+          continue;
+        }
 
-      await BaseCrudService.create('clientdocuments', newDocument);
+        const docName =
+          uploadFormData.files.length === 1
+            ? uploadFormData.documentName.trim() || file.name
+            : file.name;
 
-      setDocuments(prev => [newDocument, ...prev]);
-      setUploadSuccess(true);
-      setUploadFormData({
-        documentName: '',
-        documentCategory: 'other',
-        notes: '',
-        file: null,
-      });
-      setShowUploadForm(false);
+        const newDocument: ClientDocument = {
+          _id: crypto.randomUUID(),
+          documentName: docName,
+          fileUrl,
+          uploadDate: new Date(),
+          clientEmail: currentUser?.email || '',
+          fileType: file.type || 'application/octet-stream',
+          fileSize: file.size,
+          documentCategory: uploadFormData.documentCategory,
+          notes: uploadFormData.notes,
+          ...(wixMediaId ? ({ wixMediaId } as any) : {}),
+        };
 
-      setTimeout(() => setUploadSuccess(false), 3000);
-    } catch (error) {
-      console.error('Failed to upload document:', error);
-      setUploadError('Failed to upload document. Please try again.');
+        try {
+          await BaseCrudService.create('clientdocuments', newDocument);
+          uploaded.push(newDocument);
+        } catch (err: any) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to save document row:', err);
+          failed.push(`${file.name}: ${err?.message || 'save failed'}`);
+        }
+      }
+
+      if (uploaded.length > 0) {
+        setDocuments((prev) => [...uploaded, ...prev]);
+        setUploadSuccess(true);
+        setTimeout(() => setUploadSuccess(false), 3500);
+      }
+
+      if (failed.length === 0) {
+        setUploadFormData({
+          documentName: '',
+          documentCategory: 'other',
+          notes: '',
+          files: [],
+        });
+        setShowUploadForm(false);
+      } else {
+        setUploadError(
+          `Uploaded ${uploaded.length} of ${uploadFormData.files.length}. ` +
+          `Failed:\n• ${failed.join('\n• ')}`
+        );
+        // Keep the failed ones queued so the user can retry.
+        const failedNames = new Set(
+          failed.map((f) => f.split(':')[0])
+        );
+        setUploadFormData((prev) => ({
+          ...prev,
+          files: prev.files.filter((f) => failedNames.has(f.name)),
+        }));
+      }
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.error('Upload batch failed:', error);
+      setUploadError(
+        error?.message
+          ? `Upload failed: ${error.message}`
+          : 'Failed to upload documents. Please try again.'
+      );
     } finally {
       setIsUploading(false);
+      setUploadProgress('');
     }
   };
 
@@ -204,16 +345,24 @@ export default function DocumentsTab({ currentUser, documents, setDocuments, isL
             <form onSubmit={handleUploadSubmit} className="space-y-6">
               <div>
                 <label htmlFor="documentName" className="block font-paragraph font-semibold text-foreground mb-2">
-                  Document Name *
+                  Document Name {uploadFormData.files.length <= 1 ? '*' : '(optional for bulk uploads)'}
                 </label>
                 <Input
                   id="documentName"
                   value={uploadFormData.documentName}
                   onChange={(e) => setUploadFormData(prev => ({ ...prev, documentName: e.target.value }))}
-                  placeholder="e.g., Court Order, Contract, Invoice"
+                  placeholder={
+                    uploadFormData.files.length > 1
+                      ? "Leave blank to use each file's own filename"
+                      : "e.g., Court Order, Contract, Invoice"
+                  }
                   className="border-gray-300"
-                  required
                 />
+                {uploadFormData.files.length > 1 && (
+                  <p className="text-xs text-foreground/60 mt-1">
+                    Bulk upload — each file will be saved under its own filename.
+                  </p>
+                )}
               </div>
 
               <div>
@@ -237,21 +386,30 @@ export default function DocumentsTab({ currentUser, documents, setDocuments, isL
 
               <div>
                 <label htmlFor="file" className="block font-paragraph font-semibold text-foreground mb-2">
-                  Select File *
+                  Select File(s) *
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                   <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <p className="font-paragraph text-foreground/80 mb-2">
-                    {uploadFormData.file ? uploadFormData.file.name : 'Drag and drop your file here or click to browse'}
+                    {uploadFormData.files.length === 0
+                      ? 'Drag and drop your files here or click to browse'
+                      : `${uploadFormData.files.length} file${uploadFormData.files.length > 1 ? 's' : ''} selected`}
+                  </p>
+                  <p className="font-paragraph text-sm text-foreground/60 mb-1">
+                    Supported: PDF, Word, Excel, CSV, TXT, RTF
+                  </p>
+                  <p className="font-paragraph text-sm text-foreground/60 mb-1">
+                    Photos: JPG, PNG, GIF, WebP, HEIC/HEIF, BMP, TIFF
                   </p>
                   <p className="font-paragraph text-sm text-foreground/60 mb-4">
-                    Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 10MB)
+                    Video clips: MP4, MOV (up to 100 MB per file). You can pick multiple files at once.
                   </p>
                   <input
                     id="file"
                     type="file"
+                    multiple
                     onChange={handleFileSelect}
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    accept={ACCEPT_ATTR}
                     className="hidden"
                   />
                   <Button
@@ -260,9 +418,40 @@ export default function DocumentsTab({ currentUser, documents, setDocuments, isL
                     variant="outline"
                     className="border-primary text-primary hover:bg-primary/5"
                   >
-                    Choose File
+                    {uploadFormData.files.length === 0 ? 'Choose Files' : 'Add More Files'}
                   </Button>
                 </div>
+
+                {uploadFormData.files.length > 0 && (
+                  <ul className="mt-3 space-y-2">
+                    {uploadFormData.files.map((f, i) => (
+                      <li
+                        key={`${f.name}-${i}`}
+                        className="flex items-center justify-between gap-3 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <FileText className="w-4 h-4 text-primary/60 flex-shrink-0" />
+                          <span className="truncate font-medium text-foreground">{f.name}</span>
+                          <span className="text-xs text-foreground/50 flex-shrink-0">
+                            {(f.size / 1024 / 1024).toFixed(2)} MB
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeQueuedFile(i)}
+                          className="text-xs text-destructive hover:underline flex-shrink-0"
+                          aria-label={`Remove ${f.name} from upload queue`}
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {uploadProgress && (
+                  <p className="mt-3 text-sm text-foreground/70 italic">{uploadProgress}</p>
+                )}
               </div>
 
               <div>
