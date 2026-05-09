@@ -123,11 +123,37 @@ export default function PaymentForm({
 
     setSubmitting(true);
     try {
-      // 1) Tokenize the card on the client.
-      const tokRes = await cardHandleRef.current?.tokenize();
+      // 1) Tokenize the card on the client. We pass the SCA
+      // verification details (intent + amount + currency + buyer
+      // contact) — Square's production mode REQUIRES this on every
+      // tokenize call. amount is a string in major units ("150.00"),
+      // not cents.
+      const [givenName, ...familyParts] = clientName.trim().split(/\s+/);
+      const familyName = familyParts.join(' ');
+      const amountStr = (amountCents / 100).toFixed(2);
+      const tokRes = await cardHandleRef.current?.tokenize({
+        amount: amountStr,
+        currencyCode: 'CAD',
+        givenName: givenName || undefined,
+        familyName: familyName || undefined,
+        email: buyerEmail.trim() || undefined,
+      });
       if (!tokRes || !tokRes.token) {
         setError(tokRes?.errorMessage || 'Card details are not valid. Please re-check.');
         return;
+      }
+
+      // The card form returns either a plain card token, or a packed
+      // "<cardToken>|<verificationToken>" string when SCA produced a
+      // verification token. Split it out here so we can forward the
+      // verification token to Square's CreatePayment as a separate
+      // field — that's what unblocks live charges.
+      let sourceId = tokRes.token;
+      let verificationToken: string | undefined;
+      if (sourceId.includes('|')) {
+        const [s, v] = sourceId.split('|');
+        sourceId = s;
+        verificationToken = v;
       }
 
       // 2) Submit to our server endpoint, which actually charges via Square.
@@ -135,7 +161,8 @@ export default function PaymentForm({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          sourceId: tokRes.token,
+          sourceId,
+          verificationToken,
           amountCents,
           currency: 'CAD',
           paymentType,

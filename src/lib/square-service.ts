@@ -43,6 +43,11 @@ export type PublicSquareConfig = Pick<
 export interface CreatePaymentInput {
   /** One-time card nonce from the Web Payments SDK (`result.token`). */
   sourceId: string;
+  /**
+   * SCA / 3-D Secure verification token from `payments.verifyBuyer()`.
+   * Required in production for live charges; ignored in sandbox.
+   */
+  verificationToken?: string;
   /** Amount in the smallest currency unit (cents for CAD/USD). */
   amountCents: number;
   /** ISO 4217 currency code. Defaults to 'CAD'. */
@@ -261,7 +266,7 @@ export async function createPayment(input: CreatePaymentInput, locals?: any): Pr
   if (input.matterReference) noteParts.push(`File: ${input.matterReference}`);
   const note = noteParts.filter(Boolean).join(' — ').slice(0, 500);
 
-  const body = {
+  const body: any = {
     source_id: input.sourceId,
     idempotency_key: input.idempotencyKey || genIdempotencyKey(),
     amount_money: {
@@ -273,6 +278,12 @@ export async function createPayment(input: CreatePaymentInput, locals?: any): Pr
     buyer_email_address: input.buyerEmail || undefined,
     reference_id: input.matterId || input.clientId || undefined,
   };
+  // SCA / 3-D Secure verification token from the browser's
+  // payments.verifyBuyer() call. Required in production; Square's
+  // CreatePayment API rejects live charges without it.
+  if (input.verificationToken) {
+    body.verification_token = input.verificationToken;
+  }
 
   let resp: Response;
   try {

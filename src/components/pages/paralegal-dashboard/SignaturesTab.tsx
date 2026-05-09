@@ -56,7 +56,11 @@ export default function SignaturesTab() {
       const signedPdfDataUrl = await embedSignatureInPDF(
         signingDocument.documentUrl || '',
         signatureData,
-        signingDocument.documentName || 'Document'
+        signingDocument.documentName || 'Document',
+        // Pass the stored HTML body so the embedder can re-render with
+        // the signature appended even though documentUrl is now a real
+        // PDF (and not parseable as HTML).
+        (signingDocument as any).documentContent || undefined,
       );
 
       const signerName =

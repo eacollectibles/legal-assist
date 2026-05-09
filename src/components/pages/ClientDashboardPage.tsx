@@ -297,7 +297,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       const signedPdfDataUrl = await embedSignatureInPDF(
         signingDocument.documentUrl || '',
         signatureData,
-        signingDocument.documentName || 'Document'
+        signingDocument.documentName || 'Document',
+        (signingDocument as any).documentContent || undefined,
       );
 
       const updatedDoc: GeneratedDocuments = {

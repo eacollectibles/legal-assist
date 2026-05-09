@@ -131,37 +131,55 @@ ${isHtmlContent ? content : escapeHtml(content)}
 export async function embedSignatureInPDF(
   originalDocDataUrl: string,
   signatureData: SignatureData,
-  documentName: string
+  documentName: string,
+  /**
+   * Optional: the underlying HTML body of the document. When the
+   * original URL is a real PDF (the common case after we switched
+   * htmlToPDF to produce real PDFs), there's no HTML to parse out of
+   * the URL — pass the stored documentContent instead so we can
+   * re-render with the signature appended.
+   */
+  originalHtmlContent?: string,
 ): Promise<string> {
   const documentId = `DOC-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
   const signedDate = new Date().toISOString();
 
-  // Extract the original document content from the data URL
+  // Extract the original document content. Three sources, in order of
+  // preference:
+  //   1. Caller-supplied HTML (most reliable, used after the htmlToPDF
+  //      switch — the document URL is now a binary PDF, not HTML).
+  //   2. data:text/html;base64,... — legacy URLs from before the
+  //      htmlToPDF rewrite.
+  //   3. Empty fallback (we'll still produce a one-page signature
+  //      receipt PDF so the signing flow doesn't crash).
   let originalContent = '';
-  
-  try {
-    if (originalDocDataUrl.startsWith('data:text/html;base64,')) {
-      const base64Content = originalDocDataUrl.split(',')[1];
-      const decodedContent = decodeURIComponent(escape(atob(base64Content)));
-      
-      // Parse the original HTML to extract just the content section
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(decodedContent, 'text/html');
-      const contentDiv = doc.querySelector('.content');
-      
-      if (contentDiv) {
-        originalContent = contentDiv.innerHTML;
-      } else {
-        // Fallback: extract body content if .content div not found
-        const bodyContent = doc.querySelector('body');
-        if (bodyContent) {
-          originalContent = bodyContent.innerHTML;
+  if (originalHtmlContent && originalHtmlContent.trim()) {
+    originalContent = originalHtmlContent;
+  } else {
+    try {
+      if (originalDocDataUrl.startsWith('data:text/html;base64,')) {
+        const base64Content = originalDocDataUrl.split(',')[1];
+        const decodedContent = decodeURIComponent(escape(atob(base64Content)));
+
+        // Parse the original HTML to extract just the content section
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(decodedContent, 'text/html');
+        const contentDiv = doc.querySelector('.content');
+
+        if (contentDiv) {
+          originalContent = contentDiv.innerHTML;
+        } else {
+          // Fallback: extract body content if .content div not found
+          const bodyContent = doc.querySelector('body');
+          if (bodyContent) {
+            originalContent = bodyContent.innerHTML;
+          }
         }
       }
+    } catch (error) {
+      console.error('Error extracting original document content:', error);
+      originalContent = '<p>Original document content could not be extracted.</p>';
     }
-  } catch (error) {
-    console.error('Error extracting original document content:', error);
-    originalContent = '<p>Original document content could not be extracted.</p>';
   }
 
   // Define signature placeholders in order of priority
@@ -382,21 +400,127 @@ function escapeHtml(text: string): string {
 }
 
 /**
- * Converts HTML content to PDF data URL using browser's print functionality
- * @param htmlContent - HTML content to convert
- * @returns Base64 encoded PDF data URL (HTML format for viewing)
+ * Converts an HTML string into a real, multi-page PDF data URL.
+ *
+ * Implementation: jsPDF + html2canvas. We mount the HTML into an
+ * off-screen iframe (so styles + Google fonts evaluate exactly as they
+ * would in a browser tab), wait for fonts to settle, screenshot the
+ * rendered DOM with html2canvas, then paginate the resulting image
+ * across letter-sized PDF pages with jsPDF.
+ *
+ * Returns a `data:application/pdf;base64,...` URL — meaning the View,
+ * Download, Print, and Email actions all see a true .pdf payload and
+ * behave the way a paralegal expects (proper page-flipping in viewers,
+ * correct file extension on save, no blank tab).
  */
 async function htmlToPDF(htmlContent: string): Promise<string> {
-  return new Promise((resolve) => {
-    // Create a blob URL for the HTML content that can be viewed in browser
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const blobUrl = URL.createObjectURL(blob);
-    
-    // For better compatibility, we'll return the HTML as a data URL
-    // This allows the document to be viewed in the browser and printed as PDF
-    const base64Content = btoa(unescape(encodeURIComponent(htmlContent)));
-    const htmlDataUrl = `data:text/html;base64,${base64Content}`;
-    
-    resolve(htmlDataUrl);
-  });
+  // Lazy-load the libs so SSR builds don't pull them into Cloudflare Workers.
+  const jsPDFMod: any = await import('jspdf');
+  const html2canvasMod: any = await import('html2canvas');
+  const jsPDF = jsPDFMod.jsPDF || jsPDFMod.default || jsPDFMod;
+  const html2canvas = html2canvasMod.default || html2canvasMod;
+
+  // ----------------------------------------------------------------
+  // Extract the <body> markup out of the full document. Templates we
+  // produce wrap the content in <!doctype html><html><head>...<body>;
+  // we pull out just the body so we can render it inside a hidden div
+  // in the HOST document. Rendering inside the host (rather than an
+  // iframe) is what html2canvas works reliably with — iframe-mounted
+  // content frequently fails or returns empty canvases on iOS Safari
+  // and inside Cloudflare Worker hosts.
+  // ----------------------------------------------------------------
+  const parser = new DOMParser();
+  const parsed = parser.parseFromString(htmlContent, 'text/html');
+  const bodyHtml = parsed.body ? parsed.body.innerHTML : htmlContent;
+
+  // Pull <style> blocks from the parsed <head> and re-inject them
+  // alongside the body markup so the template's CSS still applies.
+  const styleTags = parsed.head ? Array.from(parsed.head.querySelectorAll('style')) : [];
+  const styleHtml = styleTags.map((s) => `<style>${s.innerHTML}</style>`).join('\n');
+
+  // Make sure the Allura cursive font is loaded in the host document
+  // so the paralegal signature renders correctly. Idempotent — only
+  // appends once per page life.
+  if (!document.getElementById('cowork-allura-cursive-font')) {
+    const link = document.createElement('link');
+    link.id = 'cowork-allura-cursive-font';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Allura&display=swap';
+    document.head.appendChild(link);
+  }
+
+  // Off-screen container.
+  const host = document.createElement('div');
+  host.style.position = 'fixed';
+  host.style.left = '-10000px';
+  host.style.top = '0';
+  host.style.width = '816px';      // 8.5in × 96dpi
+  host.style.minHeight = '1056px'; // 11in × 96dpi
+  host.style.background = '#ffffff';
+  host.style.zIndex = '-1';
+  host.setAttribute('aria-hidden', 'true');
+  host.innerHTML = `${styleHtml}<div data-pdf-content>${bodyHtml}</div>`;
+  document.body.appendChild(host);
+
+  try {
+    // Wait for fonts (Allura, etc.) + a paint tick.
+    if ((document as any).fonts?.ready) {
+      try { await (document as any).fonts.ready; } catch { /* non-fatal */ }
+    }
+    await new Promise((r) => requestAnimationFrame(() => r(null)));
+    await new Promise((r) => setTimeout(r, 60));
+
+    const canvas = await html2canvas(host, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      windowWidth: 816,
+      logging: false,
+    });
+
+    // ----------------------------------------------------------------
+    // Build a letter-size jsPDF (8.5 × 11 in, 72pt/in = 612 × 792pt).
+    // We slice the captured canvas into page-height strips so multi-page
+    // documents (the LTB / traffic retainer is multi-page) paginate
+    // cleanly instead of being squashed onto one page.
+    // ----------------------------------------------------------------
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'pt',
+      format: 'letter',
+      compress: true,
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let position = 0;
+    const fullImg = canvas.toDataURL('image/jpeg', 0.95);
+
+    if (imgHeight <= pageHeight) {
+      pdf.addImage(fullImg, 'JPEG', 0, 0, imgWidth, imgHeight, undefined, 'FAST');
+    } else {
+      // Multi-page: render the same long image, shifting it up by one
+      // page height each iteration. jsPDF clips at the page boundary so
+      // each page shows the next slice.
+      let heightLeft = imgHeight;
+      pdf.addImage(fullImg, 'JPEG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+      heightLeft -= pageHeight;
+      while (heightLeft > 0) {
+        position -= pageHeight;
+        pdf.addPage();
+        pdf.addImage(fullImg, 'JPEG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+        heightLeft -= pageHeight;
+      }
+    }
+
+    // jsPDF's output('datauristring') returns 'data:application/pdf;...'
+    return pdf.output('datauristring') as string;
+  } finally {
+    host.remove();
+  }
 }

@@ -412,6 +412,132 @@ export async function changePassword(currentPassword: string, newPassword: strin
 }
 
 /**
+ * Send a client invitation email — used when a paralegal opens a new
+ * client file from the admin side and wants the client to set their
+ * own portal password rather than having the paralegal invent one.
+ *
+ * Idempotent. If a useraccounts row already exists for this email, we
+ * reuse it; otherwise we create one with no password set. Either way,
+ * we generate a fresh reset token (good for 24 hours by default) and
+ * email the client an invitation with a link to /reset-password.
+ *
+ * Returns success: true and a user-friendly message regardless of
+ * whether the email actually delivered, so the admin UI can confirm
+ * the invitation was queued.
+ */
+export async function sendClientInvitation(params: {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  /** How long the invitation link should remain valid. Default 72 hours. */
+  validHours?: number;
+  /** Display name of the inviting paralegal — shown in the email body. */
+  inviterName?: string;
+}): Promise<AuthResponse & { resetLink?: string }> {
+  const normalizedEmail = (params.email || '').trim().toLowerCase();
+  if (!normalizedEmail) {
+    return { success: false, message: 'A client email is required to send the invitation.' };
+  }
+  try {
+    const { items: users } = await BaseCrudService.getAll<UserAccount>(
+      'useraccounts',
+      undefined,
+      { limit: 1000 } as any
+    );
+    let user = users?.find(
+      (u) => (u.email || '').trim().toLowerCase() === normalizedEmail
+    );
+
+    // Create the useraccount row if none exists. Leave passwordHash
+    // blank — the client sets their password via the reset link.
+    if (!user) {
+      const newId = crypto.randomUUID();
+      const newUser: any = {
+        _id: newId,
+        clientId: newId,
+        email: normalizedEmail,
+        firstName: params.firstName || '',
+        lastName: params.lastName || '',
+        isAdmin: false,
+        invitedAt: new Date().toISOString(),
+      };
+      await BaseCrudService.create('useraccounts', newUser);
+      user = newUser as UserAccount;
+    }
+
+    const resetToken = generateResetToken();
+    const validHours = params.validHours || 72;
+    const resetTokenExpiry = new Date(
+      Date.now() + validHours * 60 * 60 * 1000
+    ).toISOString();
+
+    try {
+      await BaseCrudService.update<UserAccount>('useraccounts', {
+        _id: user._id,
+        resetToken,
+        resetTokenExpiry,
+      } as any);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Could not write reset token to user row:', err);
+    }
+
+    const origin =
+      typeof window !== 'undefined' && window.location?.origin
+        ? window.location.origin
+        : 'https://www.legalassist.london';
+    const resetLink =
+      `${origin}/reset-password` +
+      `?token=${encodeURIComponent(resetToken)}` +
+      `&email=${encodeURIComponent(normalizedEmail)}`;
+
+    let emailSent = false;
+    try {
+      const { sendEmail } = await import('./email-service');
+      const greetingName = params.firstName ? ` ${params.firstName}` : '';
+      const inviter = params.inviterName || 'your paralegal at Legal Assist';
+      await sendEmail({
+        to: normalizedEmail,
+        subject: 'Welcome to Legal Assist — set your client portal password',
+        body:
+          `Hello${greetingName},\n\n` +
+          `${inviter} has opened a client file for you at Legal Assist Paralegal Services and set up access ` +
+          `to your secure client portal. Use the link below to choose your password and get started:\n\n` +
+          `${resetLink}\n\n` +
+          `This link expires in ${validHours} hours. Your username for logging in is your email address ` +
+          `(${normalizedEmail}).\n\n` +
+          `Through your portal you can review and sign documents, upload files we request, see invoices, ` +
+          `pay online, and message us securely about your matter.\n\n` +
+          `If you did not expect this email, please ignore it — no account changes will be made.\n\n` +
+          `— Legal Assist Paralegal Services`,
+      });
+      emailSent = true;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Client invitation email failed:', err);
+    }
+
+    return {
+      success: true,
+      message: emailSent
+        ? `Invitation email sent to ${normalizedEmail}. Link expires in ${validHours} hours.`
+        : `Invitation link generated. Email delivery may have failed — share this link manually if needed.`,
+      resetLink,
+    };
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.error('sendClientInvitation failed:', error);
+    return {
+      success: false,
+      message:
+        error?.message
+          ? `Could not send invitation: ${error.message}`
+          : 'Could not send invitation. Please try again.',
+    };
+  }
+}
+
+/**
  * Request password reset for a user.
  *
  * Generates a reset token, stores it for 1 hour, and emails the reset link
@@ -438,7 +564,25 @@ export async function requestPasswordReset(email: string): Promise<AuthResponse>
     const resetToken = generateResetToken();
     const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
 
-    // Persist (best-effort, ignore SSR / private mode failures)
+    // Persist on the user's CMS row (server-side) so the token is
+    // accessible from any device. The previous implementation stored
+    // tokens in localStorage on the requesting device only — meaning
+    // a user who requested reset on their phone but clicked the email
+    // link on their laptop hit "Invalid or expired" because the laptop
+    // had no record. Server-side storage fixes that.
+    //
+    // We also keep a localStorage mirror as a best-effort fallback for
+    // environments where the CMS write fails (e.g. transient network).
+    try {
+      await BaseCrudService.update<UserAccount>('useraccounts', {
+        _id: user._id,
+        resetToken,
+        resetTokenExpiry,
+      } as any);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Could not persist reset token on user row:', err);
+    }
     try {
       const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
       resetTokens[normalizedEmail] = { token: resetToken, expiry: resetTokenExpiry };
@@ -509,30 +653,27 @@ export async function resetPassword(email: string, token: string, newPassword: s
       };
     }
 
-    // Verify reset token
-    const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
-    const storedToken = resetTokens[email];
+    // Normalize email defensively — request side stores under lowercase
+    // but the link in the email may have been hand-edited or the user
+    // may type it with different casing on the reset page.
+    const normalizedEmail = (email || '').trim().toLowerCase();
 
-    if (!storedToken || storedToken.token !== token) {
-      return {
-        success: false,
-        message: 'Invalid or expired reset token',
-      };
-    }
-
-    if (new Date(storedToken.expiry) < new Date()) {
-      delete resetTokens[email];
-      localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
-      return {
-        success: false,
-        message: 'Reset token has expired. Please request a new one.',
-      };
-    }
-
-    // Find user and update password
-    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
-    const user = users?.find(u => u.email === email);
-
+    // -----------------------------------------------------------------
+    // PRIMARY PATH: look up the user by email and validate the token
+    // against the value persisted on the user's CMS row. This is the
+    // cross-device safe path — tokens are stored server-side in
+    // useraccounts.resetToken / resetTokenExpiry by requestPasswordReset,
+    // so the laptop opening the email link can verify a token that was
+    // requested from a phone.
+    // -----------------------------------------------------------------
+    const { items: users } = await BaseCrudService.getAll<UserAccount>(
+      'useraccounts',
+      undefined,
+      { limit: 1000 } as any
+    );
+    const user = users?.find(
+      (u) => (u.email || '').trim().toLowerCase() === normalizedEmail
+    );
     if (!user) {
       return {
         success: false,
@@ -540,15 +681,76 @@ export async function resetPassword(email: string, token: string, newPassword: s
       };
     }
 
+    // Server-side token + expiry pulled from the user row.
+    const serverToken = (user as any).resetToken as string | undefined;
+    const serverExpiry = (user as any).resetTokenExpiry as string | undefined;
+
+    let tokenValid = false;
+    if (serverToken && serverToken === token) {
+      if (serverExpiry) {
+        const expiry = new Date(serverExpiry);
+        if (!isNaN(expiry.getTime()) && expiry >= new Date()) {
+          tokenValid = true;
+        }
+      } else {
+        // Expiry missing — accept conservatively (token still matches)
+        tokenValid = true;
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // FALLBACK: if the server-side token isn't present (e.g. the user
+    // requested reset before this fix shipped), check the legacy
+    // localStorage store. This keeps existing in-flight tokens working
+    // for users on the same device that requested the reset.
+    // -----------------------------------------------------------------
+    if (!tokenValid) {
+      try {
+        const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
+        const storedToken = resetTokens[normalizedEmail] || resetTokens[email];
+        if (
+          storedToken &&
+          storedToken.token === token &&
+          storedToken.expiry &&
+          new Date(storedToken.expiry) >= new Date()
+        ) {
+          tokenValid = true;
+        }
+      } catch {
+        /* localStorage unavailable — ignore */
+      }
+    }
+
+    if (!tokenValid) {
+      // Distinguish "wrong token" from "expired" only when we can tell.
+      const isExpired =
+        !!serverExpiry && new Date(serverExpiry) < new Date();
+      return {
+        success: false,
+        message: isExpired
+          ? 'Reset token has expired. Please request a new one.'
+          : 'Invalid or expired reset token. Please request a new one.',
+      };
+    }
+
     const newHashedPassword = await hashPassword(newPassword);
     await BaseCrudService.update('useraccounts', {
       _id: user._id,
       passwordHash: newHashedPassword,
-    });
+      // Clear the token on the server row so it can't be used twice.
+      resetToken: null,
+      resetTokenExpiry: null,
+    } as any);
 
-    // Clear the reset token
-    delete resetTokens[email];
-    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+    // Best-effort clear the legacy localStorage mirror.
+    try {
+      const resetTokens = JSON.parse(localStorage.getItem('resetTokens') || '{}');
+      delete resetTokens[normalizedEmail];
+      delete resetTokens[email];
+      localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
+    } catch {
+      /* ignore */
+    }
 
     return {
       success: true,

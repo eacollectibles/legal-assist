@@ -114,16 +114,23 @@ export default function AssignmentsTab() {
 
     setIsCreatingClient(true);
     try {
+      // Create the useraccount with NO password — the client sets
+      // their own via the invitation email we send below. (If the
+      // form still has a password value, we honor it as a fallback,
+      // but the standard flow is invitation-based.)
       const userAccountId = crypto.randomUUID();
       await BaseCrudService.create('useraccounts', {
         _id: userAccountId,
         clientId: userAccountId,
         email: newClient.email,
-        passwordHash: newClient.password,
+        // Only set passwordHash if the admin explicitly provided one;
+        // otherwise leave it blank so the invitation flow controls it.
+        ...(newClient.password ? { passwordHash: newClient.password } : {}),
         firstName: newClient.firstName,
         lastName: newClient.lastName,
         phoneNumber: newClient.phoneNumber,
-        isAdmin: false
+        isAdmin: false,
+        invitedAt: new Date().toISOString(),
       });
 
       const clientProfileId = crypto.randomUUID();
@@ -190,8 +197,41 @@ export default function AssignmentsTab() {
         console.warn('Could not sync to clientfiles collection:', syncError);
       }
 
+      // Fire the welcome email with a "set your password" link, unless
+      // the admin manually set a password (legacy path) — in that case
+      // the client already has credentials and an invitation would
+      // overwrite their token. Best-effort; failures are logged but
+      // don't roll back the file creation.
+      let invitationMessage = '';
+      if (!newClient.password && newClient.email) {
+        try {
+          const { sendClientInvitation } = await import('@/lib/auth-service');
+          const paralegal = paralegals.find((p) => p._id === currentParalegalId);
+          const inviterName = paralegal
+            ? `${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim()
+            : '';
+          const result = await sendClientInvitation({
+            email: newClient.email,
+            firstName: newClient.firstName,
+            lastName: newClient.lastName,
+            inviterName: inviterName || undefined,
+          });
+          invitationMessage = result.message || '';
+          // eslint-disable-next-line no-console
+          console.info('Client invitation:', result);
+        } catch (inviteErr) {
+          // eslint-disable-next-line no-console
+          console.warn('Client invitation email failed:', inviteErr);
+        }
+      }
+
       setNewClientId(clientProfileId);
       setClientCreationSuccess(true);
+      if (invitationMessage) {
+        // Surface the result so the admin knows the email went out.
+        // eslint-disable-next-line no-alert
+        alert(invitationMessage);
+      }
       refreshData();
     } catch (error) {
       console.error('Error creating client:', error);

@@ -1307,6 +1307,185 @@ export const blogPosts: BlogPost[] = [
       { q: 'Can I get my car back before the 14 days?', a: 'Generally no. The 14-day impoundment is mandatory. You\'ll also have to pay impound and towing fees.' },
       { q: 'Will I lose my licence forever?', a: 'Not for a first offence, but a third offence can result in a lifetime ban. Fighting the charge is critical.' }
     ]
+  },
+  {
+    slug: 'small-claims-court-50000-limit-2025-ontario',
+    title: 'Small Claims Court Now Hears Claims Up to $50,000 (2025 Update)',
+    description: 'Ontario raised the Small Claims Court monetary limit from $35,000 to $50,000 effective January 1, 2025. Here is what the change means for plaintiffs, defendants, and existing claims that were almost too big.',
+    category: 'small-claims',
+    date: '2026-01-15',
+    readTime: '5 min',
+    content: `
+      <p>If you have a civil dispute in Ontario, the Small Claims Court just got a lot more useful. As of <strong>January 1, 2025</strong>, the monetary jurisdiction of the Small Claims Court was raised from $35,000 to <strong>$50,000</strong>, exclusive of interest and costs. This is the first increase since 2010 and brings tens of thousands of additional disputes into a faster, cheaper, more accessible court.</p>
+
+      <h2>What changed and how</h2>
+      <p>The increase was made by <em>O. Reg. 343/24</em>, amending the regulation that sets the Small Claims Court&rsquo;s monetary limit under the <em>Courts of Justice Act</em>, R.S.O. 1990, c. C.43. The Small Claims Court is a branch of the Superior Court of Justice and applies the <em>Rules of the Small Claims Court</em>, O. Reg. 258/98.</p>
+      <p>The $50,000 cap is the <em>principal</em> amount of the claim. Pre-judgment and post-judgment interest, plus costs awarded under Rule 19, are <em>on top</em> of that limit. So a $48,000 contract dispute with several years of accrued interest can still be filed in Small Claims Court — what matters is that the principal claim is at or below $50,000.</p>
+
+      <h2>Why this matters for plaintiffs</h2>
+      <p>Disputes that previously had to be filed in the Superior Court&rsquo;s Simplified Procedure (claims between $35,000 and $200,000) can now go to Small Claims Court if they fit under the new limit. The practical differences are significant:</p>
+      <ul>
+        <li><strong>Lower filing fees.</strong> Filing a Plaintiff&rsquo;s Claim in Small Claims Court is a small fraction of Superior Court filing costs.</li>
+        <li><strong>Paralegal representation.</strong> Licensed paralegals have a right of appearance in Small Claims Court under <em>Law Society of Ontario By-Law 4</em>. They cannot appear on your behalf in the Superior Court except in narrow circumstances. That makes Small Claims Court the most cost-effective forum for moderate claims.</li>
+        <li><strong>Simpler procedure.</strong> No examinations for discovery. Documentary disclosure obligations are lighter. Settlement conferences are mandatory and informal.</li>
+        <li><strong>Faster timeline.</strong> Most matters reach trial within 12&ndash;18 months, often sooner — substantially faster than Superior Court.</li>
+      </ul>
+
+      <h2>Why it matters for defendants</h2>
+      <p>If you are sued for an amount above $35,000 but under $50,000, your matter will now be in Small Claims Court rather than Superior Court. That is generally good news — defending in Small Claims Court is cheaper, faster, and procedurally simpler. You file a <strong>Defence (Form 9A)</strong> within 20 days of being served and engage with the matter from there.</p>
+
+      <h2>What about claims filed before January 1, 2025?</h2>
+      <p>Claims filed in the Superior Court before the change generally stay there. Claims filed on or after January 1, 2025 follow the new threshold. If you have a matter that is just over $35,000 and was hanging fire, this is the moment to consider whether the Small Claims Court is the better forum.</p>
+
+      <h2>Abandoning the excess</h2>
+      <p>You can still bring a claim worth more than $50,000 in Small Claims Court if you are willing to formally abandon the excess. For example, if your true loss is $58,000, you can sue for $50,000 in Small Claims Court and waive the remaining $8,000. This is sometimes worth it for the speed and cost savings — the math depends on the strength of the claim.</p>
+
+      <h2>What you cannot do in Small Claims Court</h2>
+      <ul>
+        <li>Claims for non-monetary relief only (e.g. specific performance, declarations, injunctions).</li>
+        <li>Most family-law matters and matters under the <em>Residential Tenancies Act, 2006</em> (those go to the Family Court and the Landlord and Tenant Board, respectively).</li>
+        <li>Class actions and most matters where unique equitable remedies are required.</li>
+      </ul>
+
+      <h2>Considering a claim?</h2>
+      <p>Whether your matter belongs in Small Claims Court depends on the principal amount, the type of relief you need, and your appetite for the simpler-but-still-formal procedure. Need help deciding? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Court rules, monetary limits, and procedure are updated periodically. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'When did the $50,000 limit take effect?', a: 'January 1, 2025. The increase was made by O. Reg. 343/24 amending the regulation under the Courts of Justice Act.' },
+      { q: 'Does the $50,000 include interest?', a: 'No. The $50,000 limit is the principal amount only. Pre-judgment interest, post-judgment interest, and costs are on top of that.' },
+      { q: 'Can a paralegal represent me in Small Claims Court?', a: 'Yes. Licensed paralegals have a right of appearance in Small Claims Court under Law Society of Ontario By-Law 4. They can draft your Plaintiff\'s Claim or Defence, attend the settlement conference, and represent you at trial.' },
+      { q: 'Can I sue for more than $50,000 if I abandon the excess?', a: 'Yes. You can formally waive any amount above $50,000 in your Plaintiff\'s Claim. Once waived, you cannot recover that excess later — but the savings in time and legal fees often make this worthwhile.' },
+      { q: 'Where do claims over $50,000 go?', a: 'Claims above $50,000 go to the Superior Court of Justice. Claims between $50,000 and $200,000 typically follow the Simplified Procedure under Rule 76 of the Rules of Civil Procedure. Claims over $200,000 follow the standard rules.' }
+    ]
+  },
+  {
+    slug: 'constructive-dismissal-ontario-when-quitting-is-actually-firing',
+    title: 'Constructive Dismissal in Ontario: When Quitting Is Actually Being Fired',
+    description: 'Your employer slashed your pay, demoted you, or made working conditions intolerable. If you quit, can you sue for severance? Yes — if it qualifies as constructive dismissal. Here is the legal test.',
+    category: 'employment',
+    date: '2026-02-10',
+    readTime: '7 min',
+    content: `
+      <p>Most employees know that if they are fired without cause in Ontario, they are entitled to severance. Far fewer know that you can be entitled to the same severance package even when you <em>quit</em> &mdash; if your employer pushed you to the door through changes you did not agree to. The legal label for this is <strong>constructive dismissal</strong>, and in Ontario it is governed by both the <em>Employment Standards Act, 2000</em> and decades of common-law case law.</p>
+
+      <h2>What counts as constructive dismissal?</h2>
+      <p>The Supreme Court of Canada set out the modern test in <em>Potter v. New Brunswick Legal Aid Services Commission</em>, 2015 SCC 10. There are two recognized branches:</p>
+
+      <h3>Branch 1: A unilateral, substantial breach of an essential term</h3>
+      <p>The employer makes a unilateral change to something fundamental about the job, the employee did not agree to it, and a reasonable person in the employee&rsquo;s shoes would consider the change to substantially change the terms of employment. Common examples:</p>
+      <ul>
+        <li><strong>A meaningful pay cut.</strong> Cutting base salary, eliminating commission structure, or removing a guaranteed bonus.</li>
+        <li><strong>A demotion.</strong> Stripping titles, reporting relationships, or signature authority.</li>
+        <li><strong>A geographic transfer that wasn&rsquo;t in the contract.</strong> Forcing a move that materially disrupts your life.</li>
+        <li><strong>A material change in hours or schedule.</strong> Cutting full-time to part-time, or imposing a permanent shift change.</li>
+      </ul>
+
+      <h3>Branch 2: A pattern of conduct that shows the employer no longer intends to be bound</h3>
+      <p>Even without a single dramatic change, a pattern of conduct can amount to constructive dismissal: ongoing harassment, persistent hostility, refusal to address a poisoned work environment, or stripping the employee of meaningful work over time. The court asks whether, viewed cumulatively, the employer&rsquo;s conduct shows it no longer intended to be bound by the contract.</p>
+
+      <h2>Temporary layoffs as constructive dismissal</h2>
+      <p>Outside of unionized workplaces, <strong>most Ontario employers do not have an automatic right to lay off employees temporarily.</strong> Section 56 of the <em>Employment Standards Act, 2000</em> permits temporary layoffs of up to 13 weeks (or up to 35 weeks in some circumstances), but the common-law position is that a layoff without an express or implied right in the contract can be a constructive dismissal. If you have been &ldquo;temporarily&rdquo; laid off and your employment contract does not give your employer that right, you may have a claim.</p>
+
+      <h2>What you can recover</h2>
+      <p>If a court agrees you were constructively dismissed, you are treated as if you were fired without cause. That gives you two layers of entitlement:</p>
+      <ul>
+        <li><strong>Statutory minimums under the ESA</strong> &mdash; termination pay (1 to 8 weeks depending on length of service) and, for some employers and longer-service employees, statutory severance pay (1 week per year of service to a maximum of 26 weeks).</li>
+        <li><strong>Common-law reasonable notice</strong> &mdash; often substantially more than the ESA minimum. Courts assess the &ldquo;Bardal factors&rdquo; (age, length of service, type of work, availability of similar employment) to set a reasonable notice period, sometimes one month per year of service or more.</li>
+      </ul>
+      <p>Common-law reasonable notice can sometimes reach 24 months for senior, long-service employees. Statutory minimums are a floor, not a ceiling.</p>
+
+      <h2>Things that can sink a constructive-dismissal claim</h2>
+      <ul>
+        <li><strong>Continuing to work without objecting.</strong> If you accept a salary cut for 6 months without protesting, a court may find you condoned the change. You generally need to object promptly and treat the change as a breach within a reasonable time.</li>
+        <li><strong>An enforceable termination clause in the contract.</strong> If your written contract has a termination clause that complies with the <em>Employment Standards Act, 2000</em>, your common-law entitlement may be limited to the contractual amount. Many termination clauses are unenforceable for ESA-violating language &mdash; have it reviewed before assuming you are stuck with it.</li>
+        <li><strong>Failing to mitigate.</strong> You generally have to make reasonable efforts to find comparable work. Damages may be reduced by what you earned (or could have earned) elsewhere during the notice period.</li>
+        <li><strong>Returning to the same employer in a comparable role.</strong> The Supreme Court in <em>Evans v. Teamsters Local Union No. 31</em>, 2008 SCC 20 held that, in some circumstances, an employee may be required to return to work for the same employer if a reasonable person would do so.</li>
+      </ul>
+
+      <h2>What to do if you think you have been constructively dismissed</h2>
+      <ol>
+        <li><strong>Do not quit on the spot.</strong> Document the change in writing, ask the employer to reverse it, and preserve your right to claim by clearly indicating you do not accept the change.</li>
+        <li><strong>Save everything.</strong> Emails, performance reviews, the original offer letter, the changed terms, and any communications around the change.</li>
+        <li><strong>Get advice early.</strong> A 30-minute consultation can clarify whether you have a claim and what realistic severance looks like for your service length.</li>
+        <li><strong>Watch the limitation period.</strong> Under the <em>Limitations Act, 2002</em>, you generally have 2 years from the date of dismissal to bring a claim.</li>
+      </ol>
+
+      <h2>Where the case goes</h2>
+      <p>Most constructive-dismissal claims are settled through demand letters and pre-litigation negotiation. If they go to court, lower-value claims (under $50,000) can proceed in Small Claims Court &mdash; faster, cheaper, and where a paralegal can represent you. Claims above $50,000 go to the Superior Court of Justice.</p>
+
+      <p>Need help figuring out whether what your employer did is constructive dismissal? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Employment-law outcomes turn on specific facts, contract wording, and the employee&rsquo;s background. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'Is a 10% pay cut constructive dismissal?', a: 'Often yes, but it depends on context. Courts have found pay cuts as low as 7-10% to be substantial breaches in some circumstances; in others, similar cuts have been treated as condonable changes if accepted without protest. The employee\'s response and the surrounding facts matter as much as the percentage.' },
+      { q: 'How long do I have to act after the change?', a: 'You should object in writing within a reasonable time — typically days or weeks, not months. Continuing to work without objecting can be treated as condoning (accepting) the change.' },
+      { q: 'What if my employer says it was a "temporary" layoff?', a: 'Outside unionized workplaces, your employer generally needs an express or implied contractual right to lay you off. If your contract doesn\'t give them that right, a layoff (even one labelled "temporary") can be a constructive dismissal at common law.' },
+      { q: 'Will I have to take the job back?', a: 'Sometimes. The Supreme Court in Evans v. Teamsters Local Union No. 31 held that, where conditions of return are not toxic and the role is comparable, a reasonable employee may be required to return to mitigate damages. Toxic environments, demotions, or significant pay cuts usually relieve the employee of that duty.' },
+      { q: 'Can a paralegal handle my case?', a: 'A licensed paralegal can represent you in Small Claims Court (claims under $50,000), demand-letter negotiation, and most Ministry of Labour proceedings. Superior Court actions over $50,000 require a lawyer.' }
+    ]
+  },
+  {
+    slug: 'above-guideline-rent-increase-ontario-agi-defence',
+    title: 'Above-Guideline Rent Increase (AGI) in Ontario: What Tenants Can Do',
+    description: 'Your landlord served you with notice of a rent increase well above the annual guideline. They can apply to the LTB to do that — but only on narrow grounds, and you can fight it. A practical breakdown.',
+    category: 'ltb',
+    date: '2026-03-05',
+    readTime: '6 min',
+    content: `
+      <p>The annual rent-increase guideline in Ontario caps how much most landlords can raise the rent each year on rent-controlled units. For 2026, that figure is set by the Ministry of Municipal Affairs and Housing in mid-2025 and applies to most tenancies first occupied before November 15, 2018. But landlords have one statutory escape hatch: the <strong>Above-Guideline Increase</strong> (AGI), regulated by section 126 of the <em>Residential Tenancies Act, 2006</em>. AGIs are common in larger buildings and frequently challenged successfully by tenants.</p>
+
+      <h2>When can a landlord apply for an AGI?</h2>
+      <p>Section 126(1) of the RTA permits an AGI in three narrow categories:</p>
+      <ul>
+        <li><strong>Extraordinary increase in municipal taxes and charges.</strong> A jump beyond what the guideline anticipates.</li>
+        <li><strong>Eligible capital expenditures.</strong> Major repairs and renovations that meet the regulatory definition (structural work, building-envelope repairs, replacement of major systems). Routine maintenance does not qualify.</li>
+        <li><strong>Operating costs related to security services.</strong> New or significantly enhanced security service costs in the building.</li>
+      </ul>
+      <p>The application is made on <strong>Form L5</strong> and the landlord must serve notice to every affected tenant, attaching the application materials. The LTB schedules a hearing.</p>
+
+      <h2>What the LTB looks at</h2>
+      <p>The LTB does not just take the landlord&rsquo;s word for the cost. The Board examines whether the expenditures meet the statutory definition (e.g. is it a true capital expense or routine maintenance?), whether they were reasonable, whether the proper notices were served, and whether the proposed increase is properly calculated. The Board also considers <strong>set-off factors</strong> &mdash; for example, undisputed maintenance issues that may reduce or offset the AGI.</p>
+
+      <h2>Tenant defences and arguments</h2>
+      <p>If you receive an AGI application as a tenant, here is what often works:</p>
+      <ul>
+        <li><strong>Challenge whether the work was &ldquo;eligible capital&rdquo;.</strong> Routine repairs, work that should have been covered by previous rent levels, or work made necessary by the landlord&rsquo;s neglect may not qualify.</li>
+        <li><strong>Maintenance set-off.</strong> Outstanding maintenance issues or work orders from the municipality can be raised at the AGI hearing as offsetting concerns. Document them.</li>
+        <li><strong>Service and notice defects.</strong> Section 126 has strict notice and disclosure requirements. A failure to disclose all required information can defeat or delay the application.</li>
+        <li><strong>Reasonableness of the cost.</strong> Tenants can challenge whether the work was reasonable or whether less expensive options were available. Comparator costs help.</li>
+        <li><strong>Useful life and amortization.</strong> Capital expenditures are amortized under the regulations &mdash; the AGI cannot recover the full cost in one year. Make sure the math is right.</li>
+      </ul>
+
+      <h2>What you should NOT do</h2>
+      <ul>
+        <li><strong>Don&rsquo;t ignore the application.</strong> If you don&rsquo;t respond, the LTB can grant the AGI as filed.</li>
+        <li><strong>Don&rsquo;t simply refuse to pay.</strong> Until and unless the LTB rejects the AGI, the increase may be legally enforceable. Withholding rent puts you at risk of an eviction application.</li>
+        <li><strong>Don&rsquo;t wait until the hearing.</strong> AGI cases are document-heavy. Start preparing your evidence, obtaining work orders, and identifying maintenance issues months before the hearing date.</li>
+      </ul>
+
+      <h2>Tenant organizing</h2>
+      <p>AGI applications affect every tenant in the targeted unit group. Successful AGI defences are often coordinated &mdash; tenants pool documents, identify common issues, and sometimes retain a single representative for the hearing. Rule 7 of the Tribunal&rsquo;s Common Rules permits joint participation. If you&rsquo;re alone, you can still appear and present your own evidence; but if other tenants in the building are organizing, joining them often produces a stronger record.</p>
+
+      <h2>What if the LTB grants the AGI?</h2>
+      <p>If the AGI is granted, the increase is phased in and applied to your rent. You should review the order carefully &mdash; the LTB sometimes grants a smaller increase than what was sought, allows it only for some categories of work, or denies portions outright. Future capital expenditures by the same landlord generally cannot be back-charged through later AGIs.</p>
+
+      <h2>What if you&rsquo;ve already been paying an unauthorized increase?</h2>
+      <p>If your landlord raised your rent above the guideline without an LTB order, that is illegal. You can apply to the LTB on Form T1 to recover the overpayment and, where appropriate, ask the Board to order the rent to be reduced to the lawful amount.</p>
+
+      <p>Need help responding to an AGI application or pursuing a T1 for an illegal rent increase? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. AGI applications turn on specific facts, building-level evidence, and the strength of the landlord&rsquo;s documentation. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'How is an AGI different from the regular annual rent increase?', a: 'The annual guideline (set by the Ministry of Municipal Affairs and Housing) is the rent increase a landlord can pass through automatically each year. An AGI is an LTB-approved increase ABOVE the guideline, allowed only for specific categories: extraordinary tax increases, eligible capital expenditures, or new security-service costs.' },
+      { q: 'Do I have to keep paying rent during the AGI hearing?', a: 'Yes — pay the original rent (or the guideline-only increase if applicable). Do NOT pay the AGI portion until the LTB issues an order. Withholding all rent can lead to an L1 eviction application.' },
+      { q: 'How long does an AGI application take to resolve?', a: 'AGI applications are typically scheduled within 6-12 months of filing, sometimes longer. Complex cases with many capital items can take a year or more.' },
+      { q: 'Can my landlord apply for an AGI every year?', a: 'In theory yes, but the same expenditures cannot be claimed twice and the regulations amortize capital costs over a useful-life period. Repeat AGIs every year for the same building category will face scrutiny.' },
+      { q: 'What if my landlord is in newer rental construction (built after Nov 15, 2018)?', a: 'Most newer rental units are exempt from the rent-increase guideline under section 6.1 of the RTA, meaning the landlord is not capped by the annual guideline at all. Whether the AGI process applies in those cases depends on the specific exemption and contract terms.' }
+    ]
   }
 ];
 

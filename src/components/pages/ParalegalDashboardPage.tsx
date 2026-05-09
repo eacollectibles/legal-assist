@@ -704,7 +704,8 @@ export default function ParalegalDashboardPage() {
       const signedPdfDataUrl = await embedSignatureInPDF(
         signingDocument.documentUrl || '',
         signatureData,
-        signingDocument.documentName || 'Document'
+        signingDocument.documentName || 'Document',
+        (signingDocument as any).documentContent || undefined,
       );
 
       // Update the generated document with signed version

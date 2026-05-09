@@ -204,7 +204,10 @@ export default function PublicSignPage() {
       const signedPdfDataUrl = await embedSignatureInPDF(
         doc.documentUrl || '',
         sig,
-        doc.documentName || 'Document'
+        doc.documentName || 'Document',
+        // Pass the original HTML so the embedder can re-render with the
+        // client's signature appended (documentUrl is a real PDF).
+        (doc as any).documentContent || undefined,
       );
 
       // Try Wix Media for permanent hosting

@@ -24,13 +24,34 @@ declare global {
   }
 }
 
+export interface SquareTokenizeContext {
+  /** Amount the buyer is about to be charged, in dollars (e.g. "150.00"). */
+  amount: string;
+  /** ISO currency code — defaults to 'CAD'. */
+  currencyCode?: string;
+  /** Cardholder's first name (required for SCA in production). */
+  givenName?: string;
+  /** Cardholder's last name (required for SCA in production). */
+  familyName?: string;
+  /** Buyer email — Square uses it for SCA risk scoring + receipt delivery. */
+  email?: string;
+  /** Buyer phone — optional but improves SCA risk scoring. */
+  phone?: string;
+}
+
 export interface SquareCardFormHandle {
   /**
    * Tokenizes the card. Returns the source id on success, or null and a
    * non-null error message on failure. Errors include validation issues
    * (e.g. invalid card number) and network problems.
+   *
+   * `ctx` carries the SCA verification details Square requires in
+   * production (intent + amount + currency + buyer contact). The
+   * production-mode tokenize call refuses to run without it.
    */
-  tokenize: () => Promise<{ token: string | null; errorMessage: string | null }>;
+  tokenize: (
+    ctx: SquareTokenizeContext
+  ) => Promise<{ token: string | null; errorMessage: string | null }>;
 }
 
 interface PublicSquareConfig {
@@ -98,6 +119,9 @@ export default function SquareCardForm({
 }: SquareCardFormProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<any>(null);
+  // The Square `payments` SDK instance — needed for the verifyBuyer
+  // step in the production SCA flow.
+  const paymentsRef = useRef<any>(null);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [postalCode, setPostalCode] = useState('');
@@ -133,6 +157,7 @@ export default function SquareCardForm({
         //    where it can. We don't rely on it — we override postal code at
         //    tokenize time anyway — but it doesn't hurt.
         const payments = window.Square.payments(cfg.applicationId, cfg.locationId);
+        paymentsRef.current = payments;
         card = await payments.card({
           // Suppress Square's built-in postal-code field. The SDK accepts a
           // pre-filled value here; if we pass our own (we do, at tokenize
@@ -218,7 +243,7 @@ export default function SquareCardForm({
   useEffect(() => {
     if (!handleRef) return;
     handleRef.current = {
-      tokenize: async () => {
+      tokenize: async (ctx) => {
         const card = cardRef.current;
         if (!card) {
           return { token: null, errorMessage: 'Card form is not ready yet.' };
@@ -234,27 +259,95 @@ export default function SquareCardForm({
           };
         }
         try {
-          // Pass the user-entered postal code through `billingContact`. Square
-          // uses this value for AVS verification regardless of what (if
-          // anything) is in its own postal-code field. This is the
-          // authoritative path — guarantees our captured value reaches the
-          // gateway labelled as Canadian postal code, no matter what the
-          // SDK iframe shows.
-          const result = await card.tokenize({
-            billingContact: {
-              postalCode: normalizePostal(enteredPostal),
-              countryCode: 'CA',
-            },
-          });
-          if (result.status === 'OK' && result.token) {
-            return { token: result.token, errorMessage: null };
+          const billingContact: any = {
+            postalCode: normalizePostal(enteredPostal),
+            countryCode: 'CA',
+          };
+          if (ctx.givenName) billingContact.givenName = ctx.givenName;
+          if (ctx.familyName) billingContact.familyName = ctx.familyName;
+          if (ctx.email) billingContact.email = ctx.email;
+          if (ctx.phone) billingContact.phone = ctx.phone;
+
+          // ----------------------------------------------------------
+          // STEP 1 — tokenize the card with INLINE SCA fields.
+          //
+          // Square's Web Payments SDK in production mode requires the
+          // SCA verification fields directly on the tokenize options
+          // object (flat — NOT nested under `verificationDetails`).
+          // The error "verificationDetails.intent is required and must
+          // be a(n) string" is the SDK signaling these fields weren't
+          // supplied at tokenize time. The SDK fires its own
+          // verifyBuyer() internally if 3-D Secure is required, so we
+          // don't need a separate step.
+          // ----------------------------------------------------------
+          const tokenizeOptions: any = {
+            billingContact,
+            intent: 'CHARGE',
+            amount: ctx.amount,
+            currencyCode: ctx.currencyCode || 'CAD',
+            // Required by current Square SDK in production: tells Square
+            // the cardholder is on the page initiating this charge
+            // themselves (vs a merchant-initiated repeat charge), and
+            // that the merchant is NOT keying in the card on their
+            // behalf (the customer is using the Web Payments form).
+            customerInitiated: true,
+            sellerKeyedIn: false,
+          };
+          const tokenResult = await card.tokenize(tokenizeOptions);
+          if (tokenResult.status !== 'OK' || !tokenResult.token) {
+            const firstError =
+              Array.isArray(tokenResult.errors) && tokenResult.errors[0];
+            const msg =
+              firstError?.message ||
+              firstError?.field ||
+              'Card details are not valid. Please double-check and try again.';
+            return { token: null, errorMessage: msg };
           }
-          const firstError = Array.isArray(result.errors) && result.errors[0];
-          const msg =
-            firstError?.message ||
-            firstError?.field ||
-            'Card details are not valid. Please double-check and try again.';
-          return { token: null, errorMessage: msg };
+
+          // ----------------------------------------------------------
+          // STEP 2 (fallback) — explicit verifyBuyer call. Most newer
+          // SDK versions return a token from step 1 that's already
+          // SCA-verified, in which case the server-side charge accepts
+          // it directly. But on some SDK versions the verification
+          // token is delivered separately via verifyBuyer. We try it;
+          // if the SDK doesn't expose it, or the call returns nothing
+          // useful, we just proceed with the card token alone.
+          // ----------------------------------------------------------
+          const payments = paymentsRef.current;
+          let verificationToken: string | undefined;
+          if (payments && typeof payments.verifyBuyer === 'function') {
+            try {
+              const verifyResult = await payments.verifyBuyer(
+                tokenResult.token,
+                {
+                  amount: ctx.amount,
+                  billingContact,
+                  currencyCode: ctx.currencyCode || 'CAD',
+                  intent: 'CHARGE',
+                  // Same flags as tokenize() — required by current SDK.
+                  customerInitiated: true,
+                  sellerKeyedIn: false,
+                }
+              );
+              verificationToken = verifyResult?.token;
+            } catch (verifyErr: any) {
+              // verifyBuyer is optional in the inline-SCA flow — if it
+              // fails or isn't supported, we proceed with the token
+              // from step 1, which should already be SCA-verified.
+              // eslint-disable-next-line no-console
+              console.warn('verifyBuyer fallback skipped:', verifyErr?.message);
+            }
+          }
+
+          // Concatenate the verification token onto the card token in
+          // a structured form the server can split. The server-side
+          // create-payment endpoint accepts both individual fields,
+          // but this packed form keeps the existing single-string
+          // sourceId interface working.
+          const packed = verificationToken
+            ? `${tokenResult.token}|${verificationToken}`
+            : tokenResult.token;
+          return { token: packed, errorMessage: null };
         } catch (err: any) {
           return { token: null, errorMessage: err?.message || 'Failed to tokenize card.' };
         }

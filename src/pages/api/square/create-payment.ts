@@ -62,6 +62,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
   if (!body.sourceId || typeof body.sourceId !== 'string') {
     return json({ success: false, error: 'Missing card token (sourceId).' }, 400);
   }
+  // SCA / 3-D Secure verification token from payments.verifyBuyer().
+  // Optional in sandbox; required in production. Type-check it but
+  // don't enforce presence here — Square's CreatePayment API will
+  // reject the request with a clearer error if it's actually missing
+  // for a live charge.
+  if (
+    (body as any).verificationToken !== undefined &&
+    typeof (body as any).verificationToken !== 'string'
+  ) {
+    return json({ success: false, error: 'Invalid verificationToken.' }, 400);
+  }
   if (!Number.isFinite(body.amountCents) || (body.amountCents as number) <= 0) {
     return json({ success: false, error: 'Amount must be a positive number of cents.' }, 400);
   }

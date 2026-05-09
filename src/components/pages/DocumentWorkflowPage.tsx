@@ -127,6 +127,24 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const [selectedFeeModel, setSelectedFeeModel] = useState('Hourly Retainer');
   const [retainerAmount, setRetainerAmount] = useState('');
   const [hourlyRate, setHourlyRate] = useState('');
+  // New: per-fee-model amounts. Only the field matching the selected
+  // model gets used; others stay blank in the rendered template.
+  const [flatFeeAmount, setFlatFeeAmount] = useState('');
+  const [hybridFlatFee, setHybridFlatFee] = useState('');
+  const [hybridHourlyRate, setHybridHourlyRate] = useState('');
+  const [contingencyPercent, setContingencyPercent] = useState('');
+  // New: nature-of-matter / nature-of-charge for the generated document.
+  const [natureOfMatter, setNatureOfMatter] = useState('');
+  // Generation in-flight + user-visible error so the click isn't silent.
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generateError, setGenerateError] = useState<string | null>(null);
+  // New: special-provisions / additional-fee line items. Each row has a
+  // description + amount. Drives the {SPECIAL_PROVISIONS_BLOCK}
+  // placeholder so per-stage retainer pricing (e.g. $300 first part of
+  // ticket + $200 trial) auto-populates into the generated document.
+  const [specialProvisions, setSpecialProvisions] = useState<
+    { description: string; amount: string }[]
+  >([]);
 
   // Send document dialog state
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
@@ -192,13 +210,109 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   }, []);
 
   // ----------------------------------------------------------------
-  // Strip legacy <form> scaffolding from a template body. Returns the
-  // cleaned string and a `changed` flag so the caller knows whether to
-  // PATCH the CMS row. Used both at generation time (defensive) and at
-  // load time (one-pass migration that fixes templates at source).
+  // CANONICAL RETAINER BODY
+  //
+  // Used to overwrite legacy retainer templates whose stored markup is
+  // a labels-only "CONFIGURE FEE STRUCTURE" widget with no placeholders.
+  // Uses the {PLACEHOLDER} syntax that handleGenerateDocument already
+  // substitutes — so dropping this in fixes the template at source.
+  // ----------------------------------------------------------------
+  const CANONICAL_RETAINER_HTML = `<div style="font-family: Arial, Helvetica, sans-serif; max-width:820px; margin:0 auto; padding:24px; line-height:1.55; color:#111;">
+  <h1 style="text-align:center; font-size:20px; margin:0 0 4px;">RETAINER AGREEMENT</h1>
+  <p style="text-align:center; color:#666; margin:0 0 18px;">Legal Assist Paralegal Services</p>
+  <hr>
+  <table style="width:100%; font-size:13px; margin:8px 0;">
+    <tr><td style="padding:3px 0; width:35%;"><strong>Date:</strong></td><td>{DATE}</td></tr>
+    <tr><td style="padding:3px 0;"><strong>Client:</strong></td><td>{CLIENT_NAME}</td></tr>
+    <tr><td style="padding:3px 0;"><strong>Phone:</strong></td><td>{CLIENT_PHONE}</td></tr>
+    <tr><td style="padding:3px 0;"><strong>Email:</strong></td><td>{CLIENT_EMAIL}</td></tr>
+    <tr><td style="padding:3px 0;"><strong>Address:</strong></td><td>{CLIENT_ADDRESS_LINE1} {CLIENT_ADDRESS_LINE2}</td></tr>
+    <tr><td style="padding:3px 0;"><strong>City / Province / Postal:</strong></td><td>{CLIENT_CITY}, {CLIENT_PROVINCE}  {CLIENT_POSTAL_CODE}</td></tr>
+    <tr><td style="padding:3px 0;"><strong>Matter Reference:</strong></td><td>{MATTER_REFERENCE}</td></tr>
+  </table>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">1. Parties and Relationship</h2>
+  <p>This Retainer Agreement is entered into between <strong>Legal Assist Paralegal Services</strong> (the &ldquo;Paralegal&rdquo;) and <strong>{CLIENT_NAME}</strong> (the &ldquo;Client&rdquo;) in respect of the matter identified above.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">2. Scope of Services</h2>
+  <p>The Paralegal will provide professional paralegal services authorized under the Law Society of Ontario By-Law 4 and the Paralegal Rules of Conduct, including consultation, document preparation, correspondence, and representation at the applicable tribunal or court where permitted.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">3. Fee Structure</h2>
+  <p>The selected billing model for this matter is: <strong>{SELECTED_FEE_MODEL}</strong>.</p>
+  <p>The Client agrees to pay an initial retainer deposit of <strong>$ {RETAINER_AMOUNT} + HST</strong>. Additional invoicing reflects the agreed billing model. Hourly work is billed at <strong>$ {HOURLY_RATE} / hour + HST</strong> where applicable.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">4. Disbursements and Taxes</h2>
+  <p>Disbursements (filing fees, courier charges, expert reports, etc.) are billed at cost. HST applies to legal fees and to taxable disbursements where required.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">5. Client Responsibilities</h2>
+  <p>The Client agrees to provide complete, accurate, and timely information; cooperate with reasonable requests; attend scheduled meetings, hearings, and court dates; and keep contact information current.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">6. Withdrawal and Termination</h2>
+  <p>The Paralegal may withdraw if fees remain unpaid, the Client fails to cooperate, or the Client insists on an improper course of conduct, subject to the Paralegal&rsquo;s professional obligations. The Client may terminate this retainer at any time by providing written notice; fees and disbursements incurred to that date remain payable.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">7. Electronic Signatures</h2>
+  <p>The Client consents to the use of electronic signatures, email correspondence, and electronic document exchange. Electronic copies shall have the same legal effect as paper originals.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">8. Governing Law</h2>
+  <p>This agreement is governed by the laws of the Province of Ontario.</p>
+  <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin:18px 0 6px;">9. Acknowledgment</h2>
+  <p>By signing below, the Client confirms that they have read and understood this agreement, had the opportunity to ask questions, and agree to its terms.</p>
+  <hr>
+  <table style="width:100%; margin-top:24px; border-collapse:separate; border-spacing:12px 0;">
+    <tr>
+      <td style="width:50%; vertical-align:top; padding:12px; border:1px solid #000;">
+        <p style="font-weight:bold; margin:0 0 24px;">Client Electronic Signature</p>
+        <div style="border-bottom:1px solid #000; height:30px;"></div>
+        <p style="font-size:12px; color:#666; margin:4px 0 14px;">Client Signature</p>
+        <div style="border-bottom:1px solid #000; height:24px;"></div>
+        <p style="font-size:12px; color:#666; margin:4px 0;">Date</p>
+      </td>
+      <td style="width:50%; vertical-align:top; padding:12px; border:1px solid #000;">
+        <p style="font-weight:bold; margin:0 0 12px;">Paralegal Signature</p>
+        <div>{PARALEGAL_SIGNATURE}</div>
+        <p style="font-size:12px; color:#666; margin:6px 0 0;">{PARALEGAL_NAME}, {PARALEGAL_CREDENTIAL}</p>
+        <p style="font-size:12px; color:#666; margin:0;">LSO #{PARALEGAL_LSO}</p>
+        <p style="font-size:12px; margin:8px 0 0;">{PARALEGAL_SIGN_DATE}</p>
+      </td>
+    </tr>
+  </table>
+</div>`;
+
+  // ----------------------------------------------------------------
+  // Heuristic: detect a "broken" retainer template body. Broken means
+  // the markup contains the legacy "CONFIGURE FEE STRUCTURE" header,
+  // OR contains client-info field LABELS like "CLIENT NAME" / "CLIENT
+  // PHONE" / "MATTER REFERENCE" without the corresponding {CLIENT_NAME}
+  // / {CLIENT_PHONE} / {MATTER_REFERENCE} placeholders that
+  // handleGenerateDocument knows how to substitute. Such a template
+  // can't be rendered correctly because the data has nowhere to land,
+  // so we replace the body wholesale.
+  // ----------------------------------------------------------------
+  const isBrokenRetainerBody = (raw: string): boolean => {
+    if (!raw) return false;
+    const lower = raw.toLowerCase();
+    if (lower.includes('configure fee structure')) return true;
+    const labelMarkers = [
+      'client name',
+      'client phone',
+      'client email',
+      'address line 1',
+      'matter reference',
+    ];
+    const hasLabels = labelMarkers.filter((l) => lower.includes(l)).length >= 3;
+    const hasPlaceholders =
+      raw.includes('{CLIENT_NAME}') ||
+      raw.includes('{CLIENT_PHONE}') ||
+      raw.includes('{MATTER_REFERENCE}');
+    return hasLabels && !hasPlaceholders;
+  };
+
+  // ----------------------------------------------------------------
+  // cleanTemplateContent — two-stage cleanup:
+  //   1. If the body is structurally broken (labels without
+  //      placeholders, or "CONFIGURE FEE STRUCTURE"), REPLACE the
+  //      whole body with the canonical retainer HTML so it actually
+  //      generates a usable document.
+  //   2. Otherwise, just strip stray <form>/<input>/<button> elements
+  //      that may have leaked in but the rest of the body is fine.
   // ----------------------------------------------------------------
   const cleanTemplateContent = (raw: string): { cleaned: string; changed: boolean } => {
     if (!raw) return { cleaned: '', changed: false };
+    if (isBrokenRetainerBody(raw)) {
+      return { cleaned: CANONICAL_RETAINER_HTML, changed: true };
+    }
     const before = raw;
     const cleaned = raw
       .replace(/<form[\s\S]*?<\/form>/gi, '')
@@ -600,11 +714,20 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   };
 
   const handleGenerateDocument = async () => {
+    setGenerateError(null);
+    setIsGenerating(true);
     try {
       const template = templates.find(t => t._id === selectedTemplateId);
       const client = clients.find(c => c._id === selectedClientId);
-      
-      if (!template || !client) return;
+
+      if (!template) {
+        setGenerateError('Please choose a template.');
+        return;
+      }
+      if (!client) {
+        setGenerateError('Please choose a client.');
+        return;
+      }
 
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
@@ -641,6 +764,71 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{SELECTED_FEE_MODEL\}/g, selectedFeeModel || '—');
       documentContent = documentContent.replace(/\{RETAINER_AMOUNT\}/g, retainerAmount || '—');
       documentContent = documentContent.replace(/\{HOURLY_RATE\}/g, hourlyRate || '—');
+      documentContent = documentContent.replace(/\{FLAT_FEE\}/g, flatFeeAmount || '—');
+      documentContent = documentContent.replace(/\{HYBRID_FLAT_FEE\}/g, hybridFlatFee || '—');
+      documentContent = documentContent.replace(/\{HYBRID_HOURLY_RATE\}/g, hybridHourlyRate || '—');
+      documentContent = documentContent.replace(/\{CONTINGENCY_PERCENT\}/g, contingencyPercent || '—');
+
+      // ---- Fee-model checkbox ticks ----
+      // Tick the box for the selected fee model and leave the others
+      // empty. Templates use {HOURLY_CHECK}, {FLAT_CHECK},
+      // {HYBRID_CHECK}, {CONTINGENCY_CHECK} where the literal ☐ used to
+      // be — so the right line gets ticked at generation time.
+      const tick = (model: string) => (selectedFeeModel === model ? '☑' : '☐');
+      documentContent = documentContent.replace(/\{HOURLY_CHECK\}/g, tick('Hourly Retainer'));
+      documentContent = documentContent.replace(/\{FLAT_CHECK\}/g, tick('Flat Fee'));
+      documentContent = documentContent.replace(/\{HYBRID_CHECK\}/g, tick('Hybrid Retainer'));
+      documentContent = documentContent.replace(/\{CONTINGENCY_CHECK\}/g, tick('Contingency Fee'));
+
+      // ---- Nature of Matter / Charge ----
+      // Use what the paralegal typed in the dialog. If left blank, leave
+      // a clear "(To be provided by the Client.)" so the placeholder
+      // never leaks into the generated document.
+      const natureText =
+        natureOfMatter.trim() ||
+        '(To be provided by the Client.)';
+      documentContent = documentContent.replace(/\{NATURE_OF_MATTER\}/g, natureText);
+
+      // ---- Special Provisions / Additional Charges ----
+      // Build an HTML block from the paralegal-entered line items
+      // (e.g. "$300 first part of ticket", "$200 trial"). When there
+      // are no items, the block is replaced with an empty string so
+      // the section disappears entirely. When there are items, a
+      // styled table is inserted with line items + total.
+      const validProvisions = specialProvisions.filter(
+        (p) => p.description.trim() || (Number(p.amount) || 0) > 0
+      );
+      let provisionsBlock = '';
+      if (validProvisions.length > 0) {
+        const provTotal = validProvisions.reduce(
+          (s, p) => s + (Number(p.amount) || 0),
+          0
+        );
+        const rows = validProvisions
+          .map(
+            (p) =>
+              `<tr><td style="padding:6px 0;border-bottom:1px solid #E5E7EB;">${
+                (p.description || '').replace(/</g, '&lt;')
+              }</td><td style="padding:6px 0;border-bottom:1px solid #E5E7EB;text-align:right;font-family:monospace;">$ ${
+                (Number(p.amount) || 0).toFixed(2)
+              } + HST</td></tr>`
+          )
+          .join('');
+        provisionsBlock =
+          `<h3 style="font-size:14px;margin:16px 0 6px;">Special Provisions / Additional Charges</h3>` +
+          `<p>The following additional charges apply to specific stages or aspects of this matter, in addition to the fees set out above. These amounts are payable in addition to HST.</p>` +
+          `<table style="width:100%;border-collapse:collapse;margin:8px 0;">` +
+          `<thead><tr><th style="text-align:left;padding:6px 0;border-bottom:1px solid #000;font-size:12px;text-transform:uppercase;letter-spacing:.06em;">Description</th><th style="text-align:right;padding:6px 0;border-bottom:1px solid #000;font-size:12px;text-transform:uppercase;letter-spacing:.06em;">Amount</th></tr></thead>` +
+          `<tbody>${rows}</tbody>` +
+          `<tfoot><tr><td style="padding:8px 0;font-weight:bold;">Subtotal of additional charges</td><td style="padding:8px 0;text-align:right;font-weight:bold;font-family:monospace;">$ ${provTotal.toFixed(
+            2
+          )} + HST</td></tr></tfoot>` +
+          `</table>`;
+      }
+      documentContent = documentContent.replace(
+        /\{SPECIAL_PROVISIONS_BLOCK\}/g,
+        provisionsBlock
+      );
       documentContent = documentContent.replace(/\{FLAT_FEE\}/g, '—');
       documentContent = documentContent.replace(/\{HYBRID_FLAT_FEE\}/g, '—');
       documentContent = documentContent.replace(/\{HYBRID_HOURLY_RATE\}/g, '—');
@@ -716,11 +904,24 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       setSelectedFeeModel('Hourly Retainer');
       setRetainerAmount('');
       setHourlyRate('');
+      setFlatFeeAmount('');
+      setHybridFlatFee('');
+      setHybridHourlyRate('');
+      setContingencyPercent('');
+      setNatureOfMatter('');
+      setSpecialProvisions([]);
       setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
       setAutoSignAsParalegal(false);
-    } catch (error) {
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
       console.error('Error generating document:', error);
-      loadData();
+      setGenerateError(
+        error?.message
+          ? `Could not generate document: ${error.message}`
+          : 'Could not generate document. Open the browser console for details.'
+      );
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -836,6 +1037,72 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
     }
   };
 
+  // ----------------------------------------------------------------
+  // Open a document URL in a new tab. Browsers block top-level
+  // navigation to long `data:` URLs (Chrome/Edge security policy
+  // since 2017), which is why View was opening blank tabs. We convert
+  // any data: URL into a temporary blob: URL and open that instead —
+  // blob URLs are first-class navigation targets in every browser.
+  // ----------------------------------------------------------------
+  const openDocumentUrl = (url: string | undefined): boolean => {
+    if (!url) return false;
+    try {
+      if (url.startsWith('data:')) {
+        const commaIdx = url.indexOf(',');
+        if (commaIdx === -1) return false;
+        const meta = url.slice(5, commaIdx); // strip "data:"
+        const isBase64 = meta.includes(';base64');
+        const mime = (meta.split(';')[0] || 'application/octet-stream').trim();
+        const payload = url.slice(commaIdx + 1);
+
+        let bytes: Uint8Array;
+        if (isBase64) {
+          const bin = atob(payload);
+          bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        } else {
+          const decoded = decodeURIComponent(payload);
+          bytes = new TextEncoder().encode(decoded);
+        }
+
+        const blob = new Blob([bytes], { type: mime });
+        const blobUrl = URL.createObjectURL(blob);
+        const win = window.open(blobUrl, '_blank');
+        // Revoke after a minute — long enough for the tab to load and
+        // the user to start reading, short enough to avoid a leak.
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+        if (!win) {
+          // Pop-up blocker — fall back to a programmatic anchor click,
+          // which gets a user-activation pass-through.
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
+        return true;
+      }
+      // Real http(s) URL — open directly.
+      const win = window.open(url, '_blank');
+      if (!win) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      return true;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('openDocumentUrl failed:', err);
+      return false;
+    }
+  };
+
   const handlePrintDocument = (doc: GeneratedDocument) => {
     // CRITICAL FIX: Use signed document URL if available, otherwise use original
     const documentUrl = doc.status === 'signed' && doc.signedDocumentUrl 
@@ -885,11 +1152,14 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
     if (!documentToSign) return;
 
     try {
-      // Embed signature into PDF
+      // Embed signature into PDF (pass original HTML body too — the
+      // documentUrl is a real PDF after the htmlToPDF rewrite, so we
+      // re-render from the stored HTML with the signature appended).
       const signedPdfDataUrl = await embedSignatureInPDF(
         documentToSign.documentUrl || '',
         signatureData,
-        documentToSign.documentName || 'Document'
+        documentToSign.documentName || 'Document',
+        (documentToSign as any).documentContent || undefined,
       );
 
       // Update generated document with signed version
@@ -1214,6 +1484,14 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                   setSelectedFeeModel('Hourly Retainer');
                   setRetainerAmount('');
                   setHourlyRate('');
+                  setFlatFeeAmount('');
+                  setHybridFlatFee('');
+                  setHybridHourlyRate('');
+                  setContingencyPercent('');
+                  setNatureOfMatter('');
+                  setSpecialProvisions([]);
+                  setIsGenerating(false);
+                  setGenerateError(null);
                   setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
                   setAutoSignAsParalegal(false);
                 }
@@ -1363,22 +1641,201 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                               placeholder="e.g. 1500"
                             />
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
-                            <Input
-                              id="hourlyRate"
-                              type="number"
-                              value={hourlyRate}
-                              onChange={(e) => setHourlyRate(e.target.value)}
-                              placeholder="e.g. 175"
-                            />
-                          </div>
+                          {/* Hourly rate — applies to Hourly + Hybrid */}
+                          {(selectedFeeModel === 'Hourly Retainer' ||
+                            selectedFeeModel === 'Hybrid Retainer') && (
+                            <div className="space-y-2">
+                              <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
+                              <Input
+                                id="hourlyRate"
+                                type="number"
+                                value={hourlyRate}
+                                onChange={(e) => setHourlyRate(e.target.value)}
+                                placeholder="e.g. 175"
+                              />
+                            </div>
+                          )}
+
+                          {/* Flat fee amount */}
+                          {selectedFeeModel === 'Flat Fee' && (
+                            <div className="space-y-2">
+                              <Label htmlFor="flatFeeAmount">Flat Fee Amount ($)</Label>
+                              <Input
+                                id="flatFeeAmount"
+                                type="number"
+                                value={flatFeeAmount}
+                                onChange={(e) => setFlatFeeAmount(e.target.value)}
+                                placeholder="e.g. 750"
+                              />
+                            </div>
+                          )}
+
+                          {/* Hybrid retainer — initial flat + hourly after */}
+                          {selectedFeeModel === 'Hybrid Retainer' && (
+                            <>
+                              <div className="space-y-2">
+                                <Label htmlFor="hybridFlatFee">Initial Flat Fee ($)</Label>
+                                <Input
+                                  id="hybridFlatFee"
+                                  type="number"
+                                  value={hybridFlatFee}
+                                  onChange={(e) => setHybridFlatFee(e.target.value)}
+                                  placeholder="e.g. 500"
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="hybridHourlyRate">Hourly Rate After Initial ($)</Label>
+                                <Input
+                                  id="hybridHourlyRate"
+                                  type="number"
+                                  value={hybridHourlyRate}
+                                  onChange={(e) => setHybridHourlyRate(e.target.value)}
+                                  placeholder="e.g. 150"
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {/* Contingency percentage */}
+                          {selectedFeeModel === 'Contingency Fee' && (
+                            <div className="space-y-2">
+                              <Label htmlFor="contingencyPercent">Contingency Percentage (%)</Label>
+                              <Input
+                                id="contingencyPercent"
+                                type="number"
+                                min="0"
+                                max="100"
+                                value={contingencyPercent}
+                                onChange={(e) => setContingencyPercent(e.target.value)}
+                                placeholder="e.g. 25"
+                              />
+                            </div>
+                          )}
                         </div>
                       );
                     })()}
 
-                    <Button onClick={handleGenerateDocument} className="w-full" disabled={!selectedTemplateId || !selectedClientId}>
-                      Generate Document
+                    {/* Nature of the Charge / Matter — fillable, drives
+                        the {NATURE_OF_MATTER} placeholder in any
+                        retainer template that has it. */}
+                    <div className="space-y-2">
+                      <Label htmlFor="natureOfMatter">Nature of the Matter / Charge</Label>
+                      <Textarea
+                        id="natureOfMatter"
+                        value={natureOfMatter}
+                        onChange={(e) => setNatureOfMatter(e.target.value)}
+                        placeholder='e.g. "Speeding 130 km/h in a posted 100 km/h zone, contrary to s.128(1)(b) of the Highway Traffic Act, charge issued June 14, 2026 in London."'
+                        rows={3}
+                      />
+                      <p className="text-xs text-gray-500">
+                        Fills the &ldquo;Nature of the Charge&rdquo; / &ldquo;Nature of the Matter&rdquo;
+                        section of the retainer (templates that include the <code>{'{NATURE_OF_MATTER}'}</code>{' '}
+                        placeholder). Leave blank to print &ldquo;(To be provided by the Client.)&rdquo;.
+                      </p>
+                    </div>
+
+                    {/* Special Provisions / Additional Charges — drives
+                        the {SPECIAL_PROVISIONS_BLOCK} placeholder. Each
+                        line is a description + dollar amount. Renders
+                        as a styled table in the retainer. */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <Label>Special Provisions / Additional Charges</Label>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            setSpecialProvisions((prev) => [
+                              ...prev,
+                              { description: '', amount: '' },
+                            ])
+                          }
+                          className="h-7 px-2 text-xs"
+                        >
+                          + Add charge
+                        </Button>
+                      </div>
+                      {specialProvisions.length === 0 ? (
+                        <p className="text-xs italic text-gray-500 px-3 py-2 bg-gray-50 rounded-lg">
+                          No additional charges. Click &ldquo;Add charge&rdquo; to itemize stage-specific
+                          fees (e.g. &ldquo;$300 for first appearance + $200 for trial&rdquo;).
+                        </p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {specialProvisions.map((p, idx) => (
+                            <li key={idx} className="flex gap-2 items-start">
+                              <Input
+                                value={p.description}
+                                onChange={(e) =>
+                                  setSpecialProvisions((prev) =>
+                                    prev.map((x, i) =>
+                                      i === idx
+                                        ? { ...x, description: e.target.value }
+                                        : x
+                                    )
+                                  )
+                                }
+                                placeholder='e.g. "First appearance — POA Court"'
+                                className="flex-1"
+                              />
+                              <Input
+                                type="number"
+                                min={0}
+                                step="0.01"
+                                value={p.amount}
+                                onChange={(e) =>
+                                  setSpecialProvisions((prev) =>
+                                    prev.map((x, i) =>
+                                      i === idx
+                                        ? { ...x, amount: e.target.value }
+                                        : x
+                                    )
+                                  )
+                                }
+                                placeholder="Amount"
+                                className="w-28"
+                              />
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="outline"
+                                onClick={() =>
+                                  setSpecialProvisions((prev) =>
+                                    prev.filter((_, i) => i !== idx)
+                                  )
+                                }
+                                className="border-red-200 text-red-700 hover:bg-red-50 h-9 px-2"
+                                aria-label={`Remove charge ${idx + 1}`}
+                              >
+                                ×
+                              </Button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      <p className="text-xs text-gray-500">
+                        Drives the <code>{'{SPECIAL_PROVISIONS_BLOCK}'}</code> placeholder.
+                        Templates without that placeholder will simply ignore these charges.
+                      </p>
+                    </div>
+
+                    {generateError && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                        {generateError}
+                      </div>
+                    )}
+                    {(!selectedTemplateId || !selectedClientId) && !generateError && (
+                      <p className="text-xs text-amber-700 -mb-2">
+                        Choose a template <em>and</em> a client to enable the Generate button.
+                      </p>
+                    )}
+                    <Button
+                      onClick={handleGenerateDocument}
+                      className="w-full"
+                      disabled={!selectedTemplateId || !selectedClientId || isGenerating}
+                    >
+                      {isGenerating ? 'Generating PDF…' : 'Generate Document'}
                     </Button>
                   </div>
                 </DialogContent>
@@ -1458,12 +1915,15 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                               ? doc.signedDocumentUrl
                               : doc.documentUrl;
                             if (urlToView && (urlToView.startsWith('http') || urlToView.startsWith('data:'))) {
-                              window.open(urlToView, '_blank');
+                              const opened = openDocumentUrl(urlToView);
+                              if (!opened) {
+                                alert('Could not open document. Please try Download instead.');
+                              }
                             } else if (doc.documentContent) {
                               // Regenerate PDF from stored content
                               try {
                                 const pdfDataUrl = await generatePDF(doc.documentContent, doc.documentName || 'Document');
-                                window.open(pdfDataUrl, '_blank');
+                                openDocumentUrl(pdfDataUrl);
                                 // Cache for next time
                                 await BaseCrudService.update('generateddocuments', { _id: doc._id, documentUrl: pdfDataUrl } as any);
                                 setGeneratedDocs(prev => prev.map(d => d._id === doc._id ? { ...d, documentUrl: pdfDataUrl } : d));
@@ -1542,7 +2002,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                             variant="outline"
                             onClick={() => {
                               if (doc.signedDocumentUrl) {
-                                window.open(doc.signedDocumentUrl, '_blank');
+                                openDocumentUrl(doc.signedDocumentUrl);
                               }
                             }}
                             className="gap-2 border-green-600 text-green-700 hover:bg-green-50"

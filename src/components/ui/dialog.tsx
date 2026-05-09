@@ -35,9 +35,19 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-background text-primary p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        // Mobile-first sizing:
+        //   - w-[95vw] keeps a small margin so the dialog never edges off-screen on phones
+        //   - max-w-lg is the desktop ceiling (per-dialog overrides like max-w-2xl still win)
+        //   - max-h-[90vh] + overflow-y-auto so a long form never gets cut off below the fold;
+        //     the dialog scrolls internally on small screens (iPhone/iPad)
+        //   - p-4 on mobile (was p-6) so form fields aren't crowded against the close button
+        //   - safe-area inset padding-bottom for iOS home indicator
+        "fixed left-[50%] top-[50%] z-50 grid w-[95vw] max-w-lg max-h-[90vh] overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 bg-background text-primary p-4 sm:p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg sm:rounded-lg",
         className
       )}
+      // iOS safe-area: respect the home indicator so the bottom of the
+      // modal doesn't sit underneath the gesture bar.
+      style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
       {...props}
     >
       {children}

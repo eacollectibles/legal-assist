@@ -59,28 +59,26 @@ We understand that small claims disputes can be stressful and time-consuming. Ou
     shortDescription: 'Professional representation for residential tenancy disputes and eviction proceedings.',
     icon: <Home className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=landlord-tenant-board',
-    learnMore: `The Landlord and Tenant Board (LTB) handles disputes between landlords and tenants in Ontario. Whether you're facing eviction, dealing with maintenance issues, or disputing rent increases, our paralegals provide skilled representation.
+    learnMore: `The Landlord and Tenant Board (LTB) handles disputes between landlords and tenants in Ontario under the Residential Tenancies Act, 2006. Whether you're facing eviction, dealing with maintenance issues, or responding to a rent or above-guideline increase application, our paralegals provide professional representation.
 
-We represent both landlords and tenants in matters including:
+We represent landlords or tenants — but never both sides in the same matter — in applications including:
 
-• Eviction proceedings (non-payment, lease violations)
-• Rent increase disputes
-• Maintenance and repair complaints
-• Illegal lockouts and entry disputes
-• Deposit and key money issues
-• Lease termination matters
+• Landlord applications (L1 / L2 / L3 / L4 / L5) — non-payment of rent, termination for cause, persistent late payment, or above-guideline rent increase
+• Tenant applications (T1 / T2 / T6) — illegal charges, tenants' rights (illegal entry, lockouts, harassment), and maintenance issues
+• Rent deposit and last-month's-rent disputes (key money and most other extra charges are prohibited under the RTA)
+• Eviction defence and motions to set aside ex parte orders
 
-Our team understands the Residential Tenancies Act and LTB procedures thoroughly. We work to achieve fair outcomes while maintaining professional relationships where possible.`,
+Every file is screened for conflicts before retainer. Our team works the LTB on a daily basis and is familiar with current scheduling practice and the e-File portal.`,
     keyPoints: [
-      'Residential tenancy expertise',
-      'Both landlord and tenant representation',
-      'Knowledge of Residential Tenancies Act',
-      'Eviction defense strategies',
-      'Rent dispute resolution'
+      'Residential Tenancies Act, 2006 expertise',
+      'Landlord OR tenant representation (with conflict screening)',
+      'L1–L5 and T1/T2/T6 application experience',
+      'Eviction defence and set-aside motions',
+      'Last-month\'s-rent and prohibited-charge disputes'
     ],
-    costInfo: 'Flexible fee structures available. We offer both flat fees for standard matters and hourly rates for complex cases.',
-    timeline: 'LTB hearings typically scheduled within 30-60 days of application. Resolution varies by case type.',
-    eligibility: 'Available to landlords, tenants, and property managers in Ontario. Both parties can be represented.'
+    costInfo: 'Flexible fee structures available. We offer flat fees for standard matters and hourly rates for complex cases.',
+    timeline: 'LTB scheduling has been substantially delayed post-2020. Most matters are scheduled 6–12 months after filing, with tenant applications often longer than landlord applications. We will provide a realistic estimate at retainer based on the application type and current Board practice.',
+    eligibility: 'Available to landlords or tenants in Ontario. Property managers may be represented through the landlord entity. Conflicts of interest are screened before any retainer.'
   },
   {
     id: 'hrto',
