@@ -30,27 +30,27 @@ const services: Service[] = [
     shortDescription: 'Professional representation for civil disputes up to $50,000 in Ontario.',
     icon: <Scale className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_4477a5a9ef4f48cc8e3416990393a421~mv2.png?id=small-claims-court',
-    learnMore: `Small Claims Court is designed for straightforward civil disputes involving amounts up to $50,000. Our licensed paralegals have extensive experience representing clients in these proceedings, helping you navigate the process from initial claim to judgment.
+    learnMore: `Small Claims Court is a branch of the Superior Court of Justice that handles civil disputes for principal amounts up to $50,000 (raised from $35,000 effective January 1, 2025). The procedure is governed by the Courts of Justice Act, R.S.O. 1990, c. C.43, and the Rules of the Small Claims Court, O. Reg. 258/98. Our licensed paralegals appear in this court regularly under Law Society of Ontario By-Law 4.
 
-Whether you're pursuing a debt recovery, property damage claim, or contract dispute, we provide comprehensive representation including:
+Whether you're pursuing a debt recovery, property damage claim, or contract dispute, we provide representation including:
 
-• Claim preparation and filing
-• Evidence gathering and organization
-• Pre-trial settlement negotiations
-• Full courtroom representation
-• Post-judgment enforcement assistance
-
-We understand that small claims disputes can be stressful and time-consuming. Our team works to resolve matters efficiently while protecting your interests throughout the process.`,
+• Drafting and filing the Plaintiff's Claim (Form 7A) or Defence (Form 9A)
+• Service of court documents in accordance with the Rules
+• Evidence preparation, document production, and witness preparation
+• Attendance at the mandatory settlement conference (Rule 13)
+• Drafting and arguing motions (default judgment, set-aside, summary disposition)
+• Trial representation before a Deputy Judge
+• Post-judgment enforcement filings (writ of seizure and sale, garnishment, debtor examination)`,
     keyPoints: [
-      'Claims up to $50,000',
-      'Streamlined court process',
-      'Lower costs than Superior Court',
-      'Faster resolution timeline',
-      'Professional representation available'
+      'Claims up to $50,000 principal (interest + costs additional)',
+      'Plaintiff or defence representation',
+      'Mandatory settlement conference (Rule 13)',
+      'Trial advocacy before a Deputy Judge',
+      'Post-judgment enforcement assistance'
     ],
-    costInfo: 'Competitive flat fees or hourly rates depending on case complexity. Initial consultation available.',
-    timeline: 'Typically 3-6 months from filing to judgment, depending on court scheduling and case complexity.',
-    eligibility: 'Open to individuals and businesses with civil claims within Ontario. No legal representation required, but highly recommended.'
+    costInfo: 'Flat fees for standard claims or hourly rates for complex matters. Free 30-minute consultation to assess the file.',
+    timeline: 'Realistic timelines: settlement conference is typically scheduled 6-12 months after filing; trial beyond that. Default judgments (where no Defence is filed) can be issued in 30-60 days. Times vary by court location and current scheduling.',
+    eligibility: 'Open to individuals, sole proprietors, and corporations with civil claims of $50,000 or less filed in Ontario. The 2-year basic limitation period under the Limitations Act, 2002 generally applies.'
   },
   {
     id: 'landlord-tenant',
@@ -87,28 +87,28 @@ Every file is screened for conflicts before retainer. Our team works the LTB on 
     shortDescription: 'Advocacy for discrimination and human rights violations in employment, housing, and services.',
     icon: <Users className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_dd992a5cea8d480083edf1f581620340~mv2.png?id=human-rights-tribunal',
-    learnMore: `The Human Rights Tribunal of Ontario (HRTO) addresses complaints of discrimination based on protected grounds including race, gender, disability, age, and more. These matters are serious and require experienced representation.
+    learnMore: `The Human Rights Tribunal of Ontario (HRTO) is an adjudicative tribunal that hears applications under the Ontario Human Rights Code, R.S.O. 1990, c. H.19. The Code prohibits discrimination on grounds including race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex (including pregnancy and breastfeeding), sexual orientation, gender identity, gender expression, age, marital status, family status, and disability — plus record of offences (employment only) and receipt of public assistance (housing only). Note that "political belief" is NOT a protected ground in Ontario.
 
-We handle complaints involving:
+We handle applications involving:
 
-• Employment discrimination
-• Harassment and hostile work environment
-• Disability accommodation failures
-• Housing discrimination
-• Discrimination in services and facilities
-• Retaliation for human rights complaints
+• Employment discrimination and failure to accommodate
+• Harassment tied to a protected ground (creating a poisoned work environment)
+• Disability accommodation to the point of undue hardship (s.17 Code)
+• Housing discrimination (occupancy of accommodation)
+• Discrimination in services, goods, and facilities
+• Reprisal for asserting Code-related rights (s.8)
 
-Our paralegals work with you to build a strong case, gather evidence, and present compelling arguments before the tribunal. We understand the sensitive nature of these matters and provide compassionate, professional support throughout the process.`,
+We work with applicants and respondents to file Form 1 / Form 2, prepare evidence, attend mediation, and represent clients at hearing.`,
     keyPoints: [
-      'Protected ground expertise',
-      'Employment discrimination focus',
-      'Accommodation requirement analysis',
-      'Evidence-based strategy',
-      'Tribunal hearing preparation'
+      'Ontario Human Rights Code expertise',
+      'Applicant or respondent representation',
+      'Mediation and hearing preparation',
+      'Damages for injury to dignity, feelings, and self-respect',
+      'Right of appearance under LSO By-Law 4'
     ],
-    costInfo: 'Competitive rates for human rights matters. Many cases handled on contingency or reduced fees for vulnerable clients.',
-    timeline: 'HRTO cases typically take 12-24 months from complaint to hearing, depending on complexity and tribunal scheduling.',
-    eligibility: 'Available to individuals who believe they\'ve experienced discrimination based on protected grounds under the Human Rights Code.'
+    costInfo: 'Hourly or flat-fee retainers depending on the scope. Reduced-fee structures are considered case-by-case for clients with limited means. Note: paralegal contingency arrangements are uncommon in HRTO matters because the remedy is often non-monetary.',
+    timeline: 'HRTO applications typically take 12-24 months from filing to a final hearing decision. Many cases settle at mediation 6-9 months in.',
+    eligibility: 'Available to anyone who has experienced discrimination on a protected ground in one of the five social areas covered by the Code (services, accommodation, contracts, employment, vocational associations). The 1-year limitation period under s.34(1) generally applies.'
   },
   {
     id: 'traffic-tickets',

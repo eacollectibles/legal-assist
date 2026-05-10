@@ -61,10 +61,10 @@ export default function HumanRightsTribunalPage() {
               What is the Human Rights Tribunal of Ontario?
             </h2>
             <p className="font-paragraph text-lg text-foreground/80 mb-6">
-              The Human Rights Tribunal of Ontario (HRTO) is an independent tribunal that addresses complaints of discrimination based on protected grounds under the Ontario Human Rights Code. These grounds include race, ancestry, place of origin, political belief, colour, ethnic origin, creed, sex, sexual orientation, gender identity, gender expression, age, record of offences, marital status, family status, and disability.
+              The Human Rights Tribunal of Ontario (HRTO) is an independent adjudicative tribunal that hears applications alleging discrimination under the Ontario <em>Human Rights Code</em>, R.S.O. 1990, c. H.19. Protected grounds include race, ancestry, place of origin, colour, ethnic origin, citizenship, creed (religion), sex (including pregnancy and breastfeeding), sexual orientation, gender identity, gender expression, age, marital status, family status, and disability. <strong>Record of offences</strong> is a protected ground in employment only, and <strong>receipt of public assistance</strong> is a protected ground in housing only.
             </p>
             <p className="font-paragraph text-lg text-foreground/80">
-              We concentrate our practice on representing individuals who have experienced discrimination in employment, housing, services, and other areas covered by the Code. We understand the sensitive nature of human rights matters and provide compassionate, professional advocacy throughout the HRTO process.
+              We concentrate our practice on representing applicants and respondents in matters of discrimination in employment, housing, services, contracts, and vocational associations &mdash; the five social areas covered by the Code. We understand the sensitive nature of these matters and provide professional advocacy throughout the HRTO process.
             </p>
           </div>
 
@@ -107,8 +107,8 @@ export default function HumanRightsTribunalPage() {
                   description: 'Unwelcome conduct, comments, or behavior based on protected grounds that creates a hostile or intimidating work environment.'
                 },
                 {
-                  title: 'Sexual Harassment & Assault',
-                  description: 'Unwanted sexual conduct, comments, advances, or assault in the workplace or other covered areas, including quid pro quo harassment.'
+                  title: 'Sexual Harassment',
+                  description: 'Unwanted sexual conduct, comments, or advances in the workplace or other areas covered by the Code, including quid pro quo harassment by someone in a position of authority. Note: criminal sexual assault is a Criminal Code matter handled separately by police and the Crown.'
                 },
                 {
                   title: 'Disability Discrimination',
@@ -136,15 +136,15 @@ export default function HumanRightsTribunalPage() {
                 },
                 {
                   title: 'Family Status Discrimination',
-                  description: 'Discrimination based on family status, including parental status, pregnancy, or childcare responsibilities.'
+                  description: 'Discrimination based on the parent-child relationship — for example, refusing to accommodate childcare responsibilities. (Note: pregnancy and breastfeeding are separately protected under "sex", not "family status".)'
                 },
                 {
                   title: 'Marital Status Discrimination',
                   description: 'Unfair treatment based on marital status, including single, married, divorced, or widowed status.'
                 },
                 {
-                  title: 'Record of Offences Discrimination',
-                  description: 'Discrimination based on a record of criminal conviction, including employment or housing denial.'
+                  title: 'Record of Offences Discrimination (Employment)',
+                  description: 'Employment discrimination based on a provincial offence conviction or a Criminal Code conviction for which a pardon (record suspension) has been granted. This protection applies only in employment, not in housing or services.'
                 },
                 {
                   title: 'Housing Discrimination',
@@ -175,8 +175,8 @@ export default function HumanRightsTribunalPage() {
                   description: 'Unfair treatment related to pregnancy, childbirth, breastfeeding, or parental leave entitlements.'
                 },
                 {
-                  title: 'Bullying & Intimidation',
-                  description: 'Persistent bullying, intimidation, or threatening behavior based on protected grounds creating a hostile environment.'
+                  title: 'Harassment Tied to a Protected Ground',
+                  description: 'Persistent comments, conduct, or treatment tied to a protected ground that creates a poisoned environment. General workplace bullying alone is NOT within HRTO jurisdiction unless it is connected to a protected ground; pure workplace bullying is governed by the Occupational Health and Safety Act and addressed by the Ministry of Labour.'
                 }
               ].map((violation, idx) => (
                 <div key={idx} className="bg-gradient-to-br from-pastelbeige/20 to-transparent rounded-lg p-6 border border-pastelbeige hover:shadow-md transition-shadow">
@@ -294,10 +294,10 @@ export default function HumanRightsTribunalPage() {
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-heading text-xl font-bold text-foreground mb-2">
-                      Appeal Support
+                      Reconsideration & Judicial Review
                     </h3>
                     <p className="font-paragraph text-foreground/80">
-                      If needed, we provide guidance and representation for appeals to protect your interests and seek justice.
+                      HRTO decisions are not appealed in the conventional sense. We can assist with a request for <em>reconsideration</em> by the HRTO under s.45.7 of the Code, or with a <em>judicial review</em> application to the Divisional Court under s.45.8 where appropriate.
                     </p>
                   </div>
                 </div>
@@ -436,10 +436,10 @@ export default function HumanRightsTribunalPage() {
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-heading text-xl font-bold text-foreground mb-2">
-                      Appeal Representation
+                      Reconsideration & Judicial Review
                     </h3>
                     <p className="font-paragraph text-foreground/80">
-                      Professional support for appeals if you believe the decision was unjust or based on legal errors.
+                      The Code does not provide a conventional appeal from HRTO decisions. We can assist with a request for reconsideration to the HRTO (s.45.7) or a judicial-review application to the Divisional Court (s.45.8) on grounds such as a denial of natural justice or an unreasonable decision.
                     </p>
                   </div>
                 </div>
@@ -459,23 +459,23 @@ export default function HumanRightsTribunalPage() {
             {[
               {
                 step: '1',
-                title: 'Complaint Filing',
-                description: 'We help you file a comprehensive complaint with the HRTO, clearly articulating the discrimination and protected grounds involved.'
+                title: 'Application (Form 1)',
+                description: 'We help you file Form 1 — the Application to the HRTO — within the 1-year limitation period in s.34(1) of the Code, identifying the protected ground(s), social area, and remedy sought.'
               },
               {
                 step: '2',
-                title: 'Investigation & Response',
-                description: 'The HRTO investigates the complaint. We prepare your response and gather evidence to support your position.'
+                title: 'Response & Reply',
+                description: 'The HRTO is an adjudicative tribunal — it does not investigate. The respondent files a Response (Form 2) within 35 days; the applicant may file a Reply (Form 3) within 14 days of the Response.'
               },
               {
                 step: '3',
-                title: 'Pre-Hearing Preparation',
-                description: 'We organize evidence, prepare witnesses, and develop strategy for the hearing.'
+                title: 'Mediation (Voluntary)',
+                description: 'The HRTO offers free voluntary mediation at no cost. Many cases settle here. If mediation is declined or unsuccessful, the case proceeds toward a hearing.'
               },
               {
                 step: '4',
                 title: 'Hearing & Decision',
-                description: 'Full representation at the hearing and advocacy for appropriate remedies based on the tribunal\'s decision.'
+                description: 'A full evidentiary hearing before an HRTO adjudicator. The tribunal can order monetary remedies (including damages for injury to dignity, feelings, and self-respect under s.45.2(1)1), reinstatement, policy changes, and other public-interest remedies.'
               }
             ].map((item) => (
               <div key={item.step} className="relative">
@@ -511,27 +511,27 @@ export default function HumanRightsTribunalPage() {
             {[
               {
                 q: 'What grounds of discrimination does the HRTO cover?',
-                a: 'The HRTO covers discrimination based on race, ancestry, place of origin, political belief, colour, ethnic origin, creed, sex, sexual orientation, gender identity, gender expression, age, record of offences, marital status, family status, and disability.'
+                a: 'Under the Ontario Human Rights Code, the protected grounds are: race, ancestry, place of origin, colour, ethnic origin, citizenship, creed (religion), sex (including pregnancy and breastfeeding), sexual orientation, gender identity, gender expression, age, marital status, family status, and disability. Record of offences is a protected ground in employment only. Receipt of public assistance is a protected ground in housing only. Political belief is NOT a protected ground in Ontario.'
               },
               {
                 q: 'What areas of life does the Ontario Human Rights Code cover?',
-                a: 'The Code covers employment, housing, services, facilities, contracts, and membership in unions and professional associations.'
+                a: 'The Code covers five social areas: services, goods and facilities (s.1); the occupancy of accommodation / housing (s.2); contracts (s.3); employment (s.5); and vocational associations such as trade unions, trade associations, and self-governing professions (s.6).'
               },
               {
-                q: 'Is there a time limit for filing a complaint?',
-                a: 'Generally, complaints must be filed within one year of the last incident of discrimination, though there are limited exceptions for continuing discrimination.'
+                q: 'Is there a time limit for filing an application?',
+                a: 'Yes. Section 34(1) of the Code requires the application to be filed within one year of the incident, OR within one year of the last incident in a series of incidents. Section 34(2) allows late applications if the delay was incurred in good faith and there is no substantial prejudice — but late filings are discretionary, so do not delay.'
               },
               {
                 q: 'What remedies can the HRTO award?',
-                a: 'Remedies may include compensation for lost wages and benefits, damages for emotional distress, reinstatement or hiring, policy changes, and other measures to address the discrimination.'
+                a: 'Remedies under s.45.2(1) of the Code include: monetary compensation for lost wages, benefits, and out-of-pocket costs; general damages for injury to dignity, feelings, and self-respect; non-monetary remedies (reinstatement, hiring, policy changes); and public-interest remedies (training, posting of policies, monitoring). There is no statutory cap on injury-to-dignity awards.'
               },
               {
-                q: 'Do I need a lawyer to file a complaint?',
-                a: 'While not required, having experienced representation significantly improves your chances of success and ensures your complaint is properly prepared and presented.'
+                q: 'Do I need a lawyer to file an application?',
+                a: 'No. The HRTO has no filing fee and applicants frequently appear without representation. However, having experienced representation can significantly improve outcome quality, especially at hearing. Licensed paralegals have full rights of representation at the HRTO under Law Society of Ontario By-Law 4.'
               },
               {
-                q: 'How long does an HRTO complaint typically take?',
-                a: 'HRTO complaints typically take 12-24 months from filing to hearing, depending on complexity and tribunal scheduling. Some cases may be resolved faster through settlement.'
+                q: 'How long does an HRTO application typically take?',
+                a: 'HRTO applications typically take 12-24 months from filing to a final hearing decision, depending on complexity, settlement attempts, and current tribunal scheduling. Many cases settle at mediation, which usually occurs in the first 6-9 months.'
               }
             ].map((item, index) => (
               <div key={index} className="bg-pastelbeige/10 rounded-lg p-6 border border-pastelbeige/30">

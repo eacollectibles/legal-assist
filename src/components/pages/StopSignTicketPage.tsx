@@ -20,7 +20,7 @@ export default function StopSignTicketPage() {
   const reassuranceItems = [
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'You Don\'t Attend Court', description: 'I handle everything.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Insurance Protection', description: '3 points significantly impacts insurance.' },
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Good Success Rate', description: '50-60% of contested cases result in reduction or withdrawal.' }
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Reduction Often Available', description: 'Common reductions include disobey-sign (2 points) and other lesser offences. Outcomes vary by disclosure, record, and Crown.' }
   ];
 
   const honestFAQs = [
@@ -28,7 +28,7 @@ export default function StopSignTicketPage() {
     { question: "What are the penalties?", answer: "3 demerit points, $110 set fine plus surcharges (~$85 total), and 15-25% insurance increase for 3 years. The insurance cost is typically $900-1,800+ over three years—far more than the fine." },
     { question: "What if the stop sign was obscured?", answer: "If the sign was blocked by vegetation, a vehicle, or weather conditions, this can be a defence. We need evidence—photos, Google Street View, witness statements about sign visibility." },
     { question: "What if I stopped but past the line?", answer: "You must stop before the stop line (or crosswalk, or before entering intersection if no line). Stopping past the line is technically a violation, but if you stopped and it was safe, this is arguable." },
-    { question: "Can stop sign tickets be reduced?", answer: "Yes. Common reductions: disobey sign (2 points) or other lesser offences. Success rates: 50-60% reduced, 10-15% withdrawn, 25-40% convicted." },
+    { question: "Can stop sign tickets be reduced?", answer: "Often, yes. Common negotiated reductions include disobey-sign (2 points) or other lesser offences that eliminate or reduce demerit points. Outcomes vary based on the officer's disclosure, your driving record, and the assigned Crown — withdrawal, reduction, acquittal at trial, or conviction-as-charged are all possible." },
     { question: "What if the officer was far away?", answer: "Officer vantage point matters. If they were at an angle or distance that made accurate observation difficult, this creates reasonable doubt. We examine where the officer was positioned." }
   ];
 

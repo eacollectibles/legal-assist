@@ -6,9 +6,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function StuntDrivingPage() {
   const authorityItems = [
-    { title: 'Stunt Driving Defence', description: 'Stunt driving (50+ over) triggers immediate roadside penalties and court charges. I fight these aggressively.' },
-    { title: 'Immediate Consequences', description: '14-day licence suspension and 14-day vehicle impound happen at roadside before any court appearance.' },
-    { title: 'Stakes Are Massive', description: 'Up to $10,000 fine, 2-year suspension, 6 demerit points, potential jail. Your driving future is on the line.' }
+    { title: 'Stunt Driving Defence', description: 'Stunt driving (40+ km/h over on roads ≤80 km/h, or 50+ km/h over on roads >80 km/h, or other conduct under HTA s.172) triggers immediate roadside penalties and a court charge.' },
+    { title: 'Immediate Consequences', description: '30-day licence suspension and 14-day vehicle impound happen at the roadside before any court appearance, under HTA s.172(5)–(5.1).' },
+    { title: 'Stakes Are Significant', description: 'First conviction: $2,000–$10,000 fine, up to 3 years licence suspension, 6 demerit points, possible jail up to 6 months. Second conviction within 10 years: up to 10 years suspension. Third within 10 years: lifetime.' }
   ];
 
   const processSteps = [

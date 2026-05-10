@@ -444,32 +444,32 @@ export const blogPosts: BlogPost[] = [
       <p>Congratulations on winning your Small Claims Court case. But here's the reality many people don't expect: the court doesn't collect the money for you. If the other party doesn't pay voluntarily, you need to take enforcement steps.</p>
 
       <h2>Step 1: Wait for the Appeal Period</h2>
-      <p>After a judgment is issued, the losing party has <strong>30 days</strong> to appeal. If no appeal is filed, you can begin enforcement.</p>
+      <p>After a judgment is issued, the losing party generally has <strong>30 days</strong> to appeal a final order to the Divisional Court. If no appeal is filed, you can begin enforcement.</p>
 
       <h2>Step 2: Send a Demand</h2>
       <p>Start with a formal demand letter. Often, a letter from a paralegal on your behalf is enough to prompt payment. Many debtors pay once they realize enforcement actions are coming.</p>
 
       <h2>Step 3: Examination of Debtor</h2>
-      <p>If they don't pay, you can request a <strong>debtor examination</strong> (also called a judgment debtor exam). This is a court hearing where the debtor must disclose:</p>
+      <p>If they don't pay, you can request a <strong>judgment debtor examination</strong> under Rule 20.10 of the <em>Rules of the Small Claims Court</em>. This is a court hearing where the debtor must disclose:</p>
       <ul>
         <li>Employment and income details</li>
         <li>Bank accounts</li>
         <li>Property and vehicles owned</li>
         <li>Other assets and debts</li>
       </ul>
-      <p>If the debtor fails to attend, a warrant for their arrest can be issued.</p>
+      <p>If the debtor fails to attend without a valid reason, the court may issue a warrant for their arrest for contempt.</p>
 
       <h2>Step 4: Enforcement Tools</h2>
       <p>Once you know where the debtor's assets are, you can use:</p>
       <ul>
-        <li><strong>Garnishment of wages:</strong> Up to 20% of the debtor's wages can be directed to you</li>
-        <li><strong>Garnishment of bank accounts:</strong> Freeze and seize funds from their bank</li>
-        <li><strong>Writ of seizure and sale:</strong> A sheriff can seize and sell the debtor's personal property</li>
-        <li><strong>Lien on property:</strong> Register the judgment against their real estate</li>
+        <li><strong>Garnishment of wages:</strong> Up to 20% of the debtor's net wages under the <em>Wages Act</em>, R.S.O. 1990, c. W.1 (50% for support orders)</li>
+        <li><strong>Garnishment of bank accounts:</strong> Freeze and seize funds in identified accounts</li>
+        <li><strong>Writ of seizure and sale:</strong> Filed with the Sheriff, who can seize and sell the debtor's personal property</li>
+        <li><strong>Writ filed against real estate:</strong> Filed with the Land Registry Office in the county where the debtor's property is located, the writ binds the land and forces payment on sale or refinance</li>
       </ul>
 
       <h2>How Long Is a Judgment Valid?</h2>
-      <p>A Small Claims Court judgment is valid for <strong>6 years</strong> and can be renewed. Interest accrues on the judgment at the Courts of Justice Act rate.</p>
+      <p>Under section 16(1)(b) of the <em>Limitations Act, 2002</em>, there is no limitation period for enforcing a judgment for the payment of money — the underlying judgment does not "expire". However, a <strong>Writ of Seizure and Sale</strong> filed with the Sheriff is effective for <strong>6 years</strong> and must be renewed to remain in force. Post-judgment interest accrues at the rate set under section 127 of the <em>Courts of Justice Act</em>.</p>
 
       <h2>When to Get Help</h2>
       <p>Enforcement can be complicated and time-consuming. A paralegal experienced in collections can handle the process efficiently and knows which enforcement tools work best for each situation.</p>
@@ -747,14 +747,15 @@ export const blogPosts: BlogPost[] = [
 
       <h2>The Court Process</h2>
       <ol>
-        <li><strong>File a Plaintiff's Claim:</strong> Outlines your case and what you're seeking</li>
-        <li><strong>Serve the contractor:</strong> They must be properly notified</li>
-        <li><strong>Settlement conference:</strong> A judge helps both sides try to settle</li>
-        <li><strong>Trial:</strong> If no settlement is reached, you present your case</li>
+        <li><strong>File a Plaintiff's Claim (Form 7A):</strong> Outlines your case and what you're seeking. Pay the court filing fee.</li>
+        <li><strong>Serve the contractor:</strong> Personal service or alternative service under Rule 8 of the Rules of the Small Claims Court</li>
+        <li><strong>Defence (Form 9A):</strong> The contractor has 20 days from service to file a Defence; if they don't, you can move for default judgment</li>
+        <li><strong>Settlement conference (Rule 13):</strong> A mandatory step where a Deputy Judge helps both sides try to settle. Both parties (not just their representatives) must attend.</li>
+        <li><strong>Trial:</strong> If no settlement is reached, the case proceeds to trial before a Deputy Judge</li>
       </ol>
 
       <h2>Time Limit</h2>
-      <p>You have <strong>2 years</strong> from when you discovered the problem to file a claim. Don't wait - witnesses' memories fade and evidence can be lost.</p>
+      <p>Under the <em>Limitations Act, 2002</em>, you generally have <strong>2 years</strong> from when you discovered (or reasonably ought to have discovered) the problem to file a claim. Don't wait - witnesses' memories fade, evidence can be lost, and the contractor may move on or close their business.</p>
 
       <p>Need to sue a contractor? Call <a href="tel:+12262725153">226-272-5153</a> for a free case evaluation.</p>
     `,
@@ -900,20 +901,21 @@ export const blogPosts: BlogPost[] = [
         <li>Return of personal property</li>
       </ul>
       
-      <h2>Why Choose a Paralegal Over a Lawyer?</h2>
-      <p>For Small Claims matters, paralegals offer several advantages:</p>
+      <h2>Why Choose a Paralegal for a Small Claims Matter?</h2>
+      <p>For most Small Claims matters, paralegals offer practical advantages:</p>
       <ul>
-        <li><strong>Lower cost:</strong> Our fees are typically 40-60% less than lawyers</li>
-        <li><strong>Specialization:</strong> We handle Small Claims cases daily</li>
-        <li><strong>Same authority:</strong> We have full rights of representation in this court</li>
-        <li><strong>Practical approach:</strong> We focus on cost-effective solutions</li>
+        <li><strong>Lower fees:</strong> Paralegal hourly rates are generally lower than lawyer rates for comparable work</li>
+        <li><strong>Specialization:</strong> Small Claims work is the core of many paralegal practices</li>
+        <li><strong>Right of appearance:</strong> Licensed paralegals have full representation rights in Small Claims Court under Law Society of Ontario By-Law 4</li>
+        <li><strong>Practical approach:</strong> We focus on what's recoverable and what's worth pursuing</li>
       </ul>
-      
+
       <p>Need help with a Small Claims matter? <a href="/contact">Contact us</a> for a free consultation.</p>
     `,
     faqs: [
-      { q: 'What\'s the maximum I can sue for in Small Claims Court?', a: 'The limit is $50,000 in Ontario, not including interest and court costs which are added on top.' },
-      { q: 'Do I have to go to court myself?', a: 'Not necessarily. Your paralegal can attend most proceedings on your behalf, including settlement conferences and even trial in many cases.' }
+      { q: 'What\'s the maximum I can sue for in Small Claims Court?', a: 'The principal-amount limit is $50,000 in Ontario (raised from $35,000 effective January 1, 2025). Pre-judgment interest, post-judgment interest, and costs are added on top of that limit.' },
+      { q: 'Do I have to go to court myself?', a: 'For most steps, your paralegal can appear on your behalf. The settlement conference is different — Rule 13.02 of the Rules of the Small Claims Court generally requires the parties (not just their representatives) to attend in person, unless the court orders otherwise. Your paralegal will be there with you.' },
+      { q: 'How long does a Small Claims case take?', a: 'Realistically, most matters reach settlement conference 6–12 months after filing, with trials beyond that. Default judgments (where the defendant doesn\'t file a Defence in 20 days) can be issued in 30–60 days.' }
     ]
   },
   {
