@@ -24,8 +24,8 @@ export default function NotaryPublicPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Notary Public vs. Commissioner of Oaths in Ontario | Legal Assist"
-        description="Looking for a Notary Public in Ontario? Read this first. Licensed paralegals are Commissioners for Taking Affidavits — not Notaries Public. Learn which one you actually need."
+        title="Notary Public Services | Candice Fogarty | Ontario Paralegal"
+        description="Notary Public services in Ontario by Candice Fogarty (LSO #P21479), separately appointed under the Notaries Act. Plus Commissioner for Taking Affidavits services from both paralegals at the firm."
         canonical="https://www.legalassist.london/services/notary-public"
       />
       <Header />
@@ -61,13 +61,13 @@ export default function NotaryPublicPage() {
                 <AlertTriangle className="w-7 h-7 text-amber-700 flex-shrink-0 mt-0.5" />
                 <div>
                   <h2 className="font-heading text-2xl font-bold text-amber-900 mb-3">
-                    Please read before booking
+                    Both services available at our office
                   </h2>
                   <p className="font-paragraph text-base md:text-lg text-amber-900/90 mb-3 leading-relaxed">
-                    Licensed paralegals in Ontario are <strong>Commissioners for Taking Affidavits</strong>, appointed under the <em>Commissioners for Taking Affidavits Act</em>. We are <strong>not Notaries Public</strong> and we do not perform notarizations.
+                    <strong>Candice Fogarty (LSO #P21479)</strong> is separately appointed as a <strong>Notary Public</strong> under the Notaries Act, R.S.O. 1990, c. N.6 - so the firm can perform notarizations as well as commissioning oaths.
                   </p>
                   <p className="font-paragraph text-base md:text-lg text-amber-900/90 leading-relaxed">
-                    If your document genuinely needs to be notarized (for example, an apostille, an international document, or a certified true copy of a passport), you need to see a <strong>lawyer</strong> or another appointed Notary Public. We&rsquo;ll happily point you to one.
+                    Note: paralegals in Ontario are NOT automatically Notaries Public - the Notaries Act extends ex officio to lawyers, not paralegals. Candice holds a separate appointment. <strong>Jean-Francois Demers (LSO #P22020)</strong> is a Commissioner for Taking Affidavits but not a Notary Public; he can swear and witness, but a notarization requires Candice or another appointed Notary Public.
                   </p>
                 </div>
               </div>
@@ -140,8 +140,8 @@ export default function NotaryPublicPage() {
                     Notary Public
                   </h3>
                 </div>
-                <p className="font-paragraph text-sm text-foreground/60 font-semibold mb-4">
-                  Not offered at our office. See a lawyer.
+                <p className="font-paragraph text-sm text-primary font-semibold mb-4">
+                  Available at our office through Candice Fogarty.
                 </p>
                 <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
                   A Notary Public can do everything a Commissioner can, plus notarize documents — meaning certifying signatures, copies, and documents for use outside Ontario.
@@ -161,15 +161,13 @@ export default function NotaryPublicPage() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="https://www.lsrs.lso.ca/lsrs/welcome"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 border-2 border-foreground/20 hover:border-foreground/60 text-foreground font-paragraph font-semibold px-6 py-3 rounded-lg transition-all"
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-paragraph font-semibold px-6 py-3 rounded-lg transition-all"
                 >
-                  Find a lawyer / notary (LSO directory)
+                  Book a Notary appointment with Candice
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </motion.div>
             </div>
           </div>
@@ -189,7 +187,7 @@ export default function NotaryPublicPage() {
               />
               <FAQItem
                 q="Can a paralegal certify a true copy of my passport?"
-                a="No. Certifying a true copy is a notarial act. A Notary Public (typically a lawyer) needs to do that. We can administer an oath if you want to swear an affidavit attaching a copy of the passport, but the certification of the copy itself requires a notary."
+                a="Yes - certifying a true copy is a notarial act, and Candice Fogarty (LSO #P21479) is appointed as a Notary Public, so we can do this in-house. If you need a certified true copy of a passport, driver's licence, diploma, or similar, book an appointment with Candice."
               />
               <FAQItem
                 q="My court form just says 'Sworn before me' — do I need a notary?"
@@ -197,7 +195,7 @@ export default function NotaryPublicPage() {
               />
               <FAQItem
                 q="Where can I find a Notary Public in Ontario?"
-                a="The Law Society of Ontario maintains a public directory of lawyers and paralegals at lsrs.lso.ca. Filter by your area and look for a lawyer offering notary services. Some community legal clinics also have lawyers on staff who can notarize. ServiceOntario does NOT provide notary services - it handles licensing, registration, and government IDs."
+                a="Book directly with us - Candice Fogarty (LSO #P21479) is appointed as a Notary Public and can handle most notarizations. If you need an alternative, the Law Society of Ontario maintains a public directory at lsrs.lso.ca - lawyers in Ontario are Notaries Public ex officio. Some community legal clinics also have lawyers on staff who can notarize. ServiceOntario does NOT provide notary services - it handles licensing and registration only."
               />
             </div>
           </div>
@@ -208,10 +206,10 @@ export default function NotaryPublicPage() {
           <div className="max-w-4xl mx-auto px-4 md:px-8 text-center">
             <FileText className="w-12 h-12 text-primary-foreground mx-auto mb-4" />
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Need an oath or affidavit sworn for an Ontario matter?
+              Need a Notary Public or Commissioner for Taking Affidavits?
             </h2>
             <p className="font-paragraph text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-              That&rsquo;s something we can help with. Our Commissioner of Oaths service handles affidavits, statutory declarations, and consents for Ontario tribunals and courts.
+              We handle both at the firm. Notarizations (certified true copies, apostille-bound documents, foreign-use documents) go through Candice; affidavits and statutory declarations for Ontario tribunals and courts can be sworn before either paralegal.
             </p>
             <Link
               to="/services/commissioner-of-oaths"
@@ -229,7 +227,7 @@ export default function NotaryPublicPage() {
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-foreground/50 flex-shrink-0 mt-0.5" />
               <p className="font-paragraph text-xs text-foreground/60 leading-relaxed">
-                This page is provided by Legal Assist, an Ontario paralegal firm operated by Jean-Francois Demers (LSO #P22020) and Candice Fogarty (LSO #P21479). It is general information about the difference between Notaries Public and Commissioners for Taking Affidavits in Ontario, and is not legal advice for any particular situation. If you&rsquo;re unsure which kind of authentication your document requires, ask the agency, court, or institution that&rsquo;s asking for it.
+                This page is provided by Legal Assist, an Ontario paralegal firm operated by Jean-Francois Demers (LSO #P22020) and Candice Fogarty (LSO #P21479). It explains the difference between Notaries Public and Commissioners for Taking Affidavits in Ontario, and confirms which services Candice Fogarty (LSO #P21479) and Jean-Francois Demers (LSO #P22020) are each authorized to perform. It is not legal advice for any particular situation. If you&rsquo;re unsure which kind of authentication your document requires, ask the agency, court, or institution that&rsquo;s asking for it.
               </p>
             </div>
           </div>

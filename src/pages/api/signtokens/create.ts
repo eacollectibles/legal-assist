@@ -1,5 +1,43 @@
 import type { APIRoute } from 'astro';
-import { getParalegalById } from '@/lib/paralegals';
+import { getParalegalById, PARALEGALS, type Paralegal } from '@/lib/paralegals';
+
+/**
+ * Accept either the kebab-case paralegal id ("jeanfrancois-demers"),
+ * the user's email address ("jeanfrancoisdemers@icloud.com"), or any
+ * value containing the paralegal's first or last name. Returns the
+ * matching Paralegal or null.
+ *
+ * The DocumentWorkflow caller passes the logged-in user's email as
+ * createdByParalegalId (which is the user-account email, not one of
+ * the firm-directory emails), so this loose match keeps that flow
+ * working without client-side code changes.
+ */
+function resolveCallerParalegal(
+  identifier: string | undefined
+): Paralegal | null {
+  if (!identifier) return null;
+  const id = identifier.trim().toLowerCase();
+  if (!id) return null;
+  // 1) Exact id match (kebab-case)
+  const byId = getParalegalById(identifier);
+  if (byId) return byId;
+  // 2) Exact email match against directory
+  const byDirEmail = PARALEGALS.find((p) => p.email.toLowerCase() === id);
+  if (byDirEmail) return byDirEmail;
+  // 3) Identifier (with non-alphanumerics stripped) contains the
+  //    paralegal first/last name or kebab-id. Catches cases like
+  //    "jeanfrancoisdemers@icloud.com" matching "jeanfrancois-demers".
+  const idNoDash = id.replace(/[^a-z0-9]/g, '');
+  const match = PARALEGALS.find((p) => {
+    const fn = p.firstName.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const ln = p.lastName.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const pid = p.id.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return (
+      idNoDash.includes(fn) || idNoDash.includes(ln) || idNoDash.includes(pid)
+    );
+  });
+  return match || null;
+}
 
 /**
  * POST /api/signtokens/create
@@ -116,11 +154,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   // 3) Authorise: the caller-claimed paralegal id must resolve to a
   //    known paralegal in the firm directory. This blocks an outside
-  //    actor from minting tokens with a made-up paralegal id.
-  const paralegal = getParalegalById(body.createdByParalegalId);
+  //    actor from minting tokens with a made-up paralegal id. We accept
+  //    the kebab-case id, the firm directory email, OR any identifier
+  //    that contains a known paralegal's first/last name - so the
+  //    DocumentWorkflow caller (which currently passes the logged-in
+  //    user account email) keeps working without client changes.
+  const paralegal = resolveCallerParalegal(body.createdByParalegalId);
   if (!paralegal) {
     return json(
-      { success: false, error: 'Unknown paralegal id.' },
+      {
+        success: false,
+        error:
+          'Unknown paralegal id. Pass the kebab-case id (e.g. "jeanfrancois-demers"), the firm email, or a value containing the paralegal name.',
+      },
       403
     );
   }

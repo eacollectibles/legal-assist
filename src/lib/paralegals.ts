@@ -38,6 +38,16 @@ export interface Paralegal {
   phone: string;
   /** Credential line under the signature, e.g. "Licensed Paralegal". */
   credentialLine: string;
+  /**
+   * Additional credentials and memberships displayed on the bio page.
+   * Examples: "Paralegal Diploma with Distinction",
+   * "Member, Ontario Paralegal Association",
+   * "Commissioner for Taking Affidavits",
+   * "Notary Public (Ontario)" - the last one is exceptional for
+   * paralegals and only applies if the paralegal has been separately
+   * appointed under the Notaries Act, R.S.O. 1990, c. N.6.
+   */
+  credentials?: string[];
   /** Whether this paralegal is currently active and selectable in the UI. */
   active: boolean;
 }
@@ -57,6 +67,11 @@ export const PARALEGALS: Paralegal[] = [
     email: EMAIL_PRIMARY,
     phone: PHONE_DISPLAY,
     credentialLine: 'Licensed Paralegal, Law Society of Ontario',
+    credentials: [
+      'Paralegal Diploma with Distinction',
+      'Member, Ontario Paralegal Association',
+      'Commissioner for Taking Affidavits (Ontario)',
+    ],
     active: true,
   },
   {
@@ -69,6 +84,10 @@ export const PARALEGALS: Paralegal[] = [
     email: EMAIL_PRIMARY,
     phone: PHONE_DISPLAY,
     credentialLine: 'Licensed Paralegal, Law Society of Ontario',
+    credentials: [
+      'Notary Public (Ontario) - appointed under the Notaries Act',
+      'Commissioner for Taking Affidavits (Ontario)',
+    ],
     active: true,
   },
 ];

@@ -165,8 +165,9 @@ export default function MeetOurTeamPage() {
                   </div>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Licensed Paralegal (LSO #P21479)</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Notary Public (Ontario) - appointed under the Notaries Act</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Paralegal Diploma with Distinction</li>
-                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Commissioner of Oaths</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Commissioner for Taking Affidavits (Ontario)</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Qualified Addictions Counselor</li>
                   </ul>
                 </div>
@@ -256,6 +257,9 @@ export default function MeetOurTeamPage() {
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Licensed Paralegal (LSO #P22020)</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Law Society of Ontario Member in Good Standing</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Paralegal Diploma with Distinction</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Member, Ontario Paralegal Association</li>
+                    <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Commissioner for Taking Affidavits (Ontario)</li>
                     <li className="flex items-center gap-2 text-sm text-foreground/80"><CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />Law Enforcement Diploma</li>
                   </ul>
                 </div>
