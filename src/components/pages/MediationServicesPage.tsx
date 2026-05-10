@@ -72,7 +72,7 @@ export default function MediationServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-3xl font-bold text-primary mb-2">80%+</div>
-              <p className="font-paragraph text-foreground/80">Success Rate in Reaching Agreement</p>
+              <p className="font-paragraph text-foreground/80">Confidential, voluntary, faster than litigation</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-3xl font-bold text-primary mb-2">50-70%</div>
@@ -267,7 +267,7 @@ export default function MediationServicesPage() {
                 <div className="flex items-start gap-4">
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground mb-2">High Success Rate</h3>
+                    <h3 className="font-heading text-lg font-bold text-foreground mb-2">Faster Than Litigation</h3>
                     <p className="font-paragraph text-foreground/80">Over 80% of mediations result in full or partial agreement, with high compliance rates.</p>
                   </div>
                 </div>

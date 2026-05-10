@@ -110,10 +110,16 @@ export default function FreeLegalResourcesPage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Emergency & Crisis Resources</h2>
           <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
             {[
+              { name: 'Suicide Crisis Helpline (Canada)', phone: '988', desc: 'Talk or text 24/7 (in service since Nov 30, 2023)' },
+              { name: 'Talk Suicide Canada', phone: '1-833-456-4566', desc: '24/7 phone support; text 45645 (4pm-midnight ET)' },
+              { name: 'Kids Help Phone', phone: '1-800-668-6868', desc: '24/7 support for young people; text CONNECT to 686868' },
+              { name: 'Hope for Wellness Helpline', phone: '1-855-242-3310', desc: '24/7 support for Indigenous peoples (multiple languages)' },
               { name: 'Assaulted Women\'s Helpline', phone: '1-866-863-0511', desc: '24/7 support for women experiencing abuse' },
-              { name: 'Legal Aid Emergency', phone: '1-800-668-8258', desc: 'Urgent legal matters' },
-              { name: 'Tenant Hotline', phone: '416-921-9494', desc: 'Toronto area tenant rights info' },
-              { name: 'Workers Action Centre', phone: '416-531-0778', desc: 'Employment rights information' },
+              { name: 'Legal Aid Ontario - Duty Counsel', phone: '1-800-265-0451', desc: 'Free criminal duty counsel (24/7 for bail)' },
+              { name: 'Legal Aid Ontario - General', phone: '1-800-668-8258', desc: 'Apply for legal aid certificates and clinic referrals' },
+              { name: 'Tenant Duty Counsel (Steps to Justice)', phone: '1-800-668-8258', desc: 'LAO referrals to LTB tenant duty counsel' },
+              { name: 'Workers Action Centre', phone: '416-531-0778', desc: 'Employment rights information for non-unionized workers' },
+              { name: 'Victim Support Line (Ontario)', phone: '1-888-579-2888', desc: 'Information and referral for victims of crime' },
             ].map((item, index) => (
               <div key={index} className="bg-white p-5 rounded-xl shadow-sm">
                 <Phone className="w-6 h-6 text-amber-600 mb-2" />

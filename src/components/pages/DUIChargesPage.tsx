@@ -24,7 +24,7 @@ export default function DUIChargesPage() {
   ];
 
   const honestFAQs = [
-    { question: "What's the difference between criminal and provincial impaired charges?", answer: "Criminal Code impaired (over 80, impaired operation, refusal) requires a criminal lawyer. Provincial charges (warn range suspension, administrative penalties) can be handled by paralegals. Most DUI stops result in both types of matters." },
+    { question: "What's the difference between criminal and provincial impaired charges?", answer: "Criminal Code charges - operating while impaired (s.320.14(1)(a)), operating with BAC over 80mg/100mL (s.320.14(1)(b)), refusal or failure to comply with a demand (s.320.15) - require a criminal defence lawyer. These are post-Bill C-46 (Dec 2018) renumbered offences (formerly ss.253-254). Provincial / HTA charges - warn range Administrative Driver's Licence Suspension (3/7/30 day under HTA s.48.0.1 for 0.05-0.079 BAC), zero-BAC suspensions for novice or commercial drivers, related provincial regulatory matters - can be handled by paralegals. Most DUI stops result in both types of matters." },
     { question: "What happens immediately after a DUI arrest?", answer: "90-day Administrative Driver's Licence Suspension (ADLS), 7-day vehicle impound, criminal charges laid. You can challenge the ADLS at a Tribunal hearing—that's where a paralegal can help." },
     { question: "Can I get my licence back during the criminal case?", answer: "The 90-day ADLS can be challenged at the Licence Appeal Tribunal. If successful, you get your licence back pending the criminal case. This is separate from the criminal charge itself." },
     { question: "What are the penalties for a first-time DUI conviction?", answer: "Criminal record, minimum $1,000 fine, 1-year driving prohibition (federal), up to 10 years maximum jail (rarely imposed for first offence), ignition interlock requirement, massive insurance increases." },
@@ -79,9 +79,9 @@ export default function DUIChargesPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Impaired operation</td><td className="px-6 py-4">Criminal Code</td><td className="px-6 py-4 text-red-800 font-medium">Criminal Lawyer</td></tr>
-                  <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Over 80 mg</td><td className="px-6 py-4">Criminal Code</td><td className="px-6 py-4 text-red-800 font-medium">Criminal Lawyer</td></tr>
-                  <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Refusal to provide sample</td><td className="px-6 py-4">Criminal Code</td><td className="px-6 py-4 text-red-800 font-medium">Criminal Lawyer</td></tr>
+                  <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Impaired operation</td><td className="px-6 py-4">CC s.320.14(1)(a)</td><td className="px-6 py-4 text-red-800 font-medium">Criminal Lawyer</td></tr>
+                  <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Over 80 mg/100mL</td><td className="px-6 py-4">CC s.320.14(1)(b)</td><td className="px-6 py-4 text-red-800 font-medium">Criminal Lawyer</td></tr>
+                  <tr className="bg-red-50"><td className="px-6 py-4 font-medium">Refusal to provide sample</td><td className="px-6 py-4">CC s.320.15</td><td className="px-6 py-4 text-red-800 font-medium">Criminal Lawyer</td></tr>
                   <tr className="bg-green-50"><td className="px-6 py-4 font-medium">90-day ADLS challenge</td><td className="px-6 py-4">Provincial (Tribunal)</td><td className="px-6 py-4 text-green-800 font-medium">Paralegal ✓</td></tr>
                   <tr className="bg-green-50"><td className="px-6 py-4 font-medium">Warn range suspension</td><td className="px-6 py-4">Provincial (HTA)</td><td className="px-6 py-4 text-green-800 font-medium">Paralegal ✓</td></tr>
                   <tr className="bg-green-50"><td className="px-6 py-4 font-medium">Licence reinstatement</td><td className="px-6 py-4">Provincial (MTO)</td><td className="px-6 py-4 text-green-800 font-medium">Paralegal ✓</td></tr>

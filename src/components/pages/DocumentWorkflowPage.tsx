@@ -22,6 +22,7 @@ import UploadLinkGenerator from '@/components/UploadLinkGenerator';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
 import { sendSignedDocumentEmail, sendDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 import { getActiveParalegals, DEFAULT_PARALEGAL_ID, getParalegalById } from '@/lib/paralegals';
+import { EMAIL_PRIMARY } from '@/lib/contact';
 
 // ============================================================
 // LSO BY-LAW 7.1 SECTIONS (A–K)
@@ -560,7 +561,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser
         ? JSON.parse(currentUser).email
-        : 'admin@legalservices.com';
+        : EMAIL_PRIMARY;
       const userName = currentUser
         ? `${JSON.parse(currentUser).firstName || ''} ${JSON.parse(currentUser).lastName || ''}`.trim()
         : 'Paralegal';
@@ -625,7 +626,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const handleCreateTemplate = async () => {
     try {
       const currentUser = localStorage.getItem('currentUser');
-      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
 
       if (isEditMode && editingTemplateId) {
         // Update existing template
@@ -731,7 +732,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       }
 
       const currentUser = localStorage.getItem('currentUser');
-      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
 
       // Get client's email from user accounts
       const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
@@ -967,7 +968,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       if (!doc) return;
 
       const currentUser = localStorage.getItem('currentUser');
-      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
       const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
 
       // Get user account ID for the client FIRST
@@ -1027,7 +1028,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // Create a message record for the client
       await BaseCrudService.create('messages', {
         _id: crypto.randomUUID(),
-        senderEmail: 'admin@legalservices.com',
+        senderEmail: EMAIL_PRIMARY,
         senderName: 'Legal Services Team',
         recipientEmail: doc.clientEmail || '',
         messageContent: `Document Ready for Signature: ${doc.documentName}\n\n${emailMessage}\n\nPlease review and sign the document in your client portal under the Documents section.`,
@@ -1253,7 +1254,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
 
       // Create activity log
       const currentUser = localStorage.getItem('currentUser');
-      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
       const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
 
       await BaseCrudService.create('activitylogs', {
@@ -1296,7 +1297,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
 
     try {
       const currentUser = localStorage.getItem('currentUser');
-      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
       const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
 
       const client = clients.find(c => c._id === emailingDocument.clientId);
@@ -1341,7 +1342,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       
       // Log failed attempt
       const currentUser = localStorage.getItem('currentUser');
-      const userEmail = currentUser ? JSON.parse(currentUser).email : 'admin@legalservices.com';
+      const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
       const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
 
       await BaseCrudService.create('activitylogs', {

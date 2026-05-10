@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export default function RentIncreaseDisputePage() {
   const authorityItems = [
     { title: 'Rent Increase Rules', description: 'Ontario limits when and how much landlords can increase rent. I help tenants challenge illegal increases.' },
-    { title: 'Guideline Knowledge', description: 'The 2025 rent increase guideline is 2.5%. Most landlords cannot exceed this without LTB approval.' },
+    { title: 'Guideline Knowledge', description: 'The 2026 rent increase guideline is 2.1% (down from 2.5% in 2024 and 2025). Most landlords cannot exceed this without LTB approval.' },
     { title: 'AGI Defence', description: 'Landlords seeking Above Guideline Increases face strict requirements. I help tenants challenge these.' }
   ];
 
@@ -20,11 +20,11 @@ export default function RentIncreaseDisputePage() {
   const reassuranceItems = [
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Strong Protections', description: 'Most Ontario tenants have rent control.' },
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Recovery Available', description: 'Overpaid rent can be recovered.' },
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: '2.5% Maximum', description: '2025 guideline is 2.5% (no AGI).' }
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: '2.1% Maximum', description: '2026 guideline is 2.1% (no AGI).' }
   ];
 
   const honestFAQs = [
-    { question: "How much can my landlord increase rent in 2025?", answer: "The 2025 guideline is 2.5%. Most landlords cannot increase more than this without applying to the LTB for an Above Guideline Increase. The increase can only happen once per 12 months with proper 90-day notice." },
+    { question: "How much can my landlord increase rent in 2026?", answer: "The 2026 guideline is 2.1% (down from 2.5% in 2024 and 2025). Most landlords cannot increase more than this without applying to the LTB for an Above Guideline Increase. The increase can only happen once per 12 months with proper 90-day notice." },
     { question: "Is my unit rent-controlled?", answer: "Most units occupied before November 15, 2018 are rent-controlled. Units first occupied after that date are generally exempt from rent control. This is about when the unit was first rented, not when you moved in." },
     { question: "What if my landlord is increasing rent more than the guideline?", answer: "They need LTB approval through an Above Guideline Increase (AGI) application. Without approval, the excess is illegal. You can refuse to pay the illegal portion and/or apply to recover what you've overpaid." },
     { question: "What notice is required for rent increases?", answer: "90 days written notice on proper form (N1 or N2). The increase can only happen once per 12 months. If you didn't get proper notice, the increase is invalid." },
@@ -34,7 +34,7 @@ export default function RentIncreaseDisputePage() {
 
   return (
     <>
-      <SEO title="Rent Increase Dispute Paralegal Ontario | Illegal Rent Increase" description="Licensed paralegal for rent increase disputes in Ontario. Challenge illegal increases, recover overpaid rent. 2025 guideline is 2.5%. Free consultation." canonical="https://www.legalassist.london/services/rent-increase-dispute" />
+      <SEO title="Rent Increase Dispute Paralegal Ontario | Illegal Rent Increase" description="Licensed paralegal for rent increase disputes in Ontario. Challenge illegal increases, recover overpaid rent. 2026 guideline is 2.1%. Free consultation." canonical="https://www.legalassist.london/services/rent-increase-dispute" />
       <ServicePageLayout seoTitle="Rent Increase Disputes | Ontario" seoDescription="Rent increase dispute help in Ontario." canonical="https://www.legalassist.london/services/rent-increase-dispute" problemHeadline="Rent Increase Disputes" problemDescription="Landlord raising rent above the guideline? Didn't give proper notice? You may not have to pay. I help tenants challenge illegal rent increases." heroImage={{ src: "https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png", alt: "Rent increase disputes" }} authorityItems={authorityItems} processSteps={processSteps} reassuranceItems={reassuranceItems}>
         
         <div className="w-full py-16 md:py-24 bg-white">
@@ -42,8 +42,8 @@ export default function RentIncreaseDisputePage() {
             <h2 className="font-heading text-4xl font-bold text-foreground mb-6">Ontario Rent Increase Rules</h2>
             
             <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
-              <h3 className="font-heading text-xl font-bold text-foreground mb-3">2025 Rent Increase Guideline: 2.5%</h3>
-              <p className="text-foreground/80">This is the maximum most landlords can increase rent without LTB approval. Your landlord needs to apply for an Above Guideline Increase to go higher—and tenants can challenge those applications.</p>
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">2026 Rent Increase Guideline: 2.1%</h3>
+              <p className="text-foreground/80">This is the maximum most landlords can increase rent without LTB approval (down from 2.5% in 2024 and 2025). Your landlord needs to apply for an Above Guideline Increase to go higher - and tenants can challenge those applications.</p>
             </div>
 
             <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Requirements for Valid Rent Increase</h3>

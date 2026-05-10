@@ -70,7 +70,7 @@ We represent landlords or tenants — but never both sides in the same matter �
 
 Every file is screened for conflicts before retainer. Our team works the LTB on a daily basis and is familiar with current scheduling practice and the e-File portal.`,
     keyPoints: [
-      'Residential Tenancies Act, 2006 expertise',
+      'Residential Tenancies Act, 2006 experience',
       'Landlord OR tenant representation (with conflict screening)',
       'L1–L5 and T1/T2/T6 application experience',
       'Eviction defence and set-aside motions',
@@ -100,7 +100,7 @@ We handle applications involving:
 
 We work with applicants and respondents to file Form 1 / Form 2, prepare evidence, attend mediation, and represent clients at hearing.`,
     keyPoints: [
-      'Ontario Human Rights Code expertise',
+      'Ontario Human Rights Code experience',
       'Applicant or respondent representation',
       'Mediation and hearing preparation',
       'Damages for injury to dignity, feelings, and self-respect',
@@ -207,30 +207,32 @@ IMPORTANT: Many of these offences are hybrid. A paralegal can only act if the Cr
   },
   {
     id: 'notary-public',
-    name: 'Notary Public — What You Need to Know',
-    tribunal: 'Information page',
-    shortDescription: 'Looking for a Notary Public in Ontario? Read this first — paralegals are NOT Notaries Public.',
+    name: 'Notary Public Services',
+    tribunal: 'In-house notary',
+    shortDescription: 'Notary Public services available in-house through Candice Fogarty (LSO #P21479), separately appointed under the Notaries Act, R.S.O. 1990, c. N.6.',
     icon: <Stamp className="w-8 h-8" />,
     image: 'https://static.wixstatic.com/media/99571b_df17fea496c94fbfa4d9b440d3a97917~mv2.png?id=notary-public-services',
-    learnMore: `IMPORTANT: Licensed paralegals in Ontario are NOT Notaries Public. We are appointed Commissioners for Taking Affidavits under the Commissioners for Taking Affidavits Act, R.S.O. 1990, c. C.17 — a different role with narrower authority.
+    learnMore: `Candice Fogarty (LSO #P21479) is separately appointed as a Notary Public under the Notaries Act, R.S.O. 1990, c. N.6 — so the firm offers both Commissioner-for-Taking-Affidavits services and full Notary Public services in-house.
 
-Many people use the phrase "notary public" for any document signing, but in Ontario the two roles are distinct:
+Note: paralegals in Ontario are NOT automatically Notaries Public. The Notaries Act extends ex officio to lawyers, not paralegals. Candice holds a separate appointment which lets the firm offer notarial services that most paralegal practices cannot provide.
 
-• A Commissioner of Oaths (which we are) administers oaths and witnesses signatures on Ontario-domestic affidavits and statutory declarations. Use this for affidavits filed with the LTB, Small Claims Court, HRTO, or other Ontario tribunals.
+Both roles compared:
 
-• A Notary Public (typically a lawyer) can do everything a Commissioner can, plus notarize documents — meaning certifying signatures, true copies, and documents for use outside Ontario. You need a Notary Public for international documents, apostilles, certified copies of passports, Powers of Attorney for use abroad, and real estate notarizations.
+• Commissioner for Taking Affidavits (both paralegals at the firm) — administers oaths and witnesses signatures on Ontario-domestic affidavits and statutory declarations. Used for affidavits filed with the LTB, Small Claims Court, HRTO, and other Ontario tribunals.
 
-If your document genuinely needs notarization, we will refer you to a lawyer or another appointed Notary Public — we will not pretend we can do it. Visit our Commissioner of Oaths page if you need an Ontario affidavit or statutory declaration sworn.`,
+• Notary Public (Candice only) — does everything a Commissioner can, plus certifies signatures, certifies true copies, and notarizes documents bound for use outside Ontario. Use this for international documents, apostille-bound documents, certified copies of passports / driver's licences / diplomas, Powers of Attorney for use abroad, foreign mortgage documents, and real estate documents being used outside Ontario.
+
+For notarial appointments, book directly with the firm and we will schedule with Candice.`,
     keyPoints: [
-      'Paralegals are NOT Notaries Public in Ontario',
-      'We are Commissioners for Taking Affidavits',
-      'We swear Ontario affidavits and statutory declarations',
-      'For notarization, see a lawyer',
-      'We refer honestly when a matter is outside our scope'
+      'Notary Public services available in-house through Candice Fogarty',
+      'Both paralegals act as Commissioners for Taking Affidavits',
+      'Certified true copies of passports, IDs, diplomas — done in-house',
+      'Documents bound for international use can be notarized here',
+      'Apostille / authentication paperwork prepared in-house'
     ],
-    costInfo: 'See Commissioner of Oaths services for our oath/affidavit fees. For notarization, contact a lawyer (typical lawyer notary fees vary by document and document complexity).',
-    timeline: 'Same-day Commissioner of Oaths appointments often available. Notarization timelines depend on the lawyer/notary you engage.',
-    eligibility: 'Information for anyone trying to determine whether they need a Commissioner of Oaths or a Notary Public.'
+    costInfo: 'Notary fees and Commissioner fees vary by document type and number of signatures. Contact us for a quote on your specific document.',
+    timeline: 'Same-day Commissioner appointments often available. Notary appointments scheduled with Candice; usually within 1-2 business days.',
+    eligibility: 'Available to individuals and businesses needing oaths, statutory declarations, or notarial services in Ontario.'
   },
   {
     id: 'commissioner-of-oaths',
@@ -285,7 +287,7 @@ We handle appeals for:
 • Special circumstances and hardship claims`,
     keyPoints: [
       '30-day appeal deadline',
-      '60%+ success rate with representation',
+      'Procedural familiarity with SBT Rules of Procedure and evidence expectations',
       'Free tribunal filing',
       'Expert knowledge of regulations',
       'Strong documentation and advocacy'

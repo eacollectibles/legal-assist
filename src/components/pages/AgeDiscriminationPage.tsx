@@ -29,7 +29,7 @@ export default function AgeDiscriminationPage() {
     { question: "I was laid off in a 'restructuring.' Could it be age discrimination?", answer: "Possibly. Look at who was actually laid off vs kept. If the 'restructuring' disproportionately affected older workers, or your role was 'eliminated' then refilled with someone younger, this can indicate discrimination." },
     { question: "What about comments like 'when are you retiring?'", answer: "Repeated questions about retirement plans, especially combined with adverse action, can be evidence of age discrimination. Single innocent inquiries may not be enough, but a pattern of such comments is relevant." },
     { question: "Is it age discrimination if they hired someone younger for less money?", answer: "If you were let go and replaced by a younger, cheaper employee doing the same job, this can support age discrimination. Cost savings alone doesn't justify discrimination—but proving age was the factor (not just cost) requires evidence." },
-    { question: "What damages are available for age discrimination?", answer: "Lost wages (past and future), general damages for injury to dignity ($5,000-$40,000+ depending on severity), and orders to reinstate (rarely ordered) or change practices. Age discrimination often overlaps with wrongful dismissal claims." }
+    { question: "What damages are available for age discrimination?", answer: "Lost wages (past and future), general damages for injury to dignity, feelings, and self-respect under HRC s.45.2(1)(b) - typically $10,000-$40,000 with serious cases reaching $75,000+, and orders to reinstate (rarely ordered) or change practices. Age discrimination often overlaps with wrongful dismissal claims." }
   ];
 
   return (

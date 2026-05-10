@@ -128,7 +128,7 @@ export default function MeetOurTeamPage() {
                 Law Society of Ontario licence verified — LSO #P21479
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Candice Fogarty is a licensed paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal expertise and compassionate understanding.
+                Candice Fogarty is a licensed paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal experience and compassionate understanding.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
                 Her dedication to thorough case preparation and compassionate client service has made her invaluable to the team. With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines LegalAssist's approach.

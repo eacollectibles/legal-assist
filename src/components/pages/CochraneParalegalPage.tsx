@@ -21,7 +21,7 @@ export default function CochraneParalegalPage() {
               Cochrane Paralegal Services
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Trusted paralegal representation for Cochrane and the Cochrane District. We provide expert legal assistance for traffic tickets, Small Claims Court matters, landlord-tenant disputes, and provincial offences along Highway 11.
+              Trusted paralegal representation for Cochrane and the Cochrane District. We provide skilled paralegal services for traffic tickets, Small Claims Court matters, landlord-tenant disputes, and provincial offences along Highway 11.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function TheftChargesPage() {
   const authorityItems = [
-    { title: 'Theft Under $5,000', description: 'I defend theft under $5,000 charges (summary conviction). For theft over $5,000 or complex cases, I provide lawyer referrals.' },
+    { title: 'Theft Under $5,000 (s.334(b)) - scope-dependent', description: 'Theft under $5,000 (Criminal Code s.334(b)) is a HYBRID offence. Paralegals can defend ONLY where the Crown elects summary AND the matter is within LSO By-Law 4 / s.802.1 / AG approved-program list. Theft over $5,000 (s.334(a)) is straight indictable - lawyer required.' },
     { title: 'Shoplifting Defence', description: 'Most theft under charges are shoplifting. First-time offenders often have options to avoid criminal records.' },
     { title: 'Diversion Programs', description: 'Many jurisdictions offer diversion for first-time, low-value theft—completing the program means no conviction.' }
   ];

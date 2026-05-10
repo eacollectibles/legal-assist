@@ -52,10 +52,10 @@ export default function BlogListPage() {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Legal Blog — Ontario Paralegal Resources | LegalAssist</title>
-        <meta name="description" content="Practical legal information for Ontario residents. Expert articles on traffic tickets, landlord-tenant disputes, small claims court, employment law, and more." />
+        <meta name="description" content="Practical legal information for Ontario residents. Articles on traffic tickets, landlord-tenant disputes, small claims court, employment law, and more." />
         <link rel="canonical" href="https://www.legalassist.london/blog" />
         <meta property="og:title" content="Legal Blog — Ontario Paralegal Resources | LegalAssist" />
-        <meta property="og:description" content="Practical legal information for Ontario residents. Expert articles on traffic tickets, landlord-tenant disputes, small claims court, employment law, and more." />
+        <meta property="og:description" content="Practical legal information for Ontario residents. Articles on traffic tickets, landlord-tenant disputes, small claims court, employment law, and more." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.legalassist.london/blog" />
         <meta property="og:image" content="https://www.legalassist.london/og-image.jpg" />

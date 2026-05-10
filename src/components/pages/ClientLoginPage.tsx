@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useMember } from '@/integrations';
 import { login } from '@/lib/auth-service';
+import { EMAIL_PRIMARY } from '@/lib/contact';
 
 interface LoginFormData {
   email: string;
@@ -229,7 +230,7 @@ export default function ClientLoginPage() {
                 </Button>
 
                 <p className="font-paragraph text-sm text-foreground/60 text-center">
-                  Don't have an account? <Link to="/signup" className="text-primary hover:underline">Create one here</Link>
+                  Don&apos;t have an account? <Link to="/client-signup" className="text-primary hover:underline">Create one here</Link>
                 </p>
               </form>
             </div>
@@ -280,7 +281,7 @@ export default function ClientLoginPage() {
 
                 <div className="mt-8 pt-8 border-t border-pastelbeige">
                   <p className="font-paragraph text-sm text-foreground/80">
-                    <strong>Need help?</strong> Contact our support team at <a href="mailto:support@legalassist.com" className="text-primary hover:underline">support@legalassist.com</a>
+                    <strong>Need help?</strong> Contact our support team at <a href={`mailto:${EMAIL_PRIMARY}`} className="text-primary hover:underline">{EMAIL_PRIMARY}</a>
                   </p>
                 </div>
               </div>

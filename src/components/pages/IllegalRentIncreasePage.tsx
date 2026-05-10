@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export default function IllegalRentIncreasePage() {
   const authorityItems = [
     { title: 'Illegal Rent Increases', description: 'Ontario has rent control rules. Increases above the guideline, without proper notice, or too frequently are illegal. You can recover excess rent.' },
-    { title: 'Guideline Limits', description: '2024 guideline is 2.5%. Landlord cannot increase more than this without LTB approval (AGI). Many tenants pay illegal increases unknowingly.' },
+    { title: 'Guideline Limits', description: '2026 guideline is 2.1% (down from 2.5% in 2024 and 2025). Landlord cannot exceed the annual guideline on rent-controlled units without LTB approval (AGI under RTA s.126). Many tenants pay illegal increases unknowingly.' },
     { title: 'Recovery Available', description: 'If you\'ve paid illegal rent increases, you can apply to the LTB to recover the excess. One-year limit to file, but can recover amounts paid.' }
   ];
 
@@ -24,7 +24,7 @@ export default function IllegalRentIncreasePage() {
   ];
 
   const honestFAQs = [
-    { question: "What is the rent increase guideline?", answer: "The provincial guideline is the maximum percentage a landlord can increase rent without LTB approval. 2024: 2.5%. 2023: 2.5%. Previous years varied. Increases above this require an Above Guideline Increase (AGI) application and LTB approval." },
+    { question: "What is the rent increase guideline?", answer: "The provincial guideline is the maximum percentage a landlord can increase rent without LTB approval. 2026: 2.1%. 2025: 2.5%. 2024: 2.5%. 2023: 2.5%. Previous years varied. Increases above this require an Above Guideline Increase (AGI) application and LTB approval." },
     { question: "Is my unit covered by rent control?", answer: "Most units are covered EXCEPT: units first occupied after November 15, 2018 (not previously occupied as residential). If your unit was first rented out after that date and wasn't converted from another use, rent control may not apply. Check your building's history." },
     { question: "What notice must landlord give for rent increase?", answer: "90 days written notice using the N1 form, specifying the new rent amount and effective date. Increases can only happen once every 12 months. Without proper notice, the increase is void." },
     { question: "I've been paying an illegal increase. Can I get money back?", answer: "Yes—file a T1 application at the LTB. You can recover illegal rent paid in the year before your application. If you paid $100/month extra illegally for 12 months, you could recover $1,200. Act within the 1-year limit." },
@@ -46,7 +46,7 @@ export default function IllegalRentIncreasePage() {
                 <Shield className="w-6 h-6" />
                 Rent Increase Rules
               </h3>
-              <p className="text-green-900">In rent-controlled units, landlord can only increase rent by the annual guideline (2.5% for 2024) without LTB approval. Increases must have 90 days notice, use proper form, and happen no more than once per year.</p>
+              <p className="text-green-900">In rent-controlled units, landlord can only increase rent by the annual guideline (2.1% for 2026) without LTB approval. Increases must have 90 days notice, use proper form, and happen no more than once per year.</p>
             </div>
 
             <h3 className="font-heading text-2xl font-bold text-foreground mb-6">What Makes an Increase Illegal?</h3>
@@ -87,9 +87,11 @@ export default function IllegalRentIncreasePage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  <tr><td className="px-6 py-4 font-medium">2024</td><td className="px-6 py-4 font-bold">2.5%</td><td className="px-6 py-4 text-sm">Current guideline</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">2026</td><td className="px-6 py-4 font-bold">2.1%</td><td className="px-6 py-4 text-sm">Current guideline</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">2025</td><td className="px-6 py-4 font-bold">2.5%</td><td className="px-6 py-4 text-sm">Capped at 2.5%</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">2024</td><td className="px-6 py-4 font-bold">2.5%</td><td className="px-6 py-4 text-sm">Capped at 2.5%</td></tr>
                   <tr><td className="px-6 py-4 font-medium">2023</td><td className="px-6 py-4 font-bold">2.5%</td><td className="px-6 py-4 text-sm">Capped at 2.5%</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">2022</td><td className="px-6 py-4 font-bold">1.2%</td><td className="px-6 py-4 text-sm">—</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">2022</td><td className="px-6 py-4 font-bold">1.2%</td><td className="px-6 py-4 text-sm">-</td></tr>
                   <tr><td className="px-6 py-4 font-medium">2021</td><td className="px-6 py-4 font-bold">0%</td><td className="px-6 py-4 text-sm">COVID freeze</td></tr>
                 </tbody>
               </table>

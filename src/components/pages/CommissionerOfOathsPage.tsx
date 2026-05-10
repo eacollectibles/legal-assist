@@ -5,6 +5,7 @@ import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { Image } from '@/components/ui/image';
 import { Link } from 'react-router-dom';
+import { PHONE_HREF } from '@/lib/contact';
 
 export default function CommissionerOfOathsPage() {
   return (
@@ -526,7 +527,7 @@ export default function CommissionerOfOathsPage() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
-                  href="tel:4165550123"
+                  href={PHONE_HREF}
                   className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 font-paragraph font-semibold px-8 py-4 rounded-lg transition-all"
                 >
                   Call Us

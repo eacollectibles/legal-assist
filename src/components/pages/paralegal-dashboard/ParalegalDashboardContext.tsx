@@ -1,5 +1,16 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { BaseCrudService } from '@/integrations';
+import { EMAIL_PRIMARY } from '@/lib/contact';
+
+// Recognise both the historical placeholder admin email and the
+// firm's real address as "admin/firm" mail. Lets us treat older data
+// alongside new outgoing mail uniformly.
+const LEGACY_ADMIN_EMAIL = 'admin@legalservices.com';
+const isAdminSender = (email: string | undefined | null): boolean => {
+  if (!email) return false;
+  const e = email.toLowerCase();
+  return e === LEGACY_ADMIN_EMAIL || e === EMAIL_PRIMARY.toLowerCase();
+};
 import type {
   Appointment,
   FileAssignment,
@@ -171,7 +182,7 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
 
         // Determine the actual client email: if the message was sent BY the admin/paralegal,
         // the client email is the recipientEmail; otherwise it's the senderEmail
-        const isFromAdmin = msg.senderEmail === 'admin@legalservices.com';
+        const isFromAdmin = isAdminSender(msg.senderEmail);
         const clientEmail = isFromAdmin
           ? (msg.recipientEmail || '')
           : (msg.senderEmail || '');
@@ -191,7 +202,7 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
       const conv = conversationMap.get(convId)!;
       conv.messages.push(msg);
       
-      if (!msg.isRead && msg.senderEmail !== 'admin@legalservices.com') {
+      if (!msg.isRead && !isAdminSender(msg.senderEmail)) {
         conv.unreadCount++;
       }
       

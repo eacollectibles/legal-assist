@@ -19,7 +19,7 @@ export default function HowToFileLTBPage() {
 
   const reassuranceItems = [
     { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Online Filing', description: 'Most applications can be filed online.' },
-    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Reasonable Fees', description: 'Filing fees range $53-$201.' },
+    { icon: <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />, title: 'Reasonable Fees', description: 'Filing fees range $48-$201 (online lower).' },
     { icon: <AlertTriangle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />, title: 'Delays Common', description: 'LTB has significant backlogs.' }
   ];
 
@@ -27,7 +27,7 @@ export default function HowToFileLTBPage() {
     { question: "How do I file an LTB application?", answer: "Online through the Tribunals Ontario portal (tribunalsontario.ca), by mail, fax, or in person. Online is fastest. Create an account, select your application type, complete the form, pay the fee, and submit. You'll receive a file number." },
     { question: "What forms do tenants use?", answer: "T1 (rebate for illegal charges), T2 (rights issues: harassment, entry, maintenance), T5 (bad faith eviction), T6 (maintenance problems). Many tenant applications can be combined on one form if they relate to the same tenancy." },
     { question: "What forms do landlords use?", answer: "L1 (non-payment of rent), L2 (other reasons: interference, damage, illegal activity), L3 (terminate for cause), L4 (end tenancy from void order), L9 (collect arrears after eviction), and others." },
-    { question: "How much are the filing fees?", answer: "Tenant applications: $53. Landlord L1: $201. Other landlord applications: $201. Combined applications have combined fees. Fee waiver available if you can't afford to pay." },
+    { question: "How much are the filing fees?", answer: "Tenant applications: $48 online / $53 in-person. Landlord L1, L2, L9, L10: $186 online / $201 in-person. Combined applications have combined fees. Fee waiver available if you can't afford to pay. Always confirm the current schedule on the LTB website." },
     { question: "How long until my hearing?", answer: "Currently 4-8 months for most applications due to backlog. L1 applications (non-payment) can be faster. Urgent matters (illegal lockout, lack of vital services) get expedited hearings." },
     { question: "Should I file myself or hire a paralegal?", answer: "Simple matters (clear non-payment, straightforward maintenance) can be DIY. Complex matters (eviction defences, bad faith claims, multiple issues) benefit from representation. The hearing is adversarial—the other side may have representation." }
   ];

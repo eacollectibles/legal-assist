@@ -25,7 +25,7 @@ export default function StuntDrivingDefencePage() {
 
   const honestFAQs = [
     { question: "What is stunt driving in Ontario?", answer: "50+ km/h over the limit (any road), driving 150+ km/h, or 40+ over in zones under 80 km/h. Also includes racing, burnouts, and intentionally losing traction. The threshold changes triggered many more charges." },
-    { question: "What are the penalties for stunt driving?", answer: "First offence: $2,000-$10,000 fine, 6 demerit points, 1-3 year licence suspension, 14-day vehicle impound, possible jail. Second offence: even worse. Insurance increases are massive and long-lasting." },
+    { question: "What are the penalties for stunt driving?", answer: "Stunt driving (HTA s.172) carries TWO sets of penalties: (1) IMMEDIATE roadside administrative penalties under O. Reg. 615 - 30-day driver licence suspension AND 14-day vehicle impound on first occurrence; 60-day suspension on a second within 10 years; 75 days on a third (Bill 282 / MOMS Act, 2021). (2) ON CONVICTION - $2,000-$10,000 fine, 6 demerit points, court-ordered licence suspension of 1-3 years first time (longer for subsequent offences, up to lifetime under recent amendments), possible imprisonment up to 6 months. Insurance increases are severe and long-lasting." },
     { question: "Can these charges be beaten?", answer: "Yes—technical defences work: radar/lidar calibration issues, officer qualification, testing procedures, identification errors. But outcomes vary widely. Some cases reduce to lower speeding charges; others get dismissed; some convict." },
     { question: "What's the difference between conviction and guilty plea to lesser offence?", answer: "Stunt driving conviction: minimum 1-year suspension, mandatory fine, insurance devastation. Reduced to regular speeding: much lower fine, fewer points, no suspension, much less insurance impact. The reduction is often the realistic goal." },
     { question: "Should I just plead guilty and take my lumps?", answer: "Rarely—the consequences are too severe. Even if full acquittal is unlikely, negotiating a reduction to regular speeding can save thousands in fines and years of insurance increases. At minimum, get legal advice before deciding." },
@@ -74,7 +74,7 @@ export default function StuntDrivingDefencePage() {
                 <ul className="text-red-900 text-sm space-y-2">
                   <li>• Fine: $2,000 - $10,000</li>
                   <li>• Licence suspension: 1-3 years</li>
-                  <li>• Vehicle impound: 14 days</li>
+                  <li>• Vehicle impound: 14 days (immediate, at roadside)</li>
                   <li>• 6 demerit points</li>
                   <li>• Possible jail time</li>
                   <li>• Massive insurance increase</li>

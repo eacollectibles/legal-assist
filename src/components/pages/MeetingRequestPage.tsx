@@ -9,6 +9,7 @@ import { BaseCrudService } from '@/integrations';
 import { AlertCircle, CheckCircle, Lock } from 'lucide-react';
 import { generateMeetingLink, generateZoomUrl, generateConfirmationToken } from '@/lib/meeting-utils';
 import { Bookings } from '@/entities';
+import { PHONE_DISPLAY, EMAIL_PRIMARY } from '@/lib/contact';
 
 interface MeetingRequestFormData {
   clientName: string;
@@ -414,7 +415,7 @@ export default function MeetingRequestPage() {
                   <div>
                     <h4 className="font-heading font-bold text-foreground mb-2">Contact Support</h4>
                     <p className="font-paragraph text-foreground/80 text-sm">
-                      If you have questions, please contact us at (555) 123-4567 or info@legalservices.com
+                      If you have questions, please contact us at {PHONE_DISPLAY} or {EMAIL_PRIMARY}
                     </p>
                   </div>
                 </div>

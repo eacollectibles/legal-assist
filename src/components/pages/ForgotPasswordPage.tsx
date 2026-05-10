@@ -6,6 +6,7 @@ import { AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { requestPasswordReset } from '@/lib/auth-service';
+import { EMAIL_PRIMARY } from '@/lib/contact';
 
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();
@@ -170,8 +171,8 @@ export default function ForgotPasswordPage() {
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <p className="font-paragraph text-sm text-foreground/80">
                   <strong>Still need help?</strong> Contact our support team at{' '}
-                  <a href="mailto:support@legalassist.com" className="text-primary hover:underline">
-                    support@legalassist.com
+                  <a href={`mailto:${EMAIL_PRIMARY}`} className="text-primary hover:underline">
+                    {EMAIL_PRIMARY}
                   </a>
                 </p>
               </div>

@@ -28,12 +28,12 @@ export default function RentIncreaseGuidePage() {
 
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">2025 Rent Increase Guideline</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">2026 Rent Increase Guideline</h2>
           <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">The Ontario government sets the maximum rent increase percentage each year.</p>
-          
+
           <div className="max-w-xl mx-auto bg-primary/10 border-2 border-primary rounded-lg p-8 text-center">
-            <h3 className="font-heading text-5xl font-bold text-primary mb-4">2.5%</h3>
-            <p className="font-paragraph text-foreground/80">2025 Rent Increase Guideline</p>
+            <h3 className="font-heading text-5xl font-bold text-primary mb-4">2.1%</h3>
+            <p className="font-paragraph text-foreground/80">2026 Rent Increase Guideline (down from 2.5% in 2024 and 2025)</p>
             <p className="font-paragraph text-sm text-foreground/60 mt-2">For most residential tenancies first occupied before Nov 15, 2018</p>
           </div>
           

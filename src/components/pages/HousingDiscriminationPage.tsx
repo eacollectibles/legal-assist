@@ -29,7 +29,7 @@ export default function HousingDiscriminationPage() {
     { question: "What about 'no pets' and disability?", answer: "If you need a service animal or emotional support animal due to disability, landlords must accommodate. They cannot charge pet deposits. This overrides 'no pets' clauses—but you need documentation of disability-related need." },
     { question: "Can landlords discriminate based on income source?", answer: "No. Refusing tenants because they receive Ontario Works, ODSP, or other government assistance is illegal. Income source is a protected ground under 'receipt of public assistance.'" },
     { question: "What if they say the unit is gone, but it's not?", answer: "Classic discrimination tactic. If you can prove the unit remained available after you were rejected (check listings, have someone else inquire), this is strong evidence of discrimination." },
-    { question: "What compensation is available?", answer: "General damages for injury to dignity ($5,000-$30,000+ typical for housing), out-of-pocket costs incurred, and orders requiring the landlord to rent to you or change practices." }
+    { question: "What compensation is available?", answer: "General damages for injury to dignity ($10,000-$30,000 typical for housing matters; serious cases higher), out-of-pocket costs incurred, and orders requiring the landlord to rent to you or change practices." }
   ];
 
   return (

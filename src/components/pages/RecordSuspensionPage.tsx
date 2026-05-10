@@ -8,7 +8,7 @@ export default function RecordSuspensionPage() {
   const authorityItems = [
     { title: 'Record Suspensions', description: 'Formerly called "pardons," record suspensions seal your criminal record from most background checks. Fresh start opportunity.' },
     { title: 'Waiting Periods', description: 'Summary offences: 5 years. Indictable offences: 10 years. Period starts after sentence completion (fines paid, probation done).' },
-    { title: 'Not Automatic', description: 'You must apply and pay fees ($50 filing + $657.77 processing). Process takes 6-12+ months. Worth it for employment, travel.' }
+    { title: 'Not Automatic', description: 'You must apply through the Parole Board of Canada under the Criminal Records Act, R.S.C. 1985, c. C-47. The federal application fee was reduced to $50 (down from $657.77) effective January 1, 2022. Plus you pay separately for fingerprint records (RCMP/local police - typically $25-65) and court information requests. Total cost is usually under $200. Process takes 6-12+ months. Worth it for employment, US travel (note: US does not always recognize Canadian record suspensions), and professional licensing.' }
   ];
 
   const processSteps = [

@@ -29,6 +29,8 @@ const ForgotPasswordPage = lazy(() => import('@/components/pages/ForgotPasswordP
 const ResetPasswordPage = lazy(() => import('@/components/pages/ResetPasswordPage'));
 const ClientIntakePage = lazy(() => import('@/components/pages/ClientIntakePage'));
 const ClientDashboardPage = lazy(() => import('@/components/pages/ClientDashboardPage'));
+const PrivacyPolicyPage = lazy(() => import('@/components/pages/PrivacyPolicyPage'));
+const TermsOfUsePage = lazy(() => import('@/components/pages/TermsOfUsePage'));
 const NotFoundPage = lazy(() => import('@/components/pages/NotFoundPage'));
 
 function ScrollToTop() {
@@ -74,6 +76,10 @@ export default function Router() {
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/client-intake" element={<ClientIntakePage />} />
             <Route path="/client-dashboard" element={<ClientDashboardPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />
+            <Route path="/terms" element={<TermsOfUsePage />} />
+            <Route path="/terms-of-use" element={<Navigate to="/terms" replace />} />
 
             {/* Dynamic Routes from Config Files */}
             {allRoutes.map(({ path, element: Element }) => (

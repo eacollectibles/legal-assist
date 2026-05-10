@@ -12,6 +12,17 @@ import Footer from '@/components/Footer';
 import { getCurrentUser, isAdmin, getAllUsers, setAdminStatus } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { Messages } from '@/entities';
+import { EMAIL_PRIMARY } from '@/lib/contact';
+
+// Recognise both the historical placeholder admin email and the firm's
+// real address as "admin/firm" addressed mail. Keeps legacy data working
+// during the transition.
+const LEGACY_ADMIN_EMAIL = 'admin@legalservices.com';
+const isAdminRecipient = (email: string | undefined | null): boolean => {
+  if (!email) return false;
+  const e = email.toLowerCase();
+  return e === LEGACY_ADMIN_EMAIL || e === EMAIL_PRIMARY.toLowerCase();
+};
 import { Users, Shield, ShieldOff, AlertCircle, CheckCircle, Loader, Eye, MessageSquare, UserX, Trash2, Lock, FileEdit, FileText, ArrowRight, Wrench } from 'lucide-react';
 
 interface User {
@@ -58,8 +69,8 @@ export default function AdminUserManagementPage() {
       // Count unread messages for each user (messages sent by user to admin that are unread)
       const usersWithUnreadCounts = allUsers.map(user => {
         const unreadCount = allMessages.filter(
-          msg => msg.senderEmail === user.email && 
-                 msg.recipientEmail === 'admin@legalservices.com' && 
+          msg => msg.senderEmail === user.email &&
+                 isAdminRecipient(msg.recipientEmail) &&
                  !msg.isRead
         ).length;
         

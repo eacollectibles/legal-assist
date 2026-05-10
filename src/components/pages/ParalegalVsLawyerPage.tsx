@@ -103,7 +103,7 @@ export default function ParalegalVsLawyerPage() {
               { area: 'Family Law', desc: 'Divorce, custody, child support, division of property' },
               { area: 'Real Estate', desc: 'Buying/selling property, mortgages, title issues' },
               { area: 'Wills & Estates', desc: 'Drafting wills, estate administration, probate' },
-              { area: 'Civil Litigation Over $35K', desc: 'Lawsuits exceeding Small Claims limit' },
+              { area: 'Civil Litigation Over $50K', desc: 'Lawsuits exceeding the Small Claims Court limit (raised from $35,000 to $50,000 effective Jan 1, 2025)' },
               { area: 'Immigration', desc: 'Visa applications, deportation, citizenship' },
               { area: 'Corporate Law', desc: 'Business incorporation, contracts, mergers' },
               { area: 'Personal Injury', desc: 'Serious accident claims, medical malpractice' },

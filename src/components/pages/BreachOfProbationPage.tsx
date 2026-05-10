@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function BreachOfProbationPage() {
   const authorityItems = [
-    { title: 'Breach Defence', description: 'I defend breach of probation charges (summary conviction). Understanding why the breach happened often shapes the best defence.' },
+    { title: 'Breach Defence', description: 'Breach of probation under Criminal Code s.733.1 is a HYBRID offence. Paralegals can act ONLY where the Crown elects summary AND the matter is within LSO By-Law 4 / s.802.1 / Ontario AG approved-program list. Understanding why the breach happened often shapes the best defence regardless of representation.' },
     { title: 'Context Matters', description: 'Not all breaches are equal. Missing a check-in differs from contacting a complainant. Courts consider the nature of the breach.' },
     { title: 'Preventing Future Breaches', description: 'Part of defence is addressing why the breach happened and preventing recurrence.' }
   ];

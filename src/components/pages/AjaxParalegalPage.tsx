@@ -76,7 +76,7 @@ export default function AjaxParalegalPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <span className="font-paragraph text-foreground/70">Highway 401 and 412 enforcement expertise</span>
+                  <span className="font-paragraph text-foreground/70">Highway 401 and 412 enforcement experience</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />

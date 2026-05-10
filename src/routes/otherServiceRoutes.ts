@@ -2,6 +2,9 @@ import { lazy } from 'react';
 
 // Human Rights & Employment Pages
 const HumanRightsTribunalPage = lazy(() => import('@/components/pages/HumanRightsTribunalPage'));
+const PregnancyDiscriminationPage = lazy(() => import('@/components/pages/PregnancyDiscriminationPage'));
+const ReprisalClaimsPage = lazy(() => import('@/components/pages/ReprisalClaimsPage'));
+const SexualHarassmentPage = lazy(() => import('@/components/pages/SexualHarassmentPage'));
 const EmploymentIssuesPage = lazy(() => import('@/components/pages/EmploymentIssuesPage'));
 const WorkplaceDiscriminationPage = lazy(() => import('@/components/pages/WorkplaceDiscriminationPage'));
 const HousingDiscriminationPage = lazy(() => import('@/components/pages/HousingDiscriminationPage'));
@@ -33,8 +36,35 @@ const CondoDisputesPage = lazy(() => import('@/components/pages/CondoDisputesPag
 const DangerousDogHearingsPage = lazy(() => import('@/components/pages/DangerousDogHearingsPage'));
 const AccessibilityComplaintsPage = lazy(() => import('@/components/pages/AccessibilityComplaintsPage'));
 
+
+// Wired routes added during open-ended audit (May 2026)
+const AgeDiscriminationPage = lazy(() => import('@/components/pages/AgeDiscriminationPage'));
+const AssaultChargesPage = lazy(() => import('@/components/pages/AssaultChargesPage'));
+const CausingDisturbancePage = lazy(() => import('@/components/pages/CausingDisturbancePage'));
+const ConstructiveDismissalPage = lazy(() => import('@/components/pages/ConstructiveDismissalPage'));
+const DisabilityAccommodationPage = lazy(() => import('@/components/pages/DisabilityAccommodationPage'));
+const FailToComplyPage = lazy(() => import('@/components/pages/FailToComplyPage'));
+const HRTOProcessPage = lazy(() => import('@/components/pages/HRTOProcessPage'));
+const DUIChargesPage = lazy(() => import('@/components/pages/DUIChargesPage'));
+const MischiefChargesPage = lazy(() => import('@/components/pages/MischiefChargesPage'));
+const TheftChargesPage = lazy(() => import('@/components/pages/TheftChargesPage'));
+
+const LiquorLicenceActPage2 = lazy(() => import('@/components/pages/LiquorLicenceActPage'));
+const PeaceBondPage = lazy(() => import('@/components/pages/PeaceBondPage'));
+const RegulatoryOffencesPage = lazy(() => import('@/components/pages/RegulatoryOffencesPage'));
+const SeverancePayPage = lazy(() => import('@/components/pages/SeverancePayPage'));
+const SimpleAssaultPage = lazy(() => import('@/components/pages/SimpleAssaultPage'));
+const SmallClaimsPage = lazy(() => import('@/components/pages/SmallClaimsPage'));
+const TrespassPropertyPage = lazy(() => import('@/components/pages/TrespassPropertyPage'));
+const UnpaidWagesPage = lazy(() => import('@/components/pages/UnpaidWagesPage'));
+const WrongfulTerminationPage = lazy(() => import('@/components/pages/WrongfulTerminationPage'));
+const TrespassChargesPage2 = lazy(() => import('@/components/pages/TrespassChargesPage'));
+
 export const otherServiceRoutes = [
   { path: '/services/human-rights-tribunal', element: HumanRightsTribunalPage },
+  { path: '/services/pregnancy-discrimination', element: PregnancyDiscriminationPage },
+  { path: '/services/reprisal-claims', element: ReprisalClaimsPage },
+  { path: '/services/sexual-harassment', element: SexualHarassmentPage },
   { path: '/services/employment-issues', element: EmploymentIssuesPage },
   { path: '/services/workplace-discrimination', element: WorkplaceDiscriminationPage },
   { path: '/services/housing-discrimination', element: HousingDiscriminationPage },
@@ -60,4 +90,25 @@ export const otherServiceRoutes = [
   { path: '/services/condo-disputes', element: CondoDisputesPage },
   { path: '/services/dangerous-dog-hearings', element: DangerousDogHearingsPage },
   { path: '/services/accessibility-complaints', element: AccessibilityComplaintsPage },
+  // Wired routes added during open-ended audit (May 2026)
+  { path: '/services/age-discrimination', element: AgeDiscriminationPage },
+  { path: '/services/assault-charges', element: AssaultChargesPage },
+  { path: '/services/causing-disturbance', element: CausingDisturbancePage },
+  { path: '/services/constructive-dismissal', element: ConstructiveDismissalPage },
+  { path: '/services/disability-accommodation', element: DisabilityAccommodationPage },
+  { path: '/services/fail-to-comply', element: FailToComplyPage },
+  { path: '/services/hrto-process', element: HRTOProcessPage },
+  { path: '/services/dui-charges', element: DUIChargesPage },
+  { path: '/services/mischief-charges', element: MischiefChargesPage },
+  { path: '/services/theft-charges', element: TheftChargesPage },
+  { path: '/services/liquor-licence-act', element: LiquorLicenceActPage2 },
+  { path: '/services/peace-bond', element: PeaceBondPage },
+  { path: '/services/regulatory-offences', element: RegulatoryOffencesPage },
+  { path: '/services/severance-pay', element: SeverancePayPage },
+  { path: '/services/simple-assault', element: SimpleAssaultPage },
+  { path: '/services/small-claims', element: SmallClaimsPage },
+  { path: '/services/trespass-charges', element: TrespassChargesPage2 },
+  { path: '/services/trespass-property', element: TrespassPropertyPage },
+  { path: '/services/unpaid-wages', element: UnpaidWagesPage },
+  { path: '/services/wrongful-termination', element: WrongfulTerminationPage },
 ];

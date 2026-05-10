@@ -24,7 +24,7 @@ export default function AboveGuidelineIncreasePage() {
   ];
 
   const honestFAQs = [
-    { question: "What is an Above Guideline Increase (AGI)?", answer: "An AGI allows landlords to increase rent beyond the annual guideline (2.5% in 2025) for: capital expenditures (major repairs/upgrades), extraordinary utility costs, or operating costs for eligible security services. Landlords must apply to the LTB and prove their costs." },
+    { question: "What is an Above Guideline Increase (AGI)?", answer: "An AGI allows landlords to increase rent beyond the annual guideline (2.1% in 2026, down from 2.5% in 2024 and 2025) for: capital expenditures (major repairs/upgrades), extraordinary utility costs, or operating costs for eligible security services. Landlords must apply to the LTB and prove their costs." },
     { question: "What are the limits on AGIs?", answer: "Maximum 3% above guideline per year for capital expenditures, plus additional amounts for utilities/security. Even if approved for more, increases are phased over multiple years. Total increase cannot exceed guideline + 3% annually." },
     { question: "How can I challenge an AGI?", answer: "Attend the hearing and: dispute whether costs are eligible capital expenditures, challenge documentation/receipts, argue costs were normal maintenance (not AGI-eligible), show work wasn't completed as claimed, or demonstrate costs were inflated." },
     { question: "What costs don't qualify for AGI?", answer: "Normal maintenance and repairs (painting, minor fixes), work required due to landlord neglect, upgrades primarily for landlord benefit (like adding units), cosmetic improvements, and costs not adequately documented." },
@@ -44,9 +44,9 @@ export default function AboveGuidelineIncreasePage() {
             <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <h3 className="font-heading text-xl font-bold text-foreground mb-3 flex items-center gap-2">
                 <TrendingUp className="w-6 h-6" />
-                2025 Rent Increase Guideline: 2.5%
+                2026 Rent Increase Guideline: 2.1%
               </h3>
-              <p className="text-foreground/80">Landlords can increase rent by 2.5% annually without LTB approval. AGIs allow increases ABOVE this—but only with LTB approval and documented costs.</p>
+              <p className="text-foreground/80">Landlords can increase rent by 2.1% annually (down from 2.5% in 2024 and 2025) without LTB approval. AGIs allow increases ABOVE this — but only with LTB approval and documented costs.</p>
             </div>
 
             <h3 className="font-heading text-2xl font-bold text-foreground mb-6">What Qualifies for AGI?</h3>

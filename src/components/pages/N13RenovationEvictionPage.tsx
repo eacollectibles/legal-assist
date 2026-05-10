@@ -68,7 +68,7 @@ export default function N13RenovationEvictionPage() {
               <div className="bg-green-50 rounded-lg p-6 text-center">
                 <Home className="w-10 h-10 text-green-600 mx-auto mb-3" />
                 <div className="text-3xl font-bold text-green-700 mb-2">Return</div>
-                <p className="text-green-800 font-medium">Same Rent Guaranteed</p>
+                <p className="text-green-800 font-medium">Right of First Refusal at Same Rent (RTA s.53)</p>
               </div>
             </div>
 
@@ -112,7 +112,7 @@ export default function N13RenovationEvictionPage() {
                 <h4 className="font-bold text-yellow-800 mb-2">Negotiate When:</h4>
                 <ul className="text-yellow-900 text-sm space-y-1">
                   <li>• N13 appears legitimate</li>
-                  <li>• Want guaranteed return terms</li>
+                  <li>• Want clearer return terms in writing</li>
                   <li>• Want more compensation</li>
                 </ul>
               </div>

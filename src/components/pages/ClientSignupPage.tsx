@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useMember } from '@/integrations';
 import { signup } from '@/lib/auth-service';
+import { EMAIL_PRIMARY } from '@/lib/contact';
 
 interface SignupFormData {
   firstName: string;
@@ -316,7 +317,7 @@ export default function ClientSignupPage() {
                     required
                   />
                   <label htmlFor="agreeToTerms" className="font-paragraph text-foreground/80 cursor-pointer">
-                    I agree to the <a href="#" className="text-primary hover:underline">Terms and Conditions</a> and <a href="#" className="text-primary hover:underline">Privacy Policy</a> *
+                    I agree to the <Link to="/terms" className="text-primary hover:underline">Terms of Use</Link> and <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link> *
                   </label>
                 </div>
 
@@ -381,7 +382,7 @@ export default function ClientSignupPage() {
 
                 <div className="mt-8 pt-8 border-t border-pastelbeige">
                   <p className="font-paragraph text-sm text-foreground/80">
-                    <strong>Need help?</strong> Contact our support team at <a href="mailto:support@legalassist.com" className="text-primary hover:underline">support@legalassist.com</a>
+                    <strong>Need help?</strong> Contact our support team at <a href={`mailto:${EMAIL_PRIMARY}`} className="text-primary hover:underline">{EMAIL_PRIMARY}</a>
                   </p>
                 </div>
 

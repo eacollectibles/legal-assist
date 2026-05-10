@@ -29,7 +29,16 @@ import {
 } from 'lucide-react';
 import { ParalegalDashboardProvider, useParalegalDashboard } from './paralegal-dashboard/ParalegalDashboardContext';
 import { BaseCrudService } from '@/integrations';
-import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL_PRIMARY } from '@/lib/contact';
+
+// Recognise both the legacy placeholder admin email and the firm's
+// real address as "admin/firm" mail.
+const LEGACY_ADMIN_EMAIL = 'admin@legalservices.com';
+const isAdminSender = (email: string | undefined | null): boolean => {
+  if (!email) return false;
+  const e = email.toLowerCase();
+  return e === LEGACY_ADMIN_EMAIL || e === EMAIL_PRIMARY.toLowerCase();
+};
 
 // ============================================================
 // Direct imports for dashboard tabs
@@ -221,7 +230,7 @@ function OverviewModule() {
             {recentMessages.map(msg => (
               <div key={msg._id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  msg.senderEmail === 'admin@legalservices.com'
+                  isAdminSender(msg.senderEmail)
                     ? 'bg-primary/10 text-primary'
                     : 'bg-violet-100 text-violet-600'
                 }`}>
@@ -236,7 +245,7 @@ function OverviewModule() {
                     {msg.sentDate ? new Date(msg.sentDate).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : ''}
                   </p>
                 </div>
-                {!msg.isRead && msg.senderEmail !== 'admin@legalservices.com' && (
+                {!msg.isRead && !isAdminSender(msg.senderEmail) && (
                   <div className="w-2 h-2 rounded-full bg-destructive flex-shrink-0 mt-2" />
                 )}
               </div>

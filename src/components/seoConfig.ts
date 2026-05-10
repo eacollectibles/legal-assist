@@ -1134,7 +1134,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       {
         question: 'What is an above guideline rent increase?',
-        answer: 'An AGI allows landlords to increase rent beyond the annual guideline (2.5% in 2024) for extraordinary costs: major capital repairs, significant increases in property taxes, or utility cost increases. Requires LTB approval through an L5 application.'
+        answer: 'An AGI allows landlords to increase rent beyond the annual guideline (2.1% in 2026, down from 2.5% in 2024 and 2025) for extraordinary costs: major capital repairs, significant increases in property taxes, or utility cost increases. Requires LTB approval through an L5 application.'
       },
       {
         question: 'Can tenants dispute an above guideline increase?',
@@ -1245,7 +1245,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       {
         question: 'How much can a landlord increase rent in Ontario?',
-        answer: 'For rent-controlled units, landlords can only increase rent by the annual guideline (2.5% in 2024) once per year with 90 days written notice. Units first occupied after November 15, 2018 are exempt from rent control and have no limit.'
+        answer: 'For rent-controlled units, landlords can only increase rent by the annual guideline (2.1% in 2026, down from 2.5% in 2024 and 2025) once per year with 90 days written notice. Units first occupied after November 15, 2018 are exempt from rent control and have no limit.'
       },
       {
         question: 'When is a rent increase illegal in Ontario?',
@@ -4691,7 +4691,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides' }, { name: 'Tenant Rights Guide', url: '/guides/tenant-rights-guide' }],
     faqs: [
       { question: 'Can my landlord enter my unit whenever they want?', answer: 'No. Landlords must give 24 hours written notice for most entries, entering only between 8am-8pm. Emergency entries are an exception. You can refuse improper entries.' },
-      { question: 'Can my landlord raise rent whenever they want?', answer: 'No. Rent can only increase once per 12 months, with 90 days notice, by the guideline amount (2.5% in 2024) unless AGI approved. Exceptions for post-2018 units.' },
+      { question: 'Can my landlord raise rent whenever they want?', answer: 'No. Rent can only increase once per 12 months, with 90 days notice, by the guideline amount (2.1% in 2026, down from 2.5% in 2024 and 2025) unless AGI approved. Exceptions for post-2018 units.' },
       { question: 'What if my landlord won\'t do repairs?', answer: 'Document requests in writing. Give reasonable time. File T6 application with LTB for orders and rent abatement. Don\'t withhold rent - it can lead to eviction.' }
     ,
       {
@@ -4727,7 +4727,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides' }, { name: 'Employment Rights Guide', url: '/guides/employment-rights-guide' }],
     faqs: [
       { question: 'Can I be fired without cause in Ontario?', answer: 'Yes, but you\'re entitled to reasonable notice or pay in lieu. ESA sets minimums; common law often provides more. "Just cause" (serious misconduct) eliminates notice entitlement.' },
-      { question: 'What are minimum wage and overtime rules?', answer: 'Minimum wage is $16.55/hour (2024). Overtime (1.5x) after 44 hours/week for most employees. Some jobs are exempt from overtime provisions.' },
+      { question: 'What are minimum wage and overtime rules?', answer: 'Ontario general minimum wage is $17.60/hour (effective Oct 1, 2025) per ESA O. Reg. 285/01, scheduled to rise to $17.95 on Oct 1, 2026. Specific rates apply to students under 18, liquor servers, and homeworkers. Overtime is 1.5x the regular rate after 44 hours per week (ESA s.22(1)). Some jobs are exempt from overtime provisions.' },
       { question: 'What if I\'m harassed at work?', answer: 'Report to HR/management. If not resolved, file with HRTO (for human rights harassment) or Ministry of Labour (for workplace harassment). Document everything.' }
     ,
       {

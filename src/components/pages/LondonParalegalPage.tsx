@@ -145,7 +145,7 @@ export default function LondonParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Why London Clients Choose LegalAssist</h2>
           <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">
-            London residents and businesses trust LegalAssist for reliable, affordable paralegal representation backed by local expertise and modern technology.
+            London residents and businesses trust LegalAssist for reliable, affordable paralegal representation backed by local experience and modern technology.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

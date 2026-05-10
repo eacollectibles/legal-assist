@@ -12,6 +12,18 @@ import { BaseCrudService } from '@/integrations';
 import { MessageSquare, Send, Loader, AlertCircle, CheckCircle, Search, User, Plus, Trash2, Paperclip, Flag, FileText, Filter } from 'lucide-react';
 import { getCurrentUser } from '@/lib/auth-service';
 import { sendEmail } from '@/lib/email-service';
+import { EMAIL_PRIMARY } from '@/lib/contact';
+
+// Canonical "this message was sent by admin" check. We accept the
+// historical placeholder ('admin@legalservices.com'), the firm's
+// primary admin email (EMAIL_PRIMARY), or any email containing
+// 'admin' so messages from any future admin account are recognised.
+const LEGACY_ADMIN_EMAIL = 'admin@legalservices.com';
+function isAdminSender(email: string | undefined | null): boolean {
+  if (!email) return false;
+  const e = email.toLowerCase();
+  return e === LEGACY_ADMIN_EMAIL || e === EMAIL_PRIMARY.toLowerCase();
+}
 
 interface Message {
   _id: string;
@@ -133,8 +145,8 @@ export default function AdminMessagesPage() {
       if (!conversationMap.has(convId)) {
         conversationMap.set(convId, {
           conversationId: convId,
-          clientEmail: msg.senderEmail === 'admin@legalservices.com' ? msg.recipientEmail || '' : msg.senderEmail || '',
-          clientName: msg.senderEmail === 'admin@legalservices.com' ? msg.recipientEmail || '' : msg.senderName || msg.senderEmail || '',
+          clientEmail: isAdminSender(msg.senderEmail) ? msg.recipientEmail || '' : msg.senderEmail || '',
+          clientName: isAdminSender(msg.senderEmail) ? msg.recipientEmail || '' : msg.senderName || msg.senderEmail || '',
           messages: [],
           unreadCount: 0,
           lastMessageDate: new Date(msg.sentDate || 0),
@@ -148,7 +160,7 @@ export default function AdminMessagesPage() {
       conv.messages.push(msg);
 
       // Count unread messages from clients (not from admin)
-      if (!msg.isRead && msg.senderEmail !== 'admin@legalservices.com') {
+      if (!msg.isRead && !isAdminSender(msg.senderEmail)) {
         conv.unreadCount++;
       }
 
@@ -193,7 +205,7 @@ export default function AdminMessagesPage() {
 
       const messageData: Message = {
         _id: crypto.randomUUID(),
-        senderEmail: 'admin@legalservices.com',
+        senderEmail: currentUser?.email || EMAIL_PRIMARY,
         senderName: senderName,
         recipientEmail: conversation.clientEmail,
         messageContent: replyText,
@@ -240,7 +252,7 @@ export default function AdminMessagesPage() {
     if (!conversation) return;
 
     const unreadMessages = conversation.messages.filter(
-      msg => !msg.isRead && msg.senderEmail !== 'admin@legalservices.com'
+      msg => !msg.isRead && !isAdminSender(msg.senderEmail)
     );
 
     for (const msg of unreadMessages) {
@@ -253,7 +265,7 @@ export default function AdminMessagesPage() {
 
     // Update local state
     setMessages(prev => prev.map(msg => {
-      if (msg.conversationId === conversationId && msg.senderEmail !== 'admin@legalservices.com') {
+      if (msg.conversationId === conversationId && !isAdminSender(msg.senderEmail)) {
         return { ...msg, isRead: true };
       }
       return msg;
@@ -296,7 +308,7 @@ export default function AdminMessagesPage() {
       const conversationId = crypto.randomUUID();
       const messageData: Message = {
         _id: crypto.randomUUID(),
-        senderEmail: 'admin@legalservices.com',
+        senderEmail: currentUser?.email || EMAIL_PRIMARY,
         senderName: senderName,
         recipientEmail: newMessageEmail,
         messageContent: newMessageContent,
@@ -649,7 +661,7 @@ export default function AdminMessagesPage() {
                       {/* Messages */}
                       <div className="space-y-4 mb-6 max-h-[400px] overflow-y-auto p-4 bg-gray-50 rounded-lg">
                         {selectedConv.messages.slice().reverse().map(msg => {
-                          const isFromAdmin = msg.senderEmail === 'admin@legalservices.com';
+                          const isFromAdmin = isAdminSender(msg.senderEmail);
                           return (
                             <div
                               key={msg._id}

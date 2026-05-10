@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { AlertCircle, CheckCircle, Loader, MessageSquare, Send } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { Message, CurrentUser } from './types';
+import { EMAIL_PRIMARY } from '@/lib/contact';
 
 interface MessagesTabProps {
   currentUser: CurrentUser;
@@ -35,7 +36,9 @@ export default function MessagesTab({
     setIsSendingMessage(true);
 
     try {
-      const adminEmail = 'admin@legalservices.com';
+      // Send to the firm's real email; admin/paralegal dashboards
+      // recognise both this address and the legacy placeholder.
+      const adminEmail = EMAIL_PRIMARY;
       const conversationId = `${currentUser?.email}-admin`;
 
       const messageData: Message = {

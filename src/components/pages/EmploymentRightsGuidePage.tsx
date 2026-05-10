@@ -35,7 +35,7 @@ export default function EmploymentRightsGuidePage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Your Basic Employment Rights</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
-              { icon: DollarSign, title: 'Minimum Wage', desc: 'Currently $17.20/hour (general rate, effective Oct 1, 2024) under the Employment Standards Act, 2000. Specific rates apply to students under 18, liquor servers, etc. Check ontario.ca for the current rate.' },
+              { icon: DollarSign, title: 'Minimum Wage', desc: 'Currently $17.60/hour (general rate, effective Oct 1, 2025) under the Employment Standards Act, 2000, scheduled to rise to $17.95 on Oct 1, 2026. Specific rates apply to students under 18, liquor servers, etc. Check ontario.ca for the current rate.' },
               { icon: Clock, title: 'Overtime Pay', desc: '1.5x your regular rate after 44 hours per week. Cannot be averaged without agreement.' },
               { icon: Calendar, title: 'Vacation', desc: '2 weeks (4%) after 1 year, 3 weeks (6%) after 5 years. Must be paid out if not taken.' },
               { icon: Shield, title: 'Public Holidays', desc: '9 public holidays with premium pay or substitute day off.' },

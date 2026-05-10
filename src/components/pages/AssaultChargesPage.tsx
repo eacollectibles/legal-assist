@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function AssaultChargesPage() {
   const authorityItems = [
-    { title: 'Simple Assault Defence', description: 'I defend simple assault charges (summary conviction). Assault causing bodily harm or with a weapon requires a criminal lawyer.' },
+    { title: 'Simple Assault (s.266) - scope-dependent', description: 'Simple assault under Criminal Code s.266 is a HYBRID offence. Paralegals can act on it ONLY where (a) the Crown elects summary, AND (b) the matter is within LSO By-Law 4 / Criminal Code s.802.1 scope (Ontario AG approved-program list). Assault causing bodily harm (s.267(b)), assault with a weapon (s.267(a)), and aggravated assault (s.268) require a criminal defence lawyer.' },
     { title: 'Common Defences', description: 'Self-defence, defence of others, consent (in limited cases), and identity defences can lead to acquittal.' },
     { title: 'Serious Consequences', description: 'Even simple assault convictions affect employment, professional licensing, and US travel.' }
   ];

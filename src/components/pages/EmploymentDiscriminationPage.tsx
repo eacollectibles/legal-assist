@@ -28,7 +28,7 @@ export default function EmploymentDiscriminationPage() {
     { question: "How do I prove discrimination?", answer: "Show: (1) you belong to a protected group, (2) you experienced adverse treatment, (3) your protected characteristic was a factor (doesn't have to be the only factor). Direct evidence is rare—usually proven through circumstantial evidence and comparisons." },
     { question: "What if they say they had another reason?", answer: "Employers often claim legitimate reasons. The question is whether the protected ground was a factor, even if other factors existed. 'Mixed motive' cases can still succeed if discrimination played a role." },
     { question: "What about systemic discrimination?", answer: "Not just individual bad actors—policies or practices that disproportionately affect protected groups can be discrimination even without intent. Examples: height requirements, inflexible schedules, unnecessary qualifications." },
-    { question: "What damages are available?", answer: "Lost wages (past and future), general damages for injury to dignity ($5,000-$50,000+ depending on severity), and orders for reinstatement, policy changes, or training. No cap on damages at HRTO." },
+    { question: "What damages are available?", answer: "Lost wages (past and future), general damages for injury to dignity ($10,000-$40,000 typical, with serious cases reaching $75,000+), and orders for reinstatement, policy changes, or training. No cap on damages at HRTO." },
     { question: "How long do I have to file?", answer: "1 year from the last incident of discrimination. Ongoing discrimination extends this, but don't wait—file early while evidence is fresh." }
   ];
 
@@ -86,7 +86,7 @@ export default function EmploymentDiscriminationPage() {
                 </thead>
                 <tbody className="divide-y divide-border">
                   <tr><td className="px-6 py-4 font-medium">Lost Wages</td><td className="px-6 py-4 text-sm">Wages lost due to discrimination</td><td className="px-6 py-4 text-sm">Actual losses</td></tr>
-                  <tr><td className="px-6 py-4 font-medium">General Damages</td><td className="px-6 py-4 text-sm">Injury to dignity, feelings, self-respect</td><td className="px-6 py-4 text-sm">$5,000 - $50,000+</td></tr>
+                  <tr><td className="px-6 py-4 font-medium">General Damages</td><td className="px-6 py-4 text-sm">Injury to dignity, feelings, self-respect (HRC s.45.2(1)(b))</td><td className="px-6 py-4 text-sm">$10,000 - $40,000 typical; $75,000+ in serious cases</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Future Losses</td><td className="px-6 py-4 text-sm">If ongoing impact on earning capacity</td><td className="px-6 py-4 text-sm">Case-dependent</td></tr>
                   <tr><td className="px-6 py-4 font-medium">Reinstatement</td><td className="px-6 py-4 text-sm">Get job back (rarely ordered)</td><td className="px-6 py-4 text-sm">If appropriate</td></tr>
                 </tbody>

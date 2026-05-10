@@ -27,7 +27,7 @@ export default function LandlordTenantLondonPage() {
               Landlord &amp; Tenant Paralegal in London, Ontario
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-4 max-w-3xl">
-              Licensed paralegal representation for landlords and tenants at the Landlord and Tenant Board in London and Middlesex County. From eviction hearings to rent disputes, we handle all LTB matters with local expertise and affordable rates.
+              Licensed paralegal representation for landlords and tenants at the Landlord and Tenant Board in London and Middlesex County. From eviction hearings to rent disputes, we handle all LTB matters with local experience and affordable rates.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
               London&apos;s rental market is one of the most active in Southwestern Ontario. Whether you are a landlord dealing with non-payment of rent, a tenant facing an unjust eviction, or either party navigating above-guideline rent increases, LegalAssist provides experienced paralegal representation for every stage of the LTB process.

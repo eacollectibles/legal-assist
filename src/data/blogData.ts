@@ -302,7 +302,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       { q: 'When did Bill 60 take effect?', a: 'Bill 60 passed in 2025 with provisions rolling out through 2026. Check with us for the latest implementation dates on specific sections.' },
       { q: 'Does Bill 60 affect my current lease?', a: 'Yes - the new rules apply to all residential tenancies in Ontario, including existing ones. The changes to eviction timelines and hearing procedures are already in effect.' },
-      { q: 'Do I still have rent control under Bill 60?', a: 'If your unit was first occupied before November 15, 2018, rent control still applies. The 2026 guideline is 2.5%. Units first occupied after that date remain exempt from rent control.' }
+      { q: 'Do I still have rent control under Bill 60?', a: 'If your unit was first occupied before November 15, 2018, rent control still applies. The 2026 guideline is 2.1% (down from 2.5% in 2024-2025). Units first occupied after that date remain exempt from rent control under RTA s.6.1.' }
     ]
   },
   {
@@ -1057,12 +1057,12 @@ export const blogPosts: BlogPost[] = [
   {
     slug: '2026-ontario-rent-increase-guideline',
     title: '2026 Ontario Rent Increase Guideline: What You Need to Know',
-    description: 'The 2026 Ontario rent increase guideline is 2.5%. Learn when landlords can increase rent and what tenants can do about illegal increases.',
+    description: 'The 2026 Ontario rent increase guideline is 2.1% (down from 2.5% in 2024 and 2025). Learn when landlords can increase rent and what tenants can do about illegal increases.',
     category: 'ltb',
     date: '2026-01-02',
     readTime: '3 min',
     content: `
-      <p>The Ontario government has set the <strong>2026 rent increase guideline at 2.5%</strong>. Here's what landlords and tenants need to know.</p>
+      <p>The Ontario government has set the <strong>2026 rent increase guideline at 2.1%</strong> (down from 2.5% in 2024 and 2025). Here is what landlords and tenants need to know.</p>
       
       <h2>What Is the Rent Increase Guideline?</h2>
       <p>The guideline is the maximum percentage a landlord can increase rent without applying to the Landlord and Tenant Board. It applies to most private residential rentals.</p>
@@ -1072,7 +1072,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Once per year:</strong> Landlords can only increase rent once every 12 months</li>
         <li><strong>90 days notice:</strong> Written notice must be given at least 90 days before the increase</li>
         <li><strong>Proper form:</strong> Must use the official N1 or N2 form</li>
-        <li><strong>Maximum 2.5%:</strong> Cannot exceed the guideline without LTB approval</li>
+        <li><strong>Maximum 2.1% in 2026:</strong> Cannot exceed the guideline without LTB approval</li>
       </ul>
       
       <h2>Exemptions - Units Not Covered</h2>
@@ -1084,11 +1084,11 @@ export const blogPosts: BlogPost[] = [
         <li>Care homes</li>
       </ul>
       
-      <h2>What If Your Landlord Increases More Than 2.5%?</h2>
+      <h2>What If Your Landlord Increases More Than 2.1%?</h2>
       <p>If your unit is rent-controlled and your landlord tries to increase beyond the guideline:</p>
       <ol>
         <li>Do NOT pay the illegal increase</li>
-        <li>Pay only your current rent plus 2.5%</li>
+        <li>Pay only your current rent plus 2.1% (the 2026 guideline)</li>
         <li>Request proof of any LTB approval for above-guideline increase</li>
         <li>File a T1 application if they try to enforce an illegal increase</li>
       </ol>

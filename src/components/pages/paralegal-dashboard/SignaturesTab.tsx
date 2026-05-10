@@ -9,6 +9,8 @@ import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDi
 import { sendSignedDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 import { GeneratedDocuments } from '@/entities';
 import { useParalegalDashboard } from './ParalegalDashboardContext';
+import { EMAIL_PRIMARY } from '@/lib/contact';
+import { getCurrentUser } from '@/lib/auth-service';
 
 export default function SignaturesTab() {
   const { clients, paralegals, currentParalegalId } = useParalegalDashboard();
@@ -95,7 +97,7 @@ export default function SignaturesTab() {
         activityType: 'document_signed',
         activityDescription:
           `Document "${signingDocument.documentName}" was signed by ${signerName} using a ${methodLabel}`,
-        performedBy: 'paralegal@legalservices.com',
+        performedBy: getCurrentUser()?.email || EMAIL_PRIMARY,
         performedByName: signerName,
         timestamp: signatureData.timestamp.toISOString(),
         relatedItemId: signingDocument._id

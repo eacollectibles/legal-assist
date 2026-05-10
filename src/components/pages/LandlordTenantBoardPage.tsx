@@ -68,7 +68,7 @@ export default function LandlordTenantBoardPage() {
     },
     {
       question: "Can a tenant just stop paying and stay for months?",
-      answer: "Unfortunately, yes. Ontario's system is tenant-protective, which means even tenants who clearly owe rent can remain in the unit during the entire LTB process. Some tenants know this and use the system to stay rent-free as long as possible. While you'll likely win your case, collecting the arrears is another matter—many landlords get judgments but never collect."
+      answer: "Yes. The Ontario residential tenancy framework gives a tenant the right to remain in the unit until the LTB issues an eviction order and the Sheriff (Court Enforcement Office) physically enforces it - the entire timeline can run several months even on a clear non-payment file. Even where the LTB grants the eviction and arrears order, collecting the arrears is a separate exercise; many landlords obtain orders but never collect because the tenant has no assets to garnish or the tenant has moved on."
     },
     {
       question: "What if my landlord gives me an N12 (personal use eviction)?",
@@ -135,11 +135,11 @@ export default function LandlordTenantBoardPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <DollarSign className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong>Filing Fees:</strong> L1 (non-payment): $201 | T2/T6 (tenant applications): $53 | L2 (other evictions): $201. Fees may change; check current LTB fee schedule.</span>
+                    <span><strong>Filing Fees:</strong> L1/L2 (landlord): $186 online or $201 in-person | T2/T6 (tenant): $48 online or $53 in-person. Fees may change; check current LTB fee schedule.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <FileText className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong>2025 Rent Increase Guideline:</strong> 2.5% for most units. Landlords must give 90 days' notice using proper N1 form. Increases above guideline require AGI application.</span>
+                    <span><strong>2026 Rent Increase Guideline:</strong> 2.1% for most units (down from 2.5% in 2024 and 2025). Landlords must give 90 days' notice using proper N1 form. Increases above guideline require AGI application.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <Users className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -213,8 +213,8 @@ export default function LandlordTenantBoardPage() {
                 <p className="font-paragraph text-foreground/80">Months to Hearing (avg)</p>
               </div>
               <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-                <div className="text-4xl font-bold text-primary mb-2">2.5%</div>
-                <p className="font-paragraph text-foreground/80">2025 Rent Guideline</p>
+                <div className="text-4xl font-bold text-primary mb-2">2.1%</div>
+                <p className="font-paragraph text-foreground/80">2026 Rent Guideline</p>
               </div>
               <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
                 <div className="text-4xl font-bold text-primary mb-2">$201</div>

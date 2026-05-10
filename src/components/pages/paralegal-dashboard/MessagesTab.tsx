@@ -11,6 +11,22 @@ import { MessageSquare, User, Search, Send, FileText, Plus, X, AlertCircle } fro
 import { format } from 'date-fns';
 import { useParalegalDashboard } from './ParalegalDashboardContext';
 import type { Message } from './types';
+import { EMAIL_PRIMARY } from '@/lib/contact';
+import { getCurrentUser } from '@/lib/auth-service';
+
+// Recognise both the legacy placeholder admin email and the firm's
+// real address as paralegal/firm-side mail.
+const LEGACY_ADMIN_EMAIL = 'admin@legalservices.com';
+const isParalegalSender = (email: string | undefined | null): boolean => {
+  if (!email) return false;
+  const e = email.toLowerCase();
+  return e === LEGACY_ADMIN_EMAIL || e === EMAIL_PRIMARY.toLowerCase();
+};
+// Outgoing mail uses the signed-in paralegal's email when known so
+// future filters can identify which paralegal sent the message.
+const outgoingSenderEmail = (): string => {
+  return getCurrentUser()?.email || EMAIL_PRIMARY;
+};
 
 interface AssignedClient {
   clientId: string;
@@ -129,7 +145,7 @@ export default function MessagesTab() {
 
       const messageData: Message = {
         _id: crypto.randomUUID(),
-        senderEmail: 'admin@legalservices.com',
+        senderEmail: outgoingSenderEmail(),
         senderName: senderName,
         recipientEmail: client.clientEmail,
         messageContent: composeMessage,
@@ -165,7 +181,7 @@ export default function MessagesTab() {
     if (!conversation) return;
 
     const unreadMessages = conversation.messages.filter(
-      msg => !msg.isRead && msg.senderEmail !== 'admin@legalservices.com'
+      msg => !msg.isRead && !isParalegalSender(msg.senderEmail)
     );
 
     for (const msg of unreadMessages) {
@@ -177,7 +193,7 @@ export default function MessagesTab() {
     }
 
     setMessages(prev => prev.map(msg => {
-      if (msg.conversationId === conversationId && msg.senderEmail !== 'admin@legalservices.com') {
+      if (msg.conversationId === conversationId && !isParalegalSender(msg.senderEmail)) {
         return { ...msg, isRead: true };
       }
       return msg;
@@ -204,7 +220,7 @@ export default function MessagesTab() {
 
       const messageData: Message = {
         _id: crypto.randomUUID(),
-        senderEmail: 'admin@legalservices.com',
+        senderEmail: outgoingSenderEmail(),
         senderName: senderName,
         recipientEmail: conversation.clientEmail,
         messageContent: replyText,
@@ -461,7 +477,7 @@ export default function MessagesTab() {
                       return dateA - dateB;
                     })
                     .map((msg) => {
-                      const isFromParalegal = msg.senderEmail === 'admin@legalservices.com';
+                      const isFromParalegal = isParalegalSender(msg.senderEmail);
                       return (
                         <div
                           key={msg._id}

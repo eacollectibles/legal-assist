@@ -14,7 +14,7 @@ export default function WrongfulDismissalPage() {
   const processSteps = [
     { step: '1', title: 'Entitlement Calculation', description: 'Assess your notice period under common law vs. what you received.' },
     { step: '2', title: 'Demand & Negotiation', description: 'Formal demand letter often resolves matters quickly.' },
-    { step: '3', title: 'Legal Action', description: 'Small Claims (up to $35K) or help you find litigation counsel if more.' }
+    { step: '3', title: 'Legal Action', description: 'Small Claims (up to $50,000 - limit raised from $35,000 effective Jan 1, 2025) or referral to litigation counsel if the claim exceeds that.' }
   ];
 
   const reassuranceItems = [

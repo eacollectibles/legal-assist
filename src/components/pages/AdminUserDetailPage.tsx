@@ -17,6 +17,18 @@ import TrafficTicketOnboarding from '@/components/TrafficTicketOnboarding';
 import { getCurrentUser, isAdmin } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { UserAccounts, ClientProfiles, ClientDocuments, Messages, PaymentRecords } from '@/entities';
+import { EMAIL_PRIMARY } from '@/lib/contact';
+
+// Both the historical placeholder admin email and the firm's real
+// address should be treated as "admin/firm" mail. New outgoing
+// messages always use the real firm email so message history
+// surfaces correctly even after the legacy placeholder is gone.
+const LEGACY_ADMIN_EMAIL = 'admin@legalservices.com';
+const isAdminSender = (email: string | undefined | null): boolean => {
+  if (!email) return false;
+  const e = email.toLowerCase();
+  return e === LEGACY_ADMIN_EMAIL || e === EMAIL_PRIMARY.toLowerCase();
+};
 import { 
   User, 
   FileText, 
@@ -1180,7 +1192,7 @@ export default function AdminUserDetailPage() {
 
                         const messageData: Messages = {
                           _id: crypto.randomUUID(),
-                          senderEmail: 'admin@legalservices.com',
+                          senderEmail: getCurrentUser()?.email || EMAIL_PRIMARY,
                           senderName: 'Admin Team',
                           recipientEmail: userAccount.email,
                           messageContent: messageContent,
@@ -1254,7 +1266,7 @@ export default function AdminUserDetailPage() {
                     ) : (
                       <div className="space-y-4">
                         {messages.map((msg) => {
-                          const isFromAdmin = msg.senderEmail === 'admin@legalservices.com';
+                          const isFromAdmin = isAdminSender(msg.senderEmail);
                           return (
                             <div
                               key={msg._id}

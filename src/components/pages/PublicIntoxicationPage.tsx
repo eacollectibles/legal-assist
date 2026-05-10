@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function PublicIntoxicationPage() {
   const authorityItems = [
-    { title: 'Public Intoxication', description: 'Being intoxicated in public is a provincial offence under the Liquor Licence Act—not a criminal charge. I defend these tickets.' },
+    { title: 'Public Intoxication', description: 'Being intoxicated in a public place is a provincial offence under the Liquor Licence and Control Act, 2019, S.O. 2019, c. 15, Sched. 22, s.31 (formerly the Liquor Licence Act) - not a criminal charge. Set fine $125 (~$175 with surcharges). I defend these tickets.' },
     { title: 'Provincial Offence', description: 'No criminal record from conviction. But fines, and it can affect professional licensing or immigration.' },
     { title: 'Defences Exist', description: 'Not actually intoxicated, not in public place, charter issues with detention—defences are available.' }
   ];

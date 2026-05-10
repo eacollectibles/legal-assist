@@ -23,7 +23,7 @@ export default function PerthParalegalPage() {
               Perth Paralegal Services
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Expert legal representation for Perth, Smiths Falls, Carleton Place, and Mississippi Mills residents. We handle traffic tickets, Small Claims Court disputes, and Landlord Tenant Board matters throughout Lanark County.
+              Reliable paralegal representation for Perth, Smiths Falls, Carleton Place, and Mississippi Mills residents. We handle traffic tickets, Small Claims Court disputes, and Landlord Tenant Board matters throughout Lanark County.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">

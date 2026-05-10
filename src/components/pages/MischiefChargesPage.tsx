@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 export default function MischiefChargesPage() {
   const authorityItems = [
-    { title: 'Mischief Under $5,000', description: 'I defend mischief under $5,000 charges (property damage, interference). Over $5,000 may require a lawyer.' },
+    { title: 'Mischief Under $5,000 (s.430(4)) - scope-dependent', description: 'Mischief under $5,000 (Criminal Code s.430(4)) is a HYBRID offence. Paralegals can act ONLY where the Crown elects summary AND the matter is within LSO By-Law 4 / s.802.1 / AG approved-program list. Mischief over $5,000 (s.430(3)) and mischief endangering life (s.430(2)) require a lawyer.' },
     { title: 'Common Situations', description: 'Vandalism, keying cars, breaking windows, graffiti, domestic property damage—all can result in mischief charges.' },
     { title: 'Restitution Focus', description: 'Making the victim whole through restitution often helps resolve cases favourably.' }
   ];
