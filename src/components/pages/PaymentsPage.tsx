@@ -134,18 +134,41 @@ export default function PaymentsPage() {
     setLoading(true);
     setError('');
     try {
-      const [clientsRes, paymentsRes] = await Promise.all([
-        BaseCrudService.getAll<ClientRow>('clientprofiles'),
-        BaseCrudService.getAll<PaymentRow>('payments').catch(() => ({ items: [] as PaymentRow[] })),
-      ]);
-      setClients(clientsRes.items || []);
-      // Most-recent first.
-      const sorted = [...(paymentsRes.items || [])].sort((a, b) => {
-        const ad = new Date(a.processedAt || a._createdDate || 0).getTime();
-        const bd = new Date(b.processedAt || b._createdDate || 0).getTime();
-        return bd - ad;
+      // Clients first - this is the only call we want to be fatal. If
+      // the payments collection blows up we still want to render the
+      // page so the paralegal can take new payments and see the error.
+      const clientsRes = await BaseCrudService.getAll<ClientRow>('clientprofiles', undefined, {
+        limit: 1000,
       });
-      setPayments(sorted);
+      setClients(clientsRes.items || []);
+
+      // Payments read. The previous version silently swallowed errors
+      // with `.catch(() => ({items:[]}))`, which made a missing or
+      // misconfigured `payments` collection look identical to "no
+      // payments yet". Now we surface the real CMS error so the cause
+      // is visible.
+      try {
+        const paymentsRes = await BaseCrudService.getAll<PaymentRow>('payments', undefined, {
+          limit: 1000,
+        });
+        const sorted = [...(paymentsRes.items || [])].sort((a, b) => {
+          const ad = new Date(a.processedAt || a._createdDate || 0).getTime();
+          const bd = new Date(b.processedAt || b._createdDate || 0).getTime();
+          return bd - ad;
+        });
+        setPayments(sorted);
+      } catch (paymentsErr: any) {
+        const msg = paymentsErr?.message || String(paymentsErr);
+        // WDE0025 = collection missing. Give the operator a precise hint.
+        if (msg.includes('WDE0025') || /does not exist/i.test(msg)) {
+          setError(
+            'The "payments" CMS collection does not exist yet. Square charges are still going through but the audit row cannot be written. Create the collection in Wix Studio CMS with the schema documented in src/pages/api/square/create-payment.ts, then reload this page.'
+          );
+        } else {
+          setError('Failed to load Square payments: ' + msg);
+        }
+        setPayments([]);
+      }
     } catch (e: any) {
       setError(e?.message || 'Failed to load payment data.');
     } finally {

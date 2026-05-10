@@ -10,8 +10,8 @@ export default function SocialBenefitsTribunalPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Social Benefits Tribunal | ODSP & OW Appeals | London Ontario"
-        description="Professional representation at Social Benefits Tribunal in London, Ontario. ODSP appeals, Ontario Works disputes & disability benefit hearings. Protect your rights."
+        title="Social Benefits Tribunal | ODSP & Ontario Works Appeals | Ontario"
+        description="Licensed paralegal representing claimants at the Social Benefits Tribunal (Tribunals Ontario). ODSP and Ontario Works appeals. Internal Review handled first; SBT appeal within 30 days of the Internal Review decision."
         canonical="https://www.legalassist.london/services/social-benefits-tribunal"
       />
       <Header />
@@ -25,7 +25,7 @@ export default function SocialBenefitsTribunalPage() {
                 Social Benefits Tribunal
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Professional representation for social assistance and disability support appeals. We help you navigate the Social Benefits Tribunal to secure the benefits you deserve.
+                Licensed paralegal representation for ODSP and Ontario Works appeals before the Social Benefits Tribunal (part of Tribunals Ontario). We handle Internal Reviews and the SBT appeal that follows.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
@@ -61,22 +61,22 @@ export default function SocialBenefitsTribunalPage() {
               What is the Social Benefits Tribunal?
             </h2>
             <p className="font-paragraph text-lg text-foreground/80 mb-6">
-              The Social Benefits Tribunal (SBT) is an independent tribunal that hears appeals from individuals who have been denied social assistance or disability support benefits in Ontario. If your application for Ontario Works or ODSP (Ontario Disability Support Program) has been denied or terminated, the SBT provides an opportunity to appeal that decision.
+              The Social Benefits Tribunal (SBT) is part of Tribunals Ontario and hears appeals from decisions under the Ontario Works Act, 1997 and the Ontario Disability Support Program Act, 1997. Before you can appeal to the SBT, you must FIRST request an Internal Review with the agency that made the decision (ODSP office or municipal OW office). Only after the Internal Review decision is issued can you appeal to the SBT. Both steps are time-limited and missing either deadline usually ends the appeal.
             </p>
             <p className="font-paragraph text-lg text-foreground/80">
-              Our experienced representatives understand the complex eligibility requirements and appeal procedures. We work to ensure your case is presented effectively and that you receive fair consideration of your circumstances and entitlements.
+              We handle the Internal Review request, the SBT Notice of Appeal, evidence collection, written submissions, and representation at the hearing. Where the matter ends at the SBT we explain the further options - reconsideration, statutory appeal on a question of law to the Divisional Court (ODSPA s.31 / OWA s.36), or judicial review.
             </p>
           </div>
 
           {/* Key Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-3xl font-bold text-primary mb-2">30+ Days</div>
-              <p className="font-paragraph text-foreground/80">Appeal Deadline from Decision</p>
+              <div className="text-3xl font-bold text-primary mb-2">30 Days</div>
+              <p className="font-paragraph text-foreground/80">Internal Review deadline AND SBT appeal deadline (from IR decision)</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-3xl font-bold text-primary mb-2">60%+</div>
-              <p className="font-paragraph text-foreground/80">Success Rate with Representation</p>
+              <div className="text-3xl font-bold text-primary mb-2">2 Steps</div>
+              <p className="font-paragraph text-foreground/80">Internal Review first, then SBT appeal</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-3xl font-bold text-primary mb-2">Free</div>
@@ -234,23 +234,27 @@ export default function SocialBenefitsTribunalPage() {
               <ul className="space-y-3">
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>30 days</strong> from decision notice to file appeal</span>
+                  <span className="font-paragraph text-foreground/80"><strong>30 days</strong> from the original decision to request Internal Review (with the ODSP/OW office)</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Late appeals</strong> possible with good reason (within 1 year)</span>
+                  <span className="font-paragraph text-foreground/80"><strong>30 days</strong> from the Internal Review decision to file Notice of Appeal with the SBT</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Hearing scheduled</strong> typically within 60-90 days</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Late appeals</strong> may be accepted with reasonable explanation, generally up to 1 year (SPPA s.5.1)</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Decision issued</strong> within 30 days of hearing</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Hearing scheduling</strong> varies with SBT caseload - currently several months in many cases</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Act quickly</strong> - missing deadlines can result in dismissal</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Written decision</strong> typically issues within 60-120 days after hearing</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Act quickly</strong> - missing the IR or SBT deadline usually ends the appeal</span>
                 </li>
               </ul>
             </div>
@@ -262,43 +266,53 @@ export default function SocialBenefitsTribunalPage() {
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <h2 className="font-heading text-4xl font-bold text-foreground mb-12">The Appeal Process</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
-              <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
+              <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">1</div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-3">Initial Consultation</h3>
                 <p className="font-paragraph text-foreground/80 text-sm">
-                  We review your decision notice and assess the strength of your appeal case.
+                  Review your original decision letter and confirm the deadline status.
                 </p>
               </div>
             </div>
 
             <div className="relative">
-              <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
+              <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">2</div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-3">File Appeal</h3>
+                <h3 className="font-heading text-lg font-bold text-foreground mb-3">Internal Review</h3>
                 <p className="font-paragraph text-foreground/80 text-sm">
-                  We prepare and file your appeal within the 30-day deadline with supporting documentation.
+                  File the Internal Review request with the ODSP/OW office within 30 days of the original decision. This step is mandatory before the SBT.
                 </p>
               </div>
             </div>
 
             <div className="relative">
-              <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
+              <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">3</div>
+                <h3 className="font-heading text-lg font-bold text-foreground mb-3">SBT Notice of Appeal</h3>
+                <p className="font-paragraph text-foreground/80 text-sm">
+                  Within 30 days of the Internal Review decision, file the Notice of Appeal and evidence with the Social Benefits Tribunal.
+                </p>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">4</div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-3">Prepare Case</h3>
                 <p className="font-paragraph text-foreground/80 text-sm">
-                  We gather evidence, organize documents, and prepare your testimony for the hearing.
+                  Gather medical evidence, financial records, and witness statements; prepare written submissions.
                 </p>
               </div>
             </div>
 
             <div className="relative">
-              <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm h-full">
-                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">4</div>
+              <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm h-full">
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-heading font-bold text-xl mb-4">5</div>
                 <h3 className="font-heading text-lg font-bold text-foreground mb-3">Tribunal Hearing</h3>
                 <p className="font-paragraph text-foreground/80 text-sm">
-                  We represent you at the hearing and present your case to the tribunal member.
+                  Represent you at the SBT hearing (in person or video) before the assigned tribunal member.
                 </p>
               </div>
             </div>
@@ -317,8 +331,8 @@ export default function SocialBenefitsTribunalPage() {
                 <div className="flex items-start gap-4">
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground mb-2">Increased Success Rate</h3>
-                    <p className="font-paragraph text-foreground/80">Applicants with representation have significantly higher success rates than those representing themselves.</p>
+                    <h3 className="font-heading text-lg font-bold text-foreground mb-2">Procedural Familiarity</h3>
+                    <p className="font-paragraph text-foreground/80">We know the SBT Rules of Procedure, the disclosure expectations, and how the tribunal weighs medical and financial evidence.</p>
                   </div>
                 </div>
               </div>
@@ -452,11 +466,11 @@ export default function SocialBenefitsTribunalPage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80">Tribunal decisions are final and binding</span>
+                  <span className="font-paragraph text-foreground/80">SBT decisions can be revisited via reconsideration, statutory appeal on a question of law to the Divisional Court (ODSPA s.31 / OWA s.36), or judicial review - but not through general re-hearing</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80">Limited appeal options after tribunal decision</span>
+                  <span className="font-paragraph text-foreground/80">Post-decision options are limited - 30-day reconsideration window, then Divisional Court</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
@@ -484,22 +498,22 @@ export default function SocialBenefitsTribunalPage() {
               </div>
               <div className="space-y-4 font-paragraph text-foreground/80">
                 <div>
-                  <p className="font-semibold text-foreground mb-1">Initial Consultation: 1 week</p>
-                  <p className="text-sm">Review your decision and assess your case</p>
+                  <p className="font-semibold text-foreground mb-1">Initial Consultation: same day or next day</p>
+                  <p className="text-sm">Review your decision letter and confirm where you are in the deadline window</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground mb-1">Appeal Filing: 2-4 weeks</p>
-                  <p className="text-sm">Prepare and file appeal within 30-day deadline</p>
+                  <p className="font-semibold text-foreground mb-1">Internal Review + SBT filing: within the two 30-day windows</p>
+                  <p className="text-sm">Internal Review filed first; SBT Notice of Appeal filed within 30 days of the IR decision</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground mb-1">Hearing Scheduled: 60-90 days</p>
-                  <p className="text-sm">Tribunal schedules your hearing date</p>
+                  <p className="font-semibold text-foreground mb-1">Hearing Scheduled: SBT-driven, often several months</p>
+                  <p className="text-sm">SBT schedules subject to its caseload</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground mb-1">Decision: 30 days after hearing</p>
+                  <p className="font-semibold text-foreground mb-1">Decision: 60-120 days after hearing</p>
                   <p className="text-sm">Tribunal issues written decision</p>
                 </div>
-                <p className="text-sm italic pt-4 border-t border-gray-200">Total: 4-6 months from initial consultation to decision</p>
+                <p className="text-sm italic pt-4 border-t border-gray-200">Total: typically 6-12 months from Internal Review request to SBT decision; varies with caseload</p>
               </div>
             </div>
 
@@ -539,14 +553,14 @@ export default function SocialBenefitsTribunalPage() {
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">What is the 30-day deadline?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
-                You have 30 days from the date on the decision notice to file an appeal with the Social Benefits Tribunal. Missing this deadline can result in your appeal being dismissed.
+                There are TWO 30-day deadlines. First, you have 30 days from the original ODSP/OW decision to request an Internal Review. Then, you have 30 days from the Internal Review decision to file a Notice of Appeal with the SBT. Both must be met. Missing either usually ends the appeal.
               </p>
             </div>
 
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">Can I appeal a late decision?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
-                Yes, you can request a late appeal if you have a good reason for missing the 30-day deadline. However, you must apply within one year of the decision.
+                Late requests may be accepted at either stage if you have a reasonable explanation, but it is at the SBT's discretion under SPPA s.5.1. The general outer limit is 1 year. Earlier filing is always safer - the SBT does not have to extend the time and a late request can be refused.
               </p>
             </div>
 
@@ -560,14 +574,14 @@ export default function SocialBenefitsTribunalPage() {
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">What happens at the hearing?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
-                You and the ministry present your cases to a tribunal member. We represent you, present evidence, and respond to the ministry's arguments. Hearings are typically conducted in person or by video.
+                You and the Director of ODSP / Administrator of OW present your cases to a tribunal member. We represent you, present medical and financial evidence, examine your witnesses, and respond to the Director's submissions. Most SBT hearings are now conducted by video conference, with telephone or in-person available on request.
               </p>
             </div>
 
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">Can I appeal a tribunal decision?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
-                Tribunal decisions are final and binding. There is no appeal to a higher court, though judicial review is possible in limited circumstances.
+                Yes, but in narrow channels: (1) reconsideration by the SBT itself within 30 days; (2) statutory appeal on a question of law to the Divisional Court under ODSPA s.31 or OWA s.36 within 30 days; (3) judicial review under the Judicial Review Procedure Act in limited circumstances. None of these is a general re-hearing on the facts - the original SBT findings of fact normally stand.
               </p>
             </div>
 
@@ -588,7 +602,7 @@ export default function SocialBenefitsTribunalPage() {
             Don't Let Your Appeal Deadline Pass
           </h2>
           <p className="font-paragraph text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Contact us today for a free consultation. We'll review your decision and help you understand your options.
+            Contact us today. We will review your decision letter, confirm the Internal Review and SBT deadline status, and explain the next step on your file.
           </p>
           <Link to="/booking">
             <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">

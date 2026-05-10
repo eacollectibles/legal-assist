@@ -36,10 +36,10 @@ export default function TenantRightsGuidePage() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
               { icon: Home, title: 'Security of Tenure', desc: 'You cannot be evicted without proper legal process through the LTB. Your landlord cannot just tell you to leave.' },
-              { icon: DollarSign, title: 'Rent Control', desc: 'Most units are subject to rent increase guidelines. In 2024, the maximum increase is 2.5%. Landlords cannot increase rent more than once per year.' },
+              { icon: DollarSign, title: 'Rent Control', desc: 'Most units are rent-controlled under Residential Tenancies Act, 2006 s.120. The 2026 Ontario rent increase guideline is 2.1% (down from 2.5% in 2024 and 2025). Landlords cannot raise rent more than once every 12 months.' },
               { icon: Wrench, title: 'Right to Repairs', desc: 'Your landlord must maintain the property in good repair and comply with health and safety standards.' },
               { icon: Shield, title: 'Privacy', desc: 'Your landlord must give 24 hours written notice before entering, and can only enter for specific reasons.' },
-              { icon: Ban, title: 'No Illegal Fees', desc: 'Landlords cannot charge key deposits, require post-dated cheques, or collect security deposits (only last month\'s rent).' },
+              { icon: Ban, title: 'No Illegal Fees', desc: 'Landlords cannot charge key deposits, require post-dated cheques, or collect security deposits (only last month\u2019s rent under RTA s.106; refundable key deposits at actual replacement cost are also permitted).' },
               { icon: CheckCircle, title: 'Right to Have Guests', desc: 'You can have guests and overnight visitors. Your landlord cannot restrict this.' },
             ].map((item, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
@@ -66,12 +66,13 @@ export default function TenantRightsGuidePage() {
                   <h3 className="font-heading font-bold text-foreground mb-3">Valid Reasons for Eviction</h3>
                   <ul className="space-y-2">
                     {[
-                      'Non-payment of rent (N4 notice)',
-                      'Landlord\'s own use (N12 notice)',
-                      'Major renovations requiring vacancy',
-                      'Persistent late payment',
-                      'Illegal activity',
-                      'Causing serious damage',
+                      'Non-payment of rent (N4 — RTA s.59)',
+                      'Persistent late payment (N8 — RTA s.58)',
+                      'Damage / interference with reasonable enjoyment (N5)',
+                      'Illegal act in the unit (N6 — RTA s.61)',
+                      'Serious safety impairment (N7)',
+                      'Landlord\'s own use / family / caregiver (N12 — RTA s.48; 1 month rent compensation)',
+                      'Demolition, conversion, or major renovation (N13 — RTA s.50; 3 months rent OR right of first refusal)',
                     ].map((item, index) => (
                       <li key={index} className="flex items-center gap-2 font-paragraph text-foreground/70 text-sm">
                         <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0" /> {item}
@@ -116,7 +117,7 @@ export default function TenantRightsGuidePage() {
               {[
                 { rule: '90 Days Notice', desc: 'Landlord must give written notice at least 90 days before the increase takes effect.' },
                 { rule: 'Once Per Year', desc: 'Rent can only be increased once every 12 months.' },
-                { rule: 'Guideline Amount', desc: 'For most units, increases are capped at the annual guideline (2.5% in 2024).' },
+                { rule: 'Guideline Amount', desc: 'For rent-controlled units, increases are capped at the annual guideline (2.1% in 2026; 2.5% in 2024 and 2025).' },
                 { rule: 'Proper Form Required', desc: 'Notice must be on the official N1 or N2 form.' },
                 { rule: 'New Buildings Exempt', desc: 'Units first occupied after Nov 15, 2018 are NOT subject to rent control.' },
               ].map((item, index) => (
@@ -144,11 +145,12 @@ export default function TenantRightsGuidePage() {
                 <ol className="space-y-3">
                   {[
                     'Request repairs in writing (email or letter)',
-                    'Keep copies of all communications',
-                    'Take photos of the problem',
+                    'Keep copies of all communications and pay records',
+                    'Take photos / video of the problem',
                     'Give reasonable time to respond (usually 7-14 days)',
+                    'Contact the City property-standards office for habitability issues',
                     'Follow up in writing if not fixed',
-                    'File a T6 application at the LTB if still not resolved',
+                    'File at the LTB: T6 (maintenance), T2 (interference, illegal entry, harassment), T1 (illegal charges or rent), or T5 (bad-faith N12 eviction)',
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3 font-paragraph text-foreground/80">
                       <span className="flex-shrink-0 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">{index + 1}</span>

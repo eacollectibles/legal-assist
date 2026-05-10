@@ -10,8 +10,8 @@ export default function EmploymentIssuesPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Employment Issues & Workplace Disputes | London Ontario"
-        description="Employment law paralegal in London, Ontario. Wrongful dismissal, workplace harassment, employment standards & severance disputes. Protect your workplace rights."
+        title="Employment Issues & Workplace Disputes | Ontario"
+        description="Licensed paralegal handling Ontario employment disputes within scope: wrongful dismissal up to $50,000 in Small Claims Court, ESA complaints, HRTO discrimination matters, severance review, unpaid wages."
         canonical="https://www.legalassist.london/services/employment-issues"
       />
       <Header />
@@ -25,7 +25,7 @@ export default function EmploymentIssuesPage() {
                 Employment Issues & Workplace Disputes
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Professional guidance on employment disputes, wrongful dismissal, severance packages, and workplace rights violations. Our licensed paralegals help you navigate complex employment matters and protect your rights.
+                Licensed paralegal assistance on Ontario employment disputes within scope: wrongful and constructive dismissal up to $50,000 in Small Claims Court, severance review, ESA Ministry of Labour complaints, HRTO discrimination matters, unpaid wages. We refer to employment counsel where the claim exceeds Small Claims jurisdiction or requires Superior Court.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/booking">
@@ -71,8 +71,8 @@ export default function EmploymentIssuesPage() {
           {/* Key Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">2 Weeks</div>
-              <p className="font-paragraph text-foreground/80">Minimum Notice Required (ESA)</p>
+              <div className="text-4xl font-bold text-primary mb-2">1-8 Weeks</div>
+              <p className="font-paragraph text-foreground/80">ESA s.57 notice scale (length-of-service-based)</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-4xl font-bold text-primary mb-2">$50,000</div>
@@ -83,8 +83,8 @@ export default function EmploymentIssuesPage() {
               <p className="font-paragraph text-foreground/80">Employment Law Guidance</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Fair</div>
-              <p className="font-paragraph text-foreground/80">Settlement Negotiation</p>
+              <div className="text-4xl font-bold text-primary mb-2">Bardal</div>
+              <p className="font-paragraph text-foreground/80">Common-law notice factors used to assess severance</p>
             </div>
           </div>
         </div>
@@ -253,22 +253,30 @@ export default function EmploymentIssuesPage() {
 
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-2xl font-bold text-foreground mb-6">Notice Requirements</h3>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="border-l-4 border-primary pl-4">
-                  <p className="font-heading font-bold text-foreground mb-2">Less than 3 months employment:</p>
-                  <p className="font-paragraph text-foreground/80">No notice required (unless contract specifies)</p>
+                  <p className="font-heading font-bold text-foreground mb-1">Less than 3 months</p>
+                  <p className="font-paragraph text-foreground/80 text-sm">No statutory notice required</p>
                 </div>
                 <div className="border-l-4 border-primary pl-4">
-                  <p className="font-heading font-bold text-foreground mb-2">3 months to 2 years:</p>
-                  <p className="font-paragraph text-foreground/80">2 weeks written notice required</p>
+                  <p className="font-heading font-bold text-foreground mb-1">3 months to less than 1 year</p>
+                  <p className="font-paragraph text-foreground/80 text-sm">1 week (ESA s.57(a))</p>
                 </div>
                 <div className="border-l-4 border-primary pl-4">
-                  <p className="font-heading font-bold text-foreground mb-2">2 years or more:</p>
-                  <p className="font-paragraph text-foreground/80">2 weeks written notice required</p>
+                  <p className="font-heading font-bold text-foreground mb-1">1 to less than 3 years</p>
+                  <p className="font-paragraph text-foreground/80 text-sm">2 weeks</p>
                 </div>
                 <div className="border-l-4 border-primary pl-4">
-                  <p className="font-heading font-bold text-foreground mb-2">Severance Pay (if applicable):</p>
-                  <p className="font-paragraph text-foreground/80">Based on length of service and employer payroll</p>
+                  <p className="font-heading font-bold text-foreground mb-1">3 to less than 8 years</p>
+                  <p className="font-paragraph text-foreground/80 text-sm">3 weeks at year 3, then +1 week per additional year (4 weeks at 4 yrs, 5 at 5, 6 at 6, 7 at 7)</p>
+                </div>
+                <div className="border-l-4 border-primary pl-4">
+                  <p className="font-heading font-bold text-foreground mb-1">8 years or more</p>
+                  <p className="font-paragraph text-foreground/80 text-sm">8 weeks (ESA s.57(h)) - statutory maximum</p>
+                </div>
+                <div className="border-l-4 border-amber-500 pl-4 bg-amber-50/50 py-2">
+                  <p className="font-heading font-bold text-foreground mb-1">Common-law notice (Bardal factors)</p>
+                  <p className="font-paragraph text-foreground/80 text-sm">For non-union employees, ESA notice is the FLOOR. Common-law reasonable notice (Bardal v. Globe &amp; Mail) considers age, length of service, character of employment, and availability of similar employment, and is often substantially longer than ESA minimums.</p>
                 </div>
               </div>
             </div>
@@ -399,10 +407,10 @@ export default function EmploymentIssuesPage() {
                 What is severance pay and when am I entitled to it?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
-                Severance pay is additional compensation paid when employment ends. Under the Employment Standards Act, severance is required if the employer has a payroll of $2.5 million or more and the employee has worked for 12 months or more.
+                Statutory severance pay under ESA s.64 applies when (a) the employee has 5 years of employment OR more, AND (b) the employer has a payroll of $2.5 million or more, OR has carried out a mass termination of 50 or more employees within a 6-month period.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed">
-                The amount is calculated based on length of service (2 days per year of employment). However, common law may entitle you to additional severance beyond statutory minimums, depending on your circumstances.
+                Statutory severance is calculated as ONE WEEK of regular wages per completed year of service (with prorated months), capped at 26 weeks (ESA s.65). Statutory severance is in addition to ESA termination notice. Common-law reasonable notice (per Bardal factors) often exceeds the statutory floor and is calculated separately. Employees must mitigate their damages by reasonably searching for new employment.
               </p>
             </div>
 
@@ -520,7 +528,7 @@ export default function EmploymentIssuesPage() {
                 Are there time limits for pursuing employment claims?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
-                Yes, time limits are critical. Generally, you have <strong>2 years from the date of termination</strong> to commence a wrongful dismissal action. Some claims may have different time limits.
+                Yes, and they vary by claim type. Wrongful-dismissal civil action: 2 years from termination (Limitations Act, 2002 s.4). HRTO application: 1 year from the latest incident (Human Rights Code s.34). ESA Ministry of Labour complaint: generally 2 years, with restrictions on combining ESA and civil action for the same amount. EI appeals: short windows (often 30 days from each decision).
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed">
                 If you miss the deadline, you lose your right to sue. Contact us promptly to ensure your rights are protected and your claim is filed within the required timeframe.
@@ -536,7 +544,7 @@ export default function EmploymentIssuesPage() {
                 Dismissal based on protected grounds (race, gender, disability, age, etc.) is illegal under human rights legislation. You may have claims for both wrongful dismissal and human rights violations.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed">
-                We can help you assess whether discrimination or harassment occurred, document the evidence, and pursue claims through Small Claims Court or refer you to a lawyer for human rights tribunal proceedings.
+                We can help you assess whether discrimination or harassment occurred, document the evidence, and represent you at the Human Rights Tribunal of Ontario (paralegals are authorized to appear at the HRTO under LSO By-Law 4). Note the 1-year limitation period for HRTO applications under Human Rights Code s.34. For Superior Court wrongful dismissal claims combined with human rights aspects, we refer to employment counsel.
               </p>
             </div>
 

@@ -16,6 +16,7 @@ import { Progress } from '@/components/ui/progress';
 import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2, PenTool, Link2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generator';
+import { uploadToWixMedia, approxByteLength } from '@/lib/wix-media-upload';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 import UploadLinkGenerator from '@/components/UploadLinkGenerator';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
@@ -873,7 +874,38 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;
       const pdfDataUrl = await generatePDF(documentContent, docName);
 
-      const newDoc = {
+      // The base64-encoded PDF is typically 200-500KB, far above the
+      // 177KB Wix Data field cap. Upload to Wix Media first and store
+      // the resulting CDN URL. Falls back to inline base64 only when
+      // the SDK is not available (dev sandbox).
+      let documentUrl: string = pdfDataUrl;
+      let documentMediaId: string | undefined;
+      const safeFileName = `${docName.replace(/[^A-Za-z0-9._-]+/g, '_')}.pdf`;
+      const uploaded = await uploadToWixMedia(pdfDataUrl, safeFileName, 'application/pdf');
+      if (uploaded?.url) {
+        documentUrl = uploaded.url;
+        documentMediaId = uploaded.mediaId;
+      }
+
+      // documentContent (HTML body) is normally well under the field
+      // limit, but a few legacy retainers with embedded base64 images
+      // can blow past it. If so, upload the HTML to Wix Media and
+      // leave the field empty so the row fits.
+      let storedDocumentContent: string = documentContent;
+      let documentContentUrl: string | undefined;
+      if (approxByteLength(documentContent) > 150_000) {
+        const htmlUpload = await uploadToWixMedia(
+          new Blob([documentContent], { type: 'text/html' }),
+          safeFileName.replace(/\.pdf$/, '.html'),
+          'text/html'
+        );
+        if (htmlUpload?.url) {
+          storedDocumentContent = '';
+          documentContentUrl = htmlUpload.url;
+        }
+      }
+
+      const newDoc: any = {
         _id: crypto.randomUUID(),
         documentName: docName,
         templateId: selectedTemplateId,
@@ -883,16 +915,20 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         generationDate: new Date().toISOString(),
         status: 'draft',
         requiresSignature: requiresSignature,
-        documentUrl: pdfDataUrl,
-        documentContent: documentContent,
+        documentUrl,
+        documentMediaId,
+        documentContent: storedDocumentContent,
+        documentContentUrl,
         // Persist which paralegal signed (or was selected) so re-opens know
         paralegalId: signParalegal?.id || selectedParalegalId,
         paralegalName: signParalegal?.displayName || '',
         autoSigned: !!(autoSignAsParalegal && signParalegal),
-        _createdDate: new Date()
+        _createdDate: new Date(),
       };
 
-      setGeneratedDocs([...generatedDocs, newDoc]);
+      // Local state gets the in-memory copy with full HTML so the user
+      // can View/Edit immediately without a Wix Media round-trip.
+      setGeneratedDocs([...generatedDocs, { ...newDoc, documentContent }]);
 
       await BaseCrudService.create('generateddocuments', newDoc);
 
@@ -1152,7 +1188,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
     if (!documentToSign) return;
 
     try {
-      // Embed signature into PDF (pass original HTML body too — the
+      // Embed signature into PDF (pass original HTML body too - the
       // documentUrl is a real PDF after the htmlToPDF rewrite, so we
       // re-render from the stored HTML with the signature appended).
       const signedPdfDataUrl = await embedSignatureInPDF(
@@ -1162,37 +1198,55 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         (documentToSign as any).documentContent || undefined,
       );
 
+      // Upload the SIGNED PDF to Wix Media too. Same reason as the
+      // unsigned PDF: the base64 is far above the 177KB CMS field cap.
+      let signedDocumentUrl: string = signedPdfDataUrl;
+      const signedFileName = `${(documentToSign.documentName || 'document').replace(
+        /[^A-Za-z0-9._-]+/g,
+        '_'
+      )}_signed.pdf`;
+      const signedUpload = await uploadToWixMedia(
+        signedPdfDataUrl,
+        signedFileName,
+        'application/pdf'
+      );
+      if (signedUpload?.url) {
+        signedDocumentUrl = signedUpload.url;
+      }
+
       // Update generated document with signed version
-      const updatedDocs = generatedDocs.map(d => 
-        d._id === documentToSign._id 
-          ? { 
-              ...d, 
-              status: 'signed', 
+      const updatedDocs = generatedDocs.map(d =>
+        d._id === documentToSign._id
+          ? {
+              ...d,
+              status: 'signed',
               signedDate: signatureData.timestamp.toISOString(),
-              signedDocumentUrl: signedPdfDataUrl
+              signedDocumentUrl,
             }
           : d
       );
       setGeneratedDocs(updatedDocs);
-      
+
       await BaseCrudService.update('generateddocuments', {
         _id: documentToSign._id,
         status: 'signed',
         signedDate: signatureData.timestamp.toISOString(),
-        signedDocumentUrl: signedPdfDataUrl
+        signedDocumentUrl,
       });
 
       // Update the client's document with the signed version
-      const { items: clientDocs } = await BaseCrudService.getAll('clientdocuments');
-      const clientDoc = clientDocs.find(cd => 
-        cd.documentName === documentToSign.documentName && 
+      const { items: clientDocs } = await BaseCrudService.getAll('clientdocuments', undefined, {
+        limit: 1000,
+      });
+      const clientDoc = clientDocs.find(cd =>
+        cd.documentName === documentToSign.documentName &&
         cd.clientEmail === documentToSign.clientEmail
       );
 
       if (clientDoc) {
         await BaseCrudService.update('clientdocuments', {
           _id: clientDoc._id,
-          fileUrl: signedPdfDataUrl,
+          fileUrl: signedDocumentUrl,
           notes: `${clientDoc.notes || ''}\n\nElectronically signed on ${signatureData.signedDate} at ${signatureData.signedTime}. IP Address: ${signatureData.ipAddress}`
         });
       }

@@ -153,7 +153,7 @@ export default function NotaryPublicPage() {
                     'Apostille / Authentication & Legalization',
                     'Certified true copies of passports, driver’s licences, diplomas',
                     'Powers of Attorney for use abroad',
-                    'Real estate closings (notarization of conveyancing documents)',
+                    'Real estate documents going outside Ontario (foreign mortgage, foreign sale, etc.) - domestic Ontario closings are handled by lawyers but do not normally require notarization',
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <XCircle className="w-4 h-4 text-foreground/60 flex-shrink-0 mt-1" />
@@ -197,7 +197,7 @@ export default function NotaryPublicPage() {
               />
               <FAQItem
                 q="Where can I find a Notary Public in Ontario?"
-                a="The Law Society of Ontario maintains a public directory of lawyers and paralegals at lsrs.lso.ca. Filter by your area and look for a lawyer offering notary services. Many community legal clinics and Service Ontario locations also have Notaries available, sometimes at lower cost."
+                a="The Law Society of Ontario maintains a public directory of lawyers and paralegals at lsrs.lso.ca. Filter by your area and look for a lawyer offering notary services. Some community legal clinics also have lawyers on staff who can notarize. ServiceOntario does NOT provide notary services - it handles licensing, registration, and government IDs."
               />
             </div>
           </div>

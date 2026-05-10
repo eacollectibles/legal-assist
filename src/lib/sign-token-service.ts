@@ -81,6 +81,28 @@ export interface ValidateSignTokenResult {
 const COLLECTION = 'signtokens';
 
 /**
+ * Wrap a Wix Data error with a clearer, action-oriented message when
+ * the underlying problem is a missing CMS collection. Users see this
+ * verbatim, so it should tell them exactly what to do.
+ */
+function rethrowWithSchema(err: any): never {
+  const msg = err?.message || String(err);
+  if (msg.includes('WDE0025') || /does not exist/i.test(msg)) {
+    throw new Error(
+      'The "signtokens" CMS collection does not exist yet. ' +
+        'Create it in Wix Studio CMS with these Text fields: token, ' +
+        'documentId, documentName, intendedRecipientName, ' +
+        'intendedRecipientEmail, clientId, clientFileId, ' +
+        'createdByParalegalId, createdByParalegalName, expiryDate, ' +
+        'isActive (Boolean), signedDate, signedByName, signedByEmail, ' +
+        'signedDocumentUrl, resolvedClientId, createdDate, ' +
+        'lastUsedDate, revokedDate, revokedBy, notes. Then try again.'
+    );
+  }
+  throw err;
+}
+
+/**
  * Generate a cryptographically secure token (64 hex chars).
  */
 export function generateSecureSignToken(): string {
@@ -91,19 +113,48 @@ export function generateSecureSignToken(): string {
 
 /**
  * Create a new sign-link token.
+ *
+ * The signtokens CMS collection is locked Admin-only for security
+ * (otherwise any logged-in client could mint tokens for arbitrary
+ * documents). The browser cannot write to it directly - the Wix Data
+ * SDK throws WDE0027 from a member session.
+ *
+ * Instead, we POST to /api/signtokens/create which runs server-side
+ * with elevated context, validates the caller's paralegal id against
+ * the firm directory, and writes the row.
  */
 export async function createSignToken(
   params: CreateSignTokenParams
 ): Promise<SignTokens> {
-  const token = generateSecureSignToken();
-  const now = new Date();
-  const expiryDate = new Date(
-    now.getTime() + (params.expiryHours || 168) * 60 * 60 * 1000
-  );
+  let resp: Response;
+  try {
+    resp = await fetch('/api/signtokens/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+  } catch (err: any) {
+    throw new Error(
+      `Could not reach the sign-token endpoint: ${err?.message || String(err)}`
+    );
+  }
 
-  const row: SignTokens = {
-    _id: crypto.randomUUID(),
-    token,
+  let data: any = null;
+  try {
+    data = await resp.json();
+  } catch {
+    data = null;
+  }
+  if (!data?.success) {
+    throw new Error(
+      data?.error || `Sign-token creation failed (HTTP ${resp.status}).`
+    );
+  }
+
+  const now = new Date();
+  return {
+    _id: data._id,
+    token: data.token,
     documentId: params.documentId,
     documentName: params.documentName,
     intendedRecipientName: params.intendedRecipientName,
@@ -112,48 +163,62 @@ export async function createSignToken(
     clientFileId: params.clientFileId,
     createdByParalegalId: params.createdByParalegalId,
     createdByParalegalName: params.createdByParalegalName,
-    expiryDate: expiryDate.toISOString(),
+    expiryDate: data.expiryDate,
     isActive: true,
     createdDate: now.toISOString(),
     notes: params.notes,
   };
-
-  await BaseCrudService.create(COLLECTION, row);
-  return row;
 }
 
 /**
  * Validate a token and return the row if it's still good.
+ *
+ * Anonymous-call path: PublicSignPage runs in an unauthenticated
+ * browser context, and the signtokens collection is Admin-only. So
+ * validation goes through /api/signtokens/validate which runs
+ * server-side with elevated context. Returns a sanitized payload
+ * that contains only what the public sign page needs to render.
  */
 export async function validateSignToken(
   token: string
 ): Promise<ValidateSignTokenResult> {
   if (!token) return { valid: false, error: 'Missing token' };
-
-  // Pull all tokens; limit:1000 in case BaseCrudService has paginated.
-  const { items } = await BaseCrudService.getAll<SignTokens>(
-    COLLECTION,
-    undefined,
-    { limit: 1000 } as any
-  );
-  const row = items.find((t) => t.token === token);
-  if (!row) return { valid: false, error: 'Invalid signing link.' };
-  if (!row.isActive) return { valid: false, error: 'This signing link has been deactivated.' };
-  if (row.revokedDate) return { valid: false, error: 'This signing link has been revoked.' };
-  if (row.signedDate) return { valid: false, error: 'This document has already been signed.' };
-
-  const expiryStr = row.expiryDate;
-  if (expiryStr) {
-    const expiry = new Date(expiryStr as any);
-    if (!isNaN(expiry.getTime()) && new Date() > expiry) {
-      return { valid: false, error: 'This signing link has expired.' };
-    }
+  let resp: Response;
+  try {
+    resp = await fetch('/api/signtokens/validate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    });
+  } catch (err: any) {
+    return {
+      valid: false,
+      error: 'Could not reach the signing-link validator. Please try again.',
+    };
   }
-  return { valid: true, token: row };
+  let data: any = null;
+  try {
+    data = await resp.json();
+  } catch {
+    data = null;
+  }
+  if (!data) {
+    return { valid: false, error: 'Invalid response from validator.' };
+  }
+  if (data.valid && data.token) {
+    return { valid: true, token: data.token as SignTokens };
+  }
+  return { valid: false, error: data.error || 'Signing link is not valid.' };
 }
 
 /**
  * Mark a token as used after successful signing.
+ *
+ * Anonymous-call path: PublicSignPage submits the signature without
+ * a logged-in session. The collection is Admin-only, so the update
+ * goes through /api/signtokens/mark-signed which re-validates the
+ * row (defence against double-submit) and writes the signed-state
+ * fields server-side.
  */
 export async function markSignTokenSigned(
   tokenId: string,
@@ -164,13 +229,29 @@ export async function markSignTokenSigned(
     resolvedClientId?: string;
   }
 ): Promise<void> {
-  await BaseCrudService.update<SignTokens>(COLLECTION, {
-    _id: tokenId,
-    signedDate: new Date().toISOString(),
-    isActive: false,
-    lastUsedDate: new Date().toISOString(),
-    ...patch,
-  });
+  let resp: Response;
+  try {
+    resp = await fetch('/api/signtokens/mark-signed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tokenId, ...patch }),
+    });
+  } catch (err: any) {
+    throw new Error(
+      'Could not reach the sign-token endpoint. Please try again.'
+    );
+  }
+  let data: any = null;
+  try {
+    data = await resp.json();
+  } catch {
+    data = null;
+  }
+  if (!data?.success) {
+    throw new Error(
+      data?.error || `Could not record signature (HTTP ${resp.status}).`
+    );
+  }
 }
 
 /**

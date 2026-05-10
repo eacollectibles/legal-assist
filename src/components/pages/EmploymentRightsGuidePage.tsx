@@ -35,7 +35,7 @@ export default function EmploymentRightsGuidePage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Your Basic Employment Rights</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
-              { icon: DollarSign, title: 'Minimum Wage', desc: 'Currently $16.55/hour (2024). Your employer must pay at least this amount.' },
+              { icon: DollarSign, title: 'Minimum Wage', desc: 'Currently $17.20/hour (general rate, effective Oct 1, 2024) under the Employment Standards Act, 2000. Specific rates apply to students under 18, liquor servers, etc. Check ontario.ca for the current rate.' },
               { icon: Clock, title: 'Overtime Pay', desc: '1.5x your regular rate after 44 hours per week. Cannot be averaged without agreement.' },
               { icon: Calendar, title: 'Vacation', desc: '2 weeks (4%) after 1 year, 3 weeks (6%) after 5 years. Must be paid out if not taken.' },
               { icon: Shield, title: 'Public Holidays', desc: '9 public holidays with premium pay or substitute day off.' },
@@ -59,7 +59,7 @@ export default function EmploymentRightsGuidePage() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-xl shadow-sm p-8">
               <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                When your employer ends your job without cause, you're entitled to notice (or pay in lieu):
+                Under the Employment Standards Act, 2000 s.57-58, when your employer ends your job without cause you're entitled to ESA termination notice (or pay in lieu). Common-law reasonable notice can also apply under the Bardal v. Globe & Mail factors.
               </p>
               
               <h3 className="font-heading font-bold text-foreground mb-4">ESA Minimum Notice</h3>
@@ -84,7 +84,7 @@ export default function EmploymentRightsGuidePage() {
               <div className="bg-green-50 p-4 rounded-lg mb-6">
                 <h4 className="font-heading font-bold text-green-800 mb-2">Common Law Notice (Usually More)</h4>
                 <p className="font-paragraph text-green-700 text-sm">
-                  Beyond ESA minimums, courts often award 1 month per year of service, up to 24 months. Factors include age, position, availability of similar jobs, and whether you were recruited.
+                  Beyond ESA minimums, courts apply the Bardal factors: age, length of service, character of employment (position), and availability of similar employment. "1 month per year of service" is a rough heuristic only; the upper end is generally around 24 months but courts award based on the four factors, not a formula. Senior or specialized employees often see notice well beyond the heuristic; long-service older employees with limited re-employment prospects can receive longer awards.
                 </p>
               </div>
 
@@ -157,9 +157,9 @@ export default function EmploymentRightsGuidePage() {
               <ul className="space-y-2">
                 {[
                   'File ESA claim with Ministry of Labour (free)',
-                  'File human rights complaint at HRTO',
+                  'File HRTO application within 1 year of the latest incident (HRC s.34)',
                   'Negotiate directly with employer',
-                  'Sue in Small Claims (up to $35K)',
+                  'Sue in Small Claims Court up to $50,000 (limit raised from $35,000 effective Jan 1, 2025)',
                   'Sue in Superior Court (larger amounts)',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-2 font-paragraph text-foreground/70 text-sm">

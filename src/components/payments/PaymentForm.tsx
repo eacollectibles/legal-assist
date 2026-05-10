@@ -34,6 +34,14 @@ export interface PaymentSuccess {
   receiptNumber?: string;
   amountCents: number;
   currency: string;
+  /**
+   * Square charge cleared, but one or both audit-trail writes failed.
+   * Usually means the `payments` or `financialrecords` Wix CMS
+   * collection is missing or has a schema mismatch. Surfaced as a
+   * yellow warning on the success card so the issue is visible
+   * instead of going silent.
+   */
+  ledgerWarnings?: { payments?: string | null; financialrecords?: string | null };
 }
 
 interface PaymentFormProps {
@@ -196,6 +204,7 @@ export default function PaymentForm({
         receiptNumber: data.receiptNumber,
         amountCents: data.amountCents,
         currency: data.currency,
+        ledgerWarnings: data.ledgerWarnings,
       };
       setSuccess(result);
       // Burn the idempotency key on success so the form is ready for a
@@ -240,6 +249,24 @@ export default function PaymentForm({
           >
             View Square receipt &rarr;
           </a>
+        )}
+
+        {(success.ledgerWarnings?.payments || success.ledgerWarnings?.financialrecords) && (
+          <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+            <p className="font-semibold mb-1">Audit row was not saved.</p>
+            <p className="mb-2">
+              The Square charge cleared, but writing to the audit trail
+              failed. Usually this means a CMS collection is missing or
+              has a schema mismatch. Reconcile this charge manually from
+              the Square dashboard.
+            </p>
+            {success.ledgerWarnings?.payments && (
+              <p className="text-xs"><span className="font-semibold">payments:</span> {success.ledgerWarnings.payments}</p>
+            )}
+            {success.ledgerWarnings?.financialrecords && (
+              <p className="text-xs"><span className="font-semibold">financialrecords:</span> {success.ledgerWarnings.financialrecords}</p>
+            )}
+          </div>
         )}
       </div>
     );

@@ -77,11 +77,11 @@ export default function ProvincialOffencesPage() {
               <ul className="space-y-2">
                 {[
                   'No criminal record',
-                  'Lower burden of proof (balance of probabilities for some)',
-                  'Generally lower penalties',
-                  'Heard in Provincial Offences Court',
-                  'Paralegals can represent you',
-                  'Still serious consequences (fines, suspensions)',
+                  'Crown must still prove the offence beyond a reasonable doubt (POA s.46)',
+                  'Generally lower penalties (fines, suspensions, no jail for most)',
+                  'Heard in Provincial Offences Court (Ontario Court of Justice)',
+                  'Licensed paralegals have a right of appearance under LSO By-Law 4',
+                  'Strict-liability offences allow a "due diligence" defence on a balance of probabilities',
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2 font-paragraph text-foreground/70 text-sm">
                     <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" /> {item}
@@ -162,6 +162,59 @@ export default function ProvincialOffencesPage() {
         </div>
       </section>
 
+      {/* Specific Offences We Defend */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-[100rem] mx-auto px-4 md:px-8">
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Specific Offences We Defend</h2>
+          <p className="font-paragraph text-lg text-foreground/70 mb-12 text-center max-w-3xl mx-auto">
+            Standalone defence pages for the most common Highway Traffic Act and other provincial-offence charges. Click through for fines, demerit points, defences, and FAQs.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+            {[
+              { url: '/services/speeding-ticket-defence', title: 'Speeding', desc: 'HTA s.128 - radar/laser, calibration challenges' },
+              { url: '/services/careless-driving-defence', title: 'Careless Driving', desc: 'HTA s.130 - 6 demerit points' },
+              { url: '/services/stunt-driving-defence', title: 'Stunt Driving', desc: 'HTA s.172 - 30-day suspension, vehicle impound' },
+              { url: '/services/distracted-driving', title: 'Distracted Driving', desc: 'HTA s.78.1 - phone, vape, GPS' },
+              { url: '/services/red-light-tickets', title: 'Red Light', desc: 'Camera vs officer-issued - different consequences' },
+              { url: '/services/stop-sign-ticket', title: 'Stop Sign', desc: 'HTA s.136 - 3 demerit points' },
+              { url: '/services/fail-to-stop-school-bus', title: 'Fail to Stop for School Bus', desc: 'HTA s.175(11) - 6 points, $400-$2,000' },
+              { url: '/services/disobey-sign', title: 'Disobey Sign', desc: 'HTA s.182(2) - no-turn, one-way, lane-designation' },
+              { url: '/services/fail-to-yield', title: 'Fail to Yield', desc: 'HTA s.135-141 - 3 demerit points' },
+              { url: '/services/unsafe-lane-change', title: 'Unsafe Lane Change', desc: 'HTA s.142 - 2 demerit points' },
+              { url: '/services/following-too-closely', title: 'Following Too Closely', desc: 'HTA s.158 - 4 demerit points' },
+              { url: '/services/seatbelt-violations', title: 'Seatbelt Violation', desc: 'HTA s.106 - 2 demerit points' },
+              { url: '/services/no-insurance-defence', title: 'No Insurance', desc: 'CAIA s.2(1)(c) - $5,000+ first offence' },
+              { url: '/services/driving-while-suspended', title: 'Drive While Suspended', desc: 'HTA s.53 - significant consequences' },
+              { url: '/services/fail-to-surrender', title: 'Fail to Surrender', desc: 'Licence / insurance / permit - no points' },
+              { url: '/services/g1-g2-violations', title: 'G1 / G2 Violations', desc: 'Novice driver restrictions' },
+              { url: '/services/school-zone-speeding', title: 'School Zone / Community Safety Zone', desc: 'Doubled fines' },
+              { url: '/services/hov-lane-violations', title: 'HOV Lane', desc: 'HTA s.154.1 - 3 demerit points' },
+              { url: '/services/commercial-vehicle-violations', title: 'Commercial Vehicle', desc: 'CVOR, log book, weight, equipment' },
+              { url: '/services/trespass-to-property', title: 'Trespass to Property', desc: 'TPA - banned from store, no permission' },
+              { url: '/services/liquor-licence-offences', title: 'Liquor Licence Offences', desc: 'LLCA - open liquor, public consumption' },
+              { url: '/services/cannabis-control-offences', title: 'Cannabis Control', desc: 'CCA - vehicle, public consumption, supply' },
+              { url: '/services/smoke-free-ontario-offences', title: 'Smoke-Free Ontario', desc: 'SFOA - prohibited places, supply to minor' },
+              { url: '/services/off-road-vehicle-offences', title: 'ATV / Snowmobile', desc: 'ORVA / MSVA - permit, helmet, insurance' },
+              { url: '/services/parking-tickets', title: 'Parking Tickets', desc: 'Municipal bylaw - handicapped, accessible' },
+              { url: '/services/bylaw-infractions', title: 'Municipal Bylaw', desc: 'Noise, property standards, animals' },
+              { url: '/services/dangerous-dog-hearings', title: 'Dangerous Dog Hearings', desc: 'DOLA / municipal' },
+            ].map((item, index) => (
+              <Link
+                key={index}
+                to={item.url}
+                className="bg-white border border-border rounded-lg p-4 hover:border-primary hover:shadow-sm transition-all group"
+              >
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="font-heading font-semibold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
+                  <ArrowRight className="w-4 h-4 text-foreground/40 group-hover:text-primary transition-colors flex-shrink-0 mt-1" />
+                </div>
+                <p className="font-paragraph text-sm text-foreground/60">{item.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-16 md:py-20 bg-primary text-primary-foreground">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
@@ -178,14 +231,7 @@ export default function ProvincialOffencesPage() {
               Call 226-272-5153
             </a>
           </div>
-        </div>
-      </section>
-
-      {/* LSO Badge */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
-          <p className="font-paragraph text-sm text-foreground/60">
-            <Shield className="w-4 h-4 inline mr-1" />
+          <p className="mt-6 font-paragraph text-sm opacity-75">
             Licensed by the Law Society of Ontario | Provincial Offences Act representation
           </p>
         </div>

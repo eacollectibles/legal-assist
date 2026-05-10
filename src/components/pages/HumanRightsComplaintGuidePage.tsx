@@ -36,7 +36,7 @@ export default function HumanRightsComplaintGuidePage() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-xl shadow-sm p-8">
               <p className="font-paragraph text-foreground/80 mb-6">
-                The Ontario Human Rights Code protects against discrimination based on:
+                The Ontario Human Rights Code (R.S.O. 1990, c. H.19) protects against discrimination on the following grounds (the specific list applies differently across employment, housing, services, and contracts):
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
@@ -55,7 +55,8 @@ export default function HumanRightsComplaintGuidePage() {
                   'Marital status',
                   'Family status',
                   'Disability',
-                  'Receipt of public assistance (housing)',
+                  'Record of offences (employment only)',
+                  'Receipt of public assistance (housing only)',
                 ].map((item, index) => (
                   <div key={index} className="bg-primary/5 p-2 rounded-lg text-center">
                     <span className="font-paragraph text-foreground text-sm">{item}</span>
@@ -96,7 +97,7 @@ export default function HumanRightsComplaintGuidePage() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <p className="font-heading text-4xl font-bold text-red-600 mb-2">1 Year</p>
               <p className="font-paragraph text-foreground/80">
-                You must file your application within <strong>1 year</strong> of the last incident of discrimination. The Tribunal can extend this in exceptional circumstances, but don't count on it.
+                You must file your application within <strong>1 year</strong> of the latest incident of discrimination (Human Rights Code s.34(1)). The Tribunal can extend the deadline under s.34(2) only on showing the delay was incurred in good faith AND no substantial prejudice will result - the test is rarely met. File early.
               </p>
             </div>
           </div>
@@ -115,7 +116,7 @@ export default function HumanRightsComplaintGuidePage() {
               { step: 4, title: 'Response Filed', desc: 'Respondent has 35 days to file a Response denying or admitting your allegations.' },
               { step: 5, title: 'Mediation Offered', desc: 'HRTO offers free mediation to try to resolve the matter. Voluntary but often successful.' },
               { step: 6, title: 'Hearing', desc: 'If no settlement, a hearing is scheduled. Both sides present evidence and witnesses.' },
-              { step: 7, title: 'Decision', desc: 'Adjudicator issues a written decision, usually within a few months of hearing.' },
+              { step: 7, title: 'Decision', desc: 'Adjudicator issues a written decision under HRC s.45.2. Decisions are subject to reconsideration (HRC s.45.7) and judicial review (Judicial Review Procedure Act); they are not subject to a general right of appeal.' },
             ].map((item) => (
               <div key={item.step} className="flex gap-4">
                 <div className="flex-shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-heading font-bold">
@@ -137,7 +138,7 @@ export default function HumanRightsComplaintGuidePage() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">What You Can Get</h2>
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
-              { remedy: 'Monetary Compensation', desc: 'For lost wages, expenses, and injury to dignity (typically $5,000-$50,000 for dignity)' },
+              { remedy: 'Monetary Compensation', desc: 'For lost wages, out-of-pocket expenses, and injury to dignity, feelings, and self-respect under HRC s.45.2(1)(b). Recent awards typically range from $10,000 to $40,000 for dignity, with serious cases (egregious conduct, severe impact) reaching $75,000+.' },
               { remedy: 'Reinstatement', desc: 'Getting your job back if wrongfully terminated' },
               { remedy: 'Policy Changes', desc: 'Requiring the organization to change discriminatory policies' },
               { remedy: 'Training', desc: 'Ordering human rights training for the respondent' },

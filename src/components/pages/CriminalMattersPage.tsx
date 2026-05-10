@@ -10,8 +10,8 @@ export default function CriminalMattersPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Criminal Defence Paralegal | Summary Offences | London Ontario"
-        description="Licensed paralegal for summary conviction criminal matters in London, Ontario. Theft, assault, mischief & provincial offences defence. Protect your record."
+        title="Criminal Defence Paralegal | Summary Offences | Ontario"
+        description="Licensed paralegal for in-scope summary conviction matters in Ontario under LSO By-Law 4 and Criminal Code s.802.1. Honest scope assessment, referral to defence counsel where required."
         canonical="https://www.legalassist.london/services/criminal-matters"
       />
       <Header />
@@ -61,10 +61,10 @@ export default function CriminalMattersPage() {
               What Are Summary Conviction Offences?
             </h2>
             <p className="font-paragraph text-lg text-foreground/80 mb-6">
-              Summary conviction offences are less serious criminal charges that are tried in Provincial Court without a jury. These offences carry maximum sentences of up to 2 years less a day imprisonment and/or fines. They represent the majority of criminal charges and are handled more quickly than indictable offences.
+              Summary conviction offences are tried in the Ontario Court of Justice without a jury. Following 2019 Bill C-75 amendments, the default summary conviction maximum is 2 years less a day, though some offences carry their own specific caps. Paralegal scope under LSO By-Law 4 and Criminal Code s.802.1 has NOT automatically expanded to match - we can only represent on summary matters that fall within the scope authorized by the Law Society and the Ontario Attorney General's approved-program order. Each charge requires an individual scope check.
             </p>
             <p className="font-paragraph text-lg text-foreground/80 mb-6">
-              We concentrate our practice on representing individuals charged with summary conviction offences. We provide comprehensive defense strategies to protect your rights, minimize consequences, and achieve the best possible outcome in your case.
+              Where the charge fits our scope, we provide defence strategies to protect your rights and pursue the best available outcome. Where it doesn't, we refer you to defence counsel rather than take on a matter we are not authorized to finish.
             </p>
             <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-6 mt-8">
               <div className="flex gap-4">
@@ -72,7 +72,7 @@ export default function CriminalMattersPage() {
                 <div>
                   <h3 className="font-heading text-lg font-bold text-destructive mb-2">Important Scope Limitation</h3>
                   <p className="font-paragraph text-foreground/80">
-                    Paralegals can only represent clients in Provincial Court for summary conviction offences. We cannot represent you for indictable offences, hybrid offences (when Crown proceeds by indictment), or matters in Superior Court. For those matters, you will need to retain a lawyer.
+                    Licensed paralegals in Ontario act on summary conviction matters in the Ontario Court of Justice that fall within LSO By-Law 4 AND within Criminal Code s.802.1 (the agent-representation rule). Post-2019 Bill C-75 the default summary maximum rose to 2 years less a day, but paralegal scope did NOT automatically expand. We can only act where the offence is within our scope; for indictable offences, hybrid offences elected by indictment, Superior Court matters, jury trials, or anything outside our scope, you will need to retain a lawyer. We will tell you honestly at first meeting whether the charge fits.
                   </p>
                 </div>
               </div>
@@ -82,16 +82,16 @@ export default function CriminalMattersPage() {
           {/* Key Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Provincial Court</div>
-              <p className="font-paragraph text-foreground/80">Jurisdiction for Summary Offences</p>
+              <div className="text-4xl font-bold text-primary mb-2">OCJ</div>
+              <p className="font-paragraph text-foreground/80">Ontario Court of Justice — summary trial venue</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">2 Years</div>
-              <p className="font-paragraph text-foreground/80">Maximum Sentence (Less a Day)</p>
+              <div className="text-4xl font-bold text-primary mb-2">2 Years - 1 Day</div>
+              <p className="font-paragraph text-foreground/80">Default summary cap (Bill C-75); paralegal scope is narrower</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Faster</div>
-              <p className="font-paragraph text-foreground/80">Resolution vs. Indictable Offences</p>
+              <div className="text-4xl font-bold text-primary mb-2">By-Law 4</div>
+              <p className="font-paragraph text-foreground/80">+ Criminal Code s.802.1 govern paralegal scope</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-4xl font-bold text-primary mb-2">Licensed</div>
@@ -121,20 +121,28 @@ export default function CriminalMattersPage() {
               <AlertCircle className="w-6 h-6 text-amber-700 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-paragraph font-semibold text-amber-900 mb-2">
-                  Important: Crown election determines whether we can act
+                  Important: Crown election AND s.802.1 / AG-approved-program both gate scope
                 </p>
                 <p className="font-paragraph text-sm md:text-base text-amber-900/90 leading-relaxed mb-2">
-                  Many of the categories below (assault, theft, mischief, fraud-under-$5,000,
+                  Many categories below (assault, theft, mischief, fraud-under-$5,000,
                   impaired/dangerous operation, failure to remain) are <strong>hybrid offences</strong>.
-                  Until the Crown formally elects to proceed summarily and the matter remains
-                  in the Ontario Court of Justice, a paralegal cannot represent you on it.
+                  Until the Crown formally elects to proceed summarily and the matter stays in
+                  the Ontario Court of Justice, a paralegal cannot represent you.
+                </p>
+                <p className="font-paragraph text-sm md:text-base text-amber-900/90 leading-relaxed mb-2">
+                  Even where the Crown elects summary, <strong>Criminal Code s.802.1</strong> bars an
+                  agent (paralegal) from acting on a summary offence punishable by more than
+                  6 months UNLESS the agent is authorized under a province-AG-approved program.
+                  Ontario has an approved program but it covers a defined list of offences -
+                  not every summary offence. We will check your specific charge against By-Law 4
+                  and the AG order before agreeing to act.
                 </p>
                 <p className="font-paragraph text-sm md:text-base text-amber-900/90 leading-relaxed">
-                  If the Crown elects to proceed by indictment &mdash; or you face a charge that
-                  is purely indictable (murder, robbery, sexual assault, aggravated assault,
-                  break and enter of a dwelling, etc.) &mdash; you need a <strong>lawyer</strong>.
-                  We&rsquo;ll tell you that honestly at first meeting and refer you to defence
-                  counsel rather than take on a matter we can&rsquo;t finish.
+                  If the Crown proceeds by indictment - or you face a purely indictable charge
+                  (murder, robbery, sexual assault, aggravated assault, break and enter of a
+                  dwelling, etc.) - you need a <strong>lawyer</strong>. We will tell you that honestly
+                  at first meeting and refer you to defence counsel rather than take on a matter
+                  we are not authorized to finish.
                 </p>
               </div>
             </div>
@@ -163,10 +171,10 @@ export default function CriminalMattersPage() {
               {
                 title: 'Driving Offences (Criminal Code)',
                 items: [
-                  'Impaired operation (s.320.14) — hybrid; only if Crown elects summary',
-                  'Driving while disqualified (s.320.18) — hybrid; only if Crown elects summary',
-                  'Failure to stop at accident (s.320.16) — hybrid; only if Crown elects summary',
-                  'Dangerous operation (s.320.13) — hybrid; only if Crown elects summary',
+                  'Impaired operation (s.320.14) - hybrid; even on summary election, scope is narrow - usually requires counsel',
+                  'Driving while disqualified (s.320.18) - hybrid; scope check required',
+                  'Failure to stop at accident (s.320.16) - hybrid; usually requires counsel',
+                  'Dangerous operation (s.320.13) - hybrid; usually requires counsel',
                 ]
               },
               {
@@ -190,7 +198,7 @@ export default function CriminalMattersPage() {
               {
                 title: 'Other Common Offences',
                 items: [
-                  'Possession of cannabis over personal limit (Cannabis Act) — generally summary',
+                  'Cannabis Act offences (e.g., possession over 30g in public, distribution to a minor) - summary, scope-dependent',
                   'Failure to appear (s.145(4)) — hybrid; only if Crown elects summary',
                   'Resisting peace officer (s.129) — hybrid; only if Crown elects summary',
                   'Obstructing peace officer (s.129) — hybrid; only if Crown elects summary',
@@ -228,7 +236,7 @@ export default function CriminalMattersPage() {
               </h3>
               <div className="space-y-4">
                 {[
-                  'Summary conviction offences in Provincial Court',
+                  'In-scope summary conviction offences in the Ontario Court of Justice',
                   'Initial appearances and bail hearings',
                   'Guilty pleas and sentencing negotiations',
                   'Trial representation for summary offences',
@@ -252,13 +260,13 @@ export default function CriminalMattersPage() {
               </h3>
               <div className="space-y-4">
                 {[
-                  'Indictable offences (serious crimes)',
-                  'Hybrid offences when Crown proceeds by indictment',
+                  'Indictable offences (any)',
+                  'Hybrid offences elected by indictment, OR summary-elected hybrid offences not on the AG-approved program list',
                   'Matters in Superior Court or Court of Appeal',
                   'Youth criminal justice matters',
                   'Dangerous offender proceedings',
-                  'Criminal harassment or stalking (when indictable)',
-                  'Sexual assault charges',
+                  'Criminal harassment / stalking (s.264) - generally outside paralegal scope',
+                  'Sexual assault (any election) - lawyer required',
                   'Matters requiring specialized legal expertise'
                 ].map((item, idx) => (
                   <div key={idx} className="bg-destructive/10 rounded-lg p-4 border border-destructive/20">
@@ -397,15 +405,15 @@ export default function CriminalMattersPage() {
             {[
               {
                 q: 'What is the difference between summary and indictable offences?',
-                a: 'Summary offences are less serious and tried in Provincial Court with maximum sentences up to 2 years less a day. Indictable offences are more serious and can be tried in Superior Court with longer sentences. Paralegals can only represent you for summary offences.'
+                a: 'Summary conviction offences are tried in the Ontario Court of Justice with default maximums of 2 years less a day after 2019 Bill C-75 (some have specific lower or higher caps). Indictable offences are more serious and may be tried in the Superior Court of Justice. Paralegals can only act on summary offences within LSO By-Law 4 and Criminal Code s.802.1 - not all of them.'
               },
               {
                 q: 'Can I get legal aid for criminal charges?',
-                a: 'Yes, if you qualify based on income, you may be eligible for legal aid. We can discuss your eligibility and help you apply. Note that legal aid may cover lawyer services; contact us for details.'
+                a: 'Legal Aid Ontario primarily funds lawyers on criminal certificates, not paralegals. If you qualify financially you should apply through LAO directly (1-800-668-8258 or legalaid.on.ca). For the narrower set of summary matters where a paralegal can act, our fees are generally lower than counsel fees and we offer flat-fee options where appropriate.'
               },
               {
                 q: 'What should I do if I\'m arrested?',
-                a: 'Exercise your right to remain silent and request to speak with a paralegal or lawyer immediately. Do not answer police questions without legal representation. Contact us as soon as possible.'
+                a: 'Exercise your right to remain silent and request to speak with a LAWYER immediately - the Charter s.10(b) right to counsel on arrest is to legal counsel (a lawyer). Duty counsel is available 24/7 through Legal Aid Ontario at 1-800-265-0451. Once you have spoken with counsel and the charge stabilises, contact us if you would like a scope check on whether a paralegal can act on the file.'
               },
               {
                 q: 'How much does criminal defense representation cost?',
@@ -444,7 +452,7 @@ export default function CriminalMattersPage() {
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Paralegal Scope of Practice</h3>
                 <p className="font-paragraph text-foreground/80 mb-4">
-                  Our paralegals are licensed by the Law Society of Ontario and authorized to provide legal services within defined scope. We can represent you in Provincial Court for summary conviction offences only. For matters outside this scope, we will refer you to a lawyer.
+                  Our paralegals are licensed by the Law Society of Ontario under By-Law 4 and authorized to provide legal services within a defined scope. For criminal matters that scope is limited to summary conviction offences in the Ontario Court of Justice that ALSO fall within Criminal Code s.802.1 and (where applicable) the Ontario Attorney General's approved-program order. For anything outside this scope - including indictable offences, indictment-elected hybrid offences, jury trials, Superior Court matters, sexual assault, and most other serious charges - we refer you to defence counsel.
                 </p>
               </div>
               <div>

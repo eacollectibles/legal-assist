@@ -10,8 +10,8 @@ export default function DefamationSlanderPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Defamation & Slander Legal Services | London Ontario"
-        description="Defamation and slander legal assistance in London, Ontario. Protect your reputation from false statements. Libel claims, online defamation & reputation damage."
+        title="Defamation & Slander | Libel and Slander Act | Ontario"
+        description="Defamation and slander assistance in Ontario under the Libel and Slander Act. Small Claims Court representation up to $50,000; lawyer referrals for Superior Court and anti-SLAPP matters."
         canonical="https://www.legalassist.london/services/defamation-slander"
       />
       <Header />
@@ -57,18 +57,18 @@ export default function DefamationSlanderPage() {
               Understanding Defamation & Slander
             </h2>
             <p className="font-paragraph text-lg text-foreground/80 mb-6">
-              Defamation is a false statement of fact that damages someone's reputation. In Ontario, defamation can take two forms: slander (spoken false statements) and libel (written false statements). Both can have serious consequences for your personal and professional reputation.
+              Defamation in Ontario is a statement that would tend to lower a person's reputation in the eyes of a reasonable person. The two forms are slander (transient form, usually spoken) and libel (permanent form, usually written, recorded, or broadcast). Note that under the Libel and Slander Act s.2, broadcasts (radio, TV) are deemed libel even though they are spoken. The plaintiff does NOT have to prove the statement was false at the prima facie stage - falsity is presumed and truth (justification) is a defence the defendant must prove.
             </p>
             <p className="font-paragraph text-lg text-foreground/80">
-              Proving defamation requires demonstrating that a false statement was made, communicated to third parties, and caused measurable harm to your reputation. The process can be complex, but with proper legal guidance, you can hold those responsible accountable and seek compensation for the damage caused.
+              To establish prima facie defamation in Ontario the plaintiff must show: (1) the words would tend to lower the plaintiff's reputation in the eyes of a reasonable person; (2) the words refer to the plaintiff; (3) the words were published to at least one third party. Falsity and damage are presumed in libel and in slander per se categories. The defendant then bears the burden of raising defences (truth, fair comment, qualified or absolute privilege, responsible communication on matters of public interest). Anti-SLAPP motions under s.137.1 of the Courts of Justice Act can also dispose of claims at an early stage where the speech was on a matter of public interest.
             </p>
           </div>
 
           {/* Key Elements of Defamation */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-lg font-bold text-primary mb-2">False Statement</div>
-              <p className="font-paragraph text-foreground/80 text-sm">The statement must be factually false, not opinion or hyperbole</p>
+              <div className="text-lg font-bold text-primary mb-2">Defamatory in Tendency</div>
+              <p className="font-paragraph text-foreground/80 text-sm">The words must tend to lower the plaintiff\u2019s reputation in the eyes of a reasonable person (falsity is presumed; truth is a defence)</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
               <div className="text-lg font-bold text-primary mb-2">Published/Communicated</div>
@@ -79,8 +79,8 @@ export default function DefamationSlanderPage() {
               <p className="font-paragraph text-foreground/80 text-sm">The statement must reasonably identify you as the subject</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-lg font-bold text-primary mb-2">Causes Harm</div>
-              <p className="font-paragraph text-foreground/80 text-sm">The statement must damage your reputation or cause financial loss</p>
+              <div className="text-lg font-bold text-primary mb-2">Damage (Often Presumed)</div>
+              <p className="font-paragraph text-foreground/80 text-sm">In libel and slander per se, damage is presumed; otherwise the plaintiff must prove special damage</p>
             </div>
           </div>
         </div>
@@ -432,10 +432,10 @@ export default function DefamationSlanderPage() {
                 What is Defamation?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4">
-                Defamation is a false statement of fact that damages someone's reputation. In Ontario, defamation can take two forms: slander (spoken false statements) and libel (written false statements). The key element is that the statement must be false—opinions and truthful statements are not defamatory.
+                Defamation in Ontario is a statement that would tend to lower a person's reputation in the eyes of a reasonable person. Slander is transient (typically spoken) and libel is permanent (written, recorded, or broadcast - the Libel and Slander Act s.2 deems broadcasts to be libel). The plaintiff does NOT have to prove the words are false. Falsity is presumed; truth is a defence the defendant must prove (justification).
               </p>
               <p className="font-paragraph text-foreground/80">
-                For a statement to be defamatory, it must be published (communicated to at least one third party), refer to the plaintiff, and would lower the plaintiff's reputation in the eyes of a reasonable person.
+                The prima facie elements are: (1) words tend to lower the plaintiff's reputation; (2) words refer to the plaintiff; (3) publication to at least one third party. Damage is presumed in libel and in slander per se.
               </p>
             </div>
 
@@ -448,7 +448,7 @@ export default function DefamationSlanderPage() {
                 <strong>Libel</strong> refers to defamatory statements made in written or recorded form, including emails, letters, articles, online posts, reviews, and other published material. Because libel is recorded and capable of ongoing circulation, it may have a broader and more lasting impact on reputation.
               </p>
               <p className="font-paragraph text-foreground/80">
-                <strong>Slander</strong> refers to defamatory statements made verbally or in a transient form. Slander may require proof of resulting harm, whereas libel presumes harm to reputation.
+                <strong>Slander</strong> refers to defamatory statements made in a transient form. General slander requires proof of special damage UNLESS it falls within slander per se categories (criminal conduct, professional incompetence, contagious disease, unchastity). Libel presumes damage. Broadcasts (radio, TV, streaming) are deemed libel under Libel and Slander Act s.2 even though spoken.
               </p>
             </div>
 
@@ -463,11 +463,11 @@ export default function DefamationSlanderPage() {
               <ul className="space-y-3">
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">1.</span>
-                  <span className="font-paragraph text-foreground/80"><strong>False Statement:</strong> The statement must be factually false, not opinion or hyperbole</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Defamatory in Tendency:</strong> The words would tend to lower the plaintiff\u2019s reputation in the eyes of a reasonable person. Falsity is presumed - the defendant carries the burden of proving truth.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">2.</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Published/Communicated:</strong> The false statement must be shared with at least one third party</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Published/Communicated:</strong> The words were published to at least one third party</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">3.</span>
@@ -475,7 +475,7 @@ export default function DefamationSlanderPage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">4.</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Causes Harm:</strong> The statement must damage your reputation or cause financial loss</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Damage (Often Presumed):</strong> In libel and slander per se, damage is presumed; otherwise the plaintiff must plead and prove special damage</span>
                 </li>
               </ul>
             </div>
@@ -507,7 +507,11 @@ export default function DefamationSlanderPage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold leading-none mt-1">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Responsible Communication:</strong> Statements on matters of public interest made responsibly may be protected</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Responsible Communication on Matters of Public Interest:</strong> Established in Grant v. Torstar Corp., 2009 SCC 61. Protects journalism and other speech on matters of public interest where the publisher acted responsibly</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-bold leading-none mt-1">\u2022</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Anti-SLAPP (CJA s.137.1):</strong> Defendants can move for early dismissal where the proceeding arises from expression on a matter of public interest. Plaintiff must show grounds to believe their claim has substantial merit and that public interest in protecting the speech does not outweigh public interest in the harm</span>
                 </li>
               </ul>
             </div>
@@ -550,10 +554,10 @@ export default function DefamationSlanderPage() {
                 How Long Do I Have to Sue for Defamation?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4">
-                <strong>In Ontario, you have only 2 years from the date of publication to commence a defamation action.</strong> This is a critical deadline. If you miss this deadline, you lose your right to sue, regardless of the merits of your case.
+                There are TWO limitation regimes. Under the Limitations Act, 2002 s.4 you have 2 years from discovery of the publication to commence an action. BUT for libel in a newspaper or broadcast, the Libel and Slander Act adds tighter rules: under s.5(1) you must give written notice to the defendant within 6 weeks of becoming aware of the libel, and under s.6 the action must be commenced within 3 months after notice (or in some cases within 3 months of the libel coming to your knowledge). Missing any of these can defeat the claim.
               </p>
               <p className="font-paragraph text-foreground/80 mb-4">
-                For ongoing defamation (such as false reviews or social media posts that continue to be published), the limitation period may restart with each new publication.
+                For online defamation, Canadian courts generally apply the multiple-publication rule: each fresh publication can start a new limitation period. The interaction between online publication, ongoing accessibility, and the LSA notice rules is unsettled - we will assess the deadlines specific to your facts.
               </p>
               <p className="font-paragraph text-foreground/80 font-semibold text-primary">
                 Contact us immediately if you believe you have been defamed.
@@ -629,10 +633,10 @@ export default function DefamationSlanderPage() {
                 Do Public Figures Have Different Protections?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4">
-                Yes. Public figures and matters of public interest have different legal standards. If you are a public figure or the defamatory statement relates to a matter of public interest, you must prove that the defendant acted with "malice"—meaning they knew the statement was false or acted with reckless disregard for its truth.
+                Canadian defamation law does NOT use the U.S. "actual malice" standard from New York Times v. Sullivan. In Canada, where the speech is on a matter of public interest, the defendant may raise the responsible communication defence (Grant v. Torstar Corp., 2009 SCC 61). The defendant - not the plaintiff - must show the matter was of public interest and that the publication was responsible.
               </p>
               <p className="font-paragraph text-foreground/80 mb-4">
-                This higher standard makes it more difficult for public figures to succeed in defamation claims. We assess whether these heightened standards apply to your situation.
+                Note that anti-SLAPP motions under Courts of Justice Act s.137.1 are common where the alleged defamation arose from public-interest speech, and they can result in early dismissal. We assess whether the speech is in a public-interest context and whether anti-SLAPP risk applies.
               </p>
             </div>
 
@@ -673,7 +677,7 @@ export default function DefamationSlanderPage() {
                 What is the Burden of Proof in a Defamation Case?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4">
-                In a defamation case, you (the plaintiff) must prove your case on the "balance of probabilities"—meaning it is more likely than not that the defendant's statement was false and defamatory.
+                In a defamation case, the plaintiff must prove the prima facie elements (defamatory tendency, reference to plaintiff, publication) on a balance of probabilities. The plaintiff does NOT have to prove falsity - falsity is presumed. The defendant carries the burden of proving any defence raised, including truth (justification), fair comment, privilege, or responsible communication.
               </p>
               <p className="font-paragraph text-foreground/80 mb-4">
                 Once you establish the basic elements of defamation, damage to reputation is presumed. The defendant then has the burden of proving any available defenses (such as truth or privilege).
@@ -720,11 +724,11 @@ export default function DefamationSlanderPage() {
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Burden of Proof</h3>
-                <p>{"In Ontario, a defamation claim requires proof that a statement was published to a third party, referred to you, and was defamatory in nature. Once these elements are established, damage is presumed. Defendants may raise defences such as truth, fair comment, or privilege. We assist clients in gathering and organizing evidence to support their claim within the appropriate court jurisdiction."}</p>
+                <p>{"In Ontario, a defamation claim requires the plaintiff to prove (on a balance of probabilities) that a statement was published to at least one third party, referred to the plaintiff, and would tend to lower the plaintiff's reputation in the eyes of a reasonable person. Falsity is presumed in libel and slander per se. Defendants may raise truth (justification), fair comment, qualified or absolute privilege, or responsible communication on matters of public interest, AND may bring an early anti-SLAPP motion under CJA s.137.1 in public-interest cases."}</p>
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Defenses Available to Defendants</h3>
-                <p>{"Defendants may raise defences such as truth (justification), privilege (for example, statements made in court proceedings), fair comment on matters of public interest, or qualified privilege (such as employment references). Our Licensed Paralegals can review these potential defences and provide guidance on how they may affect a defamation claim within the Small Claims Court jurisdiction. Where a matter proceeds outside the paralegal scope of practice, we will refer you to a lawyer as appropriate."}</p>
+                <p>{"Defendants may raise: truth (justification); absolute privilege (e.g., statements in court or Parliament); qualified privilege (e.g., employment references made in good faith); fair comment on matters of public interest; responsible communication on matters of public interest (Grant v. Torstar Corp., 2009 SCC 61); innocent dissemination. In public-interest cases the defendant may also bring an anti-SLAPP motion under Courts of Justice Act s.137.1 for early dismissal. Anti-SLAPP and most non-Small-Claims defamation matters are outside paralegal scope - we will refer you to defamation counsel."}</p>
               </div>
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Damages You Can Recover</h3>
@@ -735,7 +739,7 @@ export default function DefamationSlanderPage() {
               <div>
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Public Figures & Matters of Public Interest</h3>
                 <p>
-                  If you are a public figure or the defamatory statement relates to a matter of public interest, the legal standard is higher. You must prove the defendant acted with "malice" (knowing falsity or reckless disregard for truth). We assess whether these heightened standards apply to your situation.
+                  Where the speech is on a matter of public interest, the defendant may raise the responsible communication defence under Grant v. Torstar Corp., 2009 SCC 61, AND may bring an anti-SLAPP motion under Courts of Justice Act s.137.1 to dismiss the action at an early stage. Canadian law does NOT use the U.S. "actual malice" standard. We assess whether the public-interest framework applies and whether an anti-SLAPP motion is likely.
                 </p>
               </div>
               <div>
@@ -755,7 +759,7 @@ export default function DefamationSlanderPage() {
             Protect Your Reputation
           </h2>
           <p className="font-paragraph text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            If you have been defamed, don't wait. The 2-year limitation period is critical. Contact us for a free consultation to discuss your situation and explore your legal options.
+            If you have been defamed, deadlines move quickly. The 2-year general limitation applies, plus the 6-week notice / 3-month limitation for newspaper or broadcast libel. Contact us for a free consultation to confirm where you stand on the deadlines and whether your claim is suitable for Small Claims Court or requires defamation counsel.
           </p>
           <Link to="/contact">
             <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">

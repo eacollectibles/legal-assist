@@ -444,7 +444,7 @@ export default function LandlordRightsGuidePage() {
                     { title: 'Appliances', desc: 'If provided with the unit (fridge, stove, washer/dryer), you must repair or replace them when they break down.' },
                     { title: 'Common Areas', desc: 'Hallways, parking lots, laundry rooms, and shared spaces must be clean, lit, and safe.' },
                     { title: 'Pest Control', desc: 'Landlords are generally responsible for pest control (cockroaches, bed bugs, mice) even if the tenant may have introduced them.' },
-                    { title: 'Municipal Standards', desc: 'You must meet all local property standards bylaws (City of London Property Standards By-law applies to London landlords).' },
+                    { title: 'Municipal Standards', desc: 'You must meet all local property standards bylaws (each Ontario municipality has its own; check your city/town\u2019s by-laws).' },
                   ].map((item, i) => (
                     <div key={i} className="bg-gray-50 p-4 rounded-lg">
                       <h4 className="font-heading text-sm font-bold text-foreground mb-1">{item.title}</h4>

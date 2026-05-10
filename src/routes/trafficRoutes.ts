@@ -23,6 +23,16 @@ const SeatbeltViolationsPage = lazy(() => import('@/components/pages/SeatbeltVio
 const ProvincialOffencesPage = lazy(() => import('@/components/pages/ProvincialOffencesPage'));
 const MunicipalBylawPage = lazy(() => import('@/components/pages/MunicipalBylawPage'));
 
+// Newly added Provincial Offences pages (May 2026)
+const FailToStopSchoolBusPage = lazy(() => import('@/components/pages/FailToStopSchoolBusPage'));
+const DisobeySignPage = lazy(() => import('@/components/pages/DisobeySignPage'));
+const FailToSurrenderPage = lazy(() => import('@/components/pages/FailToSurrenderPage'));
+const TrespassChargesPage = lazy(() => import('@/components/pages/TrespassChargesPage'));
+const LiquorLicenceActPage = lazy(() => import('@/components/pages/LiquorLicenceActPage'));
+const CannabisControlOffencePage = lazy(() => import('@/components/pages/CannabisControlOffencePage'));
+const SmokeFreeOntarioOffencePage = lazy(() => import('@/components/pages/SmokeFreeOntarioOffencePage'));
+const OffRoadVehiclePage = lazy(() => import('@/components/pages/OffRoadVehiclePage'));
+
 export const trafficRoutes = [
   { path: '/services/traffic-tickets', element: TrafficTicketsPage },
   { path: '/services/speeding-ticket-defence', element: SpeedingTicketDefencePage },
@@ -45,4 +55,13 @@ export const trafficRoutes = [
   { path: '/services/seatbelt-violations', element: SeatbeltViolationsPage },
   { path: '/services/provincial-offences', element: ProvincialOffencesPage },
   { path: '/services/municipal-bylaw', element: MunicipalBylawPage },
+  // Newly added Provincial Offences (May 2026)
+  { path: '/services/fail-to-stop-school-bus', element: FailToStopSchoolBusPage },
+  { path: '/services/disobey-sign', element: DisobeySignPage },
+  { path: '/services/fail-to-surrender', element: FailToSurrenderPage },
+  { path: '/services/trespass-to-property', element: TrespassChargesPage },
+  { path: '/services/liquor-licence-offences', element: LiquorLicenceActPage },
+  { path: '/services/cannabis-control-offences', element: CannabisControlOffencePage },
+  { path: '/services/smoke-free-ontario-offences', element: SmokeFreeOntarioOffencePage },
+  { path: '/services/off-road-vehicle-offences', element: OffRoadVehiclePage },
 ];
