@@ -4345,6 +4345,15 @@ interface RetainerAgreement {
   paymentPurpose?: string;       // e.g. "Initial retainer deposit"
   paymentReference?: string;     // Cheque #, e-transfer ref, receipt #
   paymentDeposit?: string;       // 'trust' | 'general'
+  // ---- Payment arrangement (going-forward schedule, optional) ----
+  paymentArrangementEnabled?: boolean;
+  paymentArrangementType?: string;       // 'full' | 'installments' | 'deferred' | 'custom'
+  paymentArrangementTotal?: string;      // Total expected (display only)
+  paymentInstallmentAmount?: string;     // Per-instalment amount
+  paymentInstallmentFrequency?: string;  // 'weekly' | 'biweekly' | 'monthly' | 'quarterly'
+  paymentInstallmentStartDate?: string;  // YYYY-MM-DD
+  paymentInstallmentCount?: string;      // Number of instalments
+  paymentArrangementNotes?: string;      // Free-text additional terms
 }
 
 const EMPTY_RETAINER: Omit<RetainerAgreement, '_id'> = {
@@ -4375,6 +4384,14 @@ const EMPTY_RETAINER: Omit<RetainerAgreement, '_id'> = {
   paymentPurpose: 'Initial retainer deposit',
   paymentReference: '',
   paymentDeposit: 'trust',
+  paymentArrangementEnabled: false,
+  paymentArrangementType: 'full',
+  paymentArrangementTotal: '',
+  paymentInstallmentAmount: '',
+  paymentInstallmentFrequency: 'monthly',
+  paymentInstallmentStartDate: '',
+  paymentInstallmentCount: '',
+  paymentArrangementNotes: '',
 };
 
 function SectionRetainerAgreement({ file }: SectionEditProps) {
@@ -4613,6 +4630,17 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         paymentPurpose: agreement.paymentPurpose || '',
         paymentReference: agreement.paymentReference || '',
         paymentDeposit: agreement.paymentDeposit || '',
+        // Payment arrangement block (going-forward schedule).
+        // Renders the "Payment Arrangement" section in the retainer
+        // only when paymentArrangementEnabled is true.
+        paymentArrangementEnabled: !!agreement.paymentArrangementEnabled,
+        paymentArrangementType: agreement.paymentArrangementType || '',
+        paymentArrangementTotal: agreement.paymentArrangementTotal || '',
+        paymentInstallmentAmount: agreement.paymentInstallmentAmount || '',
+        paymentInstallmentFrequency: agreement.paymentInstallmentFrequency || '',
+        paymentInstallmentStartDate: agreement.paymentInstallmentStartDate || '',
+        paymentInstallmentCount: agreement.paymentInstallmentCount || '',
+        paymentArrangementNotes: agreement.paymentArrangementNotes || '',
       };
 
       // ---- Generate HTML (for download) and PDF (for storage / email) ----
@@ -5445,6 +5473,174 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
                 </div>
                 <p className="md:col-span-2 text-xs text-emerald-700/80 italic">
                   A matching trust-ledger row will be auto-written to <code>financialrecords</code> when this retainer is generated.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* ============================================================ */}
+          {/* PAYMENT ARRANGEMENT (going-forward schedule)                  */}
+          {/* Renders a "Payment Arrangement" subsection in the generated  */}
+          {/* retainer when enabled. Documents an instalment plan,         */}
+          {/* deferred-payment terms, or any non-default payment schedule. */}
+          {/* Distinct from "Payment Received" above — that's the receipt  */}
+          {/* of funds at signing; this is the schedule going forward.    */}
+          {/* ============================================================ */}
+          <div className="p-4 border-2 border-indigo-200 bg-indigo-50/50 rounded-lg">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={!!formData.paymentArrangementEnabled}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    paymentArrangementEnabled: e.target.checked,
+                  }))
+                }
+                className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+              />
+              <span className="text-sm font-semibold text-indigo-800">
+                Is there a payment arrangement / schedule?
+              </span>
+            </label>
+            {formData.paymentArrangementEnabled && (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                    Arrangement type
+                  </label>
+                  <select
+                    value={formData.paymentArrangementType || 'full'}
+                    onChange={(e) =>
+                      setFormData((p) => ({
+                        ...p,
+                        paymentArrangementType: e.target.value,
+                      }))
+                    }
+                    className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  >
+                    <option value="full">Paid in full at signing</option>
+                    <option value="installments">Instalment plan</option>
+                    <option value="deferred">Deferred payment</option>
+                    <option value="custom">Custom (see notes)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                    Total amount expected ($)
+                  </label>
+                  <Input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.paymentArrangementTotal || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({
+                        ...p,
+                        paymentArrangementTotal: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g. 2500.00"
+                    className="mt-1"
+                  />
+                </div>
+                {formData.paymentArrangementType === 'installments' && (
+                  <>
+                    <div>
+                      <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                        Instalment amount ($)
+                      </label>
+                      <Input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={formData.paymentInstallmentAmount || ''}
+                        onChange={(e) =>
+                          setFormData((p) => ({
+                            ...p,
+                            paymentInstallmentAmount: e.target.value,
+                          }))
+                        }
+                        placeholder="e.g. 500.00"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                        Frequency
+                      </label>
+                      <select
+                        value={formData.paymentInstallmentFrequency || 'monthly'}
+                        onChange={(e) =>
+                          setFormData((p) => ({
+                            ...p,
+                            paymentInstallmentFrequency: e.target.value,
+                          }))
+                        }
+                        className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                      >
+                        <option value="weekly">Weekly</option>
+                        <option value="biweekly">Bi-weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                        First instalment due
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.paymentInstallmentStartDate || ''}
+                        onChange={(e) =>
+                          setFormData((p) => ({
+                            ...p,
+                            paymentInstallmentStartDate: e.target.value,
+                          }))
+                        }
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                        Number of instalments
+                      </label>
+                      <Input
+                        type="number"
+                        min="1"
+                        step="1"
+                        value={formData.paymentInstallmentCount || ''}
+                        onChange={(e) =>
+                          setFormData((p) => ({
+                            ...p,
+                            paymentInstallmentCount: e.target.value,
+                          }))
+                        }
+                        placeholder="e.g. 5"
+                        className="mt-1"
+                      />
+                    </div>
+                  </>
+                )}
+                <div className="md:col-span-2">
+                  <label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                    Additional terms / notes
+                  </label>
+                  <textarea
+                    value={formData.paymentArrangementNotes || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({
+                        ...p,
+                        paymentArrangementNotes: e.target.value,
+                      }))
+                    }
+                    placeholder="Late fee policy, missed-payment consequences, conditions, etc."
+                    rows={3}
+                    className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  />
+                </div>
+                <p className="md:col-span-2 text-xs text-indigo-700/80 italic">
+                  Renders a &ldquo;Payment Arrangement&rdquo; subsection in Section 5 of the retainer when enabled.
                 </p>
               </div>
             )}

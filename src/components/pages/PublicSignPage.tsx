@@ -60,6 +60,14 @@ export default function PublicSignPage() {
   const [signerName, setSignerName] = useState('');
   const [signerEmail, setSignerEmail] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  // Iframe-safe preview URL. Wix Media CDN PDFs send
+  // X-Frame-Options: SAMEORIGIN, so a cross-origin <iframe src="https://static.wixstatic.com/..."> renders blank.
+  // We fetch the PDF as a blob and use the blob: URL (same-origin) for
+  // the iframe, which renders reliably across browsers. data: URLs
+  // (the dev-fallback path when Wix Media is unavailable) pass through
+  // unchanged because they don't have frame-ancestor restrictions.
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewError, setPreviewError] = useState<string | null>(null);
 
   // ----------------------------------------------------------------
   // Validate the token + fetch the document on mount.
@@ -103,6 +111,57 @@ export default function PublicSignPage() {
       cancelled = true;
     };
   }, [token]);
+
+  // ----------------------------------------------------------------
+  // Fetch the document as a blob and create a same-origin blob: URL
+  // for the iframe. This sidesteps the X-Frame-Options: SAMEORIGIN
+  // header that Wix Media CDN sets on PDFs — without this, the iframe
+  // would render blank when documentUrl points at a Wix CDN URL.
+  //
+  // Falls through unchanged for data: URLs (dev / inline fallback)
+  // because those don't have frame-ancestor restrictions.
+  // ----------------------------------------------------------------
+  useEffect(() => {
+    if (!doc?.documentUrl) {
+      setPreviewUrl(null);
+      return;
+    }
+    // data: URLs work directly in iframes.
+    if (doc.documentUrl.startsWith('data:')) {
+      setPreviewUrl(doc.documentUrl);
+      return;
+    }
+    let revokeUrl: string | null = null;
+    let cancelled = false;
+    (async () => {
+      try {
+        const resp = await fetch(doc.documentUrl as string, { credentials: 'omit' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const blob = await resp.blob();
+        if (cancelled) return;
+        const blobUrl = URL.createObjectURL(blob);
+        revokeUrl = blobUrl;
+        setPreviewUrl(blobUrl);
+        setPreviewError(null);
+      } catch (err: any) {
+        if (cancelled) return;
+        // eslint-disable-next-line no-console
+        console.error('Could not fetch document for preview:', err);
+        // Fall back to the raw URL — iframe may still render in some
+        // browsers, and we provide a download/open-in-new-tab link
+        // alongside as belt-and-suspenders.
+        setPreviewUrl(doc.documentUrl as string);
+        setPreviewError(
+          'The inline preview may be blocked by your browser. Use ' +
+            '"Open in new tab" below to view the document.'
+        );
+      }
+    })();
+    return () => {
+      cancelled = true;
+      if (revokeUrl) URL.revokeObjectURL(revokeUrl);
+    };
+  }, [doc?.documentUrl]);
 
   // ----------------------------------------------------------------
   // Try a Wix Media upload of the signed PDF data URL via the server
@@ -413,16 +472,42 @@ export default function PublicSignPage() {
               </CardContent>
             </Card>
 
-            {/* Inline document preview when we have a PDF URL */}
+            {/* Inline document preview when we have a PDF URL. We use
+                the fetched blob URL (previewUrl) instead of the raw
+                documentUrl so Wix Media's X-Frame-Options:SAMEORIGIN
+                header doesn't blank the iframe. */}
             {doc.documentUrl && (
               <Card>
-                <CardContent className="p-0">
-                  <iframe
-                    title="Document preview"
-                    src={doc.documentUrl}
-                    className="w-full"
-                    style={{ height: '70vh', border: 'none' }}
-                  />
+                <CardContent className="p-3 sm:p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-medium text-foreground">
+                      Document Preview
+                    </p>
+                    <a
+                      href={doc.documentUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline"
+                    >
+                      Open in new tab
+                    </a>
+                  </div>
+                  {previewError && (
+                    <p className="text-xs text-amber-700 mb-2">{previewError}</p>
+                  )}
+                  {previewUrl ? (
+                    <iframe
+                      title="Document preview"
+                      src={previewUrl}
+                      className="w-full"
+                      style={{ height: '70vh', border: 'none' }}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-32 text-sm text-foreground/60">
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                      Loading document preview&hellip;
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             )}
