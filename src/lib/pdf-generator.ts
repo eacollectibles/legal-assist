@@ -491,19 +491,33 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     document.head.appendChild(link);
   }
 
-  // Hidden-but-on-screen container. We use `visibility: hidden` with
-  // `position: absolute; left: 0; top: 0` instead of pushing offscreen
-  // to `left: -10000px`. Some PDF libraries (and html2canvas in some
-  // browsers) compute clip rectangles from getBoundingClientRect and
-  // produce a blank canvas when the element is far off-screen.
+  // On-screen container. We render the host with `opacity: 0` and
+  // `pointer-events: none` so it is fully invisible to the user but
+  // still has a real layout box that html2canvas can rasterise.
+  //
+  // We deliberately do NOT use `visibility: hidden` here. Some
+  // versions of html2canvas skip elements with `visibility: hidden`
+  // and produce a completely blank canvas in production.
+  //
+  // We also deliberately do NOT push the host far off-screen with
+  // `left: -10000px`. iOS Safari and some browsers compute clip
+  // rectangles from getBoundingClientRect and return an empty canvas
+  // when the source is far outside the viewport.
+  //
+  // Belt-and-suspenders: we also use html2canvas's `onclone` hook to
+  // promote the host to fully visible in the cloned DOM that
+  // html2canvas captures - so even if the live host's opacity:0
+  // confuses a rasteriser, the cloned copy is plainly visible.
+  const HOST_MARK = `pdf-host-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
   const host = document.createElement('div');
+  host.setAttribute('data-pdf-host', HOST_MARK);
   host.style.position = 'absolute';
   host.style.left = '0';
   host.style.top = '0';
   host.style.width = '816px';      // 8.5in x 96dpi
   host.style.minHeight = '1056px'; // 11in x 96dpi
   host.style.background = '#ffffff';
-  host.style.visibility = 'hidden';
+  host.style.opacity = '0';
   host.style.pointerEvents = 'none';
   host.style.zIndex = '-1';
   host.setAttribute('aria-hidden', 'true');
@@ -528,7 +542,7 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       try { await (document as any).fonts.ready; } catch { /* non-fatal */ }
     }
     await new Promise((r) => requestAnimationFrame(() => r(null)));
-    await new Promise((r) => setTimeout(r, 80));
+    await new Promise((r) => setTimeout(r, 120));
 
     const pdf = new jsPDF({
       orientation: 'portrait',
@@ -553,15 +567,67 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       backgroundColor: '#ffffff',
       windowWidth: 816,
       logging: false,
+      // Force the cloned host to be fully visible so html2canvas
+      // captures the content even if the live host is opacity:0 or
+      // otherwise visually suppressed.
+      onclone: (clonedDoc: Document) => {
+        const clonedHost = clonedDoc.querySelector(
+          `[data-pdf-host="${HOST_MARK}"]`
+        ) as HTMLElement | null;
+        if (clonedHost) {
+          clonedHost.style.opacity = '1';
+          clonedHost.style.visibility = 'visible';
+          clonedHost.style.display = 'block';
+          clonedHost.style.zIndex = 'auto';
+          clonedHost.style.position = 'static';
+        }
+      },
     });
 
     const imgWidth = pageWidth;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    // Sanity check: if the canvas came back empty (zero-pixel image),
-    // emit a placeholder PDF so the caller can show a useful error
-    // instead of a silent blank doc.
-    if (!canvas || canvas.width === 0 || canvas.height === 0) {
+    // Diagnostic: log canvas dimensions so we can see in DevTools
+    // whether html2canvas produced something or returned empty.
+    // eslint-disable-next-line no-console
+    console.log('[htmlToPDF] canvas size:', canvas?.width, 'x', canvas?.height);
+
+    // Sanity check: if the canvas came back empty (zero-pixel image)
+    // or the rendered content is all-white (host invisible to the
+    // rasteriser), emit a placeholder PDF so the caller can show a
+    // useful error instead of a silent blank doc.
+    const looksBlank = (() => {
+      if (!canvas || canvas.width === 0 || canvas.height === 0) return true;
+      try {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return false;
+        // Sample a small slice of pixels - if every pixel is white,
+        // the host content didn't make it into the rasterised canvas.
+        const sample = ctx.getImageData(
+          0,
+          0,
+          Math.min(canvas.width, 200),
+          Math.min(canvas.height, 200)
+        );
+        const data = sample.data;
+        for (let i = 0; i < data.length; i += 4) {
+          // Any non-white pixel means we have content.
+          if (data[i] < 250 || data[i + 1] < 250 || data[i + 2] < 250) {
+            return false;
+          }
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    })();
+
+    if (looksBlank) {
+      // eslint-disable-next-line no-console
+      console.error(
+        '[htmlToPDF] canvas appears blank (sampled pixels all white). ' +
+          'Host element may not have been captured by html2canvas.'
+      );
       pdf.setFontSize(12);
       pdf.text(
         'Document content could not be rendered. Please contact support.',
