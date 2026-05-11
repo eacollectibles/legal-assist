@@ -41,28 +41,33 @@ function dataUrlToBlob(dataUrl: string): { blob: Blob; mime: string } {
 }
 
 /**
- * Read a Wix Secret by name. Tries `wix-secrets-backend` first
- * (production) then falls back to `import.meta.env` (local dev with
- * .env.local). Mirrors the pattern used by the Square endpoints.
+ * Read a secret value from the Cloudflare Workers env binding.
+ *
+ * On Cloudflare Workers (which is where Wix Astro deploys), the
+ * `wix-secrets-backend` SDK can't be dynamically imported because the
+ * runtime blocks `Function('return import')()` ("Code generation from
+ * strings disallowed for this context"). The actual secrets live on
+ * `locals.runtime.env` (the Cloudflare binding object) — that's where
+ * Wix Secrets Manager values are injected at runtime, alongside
+ * Cloudflare-defined bindings like ASSETS.
+ *
+ * The Square diagnose endpoint confirmed this: SQUARE_ACCESS_TOKEN
+ * and our new LA_WIX_API_KEY / LA_WIX_SITE_ID all show up in
+ * `locals.runtime.env`, but the dynamic-import path errors with
+ * 'moduleLoadError: Code generation from strings disallowed'.
  */
-async function getSecretValue(name: string): Promise<string> {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-    const importer = Function('return import')();
-    const mod: any = await importer('wix-secrets-backend');
-    const getSecret = mod?.getSecret || mod?.default?.getSecret;
-    if (typeof getSecret === 'function') {
-      const v = await getSecret(name);
-      if (v) return String(v);
-    }
-  } catch {
-    // wix-secrets-backend not available — fall through
-  }
+function getSecretValue(locals: any, name: string): string {
+  const env =
+    locals?.runtime?.env ||
+    locals?.env ||
+    (typeof process !== 'undefined' ? (process as any).env : null);
+  if (env && typeof env[name] === 'string' && env[name]) return env[name];
+  // Last-ditch: import.meta.env for local dev (.env.local).
   // @ts-expect-error import.meta.env is dynamic
-  return (import.meta.env[name] as string | undefined) || '';
+  return (import.meta.env?.[name] as string | undefined) || '';
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   const origin = request.headers.get('origin') || '';
   const referer = request.headers.get('referer') || '';
   const fromAllowed =
@@ -113,8 +118,8 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const apiKey = await getSecretValue('LA_WIX_API_KEY');
-  const siteId = await getSecretValue('LA_WIX_SITE_ID');
+  const apiKey = getSecretValue(locals, 'LA_WIX_API_KEY');
+  const siteId = getSecretValue(locals, 'LA_WIX_SITE_ID');
   if (!apiKey || !siteId) {
     return json(
       {

@@ -58,6 +58,17 @@ interface DocumentTemplate {
   templateContent?: string;
   /** LSO By-Law 7.1 section this template belongs to (A-K, or 'OTHER'). */
   lsoSection?: string;
+  /**
+   * Paralegal-supplied area of law for grouping in the template
+   * picker. Set in Wix CMS (documenttemplates collection) per row.
+   * Examples seen in the wild: "Landlord & Tenant", "Small Claims
+   * Court", "Human Rights (HRTO)", "Employment Law", "Social Benefits
+   * Tribunal", "Traffic & Provincial Offences", "Criminal (Summary)",
+   * "Mediation", "Defamation & Slander", "General / Administrative".
+   * When present, this takes priority over the keyword-based fallback
+   * in classifyTemplateArea.
+   */
+  templateCategory?: string;
   createdBy?: string;
   isActive?: boolean;
   _createdDate?: Date | string;
@@ -117,7 +128,42 @@ const AREA_DISPLAY_ORDER = [
   'General / Administrative',
 ];
 
+/**
+ * Map a paralegal-supplied templateCategory string onto one of the
+ * canonical area labels used by AREA_DISPLAY_ORDER. Tolerates the
+ * minor spelling/abbreviation variations the paralegal entered when
+ * tagging templates in the CMS — e.g. "Landlord & Tenant" maps to
+ * "Landlord & Tenant Board"; "Human Rights (HRTO)" maps to "Human
+ * Rights Tribunal". Unknown values pass through unchanged so a
+ * brand-new category the paralegal types just becomes its own group.
+ */
+function normalizeManualCategory(raw: string): string {
+  const t = raw.toLowerCase();
+  if (/landlord|tenant|\bltb\b/.test(t)) return 'Landlord & Tenant Board';
+  if (/small claim/.test(t)) return 'Small Claims Court';
+  if (/human rights|\bhrto\b/.test(t)) return 'Human Rights Tribunal';
+  if (/employment|\besa\b/.test(t)) return 'Employment / ESA';
+  if (/provincial offence|traffic|\bpoa\b/.test(t))
+    return 'Provincial Offences / Traffic';
+  if (/criminal/.test(t)) return 'Criminal';
+  if (/\bwsib\b/.test(t)) return 'WSIB';
+  if (/\bodsp\b|ontario works|social benefits|social assistance/.test(t))
+    return 'Social Benefits (ODSP/OW)';
+  if (/notary|commissioner/.test(t)) return 'Notary / Commissioner';
+  if (/general|admin/.test(t)) return 'General / Administrative';
+  // Unknown — return the raw string trimmed so it shows up as a
+  // new group label rather than collapsing to "General".
+  return raw.trim();
+}
+
 function classifyTemplateArea(template: DocumentTemplate): string {
+  // 1) Paralegal-supplied templateCategory in the CMS row wins.
+  //    The classifier's keyword guesses are fallback only — when the
+  //    paralegal has tagged a template explicitly, respect that.
+  if (template.templateCategory && template.templateCategory.trim()) {
+    return normalizeManualCategory(template.templateCategory);
+  }
+  // 2) Otherwise fall back to keyword inference from name + type.
   const text =
     `${template.templateName || ''} ${template.templateType || ''}`.toLowerCase();
   // Order matters here - more specific keywords first.
