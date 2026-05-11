@@ -3,20 +3,21 @@ import type { APIRoute } from 'astro';
 /**
  * POST /api/media/upload
  *
- * Server-side Wix Media upload. Accepts a base64-encoded payload and
- * uploads it to Wix Media using the server context (which has the
- * elevated permissions and SDK methods needed to actually complete
- * the upload).
+ * Server-side Wix Media upload using the Wix SDK's ApiKeyStrategy.
+ *
+ * Why an API key (and not just the auto-injected server auth that
+ * `@wix/data` enjoys): `@wix/media`'s upload endpoints require
+ * `SITE_MEDIA.MANAGE` scope, which is NOT granted to the default
+ * visitor-context client. Without a key, generateFileUploadUrl()
+ * returns HTTP 429 "UNKNOWN" (Wix's polite way of saying "you have
+ * no permission for this call").
+ *
+ * Configuration (Wix Secrets Manager):
+ *   - LA_WIX_API_KEY: Wix API Key with "Manage Site Media" permission
+ *   - LA_WIX_SITE_ID: this site's ID (UUID)
  *
  * Body: { dataUrl: string, fileName: string, mimeType?: string }
- *
- * Browser-side @wix/media uploads are unreliable because the SDK's
- * uploadFile / generateFileUploadUrl methods need server-side
- * context to authenticate with Wix's media backend. So we route
- * everything through here.
- *
- * Returns { success, url, mediaId } on success or
- * { success: false, error } on failure.
+ * Returns: { success: true, url, mediaId } | { success: false, error }
  */
 
 const ALLOWED_ORIGINS = new Set<string>([
@@ -37,6 +38,28 @@ function dataUrlToBlob(dataUrl: string): { blob: Blob; mime: string } {
   const bytes = new Uint8Array(len);
   for (let i = 0; i < len; i++) bytes[i] = bin.charCodeAt(i);
   return { blob: new Blob([bytes], { type: mime }), mime };
+}
+
+/**
+ * Read a Wix Secret by name. Tries `wix-secrets-backend` first
+ * (production) then falls back to `import.meta.env` (local dev with
+ * .env.local). Mirrors the pattern used by the Square endpoints.
+ */
+async function getSecretValue(name: string): Promise<string> {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+    const importer = Function('return import')();
+    const mod: any = await importer('wix-secrets-backend');
+    const getSecret = mod?.getSecret || mod?.default?.getSecret;
+    if (typeof getSecret === 'function') {
+      const v = await getSecret(name);
+      if (v) return String(v);
+    }
+  } catch {
+    // wix-secrets-backend not available — fall through
+  }
+  // @ts-expect-error import.meta.env is dynamic
+  return (import.meta.env[name] as string | undefined) || '';
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -90,122 +113,115 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // Try the @wix/media SDK in the order most-likely-to-work-first.
-  // We expose every error message we encounter so the client can show
-  // the real failure instead of silently falling back to broken base64.
+  const apiKey = await getSecretValue('LA_WIX_API_KEY');
+  const siteId = await getSecretValue('LA_WIX_SITE_ID');
+  if (!apiKey || !siteId) {
+    return json(
+      {
+        success: false,
+        error:
+          'Wix Media credentials not configured. Add LA_WIX_API_KEY and LA_WIX_SITE_ID to Wix Secrets Manager.',
+      },
+      500
+    );
+  }
+
   const tried: string[] = [];
 
   try {
-    const wixMedia: any = await import('@wix/media').catch(() => null);
-    if (!wixMedia) {
+    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+    const importer = Function('return import')();
+    const [sdkMod, mediaMod]: [any, any] = await Promise.all([
+      importer('@wix/sdk'),
+      importer('@wix/media'),
+    ]);
+
+    const createClient = sdkMod?.createClient || sdkMod?.default?.createClient;
+    const ApiKeyStrategy =
+      sdkMod?.ApiKeyStrategy || sdkMod?.default?.ApiKeyStrategy;
+    const filesNs = mediaMod?.files || mediaMod?.default?.files;
+
+    if (!createClient || !ApiKeyStrategy || !filesNs) {
       return json(
         {
           success: false,
-          error: '@wix/media SDK is not available in this build.',
+          error:
+            'Wix SDK modules unavailable (createClient/ApiKeyStrategy/files).',
+        },
+        500
+      );
+    }
+
+    const wixClient = createClient({
+      modules: { files: filesNs },
+      auth: ApiKeyStrategy({ apiKey, siteId }),
+    });
+
+    tried.push('generateFileUploadUrl');
+    const presigned: any = await wixClient.files.generateFileUploadUrl({
+      mimeType: mime,
+      fileName: body.fileName,
+    });
+    const uploadUrl: string | undefined =
+      presigned?.uploadUrl || presigned?.url;
+    if (!uploadUrl) {
+      return json(
+        {
+          success: false,
+          error: 'generateFileUploadUrl returned no upload URL.',
+          tried,
+          presignedKeys: presigned ? Object.keys(presigned) : [],
+        },
+        500
+      );
+    }
+
+    // Wix presigned URLs accept a POST with multipart/form-data
+    // (field name: "file"). The response is JSON describing the
+    // newly-uploaded file.
+    tried.push('POST upload');
+    const fd = new FormData();
+    fd.append('file', blob, body.fileName);
+    const uploaded = await fetch(uploadUrl, { method: 'POST', body: fd });
+    if (!uploaded.ok) {
+      const text = await uploaded.text().catch(() => '');
+      return json(
+        {
+          success: false,
+          error: `Upload POST failed HTTP ${uploaded.status}: ${text.slice(0, 300)}`,
           tried,
         },
         500
       );
     }
 
-    const filesApi = wixMedia.files || wixMedia.default?.files || wixMedia;
-
-    // Strategy 1: uploadFile (legacy / Velo-style)
-    if (typeof filesApi.uploadFile === 'function') {
-      tried.push('uploadFile');
-      try {
-        const result = await filesApi.uploadFile({
-          mimeType: mime,
-          fileName: body.fileName,
-          file: blob,
-          parentFolderId: 'media-root',
-        });
-        const url = result?.file?.url || result?.fileUrl || result?.url;
-        const mediaId =
-          result?.file?.id || result?.file?._id || result?._id || result?.id;
-        if (url) return json({ success: true, url, mediaId, method: 'uploadFile' }, 200);
-      } catch (e: any) {
-        tried.push('uploadFile-failed: ' + (e?.message || String(e)));
-      }
+    const data: any = await uploaded.json().catch(() => ({}));
+    // Wix's V3 upload responses come back as { file: { ... } } or
+    // { files: [{ ... }] } depending on the endpoint variant. Be
+    // permissive about the shape.
+    const fileObj =
+      data?.file || (Array.isArray(data?.files) ? data.files[0] : null) || data;
+    const url: string | undefined =
+      fileObj?.url || fileObj?.fileUrl || fileObj?.mediaUrl;
+    const mediaId: string | undefined =
+      fileObj?.id || fileObj?._id || fileObj?.fileId;
+    if (url) {
+      return json({ success: true, url, mediaId, method: 'apikey-presigned' }, 200);
     }
-
-    // Strategy 2: importFile (newer SDK pattern - takes a URL, not a blob)
-    // We can't use this directly with a blob, skip.
-
-    // Strategy 3: generateFileUploadUrl + manual PUT/POST
-    if (typeof filesApi.generateFileUploadUrl === 'function') {
-      tried.push('generateFileUploadUrl');
-      try {
-        const presigned = await filesApi.generateFileUploadUrl({
-          mimeType: mime,
-          fileName: body.fileName,
-        });
-        const uploadUrl = presigned?.uploadUrl || presigned?.url;
-        if (!uploadUrl) {
-          tried.push('generateFileUploadUrl-no-url');
-        } else {
-          // Wix presigned URLs typically accept a PUT with the raw blob.
-          // Try PUT first; fall back to POST if that fails.
-          let uploaded: Response | null = null;
-          try {
-            uploaded = await fetch(uploadUrl, {
-              method: 'PUT',
-              headers: { 'Content-Type': mime },
-              body: blob,
-            });
-          } catch (e: any) {
-            tried.push('PUT-fetch-failed: ' + (e?.message || e));
-          }
-          if (!uploaded || !uploaded.ok) {
-            // Try POST with FormData as fallback
-            try {
-              const fd = new FormData();
-              fd.append('file', blob, body.fileName);
-              uploaded = await fetch(uploadUrl, { method: 'POST', body: fd });
-            } catch (e: any) {
-              tried.push('POST-fetch-failed: ' + (e?.message || e));
-            }
-          }
-          if (uploaded && uploaded.ok) {
-            const data = await uploaded.json().catch(() => ({} as any));
-            const url = data?.file?.url || data?.fileUrl || data?.url;
-            const mediaId =
-              data?.file?.id || data?.file?._id || data?._id || data?.id;
-            if (url) {
-              return json(
-                { success: true, url, mediaId, method: 'generateFileUploadUrl' },
-                200
-              );
-            }
-            tried.push('upload-response-no-url');
-          } else if (uploaded) {
-            tried.push(`upload-http-${uploaded.status}`);
-          }
-        }
-      } catch (e: any) {
-        tried.push('generateFileUploadUrl-failed: ' + (e?.message || String(e)));
-      }
-    }
-
     return json(
       {
         success: false,
-        error:
-          'Could not upload to Wix Media. SDK call paths attempted: ' +
-          tried.join(' | '),
+        error: 'Upload succeeded but response had no file URL.',
         tried,
+        responseKeys: data ? Object.keys(data) : [],
       },
       500
     );
   } catch (err: any) {
-    return json(
-      {
-        success: false,
-        error: err?.message || String(err),
-        tried,
-      },
-      500
-    );
+    const msg =
+      err?.message ||
+      (typeof err === 'object' ? JSON.stringify(err).slice(0, 500) : String(err));
+    return json({ success: false, error: msg, tried }, 500);
   }
 };
 

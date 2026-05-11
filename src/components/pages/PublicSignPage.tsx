@@ -31,6 +31,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AlertCircle, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
+import { uploadToWixMedia } from '@/lib/wix-media-upload';
 import {
   validateSignToken,
   markSignTokenSigned,
@@ -104,34 +105,15 @@ export default function PublicSignPage() {
   }, [token]);
 
   // ----------------------------------------------------------------
-  // Try a Wix Media upload of the signed PDF data URL. Returns null
-  // if the SDK isn't available (caller falls back to the data URL).
+  // Try a Wix Media upload of the signed PDF data URL via the server
+  // endpoint (which authenticates with an API key). Returns null if
+  // the upload fails — caller falls back to inline storage.
   // ----------------------------------------------------------------
   const tryWixMediaUpload = async (
     dataUrl: string,
     fileName: string
   ): Promise<{ url: string; mediaId?: string } | null> => {
-    try {
-      const res = await fetch(dataUrl);
-      const blob = await res.blob();
-      const file = new File([blob], fileName, { type: 'application/pdf' });
-      const wixMedia: any = await import('@wix/media').catch(() => null);
-      if (!wixMedia) return null;
-      const filesApi = wixMedia.files || wixMedia.default?.files || wixMedia;
-      if (filesApi.uploadFile) {
-        const r = await filesApi.uploadFile({
-          mimeType: 'application/pdf',
-          fileName,
-          file,
-        });
-        const url = r?.file?.url || r?.fileUrl || r?.url;
-        const mediaId = r?.file?.id || r?._id || r?.id;
-        if (url) return { url, mediaId };
-      }
-      return null;
-    } catch {
-      return null;
-    }
+    return uploadToWixMedia(dataUrl, fileName, 'application/pdf');
   };
 
   // ----------------------------------------------------------------

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Upload, Download, Trash2, Plus, FileText, AlertCircle, CheckCircle, Loader } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { ClientDocument, CurrentUser } from './types';
+import { uploadToWixMedia } from '@/lib/wix-media-upload';
 
 interface DocumentsTabProps {
   currentUser: CurrentUser;
@@ -33,53 +34,14 @@ const ACCEPT_ATTR =
   '.mp4,.mov,.m4v';
 
 /**
- * Try to upload a file via Wix Media (CDN-backed, multi-MB ceiling).
- * Returns the permanent URL on success, or null if the SDK isn't
- * available — caller falls back to the inline-base64 path for small
- * files. Mirrors the helper in SectionDocuments.tsx so behaviour stays
- * consistent across paralegal-side and client-side upload flows.
+ * Upload via Wix Media through the server endpoint (which auths with
+ * a Wix API Key). Returns { url, mediaId } on success or null —
+ * caller falls back to inline base64 storage for small files.
  */
 const tryWixMediaUpload = async (
   file: File
 ): Promise<{ url: string; mediaId?: string } | null> => {
-  try {
-    const wixMedia: any = await import('@wix/media').catch(() => null);
-    if (!wixMedia) return null;
-
-    const filesApi =
-      wixMedia.files || wixMedia.default?.files || wixMedia;
-
-    if (filesApi.uploadFile) {
-      const result = await filesApi.uploadFile({
-        mimeType: file.type || 'application/octet-stream',
-        fileName: file.name,
-        file,
-      });
-      const url = result?.file?.url || result?.fileUrl || result?.url;
-      const mediaId = result?.file?.id || result?._id || result?.id;
-      if (url) return { url, mediaId };
-    }
-
-    if (filesApi.generateFileUploadUrl) {
-      const presigned = await filesApi.generateFileUploadUrl({
-        mimeType: file.type || 'application/octet-stream',
-        fileName: file.name,
-      });
-      const uploadUrl = presigned?.uploadUrl || presigned?.url;
-      if (!uploadUrl) return null;
-      const fd = new FormData();
-      fd.append('file', file);
-      const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
-      if (!resp.ok) return null;
-      const data = await resp.json().catch(() => ({}));
-      const url = data?.file?.url || data?.fileUrl || data?.url;
-      const mediaId = data?.file?.id || data?._id || data?.id;
-      if (url) return { url, mediaId };
-    }
-    return null;
-  } catch {
-    return null;
-  }
+  return uploadToWixMedia(file, file.name, file.type || 'application/octet-stream');
 };
 
 const fileToDataUrl = (file: File): Promise<string> =>

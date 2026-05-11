@@ -1,16 +1,17 @@
 /**
  * Wix Media upload helper.
  *
+ * Routes all uploads through the server endpoint at /api/media/upload
+ * because the browser-side @wix/media SDK calls always return HTTP 429
+ * (Wix's polite "no permission" — the visitor session lacks
+ * SITE_MEDIA.MANAGE scope). The server endpoint authenticates with a
+ * Wix API Key (LA_WIX_API_KEY) that does have the scope.
+ *
  * Wix Data fields cap at 177KB per field, which means a base64-encoded
  * PDF will not fit in a single CMS row. The right place for files is
- * Wix Media (CDN-backed, multi-MB ceiling). This helper accepts either
- * a Blob, a File, or a base64 data URL, attempts to upload via the
- * Wix Media SDK, and returns the resulting permanent URL.
- *
- * Returns null if the SDK is unavailable so callers can fall back to
- * the inline-base64 path for small files. Mirrors the inlined helpers
- * in DocumentsTab.tsx and SectionDocuments.tsx so behaviour stays
- * consistent across paralegal-side and client-side flows.
+ * Wix Media (CDN-backed, multi-MB ceiling). Callers should prefer
+ * this path; the inline-base64 path is a fallback for tiny files
+ * only.
  */
 
 export interface WixMediaUploadResult {
@@ -30,10 +31,22 @@ export function dataUrlToBlob(dataUrl: string): Blob {
   return new Blob([bytes], { type: mime });
 }
 
+/** Read a Blob/File as a base64 data URL. */
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
 /**
- * Upload to Wix Media. Accepts a File, a Blob, or a base64 data URL.
- * Returns { url, mediaId } on success or null if the SDK isn't
- * available.
+ * Upload to Wix Media via the server endpoint. Accepts a File, a Blob,
+ * or a base64 data URL. Returns { url, mediaId } on success or null
+ * on failure — caller falls back to inline-base64 storage for tiny
+ * files. Errors are logged to the console with the server's `tried`
+ * debug array so failures are diagnosable.
  */
 export async function uploadToWixMedia(
   input: File | Blob | string,
@@ -41,57 +54,45 @@ export async function uploadToWixMedia(
   mimeType?: string
 ): Promise<WixMediaUploadResult | null> {
   try {
-    const wixMedia: any = await import('@wix/media').catch(() => null);
-    if (!wixMedia) return null;
-
-    // IMPORTANT: do NOT call `new File(...)`. In the Wix Astro /
-    // Cloudflare Workers production bundle the global `File`
-    // constructor is sometimes minified/shadowed to a stub that
-    // throws "X is not a constructor" at runtime. A Blob is enough
-    // for both the Wix Media SDK and FormData uploads (FormData
-    // accepts a filename argument; Wix uploadFile accepts the
-    // fileName field separately from the body).
-    let blob: Blob;
+    // Normalise to a base64 data URL for the JSON request body.
+    let dataUrl: string;
     if (typeof input === 'string') {
-      blob = dataUrlToBlob(input);
+      dataUrl = input;
     } else {
-      // File extends Blob, so a File is already a valid Blob here.
-      blob = input as Blob;
+      dataUrl = await blobToDataUrl(input);
     }
+
+    const headerMime = /data:([^;]+)/.exec(dataUrl)?.[1];
     const effectiveMime =
-      mimeType || (blob as Blob).type || 'application/octet-stream';
+      mimeType || headerMime || 'application/octet-stream';
 
-    const filesApi = wixMedia.files || wixMedia.default?.files || wixMedia;
+    const resp = await fetch('/api/media/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dataUrl, fileName, mimeType: effectiveMime }),
+    });
 
-    if (filesApi.uploadFile) {
-      const result = await filesApi.uploadFile({
-        mimeType: effectiveMime,
-        fileName,
-        file: blob,
-      });
-      const url = result?.file?.url || result?.fileUrl || result?.url;
-      const mediaId = result?.file?.id || result?._id || result?.id;
-      if (url) return { url, mediaId };
+    let data: any = null;
+    try {
+      data = await resp.json();
+    } catch {
+      // Non-JSON response — already a failure.
     }
 
-    if (filesApi.generateFileUploadUrl) {
-      const presigned = await filesApi.generateFileUploadUrl({
-        mimeType: effectiveMime,
-        fileName,
-      });
-      const uploadUrl = presigned?.uploadUrl || presigned?.url;
-      if (!uploadUrl) return null;
-      const fd = new FormData();
-      fd.append('file', blob, fileName);
-      const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
-      if (!resp.ok) return null;
-      const data = await resp.json().catch(() => ({}));
-      const url = data?.file?.url || data?.fileUrl || data?.url;
-      const mediaId = data?.file?.id || data?._id || data?.id;
-      if (url) return { url, mediaId };
+    if (!resp.ok || !data?.success || !data?.url) {
+      // eslint-disable-next-line no-console
+      console.error(
+        'Wix Media upload failed (HTTP ' + resp.status + '):',
+        data?.error || resp.statusText,
+        data?.tried || []
+      );
+      return null;
     }
-    return null;
-  } catch {
+
+    return { url: data.url, mediaId: data.mediaId };
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('uploadToWixMedia exception:', err);
     return null;
   }
 }
@@ -106,9 +107,6 @@ export const INLINE_FIELD_LIMIT_BYTES = 200_000;
 
 /** Approximate byte length of a UTF-16 string when encoded as UTF-8. */
 export function approxByteLength(s: string): number {
-  // Cheap upper-bound estimate: assume each char is 1-3 bytes in UTF-8.
-  // Good enough for the "is this going to bust the 177KB CMS limit"
-  // decision. Reaches for TextEncoder when available for accuracy.
   if (typeof TextEncoder !== 'undefined') {
     try {
       return new TextEncoder().encode(s).length;

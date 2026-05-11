@@ -17,10 +17,9 @@ import {
   AlertCircle, CheckCircle
 } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
-// @wix/media is the proper Wix path for files larger than the CMS field
-// limit (256 KB). It uploads to Wix's CDN and returns a permanent URL.
-// Imported lazily inside the upload handler so older builds without the
-// package still compile.
+import { uploadToWixMedia } from '@/lib/wix-media-upload';
+// Wix Media uploads go through the server endpoint at /api/media/upload
+// (which authenticates with an API key) — see src/lib/wix-media-upload.ts.
 
 // ============================================================
 // TYPES
@@ -238,69 +237,15 @@ export default function SectionDocuments({
   };
 
   /**
-   * Try to upload via Wix Media (which handles arbitrarily large files
-   * by storing them on Wix's CDN). Returns a permanent URL on success
-   * or null if the SDK is unavailable / rejects the upload — caller
-   * falls back to the base64 path for small files.
+   * Upload via Wix Media (server-side endpoint). Returns the
+   * permanent URL on success or null if the server endpoint rejects
+   * the upload — caller falls back to the base64 path for small
+   * files. Detailed failure reasons are logged to the browser console
+   * by the shared helper.
    */
   const tryWixMediaUpload = async (file: File): Promise<{ url: string; mediaId?: string } | null> => {
-    try {
-      const wixMedia: any = await import('@wix/media').catch(() => null);
-      if (!wixMedia) return null;
-
-      // Wix Media's typical browser-side upload pattern is a two-step:
-      // 1) Generate a presigned upload URL via the SDK
-      // 2) PUT/POST the file binary to that URL
-      // The exact symbol varies across SDK versions; we probe a few.
-      const filesApi =
-        wixMedia.files ||
-        wixMedia.default?.files ||
-        wixMedia;
-
-      const generate =
-        filesApi?.generateFileUploadUrl ||
-        filesApi?.uploadFile ||
-        null;
-
-      if (typeof generate !== 'function') return null;
-
-      // First-shot: direct upload (newer SDK versions)
-      if (filesApi.uploadFile) {
-        const result = await filesApi.uploadFile({
-          mimeType: file.type || 'application/octet-stream',
-          fileName: file.name,
-          file,
-        });
-        const url = result?.file?.url || result?.fileUrl || result?.url;
-        const mediaId = result?.file?.id || result?._id || result?.id;
-        if (url) return { url, mediaId };
-      }
-
-      // Fallback: presigned-URL flow
-      if (filesApi.generateFileUploadUrl) {
-        const presigned = await filesApi.generateFileUploadUrl({
-          mimeType: file.type || 'application/octet-stream',
-          fileName: file.name,
-        });
-        const uploadUrl = presigned?.uploadUrl || presigned?.url;
-        if (!uploadUrl) return null;
-
-        const fd = new FormData();
-        fd.append('file', file);
-        const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
-        if (!resp.ok) return null;
-        const data = await resp.json().catch(() => ({}));
-        const url = data?.file?.url || data?.fileUrl || data?.url;
-        const mediaId = data?.file?.id || data?._id || data?.id;
-        if (url) return { url, mediaId };
-      }
-
-      return null;
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn('Wix Media upload failed, will fall back to inline base64:', err);
-      return null;
-    }
+    const mime = file.type || 'application/octet-stream';
+    return uploadToWixMedia(file, file.name, mime);
   };
 
   const handleSaveUpload = async () => {
