@@ -92,18 +92,68 @@ export default function PublicSignPage() {
       setSignerEmail(res.token.intendedRecipientEmail || '');
 
       try {
-        const fetched = await BaseCrudService.getById<GeneratedDoc>(
-          'generateddocuments',
-          res.token.documentId || ''
-        );
-        if (!cancelled) {
-          setDoc(fetched || null);
-          setPhase('review');
+        // The token's documentId can point to either:
+        //   - `generateddocuments` (template-based docs created via the
+        //      DocumentWorkflow page), OR
+        //   - `retaineragreements` (retainer PDFs created via the
+        //      per-client retainer dialog in ClientFileManagement).
+        // We probe `generateddocuments` first because it's the most
+        // common, then fall back to `retaineragreements`. Without the
+        // fallback, retainer sign links rendered a blank page because
+        // the doc lookup quietly returned null and the review phase
+        // requires `doc` to render anything.
+        const docId = res.token.documentId || '';
+        let fetched: GeneratedDoc | null = null;
+        try {
+          fetched = await BaseCrudService.getById<GeneratedDoc>(
+            'generateddocuments',
+            docId
+          );
+        } catch {
+          /* fall through to the retaineragreements probe */
         }
+        if (!fetched?._id) {
+          try {
+            const ra: any = await BaseCrudService.getById<any>(
+              'retaineragreements',
+              docId
+            );
+            if (ra?._id) {
+              // Adapt the retaineragreements row into the GeneratedDoc
+              // shape the rest of this page expects.
+              fetched = {
+                _id: ra._id,
+                documentName:
+                  ra.documentName || 'Retainer Agreement',
+                documentUrl: ra.documentUrl || '',
+                documentContent: ra.documentContent || undefined,
+                signedDocumentUrl: ra.signedDocumentUrl || undefined,
+                clientId: ra.clientId || undefined,
+                clientEmail: ra.clientEmail || undefined,
+              };
+            }
+          } catch {
+            /* fall through to the not-found branch below */
+          }
+        }
+        if (cancelled) return;
+        if (!fetched || !fetched._id) {
+          setPhase('invalid');
+          setError(
+            'The document attached to this signing link can no longer be found. ' +
+              'It may have been deleted or moved. Please contact our office to receive a new signing link.'
+          );
+          return;
+        }
+        setDoc(fetched);
+        setPhase('review');
       } catch (e) {
         if (!cancelled) {
           setPhase('invalid');
-          setError('Could not load the document attached to this link.');
+          setError(
+            'Could not load the document attached to this signing link. ' +
+              (e instanceof Error ? e.message : '')
+          );
         }
       }
     })();
