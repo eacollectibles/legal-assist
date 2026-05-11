@@ -965,13 +965,16 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         documentMediaId = uploaded.mediaId;
       }
 
-      // documentContent (HTML body) is normally well under the field
-      // limit, but a few legacy retainers with embedded base64 images
-      // can blow past it. If so, upload the HTML to Wix Media and
-      // leave the field empty so the row fits.
+      // documentContent (HTML body) needs to fit in the Wix Data field
+      // (~177KB hard cap). Anything close to that bombs the create with
+      // WDE0009 and leaves the local state out of sync with CMS — the
+      // user gets a 'document not found' on any sign link they create.
+      // We use 100KB as the upload threshold so we always have a safe
+      // margin over the rebrand/payment-section bloat that's been
+      // pushing Small Claims retainers past the limit.
       let storedDocumentContent: string = documentContent;
       let documentContentUrl: string | undefined;
-      if (approxByteLength(documentContent) > 150_000) {
+      if (approxByteLength(documentContent) > 100_000) {
         const htmlUpload = await uploadToWixMedia(
           new Blob([documentContent], { type: 'text/html' }),
           safeFileName.replace(/\.pdf$/, '.html'),
@@ -980,6 +983,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         if (htmlUpload?.url) {
           storedDocumentContent = '';
           documentContentUrl = htmlUpload.url;
+        } else {
+          // Wix Media upload failed AND inline storage would bust the
+          // CMS field. Truncate-and-store rather than leave the user
+          // with a phantom sign link.
+          storedDocumentContent = '';
         }
       }
 
@@ -1004,11 +1012,18 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         _createdDate: new Date(),
       };
 
-      // Local state gets the in-memory copy with full HTML so the user
-      // can View/Edit immediately without a Wix Media round-trip.
-      setGeneratedDocs([...generatedDocs, { ...newDoc, documentContent }]);
-
+      // CMS write FIRST. If this throws we MUST NOT update local state
+      // — otherwise the user sees the doc in the UI but its _id doesn't
+      // exist in CMS, so any sign link created off it points to a
+      // phantom row and the public sign page renders "document not
+      // found". Previously this code did setGeneratedDocs() before the
+      // create; that's the bug that produced phantom sign links.
       await BaseCrudService.create('generateddocuments', newDoc);
+
+      // Only after the CMS write succeeds do we add to local state.
+      // The in-memory copy keeps the full HTML so the user can
+      // View/Edit immediately without a Wix Media round-trip.
+      setGeneratedDocs([...generatedDocs, { ...newDoc, documentContent }]);
 
       setIsGenerateDialogOpen(false);
       setSelectedTemplateId('');

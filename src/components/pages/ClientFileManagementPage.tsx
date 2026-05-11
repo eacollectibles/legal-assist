@@ -4842,6 +4842,24 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
           natureOfMatter: r.natureOfMatter || '',
           paralegalId: r.paralegalId || DEFAULT_PARALEGAL_ID,
           templateName: r.templateName || '',
+          // Payment received at signing (LSO By-Law 9 / Form 9A)
+          paymentReceived: !!r.paymentReceived,
+          paymentAmount: r.paymentAmount || '',
+          paymentMethod: r.paymentMethod || 'cash',
+          paymentDate: r.paymentDate || '',
+          paymentReceivedBy: r.paymentReceivedBy || '',
+          paymentPurpose: r.paymentPurpose || '',
+          paymentReference: r.paymentReference || '',
+          paymentDeposit: r.paymentDeposit || 'trust',
+          // Payment arrangement (going-forward schedule)
+          paymentArrangementEnabled: !!r.paymentArrangementEnabled,
+          paymentArrangementType: r.paymentArrangementType || 'full',
+          paymentArrangementTotal: r.paymentArrangementTotal || '',
+          paymentInstallmentAmount: r.paymentInstallmentAmount || '',
+          paymentInstallmentFrequency: r.paymentInstallmentFrequency || 'monthly',
+          paymentInstallmentStartDate: r.paymentInstallmentStartDate || '',
+          paymentInstallmentCount: r.paymentInstallmentCount || '',
+          paymentArrangementNotes: r.paymentArrangementNotes || '',
         }));
       setAgreements(fileAgreements);
     } catch (err) {
