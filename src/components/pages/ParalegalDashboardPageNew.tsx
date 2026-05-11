@@ -524,4 +524,17 @@ function DashboardShell() {
           </div>
         </main>
       </div>
- 
+    </div>
+  );
+}
+
+// ============================================================
+// EXPORT — wrapped in context provider
+// ============================================================
+export default function ParalegalDashboardPage() {
+  return (
+    <ParalegalDashboardProvider>
+      <DashboardShell />
+    </ParalegalDashboardProvider>
+  );
+}

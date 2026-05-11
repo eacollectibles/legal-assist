@@ -49,7 +49,7 @@ export async function uploadToWixMedia(
     // constructor is sometimes minified/shadowed to a stub that
     // throws "X is not a constructor" at runtime. A Blob is enough
     // for both the Wix Media SDK and FormData uploads (FormData
-    // accepts a filename argument; Wix's uploadFile accepts the
+    // accepts a filename argument; Wix uploadFile accepts the
     // fileName field separately from the body).
     let blob: Blob;
     if (typeof input === 'string') {
@@ -82,8 +82,6 @@ export async function uploadToWixMedia(
       const uploadUrl = presigned?.uploadUrl || presigned?.url;
       if (!uploadUrl) return null;
       const fd = new FormData();
-      // Third arg to FormData.append supplies the filename without
-      // needing a File wrapper.
       fd.append('file', blob, fileName);
       const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
       if (!resp.ok) return null;

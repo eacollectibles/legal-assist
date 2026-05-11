@@ -112,13 +112,23 @@ export default function PublicSignPage() {
     fileName: string
   ): Promise<{ url: string; mediaId?: string } | null> => {
     try {
-      // Pass the data URL directly to the shared helper. The helper
-      // converts to Blob internally and passes the Blob (NOT a File)
-      // to the Wix Media SDK, because `new File([...])` is unsafe
-      // in the production bundle: minification can shadow `File` to
-      // a stub that throws "X is not a constructor" at runtime.
-      const { uploadToWixMedia } = await import('@/lib/wix-media-upload');
-      return await uploadToWixMedia(dataUrl, fileName, 'application/pdf');
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
+      const file = new File([blob], fileName, { type: 'application/pdf' });
+      const wixMedia: any = await import('@wix/media').catch(() => null);
+      if (!wixMedia) return null;
+      const filesApi = wixMedia.files || wixMedia.default?.files || wixMedia;
+      if (filesApi.uploadFile) {
+        const r = await filesApi.uploadFile({
+          mimeType: 'application/pdf',
+          fileName,
+          file,
+        });
+        const url = r?.file?.url || r?.fileUrl || r?.url;
+        const mediaId = r?.file?.id || r?._id || r?.id;
+        if (url) return { url, mediaId };
+      }
+      return null;
     } catch {
       return null;
     }

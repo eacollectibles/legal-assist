@@ -6497,4 +6497,11 @@ export function generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[], baseUrl:
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": `
+      "item": `${baseUrl}${item.url}`
+    }))
+
+  };
+}
+
+// Export total count for reference
+export const totalConfiguredPages = Object.keys(seoConfig).length;

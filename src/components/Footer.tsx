@@ -271,4 +271,17 @@ export default function Footer() {
             or AI-generated and do not represent actual clients, cases, or outcomes.
           </p>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center mb-3">
-            &copy; 2026 Legal Assist Paralegal Services. Operated by Jean-Francois &ldq
+            &copy; 2026 Legal Assist Paralegal Services. Operated by Jean-Francois &ldquo;Johnny&rdquo; Demers, Licensed Paralegal (Law Society of Ontario), Licence No. P22020, and Candice Fogarty, Licensed Paralegal (Law Society of Ontario), Licence No. P21479. All rights reserved.
+          </p>
+          <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
+            <Link to="/privacy" className="hover:text-primary hover:underline">Privacy Policy</Link>
+            <span className="mx-2">&bull;</span>
+            <Link to="/terms" className="hover:text-primary hover:underline">Terms of Use</Link>
+            <span className="mx-2">&bull;</span>
+            <Link to="/contact" className="hover:text-primary hover:underline">Contact</Link>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
