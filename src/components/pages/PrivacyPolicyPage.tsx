@@ -11,8 +11,8 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Privacy Policy | LegalAssist Paralegal Services Ontario"
-        description="How LegalAssist collects, uses, stores, and protects your personal information. PIPEDA-compliant privacy practices for our paralegal services in Ontario."
+        title="Privacy Policy | Legal Assist Paralegal Services Ontario"
+        description="How Legal Assist collects, uses, stores, and protects your personal information. PIPEDA-compliant privacy practices for our paralegal services in Ontario."
         canonical="https://www.legalassist.london/privacy"
       />
       <Header />
@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
 
           <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg">
             <p className="text-foreground">
-              LegalAssist Paralegal Services ("we," "us," or "our") respects your privacy and is
+              Legal Assist Paralegal Services ("we," "us," or "our") respects your privacy and is
               committed to protecting your personal information. This Privacy Policy explains
               what information we collect, how we use it, and your rights under Canadian privacy
               law and the Law Society of Ontario's confidentiality requirements.
@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
           <div>
             <h2 className="font-heading text-2xl font-bold text-foreground mb-3">1. Who We Are</h2>
             <p>
-              LegalAssist Paralegal Services is operated by Jean-Francois "Johnny" Demers,
+              Legal Assist Paralegal Services is operated by Jean-Francois "Johnny" Demers,
               Licensed Paralegal (LSO #P22020) and Candice Fogarty, Licensed Paralegal
               (LSO #P21479). We are licensed by the Law Society of Ontario under By-Law 4 and
               regulated by the Paralegal Rules of Conduct and By-Law 7.1.

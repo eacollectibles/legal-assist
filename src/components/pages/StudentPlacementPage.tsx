@@ -1,6 +1,6 @@
 /**
  * StudentPlacementPage.tsx
- * Detailed information about LegalAssist's student placement program,
+ * Detailed information about Legal Assist's student placement program,
  * application process, expectations, and standards.
  */
 
@@ -37,13 +37,13 @@ export default function StudentPlacementPage() {
               Student Placement Program
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-4 max-w-3xl">
-              LegalAssist accepts student placements from accredited paralegal and law clerk programs
+              Legal Assist accepts student placements from accredited paralegal and law clerk programs
               across Ontario. Our placement program is designed to give students real-world experience in
               a high-standards, client-facing paralegal practice.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
               We take our responsibility to the next generation of legal professionals seriously. Every placement
-              student at LegalAssist is held to the same professional and ethical standards as our licensed staff.
+              student at Legal Assist is held to the same professional and ethical standards as our licensed staff.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#application-process" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
@@ -209,7 +209,7 @@ export default function StudentPlacementPage() {
                   <h4 className="font-heading text-sm font-bold text-foreground mb-3">Your application must include:</h4>
                   <ul className="space-y-2">
                     {[
-                      'A cover letter explaining why you want to complete your placement at LegalAssist, what area of law interests you most, and what you hope to gain from the experience',
+                      'A cover letter explaining why you want to complete your placement at Legal Assist, what area of law interests you most, and what you hope to gain from the experience',
                       'Your current resume, including any legal or customer service experience',
                       'An unofficial transcript showing your current GPA and courses completed',
                       'A letter from your program coordinator confirming your eligibility for placement, the required hours, and the placement dates',
@@ -242,7 +242,7 @@ export default function StudentPlacementPage() {
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                   <p className="text-sm text-amber-800 font-paragraph">
                     <strong>Note:</strong> Applications with spelling errors in the cover letter, generic cover letters
-                    not addressed to LegalAssist, or missing documents will not proceed to the interview stage.
+                    not addressed to Legal Assist, or missing documents will not proceed to the interview stage.
                     Attention to detail is tested from the very first interaction.
                   </p>
                 </div>
@@ -359,7 +359,7 @@ export default function StudentPlacementPage() {
                   <h4 className="font-heading text-sm font-bold text-foreground mb-3">Required documents include:</h4>
                   <ul className="space-y-2">
                     {[
-                      'Placement Agreement — a tri-party agreement between you, LegalAssist, and your educational institution outlining the terms, hours, expectations, and evaluation criteria',
+                      'Placement Agreement — a tri-party agreement between you, Legal Assist, and your educational institution outlining the terms, hours, expectations, and evaluation criteria',
                       'Confidentiality & Non-Disclosure Agreement — you will have access to privileged client information. This agreement is binding and enforceable. Breaches are reported to your school and may be reported to the LSO.',
                       'Code of Conduct Acknowledgment — our internal code of conduct that supplements the LSO Paralegal Rules of Conduct, covering dress code, phone/social media policy, office procedures, and professional behaviour',
                       'Emergency Contact Form — standard emergency contact information for workplace safety',

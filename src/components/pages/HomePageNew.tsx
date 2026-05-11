@@ -21,7 +21,7 @@ const testimonials = [
   {
     name: 'Sarah M.',
     location: 'London, ON',
-    text: 'I was facing an eviction with almost no notice. LegalAssist reviewed my situation, identified procedural errors in my landlord\'s application, and represented me at the LTB. The case was dismissed. I couldn\'t have done it alone.',
+    text: 'I was facing an eviction with almost no notice. Legal Assist reviewed my situation, identified procedural errors in my landlord\'s application, and represented me at the LTB. The case was dismissed. I couldn\'t have done it alone.',
     service: 'Landlord & Tenant',
     rating: 5,
   },
@@ -49,7 +49,7 @@ const testimonials = [
   {
     name: 'Priya S.',
     location: 'Stratford, ON',
-    text: 'My landlord was withholding my deposit and ignoring my calls. LegalAssist sent a demand letter, filed the appropriate forms, and I had my money back within three weeks. They made a stressful situation manageable.',
+    text: 'My landlord was withholding my deposit and ignoring my calls. Legal Assist sent a demand letter, filed the appropriate forms, and I had my money back within three weeks. They made a stressful situation manageable.',
     service: 'Landlord & Tenant',
     rating: 5,
   },
@@ -133,7 +133,7 @@ export default function HomePageNew() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>LegalAssist London | Licensed Paralegal Services in Ontario</title>
+        <title>Legal Assist London | Licensed Paralegal Services in Ontario</title>
         <meta name="description" content="Professional paralegal services in London, Ontario. Small Claims Court, Landlord & Tenant disputes, debt collection, and legal document preparation. Free case review." />
         <link rel="canonical" href="https://legalassist.london" />
       </Helmet>
@@ -333,7 +333,7 @@ export default function HomePageNew() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight">
-                Why Clients Choose LegalAssist
+                Why Clients Choose Legal Assist
               </h2>
               <p className="mt-6 text-lg text-white/60 leading-relaxed">
                 We provide professional representation grounded in clarity, strategy, and respect

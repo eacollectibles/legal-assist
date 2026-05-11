@@ -153,7 +153,7 @@ export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Pr
     to_email: payload.to,
     subject: payload.subject,
     message: payload.body,
-    from_name: payload.paralegalName || 'LegalAssist Paralegal Services',
+    from_name: payload.paralegalName || 'Legal Assist Paralegal Services',
     document_name: payload.documentName,
     document_link: payload.documentUrl || '',
     client_name: payload.clientName,
@@ -195,7 +195,7 @@ export const sendBookingConfirmationEmail = async (payload: BookingConfirmationP
     date: payload.preferredDate,
     time: payload.preferredTime,
     status: 'confirmed',
-    from_name: 'LegalAssist Paralegal Services',
+    from_name: 'Legal Assist Paralegal Services',
   });
 
   if (!result.success) {
@@ -220,7 +220,7 @@ export const sendStatusNotificationEmails = async (payload: EmailNotificationPay
       ? `Update regarding your ${payload.serviceType} request`
       : `Your ${payload.serviceType} request is being reviewed`;
 
-  const body = `Dear ${payload.clientName},\n\nYour ${payload.serviceType} request for ${payload.preferredDate} at ${payload.preferredTime} ${statusText}.\n\n${payload.approvalNotes ? `Notes: ${payload.approvalNotes}\n\n` : ''}If you have any questions, please don't hesitate to contact us.\n\nThank you,\nLegalAssist Paralegal Services`;
+  const body = `Dear ${payload.clientName},\n\nYour ${payload.serviceType} request for ${payload.preferredDate} at ${payload.preferredTime} ${statusText}.\n\n${payload.approvalNotes ? `Notes: ${payload.approvalNotes}\n\n` : ''}If you have any questions, please don't hesitate to contact us.\n\nThank you,\nLegal Assist Paralegal Services`;
 
   const result = await sendViaEmailJS(EMAILJS_CONFIG.templates.booking, {
     to_email: payload.clientEmail,
@@ -231,7 +231,7 @@ export const sendStatusNotificationEmails = async (payload: EmailNotificationPay
     status: payload.status,
     subject: subject,
     message: body,
-    from_name: 'LegalAssist Paralegal Services',
+    from_name: 'Legal Assist Paralegal Services',
   });
 
   if (!result.success) {
@@ -248,7 +248,7 @@ export const sendEmail = async (payload: SimpleEmailPayload): Promise<void> => {
     to_email: payload.to,
     subject: payload.subject,
     message: payload.body,
-    from_name: 'LegalAssist Paralegal Services',
+    from_name: 'Legal Assist Paralegal Services',
   });
 
   if (!result.success) {
@@ -289,7 +289,7 @@ export const sendCourtFormsEmail = async (payload: CourtFormsEmailPayload): Prom
     to_email: payload.to,
     subject: payload.subject,
     message: payload.body,
-    from_name: payload.paralegalName || 'LegalAssist Paralegal Services',
+    from_name: payload.paralegalName || 'Legal Assist Paralegal Services',
     court_name: payload.courtName,
     client_name: payload.clientName,
     form_list: formList,
@@ -309,7 +309,7 @@ export const sendDocumentEmail = async (payload: EmailDocumentPayload): Promise<
     to_email: payload.to,
     subject: payload.subject,
     message: payload.body,
-    from_name: payload.paralegalName || 'LegalAssist Paralegal Services',
+    from_name: payload.paralegalName || 'Legal Assist Paralegal Services',
     document_name: payload.documentName,
     document_link: payload.documentUrl || '',
     client_name: payload.clientName,

@@ -1,7 +1,7 @@
 # Primary CTA Enforcement Guide
 
 ## Overview
-This document outlines the enforcement of a single, dominant Call-to-Action (CTA) across the LegalAssist website.
+This document outlines the enforcement of a single, dominant Call-to-Action (CTA) across the Legal Assist website.
 
 ## Primary CTA Specification
 - **Text (EXACT):** "Call Now for a Free Case Review"

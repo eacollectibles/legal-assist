@@ -1064,7 +1064,7 @@ export default function ClientIntakePage() {
                                   />
                                   <Label htmlFor="conflictAcknowledge" className="font-paragraph text-sm cursor-pointer leading-relaxed">
                                     I confirm that I have provided accurate names for all opposing parties. I understand
-                                    LegalAssist has checked for conflicts of interest and I may proceed.
+                                    Legal Assist has checked for conflicts of interest and I may proceed.
                                   </Label>
                                 </div>
                               )}

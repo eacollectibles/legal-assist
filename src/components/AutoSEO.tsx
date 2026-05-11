@@ -22,7 +22,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LegalService",
   "@id": "https://www.legalassist.london/#organization",
-  "name": "LegalAssist Paralegal Services",
+  "name": "Legal Assist Paralegal Services",
   "url": "https://www.legalassist.london",
   "telephone": "226-272-5153",
   "email": "jeanfrancois@legalassist.london",
@@ -66,7 +66,7 @@ const localBusinessSchema = {
   "sameAs": [
     // Add your social profiles here when available
     // "https://www.linkedin.com/company/legalassist",
-    // "https://www.google.com/maps/place/LegalAssist"
+    // "https://www.google.com/maps/place/Legal Assist"
   ]
 };
 

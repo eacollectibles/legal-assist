@@ -1183,7 +1183,7 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
 
                 {/* Footer Actions */}
                 <div className="flex items-center justify-between px-8 py-5 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
-                  <p className="text-xs text-gray-400">LegalAssist London — Practice Management System</p>
+                  <p className="text-xs text-gray-400">Legal Assist London — Practice Management System</p>
                   <Button onClick={() => setShowComplianceReport(false)} variant="outline">
                     Close Report
                   </Button>
@@ -3993,7 +3993,7 @@ th{background:#f0f0f0;padding:8px 10px;border:1px solid #ccc;text-align:left;fon
 .footer{margin-top:40px;border-top:1px solid #000;padding-top:12px;font-size:10pt;color:#666}
 @media print{body{margin:20px}}</style></head><body>
 <div class="header"><h1>CONFLICT OF INTEREST CHECK</h1>
-<p style="font-size:10pt;color:#666">LegalAssist Paralegal Services — LSO By-Law 7.1 Compliance</p></div>
+<p style="font-size:10pt;color:#666">Legal Assist Paralegal Services — LSO By-Law 7.1 Compliance</p></div>
 <h2>File Information</h2>
 <div class="info-grid">
 <div class="info-item"><span class="label">File Number:</span><span>${file.fileNumber}</span></div>
@@ -4014,7 +4014,7 @@ th{background:#f0f0f0;padding:8px 10px;border:1px solid #ccc;text-align:left;fon
 <table><thead><tr><th>Searched Name</th><th>Found In</th><th>Matched Record</th><th>Type</th></tr></thead><tbody>${matchRows}</tbody></table>
 <div class="footer">
 <p>This conflict check was performed in accordance with the Law Society of Ontario's Paralegal Rules of Conduct, Rule 3.04.</p>
-<p>Generated: ${new Date().toLocaleString('en-CA')} | File: ${file.fileNumber} | LegalAssist Paralegal Services</p>
+<p>Generated: ${new Date().toLocaleString('en-CA')} | File: ${file.fileNumber} | Legal Assist Paralegal Services</p>
 </div></body></html>`;
   };
 
@@ -4336,6 +4336,15 @@ interface RetainerAgreement {
   paralegalId?: string;
   /** Optional override for matter profile selection (otherwise file.matterType drives it). */
   templateName?: string;
+  // ---- Payment received at retainer signing (LSO By-Law 9 / Form 9A) ----
+  paymentReceived?: boolean;
+  paymentAmount?: string;
+  paymentMethod?: string;       // cash | cheque | credit_card | etransfer | square | other
+  paymentDate?: string;          // YYYY-MM-DD
+  paymentReceivedBy?: string;    // Receiving paralegal display name
+  paymentPurpose?: string;       // e.g. "Initial retainer deposit"
+  paymentReference?: string;     // Cheque #, e-transfer ref, receipt #
+  paymentDeposit?: string;       // 'trust' | 'general'
 }
 
 const EMPTY_RETAINER: Omit<RetainerAgreement, '_id'> = {
@@ -4358,6 +4367,14 @@ const EMPTY_RETAINER: Omit<RetainerAgreement, '_id'> = {
   natureOfMatter: '',
   paralegalId: DEFAULT_PARALEGAL_ID,
   templateName: '',
+  paymentReceived: false,
+  paymentAmount: '',
+  paymentMethod: 'cash',
+  paymentDate: '',
+  paymentReceivedBy: '',
+  paymentPurpose: 'Initial retainer deposit',
+  paymentReference: '',
+  paymentDeposit: 'trust',
 };
 
 function SectionRetainerAgreement({ file }: SectionEditProps) {
@@ -4399,7 +4416,7 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         documentUrl: emailingAgreement.documentUrl || '',
         documentName: `Retainer Agreement — ${file.clientName}`,
         clientName: file.clientName || '',
-        paralegalName: file.assignedParalegalName || 'LegalAssist Paralegal Services',
+        paralegalName: file.assignedParalegalName || 'Legal Assist Paralegal Services',
         documentId: emailingAgreement._id || '',
         clientId: file.clientId,
       });
@@ -4586,6 +4603,16 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         hybridHourlyRate: agreement.hybridHourlyRate || '',
         contingencyPercent: agreement.contingencyPercent || '',
         retainerDeposit: agreement.retainerDeposit || '',
+        // Payment-received block (rendered as "Receipt of Funds"
+        // section in the retainer; mirrored to financialrecords below)
+        paymentReceived: !!agreement.paymentReceived,
+        paymentAmount: agreement.paymentAmount || '',
+        paymentMethod: agreement.paymentMethod || '',
+        paymentDate: agreement.paymentDate || '',
+        paymentReceivedBy: agreement.paymentReceivedBy || '',
+        paymentPurpose: agreement.paymentPurpose || '',
+        paymentReference: agreement.paymentReference || '',
+        paymentDeposit: agreement.paymentDeposit || '',
       };
 
       // ---- Generate HTML (for download) and PDF (for storage / email) ----
@@ -4687,6 +4714,48 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         } catch (err) {
           // eslint-disable-next-line no-console
           console.warn('Could not auto-file retainer to section F:', err);
+        }
+      }
+
+      // ---- LSO By-Law 9 / Form 9A trust-ledger mirror ----
+      // If the paralegal recorded a payment in the Generate Retainer
+      // dialog, write a matching financialrecords row so the trust
+      // ledger reconciles with what the retainer text confirms. The
+      // retainer PDF and the ledger entry both reference the same
+      // amount / method / date / receiving paralegal.
+      if (agreement.paymentReceived && agreement.paymentAmount) {
+        try {
+          const parsedAmount = parseFloat(
+            String(agreement.paymentAmount).replace(/[^0-9.]/g, '')
+          );
+          await BaseCrudService.create('financialrecords', {
+            _id: crypto.randomUUID(),
+            clientId: file.clientId || '',
+            fileId: file._id || '',
+            transactionType:
+              agreement.paymentDeposit === 'trust'
+                ? 'trust_deposit'
+                : 'general_deposit',
+            amount: isFinite(parsedAmount) ? parsedAmount : 0,
+            transactionDate: agreement.paymentDate
+              ? new Date(agreement.paymentDate)
+              : new Date(),
+            description:
+              (agreement.paymentPurpose || 'Retainer payment') +
+              ' - ' +
+              (file.clientName || '') +
+              (file.fileNumber ? ` - File: ${file.fileNumber}` : ''),
+            referenceNumber: agreement.paymentReference || '',
+            paymentMethod: agreement.paymentMethod || '',
+            recordedBy: agreement.paymentReceivedBy || 'Paralegal',
+            _createdDate: new Date(),
+          });
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            'Could not auto-write financialrecords row for retainer payment:',
+            err
+          );
         }
       }
 
@@ -5226,6 +5295,137 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
             </div>
           )}
 
+          {/* ============================================================ */}
+          {/* PAYMENT RECEIVED (LSO By-Law 9 / Form 9A trust ledger)        */}
+          {/* When toggled on, the generated retainer renders a "Receipt   */}
+          {/* of Funds" section and a matching financialrecords row is     */}
+          {/* auto-written to keep the trust ledger in sync with the doc.  */}
+          {/* ============================================================ */}
+          <div className="p-4 border-2 border-emerald-200 bg-emerald-50/50 rounded-lg">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={!!formData.paymentReceived}
+                onChange={(e) =>
+                  setFormData((p) => ({ ...p, paymentReceived: e.target.checked }))
+                }
+                className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-600"
+              />
+              <span className="text-sm font-semibold text-emerald-800">
+                Was a payment received with this retainer?
+              </span>
+            </label>
+            {formData.paymentReceived && (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Amount ($)
+                  </label>
+                  <Input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.paymentAmount || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentAmount: e.target.value }))
+                    }
+                    placeholder="e.g. 500.00"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Method
+                  </label>
+                  <select
+                    value={formData.paymentMethod || 'cash'}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentMethod: e.target.value }))
+                    }
+                    className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
+                  >
+                    <option value="cash">Cash</option>
+                    <option value="cheque">Cheque</option>
+                    <option value="etransfer">Interac e-Transfer</option>
+                    <option value="credit_card">Credit card</option>
+                    <option value="square">Credit card (Square)</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Date received
+                  </label>
+                  <Input
+                    type="date"
+                    value={formData.paymentDate || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentDate: e.target.value }))
+                    }
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Received by (paralegal)
+                  </label>
+                  <Input
+                    value={formData.paymentReceivedBy || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentReceivedBy: e.target.value }))
+                    }
+                    placeholder="e.g. Jean-Francois Demers"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Purpose of payment
+                  </label>
+                  <Input
+                    value={formData.paymentPurpose || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentPurpose: e.target.value }))
+                    }
+                    placeholder="e.g. Initial retainer deposit"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Reference / receipt #
+                  </label>
+                  <Input
+                    value={formData.paymentReference || ''}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentReference: e.target.value }))
+                    }
+                    placeholder="Cheque #, e-transfer ref, etc."
+                    className="mt-1"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                    Funds deposited into
+                  </label>
+                  <select
+                    value={formData.paymentDeposit || 'trust'}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, paymentDeposit: e.target.value }))
+                    }
+                    className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
+                  >
+                    <option value="trust">Trust account (LSO By-Law 9)</option>
+                    <option value="general">General (firm operating) account</option>
+                  </select>
+                </div>
+                <p className="md:col-span-2 text-xs text-emerald-700/80 italic">
+                  A matching trust-ledger row will be auto-written to <code>financialrecords</code> when this retainer is generated.
+                </p>
+              </div>
+            )}
+          </div>
+
           <div>
             <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">Scope of Services *</label>
             <textarea
@@ -5411,7 +5611,7 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         isOpen={isEmailDialogOpen}
         onClose={() => { setIsEmailDialogOpen(false); setEmailingAgreement(null); }}
         onSend={handleEmailRetainer}
-        paralegalName={file.assignedParalegalName || 'LegalAssist Paralegal Services'}
+        paralegalName={file.assignedParalegalName || 'Legal Assist Paralegal Services'}
         clientName={file.clientName || ''}
       />
     </div>
@@ -7342,7 +7542,7 @@ function SectionContingencyPlan({ file, editing, editValues, onChange }: Section
         { key: 'backupFrequency', label: 'Backup Frequency', type: 'select' as const, options: [{ value: 'daily', label: 'Daily' }, { value: 'weekly', label: 'Weekly' }, { value: 'monthly', label: 'Monthly' }] },
         { key: 'accessInstructions', label: 'Access Instructions for Administrator', type: 'textarea' as const },
       ],
-      defaults: { fileStorageLocation: 'LegalAssist London Office — Locked Filing Room', digitalStorageLocation: 'Wix Cloud CMS (encrypted)', backupFrequency: 'daily', accessInstructions: 'Master password and access credentials stored in sealed envelope with administrator. Safe deposit box #412 at TD Bank, 380 Wellington St, London ON.' },
+      defaults: { fileStorageLocation: 'Legal Assist London Office — Locked Filing Room', digitalStorageLocation: 'Wix Cloud CMS (encrypted)', backupFrequency: 'daily', accessInstructions: 'Master password and access credentials stored in sealed envelope with administrator. Safe deposit box #412 at TD Bank, 380 Wellington St, London ON.' },
     },
     {
       id: 'trustAccounts',
@@ -7380,7 +7580,7 @@ function SectionContingencyPlan({ file, editing, editValues, onChange }: Section
         { key: 'calendarSystem', label: 'Calendar/Tickler System', type: 'text' as const },
         { key: 'urgentProtocol', label: 'Urgent Deadline Protocol', type: 'textarea' as const },
       ],
-      defaults: { activeMattersLog: 'LegalAssist CMS — Admin Dashboard → Client Files', calendarSystem: 'Google Calendar (shared with administrator) + CMS appointment system', urgentProtocol: 'Administrator to review all active files within 48 hours. Any matter with a court date within 30 days requires immediate action — request adjournment or arrange coverage. Notify opposing counsel of situation.' },
+      defaults: { activeMattersLog: 'Legal Assist CMS — Admin Dashboard → Client Files', calendarSystem: 'Google Calendar (shared with administrator) + CMS appointment system', urgentProtocol: 'Administrator to review all active files within 48 hours. Any matter with a court date within 30 days requires immediate action — request adjournment or arrange coverage. Notify opposing counsel of situation.' },
     },
     {
       id: 'lsoNotification',
@@ -7420,7 +7620,7 @@ function SectionContingencyPlan({ file, editing, editValues, onChange }: Section
         { key: 'complaintInsurerPolicy', label: 'Policy Number', type: 'text' as const },
         { key: 'complaintProcedure', label: 'Response Procedure', type: 'textarea' as const },
       ],
-      defaults: { complaintOfficer: 'Johnny Demers, Licensed Paralegal', complaintTimeline: 'Acknowledge within 5 business days; full response within 30 days', complaintDocLocation: 'LegalAssist CMS — Admin → Complaints folder', complaintInsurer: 'LAWPRO (through LSO)', complaintInsurerPolicy: 'Contact LSO Member Services for policy details', complaintProcedure: '1. Log complaint receipt date and details in complaints register.\n2. Notify E&O insurer immediately if potential negligence claim.\n3. Gather all relevant file materials and correspondence.\n4. Prepare written response addressing each allegation.\n5. Submit response to LSO within deadline.\n6. Cooperate fully with any LSO investigation.\n7. Document all actions taken in response to complaint.\n8. If complaint involves trust funds, conduct immediate trust audit.\n9. Consider whether client should be referred to independent legal advice.\n10. Update contingency plan if complaint reveals systemic issues.' },
+      defaults: { complaintOfficer: 'Johnny Demers, Licensed Paralegal', complaintTimeline: 'Acknowledge within 5 business days; full response within 30 days', complaintDocLocation: 'Legal Assist CMS — Admin → Complaints folder', complaintInsurer: 'LAWPRO (through LSO)', complaintInsurerPolicy: 'Contact LSO Member Services for policy details', complaintProcedure: '1. Log complaint receipt date and details in complaints register.\n2. Notify E&O insurer immediately if potential negligence claim.\n3. Gather all relevant file materials and correspondence.\n4. Prepare written response addressing each allegation.\n5. Submit response to LSO within deadline.\n6. Cooperate fully with any LSO investigation.\n7. Document all actions taken in response to complaint.\n8. If complaint involves trust funds, conduct immediate trust audit.\n9. Consider whether client should be referred to independent legal advice.\n10. Update contingency plan if complaint reveals systemic issues.' },
     },
   ];
 
@@ -7530,3 +7730,4 @@ function SectionContingencyPlan({ file, editing, editValues, onChange }: Section
     </div>
   );
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               

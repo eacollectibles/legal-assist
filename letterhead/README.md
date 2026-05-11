@@ -1,6 +1,6 @@
 # Legal Assist — Letterhead Generator
 
-Reusable Python module that produces letters on the LegalAssist
+Reusable Python module that produces letters on the Legal Assist
 letterhead with an embedded cursive auto-signature. Used for LTB
 scheduling requests, demand letters, Crown disclosure requests,
 opposing-counsel correspondence, etc.

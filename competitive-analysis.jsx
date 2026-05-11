@@ -53,7 +53,7 @@ const METRICS = [
 
 const COMPETITORS = [
   {
-    name: "LegalAssist",
+    name: "Legal Assist",
     url: "legalassist.london",
     isYou: true,
     location: "London, ON",
@@ -304,7 +304,7 @@ export default function CompetitiveAnalysis() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Competitive Analysis</h1>
-        <p className="text-sm text-gray-500">LegalAssist vs. 10 Ontario paralegal competitors — April 2026</p>
+        <p className="text-sm text-gray-500">Legal Assist vs. 10 Ontario paralegal competitors — April 2026</p>
       </div>
 
       {/* Scoring Legend */}
@@ -476,7 +476,7 @@ export default function CompetitiveAnalysis() {
       {/* Methodology */}
       <div className="mt-6 text-xs text-gray-400 border-t pt-4">
         <p className="font-medium text-gray-500 mb-1">Methodology</p>
-        <p>Scores based on publicly visible website features as of April 2026. Each metric scored 1–10 by evaluating the live website. Weighted scoring reflects business impact: content depth & legal accuracy (weight 10) matter more than page speed (weight 6). LegalAssist scores reflect actual codebase analysis (400+ pages verified). Competitor scores reflect WebFetch evaluation of their public websites. This analysis does not account for paid advertising, offline reputation, or non-public business metrics.</p>
+        <p>Scores based on publicly visible website features as of April 2026. Each metric scored 1–10 by evaluating the live website. Weighted scoring reflects business impact: content depth & legal accuracy (weight 10) matter more than page speed (weight 6). Legal Assist scores reflect actual codebase analysis (400+ pages verified). Competitor scores reflect WebFetch evaluation of their public websites. This analysis does not account for paid advertising, offline reputation, or non-public business metrics.</p>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ const isPrivateRoute = /^\/(admin|dashboard|client-dashboard|login|signup|client
 
 // Get SEO config for this path, or use defaults
 const pageConfig = seoConfig[normalizedPath] || {
-  title: 'LegalAssist Paralegal Services | London Ontario',
+  title: 'Legal Assist Paralegal Services | London Ontario',
   description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 226-272-5153.',
   keywords: 'paralegal london ontario, legal services, traffic ticket lawyer, LTB paralegal, small claims court'
 };
@@ -38,7 +38,7 @@ const canonicalUrl = `${businessInfo.url}${normalizedPath === '/' ? '' : normali
 // Derive an H1 from the title (strip brand/city suffixes after separators)
 const ssrH1 = pageConfig.title
   .split(/\s*\|\s*/)[0]
-  .trim() || 'LegalAssist Paralegal Services';
+  .trim() || 'Legal Assist Paralegal Services';
 
 // Generate JSON-LD for FAQs if present
 const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0
@@ -57,8 +57,8 @@ const schemaData = {
     {
       "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
       "@id": "https://www.legalassist.london/#organization",
-      "name": "LegalAssist Paralegal Services",
-      "alternateName": "LegalAssist",
+      "name": "Legal Assist Paralegal Services",
+      "alternateName": "Legal Assist",
       "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
       "url": "https://www.legalassist.london",
       "logo": {
@@ -111,13 +111,13 @@ const schemaData = {
       "knowsLanguage": ["en", "English"],
       "slogan": "Affordable Legal Help When You Need It Most",
       "foundingDate": "2024",
-      "legalName": "LegalAssist Paralegal Services"
+      "legalName": "Legal Assist Paralegal Services"
     },
     {
       "@type": "WebSite",
       "@id": "https://www.legalassist.london/#website",
       "url": "https://www.legalassist.london",
-      "name": "LegalAssist Paralegal Services",
+      "name": "Legal Assist Paralegal Services",
       "description": "Licensed paralegal services in London, Ontario",
       "publisher": {
         "@id": "https://www.legalassist.london/#organization"
@@ -199,14 +199,14 @@ const currentYear = new Date().getFullYear();
     <meta name="robots" content={isPrivateRoute ? 'noindex, nofollow' : 'index, follow'} />
     
     <!-- Business Meta -->
-    <meta name="author" content="LegalAssist Paralegal Services" />
-    <meta name="publisher" content="LegalAssist Paralegal Services" />
-    <meta name="copyright" content={`© ${currentYear} LegalAssist Paralegal Services`} />
+    <meta name="author" content="Legal Assist Paralegal Services" />
+    <meta name="publisher" content="Legal Assist Paralegal Services" />
+    <meta name="copyright" content={`© ${currentYear} Legal Assist Paralegal Services`} />
     <meta name="language" content="en-CA" />
     
     <!-- SERVER-SIDE SEO: Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="LegalAssist Paralegal Services" />
+    <meta property="og:site_name" content="Legal Assist Paralegal Services" />
     <meta property="og:title" content={pageConfig.title} />
     <meta property="og:description" content={pageConfig.description} />
     <meta property="og:url" content={canonicalUrl} />
@@ -214,7 +214,7 @@ const currentYear = new Date().getFullYear();
     <meta property="og:image" content={`${businessInfo.url}/og-image.jpg`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="LegalAssist Paralegal Services - London, Ontario" />
+    <meta property="og:image:alt" content="Legal Assist Paralegal Services - London, Ontario" />
     
     <!-- SERVER-SIDE SEO: Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -233,8 +233,8 @@ const currentYear = new Date().getFullYear();
     <meta name="msapplication-TileColor" content="#B94A1F" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="LegalAssist" />
-    <meta name="application-name" content="LegalAssist" />
+    <meta name="apple-mobile-web-app-title" content="Legal Assist" />
+    <meta name="application-name" content="Legal Assist" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="/site.webmanifest" />
     
@@ -332,9 +332,9 @@ const currentYear = new Date().getFullYear();
           </section>
         )}
         <section>
-          <h2>Contact LegalAssist</h2>
+          <h2>Contact Legal Assist</h2>
           <p>
-            LegalAssist Paralegal Services &mdash; Licensed by the Law Society of Ontario.
+            Legal Assist Paralegal Services &mdash; Licensed by the Law Society of Ontario.
             Serving London, Ontario and Southwestern Ontario. Call
             <a href={`tel:${PHONE_TEL}`}>{businessInfo.telephoneDisplay}</a>
             or email <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>

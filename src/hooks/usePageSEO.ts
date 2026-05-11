@@ -82,7 +82,7 @@ export function usePageSEO(overrides?: Partial<SEOConfig>) {
     setMetaTag('og:description', seo.description, true);
     setMetaTag('og:url', canonicalUrl, true);
     setMetaTag('og:type', 'website', true);
-    setMetaTag('og:site_name', 'LegalAssist Paralegal Services', true);
+    setMetaTag('og:site_name', 'Legal Assist Paralegal Services', true);
     setMetaTag('og:locale', 'en_CA', true);
     
     // Twitter Card tags

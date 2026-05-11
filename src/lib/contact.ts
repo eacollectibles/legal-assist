@@ -1,6 +1,6 @@
 /**
  * Single source of truth for contact information
- * Used across the entire LegalAssist site
+ * Used across the entire Legal Assist site
  */
 
 // Voice / call line

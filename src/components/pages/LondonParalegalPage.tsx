@@ -30,7 +30,7 @@ export default function LondonParalegalPage() {
               Licensed paralegal representation for Small Claims Court, Landlord and Tenant Board, traffic tickets, and administrative tribunal matters in London and throughout Southwestern Ontario.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
-              Whether you are facing a landlord-tenant dispute at the London LTB office, a traffic ticket from the London Provincial Offences Court, or a Small Claims Court matter at the Middlesex County courthouse, LegalAssist provides affordable, professional paralegal services tailored to your needs.
+              Whether you are facing a landlord-tenant dispute at the London LTB office, a traffic ticket from the London Provincial Offences Court, or a Small Claims Court matter at the Middlesex County courthouse, Legal Assist provides affordable, professional paralegal services tailored to your needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
@@ -52,7 +52,7 @@ export default function LondonParalegalPage() {
             In Ontario, licensed paralegals are authorized by the Law Society of Ontario to represent clients in specific legal matters. Unlike lawyers, paralegals offer a cost-effective alternative for cases that fall within their scope of practice, including Small Claims Court actions up to $50,000, Provincial Offences Act matters, Landlord and Tenant Board disputes, and select tribunal proceedings.
           </p>
           <p className="font-paragraph text-base text-foreground/60 text-center mb-12 max-w-3xl mx-auto">
-            At LegalAssist, our licensed paralegal provides London residents and businesses with knowledgeable representation at a fraction of the cost of hiring a lawyer. Every case is handled personally, ensuring you receive dedicated attention from start to resolution.
+            At Legal Assist, our licensed paralegal provides London residents and businesses with knowledgeable representation at a fraction of the cost of hiring a lawyer. Every case is handled personally, ensuring you receive dedicated attention from start to resolution.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -140,12 +140,12 @@ export default function LondonParalegalPage() {
         </div>
       </section>
 
-      {/* Why Choose LegalAssist */}
+      {/* Why Choose Legal Assist */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Why London Clients Choose LegalAssist</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Why London Clients Choose Legal Assist</h2>
           <p className="font-paragraph text-lg text-foreground/70 text-center mb-12 max-w-3xl mx-auto">
-            London residents and businesses trust LegalAssist for reliable, affordable paralegal representation backed by local experience and modern technology.
+            London residents and businesses trust Legal Assist for reliable, affordable paralegal representation backed by local experience and modern technology.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -250,7 +250,7 @@ export default function LondonParalegalPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Need Affordable Legal Help in London, Ontario?</h2>
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-4 max-w-2xl mx-auto">
-            Do not navigate the legal system alone. Whether you are a London tenant facing eviction, a driver with a traffic ticket, or a business owner owed money, LegalAssist is here to help.
+            Do not navigate the legal system alone. Whether you are a London tenant facing eviction, a driver with a traffic ticket, or a business owner owed money, Legal Assist is here to help.
           </p>
           <p className="font-paragraph text-base text-secondary-foreground/60 mb-8 max-w-2xl mx-auto">
             Contact us today for a free, no-obligation consultation. We will review your matter and provide clear advice on how we can help resolve it.
@@ -269,4 +269,4 @@ export default function LondonParalegalPage() {
       <Footer />
     </div>
   );
-}
+}

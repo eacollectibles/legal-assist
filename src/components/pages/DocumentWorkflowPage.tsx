@@ -10,9 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2, PenTool, Link2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generator';
@@ -92,6 +93,74 @@ interface UserAccount {
   email?: string;
   firstName?: string;
   lastName?: string;
+}
+
+// ============================================================
+// AREA-OF-LAW CLASSIFIER
+// ============================================================
+// Group templates in the Generate Document picker by the area of
+// law they belong to (LTB, Small Claims, Provincial Offences, etc).
+// We don't have a dedicated "area" field on DocumentTemplate, so we
+// infer it from the templateName + templateType using keyword match.
+// Areas are listed in display order; templates within each area get
+// sorted alphabetically at render time.
+const AREA_DISPLAY_ORDER = [
+  'Landlord & Tenant Board',
+  'Small Claims Court',
+  'Human Rights Tribunal',
+  'Employment / ESA',
+  'Provincial Offences / Traffic',
+  'Criminal',
+  'WSIB',
+  'Social Benefits (ODSP/OW)',
+  'Notary / Commissioner',
+  'General / Administrative',
+];
+
+function classifyTemplateArea(template: DocumentTemplate): string {
+  const text =
+    `${template.templateName || ''} ${template.templateType || ''}`.toLowerCase();
+  // Order matters here - more specific keywords first.
+  if (
+    /\bltb\b|landlord|tenant|n4|n5|n6|n7|n8|n11|n12|n13|l1\b|l2\b|t1\b|t2\b|t5\b|t6\b|residential tenanc/.test(
+      text
+    )
+  ) {
+    return 'Landlord & Tenant Board';
+  }
+  if (/small claim|plaintiff|form 7a|form 9a|form 10a/.test(text)) {
+    return 'Small Claims Court';
+  }
+  if (/\bhrto\b|human rights|discrimination|code-related|harassment.*ground/.test(text)) {
+    return 'Human Rights Tribunal';
+  }
+  if (/\besa\b|employment|wrongful|severance|wage|termination|hours of work|overtime/.test(text)) {
+    return 'Employment / ESA';
+  }
+  if (
+    /\bpoa\b|provincial offence|highway traffic|stunt driving|careless|speeding|distracted|red light|seat belt|hov\b|insurance.*card|drive.*suspended|fail to/.test(
+      text
+    )
+  ) {
+    return 'Provincial Offences / Traffic';
+  }
+  if (
+    /\bcc\b|criminal code|impaired|dui\b|over 80|assault|mischief|theft.*under|peace bond|trespass|disturbance/.test(
+      text
+    )
+  ) {
+    return 'Criminal';
+  }
+  if (/\bwsib\b|workplace.*injury|workplace safety.*insurance/.test(text)) {
+    return 'WSIB';
+  }
+  if (/\bodsp\b|ontario works|\bow\b|social benefits|social assistance/.test(text)) {
+    return 'Social Benefits (ODSP/OW)';
+  }
+  if (/notary|commissioner|oath|affidavit|statutory declaration/.test(text)) {
+    return 'Notary / Commissioner';
+  }
+  return 'General / Administrative';
 }
 
 export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean } = {}) {
@@ -1569,11 +1638,47 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                           <SelectValue placeholder="Choose a template" />
                         </SelectTrigger>
                         <SelectContent>
-                          {templates.filter(t => t.isActive).map((template) => (
-                            <SelectItem key={template._id} value={template._id}>
-                              {template.templateName} ({template.templateType})
-                            </SelectItem>
-                          ))}
+                          {(() => {
+                            // Group active templates by inferred area of
+                            // law, sort areas by AREA_DISPLAY_ORDER, and
+                            // sort templates alphabetically within each
+                            // area for fast paralegal lookup.
+                            const active = templates.filter((t) => t.isActive);
+                            const byArea: Record<string, DocumentTemplate[]> = {};
+                            for (const t of active) {
+                              const area = classifyTemplateArea(t);
+                              (byArea[area] = byArea[area] || []).push(t);
+                            }
+                            const orderedAreas = AREA_DISPLAY_ORDER
+                              .filter((a) => byArea[a] && byArea[a].length > 0)
+                              .concat(
+                                Object.keys(byArea).filter(
+                                  (a) => !AREA_DISPLAY_ORDER.includes(a)
+                                ).sort()
+                              );
+                            for (const a of orderedAreas) {
+                              byArea[a].sort((x, y) =>
+                                (x.templateName || '').localeCompare(
+                                  y.templateName || '',
+                                  'en',
+                                  { sensitivity: 'base' }
+                                )
+                              );
+                            }
+                            return orderedAreas.map((area) => (
+                              <SelectGroup key={area}>
+                                <SelectLabel>{area}</SelectLabel>
+                                {byArea[area].map((template) => (
+                                  <SelectItem key={template._id} value={template._id}>
+                                    {template.templateName}
+                                    {template.templateType
+                                      ? ` (${template.templateType})`
+                                      : ''}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            ));
+                          })()}
                         </SelectContent>
                       </Select>
                     </div>
@@ -1907,8 +2012,55 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                     </p>
                   </CardContent>
                 </Card>
-              ) : (
-                generatedDocs.map((doc) => (
+              ) : (() => {
+                // ----------------------------------------------------------------
+                // Group generated documents by client name, sort clients
+                // alphabetically, sort documents alphabetically within each
+                // client. Each client is collapsible so the paralegal can
+                // drill into one matter at a time.
+                // ----------------------------------------------------------------
+                const grouped: Record<string, typeof generatedDocs> = {};
+                for (const d of generatedDocs) {
+                  const name = (getClientName(d.clientId) || '').trim() || 'Unassigned';
+                  (grouped[name] = grouped[name] || []).push(d);
+                }
+                const clientNames = Object.keys(grouped).sort((a, b) => {
+                  if (a === 'Unassigned') return 1;
+                  if (b === 'Unassigned') return -1;
+                  return a.localeCompare(b, 'en', { sensitivity: 'base' });
+                });
+                for (const n of clientNames) {
+                  grouped[n].sort((a, b) =>
+                    (a.documentName || '').localeCompare(
+                      b.documentName || '',
+                      'en',
+                      { sensitivity: 'base' }
+                    )
+                  );
+                }
+                return (
+                  <Accordion type="multiple" className="space-y-3">
+                    {clientNames.map((clientName) => (
+                      <AccordionItem
+                        key={clientName}
+                        value={clientName}
+                        className="border border-border rounded-lg bg-white"
+                      >
+                        <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                          <span className="flex items-center gap-3 flex-1">
+                            <Users className="h-4 w-4 text-primary flex-shrink-0" />
+                            <span className="font-heading font-semibold text-foreground text-left">
+                              {clientName}
+                            </span>
+                            <Badge variant="outline" className="ml-auto mr-2">
+                              {grouped[clientName].length}{' '}
+                              {grouped[clientName].length === 1 ? 'doc' : 'docs'}
+                            </Badge>
+                          </span>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="grid gap-4">
+                            {grouped[clientName].map((doc) => (
                   <Card key={doc._id} className="hover:shadow-lg transition-shadow">
                     <CardHeader>
                       <div className="flex justify-between items-start">
@@ -2135,8 +2287,14 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                       </div>
                     </CardContent>
                   </Card>
-                ))
-              )}
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                );
+              })()}
             </div>
           </TabsContent>
 

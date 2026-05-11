@@ -2,7 +2,7 @@
 Legal Assist — Reusable Letterhead Engine
 ==========================================
 
-Generates a one-page (or multi-page) PDF on the LegalAssist letterhead
+Generates a one-page (or multi-page) PDF on the Legal Assist letterhead
 with a cursive auto-signature. Used for LTB scheduling requests, demand
 letters, Crown disclosure requests, opposing-counsel correspondence,
 etc. The letterhead and signature visuals match the live Wix retainer

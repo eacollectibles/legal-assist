@@ -376,7 +376,7 @@ function DashboardShell() {
           </div>
           {!sidebarCollapsed && (
             <div className="min-w-0">
-              <p className="text-sm font-bold text-white truncate">LegalAssist</p>
+              <p className="text-sm font-bold text-white truncate">Legal Assist</p>
               <p className="text-[10px] text-white/50 uppercase tracking-wider">Paralegal Hub</p>
             </div>
           )}
@@ -524,17 +524,4 @@ function DashboardShell() {
           </div>
         </main>
       </div>
-    </div>
-  );
-}
-
-// ============================================================
-// EXPORT — wrapped in context provider
-// ============================================================
-export default function ParalegalDashboardPage() {
-  return (
-    <ParalegalDashboardProvider>
-      <DashboardShell />
-    </ParalegalDashboardProvider>
-  );
-}
+ 

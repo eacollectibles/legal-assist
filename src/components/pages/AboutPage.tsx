@@ -17,7 +17,7 @@ export default function AboutPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-              About LegalAssist
+              About Legal Assist
             </h1>
             <p className="font-paragraph text-lg text-foreground/80">
               Professional paralegal services providing accessible legal representation across Ontario. We're committed to making quality legal assistance available to individuals and small businesses.
@@ -35,7 +35,7 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="font-paragraph text-lg text-foreground/80 mb-6">
-                At LegalAssist, we believe that everyone deserves access to quality legal representation. Our mission is to provide professional, affordable, and compassionate paralegal services that empower individuals and small businesses to navigate Ontario's legal system with confidence.
+                At Legal Assist, we believe that everyone deserves access to quality legal representation. Our mission is to provide professional, affordable, and compassionate paralegal services that empower individuals and small businesses to navigate Ontario's legal system with confidence.
               </p>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
                 We concentrate our practice on a broad range of legal matters within the authorized scope of paralegal practice, from criminal defense to landlord-tenant disputes, human rights matters, and small claims court representation.
@@ -67,7 +67,7 @@ export default function AboutPage() {
             <div className="rounded-lg overflow-hidden shadow-lg">
               <Image
                 src="https://static.wixstatic.com/media/99571b_9954538ec5b24b4a8a245180de229f4b~mv2.png?id=about-mission"
-                alt="LegalAssist team providing professional paralegal services"
+                alt="Legal Assist team providing professional paralegal services"
                 width={600}
                 height={400}
                 loading="lazy"
@@ -82,7 +82,7 @@ export default function AboutPage() {
       <section className="w-full py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           <h2 className="font-heading text-4xl font-bold text-foreground mb-12 text-center">
-            Why Choose LegalAssist
+            Why Choose Legal Assist
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm">

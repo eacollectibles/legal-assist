@@ -855,7 +855,7 @@ export const blogPosts: BlogPost[] = [
       <p>Licensed paralegals can handle the same matters as lawyers within our scope of practice, but our overhead is lower and we concentrate our practice on these specific areas. You're not paying for services you don't need.</p>
       
       <h2>Payment Options</h2>
-      <p>At LegalAssist, we offer:</p>
+      <p>At Legal Assist, we offer:</p>
       <ul>
         <li>Free initial consultations (30 minutes)</li>
         <li>Flat-fee pricing for most services (no surprise bills)</li>
@@ -866,7 +866,7 @@ export const blogPosts: BlogPost[] = [
       <p>Call us at <a href="tel:+12262725153">226-272-5153</a> for a free quote on your specific situation.</p>
     `,
     faqs: [
-      { q: 'Do paralegals charge hourly or flat fees?', a: 'Most paralegals offer both options. At LegalAssist, we prefer flat fees for transparency - you know exactly what you\'ll pay upfront.' },
+      { q: 'Do paralegals charge hourly or flat fees?', a: 'Most paralegals offer both options. At Legal Assist, we prefer flat fees for transparency - you know exactly what you\'ll pay upfront.' },
       { q: 'Is a free consultation really free?', a: 'Yes. Our 30-minute consultations are completely free with no obligation. We\'ll assess your situation and provide a clear quote.' },
       { q: 'Can I pay in installments?', a: 'Yes, we offer payment plans for most services. Contact us to discuss options that fit your budget.' }
     ]

@@ -74,13 +74,13 @@ export default function Header() {
             <Link 
               to="/" 
               className="flex items-center gap-2 sm:gap-3 flex-shrink-0 focus-ring rounded-lg p-1 -m-1" 
-              aria-label="LegalAssist home"
+              aria-label="Legal Assist home"
             >
               <div className="w-10 h-10 sm:w-11 sm:h-11 bg-primary rounded-sm flex items-center justify-center">
                 <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">L.A</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-lg sm:text-2xl text-secondary font-bold leading-tight">LegalAssist</span>
+                <span className="font-heading text-lg sm:text-2xl text-secondary font-bold leading-tight">Legal Assist</span>
                 <span className="font-paragraph text-xs sm:text-sm text-secondary/60 font-normal leading-tight">Paralegal Services</span>
               </div>
             </Link>

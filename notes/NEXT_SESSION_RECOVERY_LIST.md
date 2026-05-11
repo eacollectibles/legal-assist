@@ -81,7 +81,7 @@ Process to confirm a culprit:
 
 ## Brand rename (deferred)
 
-`LegalAssist` → `Legal Assist` across ~44 active files. Three attempts have been corrupted. Defer until file-corruption investigation is complete.
+`Legal Assist` → `Legal Assist` across ~44 active files. Three attempts have been corrupted. Defer until file-corruption investigation is complete.
 
 ## Recovery checkpoints
 

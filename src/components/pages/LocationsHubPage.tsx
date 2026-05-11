@@ -228,7 +228,7 @@ export default function LocationsHubPage() {
               Ontario Paralegal Services
             </h1>
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Licensed paralegal representation across {totalCities}+ Ontario communities. From Windsor to Ottawa, Thunder Bay to Niagara Falls, LegalAssist provides affordable legal services wherever you are in Ontario.
+              Licensed paralegal representation across {totalCities}+ Ontario communities. From Windsor to Ottawa, Thunder Bay to Niagara Falls, Legal Assist provides affordable legal services wherever you are in Ontario.
             </p>
             <div className="relative max-w-md">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />

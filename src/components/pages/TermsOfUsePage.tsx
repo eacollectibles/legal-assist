@@ -11,8 +11,8 @@ export default function TermsOfUsePage() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Terms of Use | LegalAssist Paralegal Services Ontario"
-        description="Terms governing your use of the LegalAssist website, client portal, and online services. Notice that website use does not create a paralegal-client relationship."
+        title="Terms of Use | Legal Assist Paralegal Services Ontario"
+        description="Terms governing your use of the Legal Assist website, client portal, and online services. Notice that website use does not create a paralegal-client relationship."
         canonical="https://www.legalassist.london/terms"
       />
       <Header />
@@ -43,7 +43,7 @@ export default function TermsOfUsePage() {
           <div>
             <h2 className="font-heading text-2xl font-bold text-foreground mb-3">1. About These Terms</h2>
             <p>
-              These Terms of Use ("Terms") govern your access to and use of the LegalAssist
+              These Terms of Use ("Terms") govern your access to and use of the Legal Assist
               website at legalassist.london (the "Site"), the client portal, and any online
               services we offer. The Site is operated by Jean-Francois Demers (LSO #P22020) and
               Candice Fogarty (LSO #P21479), Licensed Paralegals regulated by the Law Society
@@ -122,7 +122,7 @@ export default function TermsOfUsePage() {
             <h2 className="font-heading text-2xl font-bold text-foreground mb-3">7. Intellectual Property</h2>
             <p>
               The Site (including text, graphics, layout, code, blog posts, and templates) is
-              owned by LegalAssist Paralegal Services or licensed for our use. You may view,
+              owned by Legal Assist Paralegal Services or licensed for our use. You may view,
               download, and print Site content for personal, non-commercial use. You may not
               republish, redistribute, or scrape Site content for commercial purposes without
               written permission. Trademarks, logos, and service marks displayed on the Site
@@ -143,7 +143,7 @@ export default function TermsOfUsePage() {
           <div>
             <h2 className="font-heading text-2xl font-bold text-foreground mb-3">9. Limitation of Liability</h2>
             <p>
-              To the fullest extent permitted by law, LegalAssist Paralegal Services and its
+              To the fullest extent permitted by law, Legal Assist Paralegal Services and its
               licensed paralegals are not liable for any indirect, incidental, consequential,
               or punitive damages arising from your use of the Site. Nothing in these Terms
               limits liability for fraud, professional misconduct, or any liability that cannot

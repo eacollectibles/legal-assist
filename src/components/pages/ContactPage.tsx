@@ -560,8 +560,8 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-heading text-xl font-bold mb-2">Office Location</h3>
                   <p className="font-paragraph text-secondary-foreground/80">
-                    123 Bay Street, Suite 500<br />
-                    Toronto, ON M5J 2N8
+                    Digital and In-Person appointments<br />
+                    Serving clients across Ontario
                   </p>
                 </div>
               </div>

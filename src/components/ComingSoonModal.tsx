@@ -54,7 +54,7 @@ export default function ComingSoonModal() {
         <div className="px-6 py-6">
           <div className="space-y-4">
             <p className="font-paragraph text-foreground text-base leading-relaxed">
-              <strong>LegalAssist Paralegal Services is not yet open for business.</strong>
+              <strong>Legal Assist Paralegal Services is not yet open for business.</strong>
             </p>
             
             <p className="font-paragraph text-foreground/80 text-base leading-relaxed">
@@ -82,7 +82,7 @@ export default function ComingSoonModal() {
             I Understand — Continue to Website
           </button>
           <p className="text-center text-xs text-foreground/50 mt-3 font-paragraph">
-            By clicking above, you acknowledge that LegalAssist is not currently offering legal services.
+            By clicking above, you acknowledge that Legal Assist is not currently offering legal services.
           </p>
         </div>
       </div>

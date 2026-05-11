@@ -103,12 +103,12 @@ export default function LegalNewsPage() {
   const pageSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Recent Ontario Legal Decisions | LegalAssist',
+    name: 'Recent Ontario Legal Decisions | Legal Assist',
     description: 'Stay informed with the latest Ontario tribunal and court decisions relevant to landlord-tenant disputes, traffic tickets, small claims, and human rights matters.',
     url: 'https://www.legalassist.london/legal-news',
     publisher: {
       '@type': 'LegalService',
-      name: 'LegalAssist Paralegal Services',
+      name: 'Legal Assist Paralegal Services',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'London',
@@ -231,7 +231,7 @@ export default function LegalNewsPage() {
   return (
     <>
       <Helmet>
-        <title>Recent Ontario Legal Decisions | LegalAssist Paralegal Services</title>
+        <title>Recent Ontario Legal Decisions | Legal Assist Paralegal Services</title>
         <meta 
           name="description" 
           content="Stay informed with the latest Ontario tribunal and court decisions. Landlord-tenant, traffic, small claims, and human rights cases updated from CanLII." 

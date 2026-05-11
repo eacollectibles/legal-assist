@@ -29,11 +29,11 @@ const teamMembers = [
     subtitle: 'P1 Licence Holder',
     licenseNumber: 'P#XXXXX', // Replace with actual LSO number
     image: 'https://static.wixstatic.com/media/99571b_johnny_demers_paralegal~mv2.jpg?id=johnny-demers-headshot',
-    imageAlt: 'Johnny Demers, Licensed Paralegal and Founder of LegalAssist Paralegal Services in London Ontario',
-    bio: `Johnny Demers is the founder and principal paralegal of LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny established LegalAssist to provide professional legal representation to individuals and small businesses across Southwestern Ontario who might otherwise struggle to afford quality legal help.`,
+    imageAlt: 'Johnny Demers, Licensed Paralegal and Founder of Legal Assist Paralegal Services in London Ontario',
+    bio: `Johnny Demers is the founder and principal paralegal of Legal Assist Paralegal Services. With a deep commitment to accessible justice, Johnny established Legal Assist to provide professional legal representation to individuals and small businesses across Southwestern Ontario who might otherwise struggle to afford quality legal help.`,
     fullBio: `Johnny brings a unique perspective to paralegal work, combining technical expertise with genuine compassion for clients facing legal challenges. His approach emphasizes clear communication, thorough preparation, and aggressive advocacy within the bounds of professional ethics.
 
-Before founding LegalAssist, Johnny developed extensive knowledge in various areas of paralegal practice and remains committed to continuous professional development. He takes pride in demystifying the legal process for clients and ensuring they understand their rights and options at every stage of their matter.`,
+Before founding Legal Assist, Johnny developed extensive knowledge in various areas of paralegal practice and remains committed to continuous professional development. He takes pride in demystifying the legal process for clients and ensuring they understand their rights and options at every stage of their matter.`,
     specializations: [
       'Provincial Offences & Traffic Tickets',
       'Small Claims Court Litigation',
@@ -45,7 +45,7 @@ Before founding LegalAssist, Johnny developed extensive knowledge in various are
       'Paralegal Diploma - [Program Name]',
       'Licensed by the Law Society of Ontario'
     ],
-    personalNote: `"I founded LegalAssist because I believe everyone deserves quality legal representation, regardless of their financial situation. The legal system can be intimidating, but it doesn't have to be. My goal is to guide clients through their legal matters with clarity, compassion, and unwavering dedication to their best interests."`,
+    personalNote: `"I founded Legal Assist because I believe everyone deserves quality legal representation, regardless of their financial situation. The legal system can be intimidating, but it doesn't have to be. My goal is to guide clients through their legal matters with clarity, compassion, and unwavering dedication to their best interests."`,
     email: 'johnny@legalassist.ca',
     phone: '(519) 555-0100',
     linkedIn: 'https://linkedin.com/in/johnnydemers',
@@ -58,9 +58,9 @@ Before founding LegalAssist, Johnny developed extensive knowledge in various are
     subtitle: 'P1 Licence Holder',
     licenseNumber: 'P#XXXXX', // Replace with actual LSO number
     image: 'https://static.wixstatic.com/media/99571b_candice_fogarty_paralegal~mv2.jpg?id=candice-fogarty-headshot',
-    imageAlt: 'Candice Fogarty, Managing Paralegal at LegalAssist Paralegal Services in London Ontario',
-    bio: `Candice Fogarty serves as Managing Paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. Her dedication to thorough case preparation and compassionate client service has made her an invaluable member of the team.`,
-    fullBio: `With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines LegalAssist's approach to legal services.
+    imageAlt: 'Candice Fogarty, Managing Paralegal at Legal Assist Paralegal Services in London Ontario',
+    bio: `Candice Fogarty serves as Managing Paralegal at Legal Assist, bringing exceptional organizational skills and a client-centered approach to the firm. Her dedication to thorough case preparation and compassionate client service has made her an invaluable member of the team.`,
+    fullBio: `With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines Legal Assist's approach to legal services.
 
 Candice is known for her ability to break down complicated legal procedures into understandable steps, helping clients feel confident and informed throughout their legal journey. Her expertise spans multiple practice areas, and she approaches each case with the same level of dedication and professionalism.`,
     specializations: [
@@ -87,7 +87,7 @@ function generateTeamStructuredData() {
   return {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
-    name: 'LegalAssist Paralegal Services',
+    name: 'Legal Assist Paralegal Services',
     description: 'Professional paralegal services in London, Ontario and surrounding areas',
     url: 'https://www.legalassist.london',
     address: {
@@ -105,7 +105,7 @@ function generateTeamStructuredData() {
       telephone: member.phone,
       worksFor: {
         '@type': 'LegalService',
-        name: 'LegalAssist Paralegal Services'
+        name: 'Legal Assist Paralegal Services'
       },
       hasCredential: {
         '@type': 'EducationalOccupationalCredential',
@@ -310,11 +310,11 @@ function TeamMemberCard({ member, index }: { member: typeof teamMembers[0]; inde
 export default function MeetOurTeamPage() {
   useEffect(() => {
     // Page title and meta description
-    document.title = 'Meet Our Team | Licensed Paralegals in London Ontario | LegalAssist';
+    document.title = 'Meet Our Team | Licensed Paralegals in London Ontario | Legal Assist';
     
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Meet the licensed paralegals at LegalAssist. Our team of Law Society of Ontario licensed professionals provides expert legal representation in traffic tickets, landlord-tenant disputes, small claims court, and human rights matters across Southwestern Ontario.');
+      metaDesc.setAttribute('content', 'Meet the licensed paralegals at Legal Assist. Our team of Law Society of Ontario licensed professionals provides expert legal representation in traffic tickets, landlord-tenant disputes, small claims court, and human rights matters across Southwestern Ontario.');
     }
     
     // Add structured data
@@ -433,7 +433,7 @@ export default function MeetOurTeamPage() {
               Our Core Values
             </h2>
             <p className="font-paragraph text-lg text-white/80 max-w-2xl mx-auto">
-              These principles guide everything we do at LegalAssist
+              These principles guide everything we do at Legal Assist
             </p>
           </div>
           

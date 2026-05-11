@@ -30,7 +30,7 @@ export default function SmallClaimsLondonPage() {
               Licensed paralegal representation for Small Claims Court matters up to $50,000 in London and Middlesex County. We handle debt recovery, contract disputes, property damage claims, and consumer complaints at the London courthouse.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
-              Small Claims Court is designed to be accessible, but navigating the process without professional help can result in missed deadlines, procedural errors, and weaker outcomes. LegalAssist provides experienced paralegal representation at the London Small Claims Court, giving you the best chance of recovering what you are owed or defending a claim against you.
+              Small Claims Court is designed to be accessible, but navigating the process without professional help can result in missed deadlines, procedural errors, and weaker outcomes. Legal Assist provides experienced paralegal representation at the London Small Claims Court, giving you the best chance of recovering what you are owed or defending a claim against you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
@@ -174,7 +174,7 @@ export default function SmallClaimsLondonPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Need to File a Small Claims Court Case in London?</h2>
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-4 max-w-2xl mx-auto">
-            Whether you are owed money, dealing with a breach of contract, or need to defend a claim against you, LegalAssist can help you navigate London Small Claims Court.
+            Whether you are owed money, dealing with a breach of contract, or need to defend a claim against you, Legal Assist can help you navigate London Small Claims Court.
           </p>
           <p className="font-paragraph text-base text-secondary-foreground/60 mb-8 max-w-2xl mx-auto">
             Contact us today for a free consultation. We will review your case and advise you on the best path to a successful outcome.

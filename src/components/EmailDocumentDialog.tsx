@@ -86,7 +86,7 @@ Thank you for your cooperation.
 Yours truly,
 
 ${paralegalName}
-LegalAssist Paralegal Services
+Legal Assist Paralegal Services
 London, Ontario
 jeanfrancois@legalassist.london`
         : `RE: ${docName}
@@ -106,7 +106,7 @@ ${uploadLink}
 Yours truly,
 
 ${paralegalName}
-LegalAssist Paralegal Services
+Legal Assist Paralegal Services
 London, Ontario
 jeanfrancois@legalassist.london`;
 

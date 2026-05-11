@@ -26,8 +26,8 @@ export const Head = () => {
       {
         "@type": ["LegalService", "LocalBusiness", "ProfessionalService"],
         "@id": "https://www.legalassist.london/#organization",
-        "name": "LegalAssist Paralegal Services",
-        "alternateName": "LegalAssist",
+        "name": "Legal Assist Paralegal Services",
+        "alternateName": "Legal Assist",
         "description": "Licensed paralegal services in London, Ontario. Affordable representation for Small Claims Court (up to $50,000), Landlord Tenant Board, traffic tickets, Human Rights Tribunal, and provincial offences throughout Southwestern Ontario.",
         "url": "https://www.legalassist.london",
         "logo": {
@@ -78,7 +78,7 @@ export const Head = () => {
         "knowsLanguage": ["en", "English"],
         "slogan": "Affordable Legal Help When You Need It Most",
         "foundingDate": "2024",
-        "legalName": "LegalAssist Paralegal Services",
+        "legalName": "Legal Assist Paralegal Services",
         "hasCredential": [
           {
             "@type": "EducationalOccupationalCredential",
@@ -160,7 +160,7 @@ export const Head = () => {
         "@type": "WebSite",
         "@id": "https://www.legalassist.london/#website",
         "url": "https://www.legalassist.london",
-        "name": "LegalAssist Paralegal Services",
+        "name": "Legal Assist Paralegal Services",
         "description": "Licensed paralegal services in London, Ontario",
         "publisher": {
           "@id": "https://www.legalassist.london/#organization"
@@ -188,9 +188,9 @@ export const Head = () => {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       
       {/* Business Meta */}
-      <meta name="author" content="LegalAssist Paralegal Services" />
-      <meta name="publisher" content="LegalAssist Paralegal Services" />
-      <meta name="copyright" content={`© ${currentYear} LegalAssist Paralegal Services`} />
+      <meta name="author" content="Legal Assist Paralegal Services" />
+      <meta name="publisher" content="Legal Assist Paralegal Services" />
+      <meta name="copyright" content={`© ${currentYear} Legal Assist Paralegal Services`} />
       <meta name="language" content="en-CA" />
       
       {/* Verification - Add your codes from Google Search Console & Bing Webmaster Tools */}
@@ -208,8 +208,8 @@ export const Head = () => {
       <meta name="msapplication-TileColor" content="#B94A1F" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-      <meta name="apple-mobile-web-app-title" content="LegalAssist" />
-      <meta name="application-name" content="LegalAssist" />
+      <meta name="apple-mobile-web-app-title" content="Legal Assist" />
+      <meta name="application-name" content="Legal Assist" />
       <meta name="mobile-web-app-capable" content="yes" />
       <link rel="manifest" href="/site.webmanifest" />
       
@@ -223,7 +223,7 @@ export const Head = () => {
       <meta property="og:image" content="https://www.legalassist.london/og-image.jpg" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="LegalAssist Paralegal Services - London, Ontario" />
+      <meta property="og:image:alt" content="Legal Assist Paralegal Services - London, Ontario" />
       <meta name="twitter:image" content="https://www.legalassist.london/og-image.jpg" />
       
       {/* Security */}

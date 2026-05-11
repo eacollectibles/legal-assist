@@ -30,7 +30,7 @@ export default function TrafficTicketLondonPage() {
               Fight your London traffic ticket with a licensed paralegal. We defend speeding tickets, careless driving charges, stunt driving, red light camera tickets, and all Highway Traffic Act offences at the London Provincial Offences Court.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
-              A traffic conviction in London can result in demerit points, licence suspension, skyrocketing insurance premiums, and even a criminal record for serious charges. Do not simply pay the fine — let LegalAssist fight your ticket and protect your driving record.
+              A traffic conviction in London can result in demerit points, licence suspension, skyrocketing insurance premiums, and even a criminal record for serious charges. Do not simply pay the fine — let Legal Assist fight your ticket and protect your driving record.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
@@ -158,7 +158,7 @@ export default function TrafficTicketLondonPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Got a Traffic Ticket in London?</h2>
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-4 max-w-2xl mx-auto">
-            Do not pay your ticket and accept the conviction. Contact LegalAssist today for a free consultation. We will review your ticket and explain your options for fighting it at the London Provincial Offences Court.
+            Do not pay your ticket and accept the conviction. Contact Legal Assist today for a free consultation. We will review your ticket and explain your options for fighting it at the London Provincial Offences Court.
           </p>
           <p className="font-paragraph text-base text-secondary-foreground/60 mb-8 max-w-2xl mx-auto">
             Remember: you only have 15 days to respond. Call us now to protect your driving record.

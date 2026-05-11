@@ -131,12 +131,12 @@ export default function ResourcesPage() {
   const schemaMarkup = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Legal Resources & Guides | LegalAssist',
+    name: 'Legal Resources & Guides | Legal Assist',
     description: 'Free legal guides and resources for Ontario residents. Learn about tenant rights, small claims court, human rights complaints, and more.',
     url: 'https://www.legalassist.london/resources',
     publisher: {
       '@type': 'LegalService',
-      name: 'LegalAssist Paralegal Services',
+      name: 'Legal Assist Paralegal Services',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'London',
@@ -162,7 +162,7 @@ export default function ResourcesPage() {
   return (
     <>
       <Helmet>
-        <title>Legal Resources & Guides | LegalAssist Paralegal Services</title>
+        <title>Legal Resources & Guides | Legal Assist Paralegal Services</title>
         <meta 
           name="description" 
           content="Free legal guides and resources for Ontario residents. Learn about tenant rights, small claims court, human rights, employment law, and more." 

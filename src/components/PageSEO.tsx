@@ -85,7 +85,7 @@ export function PageSEO({
     setMetaTag('og:description', description, true);
     setMetaTag('og:url', canonicalUrl, true);
     setMetaTag('og:type', ogType, true);
-    setMetaTag('og:site_name', 'LegalAssist Paralegal Services', true);
+    setMetaTag('og:site_name', 'Legal Assist Paralegal Services', true);
     setMetaTag('og:locale', 'en_CA', true);
     
     if (ogImage) {

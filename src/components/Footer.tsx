@@ -30,7 +30,7 @@ export default function Footer() {
                 <span className="text-primary-foreground font-heading font-bold text-lg sm:text-xl">L.A</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-xl sm:text-2xl font-bold">LegalAssist</span>
+                <span className="font-heading text-xl sm:text-2xl font-bold">Legal Assist</span>
                 <span className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 font-normal leading-tight">Paralegal Services</span>
               </div>
             </div>
@@ -254,16 +254,16 @@ export default function Footer() {
           </p>
           <div className="bg-secondary-foreground/5 rounded-xl p-4 sm:p-6 border border-secondary-foreground/10 mb-6">
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
-              <strong className="text-secondary-foreground/90">Disclaimer:</strong> The information provided on this website is for general informational purposes only and does not constitute legal advice. No paralegal-client relationship is created by viewing this website, submitting information, or communicating with LegalAssist unless and until a written retainer agreement is executed. Information submitted through this website is handled securely but is not subject to solicitor-client or paralegal-client privilege prior to the formation of a formal retainer. LegalAssist Paralegal Services is operated by J. Demers, Licensed Paralegal, Law Society of Ontario License #P22020. For advice specific to your legal situation, please contact us to schedule a consultation.
+              <strong className="text-secondary-foreground/90">Disclaimer:</strong> The information provided on this website is for general informational purposes only and does not constitute legal advice. No paralegal-client relationship is created by viewing this website, submitting information, or communicating with Legal Assist unless and until a written retainer agreement is executed. Information submitted through this website is handled securely but is not subject to solicitor-client or paralegal-client privilege prior to the formation of a formal retainer. Legal Assist Paralegal Services is operated by J. Demers, Licensed Paralegal, Law Society of Ontario License #P22020. For advice specific to your legal situation, please contact us to schedule a consultation.
             </p>
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
-              <strong className="text-secondary-foreground/90">Immigration Services Notice:</strong> Immigration services are provided exclusively by licensed Regulated Canadian Immigration Consultants (RCICs). LegalAssist Paralegal Services does not provide immigration advice or representation except where permitted by the Law Society of Ontario in relation to advocacy before the Immigration and Refugee Board (IRB).
+              <strong className="text-secondary-foreground/90">Immigration Services Notice:</strong> Immigration services are provided exclusively by licensed Regulated Canadian Immigration Consultants (RCICs). Legal Assist Paralegal Services does not provide immigration advice or representation except where permitted by the Law Society of Ontario in relation to advocacy before the Immigration and Refugee Board (IRB).
             </p>
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
-              <strong className="text-secondary-foreground/90">Insolvency Services Notice:</strong> Insolvency and bankruptcy services referenced on this website are provided exclusively by Licensed Insolvency Trustees (LITs) licensed by the Office of the Superintendent of Bankruptcy. LegalAssist Paralegal Services does not provide insolvency advice or representation.
+              <strong className="text-secondary-foreground/90">Insolvency Services Notice:</strong> Insolvency and bankruptcy services referenced on this website are provided exclusively by Licensed Insolvency Trustees (LITs) licensed by the Office of the Superintendent of Bankruptcy. Legal Assist Paralegal Services does not provide insolvency advice or representation.
             </p>
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
-              <strong className="text-secondary-foreground/90">Referral Fee Disclosure:</strong> LegalAssist Paralegal Services may receive a referral or administrative fee when connecting clients with third-party licensed professionals, including Regulated Canadian Immigration Consultants (RCICs) and Licensed Insolvency Trustees (LITs). Any such referrals do not affect the independence of the licensed professional or the fees charged to the client.
+              <strong className="text-secondary-foreground/90">Referral Fee Disclosure:</strong> Legal Assist Paralegal Services may receive a referral or administrative fee when connecting clients with third-party licensed professionals, including Regulated Canadian Immigration Consultants (RCICs) and Licensed Insolvency Trustees (LITs). Any such referrals do not affect the independence of the licensed professional or the fees charged to the client.
             </p>
           </div>
           <p className="text-xs text-secondary-foreground/50 text-center mb-2">
@@ -271,17 +271,4 @@ export default function Footer() {
             or AI-generated and do not represent actual clients, cases, or outcomes.
           </p>
           <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center mb-3">
-            &copy; 2026 LegalAssist Paralegal Services. Operated by Jean-Francois &ldquo;Johnny&rdquo; Demers, Licensed Paralegal (Law Society of Ontario), Licence No. P22020, and Candice Fogarty, Licensed Paralegal (Law Society of Ontario), Licence No. P21479. All rights reserved.
-          </p>
-          <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/60 text-center">
-            <Link to="/privacy" className="hover:text-primary hover:underline">Privacy Policy</Link>
-            <span className="mx-2">&bull;</span>
-            <Link to="/terms" className="hover:text-primary hover:underline">Terms of Use</Link>
-            <span className="mx-2">&bull;</span>
-            <Link to="/contact" className="hover:text-primary hover:underline">Contact</Link>
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
+            &copy; 2026 Legal Assist Paralegal Services. Operated by Jean-Francois &ldq

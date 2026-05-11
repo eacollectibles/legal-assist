@@ -27,7 +27,7 @@ export default function MeetOurTeamPage() {
               Meet Our <span className="text-primary">Team</span>
             </h1>
             <p className="font-paragraph text-lg text-foreground/80 mb-8">
-              Meet the people behind LegalAssist — including Law Society of Ontario licensed paralegals and dedicated support — serving clients across Southwestern Ontario.
+              Meet the people behind Legal Assist — including Law Society of Ontario licensed paralegals and dedicated support — serving clients across Southwestern Ontario.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6">
               <div className="flex items-center gap-2">
@@ -92,7 +92,7 @@ export default function MeetOurTeamPage() {
                 <div className="rounded-xl overflow-hidden shadow-xl aspect-[3/4] bg-pastellavender/30">
                   <Image
                     src="https://static.wixstatic.com/media/99571b_placeholder2~mv2.jpg"
-                    alt="Candice Fogarty, Licensed Paralegal at LegalAssist"
+                    alt="Candice Fogarty, Licensed Paralegal at Legal Assist"
                     width={400}
                     height={533}
                     className="w-full h-full object-cover"
@@ -128,10 +128,10 @@ export default function MeetOurTeamPage() {
                 Law Society of Ontario licence verified — LSO #P21479
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Candice Fogarty is a licensed paralegal at LegalAssist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal experience and compassionate understanding.
+                Candice Fogarty is a licensed paralegal at Legal Assist, bringing exceptional organizational skills and a client-centered approach to the firm. As a Licensed Paralegal with the Law Society of Ontario and a Qualified Addictions Counselor, she offers a unique combination of legal experience and compassionate understanding.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
-                Her dedication to thorough case preparation and compassionate client service has made her invaluable to the team. With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines LegalAssist's approach.
+                Her dedication to thorough case preparation and compassionate client service has made her invaluable to the team. With a keen eye for detail and a natural ability to connect with clients during stressful times, Candice excels at managing complex case files while maintaining the personal touch that defines Legal Assist's approach.
               </p>
               <blockquote className="bg-gradient-to-br from-pastelbeige/30 to-pastelpeach/20 rounded-xl p-6 mb-8 border-l-4 border-primary">
                 <p className="font-paragraph text-foreground/90 italic">
@@ -186,7 +186,7 @@ export default function MeetOurTeamPage() {
                 <div className="rounded-xl overflow-hidden shadow-xl aspect-[3/4] bg-pastellavender/30">
                   <Image
                     src="https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png"
-                    alt="Jean-Francois 'Johnny' Demers, Licensed Paralegal at LegalAssist"
+                    alt="Jean-Francois 'Johnny' Demers, Licensed Paralegal at Legal Assist"
                     width={400}
                     height={533}
                     className="w-full h-full object-cover"
@@ -222,7 +222,7 @@ export default function MeetOurTeamPage() {
                 Law Society of Ontario licence verified — LSO #P22020
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-6">
-                Jean-Francois "Johnny" Demers is a Licensed Paralegal with the Law Society of Ontario at LegalAssist Paralegal Services. With a deep commitment to accessible justice, Johnny is dedicated to providing professional legal representation to individuals and small businesses across Ontario.
+                Jean-Francois "Johnny" Demers is a Licensed Paralegal with the Law Society of Ontario at Legal Assist Paralegal Services. With a deep commitment to accessible justice, Johnny is dedicated to providing professional legal representation to individuals and small businesses across Ontario.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed mb-8">
                 Drawing on his background in law enforcement, Johnny brings a unique perspective to legal matters. His approach emphasizes clear communication, thorough preparation, and a strong understanding of procedural requirements. Johnny takes pride in demystifying the legal process for clients and ensuring they understand their rights at every stage.
@@ -284,7 +284,7 @@ export default function MeetOurTeamPage() {
                     Join Our Team
                   </h2>
                   <p className="font-paragraph text-foreground/80 mb-4">
-                    Are you a licensed paralegal looking for flexible, contract-based work? LegalAssist is growing, and we're looking for passionate paralegals who share our commitment to accessible justice.
+                    Are you a licensed paralegal looking for flexible, contract-based work? Legal Assist is growing, and we're looking for passionate paralegals who share our commitment to accessible justice.
                   </p>
                   <div className="space-y-2 mb-6">
                     <p className="font-paragraph text-sm text-foreground/70 font-medium">We're looking for:</p>

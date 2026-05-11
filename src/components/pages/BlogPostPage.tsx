@@ -39,11 +39,11 @@ export default function BlogPostPage() {
     url: `https://www.legalassist.london/blog/${post.slug}`,
     author: {
       '@type': 'Organization',
-      name: 'LegalAssist Paralegal Services',
+      name: 'Legal Assist Paralegal Services',
     },
     publisher: {
       '@type': 'LegalService',
-      name: 'LegalAssist Paralegal Services',
+      name: 'Legal Assist Paralegal Services',
       url: 'https://www.legalassist.london',
     },
   };
@@ -51,7 +51,7 @@ export default function BlogPostPage() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{post.title} | LegalAssist Blog</title>
+        <title>{post.title} | Legal Assist Blog</title>
         <meta name="description" content={post.description} />
         <link rel="canonical" href={`https://www.legalassist.london/blog/${post.slug}`} />
         <meta property="og:title" content={post.title} />
@@ -63,7 +63,7 @@ export default function BlogPostPage() {
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={post.title} />
         <meta property="og:locale" content="en_CA" />
-        <meta property="og:site_name" content="LegalAssist Paralegal Services" />
+        <meta property="og:site_name" content="Legal Assist Paralegal Services" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.description} />

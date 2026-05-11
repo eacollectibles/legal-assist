@@ -30,7 +30,7 @@ export default function LandlordTenantLondonPage() {
               Licensed paralegal representation for landlords and tenants at the Landlord and Tenant Board in London and Middlesex County. From eviction hearings to rent disputes, we handle all LTB matters with local experience and affordable rates.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
-              London&apos;s rental market is one of the most active in Southwestern Ontario. Whether you are a landlord dealing with non-payment of rent, a tenant facing an unjust eviction, or either party navigating above-guideline rent increases, LegalAssist provides experienced paralegal representation for every stage of the LTB process.
+              London&apos;s rental market is one of the most active in Southwestern Ontario. Whether you are a landlord dealing with non-payment of rent, a tenant facing an unjust eviction, or either party navigating above-guideline rent increases, Legal Assist provides experienced paralegal representation for every stage of the LTB process.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
@@ -159,7 +159,7 @@ export default function LandlordTenantLondonPage() {
       {/* Why Choose */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-pastelbeige/20 to-transparent">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Why Choose LegalAssist for London LTB Matters</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-12 text-center">Why Choose Legal Assist for London LTB Matters</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"><Shield className="w-8 h-8 text-primary" /></div>
@@ -208,7 +208,7 @@ export default function LandlordTenantLondonPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Landlord or Tenant Dispute in London?</h2>
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-4 max-w-2xl mx-auto">
-            Do not wait until your LTB hearing date to seek help. Contact LegalAssist today for a free consultation about your London landlord-tenant matter.
+            Do not wait until your LTB hearing date to seek help. Contact Legal Assist today for a free consultation about your London landlord-tenant matter.
           </p>
           <p className="font-paragraph text-base text-secondary-foreground/60 mb-8 max-w-2xl mx-auto">
             We will review your situation, explain your options under the Residential Tenancies Act, and provide a clear plan to resolve your dispute.
@@ -227,4 +227,4 @@ export default function LandlordTenantLondonPage() {
       <Footer />
     </div>
   );
-}
+}

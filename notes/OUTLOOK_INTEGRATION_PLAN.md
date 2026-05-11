@@ -1,11 +1,11 @@
-# Outlook Integration Plan — LegalAssist Paralegal Dashboard
+# Outlook Integration Plan — Legal Assist Paralegal Dashboard
 
 **Status:** Planned, not started.
 **Created:** End of session, May 3, 2026.
 
 ## Goal
 
-Integrate the paralegal's Outlook (Microsoft 365) mailbox into the paralegal dashboard so emails can be read, sent, sorted, auto-filed to client files, and AI-summarized — all without leaving LegalAssist.
+Integrate the paralegal's Outlook (Microsoft 365) mailbox into the paralegal dashboard so emails can be read, sent, sorted, auto-filed to client files, and AI-summarized — all without leaving Legal Assist.
 
 ## Use cases
 
@@ -22,7 +22,7 @@ Microsoft Graph is the official API for accessing Outlook / Microsoft 365 mailbo
 ### High-level architecture
 
 ```
-[Outlook mailbox] <--> [Microsoft Graph API] <--> [LegalAssist server endpoints]
+[Outlook mailbox] <--> [Microsoft Graph API] <--> [Legal Assist server endpoints]
                                                           |
                                                           v
                                                   [Wix CMS — clientfiles, fileactivity, attachments]
@@ -37,7 +37,7 @@ Microsoft Graph is the official API for accessing Outlook / Microsoft 365 mailbo
 
 1. **Register an Azure AD application**
    - Go to https://entra.microsoft.com → App registrations → New registration
-   - Name: "LegalAssist Paralegal Dashboard"
+   - Name: "Legal Assist Paralegal Dashboard"
    - Supported account types: "Accounts in any organizational directory and personal Microsoft accounts"
    - Redirect URI: `https://www.legalassist.london/api/microsoft/oauth-callback`
    - Note the **Application (Client) ID**
@@ -143,7 +143,7 @@ Buy if:
 
 1. Decide build vs. buy.
 2. If build: register the Azure AD app, share the Client ID + Client Secret with the dev session, and start with Session 1.
-3. If buy: pick a vendor, sign up for trial, migrate client data, decommission relevant LegalAssist modules.
+3. If buy: pick a vendor, sign up for trial, migrate client data, decommission relevant Legal Assist modules.
 
 ---
 

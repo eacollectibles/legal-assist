@@ -30,7 +30,7 @@ export default function HRTOLondonPage() {
               Licensed paralegal representation for Human Rights Tribunal of Ontario (HRTO) applications in London and Middlesex County. We help London residents file and defend discrimination complaints for employment, housing, and services under the Ontario Human Rights Code.
             </p>
             <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
-              If you have experienced discrimination in a London workplace, been denied housing based on a protected ground, or received unequal treatment when accessing services, you have the right to file a complaint with the HRTO. LegalAssist provides experienced paralegal representation to help you assert your human rights and seek appropriate remedies.
+              If you have experienced discrimination in a London workplace, been denied housing based on a protected ground, or received unequal treatment when accessing services, you have the right to file a complaint with the HRTO. Legal Assist provides experienced paralegal representation to help you assert your human rights and seek appropriate remedies.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
@@ -193,7 +193,7 @@ export default function HRTOLondonPage() {
         <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Experienced Discrimination in London?</h2>
           <p className="font-paragraph text-lg text-secondary-foreground/80 mb-4 max-w-2xl mx-auto">
-            You do not have to face discrimination alone. Whether it happened at a London workplace, in a rental application, or when accessing services, LegalAssist can help you file a human rights complaint and fight for the compensation and changes you deserve.
+            You do not have to face discrimination alone. Whether it happened at a London workplace, in a rental application, or when accessing services, Legal Assist can help you file a human rights complaint and fight for the compensation and changes you deserve.
           </p>
           <p className="font-paragraph text-base text-secondary-foreground/60 mb-8 max-w-2xl mx-auto">
             Contact us today for a free, confidential consultation. Remember, you have one year from the date of the discriminatory act to file with the HRTO.
