@@ -803,10 +803,18 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
 
-      // Get client's email from user accounts
+      // Get client's email from user accounts. Reject anything that
+      // doesn't look like an email (e.g. when the useraccount row is
+      // missing or the schema has been repurposed and the field holds
+      // a UUID). We'd rather print "—" than a hex blob in the
+      // retainer's Email field.
       const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
       const clientAccount = userAccounts.find(u => u._id === selectedClientId);
-      const clientEmailAddress = clientAccount?.email || selectedClientId;
+      const looksLikeEmail = (s?: string) =>
+        !!s && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
+      const clientEmailAddress =
+        [clientAccount?.email, (client as any).email, (client as any).emailAddress]
+          .find(looksLikeEmail) || '';
 
       // Replace placeholders in template content. cleanTemplateContent
       // strips any legacy <form> scaffolding ("CONFIGURE FEE STRUCTURE"
@@ -1209,39 +1217,72 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
     }
   };
 
-  const handlePrintDocument = (doc: GeneratedDocument) => {
-    // CRITICAL FIX: Use signed document URL if available, otherwise use original
-    const documentUrl = doc.status === 'signed' && doc.signedDocumentUrl 
-      ? doc.signedDocumentUrl 
+  const handlePrintDocument = async (doc: GeneratedDocument) => {
+    // Use the signed copy when available, otherwise the original.
+    const documentUrl = doc.status === 'signed' && doc.signedDocumentUrl
+      ? doc.signedDocumentUrl
       : doc.documentUrl;
-    
+
     if (!documentUrl) return;
-    
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Print Document</title>
-            <style>
-              body { font-family: Arial, sans-serif; padding: 20px; }
-              @media print {
-                body { padding: 0; }
-              }
-            </style>
-          </head>
-          <body>
-            <iframe src="${documentUrl}" style="width: 100%; height: 100vh; border: none;"></iframe>
-            <script>
-              window.onload = function() {
-                setTimeout(function() {
-                  window.print();
-                }, 500);
-              };
-            </script>
-          </body>
-        </html>
-      `);
+
+    // The old approach (popup window + iframe + window.print()) was
+    // broken for two reasons:
+    //   1. Wix Media CDN PDFs are cross-origin to the popup, so the
+    //      parent frame's window.print() can't reach the iframe's
+    //      PDF viewer (browser security).
+    //   2. Even for same-origin data:application/pdf URLs, Chrome's
+    //      embedded PDF viewer (pdfium) ignores window.print() called
+    //      on the surrounding HTML page.
+    //
+    // The reliable path is to open the PDF directly in a new tab so
+    // the browser's built-in PDF viewer renders it — that viewer has
+    // its own Print button that handles both data: URLs and remote
+    // URLs correctly. We also try to auto-trigger print from inside
+    // the viewer (works in Chrome via the iframe contentWindow when
+    // same-origin; cross-origin we just open it and let the user
+    // click Print).
+    try {
+      // For data: URLs we can blob them up and open the blob — that
+      // makes printing reliable across browsers because the blob has
+      // a Content-Type the browser PDF viewer recognises immediately.
+      if (documentUrl.startsWith('data:application/pdf')) {
+        const resp = await fetch(documentUrl);
+        const blob = await resp.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const w = window.open(blobUrl, '_blank');
+        if (!w) {
+          alert('Please allow pop-ups for this site to print documents.');
+          URL.revokeObjectURL(blobUrl);
+          return;
+        }
+        // Try to fire the viewer's Print dialog once it's loaded.
+        // Same-origin blob URLs allow w.print() to dispatch the
+        // PDF viewer's print action.
+        const tryPrint = () => {
+          try { w.print(); } catch { /* user can click Print manually */ }
+        };
+        // Give the viewer time to mount the PDF.
+        setTimeout(tryPrint, 1500);
+        // Free the blob URL after the tab has had time to load.
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+        return;
+      }
+
+      // Remote https URL (Wix Media CDN, etc.). Open directly. The
+      // browser's PDF viewer takes over and exposes a Print button.
+      // We cannot programmatically trigger print across origins, but
+      // opening the PDF in a real tab (not an iframe) lets the user
+      // click Print one second after it loads — which is what they
+      // do anyway when the iframe approach silently fails.
+      const w = window.open(documentUrl, '_blank', 'noopener,noreferrer');
+      if (!w) {
+        alert('Please allow pop-ups for this site to print documents.');
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('handlePrintDocument failed:', err);
+      // Last-ditch fallback: navigate the current tab to the document.
+      window.location.href = documentUrl;
     }
   };
 

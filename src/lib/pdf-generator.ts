@@ -639,35 +639,85 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
 
     const fullImg = canvas.toDataURL('image/jpeg', 0.95);
 
-    // Find Y coordinates of safe break points - between block-level
-    // elements in the host. We map them from host pixels to canvas
-    // pixels (factor 2 because html2canvas scale: 2).
-    const safeBreakPoints: number[] = [0];
-    const blocks = host.querySelectorAll(
-      'p, h1, h2, h3, h4, table, hr, ul, ol, .signature-block, [data-keep-together]'
-    );
+    // Find Y coordinates of safe break points in the host content.
+    // Two flavours, both mapped from host pixels to canvas pixels
+    // (factor 2 because html2canvas scale: 2):
+    //
+    //   1. Section TOPS (h1/h2/h3/h4) — cut here so the next page
+    //      starts with the heading. Strongly preferred so headings
+    //      aren't sliced in half across pages.
+    //   2. Block BOTTOMS (p, table, ul, ol, hr, signature-block) —
+    //      cut here so we end a page at a paragraph boundary.
+    //
+    // Without (1) the old algorithm could only snap to ends of blocks
+    // and so frequently cut headings mid-character ("CONTINGENCY FEE
+    // TERMS (IF APPLICABLE)" → "AND ALL APPLICABLE" on the next page).
     const hostRect = host.getBoundingClientRect();
-    blocks.forEach((el) => {
-      const r = (el as HTMLElement).getBoundingClientRect();
-      const yInCanvas = (r.bottom - hostRect.top) * 2;
-      if (yInCanvas > 0 && yInCanvas < canvas.height) safeBreakPoints.push(yInCanvas);
-    });
-    safeBreakPoints.push(canvas.height);
-    safeBreakPoints.sort((a, b) => a - b);
+    const sectionTops: number[] = [];
+    const blockBottoms: number[] = [];
+
+    host
+      .querySelectorAll('h1, h2, h3, h4')
+      .forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const yInCanvas = (r.top - hostRect.top) * 2;
+        if (yInCanvas > 0 && yInCanvas < canvas.height) {
+          sectionTops.push(yInCanvas);
+        }
+      });
+
+    host
+      .querySelectorAll(
+        'p, table, hr, ul, ol, .signature-block, [data-keep-together]'
+      )
+      .forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const yInCanvas = (r.bottom - hostRect.top) * 2;
+        if (yInCanvas > 0 && yInCanvas < canvas.height) {
+          blockBottoms.push(yInCanvas);
+        }
+      });
+
+    sectionTops.sort((a, b) => a - b);
+    blockBottoms.sort((a, b) => a - b);
 
     const canvasPerPage = (pageHeight * canvas.width) / imgWidth;
+    // Minimum acceptable page fill ratio. If we accept ANY break point
+    // however far above target the resulting pages are sometimes
+    // only 30 % full; if we accept ONLY breaks right at target we
+    // cut mid-paragraph. 0.55 is a pragmatic middle — pages will be
+    // at least 55 % full but we still respect natural boundaries.
+    const MIN_FILL = 0.55;
+
     const breaks: number[] = [0];
     let currentY = 0;
     while (currentY + canvasPerPage < canvas.height) {
       const target = currentY + canvasPerPage;
-      // Find the nearest safe point <= target (snap up = use as cut
-      // point, the rest goes to next page). Require some forward
-      // progress (> currentY + 100px) to avoid an infinite loop on
-      // pages with no block elements near a target.
-      const safe = [...safeBreakPoints]
+      const minCut = currentY + canvasPerPage * MIN_FILL;
+
+      // Preference 1: section top within [minCut, target] — page
+      // ends right before a heading on the next page.
+      let cutAt = [...sectionTops]
         .reverse()
-        .find((p) => p <= target && p > currentY + 100);
-      const cutAt = safe ?? target;
+        .find((p) => p > minCut && p <= target) ?? -1;
+
+      // Preference 2: block bottom within [minCut, target] — page
+      // ends at a paragraph/table boundary.
+      if (cutAt < 0) {
+        cutAt = [...blockBottoms]
+          .reverse()
+          .find((p) => p > minCut && p <= target) ?? -1;
+      }
+
+      // Last resort: any block bottom > currentY + 100, even past
+      // target (better to slightly overflow than to land in the
+      // middle of a paragraph). If still nothing, cut at target.
+      if (cutAt < 0) {
+        cutAt = [...blockBottoms].find((p) => p > currentY + 100) ?? target;
+        // But never overflow past target by more than 15 % of a page.
+        if (cutAt > target + canvasPerPage * 0.15) cutAt = target;
+      }
+
       breaks.push(cutAt);
       currentY = cutAt;
     }

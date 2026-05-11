@@ -5110,16 +5110,40 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
                     </a>
                   )}
 
-                  {/* Print — still uses window.open because we need to call
-                      .print() after the new tab loads. Desktop will work;
-                      mobile users typically use the system share-sheet
-                      from the View tab to print, which is why we keep
-                      View/Download as the primary mobile actions. */}
+                  {/* Print — opens the PDF directly in a new tab so the
+                      browser's built-in PDF viewer takes over. We do NOT
+                      try to call .print() from the parent: that worked
+                      for blob URLs of small same-origin PDFs but
+                      silently failed for cross-origin Wix Media CDN
+                      URLs (the parent frame can't reach the embedded
+                      pdfium viewer to dispatch its print action). The
+                      user clicks Print from the PDF viewer's toolbar —
+                      one extra click but it always works. For data:
+                      URLs we convert to a blob first so the viewer
+                      recognises the Content-Type immediately. */}
                   <Button variant="outline" size="sm" title="Print Document"
-                    onClick={() => handleStaleBlobOrAct(() => {
-                      const printWindow = window.open(url, '_blank');
-                      if (printWindow) {
-                        printWindow.onload = () => printWindow.print();
+                    onClick={() => handleStaleBlobOrAct(async () => {
+                      try {
+                        if (url.startsWith('data:application/pdf')) {
+                          const resp = await fetch(url);
+                          const blob = await resp.blob();
+                          const blobUrl = URL.createObjectURL(blob);
+                          const w = window.open(blobUrl, '_blank');
+                          if (!w) {
+                            alert('Please allow pop-ups for this site to print documents.');
+                            URL.revokeObjectURL(blobUrl);
+                            return;
+                          }
+                          setTimeout(() => { try { w.print(); } catch { /* user clicks Print */ } }, 1500);
+                          setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+                          return;
+                        }
+                        const w = window.open(url, '_blank', 'noopener,noreferrer');
+                        if (!w) alert('Please allow pop-ups for this site to print documents.');
+                      } catch (err) {
+                        // eslint-disable-next-line no-console
+                        console.error('Print failed:', err);
+                        window.open(url, '_blank', 'noopener,noreferrer');
                       }
                     })}>
                     <Printer className="w-3.5 h-3.5 mr-1" /> Print
