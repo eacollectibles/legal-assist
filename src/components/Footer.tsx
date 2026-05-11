@@ -148,12 +148,16 @@ export default function Footer() {
           <div>
             <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Contact</h3>
             <div className="flex flex-col gap-0.5">
-              <div className="flex items-start gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg">
-                <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
-                <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80">
-                  P.O Box 1000<br />London, Ontario, N6A 2L1
+              <Link
+                to="/contact"
+                className="flex items-center gap-3 min-h-[48px] py-2 px-3 -mx-3 rounded-lg hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors group focus-ring"
+                aria-label="Visit our contact page"
+              >
+                <MapPin className="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true" />
+                <span className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 group-hover:text-primary-foreground group-active:text-primary transition-colors">
+                  Contact Us
                 </span>
-              </div>
+              </Link>
 
               <a
                 href={PHONE_HREF}

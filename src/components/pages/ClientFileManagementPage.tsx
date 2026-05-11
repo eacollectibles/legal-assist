@@ -4616,35 +4616,22 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
       // upload the binary to Wix Media and store the resulting URL. If
       // Wix Media isn't available we fall back to a download-only flow
       // (PDF goes to the user's machine but no CMS persistence).
+      //
+      // NOTE: we route through `uploadToWixMedia` and pass the Blob
+      // directly. We deliberately avoid `new File([...])` because in
+      // the Wix Astro / Cloudflare Workers production bundle the
+      // global `File` constructor is sometimes minified/shadowed to
+      // a stub that throws "X is not a constructor" at runtime.
       let storedDocumentUrl = '';
       try {
-        const wixMedia: any = await import('@wix/media').catch(() => null);
-        const filesApi = wixMedia?.files || wixMedia?.default?.files || wixMedia;
-        if (filesApi && pdfBlob) {
-          const pdfFile = new File([pdfBlob], pdfFilename, { type: 'application/pdf' });
-          if (filesApi.uploadFile) {
-            const r = await filesApi.uploadFile({
-              mimeType: 'application/pdf',
-              fileName: pdfFilename,
-              file: pdfFile,
-            });
-            storedDocumentUrl = r?.file?.url || r?.fileUrl || r?.url || '';
-          } else if (filesApi.generateFileUploadUrl) {
-            const presigned = await filesApi.generateFileUploadUrl({
-              mimeType: 'application/pdf',
-              fileName: pdfFilename,
-            });
-            const uploadUrl = presigned?.uploadUrl || presigned?.url;
-            if (uploadUrl) {
-              const fd = new FormData();
-              fd.append('file', pdfFile);
-              const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
-              if (resp.ok) {
-                const data = await resp.json().catch(() => ({}));
-                storedDocumentUrl = data?.file?.url || data?.fileUrl || data?.url || '';
-              }
-            }
-          }
+        if (pdfBlob) {
+          const { uploadToWixMedia } = await import('@/lib/wix-media-upload');
+          const uploaded = await uploadToWixMedia(
+            pdfBlob,
+            pdfFilename,
+            'application/pdf'
+          );
+          if (uploaded?.url) storedDocumentUrl = uploaded.url;
         }
       } catch (uploadErr) {
         // eslint-disable-next-line no-console

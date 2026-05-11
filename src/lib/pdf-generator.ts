@@ -440,16 +440,20 @@ function escapeHtml(text: string): string {
 /**
  * Converts an HTML string into a real, multi-page PDF data URL.
  *
- * Implementation: jsPDF + html2canvas. We mount the HTML into an
- * off-screen iframe (so styles + Google fonts evaluate exactly as they
- * would in a browser tab), wait for fonts to settle, screenshot the
- * rendered DOM with html2canvas, then paginate the resulting image
- * across letter-sized PDF pages with jsPDF.
+ * Implementation: html2canvas + jsPDF, with smart page-break snapping.
  *
- * Returns a `data:application/pdf;base64,...` URL — meaning the View,
- * Download, Print, and Email actions all see a true .pdf payload and
- * behave the way a paralegal expects (proper page-flipping in viewers,
- * correct file extension on save, no blank tab).
+ * Why not `pdf.html()`? Earlier versions of this function tried jsPDF's
+ * built-in html() method (with autoPaging:'text') as the preferred
+ * path. That method silently produced blank PDFs when the source host
+ * was positioned off-screen with `left: -10000px`, so the user got an
+ * empty document with no error in the console. The full-page canvas
+ * + smart slicing approach below is the reliable path: it always
+ * produces a real PDF and we keep paragraph/heading boundaries intact
+ * by snapping each page cut up to the nearest block-element boundary.
+ *
+ * Returns a `data:application/pdf;base64,...` URL - so View, Download,
+ * Print, and Email actions all see a true .pdf payload and behave the
+ * way a paralegal expects.
  */
 async function htmlToPDF(htmlContent: string): Promise<string> {
   // Lazy-load the libs so SSR builds don't pull them into Cloudflare Workers.
@@ -463,7 +467,7 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
   // produce wrap the content in <!doctype html><html><head>...<body>;
   // we pull out just the body so we can render it inside a hidden div
   // in the HOST document. Rendering inside the host (rather than an
-  // iframe) is what html2canvas works reliably with — iframe-mounted
+  // iframe) is what html2canvas works reliably with - iframe-mounted
   // content frequently fails or returns empty canvases on iOS Safari
   // and inside Cloudflare Worker hosts.
   // ----------------------------------------------------------------
@@ -477,7 +481,7 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
   const styleHtml = styleTags.map((s) => `<style>${s.innerHTML}</style>`).join('\n');
 
   // Make sure the Allura cursive font is loaded in the host document
-  // so the paralegal signature renders correctly. Idempotent — only
+  // so the paralegal signature renders correctly. Idempotent - only
   // appends once per page life.
   if (!document.getElementById('cowork-allura-cursive-font')) {
     const link = document.createElement('link');
@@ -487,22 +491,24 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     document.head.appendChild(link);
   }
 
-  // Off-screen container.
+  // Hidden-but-on-screen container. We use `visibility: hidden` with
+  // `position: absolute; left: 0; top: 0` instead of pushing offscreen
+  // to `left: -10000px`. Some PDF libraries (and html2canvas in some
+  // browsers) compute clip rectangles from getBoundingClientRect and
+  // produce a blank canvas when the element is far off-screen.
   const host = document.createElement('div');
-  host.style.position = 'fixed';
-  host.style.left = '-10000px';
+  host.style.position = 'absolute';
+  host.style.left = '0';
   host.style.top = '0';
-  host.style.width = '816px';      // 8.5in × 96dpi
-  host.style.minHeight = '1056px'; // 11in × 96dpi
+  host.style.width = '816px';      // 8.5in x 96dpi
+  host.style.minHeight = '1056px'; // 11in x 96dpi
   host.style.background = '#ffffff';
+  host.style.visibility = 'hidden';
+  host.style.pointerEvents = 'none';
   host.style.zIndex = '-1';
   host.setAttribute('aria-hidden', 'true');
-  host.innerHTML = `${styleHtml}<div data-pdf-content>${bodyHtml}</div>`;
-  document.body.appendChild(host);
-
-  // Inject CSS that html2canvas + smart pagination both honour for
-  // page breaks. We add this AFTER the template's own styles so it
-  // doesn't get overridden.
+  // Page-break hints first (so the template's CSS can still override),
+  // then the template styles, then the actual body.
   const pageBreakCss = `
     h1, h2, h3, h4, h5, h6 { page-break-after: avoid; break-after: avoid; }
     table, tr, .signature-block, [data-keep-together] {
@@ -510,10 +516,14 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     }
     p, li { orphans: 3; widows: 3; }
   `;
-  host.insertAdjacentHTML('afterbegin', `<style>${pageBreakCss}</style>`);
+  host.innerHTML =
+    `<style>${pageBreakCss}</style>` +
+    styleHtml +
+    `<div data-pdf-content>${bodyHtml}</div>`;
+  document.body.appendChild(host);
 
   try {
-    // Wait for fonts (Allura, etc.) + a paint tick.
+    // Wait for fonts (Allura, etc.) + a paint tick before screenshotting.
     if ((document as any).fonts?.ready) {
       try { await (document as any).fonts.ready; } catch { /* non-fatal */ }
     }
@@ -529,121 +539,101 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
 
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
-    const margin = 36; // 0.5in margin
 
     // ----------------------------------------------------------------
-    // Strategy A: jsPDF's html() method. It uses html2canvas under the
-    // hood but understands element boundaries when slicing - meaning
-    // a paragraph or signature block won't be cut in half. This is the
-    // preferred path.
+    // Full-page canvas screenshot, then slice into page-height strips.
+    // Snaps each page break UP to the nearest safe gap between block
+    // elements so paragraphs and signature blocks don't get cut in
+    // half across pages.
     // ----------------------------------------------------------------
-    let usedHtmlMethod = false;
-    if (typeof (pdf as any).html === 'function') {
-      try {
-        await new Promise<void>((resolve, reject) => {
-          try {
-            (pdf as any).html(host, {
-              callback: () => resolve(),
-              x: margin,
-              y: margin,
-              width: pageWidth - margin * 2,
-              windowWidth: 816,
-              autoPaging: 'text',
-              html2canvas: {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: '#ffffff',
-                logging: false,
-              },
-              margin: [margin, margin, margin, margin],
-            });
-          } catch (e) {
-            reject(e);
-          }
-        });
-        usedHtmlMethod = true;
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('jsPDF.html() failed, falling back to canvas slicing:', e);
-      }
+    const canvas = await html2canvas(host, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      windowWidth: 816,
+      logging: false,
+    });
+
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // Sanity check: if the canvas came back empty (zero-pixel image),
+    // emit a placeholder PDF so the caller can show a useful error
+    // instead of a silent blank doc.
+    if (!canvas || canvas.width === 0 || canvas.height === 0) {
+      pdf.setFontSize(12);
+      pdf.text(
+        'Document content could not be rendered. Please contact support.',
+        40,
+        80
+      );
+      return pdf.output('datauristring') as string;
     }
 
-    // ----------------------------------------------------------------
-    // Strategy B (fallback): full-page canvas screenshot, then slice
-    // into page-height strips. Snaps each page break UP to the nearest
-    // safe gap between block elements so we don't cut paragraphs in
-    // half. Only runs if Strategy A was unavailable.
-    // ----------------------------------------------------------------
-    if (!usedHtmlMethod) {
-      // Reset the PDF (Strategy A may have added pages before failing).
-      const fresh = new jsPDF({
-        orientation: 'portrait',
-        unit: 'pt',
-        format: 'letter',
-        compress: true,
-      });
+    const fullImg = canvas.toDataURL('image/jpeg', 0.95);
 
-      const canvas = await html2canvas(host, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        windowWidth: 816,
-        logging: false,
-      });
+    // Find Y coordinates of safe break points - between block-level
+    // elements in the host. We map them from host pixels to canvas
+    // pixels (factor 2 because html2canvas scale: 2).
+    const safeBreakPoints: number[] = [0];
+    const blocks = host.querySelectorAll(
+      'p, h1, h2, h3, h4, table, hr, ul, ol, .signature-block, [data-keep-together]'
+    );
+    const hostRect = host.getBoundingClientRect();
+    blocks.forEach((el) => {
+      const r = (el as HTMLElement).getBoundingClientRect();
+      const yInCanvas = (r.bottom - hostRect.top) * 2;
+      if (yInCanvas > 0 && yInCanvas < canvas.height) safeBreakPoints.push(yInCanvas);
+    });
+    safeBreakPoints.push(canvas.height);
+    safeBreakPoints.sort((a, b) => a - b);
 
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const fullImg = canvas.toDataURL('image/jpeg', 0.95);
+    const canvasPerPage = (pageHeight * canvas.width) / imgWidth;
+    const breaks: number[] = [0];
+    let currentY = 0;
+    while (currentY + canvasPerPage < canvas.height) {
+      const target = currentY + canvasPerPage;
+      // Find the nearest safe point <= target (snap up = use as cut
+      // point, the rest goes to next page). Require some forward
+      // progress (> currentY + 100px) to avoid an infinite loop on
+      // pages with no block elements near a target.
+      const safe = [...safeBreakPoints]
+        .reverse()
+        .find((p) => p <= target && p > currentY + 100);
+      const cutAt = safe ?? target;
+      breaks.push(cutAt);
+      currentY = cutAt;
+    }
+    breaks.push(canvas.height);
 
-      // Find Y coordinates of safe break points - between block-level
-      // elements in the host. We map them from host pixels to canvas
-      // pixels (factor 2 because html2canvas scale: 2).
-      const safeBreakPoints: number[] = [0];
-      const blocks = host.querySelectorAll('p, h1, h2, h3, h4, table, hr, ul, ol, .signature-block, [data-keep-together]');
-      blocks.forEach((el) => {
-        const r = (el as HTMLElement).getBoundingClientRect();
-        const hostRect = host.getBoundingClientRect();
-        const yInCanvas = (r.bottom - hostRect.top) * 2;
-        if (yInCanvas > 0 && yInCanvas < canvas.height) safeBreakPoints.push(yInCanvas);
-      });
-      safeBreakPoints.push(canvas.height);
-      safeBreakPoints.sort((a, b) => a - b);
-
-      const canvasPerPage = (pageHeight * canvas.width) / imgWidth;
-      const breaks: number[] = [0];
-      let currentY = 0;
-      while (currentY + canvasPerPage < canvas.height) {
-        const target = currentY + canvasPerPage;
-        // Find the nearest safe point <= target (snap up = use as cut
-        // point, the rest goes to next page).
-        const safe = [...safeBreakPoints].reverse().find((p) => p <= target && p > currentY);
-        const cutAt = safe ?? target;
-        breaks.push(cutAt);
-        currentY = cutAt;
+    // Render each segment to its own page.
+    for (let i = 0; i < breaks.length - 1; i++) {
+      if (i > 0) pdf.addPage();
+      const segH = breaks[i + 1] - breaks[i];
+      if (segH <= 0) continue;
+      const segCanvas = document.createElement('canvas');
+      segCanvas.width = canvas.width;
+      segCanvas.height = segH;
+      const ctx = segCanvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(canvas, 0, breaks[i], canvas.width, segH, 0, 0, canvas.width, segH);
+        const segImg = segCanvas.toDataURL('image/jpeg', 0.95);
+        const segImgHeightOnPage = (segH * imgWidth) / canvas.width;
+        pdf.addImage(segImg, 'JPEG', 0, 0, imgWidth, segImgHeightOnPage, undefined, 'FAST');
+      } else {
+        // Last-ditch: emit the full image with the old behaviour.
+        pdf.addImage(
+          fullImg,
+          'JPEG',
+          0,
+          -((breaks[i] * imgWidth) / canvas.width),
+          imgWidth,
+          imgHeight,
+          undefined,
+          'FAST'
+        );
       }
-      breaks.push(canvas.height);
-
-      // Render each segment to its own page
-      for (let i = 0; i < breaks.length - 1; i++) {
-        if (i > 0) fresh.addPage();
-        const segH = breaks[i + 1] - breaks[i];
-        const segCanvas = document.createElement('canvas');
-        segCanvas.width = canvas.width;
-        segCanvas.height = segH;
-        const ctx = segCanvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(canvas, 0, breaks[i], canvas.width, segH, 0, 0, canvas.width, segH);
-          const segImg = segCanvas.toDataURL('image/jpeg', 0.95);
-          const segImgHeightOnPage = (segH * imgWidth) / canvas.width;
-          fresh.addImage(segImg, 'JPEG', 0, 0, imgWidth, segImgHeightOnPage, undefined, 'FAST');
-        } else {
-          // Last-ditch: emit the full image with the old behaviour.
-          fresh.addImage(fullImg, 'JPEG', 0, -((breaks[i] * imgWidth) / canvas.width), imgWidth, imgHeight, undefined, 'FAST');
-        }
-      }
-      return fresh.output('datauristring') as string;
     }
 
     return pdf.output('datauristring') as string;

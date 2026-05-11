@@ -44,31 +44,30 @@ export async function uploadToWixMedia(
     const wixMedia: any = await import('@wix/media').catch(() => null);
     if (!wixMedia) return null;
 
-    let file: File | Blob;
+    // IMPORTANT: do NOT call `new File(...)`. In the Wix Astro /
+    // Cloudflare Workers production bundle the global `File`
+    // constructor is sometimes minified/shadowed to a stub that
+    // throws "X is not a constructor" at runtime. A Blob is enough
+    // for both the Wix Media SDK and FormData uploads (FormData
+    // accepts a filename argument; Wix's uploadFile accepts the
+    // fileName field separately from the body).
+    let blob: Blob;
     if (typeof input === 'string') {
-      // assume base64 data URL
-      const blob = dataUrlToBlob(input);
-      file = new File([blob], fileName, {
-        type: mimeType || blob.type || 'application/octet-stream',
-      });
-    } else if (input instanceof File) {
-      file = input;
+      blob = dataUrlToBlob(input);
     } else {
-      file = new File([input], fileName, {
-        type: mimeType || (input as Blob).type || 'application/octet-stream',
-      });
+      // File extends Blob, so a File is already a valid Blob here.
+      blob = input as Blob;
     }
+    const effectiveMime =
+      mimeType || (blob as Blob).type || 'application/octet-stream';
 
     const filesApi = wixMedia.files || wixMedia.default?.files || wixMedia;
 
     if (filesApi.uploadFile) {
       const result = await filesApi.uploadFile({
-        mimeType:
-          mimeType ||
-          (file as File).type ||
-          'application/octet-stream',
+        mimeType: effectiveMime,
         fileName,
-        file,
+        file: blob,
       });
       const url = result?.file?.url || result?.fileUrl || result?.url;
       const mediaId = result?.file?.id || result?._id || result?.id;
@@ -77,16 +76,15 @@ export async function uploadToWixMedia(
 
     if (filesApi.generateFileUploadUrl) {
       const presigned = await filesApi.generateFileUploadUrl({
-        mimeType:
-          mimeType ||
-          (file as File).type ||
-          'application/octet-stream',
+        mimeType: effectiveMime,
         fileName,
       });
       const uploadUrl = presigned?.uploadUrl || presigned?.url;
       if (!uploadUrl) return null;
       const fd = new FormData();
-      fd.append('file', file as Blob, fileName);
+      // Third arg to FormData.append supplies the filename without
+      // needing a File wrapper.
+      fd.append('file', blob, fileName);
       const resp = await fetch(uploadUrl, { method: 'POST', body: fd });
       if (!resp.ok) return null;
       const data = await resp.json().catch(() => ({}));
