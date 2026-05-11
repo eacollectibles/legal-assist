@@ -590,7 +590,7 @@ const PAYMENT_DEPOSIT_LABELS: Record<string, string> = {
   trust: 'Trust account (LSO By-Law 9)',
   general: 'General (firm operating) account',
 };
-function buildPaymentSection(data: RetainerHTMLData): string {
+export function buildPaymentSection(data: RetainerHTMLData): string {
   if (!data.paymentReceived) return '';
   const row = (label: string, value: string) =>
     '<tr><td style="padding:4px 8px;font-weight:bold;width:40%;">' +
@@ -660,7 +660,7 @@ const FREQUENCY_LABELS: Record<string, string> = {
   quarterly: 'Quarterly',
 };
 
-function buildPaymentArrangementSection(data: RetainerHTMLData): string {
+export function buildPaymentArrangementSection(data: RetainerHTMLData): string {
   if (!data.paymentArrangementEnabled) return '';
 
   const arrType = data.paymentArrangementType || '';

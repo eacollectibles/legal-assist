@@ -217,6 +217,22 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
     { description: string; amount: string }[]
   >([]);
 
+  // ----------------------------------------------------------------
+  // Payment Arrangement state (going-forward payment schedule).
+  // Drives the {PAYMENT_ARRANGEMENT_SECTION} placeholder substitution
+  // in the rendered template. Section renders only when the toggle
+  // is on. Mirrors the same fields the per-client retainer dialog
+  // exposes in ClientFileManagementPage.
+  // ----------------------------------------------------------------
+  const [paymentArrangementEnabled, setPaymentArrangementEnabled] = useState(false);
+  const [paymentArrangementType, setPaymentArrangementType] = useState('full');
+  const [paymentArrangementTotal, setPaymentArrangementTotal] = useState('');
+  const [paymentInstallmentAmount, setPaymentInstallmentAmount] = useState('');
+  const [paymentInstallmentFrequency, setPaymentInstallmentFrequency] = useState('monthly');
+  const [paymentInstallmentStartDate, setPaymentInstallmentStartDate] = useState('');
+  const [paymentInstallmentCount, setPaymentInstallmentCount] = useState('');
+  const [paymentArrangementNotes, setPaymentArrangementNotes] = useState('');
+
   // Send document dialog state
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState('');
@@ -848,6 +864,33 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{HYBRID_HOURLY_RATE\}/g, hybridHourlyRate || '—');
       documentContent = documentContent.replace(/\{CONTINGENCY_PERCENT\}/g, contingencyPercent || '—');
 
+      // ---- Payment Arrangement section ----
+      // Renders a "Payment Arrangement" subsection (installment plan,
+      // deferred payment, etc.) when the paralegal toggles it on in
+      // the Generate Document dialog. Templates use the
+      // {PAYMENT_ARRANGEMENT_SECTION} placeholder where the block
+      // should appear; if the toggle is off the placeholder collapses
+      // to an empty string so the section disappears entirely.
+      const { buildPaymentArrangementSection } = await import(
+        '@/lib/retainer-html-generator'
+      );
+      documentContent = documentContent.replace(
+        /\{PAYMENT_ARRANGEMENT_SECTION\}/g,
+        buildPaymentArrangementSection({
+          // Only the payment-arrangement fields are read by the helper;
+          // the rest of RetainerHTMLData is ignored here. Cast keeps TS
+          // happy without forcing the caller to populate every field.
+          paymentArrangementEnabled,
+          paymentArrangementType,
+          paymentArrangementTotal,
+          paymentInstallmentAmount,
+          paymentInstallmentFrequency,
+          paymentInstallmentStartDate,
+          paymentInstallmentCount,
+          paymentArrangementNotes,
+        } as any)
+      );
+
       // ---- Fee-model checkbox ticks ----
       // Tick the box for the selected fee model and leave the others
       // empty. Templates use {HOURLY_CHECK}, {FLAT_CHECK},
@@ -953,42 +996,52 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const pdfDataUrl = await generatePDF(documentContent, docName);
 
       // The base64-encoded PDF is typically 200-500KB, far above the
-      // 177KB Wix Data field cap. Upload to Wix Media first and store
-      // the resulting CDN URL. Falls back to inline base64 only when
-      // the SDK is not available (dev sandbox).
-      let documentUrl: string = pdfDataUrl;
-      let documentMediaId: string | undefined;
+      // 177KB Wix Data field cap AND the total-document size limit
+      // that Wix Data enforces (around 0.5MB). Storing the base64
+      // inline guarantees WDE0009 on the CMS create. We MUST upload
+      // to Wix Media and store only the URL.
       const safeFileName = `${docName.replace(/[^A-Za-z0-9._-]+/g, '_')}.pdf`;
       const uploaded = await uploadToWixMedia(pdfDataUrl, safeFileName, 'application/pdf');
-      if (uploaded?.url) {
-        documentUrl = uploaded.url;
-        documentMediaId = uploaded.mediaId;
+      if (!uploaded?.url) {
+        throw new Error(
+          'Could not upload the generated PDF to Wix Media. The Wix ' +
+            'Media credentials may be missing or invalid (check LA_WIX_API_KEY ' +
+            'and LA_WIX_SITE_ID in the Wix Secrets Manager). Open the browser ' +
+            'console for the underlying upload-endpoint error.'
+        );
       }
+      const documentUrl: string = uploaded.url;
+      const documentMediaId: string | undefined = uploaded.mediaId;
 
-      // documentContent (HTML body) needs to fit in the Wix Data field
-      // (~177KB hard cap). Anything close to that bombs the create with
-      // WDE0009 and leaves the local state out of sync with CMS — the
-      // user gets a 'document not found' on any sign link they create.
-      // We use 100KB as the upload threshold so we always have a safe
-      // margin over the rebrand/payment-section bloat that's been
-      // pushing Small Claims retainers past the limit.
-      let storedDocumentContent: string = documentContent;
+      // documentContent (HTML body) also needs to fit. Wix Data has a
+      // per-field cap (~177KB) AND a per-document size budget. We
+      // always upload the HTML to Wix Media too and only store the
+      // URL inline — that way the size of the row is predictable no
+      // matter how large the template grows. Falls back to a tiny
+      // inline preview (4KB) if Media upload fails so the row at
+      // least saves.
+      let storedDocumentContent: string = '';
       let documentContentUrl: string | undefined;
-      if (approxByteLength(documentContent) > 100_000) {
+      try {
         const htmlUpload = await uploadToWixMedia(
           new Blob([documentContent], { type: 'text/html' }),
           safeFileName.replace(/\.pdf$/, '.html'),
           'text/html'
         );
         if (htmlUpload?.url) {
-          storedDocumentContent = '';
           documentContentUrl = htmlUpload.url;
-        } else {
-          // Wix Media upload failed AND inline storage would bust the
-          // CMS field. Truncate-and-store rather than leave the user
-          // with a phantom sign link.
-          storedDocumentContent = '';
         }
+      } catch {
+        /* Media upload failure is non-fatal here — we'll save with
+           an empty documentContent and the document is still usable
+           via the documentUrl PDF. */
+      }
+      // If Media upload of HTML failed and the body is small enough
+      // to fit inline (under 80KB to give margin for other fields),
+      // keep the inline copy so View/Edit still works without a
+      // network round trip.
+      if (!documentContentUrl && approxByteLength(documentContent) < 80_000) {
+        storedDocumentContent = documentContent;
       }
 
       const newDoc: any = {
@@ -1041,6 +1094,15 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       setSpecialProvisions([]);
       setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
       setAutoSignAsParalegal(false);
+      // Reset payment-arrangement fields for next doc
+      setPaymentArrangementEnabled(false);
+      setPaymentArrangementType('full');
+      setPaymentArrangementTotal('');
+      setPaymentInstallmentAmount('');
+      setPaymentInstallmentFrequency('monthly');
+      setPaymentInstallmentStartDate('');
+      setPaymentInstallmentCount('');
+      setPaymentArrangementNotes('');
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.error('Error generating document:', error);
@@ -2034,6 +2096,148 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                         Drives the <code>{'{SPECIAL_PROVISIONS_BLOCK}'}</code> placeholder.
                         Templates without that placeholder will simply ignore these charges.
                       </p>
+                    </div>
+
+                    {/* ============================================== */}
+                    {/* PAYMENT ARRANGEMENT (going-forward schedule)   */}
+                    {/* Drives {PAYMENT_ARRANGEMENT_SECTION} in CMS    */}
+                    {/* templates. Renders only when enabled.          */}
+                    {/* ============================================== */}
+                    <div className="p-4 border-2 border-indigo-200 bg-indigo-50/50 rounded-lg">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={paymentArrangementEnabled}
+                          onChange={(e) =>
+                            setPaymentArrangementEnabled(e.target.checked)
+                          }
+                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <span className="text-sm font-semibold text-indigo-800">
+                          Is there a payment arrangement / schedule?
+                        </span>
+                      </label>
+                      {paymentArrangementEnabled && (
+                        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                              Arrangement type
+                            </Label>
+                            <select
+                              value={paymentArrangementType}
+                              onChange={(e) =>
+                                setPaymentArrangementType(e.target.value)
+                              }
+                              className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                            >
+                              <option value="full">Paid in full at signing</option>
+                              <option value="installments">Instalment plan</option>
+                              <option value="deferred">Deferred payment</option>
+                              <option value="custom">Custom (see notes)</option>
+                            </select>
+                          </div>
+                          <div>
+                            <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                              Total amount expected ($)
+                            </Label>
+                            <Input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={paymentArrangementTotal}
+                              onChange={(e) =>
+                                setPaymentArrangementTotal(e.target.value)
+                              }
+                              placeholder="e.g. 2500.00"
+                              className="mt-1"
+                            />
+                          </div>
+                          {paymentArrangementType === 'installments' && (
+                            <>
+                              <div>
+                                <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                                  Instalment amount ($)
+                                </Label>
+                                <Input
+                                  type="number"
+                                  min="0"
+                                  step="0.01"
+                                  value={paymentInstallmentAmount}
+                                  onChange={(e) =>
+                                    setPaymentInstallmentAmount(e.target.value)
+                                  }
+                                  placeholder="e.g. 500.00"
+                                  className="mt-1"
+                                />
+                              </div>
+                              <div>
+                                <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                                  Frequency
+                                </Label>
+                                <select
+                                  value={paymentInstallmentFrequency}
+                                  onChange={(e) =>
+                                    setPaymentInstallmentFrequency(e.target.value)
+                                  }
+                                  className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                                >
+                                  <option value="weekly">Weekly</option>
+                                  <option value="biweekly">Bi-weekly</option>
+                                  <option value="monthly">Monthly</option>
+                                  <option value="quarterly">Quarterly</option>
+                                </select>
+                              </div>
+                              <div>
+                                <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                                  First instalment due
+                                </Label>
+                                <Input
+                                  type="date"
+                                  value={paymentInstallmentStartDate}
+                                  onChange={(e) =>
+                                    setPaymentInstallmentStartDate(e.target.value)
+                                  }
+                                  className="mt-1"
+                                />
+                              </div>
+                              <div>
+                                <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                                  Number of instalments
+                                </Label>
+                                <Input
+                                  type="number"
+                                  min="1"
+                                  step="1"
+                                  value={paymentInstallmentCount}
+                                  onChange={(e) =>
+                                    setPaymentInstallmentCount(e.target.value)
+                                  }
+                                  placeholder="e.g. 5"
+                                  className="mt-1"
+                                />
+                              </div>
+                            </>
+                          )}
+                          <div className="md:col-span-2">
+                            <Label className="text-xs font-medium text-indigo-700 uppercase tracking-wider">
+                              Additional terms / notes
+                            </Label>
+                            <textarea
+                              value={paymentArrangementNotes}
+                              onChange={(e) =>
+                                setPaymentArrangementNotes(e.target.value)
+                              }
+                              placeholder="Late fee policy, missed-payment consequences, conditions, etc."
+                              rows={3}
+                              className="w-full mt-1 text-sm border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                            />
+                          </div>
+                          <p className="md:col-span-2 text-xs text-indigo-700/80 italic">
+                            Drives the <code>{'{PAYMENT_ARRANGEMENT_SECTION}'}</code> placeholder.
+                            Templates without that placeholder will simply ignore these fields.
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {generateError && (
