@@ -160,10 +160,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
 
     tried.push('generateFileUploadUrl');
-    const presigned: any = await wixClient.files.generateFileUploadUrl({
-      mimeType: mime,
-      fileName: body.fileName,
-    });
+    // Signature: generateFileUploadUrl(mimeType, options) — mimeType
+    // is a positional first argument, NOT a field on the options
+    // object. Passing { mimeType, fileName } as one object made the
+    // SDK forward an empty mimeType and Wix returned HTTP 400 UNKNOWN.
+    const presigned: any = await wixClient.files.generateFileUploadUrl(
+      mime,
+      {
+        fileName: body.fileName,
+        sizeInBytes: String(blob.size),
+      }
+    );
     const uploadUrl: string | undefined =
       presigned?.uploadUrl || presigned?.url;
     if (!uploadUrl) {
