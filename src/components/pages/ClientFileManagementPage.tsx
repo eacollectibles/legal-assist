@@ -455,6 +455,9 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
         'conflictStatus', 'notes', 'conflictNotes',
         // Section A — assigned paralegal lives on the file row
         'assignedParalegalName', 'assignedParalegalId',
+        // Denormalised client display fields kept on the file row so
+        // list views render without joining clientprofiles.
+        'clientName', 'clientEmail',
       ]);
 
       // Helper: coerce date-string inputs to Date so Wix datetime fields
@@ -473,6 +476,21 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
       const profileUpdates: Record<string, any> = {};
       Object.entries(editValues).forEach(([k, v]) => {
         const cv = coerce(k, v);
+        // Special case: Section B's "Full Legal Name" EditableField
+        // uses fieldKey="clientName" which doesn't exist as a column
+        // on either clientprofiles (uses firstName/lastName) or
+        // clientfiles. Split the entered full name and route the
+        // pieces to the profile row. Also mirror onto the file row's
+        // clientName denormalised column so search/list views update.
+        if (k === 'clientName' && typeof cv === 'string') {
+          const parts = cv.trim().split(/\s+/);
+          const firstName = parts.shift() || '';
+          const lastName = parts.join(' ');
+          profileUpdates['firstName'] = firstName;
+          profileUpdates['lastName'] = lastName;
+          fileUpdates['clientName'] = cv.trim();
+          return;
+        }
         if (PROFILE_FIELDS.has(k)) profileUpdates[k] = cv;
         else if (FILE_FIELDS.has(k)) fileUpdates[k] = cv;
         else {

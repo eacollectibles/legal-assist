@@ -461,10 +461,16 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const loadData = async () => {
     setIsLoading(true);
     try {
+      // BaseCrudService.getAll defaults to a 50-row page. We always
+      // need the full collections here because the user picks any
+      // template / client from these lists — silently dropping rows
+      // past page 1 caused 'client.find returned undefined' bugs that
+      // showed up downstream as missing fields in generated documents
+      // (province defaulting to '—', etc.).
       const [templatesRes, docsRes, clientsRes] = await Promise.all([
-        BaseCrudService.getAll<DocumentTemplate>('documenttemplates'),
-        BaseCrudService.getAll<GeneratedDocument>('generateddocuments'),
-        BaseCrudService.getAll<ClientProfile>('clientprofiles')
+        BaseCrudService.getAll<DocumentTemplate>('documenttemplates', undefined, { limit: 1000 } as any),
+        BaseCrudService.getAll<GeneratedDocument>('generateddocuments', undefined, { limit: 1000 } as any),
+        BaseCrudService.getAll<ClientProfile>('clientprofiles', undefined, { limit: 1000 } as any)
       ]);
 
       // -----------------------------------------------------------
@@ -889,7 +895,12 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE1\}/g, client.streetAddress || '—');
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE2\}/g, client.unit || client.addressLine2 || '—');
       documentContent = documentContent.replace(/\{CLIENT_CITY\}/g, client.city || '—');
-      documentContent = documentContent.replace(/\{CLIENT_PROVINCE\}/g, client.state || '—');
+      // Default to Ontario when the client's province field is empty.
+      // Section B's EditableField shows "Ontario" as a visual default
+      // but if the user never clicks the field, the default doesn't
+      // persist to CMS. Without this fallback the retainer printed
+      // an em-dash where the province should be.
+      documentContent = documentContent.replace(/\{CLIENT_PROVINCE\}/g, client.state || 'Ontario');
       documentContent = documentContent.replace(/\{CLIENT_POSTAL_CODE\}/g, client.zipCode || '—');
       // Matter reference: prefer the client's display id (CL-XXXXXX) or
       // the document name; falling back to a dash only if nothing exists.
