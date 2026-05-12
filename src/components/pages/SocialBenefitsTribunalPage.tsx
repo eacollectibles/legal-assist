@@ -64,7 +64,7 @@ export default function SocialBenefitsTribunalPage() {
               The Social Benefits Tribunal (SBT) is part of Tribunals Ontario and hears appeals from decisions under the Ontario Works Act, 1997 and the Ontario Disability Support Program Act, 1997. Before you can appeal to the SBT, you must FIRST request an Internal Review with the agency that made the decision (ODSP office or municipal OW office). Only after the Internal Review decision is issued can you appeal to the SBT. Both steps are time-limited and missing either deadline usually ends the appeal.
             </p>
             <p className="font-paragraph text-lg text-foreground/80">
-              We handle the Internal Review request, the SBT Notice of Appeal, evidence collection, written submissions, and representation at the hearing. Where the matter ends at the SBT we explain the further options - reconsideration, statutory appeal on a question of law to the Divisional Court (ODSPA s.31 / OWA s.36), or judicial review.
+              We handle the Internal Review request, the SBT Notice of Appeal, evidence collection, written submissions, and representation at the hearing. Where the matter ends at the SBT we explain the further options - reconsideration before the SBT itself, statutory appeal on a question of law to the Divisional Court (ODSPA s.31 / OWA s.36), or judicial review. Note: paralegals do not have a right of appearance under LSO By-Law 4 in the Divisional Court, so we refer Divisional Court appeals and judicial review applications to licensed counsel.
             </p>
           </div>
 
@@ -242,7 +242,7 @@ export default function SocialBenefitsTribunalPage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80"><strong>Late appeals</strong> may be accepted with reasonable explanation, generally up to 1 year (SPPA s.5.1)</span>
+                  <span className="font-paragraph text-foreground/80"><strong>Late appeals</strong> may be accepted with reasonable explanation, generally up to 1 year (OWA s.27(2.1) / s.31(2.1); ODSPA s.28(2.1) / s.29; SBT Rules of Procedure)</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
@@ -341,7 +341,7 @@ export default function SocialBenefitsTribunalPage() {
                 <div className="flex items-start gap-4">
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground mb-2">Expert Knowledge</h3>
+                    <h3 className="font-heading text-lg font-bold text-foreground mb-2">In-Depth Knowledge</h3>
                     <p className="font-paragraph text-foreground/80">We understand complex eligibility rules, regulations, and tribunal procedures that affect your case.</p>
                   </div>
                 </div>
@@ -466,7 +466,7 @@ export default function SocialBenefitsTribunalPage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
-                  <span className="font-paragraph text-foreground/80">SBT decisions can be revisited via reconsideration, statutory appeal on a question of law to the Divisional Court (ODSPA s.31 / OWA s.36), or judicial review - but not through general re-hearing</span>
+                  <span className="font-paragraph text-foreground/80">SBT decisions can be revisited via reconsideration at the SBT (which we represent on), statutory appeal on a question of law to the Divisional Court (ODSPA s.31 / OWA s.36), or judicial review - but not through general re-hearing. Paralegals cannot appear in the Divisional Court; we refer those appeals and judicial review applications to licensed counsel.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold text-lg leading-none mt-0.5">•</span>
@@ -560,7 +560,7 @@ export default function SocialBenefitsTribunalPage() {
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">Can I appeal a late decision?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
-                Late requests may be accepted at either stage if you have a reasonable explanation, but it is at the SBT's discretion under SPPA s.5.1. The general outer limit is 1 year. Earlier filing is always safer - the SBT does not have to extend the time and a late request can be refused.
+                Late requests may be accepted at either stage if you have a reasonable explanation, but it is at the SBT's discretion under OWA s.27(2.1) and s.31(2.1) / ODSPA s.28(2.1) and s.29, together with the SBT Rules of Procedure. The general outer limit is 1 year. Earlier filing is always safer - the SBT does not have to extend the time and a late request can be refused.
               </p>
             </div>
 
@@ -581,7 +581,7 @@ export default function SocialBenefitsTribunalPage() {
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">Can I appeal a tribunal decision?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
-                Yes, but in narrow channels: (1) reconsideration by the SBT itself within 30 days; (2) statutory appeal on a question of law to the Divisional Court under ODSPA s.31 or OWA s.36 within 30 days; (3) judicial review under the Judicial Review Procedure Act in limited circumstances. None of these is a general re-hearing on the facts - the original SBT findings of fact normally stand.
+                Yes, but in narrow channels: (1) <strong>reconsideration by the SBT itself</strong> within 30 days (paralegals can represent on reconsideration); (2) <strong>statutory appeal on a question of law to the Divisional Court</strong> under ODSPA s.31 or OWA s.36 within 30 days (Divisional Court is part of the Superior Court of Justice — paralegals cannot appear, so we refer to licensed counsel); (3) <strong>judicial review</strong> under the <em>Judicial Review Procedure Act</em> in limited circumstances (also Divisional Court — same referral). None of these is a general re-hearing on the facts - the original SBT findings of fact normally stand.
               </p>
             </div>
 
@@ -589,6 +589,13 @@ export default function SocialBenefitsTribunalPage() {
               <h3 className="font-heading text-lg font-bold text-foreground mb-3">What if I win my appeal?</h3>
               <p className="font-paragraph text-foreground/80 text-sm">
                 If you win, the tribunal orders the ministry to approve your benefits or reinstate them. You may also be entitled to back pay from the date of the original decision.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
+              <h3 className="font-heading text-lg font-bold text-foreground mb-3">Could my situation also be a human rights claim?</h3>
+              <p className="font-paragraph text-foreground/80 text-sm">
+                Sometimes. Where the underlying ODSP or OW decision may have been influenced by discrimination on a protected ground under the <em>Human Rights Code</em> (for example, disability, race, family status, age), the same facts may support a parallel <strong>Human Rights Tribunal of Ontario</strong> application within the 1-year limitation period under Code s.34. We can assess at intake whether HRTO is appropriate alongside the SBT appeal and represent you in both forums under LSO By-Law 4.
               </p>
             </div>
           </div>

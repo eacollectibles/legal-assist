@@ -100,11 +100,11 @@ export default function EmploymentIssuesPage() {
             {[
               {
                 title: 'Wrongful Dismissal',
-                description: 'Representation for employees terminated without just cause or proper notice. We help you understand your entitlements and negotiate fair compensation.'
+                description: 'Representation for employees terminated without just cause or proper notice — within Small Claims Court jurisdiction (up to $50,000). Larger common-law notice claims are referred to employment counsel for Superior Court.'
               },
               {
                 title: 'Constructive Dismissal',
-                description: 'Guidance when working conditions become intolerable, forcing you to resign. We assess whether you have a constructive dismissal claim and your options.'
+                description: 'Guidance and negotiation when working conditions force a resignation. We assess your claim and represent you at Small Claims Court where the damages fit within jurisdiction; larger claims are referred to employment counsel.'
               },
               {
                 title: 'Severance Package Review',
@@ -140,11 +140,11 @@ export default function EmploymentIssuesPage() {
               },
               {
                 title: 'Workplace Harassment and Bullying',
-                description: 'Documentation and response strategies. We help you address harassment and pursue claims for damages.'
+                description: 'Documentation and response strategies. We assess whether your claim belongs at the HRTO (Code-protected harassment), the OLRB under OHSA s.50, or Small Claims Court. Civil tort claims requiring Superior Court are referred to litigation counsel.'
               },
               {
                 title: 'Retaliation Claims',
-                description: 'Protection against retaliation for reporting violations or exercising rights. We help you pursue retaliation claims.'
+                description: 'Reprisal for reporting violations or exercising rights — paralegal-represented at the OLRB (OHSA s.50), HRTO (Code s.8), or Small Claims Court depending on the venue. We assess the proper forum at intake.'
               }
             ].map((issue, idx) => (
               <div key={idx} className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
@@ -394,10 +394,10 @@ export default function EmploymentIssuesPage() {
                 How much notice am I entitled to?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
-                Under the Employment Standards Act, employees are entitled to 2 weeks written notice if employed for 3 months or more. However, common law may provide for longer notice periods.
+                Statutory notice under the Employment Standards Act, 2000 s.57 scales with length of service: 1 week (3 months to less than 1 year), 2 weeks (1 to less than 3 years), 3 weeks at 3 years and an additional week for each completed year thereafter, capped at 8 weeks at 8+ years. The ESA notice is a floor, not a ceiling.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed">
-                Common law notice depends on factors like age, length of service, position, and availability of similar employment. Senior employees with long service may be entitled to several months of notice. Your contract may also specify notice requirements.
+                Common-law reasonable notice for non-union employees is often substantially longer than the ESA minimum. The Bardal factors (age, length of service, character of employment, and availability of similar employment) determine common-law notice. Senior employees with long service may be entitled to several months. Your contract may also specify notice requirements, although enforceability depends on the contract complying with the ESA.
               </p>
             </div>
 
@@ -528,7 +528,7 @@ export default function EmploymentIssuesPage() {
                 Are there time limits for pursuing employment claims?
               </h3>
               <p className="font-paragraph text-foreground/80 mb-4 leading-relaxed">
-                Yes, and they vary by claim type. Wrongful-dismissal civil action: 2 years from termination (Limitations Act, 2002 s.4). HRTO application: 1 year from the latest incident (Human Rights Code s.34). ESA Ministry of Labour complaint: generally 2 years, with restrictions on combining ESA and civil action for the same amount. EI appeals: short windows (often 30 days from each decision).
+                Yes, and they vary by claim type. Wrongful-dismissal civil action: 2 years from termination (Limitations Act, 2002 s.4). HRTO application: 1 year from the latest incident (Human Rights Code s.34). ESA Ministry of Labour complaint: generally 2 years, with restrictions on combining ESA and civil action for the same amount (ESA s.97 election). Federal Employment Insurance appeals at the Social Security Tribunal: short windows (typically 30 days from each decision); paralegals can represent at the federal SST.
               </p>
               <p className="font-paragraph text-foreground/80 leading-relaxed">
                 If you miss the deadline, you lose your right to sue. Contact us promptly to ensure your rights are protected and your claim is filed within the required timeframe.
