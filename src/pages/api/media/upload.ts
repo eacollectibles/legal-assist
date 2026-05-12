@@ -1,4 +1,11 @@
 import type { APIRoute } from 'astro';
+// Static imports for the Wix SDK. We deliberately avoid
+// `Function('return import')()` because Cloudflare Workers blocks
+// "Code generation from strings", which makes the dynamic-import
+// trick throw at runtime with no useful error. Static imports get
+// bundled at build time so the worker can use them directly.
+import { createClient, ApiKeyStrategy } from '@wix/sdk';
+import { files as wixFiles } from '@wix/media';
 
 /**
  * POST /api/media/upload
@@ -134,19 +141,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const tried: string[] = [];
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-    const importer = Function('return import')();
-    const [sdkMod, mediaMod]: [any, any] = await Promise.all([
-      importer('@wix/sdk'),
-      importer('@wix/media'),
-    ]);
-
-    const createClient = sdkMod?.createClient || sdkMod?.default?.createClient;
-    const ApiKeyStrategy =
-      sdkMod?.ApiKeyStrategy || sdkMod?.default?.ApiKeyStrategy;
-    const filesNs = mediaMod?.files || mediaMod?.default?.files;
-
-    if (!createClient || !ApiKeyStrategy || !filesNs) {
+    // SDK modules are imported statically at the top of this file.
+    // Sanity-check that the bundler didn't drop them.
+    if (!createClient || !ApiKeyStrategy || !wixFiles) {
       return json(
         {
           success: false,
@@ -158,7 +155,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     const wixClient = createClient({
-      modules: { files: filesNs },
+      modules: { files: wixFiles },
       auth: ApiKeyStrategy({ apiKey, siteId }),
     });
 
