@@ -262,8 +262,11 @@ export default function Footer() {
             <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
               <strong className="text-secondary-foreground/90">Insolvency Services Notice:</strong> Insolvency and bankruptcy services referenced on this website are provided exclusively by Licensed Insolvency Trustees (LITs) licensed by the Office of the Superintendent of Bankruptcy. Legal Assist Paralegal Services does not provide insolvency advice or representation.
             </p>
-            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed mb-4">
               <strong className="text-secondary-foreground/90">Referral Fee Disclosure:</strong> Legal Assist Paralegal Services may receive a referral or administrative fee when connecting clients with third-party licensed professionals, including Regulated Canadian Immigration Consultants (RCICs) and Licensed Insolvency Trustees (LITs). Any such referrals do not affect the independence of the licensed professional or the fees charged to the client.
+            </p>
+            <p className="font-paragraph text-xs sm:text-sm text-secondary-foreground/70 leading-relaxed">
+              <strong className="text-secondary-foreground/90">Law Society Referral Service:</strong> Legal Assist Paralegal Services is part of the Law Society of Ontario Referral Service.
             </p>
           </div>
           <p className="text-xs text-secondary-foreground/50 text-center mb-2">

@@ -1,0 +1,1052 @@
+<!--
+  HRTO Retainer Agreement — HTML Template
+  Source of truth: Wix CMS row in `documenttemplates` (templateName: "HRTO")
+  Substitutions are performed by DocumentWorkflowPage.tsx + retainer-html-generator.ts.
+  Empty/optional fields are hidden via the [data-empty="true"] CSS rule below.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Retainer Agreement — Human Rights Tribunal of Ontario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       BASE
+       ============================================================ */
+    :root {
+      --navy: #0f2a4a;
+      --navy-2: #14315a;
+      --gold: #b08a3e;
+      --ink: #1f2937;
+      --ink-2: #374151;
+      --mute: #6b7280;
+      --bg: #ffffff;
+      --bg-soft: #f7f9fc;
+      --bg-warm: #fdfaf3;
+      --line: #e2e8f0;
+      --line-2: #cbd5e1;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --ok: #166534;
+      --ok-soft: #f0fdf4;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 13.5px/1.55 Inter, Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .doc {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 40px 48px;
+    }
+    h1, h2, h3, h4 {
+      font-family: Inter, Arial, sans-serif;
+      color: var(--navy);
+      line-height: 1.25;
+      margin: 0 0 8px;
+    }
+    h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+    h2 { font-size: 18px; font-weight: 700; margin-top: 28px; padding-bottom: 6px; border-bottom: 2px solid var(--gold); }
+    h3 { font-size: 14.5px; font-weight: 700; margin-top: 18px; }
+    h4 { font-size: 13px; font-weight: 600; margin-top: 14px; color: var(--ink); }
+    p { margin: 0 0 10px; }
+    ul, ol { margin: 6px 0 12px 22px; padding: 0; }
+    li { margin: 0 0 4px; }
+    strong { color: var(--ink); }
+    small { color: var(--mute); font-size: 11.5px; }
+    a { color: var(--navy); text-decoration: underline; }
+
+    /* ============================================================
+       PAGE-BREAK PROTECTION (downstream of pdf-generator.ts slicer)
+       ============================================================ */
+    .callout,
+    .card,
+    .fee-row,
+    .protected-grounds,
+    .signature-row,
+    .timeline,
+    .ack-list,
+    .meta-grid,
+    .summary-card,
+    .why-card,
+    .receipt {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    h2, h3 { page-break-after: avoid; break-after: avoid; }
+
+    /* ============================================================
+       OPTIONAL-FIELD HIDING
+       ============================================================ */
+    [data-empty="true"] { display: none !important; }
+
+    /* ============================================================
+       COVER PAGE
+       ============================================================ */
+    .cover {
+      min-height: 980px;
+      padding: 40px 0 24px;
+      display: flex;
+      flex-direction: column;
+      page-break-after: always;
+      break-after: page;
+    }
+    .cover-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 3px solid var(--gold);
+    }
+    .cover-brand .mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 18px/1 Inter, sans-serif;
+      letter-spacing: 0.02em;
+    }
+    .cover-brand .firm {
+      font: 700 17px/1.2 Inter, sans-serif;
+      color: var(--navy);
+    }
+    .cover-brand .firm small {
+      display: block;
+      font: 400 11.5px/1.3 Inter, sans-serif;
+      color: var(--mute);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .cover-title {
+      margin-top: 48px;
+      font-size: 32px;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+    }
+    .cover-sub {
+      margin-top: 6px;
+      font: 500 15px/1.4 Inter, sans-serif;
+      color: var(--ink-2);
+    }
+    .cover-tag {
+      margin-top: 20px;
+      font: italic 400 13px/1.55 Lora, Georgia, serif;
+      color: var(--mute);
+      max-width: 520px;
+    }
+    .cover-meta {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 22px;
+      padding: 18px 20px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .cover-meta .row { display: flex; flex-direction: column; gap: 2px; }
+    .cover-meta .lab {
+      font: 600 10px/1 Inter, sans-serif;
+      color: var(--mute);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .cover-meta .val {
+      font: 600 13.5px/1.4 Inter, sans-serif;
+      color: var(--ink);
+    }
+
+    .cover-toc {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .cover-toc h4 {
+      margin: 0 0 10px;
+      font: 700 11.5px/1 Inter, sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .cover-toc ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      column-count: 2;
+      column-gap: 28px;
+      column-rule: 1px solid var(--line);
+    }
+    .cover-toc ol li {
+      break-inside: avoid;
+      font: 500 11.5px/1.6 Inter, sans-serif;
+      color: var(--ink-2);
+      padding-left: 22px;
+      position: relative;
+      margin: 0 0 2px;
+    }
+    .cover-toc ol li::before {
+      content: counter(toc, decimal-leading-zero);
+      counter-increment: toc;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font: 700 10px/1.6 Inter, sans-serif;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .cover-toc ol { counter-reset: toc; }
+
+    .cover-foot {
+      margin-top: auto;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 18px;
+    }
+    .cover-foot .left {
+      font: 400 11px/1.5 Inter, sans-serif;
+      color: var(--mute);
+      max-width: 460px;
+    }
+    .cover-foot .right {
+      font: 600 11px/1.3 Inter, sans-serif;
+      color: var(--navy);
+      text-align: right;
+    }
+    .cover-foot .right small {
+      display: block;
+      font: 400 10.5px/1.3 Inter, sans-serif;
+      color: var(--mute);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+
+    /* ============================================================
+       SUMMARY + WHY-CHOOSE CARDS
+       ============================================================ */
+    .summary-card {
+      margin: 18px 0 24px;
+      padding: 18px 22px;
+      background: var(--bg-warm);
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+    }
+    .summary-card h3 {
+      margin: 0 0 6px;
+      font: 700 13px/1 Inter, sans-serif;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .summary-card p { margin: 0; color: var(--ink-2); font-size: 13px; }
+
+    .why-card {
+      margin: 18px 0;
+      padding: 18px 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--navy);
+      border-radius: 6px;
+    }
+    .why-card h3 {
+      margin: 0 0 8px;
+      font: 700 13px/1 Inter, sans-serif;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .why-card ul { margin: 0; padding-left: 18px; }
+    .why-card li { color: var(--ink-2); font-size: 12.5px; margin: 0 0 3px; }
+
+    /* ============================================================
+       TIMELINE  (the broken-overlap bug — fully rewritten)
+       ============================================================ */
+    .timeline {
+      position: relative;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 24px 12px 18px;
+      margin: 22px 0 26px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .timeline-step {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .timeline-step .dot {
+      position: static;          /* CRITICAL: was absolute → caused overlap */
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font: 700 12px/28px Inter, sans-serif;
+      text-align: center;
+      margin: 0 0 8px;
+      box-shadow: 0 1px 3px rgba(15,42,74,0.25);
+      z-index: 2;
+    }
+    .timeline-step .label {
+      display: block;
+      font: 600 9.5px/1.2 Inter, sans-serif;
+      color: var(--ink);
+      word-break: keep-all;
+      hyphens: none;
+      letter-spacing: 0.01em;
+      padding: 0 2px;
+    }
+    .timeline-step .sub {
+      display: block;
+      font: 500 8.5px/1.15 Inter, sans-serif;
+      color: var(--mute);
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       META-GRID (Section 1 Parties)
+       ============================================================ */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 22px;
+      margin: 8px 0 14px;
+      padding: 14px 18px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .meta-grid .row {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+    .meta-grid .lab {
+      flex: 0 0 110px;
+      font: 600 11px/1.4 Inter, sans-serif;
+      color: var(--mute);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .meta-grid .val {
+      flex: 1 1 0;
+      font: 500 12.5px/1.4 Inter, sans-serif;
+      color: var(--ink);
+    }
+
+    /* ============================================================
+       CALLOUTS
+       ============================================================ */
+    .callout {
+      margin: 14px 0;
+      padding: 14px 18px;
+      border-radius: 8px;
+      background: var(--bg-soft);
+      border-left: 4px solid var(--navy);
+    }
+    .callout.warn { background: var(--danger-soft); border-left-color: var(--danger); }
+    .callout.warn h4 { color: var(--danger); }
+    .callout.ok   { background: var(--ok-soft);     border-left-color: var(--ok); }
+    .callout h4 {
+      margin: 0 0 6px;
+      font: 700 11.5px/1 Inter, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .callout p { margin: 0 0 6px; font-size: 12.5px; color: var(--ink-2); }
+    .callout p:last-child { margin: 0; }
+
+    .protected-grounds {
+      margin: 14px 0;
+      padding: 14px 18px;
+      border: 1px solid var(--line-2);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .protected-grounds h4 {
+      margin: 0 0 8px;
+      font: 700 11px/1 Inter, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+    }
+    .protected-grounds ul {
+      margin: 0;
+      padding-left: 18px;
+      column-count: 2;
+      column-gap: 24px;
+    }
+    .protected-grounds li {
+      break-inside: avoid;
+      font-size: 12px;
+      color: var(--ink-2);
+      margin: 0 0 3px;
+    }
+
+    /* ============================================================
+       FEE STRUCTURE
+       ============================================================ */
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 9px 14px;
+      margin: 6px 0;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+    .fee-row .name { font: 600 12.5px/1.3 Inter, sans-serif; color: var(--ink); }
+    .fee-row .amt  { font: 700 13px/1.3 Inter, sans-serif; color: var(--navy); }
+
+    /* ============================================================
+       PAYMENT / RECEIPT
+       ============================================================ */
+    .receipt {
+      margin: 14px 0;
+      padding: 16px 20px;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      background: var(--bg-warm);
+    }
+    .receipt h4 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font: 700 11.5px/1 Inter, sans-serif;
+    }
+    .receipt .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 22px;
+    }
+    .receipt .row { display: flex; gap: 8px; align-items: baseline; }
+    .receipt .lab {
+      flex: 0 0 130px;
+      font: 600 10.5px/1.4 Inter, sans-serif;
+      color: var(--mute);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .receipt .val { font: 600 12.5px/1.4 Inter, sans-serif; color: var(--ink); }
+
+    /* ============================================================
+       ACKNOWLEDGMENT INITIALS LIST (signature page filler)
+       ============================================================ */
+    .ack-list {
+      margin: 18px 0 22px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+    }
+    .ack-list h4 {
+      margin: 0 0 10px;
+      font: 700 11.5px/1 Inter, sans-serif;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .ack-list .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .ack-list .item:last-child { border-bottom: 0; }
+    .ack-list .box {
+      flex: 0 0 56px;
+      height: 22px;
+      border: 1.5px solid var(--ink-2);
+      border-radius: 3px;
+      text-align: center;
+      font: 600 10px/22px Inter, sans-serif;
+      color: var(--mute);
+      letter-spacing: 0.08em;
+    }
+    .ack-list .txt { flex: 1 1 0; font: 500 12px/1.45 Inter, sans-serif; color: var(--ink-2); }
+    .ack-list .txt strong { color: var(--navy); }
+
+    /* ============================================================
+       SIGNATURE BLOCK
+       ============================================================ */
+    .signature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin: 20px 0 12px;
+    }
+    .sig-card {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .sig-card .lab {
+      font: 700 10px/1 Inter, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mute);
+      margin-bottom: 4px;
+    }
+    .sig-card .name { font: 700 14px/1.3 Inter, sans-serif; color: var(--ink); margin-bottom: 4px; }
+    .sig-card .meta { font: 500 11.5px/1.35 Inter, sans-serif; color: var(--mute); margin-bottom: 12px; }
+    .sig-card .line {
+      border-top: 1.5px solid var(--ink);
+      height: 0;
+      margin: 32px 0 6px;
+    }
+    .sig-card .cursive {
+      font: italic 400 22px/1 "Allura", "Lora", cursive, serif;
+      color: var(--navy);
+      margin: 0 0 -2px;
+      letter-spacing: 0.01em;
+    }
+    .sig-card .date { font: 500 11px/1.3 Inter, sans-serif; color: var(--ink-2); }
+
+    /* ============================================================
+       DOC FOOTER
+       ============================================================ */
+    .doc-footer {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font: 500 10.5px/1.45 Inter, sans-serif;
+      color: var(--mute);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .doc-footer a { color: var(--mute); }
+    .doc-footer .right { text-align: right; }
+
+    /* ============================================================
+       MOBILE
+       ============================================================ */
+    @media (max-width: 640px) {
+      .doc { padding: 18px 18px 32px; }
+      .cover-meta { grid-template-columns: 1fr; }
+      .cover-toc ol { column-count: 1; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .signature-row { grid-template-columns: 1fr; }
+      .receipt .grid { grid-template-columns: 1fr; }
+      .protected-grounds ul { column-count: 1; }
+      .timeline-step .label { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ========================================================
+       COVER PAGE
+       ======================================================== -->
+  <section class="cover">
+    <div class="cover-brand">
+      <span class="mark">LA</span>
+      <div class="firm">
+        Legal Assist Paralegal Services
+        <small>Licensed by the Law Society of Ontario</small>
+      </div>
+    </div>
+
+    <h1 class="cover-title">Retainer Agreement</h1>
+    <p class="cover-sub">Human Rights Tribunal of Ontario (HRTO)</p>
+    <p class="cover-tag">Please read this agreement carefully. It explains the work we will perform, how we charge, and the rights and obligations of both parties. Your signature confirms you have had the opportunity to ask questions and to seek independent advice.</p>
+
+    <div class="cover-meta">
+      <div class="row">
+        <span class="lab">Prepared For</span>
+        <span class="val">{CLIENT_NAME}</span>
+      </div>
+      <div class="row">
+        <span class="lab">Prepared By</span>
+        <span class="val">{PARALEGAL_NAME}, LSO #{PARALEGAL_LSO}</span>
+      </div>
+      <div class="row" data-empty="{IS_FILE_REF_EMPTY}">
+        <span class="lab">File Reference</span>
+        <span class="val">{FILE_REFERENCE}</span>
+      </div>
+      <div class="row">
+        <span class="lab">Date Prepared</span>
+        <span class="val">{DATE}</span>
+      </div>
+      <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}">
+        <span class="lab">Matter Type</span>
+        <span class="val">{MATTER_TYPE}</span>
+      </div>
+      <div class="row">
+        <span class="lab">Tribunal</span>
+        <span class="val">Human Rights Tribunal of Ontario</span>
+      </div>
+    </div>
+
+    <div class="cover-toc">
+      <h4>What's in this agreement</h4>
+      <ol>
+        <li>Parties &amp; Matter</li>
+        <li>Retainer &amp; Relationship</li>
+        <li>Scope of Services</li>
+        <li>Excluded Services</li>
+        <li>Fee Structure &amp; Payment</li>
+        <li>Settlement Authority</li>
+        <li>Client Responsibilities</li>
+        <li>Evidence &amp; Disclosure</li>
+        <li>Limitation Period</li>
+        <li>Mediation Confidentiality</li>
+        <li>Client Conduct</li>
+        <li>No Guaranteed Outcome</li>
+        <li>Referral &amp; Other Counsel</li>
+        <li>Parallel Proceedings</li>
+        <li>Communication</li>
+        <li>File Assignment</li>
+        <li>Social Media</li>
+        <li>No Action Without Funding</li>
+        <li>Withdrawal &amp; Termination</li>
+        <li>Indemnity &amp; Liability</li>
+        <li>Electronic Communications</li>
+        <li>Use of Technology &amp; AI</li>
+        <li>Governing Law</li>
+        <li>Acknowledgment</li>
+      </ol>
+    </div>
+
+    <div class="cover-foot">
+      <div class="left">
+        Legal Assist Paralegal Services is licensed and insured by the Law Society of Ontario (LSO). Verify our licensing at <a href="https://lso.ca/directory">lso.ca/directory</a>. This agreement is governed by the laws of the Province of Ontario.
+      </div>
+      <div class="right">
+        <small>Document</small>
+        HRTO-RET-{DATE_SHORT}
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       PLAIN-ENGLISH SUMMARY + WHY US
+       ======================================================== -->
+  <div class="summary-card">
+    <h3>In plain English</h3>
+    <p>You are hiring <strong>{PARALEGAL_NAME}</strong> at Legal Assist Paralegal Services to represent you in a Human Rights Tribunal of Ontario application. This document explains what we will do, what we will not do, what it costs, and what we both need from each other. If anything in this document is unclear, ask us before signing.</p>
+  </div>
+
+  <div class="why-card">
+    <h3>Why clients choose us for HRTO matters</h3>
+    <ul>
+      <li>Focused practice in human-rights, employment, and tribunal advocacy in London and Southwestern Ontario.</li>
+      <li>Transparent fees — you receive a written estimate before work begins and a detailed account with every invoice.</li>
+      <li>Direct paralegal access — you speak with the licensee handling your file, not a call centre.</li>
+      <li>LSO-licensed, insured, and bound by the Paralegal Rules of Conduct.</li>
+    </ul>
+  </div>
+
+  <!-- ========================================================
+       TIMELINE — fixed: dots stacked above labels, no overlap
+       ======================================================== -->
+  <h3 style="margin-top:24px;">How an HRTO matter typically moves</h3>
+  <div class="timeline">
+    <div class="timeline-step">
+      <span class="dot">1</span>
+      <span class="label">Consult</span>
+      <span class="sub">Intake</span>
+    </div>
+    <div class="timeline-step">
+      <span class="dot">2</span>
+      <span class="label">Application</span>
+      <span class="sub">Form 1</span>
+    </div>
+    <div class="timeline-step">
+      <span class="dot">3</span>
+      <span class="label">Response</span>
+      <span class="sub">Form 2</span>
+    </div>
+    <div class="timeline-step">
+      <span class="dot">4</span>
+      <span class="label">Disclosure</span>
+      <span class="sub">Exchange</span>
+    </div>
+    <div class="timeline-step">
+      <span class="dot">5</span>
+      <span class="label">Mediation</span>
+      <span class="sub">or CMC</span>
+    </div>
+    <div class="timeline-step">
+      <span class="dot">6</span>
+      <span class="label">Hearing</span>
+      <span class="sub">Merits</span>
+    </div>
+    <div class="timeline-step">
+      <span class="dot">7</span>
+      <span class="label">Decision</span>
+      <span class="sub">Remedy</span>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       1. PARTIES & MATTER
+       ======================================================== -->
+  <h2>1. Parties &amp; Matter</h2>
+  <p>This Retainer Agreement (the "<strong>Agreement</strong>") is made between <strong>{CLIENT_NAME}</strong> (the "<strong>Client</strong>") and <strong>Legal Assist Paralegal Services</strong>, acting through paralegal <strong>{PARALEGAL_NAME}</strong>, LSO #{PARALEGAL_LSO} (the "<strong>Paralegal</strong>" or "<strong>we</strong>").</p>
+
+  <div class="meta-grid">
+    <div class="row">
+      <span class="lab">Client</span>
+      <span class="val">{CLIENT_NAME}</span>
+    </div>
+    <div class="row">
+      <span class="lab">Email</span>
+      <span class="val">{CLIENT_EMAIL}</span>
+    </div>
+    <div class="row" data-empty="{IS_CLIENT_PHONE_EMPTY}">
+      <span class="lab">Phone</span>
+      <span class="val">{CLIENT_PHONE}</span>
+    </div>
+    <div class="row" data-empty="{IS_CLIENT_ADDRESS_EMPTY}">
+      <span class="lab">Address</span>
+      <span class="val">{CLIENT_ADDRESS}</span>
+    </div>
+    <div class="row" data-empty="{IS_CLIENT_UNIT_EMPTY}">
+      <span class="lab">Unit</span>
+      <span class="val">{CLIENT_UNIT}</span>
+    </div>
+    <div class="row">
+      <span class="lab">City / Province</span>
+      <span class="val">{CLIENT_CITY}, {CLIENT_PROVINCE} {CLIENT_POSTAL_CODE}</span>
+    </div>
+    <div class="row" data-empty="{IS_FILE_REF_EMPTY}">
+      <span class="lab">File Ref</span>
+      <span class="val">{FILE_REFERENCE}</span>
+    </div>
+    <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}">
+      <span class="lab">Matter Type</span>
+      <span class="val">{MATTER_TYPE}</span>
+    </div>
+    <div class="row" data-empty="{IS_NATURE_EMPTY}" style="grid-column:1 / -1;">
+      <span class="lab">Nature</span>
+      <span class="val">{NATURE_OF_MATTER}</span>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       2. RETAINER & RELATIONSHIP
+       ======================================================== -->
+  <h2>2. Retainer &amp; Relationship</h2>
+  <p>The Client retains the Paralegal to represent the Client before the Human Rights Tribunal of Ontario (the "<strong>HRTO</strong>" or the "<strong>Tribunal</strong>") in respect of the matter described in Section 1. The Paralegal accepts the retainer subject to the terms of this Agreement.</p>
+  <p>The Paralegal acts only within the scope of practice authorized by By-Law 4 of the Law Society of Ontario for paralegals. Nothing in this Agreement creates a solicitor-client relationship with a lawyer or an obligation on us to provide legal services that fall outside paralegal scope.</p>
+
+  <!-- ========================================================
+       3. SCOPE OF SERVICES
+       ======================================================== -->
+  <h2>3. Scope of Services</h2>
+  <p>Subject to Section 4, our services include:</p>
+  <ul>
+    <li>Reviewing the facts and assessing whether they engage one or more grounds protected by the Ontario <em>Human Rights Code</em>;</li>
+    <li>Drafting and filing an <strong>Application (Form 1)</strong> with the HRTO, or responding to an Application as <strong>Respondent (Form 2)</strong>;</li>
+    <li>Drafting a <strong>Reply (Form 3)</strong> where appropriate;</li>
+    <li>Preparing and exchanging mandatory disclosure under HRTO Rule 16;</li>
+    <li>Representing the Client at <strong>mediation</strong> and at any <strong>Case Assessment Direction (CAD)</strong> or summary hearing under Rule 19A;</li>
+    <li>Drafting and reviewing settlement offers and Minutes of Settlement;</li>
+    <li>Representing the Client at the merits hearing, including examination-in-chief, cross-examination, and submissions;</li>
+    <li>Receiving and explaining the Tribunal's decision and any remedy ordered under s. 45.2 of the <em>Code</em>.</li>
+  </ul>
+
+  <div class="protected-grounds">
+    <h4>Protected grounds alleged under s. 1 of the Code</h4>
+    <ul>
+      <li>Race</li>
+      <li>Ancestry</li>
+      <li>Place of origin</li>
+      <li>Colour</li>
+      <li>Ethnic origin</li>
+      <li>Citizenship</li>
+      <li>Creed</li>
+      <li>Sex (incl. pregnancy)</li>
+      <li>Sexual orientation</li>
+      <li>Gender identity</li>
+      <li>Gender expression</li>
+      <li>Age</li>
+      <li>Marital status</li>
+      <li>Family status</li>
+      <li>Disability</li>
+      <li>Receipt of public assistance (housing)</li>
+      <li>Record of offences (employment)</li>
+      <li>Association with a protected person</li>
+    </ul>
+  </div>
+
+  <!-- ========================================================
+       4. EXCLUDED SERVICES
+       ======================================================== -->
+  <h2>4. Excluded Services</h2>
+  <p>This retainer does <strong>not</strong> include, and we are not authorized to provide:</p>
+  <ul>
+    <li>Appearances before the Divisional Court or any other court (paralegals do not have rights of audience in Superior Court of Justice or Divisional Court);</li>
+    <li>Applications for judicial review or appeals to the Divisional Court;</li>
+    <li>Civil claims for damages outside the HRTO's jurisdiction (e.g. wrongful dismissal at common law beyond the HRTO's remedial reach);</li>
+    <li>Federal human rights matters under the <em>Canadian Human Rights Act</em>;</li>
+    <li>Criminal, family, immigration, or estates matters;</li>
+    <li>Tax or accounting advice;</li>
+    <li>Negotiation or drafting of agreements unrelated to the HRTO matter.</li>
+  </ul>
+
+  <!-- ========================================================
+       5. FEE STRUCTURE & PAYMENT
+       ======================================================== -->
+  <h2>5. Fee Structure &amp; Payment</h2>
+  <p>The Client agrees to pay fees and disbursements on the basis selected below. All amounts are in Canadian dollars and are subject to Harmonized Sales Tax (HST) at 13%.</p>
+
+  <div class="fee-row" data-empty="{IS_HOURLY_EMPTY}">
+    <span class="name">Hourly Retainer</span>
+    <span class="amt">${HOURLY_RATE} per hour + HST</span>
+  </div>
+  <div class="fee-row" data-empty="{IS_FLAT_EMPTY}">
+    <span class="name">Flat Fee</span>
+    <span class="amt">${FLAT_FEE_AMOUNT} + HST</span>
+  </div>
+  <div class="fee-row" data-empty="{IS_HYBRID_EMPTY}">
+    <span class="name">Hybrid Retainer (flat + hourly overage)</span>
+    <span class="amt">${HYBRID_FLAT_FEE} + HST · ${HYBRID_HOURLY_RATE}/hr beyond cap</span>
+  </div>
+  <div class="fee-row" data-empty="{IS_CONTINGENCY_EMPTY}">
+    <span class="name">Contingency Fee</span>
+    <span class="amt">{CONTINGENCY_PERCENT}% of recovery + HST</span>
+  </div>
+  <div class="fee-row" data-empty="{IS_DEPOSIT_EMPTY}">
+    <span class="name">Initial Retainer Deposit</span>
+    <span class="amt">${RETAINER_DEPOSIT} + HST</span>
+  </div>
+
+  <p style="margin-top:12px;">Disbursements — out-of-pocket costs incurred on the Client's behalf (filing fees, courier, copying, transcripts, expert reports, witness expenses) — are billed at cost. Invoices are issued monthly and are due on receipt.</p>
+
+  {PAYMENT_SECTION}
+
+  {PAYMENT_ARRANGEMENT_SECTION}
+
+  <!-- ========================================================
+       6. SETTLEMENT AUTHORITY
+       ======================================================== -->
+  <h2>6. Settlement Authority</h2>
+  <p>The Paralegal will not accept or reject any settlement offer, sign Minutes of Settlement, or release any claim on the Client's behalf without the Client's express written instructions. We will advise on the relative strengths and weaknesses of an offer; the decision to accept or refuse rests entirely with the Client.</p>
+
+  <!-- ========================================================
+       7. CLIENT RESPONSIBILITIES
+       ======================================================== -->
+  <h2>7. Client Responsibilities</h2>
+  <ul>
+    <li>Provide complete, accurate, and timely instructions and information;</li>
+    <li>Respond to our requests for documents and information within the time we specify;</li>
+    <li>Attend all scheduled meetings, mediations, and hearings;</li>
+    <li>Keep us informed of any change in address, phone number, email, or employment status;</li>
+    <li>Pay invoices in accordance with this Agreement.</li>
+  </ul>
+
+  <!-- ========================================================
+       8. EVIDENCE & DISCLOSURE
+       ======================================================== -->
+  <h2>8. Evidence &amp; Disclosure</h2>
+  <p>Under HRTO Rule 16 and Rule 17, each party must disclose to the other party and to the Tribunal a list of documents and witnesses relevant to the application. The Client must preserve all communications, records, and evidence in their possession and produce them to us promptly. Failure to preserve evidence (whether paper or electronic — including text messages, social media posts, and emails) may result in adverse inferences being drawn by the Tribunal.</p>
+
+  <!-- ========================================================
+       9. LIMITATION PERIOD
+       ======================================================== -->
+  <h2>9. Limitation Period</h2>
+  <div class="callout warn">
+    <h4>Strict one-year limit</h4>
+    <p>Under <strong>s. 34(1) of the Ontario Human Rights Code</strong>, an Application must be filed within <strong>one year</strong> of the alleged incident — or, where there is a series of incidents, within one year of the last incident in the series. The Tribunal may extend this period under s. 34(2) only where the delay was in good faith and no substantial prejudice will result, which is a high threshold and is not granted as a matter of course.</p>
+    <p>The Client confirms that they have advised the Paralegal of all relevant dates and that the Application can be filed within the limitation period, or that the Client is aware of the risks of seeking an extension.</p>
+  </div>
+
+  <!-- ========================================================
+       10. MEDIATION CONFIDENTIALITY
+       ======================================================== -->
+  <h2>10. Mediation Confidentiality</h2>
+  <p>Under <strong>HRTO Rule 17</strong>, anything said, written, or produced during mediation is confidential and without prejudice. Neither party may rely on or refer to mediation discussions in subsequent proceedings, except (a) a final, written, signed settlement agreement, or (b) where disclosure is required by law.</p>
+
+  <!-- ========================================================
+       11. CLIENT CONDUCT
+       ======================================================== -->
+  <h2>11. Client Conduct</h2>
+  <p>The Client agrees to behave courteously toward the Paralegal, Tribunal staff, mediators, witnesses, opposing parties, and opposing counsel. Threatening, harassing, or abusive conduct directed at any of the foregoing — whether in person, by email, by phone, or on social media — is grounds for the Paralegal to withdraw from the retainer under Section 19.</p>
+
+  <!-- ========================================================
+       12. NO GUARANTEED OUTCOME
+       ======================================================== -->
+  <h2>12. No Guaranteed Outcome</h2>
+  <p>The Paralegal has not made and cannot make any promise, prediction, or guarantee about the outcome of the Client's HRTO matter. Past results in similar cases do not predict future results. Decisions of the Tribunal turn on the specific facts, evidence, and credibility findings of each case.</p>
+
+  <!-- ========================================================
+       13. REFERRAL & OTHER COUNSEL
+       ======================================================== -->
+  <h2>13. Referral &amp; Other Counsel</h2>
+  <p>The Client may consult or retain a lawyer at any time. The Paralegal may, where appropriate and with the Client's consent, refer the Client to a lawyer (for example, where the matter exceeds paralegal scope, or where parallel Superior Court proceedings are advisable). Any referral is made in the Client's best interests and not for any referral fee.</p>
+
+  <!-- ========================================================
+       14. PARALLEL PROCEEDINGS
+       ======================================================== -->
+  <h2>14. Parallel Proceedings</h2>
+  <p>Under <strong>s. 34(11) of the Code</strong>, the HRTO will not deal with an application that is the subject of a civil proceeding seeking the same remedy. The Client must inform the Paralegal of any other proceeding — civil, criminal, regulatory, or before another tribunal — that arises out of the same facts. The Client also acknowledges that filing an HRTO application may affect, or be affected by, parallel proceedings such as Employment Standards complaints, WSIB claims, or civil actions.</p>
+
+  <!-- ========================================================
+       15. COMMUNICATION
+       ======================================================== -->
+  <h2>15. Communication</h2>
+  <p>Primary communication is by email to <strong>{CLIENT_EMAIL}</strong>. We aim to respond to client emails within two business days. Urgent matters should be flagged in the subject line. Telephone calls are returned within two business days unless we are in a hearing or mediation.</p>
+
+  <!-- ========================================================
+       16. FILE ASSIGNMENT
+       ======================================================== -->
+  <h2>16. File Assignment</h2>
+  <p>The file is assigned to <strong>{PARALEGAL_NAME}</strong>. In the event of illness, vacation, or a scheduling conflict, another licensed paralegal at Legal Assist Paralegal Services may attend on the file. The Client will be advised in writing of any extended reassignment.</p>
+
+  <!-- ========================================================
+       17. SOCIAL MEDIA
+       ======================================================== -->
+  <h2>17. Social Media</h2>
+  <div class="callout warn">
+    <h4>Do not post about the case</h4>
+    <p>The Client agrees not to post, comment, or share anything about the matter, the parties, the witnesses, the mediator, or the Tribunal on any social-media platform — including Facebook, Instagram, X (Twitter), TikTok, LinkedIn, Reddit, or any blog. Posts can be subpoenaed, can damage credibility, and can be cited against the Client at the hearing.</p>
+  </div>
+
+  <!-- ========================================================
+       18. NO ACTION WITHOUT FUNDING
+       ======================================================== -->
+  <h2>18. No Action Without Funding</h2>
+  <p>The Paralegal is not obliged to commence, continue, or complete any step (including filing the Application, attending mediation, or attending the hearing) unless the Client's account is current and any required deposit has been received in our trust account. The Client agrees that delay caused by non-payment is at the Client's risk, including the loss of limitation rights under s. 34 of the <em>Code</em>.</p>
+
+  <!-- ========================================================
+       19. WITHDRAWAL & TERMINATION
+       ======================================================== -->
+  <h2>19. Withdrawal &amp; Termination</h2>
+  <p>The Client may terminate this retainer at any time by written notice. The Paralegal may withdraw on reasonable notice for cause permitted by the <em>Paralegal Rules of Conduct</em>, including non-payment of accounts, loss of confidence, conflict of interest, or breach of Section 11 (Client Conduct). On termination, the Client remains responsible for fees and disbursements incurred to the date of termination and for any reasonable file-transfer costs.</p>
+
+  <!-- ========================================================
+       20. INDEMNITY & LIABILITY
+       ======================================================== -->
+  <h2>20. Indemnity &amp; Liability</h2>
+  <p>The Paralegal carries professional liability insurance as required by the Law Society of Ontario. Except as required by law, the Paralegal's aggregate liability under this Agreement is limited to the amount of professional liability insurance available to respond to the claim. This clause does not limit liability for fraud, willful misconduct, or any liability that cannot be excluded under the <em>Paralegal Rules of Conduct</em>.</p>
+
+  <!-- ========================================================
+       21. ELECTRONIC COMMUNICATIONS
+       ======================================================== -->
+  <h2>21. Electronic Communications</h2>
+  <p>The Client consents to receiving documents and communications by email. The Client acknowledges that email is not perfectly secure and that, despite reasonable precautions, communications may be intercepted, lost, or delayed. The Client agrees to advise the Paralegal of any change to the email address on file.</p>
+
+  <!-- ========================================================
+       22. USE OF TECHNOLOGY & AI
+       ======================================================== -->
+  <h2>22. Use of Technology &amp; AI</h2>
+  <p>The Paralegal may use technology tools — including practice-management software, document-automation, and machine-learning research assistants — to deliver services efficiently. All work product is reviewed by the licensed Paralegal before it is filed or sent to the Client. Confidential information is handled in accordance with the LSO's <em>Practice Management Guidelines</em> on technology and confidentiality.</p>
+
+  <!-- ========================================================
+       23. GOVERNING LAW
+       ======================================================== -->
+  <h2>23. Governing Law</h2>
+  <p>This Agreement is governed by the laws of the Province of Ontario and the federal laws of Canada applicable in Ontario. The parties submit to the exclusive jurisdiction of the courts of Ontario for any dispute arising under this Agreement that is not within the jurisdiction of the Law Society Tribunal.</p>
+
+  <!-- ========================================================
+       24. ACKNOWLEDGMENT
+       ======================================================== -->
+  <h2>24. Acknowledgment</h2>
+  <p>By signing below, the Client confirms that:</p>
+  <ul>
+    <li>The Client has read this Agreement in its entirety;</li>
+    <li>The Client has had the opportunity to ask questions and to seek independent legal advice;</li>
+    <li>The Client understands the scope of services, the fees, and the limitations described in this Agreement;</li>
+    <li>The Client retains Legal Assist Paralegal Services on the terms set out above.</li>
+  </ul>
+
+  <div class="ack-list">
+    <h4>Initials required</h4>
+    <div class="item">
+      <div class="box">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 3 — Scope of Services</strong> and <strong>Section 4 — Excluded Services</strong>, and I understand which services this retainer does and does not cover.</div>
+    </div>
+    <div class="item">
+      <div class="box">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 5 — Fee Structure</strong>, including any payment received at signing and any payment arrangement, and how disbursements and HST are billed.</div>
+    </div>
+    <div class="item">
+      <div class="box">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 9 — Limitation Period</strong> and the one-year deadline under s. 34 of the <em>Human Rights Code</em>.</div>
+    </div>
+    <div class="item">
+      <div class="box">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 12 — No Guaranteed Outcome</strong>; no prediction or promise has been made to me about the result of my application.</div>
+    </div>
+    <div class="item">
+      <div class="box">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 17 — Social Media</strong> and I agree not to post about my matter, the parties, or the witnesses.</div>
+    </div>
+    <div class="item">
+      <div class="box">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 19 — Withdrawal &amp; Termination</strong>, including the conditions under which the Paralegal may withdraw.</div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       SIGNATURES
+       ======================================================== -->
+  <div class="signature-row">
+    <div class="sig-card">
+      <div class="lab">Client</div>
+      <div class="name">{CLIENT_NAME}</div>
+      <div class="meta">{CLIENT_EMAIL}</div>
+      <div class="line"></div>
+      <div class="date">Date: ____________________</div>
+    </div>
+    <div class="sig-card">
+      <div class="lab">Paralegal</div>
+      <div class="name">{PARALEGAL_NAME}</div>
+      <div class="meta">LSO #{PARALEGAL_LSO} · Legal Assist Paralegal Services</div>
+      <div class="cursive">{PARALEGAL_NAME}</div>
+      <div class="line"></div>
+      <div class="date">Date: {DATE}</div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <div class="left">
+      Legal Assist Paralegal Services · HRTO Retainer Agreement<br>
+      <a href="https://legalassist.london">www.legalassist.london</a>
+    </div>
+    <div class="right">
+      VERIFY OUR LICENSING<br>
+      <a href="https://lso.ca/directory">lso.ca/directory</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

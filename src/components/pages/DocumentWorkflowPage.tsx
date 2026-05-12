@@ -948,6 +948,20 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         } as any)
       );
 
+      // {PAYMENT_SECTION} is the "Receipt of Funds" / Form 9A block.
+      // DocumentWorkflowPage doesn't currently expose payment-received
+      // fields in its dialog (that flow lives in ClientFileManagementPage's
+      // per-client retainer dialog), so the helper is called with
+      // paymentReceived:false and the block collapses to empty string.
+      // This prevents the placeholder from leaking into the rendered
+      // PDF as literal '{PAYMENT_SECTION}' text. If payment-received
+      // capture is added to this dialog later, just pass the toggled
+      // state through here.
+      documentContent = documentContent.replace(
+        /\{PAYMENT_SECTION\}/g,
+        ''
+      );
+
       // ---- Fee-model checkbox ticks ----
       // Tick the box for the selected fee model and leave the others
       // empty. Templates use {HOURLY_CHECK}, {FLAT_CHECK},
@@ -1047,6 +1061,64 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         documentContent = documentContent.replace(/\{PARALEGAL_CREDENTIAL\}/g, signParalegal?.credentialLine || '—');
         documentContent = documentContent.replace(/\{PARALEGAL_SIGN_DATE\}/g, todayFormatted);
       }
+
+      // ============================================================
+      // HRTO retainer template (and any future template using the
+      // [data-empty="{IS_*_EMPTY}"] conditional-row pattern).
+      // ------------------------------------------------------------
+      // The HRTO template hides optional rows by reading a boolean
+      // attribute set by these substitutions ("true" or "false"). The
+      // template's CSS rule  [data-empty="true"] { display:none }
+      // collapses any row whose value wasn't filled in — so we don't
+      // get "File Reference: —", "Unit: —", "$ — per hour + HST"
+      // leaking into the final PDF.
+      //
+      // Templates that don't reference these placeholders are
+      // unaffected (the regex simply finds nothing to replace).
+      // ============================================================
+      const matterTypeValue = (template.templateCategory || template.templateName || '').trim();
+      const natureValue = natureOfMatter.trim();
+      const phoneValue = (client.phoneNumber || '').trim();
+      const addressValue = (client.streetAddress || '').trim();
+      const unitValue = (client.unit || (client as any).addressLine2 || '').trim();
+      const fileRefValue = (
+        (client as any).clientId ||
+        (client as any).fileNumber ||
+        ''
+      ).toString().trim();
+
+      const isEmptyValue = (v?: string) => !v || v.trim() === '' || v.trim() === '—';
+      const flag = (empty: boolean) => (empty ? 'true' : 'false');
+
+      // ---- Conditional-row flags ([data-empty]) ----
+      documentContent = documentContent.replace(/\{IS_FILE_REF_EMPTY\}/g, flag(!fileRefValue));
+      documentContent = documentContent.replace(/\{IS_MATTER_TYPE_EMPTY\}/g, flag(!matterTypeValue));
+      documentContent = documentContent.replace(/\{IS_NATURE_EMPTY\}/g, flag(!natureValue));
+      documentContent = documentContent.replace(/\{IS_CLIENT_PHONE_EMPTY\}/g, flag(!phoneValue));
+      documentContent = documentContent.replace(/\{IS_CLIENT_ADDRESS_EMPTY\}/g, flag(!addressValue));
+      documentContent = documentContent.replace(/\{IS_CLIENT_UNIT_EMPTY\}/g, flag(!unitValue));
+      documentContent = documentContent.replace(/\{IS_HOURLY_EMPTY\}/g, flag(isEmptyValue(hourlyRate)));
+      documentContent = documentContent.replace(/\{IS_FLAT_EMPTY\}/g, flag(isEmptyValue(flatFeeAmount)));
+      documentContent = documentContent.replace(/\{IS_HYBRID_EMPTY\}/g, flag(isEmptyValue(hybridFlatFee) && isEmptyValue(hybridHourlyRate)));
+      documentContent = documentContent.replace(/\{IS_CONTINGENCY_EMPTY\}/g, flag(isEmptyValue(contingencyPercent)));
+      documentContent = documentContent.replace(/\{IS_DEPOSIT_EMPTY\}/g, flag(isEmptyValue(retainerAmount)));
+
+      // ---- HRTO-named field aliases ----
+      // The HRTO template uses {FILE_REFERENCE}, {MATTER_TYPE},
+      // {CLIENT_ADDRESS}, {CLIENT_UNIT}, {FLAT_FEE_AMOUNT},
+      // {RETAINER_DEPOSIT} (instead of the older {MATTER_REFERENCE},
+      // {LTB_MATTER_TYPE}, {CLIENT_ADDRESS_LINE1/2}, {FLAT_FEE},
+      // {RETAINER_AMOUNT} names). Both name sets coexist.
+      documentContent = documentContent.replace(/\{FILE_REFERENCE\}/g, fileRefValue || '—');
+      documentContent = documentContent.replace(/\{MATTER_TYPE\}/g, matterTypeValue || '—');
+      documentContent = documentContent.replace(/\{CLIENT_ADDRESS\}/g, addressValue || '—');
+      documentContent = documentContent.replace(/\{CLIENT_UNIT\}/g, unitValue || '—');
+      documentContent = documentContent.replace(/\{FLAT_FEE_AMOUNT\}/g, flatFeeAmount || '—');
+      documentContent = documentContent.replace(/\{RETAINER_DEPOSIT\}/g, retainerAmount || '—');
+      // Compact YYYYMMDD date used in the HRTO cover-page document ID
+      // ("HRTO-RET-20260512"). Templates without this placeholder are
+      // unaffected.
+      documentContent = documentContent.replace(/\{DATE_SHORT\}/g, format(new Date(), 'yyyyMMdd'));
 
       // Generate PDF from content
       const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;

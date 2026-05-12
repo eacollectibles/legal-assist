@@ -1488,6 +1488,206 @@ export const blogPosts: BlogPost[] = [
       { q: 'Can my landlord apply for an AGI every year?', a: 'In theory yes, but the same expenditures cannot be claimed twice and the regulations amortize capital costs over a useful-life period. Repeat AGIs every year for the same building category will face scrutiny.' },
       { q: 'What if my landlord is in newer rental construction (built after Nov 15, 2018)?', a: 'Most newer rental units are exempt from the rent-increase guideline under section 6.1 of the RTA, meaning the landlord is not capped by the annual guideline at all. Whether the AGI process applies in those cases depends on the specific exemption and contract terms.' }
     ]
+  },
+  {
+    slug: 'ontario-speed-camera-ban-bill-56-old-tickets',
+    title: 'Ontario’s Speed Camera Ban: What to Do If You Still Get a Photo Radar Notice',
+    description: 'Bill 56 ended Automated Speed Enforcement (ASE) in Ontario on November 14, 2025. But notices for incidents that happened before that date are still arriving by mail — and they’re still enforceable. Here’s what they mean and how to respond.',
+    category: 'traffic',
+    date: '2026-05-09',
+    readTime: '7 min',
+    content: `
+      <p>On November 14, 2025, Ontario’s <em>Less Red Tape, More Common Sense Act, 2025</em> (Bill 56) ended Automated Speed Enforcement (ASE) province-wide. Every municipal speed camera in Ontario — from school zones to community safety zones — stopped issuing new tickets that day. Six months later, however, mail-out notices are still landing in driveways for incidents the cameras captured <strong>before</strong> the ban took effect. If one of those envelopes has your licence plate on it, this post explains what it actually is, what it isn’t, and how to respond.</p>
+
+      <h2>A speed camera notice is not a regular speeding ticket</h2>
+      <p>An ASE notice is what the <em>Highway Traffic Act</em> calls an <strong>owner liability</strong> offence. The camera photographed the rear of the vehicle and the licence plate, but not the driver. So Ontario law assigned responsibility to the registered owner of the plate, regardless of who was actually behind the wheel.</p>
+      <p>The practical effect is significant:</p>
+      <ul>
+        <li>No demerit points are added to anyone’s record.</li>
+        <li>The conviction does not appear on a driver abstract.</li>
+        <li>Insurance companies do not see ASE convictions and do not raise premiums because of one.</li>
+        <li>You cannot lose your licence over an ASE ticket alone, no matter how many you accumulate.</li>
+      </ul>
+      <p>The trade-off is that you cannot get out of the ticket by saying “someone else was driving.” The fine attaches to the plate, and the registered owner is the one on the hook.</p>
+
+      <h2>Why notices are still arriving after the ban</h2>
+      <p>Bill 56 stopped municipalities from <strong>issuing new ASE penalties</strong> after November 14, 2025. It did not retroactively wipe out incidents that the cameras captured before that date. The <em>Provincial Offences Act</em> generally allows up to six months from the date of an alleged offence for a Part I charge to be laid (the limitation period under s. 76 of the POA), so a capture from late 2025 can lawfully produce a notice arriving into 2026. If your notice references an incident date before November 14, 2025, it is enforceable even though the program has since ended.</p>
+      <p>Notices captured <strong>on or after November 14, 2025</strong> are a different story — those should not have been issued, and if you receive one you should dispute it on that basis. The capture date is printed on the notice.</p>
+
+      <h2>Your three response options</h2>
+      <p>Every ASE notice gives the registered owner the same three choices:</p>
+      <ol>
+        <li><strong>Pay the set fine.</strong> Paying is a plea of guilty. The conviction goes onto the vehicle’s record (not the driver’s), and the matter ends.</li>
+        <li><strong>Meet with the prosecutor (early resolution).</strong> Some municipalities offer a virtual or in-person meeting to negotiate the fine. The original charge is rarely withdrawn, but the fine amount can sometimes be reduced.</li>
+        <li><strong>Request a trial.</strong> The matter is set down for hearing before a justice of the peace. The municipality must prove the offence, including that the device was tested and operating correctly and that the photograph identifies the vehicle.</li>
+      </ol>
+      <p>You generally have <strong>15 days</strong> from service of the notice to elect one of these options. Missing the deadline triggers an automatic conviction in absentia (see below for how to reopen one).</p>
+
+      <h2>Defences that can succeed</h2>
+      <p>Most photo radar notices are well documented, but a few defences are worth raising at trial:</p>
+      <ul>
+        <li><strong>Capture date after November 14, 2025.</strong> The municipality lost authority to operate ASE on that date. Any new notice for a post-ban capture should be withdrawn.</li>
+        <li><strong>Plate identification.</strong> If the photograph is unclear, partially obscured, or shows a different plate than the one charged, the prosecutor cannot prove the link to the owner.</li>
+        <li><strong>Sign placement and warning.</strong> ASE only operates in school zones and designated community safety zones, and the zones must be marked with the proper signage. Improper signage has been a successful defence in past cases.</li>
+        <li><strong>Device certification.</strong> The prosecutor must produce evidence that the camera was certified and operating within tolerances at the time of capture.</li>
+        <li><strong>Service defects.</strong> The notice must be served on the registered owner within the time set by the <em>POA</em>. A late or improper service is a complete defence.</li>
+      </ul>
+
+      <h2>If you already missed the deadline</h2>
+      <p>If the 15-day window has passed and you only just learned about the ticket (for example, when you went to renew your plate sticker and ServiceOntario flagged an outstanding fine), you may still be able to apply to reopen the conviction under section 11 of the <em>Provincial Offences Act</em>. The application is made on Form 102 within 15 days of becoming aware of the conviction, supported by a sworn affidavit explaining that you were unable to attend or that the notice was never delivered. A clerk of the court reviews the affidavit and can strike out the conviction.</p>
+
+      <h2>What about plate-renewal blocks?</h2>
+      <p>Unpaid Provincial Offences fines — including ASE convictions — are reported to the Ministry of Transportation, which means ServiceOntario will refuse to renew your plate sticker until the fine and any administrative charges are paid. This is the main reason it is worth dealing with the notice rather than ignoring it.</p>
+
+      <p>Need help reviewing a photo radar notice, requesting a trial, or filing a section 11 reopening? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. ASE rules and the post-ban transition continue to develop. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'Will paying my photo radar ticket affect my insurance?', a: 'No. ASE convictions attach to the vehicle’s plate, not the driver, and never appear on a driver abstract. Insurance carriers in Ontario do not raise premiums based on ASE convictions and generally cannot access them.' },
+      { q: 'Are demerit points added for a speed camera ticket?', a: 'No. Owner-liability offences under section 207 of the Highway Traffic Act do not carry demerit points. Demerit points are reserved for offences where the driver is identified, typically by an officer at the roadside.' },
+      { q: 'My ticket arrived months after the ban. Is it still valid?', a: 'It depends on when the camera captured the incident, not when the envelope arrived. Captures from before November 14, 2025 remain enforceable. Captures on or after November 14, 2025 should not have been issued at all and can be challenged on that basis at trial.' },
+      { q: 'Can I just ignore the ticket since the program is ending?', a: 'No. Unpaid fines stay on file and prevent you from renewing your plate sticker. Service Ontario refuses renewals when there are outstanding POA fines tied to the plate, regardless of whether the underlying program has been discontinued.' },
+      { q: 'I was not driving when the photo was taken. Can I name the driver?', a: 'No. Photo radar is an owner-liability offence — the registered owner is legally responsible regardless of who was driving. The only exception is if the vehicle had been reported stolen at the time of the offence.' }
+    ]
+  },
+  {
+    slug: 'stunt-driving-ontario-2026-section-172',
+    title: 'Stunt Driving in Ontario (2026): Section 172, Roadside Penalties, and How a Charge Actually Plays Out',
+    description: 'A stunt driving charge under section 172 of the Highway Traffic Act starts with an immediate 30-day licence suspension and a 14-day vehicle impound — before any court date. Here’s how the charge works in 2026 and what defences can apply.',
+    category: 'traffic',
+    date: '2026-05-08',
+    readTime: '8 min',
+    content: `
+      <p>Few traffic charges in Ontario hit as hard or as fast as stunt driving. Under section 172 of the <em>Highway Traffic Act</em>, an officer at the roadside can suspend your driver’s licence for 30 days and impound your vehicle for 14 days the moment the charge is laid — long before a justice of the peace ever sees the file. The consequences on conviction are steeper still. Whether you are a first-time driver caught at 40 km/h over on a residential street or a long-haul operator clocked at 50 km/h over on the 401, the framework is the same. This post walks through how the charge is laid in 2026, what penalties apply, and the defences that have actually succeeded.</p>
+
+      <h2>The speed thresholds</h2>
+      <p>Most stunt driving charges in 2026 are laid for excess speed alone. The current thresholds, in effect since changes that took force in 2022, are:</p>
+      <ul>
+        <li><strong>40 km/h or more over the posted limit</strong> on roads with a posted limit <strong>under 80 km/h</strong> (residential streets, most arterials in cities).</li>
+        <li><strong>50 km/h or more over the posted limit</strong> on roads with a posted limit of <strong>80 km/h or higher</strong> (most provincial highways).</li>
+      </ul>
+      <p>The thresholds are absolute. If your radar-confirmed speed crosses the line by one kilometre, the officer has authority to charge under section 172. Weather, time of day, the absence of other vehicles, and a clean driving record do not change the threshold.</p>
+
+      <h2>Other conduct that counts as stunt driving</h2>
+      <p>The regulation under section 172 (O. Reg. 455/07) also captures conduct other than excess speed, including:</p>
+      <ul>
+        <li>Racing or chasing another vehicle.</li>
+        <li>Driving in a manner that indicates an intention to lift one or more tires off the ground.</li>
+        <li>Spinning the vehicle (donuts, drifts).</li>
+        <li>Driving without due care and attention or without reasonable consideration for other road users while doing certain manoeuvres.</li>
+        <li>Driving with a person in the trunk.</li>
+        <li>Driving while not seated in the driver’s seat.</li>
+      </ul>
+      <p>For these forms of stunt driving the prosecutor must prove the specific conduct, not just a speed reading.</p>
+
+      <h2>The immediate roadside penalties</h2>
+      <p>When the officer charges you under section 172, two things happen immediately and automatically:</p>
+      <ul>
+        <li><strong>30-day Administrative Driver’s Licence Suspension (ADLS).</strong> Your licence is suspended on the spot. There is no appeal of the roadside suspension itself — it runs even if the underlying charge is later withdrawn.</li>
+        <li><strong>14-day vehicle impound.</strong> Your vehicle is towed at your expense and held for 14 days. Towing and storage typically run between $1,000 and $2,000, all payable before the vehicle is released.</li>
+      </ul>
+      <p>These penalties are administrative — they do not require a conviction. The Ontario Court of Appeal has upheld the constitutionality of administrative suspensions of this kind, though individual roadside decisions remain reviewable.</p>
+
+      <h2>The penalties on conviction</h2>
+      <p>If you are convicted at trial or by plea, the penalties under section 172 escalate:</p>
+      <ul>
+        <li><strong>Fine:</strong> $2,000 to $10,000 on a first conviction. The fine is set by the justice of the peace and includes a 25% victim fine surcharge plus court costs.</li>
+        <li><strong>Licence suspension on conviction:</strong> not less than 1 year and up to 3 years on a first conviction. Repeat convictions within ten years carry longer suspensions — up to 10 years for a second, and lifetime for a third (with possible reinstatement after 10 years).</li>
+        <li><strong>Demerit points:</strong> 6 points added to your driver record.</li>
+        <li><strong>Jail:</strong> up to 6 months. Jail is uncommon for a first-time excess-speed conviction with no aggravating factors, but it is available to the court.</li>
+        <li><strong>Insurance:</strong> a stunt driving conviction is treated as a major or criminal-tier conviction by most insurers. Premium increases of 100% or more are typical, and some standard-market insurers refuse to renew.</li>
+      </ul>
+
+      <h2>What defences actually work?</h2>
+      <p>Stunt driving cases are not unwinnable. The defences that succeed at the Ontario Court of Justice generally fall into a few categories:</p>
+      <ul>
+        <li><strong>Speed measurement.</strong> Radar and laser devices require proper testing, calibration records, and a trained operator. A failure to produce certificates, prove tuning-fork tests, or establish the officer’s training can defeat the speed reading.</li>
+        <li><strong>Identification.</strong> The prosecutor must prove that the person in court is the same person who was driving. In multi-vehicle stops, identification can be a real issue.</li>
+        <li><strong>Plea to a lesser included offence.</strong> Where the speed is just over the threshold, prosecutors will sometimes accept a guilty plea to careless driving (s. 130) or speeding under section 128. This avoids the year-long suspension but still carries demerit points and a major-conviction insurance impact for careless driving.</li>
+        <li><strong>Charter motions.</strong> Unreasonable delay (s. 11(b) of the Charter) and breaches of detention rights (s. 9, 10) have been raised successfully where there were procedural problems with the stop or with court scheduling.</li>
+      </ul>
+
+      <h2>The takeaway</h2>
+      <p>Section 172 is unforgiving on the front end — the roadside suspension and impound run the moment the charge is laid, and there is no early reset. What you can influence is what happens in court, and there the timing is critical. Disclosure must be requested, witness availability checked, and any Charter or measurement issues raised at the first opportunity. A plea entered without disclosure is rarely the best outcome.</p>
+
+      <p>Charged with stunt driving in Ontario? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation. We handle stunt driving and other Highway Traffic Act charges in London and across Southwestern Ontario.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Stunt driving outcomes turn on the specific facts, the evidence available, and the venue. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'Can I appeal the 30-day roadside licence suspension?', a: 'No. The Administrative Driver’s Licence Suspension is statutory under section 172(5) and runs automatically once the charge is laid. Even if the charge is later withdrawn, the 30 days have already been served. Your remedy is the trial of the underlying offence, not a separate appeal of the suspension.' },
+      { q: 'What if I was just barely over the threshold — say 41 km/h on a 50 km/h road?', a: 'The threshold is absolute, so you are still chargeable. However, prosecutors have discretion, and pleas down to careless driving or section 128 speeding are sometimes accepted where the speed is just over the threshold and there are no aggravating factors. Disclosure should be reviewed before any plea is entered.' },
+      { q: 'How will a stunt driving conviction affect my insurance?', a: 'Most insurers classify stunt driving as a major or "criminal-tier" conviction. Standard-market premiums often double or triple, and many insurers refuse to renew, pushing the driver into the high-risk facility market for three years from the date of conviction.' },
+      { q: 'Do I get the vehicle back after 14 days?', a: 'Yes, but you must pay the towing and storage fees in full before release. The impound charges are not waived even if the charge is later withdrawn. If the vehicle owner is someone other than the driver, the owner may have a separate civil claim against the driver.' },
+      { q: 'Can I drive to work during the 30-day suspension?', a: 'No. There is no work-purpose exemption for a section 172 ADLS. Driving on a suspended licence is itself an offence under section 53 of the Highway Traffic Act, with its own fines, a further licence suspension, and possible vehicle impoundment.' },
+      { q: 'Will pleading guilty get me a faster outcome?', a: 'A guilty plea ends the case quickly but carries the full penalty range. In most cases, requesting disclosure and consulting with a paralegal before entering any plea gives you a fuller picture of the prosecutor’s evidence and any defences available.' }
+    ]
+  },
+  {
+    slug: 'reopening-poa-conviction-ontario-form-102-section-11',
+    title: 'Missed Your Court Date? How to Reopen a Provincial Offences Conviction in Ontario',
+    description: 'If you were convicted of a traffic ticket or other Part I offence without ever appearing in court, you may be able to reopen the conviction under section 11 of the Provincial Offences Act. Here’s how Form 102 works and when it succeeds.',
+    category: 'traffic',
+    date: '2026-05-07',
+    readTime: '7 min',
+    content: `
+      <p>It happens more often than you would think. A speeding ticket gets lost in the mail. A new address never made it to ServiceOntario. A family emergency means a hearing date passes unnoticed. Months later, the driver finds out about the conviction only when their plate sticker renewal is refused at ServiceOntario or when their insurance broker quotes a sharply higher premium. The good news: Ontario’s <em>Provincial Offences Act</em> has a built-in fix called a <strong>reopening</strong>, and most drivers do not know it exists.</p>
+
+      <h2>What a reopening actually does</h2>
+      <p>A reopening is not an appeal. It is a statutory remedy under section 11 of the <em>POA</em> that lets a clerk of the court — not a justice of the peace — strike out a conviction entered in absentia when the defendant can show one of two things:</p>
+      <ul>
+        <li>That you were <strong>unable to attend</strong> the hearing or the early resolution meeting through no fault of your own; or</li>
+        <li>That a <strong>notice or document</strong> relating to the offence was not delivered to you.</li>
+      </ul>
+      <p>If the clerk is satisfied, the conviction is set aside and the matter is restored to the trial list. You then exercise your options the way you should have at the start — plead not guilty and ask for trial, schedule an early resolution meeting, or pay the set fine if you decide it is the best outcome.</p>
+
+      <h2>The 15-day window</h2>
+      <p>The single most important fact about a section 11 reopening is the deadline. You have <strong>15 days from the day you became aware of the conviction</strong> to file the application. Not 15 days from the conviction itself — 15 days from <strong>awareness</strong>. That means if you only learned about the conviction six months after the fact when you tried to renew your plate sticker, the clock starts then.</p>
+      <p>The catch: you have to be able to prove when you found out. A ServiceOntario refusal slip, an insurance broker email, a printout from the Provincial Offences court showing when you accessed the file — anything dated that establishes the discovery date helps. Sworn affidavit evidence is required either way, but corroborating documentation makes the affidavit far more persuasive.</p>
+
+      <h2>Form 102 and Form 102.1</h2>
+      <p>The application is made on <strong>Form 102 (Reopening Application/Affidavit)</strong>, available on the Ontario Court Forms website. Form 102.1 is used in some jurisdictions for applications made by counsel or an agent on behalf of the defendant. You complete the form, swear it before a commissioner of oaths (commissioners are available at most paralegal and law offices, ServiceOntario centres, and notary publics), and file it at the Provincial Offences court office listed on the back of your original ticket.</p>
+      <p>The form requires three things:</p>
+      <ol>
+        <li>Identifying information — the offence number, the date of conviction, the court location, and your contact information.</li>
+        <li>A statement of the grounds — either inability to attend or non-delivery of notice, with a brief explanation of the circumstances.</li>
+        <li>Your sworn signature in the presence of a commissioner.</li>
+      </ol>
+
+      <h2>What “unable to attend through no fault of your own” means</h2>
+      <p>The clerk is looking for circumstances that a reasonable person could not have controlled or anticipated. Grounds that have succeeded in past applications include:</p>
+      <ul>
+        <li>Hospitalization, serious illness, or a medical emergency the day of the hearing.</li>
+        <li>Travel out of the country with the trip booked before the notice arrived.</li>
+        <li>A workplace emergency or shift change imposed by an employer at short notice.</li>
+        <li>A family bereavement or other unforeseen family emergency.</li>
+        <li>A documented postal delivery failure or mis-addressed mail.</li>
+        <li>Moving residence before the notice was sent and never receiving the forwarded mail.</li>
+      </ul>
+      <p>Grounds that generally do <strong>not</strong> succeed include forgetting the date, deciding the matter was not worth attending, or finding the fine too low to bother with at the time. The clerk’s discretion is not unlimited — the affidavit needs to show genuine inability or non-delivery, not just regret.</p>
+
+      <h2>The non-delivery ground</h2>
+      <p>Many Part I tickets are convicted without a hearing under section 9.1 of the <em>POA</em> — the “deemed not to dispute” provision. If you never received the original Offence Notice (the yellow copy of the ticket), or if a follow-up notice scheduling a hearing went to an old address, the non-delivery ground is the more straightforward path. You do not need to prove inability to attend at all — you only need to show, on the balance of probabilities, that the document did not reach you. Evidence of a move, a new address registered with ServiceOntario, or postal records can all support the ground.</p>
+
+      <h2>What a reopening does not do</h2>
+      <p>A reopening is not a guarantee that the underlying charge will be dismissed. It restores the matter to the docket as if the conviction had never been entered. You still face the same charge with the same evidence, and the prosecutor can still proceed to trial. But you get back the options you lost — disclosure, a not-guilty plea, the chance to raise a defence, and the chance to negotiate.</p>
+      <p>It also does not erase any administrative consequences that have already taken effect. If your licence was suspended for unpaid fines, the suspension generally lifts only once the conviction is struck and any outstanding court costs are addressed.</p>
+
+      <h2>If the 15 days have passed</h2>
+      <p>If you only learn about a conviction more than 15 days after becoming aware of it, the reopening route is closed. The remaining option is an appeal under Part VII of the <em>POA</em> with leave to extend time — a higher threshold, decided by a judge rather than a clerk, and requiring proof both that the appeal has merit and that the delay is justified.</p>
+
+      <p>Just discovered you have an outstanding Provincial Offences conviction? Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation. We handle reopenings, Part VII appeals, and trials across Ontario’s Provincial Offences courts.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Reopening applications turn on the specific facts and on the individual clerk’s assessment of the affidavit. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'How long does a reopening application take to decide?', a: 'Once Form 102 is filed, most clerks decide within four to eight weeks. Some courts review the file on paper without a hearing; others schedule a brief in-person or virtual appearance. Decisions can take longer in busy jurisdictions like Toronto and Brampton.' },
+      { q: 'Is there a filing fee for Form 102?', a: 'No. The reopening application itself is filed without a fee. You may incur a small fee for swearing the affidavit before a commissioner of oaths if you use a private notary or paralegal.' },
+      { q: 'Can a paralegal represent me on a reopening?', a: 'Yes. Reopenings under the Provincial Offences Act fall within paralegal scope under By-Law 4 of the Law Society of Ontario. A paralegal can draft the Form 102 affidavit, commission your signature, file the application, and represent you at any hearing the court schedules.' },
+      { q: 'What if my reopening is refused?', a: 'You have a right of appeal to a judge of the Ontario Court of Justice under Part VII of the POA. The appeal is on the record — the judge reviews the clerk’s decision and the affidavit, and decides whether the clerk’s refusal was reasonable.' },
+      { q: 'Will reopening the conviction stop a plate-renewal block?', a: 'Yes, in most cases. Once the conviction is struck, the underlying fine is no longer due, and the Ministry of Transportation generally releases the plate block within a few business days. You may need to provide ServiceOntario with a copy of the order striking out the conviction.' }
+    ]
   }
 ];
 
