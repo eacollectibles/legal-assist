@@ -140,6 +140,17 @@ export async function embedSignatureInPDF(
    * re-render with the signature appended.
    */
   originalHtmlContent?: string,
+  /**
+   * Optional: client-confirmed initials and the list of acknowledgment
+   * section IDs that were initialed via PublicSignPage. When provided,
+   * each `<div class="box" data-initial-target="<id>">INIT</div>` in
+   * the document HTML whose `<id>` appears in `sectionIds` is rewritten
+   * so the placeholder `INIT` text is replaced with the typed initials
+   * (rendered in cursive via the `.initialled` class added by the
+   * template's CSS). This persists the per-section client initials
+   * into the final signed PDF.
+   */
+  initialsPayload?: { initials: string; sectionIds: string[] },
 ): Promise<string> {
   const documentId = `DOC-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
   const signedDate = new Date().toISOString();
@@ -179,6 +190,48 @@ export async function embedSignatureInPDF(
     } catch (error) {
       console.error('Error extracting original document content:', error);
       originalContent = '<p>Original document content could not be extracted.</p>';
+    }
+  }
+
+  // ----------------------------------------------------------------
+  // Per-section initialing: for each section ID confirmed by the
+  // client on PublicSignPage, find the matching
+  //   <div class="box" data-initial-target="<id>">INIT</div>
+  // and replace the inner "INIT" with the typed initials, plus add
+  // the `initialled` class so the template's CSS renders them in
+  // cursive (Allura). No-op if `initialsPayload` is not supplied or
+  // the document HTML doesn't contain any `[data-initial-target]`
+  // boxes (older templates).
+  // ----------------------------------------------------------------
+  if (
+    initialsPayload &&
+    initialsPayload.initials &&
+    Array.isArray(initialsPayload.sectionIds) &&
+    initialsPayload.sectionIds.length > 0 &&
+    originalContent
+  ) {
+    const safeInitials = escapeHtml(initialsPayload.initials);
+    const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    for (const sectionId of initialsPayload.sectionIds) {
+      if (!sectionId) continue;
+      const pattern = new RegExp(
+        `(<div\\b[^>]*\\bdata-initial-target\\s*=\\s*["']${escapeRegex(sectionId)}["'][^>]*>)([\\s\\S]*?)(</div>)`,
+        'gi'
+      );
+      originalContent = originalContent.replace(pattern, (_match, open, _inner, close) => {
+        // Append the `initialled` class so the template CSS rule
+        // .ack-list .box.initialled { ... } picks it up.
+        let opened: string;
+        if (/class\s*=\s*["'][^"']*["']/i.test(open)) {
+          opened = open.replace(/class\s*=\s*["']([^"']*)["']/i, (_m: string, cls: string) => {
+            if (/\binitialled\b/.test(cls)) return `class="${cls}"`;
+            return `class="${cls.trim()} initialled"`;
+          });
+        } else {
+          opened = open.replace(/^<div\b/, '<div class="initialled"');
+        }
+        return `${opened}${safeInitials}${close}`;
+      });
     }
   }
 
@@ -655,6 +708,10 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     const hostRect = host.getBoundingClientRect();
     const sectionTops: number[] = [];
     const blockBottoms: number[] = [];
+    // Forced page-break candidates — elements that MUST start a new
+    // page. Marked with class="page-break-before" or
+    // data-pagebreak-before="true" in the template. Overrides MIN_FILL.
+    const forcedBreaks: number[] = [];
 
     host
       .querySelectorAll('h1, h2, h3, h4')
@@ -663,6 +720,18 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
         const yInCanvas = (r.top - hostRect.top) * 2;
         if (yInCanvas > 0 && yInCanvas < canvas.height) {
           sectionTops.push(yInCanvas);
+        }
+      });
+
+    host
+      .querySelectorAll(
+        '.page-break-before, [data-pagebreak-before="true"]'
+      )
+      .forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const yInCanvas = (r.top - hostRect.top) * 2;
+        if (yInCanvas > 0 && yInCanvas < canvas.height) {
+          forcedBreaks.push(yInCanvas);
         }
       });
 
@@ -680,6 +749,7 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
 
     sectionTops.sort((a, b) => a - b);
     blockBottoms.sort((a, b) => a - b);
+    forcedBreaks.sort((a, b) => a - b);
 
     const canvasPerPage = (pageHeight * canvas.width) / imgWidth;
     // Minimum acceptable page fill ratio. If we accept ANY break point
@@ -695,11 +765,21 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       const target = currentY + canvasPerPage;
       const minCut = currentY + canvasPerPage * MIN_FILL;
 
+      // Preference 0 (highest): forced page-break-before element
+      // within [currentY+100, target+15% page]. These OVERRIDE
+      // MIN_FILL so a section marked .page-break-before always
+      // starts on a new page regardless of how short the previous
+      // page becomes.
+      let cutAt = forcedBreaks
+        .find((p) => p > currentY + 100 && p <= target + canvasPerPage * 0.15) ?? -1;
+
       // Preference 1: section top within [minCut, target] — page
       // ends right before a heading on the next page.
-      let cutAt = [...sectionTops]
-        .reverse()
-        .find((p) => p > minCut && p <= target) ?? -1;
+      if (cutAt < 0) {
+        cutAt = [...sectionTops]
+          .reverse()
+          .find((p) => p > minCut && p <= target) ?? -1;
+      }
 
       // Preference 2: block bottom within [minCut, target] — page
       // ends at a paragraph/table boundary.
@@ -709,13 +789,31 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
           .find((p) => p > minCut && p <= target) ?? -1;
       }
 
-      // Last resort: any block bottom > currentY + 100, even past
-      // target (better to slightly overflow than to land in the
-      // middle of a paragraph). If still nothing, cut at target.
+      // Last resort: NEVER cut mid-content. Pick whichever block
+      // bottom is closer to target — the last one before target
+      // (gives a short page but clean boundary) or the first one
+      // after target (slight overflow but still clean). Only fall
+      // through to cutting at target if there are no block bottoms
+      // at all on this page (effectively never).
       if (cutAt < 0) {
-        cutAt = [...blockBottoms].find((p) => p > currentY + 100) ?? target;
-        // But never overflow past target by more than 15 % of a page.
-        if (cutAt > target + canvasPerPage * 0.15) cutAt = target;
+        const beforeTarget = [...blockBottoms]
+          .filter((p) => p > currentY + 100 && p <= target)
+          .pop();
+        const afterTarget = blockBottoms.find((p) => p > target);
+
+        if (beforeTarget !== undefined && afterTarget !== undefined) {
+          cutAt =
+            target - beforeTarget <= afterTarget - target
+              ? beforeTarget
+              : afterTarget;
+        } else {
+          cutAt = beforeTarget ?? afterTarget ?? target;
+        }
+
+        // Hard cap overflow at 20% of a page.
+        if (cutAt > target + canvasPerPage * 0.20) {
+          cutAt = beforeTarget ?? target;
+        }
       }
 
       breaks.push(cutAt);

@@ -89,6 +89,65 @@
        ============================================================ */
     [data-empty="true"] { display: none !important; }
 
+    /* Fee-row strike-through: the substitution layer emits
+       data-struck="true" on every fee row EXCEPT the selected one,
+       so the chosen fee model reads as the live term and the others
+       read as crossed-out alternatives. */
+    .fee-row[data-struck="true"] {
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+      text-decoration-color: rgba(0,0,0,0.55);
+      opacity: 0.5;
+      filter: grayscale(40%);
+    }
+    .fee-row[data-struck="true"] .amt { color: var(--mute); }
+
+    /* Forced page breaks honoured by the PDF slicer. Sections with
+       this class always start a new page regardless of how short
+       the previous page becomes. */
+    .page-break-before {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    /* End-of-section marker: a single diagonal stroke across an
+       otherwise-empty area, indicating that no further conditions
+       follow. Convention used to prevent later insertion of text
+       between the last clause and the page break. */
+    .end-marker {
+      position: relative;
+      height: 110px;
+      margin: 20px 0 0;
+      border: 1px dashed var(--line-2);
+      border-radius: 4px;
+      background: #fff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      overflow: hidden;
+    }
+    .end-marker .end-stroke {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: block;
+    }
+    .end-marker .end-label {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      font: 600 9.5px/1 Inter, sans-serif;
+      color: var(--mute);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      z-index: 2;
+      white-space: nowrap;
+    }
+
     /* ============================================================
        COVER PAGE
        ============================================================ */
@@ -496,6 +555,17 @@
       color: var(--mute);
       letter-spacing: 0.08em;
     }
+    /* Initialed state — applied by embedSignatureInPDF after client
+       captures initials via PublicSignPage. The box border softens, the
+       INIT placeholder text is replaced with the client's typed initials
+       in cursive (Allura) styling to mimic a handwritten initial. */
+    .ack-list .box.initialled {
+      font: italic 700 14px/22px "Allura", "Lora", cursive, serif;
+      color: var(--navy);
+      letter-spacing: 0;
+      border-color: var(--gold);
+      background: var(--bg-warm);
+    }
     .ack-list .txt { flex: 1 1 0; font: 500 12px/1.45 Inter, sans-serif; color: var(--ink-2); }
     .ack-list .txt strong { color: var(--navy); }
 
@@ -534,6 +604,10 @@
       margin: 0 0 -2px;
       letter-spacing: 0.01em;
     }
+    /* Empty space on the client side where the e-signature will be
+       drawn at signing time. Mirrors the height of the paralegal's
+       cursive block so both sides of the signature row line up. */
+    .sig-card .sig-area { height: 44px; }
     .sig-card .date { font: 500 11px/1.3 Inter, sans-serif; color: var(--ink-2); }
 
     /* ============================================================
@@ -613,7 +687,7 @@
       </div>
     </div>
 
-    <div class="cover-toc">
+    <div class="cover-toc page-break-before">
       <h4>What's in this agreement</h4>
       <ol>
         <li>Parties &amp; Matter</li>
@@ -773,17 +847,17 @@
   <p>Subject to Section 4, our services include:</p>
   <ul>
     <li>Reviewing the facts and assessing whether they engage one or more grounds protected by the Ontario <em>Human Rights Code</em>;</li>
-    <li>Drafting and filing an <strong>Application (Form 1)</strong> with the HRTO, or responding to an Application as <strong>Respondent (Form 2)</strong>;</li>
-    <li>Drafting a <strong>Reply (Form 3)</strong> where appropriate;</li>
-    <li>Preparing and exchanging mandatory disclosure under HRTO Rule 16;</li>
-    <li>Representing the Client at <strong>mediation</strong> and at any <strong>Case Assessment Direction (CAD)</strong> or summary hearing under Rule 19A;</li>
-    <li>Drafting and reviewing settlement offers and Minutes of Settlement;</li>
+    <li>Drafting and filing an <strong>Application (Form 1)</strong> with the HRTO under s. 34 of the <em>Code</em>, or filing a <strong>Response (Form 2)</strong> on behalf of a respondent within the 35-day deadline after service;</li>
+    <li>Drafting an applicant's <strong>Reply (Form 3)</strong> within 21 days of receiving the Response, where appropriate;</li>
+    <li>Preparing and exchanging disclosure of documents under HRTO Rule 16 and witness statements under Rule 17;</li>
+    <li>Representing the Client at <strong>mediation</strong> (scheduled in every application as of June 1, 2025 under Rule 15) and at any <strong>Case Assessment Direction (CAD)</strong> or summary hearing under Rule 19A;</li>
+    <li>Drafting and reviewing settlement offers, Minutes of Settlement, and Form 25 Confirmation of Settlement;</li>
     <li>Representing the Client at the merits hearing, including examination-in-chief, cross-examination, and submissions;</li>
     <li>Receiving and explaining the Tribunal's decision and any remedy ordered under s. 45.2 of the <em>Code</em>.</li>
   </ul>
 
   <div class="protected-grounds">
-    <h4>Protected grounds alleged under s. 1 of the Code</h4>
+    <h4>Protected grounds under the Ontario Human Rights Code</h4>
     <ul>
       <li>Race</li>
       <li>Ancestry</li>
@@ -800,9 +874,9 @@
       <li>Marital status</li>
       <li>Family status</li>
       <li>Disability</li>
-      <li>Receipt of public assistance (housing)</li>
-      <li>Record of offences (employment)</li>
-      <li>Association with a protected person</li>
+      <li>Receipt of public assistance (housing only — s. 2)</li>
+      <li>Record of offences (employment only — s. 5)</li>
+      <li>Association with a person identified by a protected ground (s. 12)</li>
     </ul>
   </div>
 
@@ -827,23 +901,23 @@
   <h2>5. Fee Structure &amp; Payment</h2>
   <p>The Client agrees to pay fees and disbursements on the basis selected below. All amounts are in Canadian dollars and are subject to Harmonized Sales Tax (HST) at 13%.</p>
 
-  <div class="fee-row" data-empty="{IS_HOURLY_EMPTY}">
+  <div class="fee-row" data-struck="{STRUCK_HOURLY}">
     <span class="name">Hourly Retainer</span>
     <span class="amt">${HOURLY_RATE} per hour + HST</span>
   </div>
-  <div class="fee-row" data-empty="{IS_FLAT_EMPTY}">
+  <div class="fee-row" data-struck="{STRUCK_FLAT}">
     <span class="name">Flat Fee</span>
     <span class="amt">${FLAT_FEE_AMOUNT} + HST</span>
   </div>
-  <div class="fee-row" data-empty="{IS_HYBRID_EMPTY}">
+  <div class="fee-row" data-struck="{STRUCK_HYBRID}">
     <span class="name">Hybrid Retainer (flat + hourly overage)</span>
     <span class="amt">${HYBRID_FLAT_FEE} + HST · ${HYBRID_HOURLY_RATE}/hr beyond cap</span>
   </div>
-  <div class="fee-row" data-empty="{IS_CONTINGENCY_EMPTY}">
+  <div class="fee-row" data-struck="{STRUCK_CONTINGENCY}">
     <span class="name">Contingency Fee</span>
     <span class="amt">{CONTINGENCY_PERCENT}% of recovery + HST</span>
   </div>
-  <div class="fee-row" data-empty="{IS_DEPOSIT_EMPTY}">
+  <div class="fee-row" data-struck="{STRUCK_DEPOSIT}">
     <span class="name">Initial Retainer Deposit</span>
     <span class="amt">${RETAINER_DEPOSIT} + HST</span>
   </div>
@@ -881,7 +955,7 @@
   <!-- ========================================================
        9. LIMITATION PERIOD
        ======================================================== -->
-  <h2>9. Limitation Period</h2>
+  <h2 class="page-break-before">9. Limitation Period</h2>
   <div class="callout warn">
     <h4>Strict one-year limit</h4>
     <p>Under <strong>s. 34(1) of the Ontario Human Rights Code</strong>, an Application must be filed within <strong>one year</strong> of the alleged incident — or, where there is a series of incidents, within one year of the last incident in the series. The Tribunal may extend this period under s. 34(2) only where the delay was in good faith and no substantial prejudice will result, which is a high threshold and is not granted as a matter of course.</p>
@@ -892,7 +966,8 @@
        10. MEDIATION CONFIDENTIALITY
        ======================================================== -->
   <h2>10. Mediation Confidentiality</h2>
-  <p>Under <strong>HRTO Rule 17</strong>, anything said, written, or produced during mediation is confidential and without prejudice. Neither party may rely on or refer to mediation discussions in subsequent proceedings, except (a) a final, written, signed settlement agreement, or (b) where disclosure is required by law.</p>
+  <p>Under <strong>HRTO Rule 15</strong>, anything said, written, or produced during mediation is confidential and without prejudice. The parties, their representatives, and any intervenors or affected persons present at mediation must sign the Tribunal's confidentiality agreement before the mediation begins. Matters disclosed during mediation may not be raised before the Tribunal or in other proceedings except (a) a final, written, signed settlement agreement, or (b) where disclosure is otherwise required by law.</p>
+  <p>Effective June 1, 2025, the HRTO schedules mediation in every application as standard practice. The Client may request an exemption only in exceptional circumstances. If a settlement is reached at mediation but a Form 25 Confirmation of Settlement is not filed before the mediation ends, the parties have 14 days from the mediation date to either file Form 25 or confirm in writing that the Application is continuing, failing which the Tribunal may administratively close the file.</p>
 
   <!-- ========================================================
        11. CLIENT CONDUCT
@@ -945,10 +1020,17 @@
   <h2>18. No Action Without Funding</h2>
   <p>The Paralegal is not obliged to commence, continue, or complete any step (including filing the Application, attending mediation, or attending the hearing) unless the Client's account is current and any required deposit has been received in our trust account. The Client agrees that delay caused by non-payment is at the Client's risk, including the loss of limitation rights under s. 34 of the <em>Code</em>.</p>
 
+  <div class="end-marker" aria-label="End of clauses on this page — no further conditions">
+    <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+    </svg>
+    <span class="end-label">End of Section — No Further Conditions</span>
+  </div>
+
   <!-- ========================================================
        19. WITHDRAWAL & TERMINATION
        ======================================================== -->
-  <h2>19. Withdrawal &amp; Termination</h2>
+  <h2 class="page-break-before">19. Withdrawal &amp; Termination</h2>
   <p>The Client may terminate this retainer at any time by written notice. The Paralegal may withdraw on reasonable notice for cause permitted by the <em>Paralegal Rules of Conduct</em>, including non-payment of accounts, loss of confidence, conflict of interest, or breach of Section 11 (Client Conduct). On termination, the Client remains responsible for fees and disbursements incurred to the date of termination and for any reasonable file-transfer costs.</p>
 
   <!-- ========================================================
@@ -975,10 +1057,17 @@
   <h2>23. Governing Law</h2>
   <p>This Agreement is governed by the laws of the Province of Ontario and the federal laws of Canada applicable in Ontario. The parties submit to the exclusive jurisdiction of the courts of Ontario for any dispute arising under this Agreement that is not within the jurisdiction of the Law Society Tribunal.</p>
 
+  <div class="end-marker" aria-label="End of clauses on this page — no further conditions">
+    <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+    </svg>
+    <span class="end-label">End of Section — No Further Conditions</span>
+  </div>
+
   <!-- ========================================================
        24. ACKNOWLEDGMENT
        ======================================================== -->
-  <h2>24. Acknowledgment</h2>
+  <h2 class="page-break-before">24. Acknowledgment</h2>
   <p>By signing below, the Client confirms that:</p>
   <ul>
     <li>The Client has read this Agreement in its entirety;</li>
@@ -1020,18 +1109,19 @@
        ======================================================== -->
   <div class="signature-row">
     <div class="sig-card">
-      <div class="lab">Client</div>
+      <div class="lab">Client Signature</div>
+      <div class="sig-area"></div>
+      <div class="line"></div>
       <div class="name">{CLIENT_NAME}</div>
       <div class="meta">{CLIENT_EMAIL}</div>
-      <div class="line"></div>
       <div class="date">Date: ____________________</div>
     </div>
     <div class="sig-card">
-      <div class="lab">Paralegal</div>
-      <div class="name">{PARALEGAL_NAME}</div>
-      <div class="meta">LSO #{PARALEGAL_LSO} · Legal Assist Paralegal Services</div>
+      <div class="lab">Paralegal Signature</div>
       <div class="cursive">{PARALEGAL_NAME}</div>
       <div class="line"></div>
+      <div class="name">{PARALEGAL_NAME}</div>
+      <div class="meta">LSO #{PARALEGAL_LSO} · Legal Assist Paralegal Services</div>
       <div class="date">Date: {DATE}</div>
     </div>
   </div>

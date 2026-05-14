@@ -1076,14 +1076,26 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // Templates that don't reference these placeholders are
       // unaffected (the regex simply finds nothing to replace).
       // ============================================================
-      const matterTypeValue = (template.templateCategory || template.templateName || '').trim();
+      // Permissive fallbacks: the HRTO template surfaces these as
+      // labelled rows. If we don't have a value we still want
+      // something useful to render rather than a hidden row or "—".
+      const matterTypeValue = (
+        template.templateCategory ||
+        template.templateName ||
+        ''
+      ).trim();
       const natureValue = natureOfMatter.trim();
       const phoneValue = (client.phoneNumber || '').trim();
       const addressValue = (client.streetAddress || '').trim();
       const unitValue = (client.unit || (client as any).addressLine2 || '').trim();
+      // File reference: prefer the client's CL-XXXXXX id, then the
+      // file number, then the document name the paralegal typed in
+      // the dialog (mirrors the older {MATTER_REFERENCE} behaviour
+      // so the cover page never shows just "—").
       const fileRefValue = (
         (client as any).clientId ||
         (client as any).fileNumber ||
+        documentName ||
         ''
       ).toString().trim();
 
@@ -1097,11 +1109,34 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{IS_CLIENT_PHONE_EMPTY\}/g, flag(!phoneValue));
       documentContent = documentContent.replace(/\{IS_CLIENT_ADDRESS_EMPTY\}/g, flag(!addressValue));
       documentContent = documentContent.replace(/\{IS_CLIENT_UNIT_EMPTY\}/g, flag(!unitValue));
-      documentContent = documentContent.replace(/\{IS_HOURLY_EMPTY\}/g, flag(isEmptyValue(hourlyRate)));
-      documentContent = documentContent.replace(/\{IS_FLAT_EMPTY\}/g, flag(isEmptyValue(flatFeeAmount)));
-      documentContent = documentContent.replace(/\{IS_HYBRID_EMPTY\}/g, flag(isEmptyValue(hybridFlatFee) && isEmptyValue(hybridHourlyRate)));
-      documentContent = documentContent.replace(/\{IS_CONTINGENCY_EMPTY\}/g, flag(isEmptyValue(contingencyPercent)));
-      documentContent = documentContent.replace(/\{IS_DEPOSIT_EMPTY\}/g, flag(isEmptyValue(retainerAmount)));
+
+      // ---- Fee-row strike-through pattern ----
+      // The HRTO template renders ALL four fee models but visually
+      // strikes through the ones that aren't selected so the
+      // retainer reads as a menu with one option chosen and the
+      // others crossed out. The {STRUCK_*} flags emit
+      // data-struck="true"/"false" on each .fee-row; the template
+      // CSS rule  .fee-row[data-struck="true"]
+      //   { text-decoration: line-through; opacity: 0.5 }
+      // does the visual strike.
+      const norm = (s: string) => s.trim().toLowerCase();
+      const selected = norm(selectedFeeModel || '');
+      const isStruck = (modelName: string) => selected !== '' && selected !== norm(modelName);
+      documentContent = documentContent.replace(/\{STRUCK_HOURLY\}/g, flag(isStruck('Hourly Retainer')));
+      documentContent = documentContent.replace(/\{STRUCK_FLAT\}/g, flag(isStruck('Flat Fee')));
+      documentContent = documentContent.replace(/\{STRUCK_HYBRID\}/g, flag(isStruck('Hybrid Retainer')));
+      documentContent = documentContent.replace(/\{STRUCK_CONTINGENCY\}/g, flag(isStruck('Contingency Fee')));
+      documentContent = documentContent.replace(/\{STRUCK_DEPOSIT\}/g, flag(isStruck('Hourly Retainer') && isStruck('Hybrid Retainer')));
+
+      // Older {IS_*_EMPTY} flags for fee rows — kept as no-op
+      // fallbacks for back-compat in case the CMS row still has the
+      // earlier template version. With data-struck the rows always
+      // render, so empty=false.
+      documentContent = documentContent.replace(/\{IS_HOURLY_EMPTY\}/g, 'false');
+      documentContent = documentContent.replace(/\{IS_FLAT_EMPTY\}/g, 'false');
+      documentContent = documentContent.replace(/\{IS_HYBRID_EMPTY\}/g, 'false');
+      documentContent = documentContent.replace(/\{IS_CONTINGENCY_EMPTY\}/g, 'false');
+      documentContent = documentContent.replace(/\{IS_DEPOSIT_EMPTY\}/g, 'false');
 
       // ---- HRTO-named field aliases ----
       // The HRTO template uses {FILE_REFERENCE}, {MATTER_TYPE},
@@ -1110,7 +1145,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // {LTB_MATTER_TYPE}, {CLIENT_ADDRESS_LINE1/2}, {FLAT_FEE},
       // {RETAINER_AMOUNT} names). Both name sets coexist.
       documentContent = documentContent.replace(/\{FILE_REFERENCE\}/g, fileRefValue || '—');
-      documentContent = documentContent.replace(/\{MATTER_TYPE\}/g, matterTypeValue || '—');
+      documentContent = documentContent.replace(/\{MATTER_TYPE\}/g, matterTypeValue || 'Legal Matter');
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS\}/g, addressValue || '—');
       documentContent = documentContent.replace(/\{CLIENT_UNIT\}/g, unitValue || '—');
       documentContent = documentContent.replace(/\{FLAT_FEE_AMOUNT\}/g, flatFeeAmount || '—');

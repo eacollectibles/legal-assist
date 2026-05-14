@@ -52,7 +52,7 @@ export default function PublicSignPage() {
   const { token } = useParams<{ token: string }>();
 
   const [phase, setPhase] = useState<
-    'validating' | 'invalid' | 'review' | 'signing' | 'submitting' | 'done'
+    'validating' | 'invalid' | 'review' | 'initialing' | 'signing' | 'submitting' | 'done'
   >('validating');
   const [error, setError] = useState<string>('');
   const [tokenRow, setTokenRow] = useState<SignTokens | null>(null);
@@ -60,6 +60,15 @@ export default function PublicSignPage() {
   const [signerName, setSignerName] = useState('');
   const [signerEmail, setSignerEmail] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  // Section-by-section initialing. The document template can mark up
+  // acknowledgment items with `data-initial-target="<id>"` on the .box
+  // element; we extract those targets + the adjacent .txt content here
+  // so the client can confirm each section before signing the main
+  // signature card at the bottom.
+  type InitialTarget = { id: string; label: string };
+  const [initialTargets, setInitialTargets] = useState<InitialTarget[]>([]);
+  const [initialsValue, setInitialsValue] = useState('');
+  const [initialedIds, setInitialedIds] = useState<Set<string>>(new Set());
   // Iframe-safe preview URL. Wix Media CDN PDFs send
   // X-Frame-Options: SAMEORIGIN, so a cross-origin <iframe src="https://static.wixstatic.com/..."> renders blank.
   // We fetch the PDF as a blob and use the blob: URL (same-origin) for
@@ -214,6 +223,42 @@ export default function PublicSignPage() {
   }, [doc?.documentUrl]);
 
   // ----------------------------------------------------------------
+  // Parse the document's stored HTML to find acknowledgment items
+  // marked up with data-initial-target="<id>". Each match becomes one
+  // line in the initialing UI. If the document has no such markup
+  // (older retainers without the v2 ack-list) we just skip the
+  // initialing phase entirely.
+  // ----------------------------------------------------------------
+  const extractInitialTargets = (html: string): InitialTarget[] => {
+    if (!html || typeof html !== 'string') return [];
+    try {
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(html, 'text/html');
+      const boxes = dom.querySelectorAll('[data-initial-target]');
+      const out: InitialTarget[] = [];
+      boxes.forEach((box) => {
+        const id = box.getAttribute('data-initial-target');
+        if (!id) return;
+        // Adjacent .txt sibling holds the acknowledgment statement.
+        const sibling = box.parentElement?.querySelector('.txt') as HTMLElement | null;
+        const label = (sibling?.textContent || box.textContent || '').trim();
+        out.push({ id, label });
+      });
+      return out;
+    } catch (e) {
+      console.warn('extractInitialTargets failed:', e);
+      return [];
+    }
+  };
+
+  // Auto-derive initials from a full name. "Jean-Francois Demers" → "JD".
+  // The user can edit before confirming.
+  const initialsFromName = (name: string): string => {
+    const parts = (name || '').trim().split(/[\s-]+/).filter(Boolean);
+    return parts.slice(0, 3).map((p) => p[0].toUpperCase()).join('');
+  };
+
+  // ----------------------------------------------------------------
   // Try a Wix Media upload of the signed PDF data URL via the server
   // endpoint (which authenticates with an API key). Returns null if
   // the upload fails — caller falls back to inline storage.
@@ -292,6 +337,16 @@ export default function PublicSignPage() {
     setPhase('submitting');
     try {
       const { embedSignatureInPDF } = await import('@/lib/pdf-generator');
+      // Build the initials payload to pass to the embedder. The
+      // embedder will rewrite each [data-initial-target] box in the
+      // document HTML so that the chosen initials replace the "INIT"
+      // placeholder for every confirmed section.
+      const initialsPayload = initialsValue.trim()
+        ? {
+            initials: initialsValue.trim().toUpperCase(),
+            sectionIds: Array.from(initialedIds),
+          }
+        : undefined;
       const signedPdfDataUrl = await embedSignatureInPDF(
         doc.documentUrl || '',
         sig,
@@ -299,6 +354,7 @@ export default function PublicSignPage() {
         // Pass the original HTML so the embedder can re-render with the
         // client's signature appended (documentUrl is a real PDF).
         (doc as any).documentContent || undefined,
+        initialsPayload,
       );
 
       // Try Wix Media for permanent hosting
@@ -507,10 +563,29 @@ export default function PublicSignPage() {
                       !acceptedTerms ||
                       !doc.documentUrl
                     }
-                    onClick={() => setPhase('signing')}
+                    onClick={() => {
+                      // Extract initialing targets from the document's
+                      // stored HTML. If the document is from an older
+                      // template (no [data-initial-target] markup) skip
+                      // the initialing phase and go straight to the
+                      // main signature.
+                      const html = (doc as any).documentContent || '';
+                      const targets = extractInitialTargets(html);
+                      if (targets.length > 0) {
+                        setInitialTargets(targets);
+                        // Pre-fill initials from the entered name; the
+                        // client can edit before confirming.
+                        if (!initialsValue) {
+                          setInitialsValue(initialsFromName(signerName));
+                        }
+                        setPhase('initialing');
+                      } else {
+                        setPhase('signing');
+                      }
+                    }}
                     className="bg-primary hover:bg-primary/90 text-white"
                   >
-                    Continue to signature
+                    Continue to initials
                   </Button>
                   {!doc.documentUrl && (
                     <p className="text-xs text-amber-700 mt-2">
@@ -564,6 +639,118 @@ export default function PublicSignPage() {
           </div>
         )}
 
+        {phase === 'initialing' && doc && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-heading flex items-center gap-2">
+                <FileText className="w-6 h-6 text-primary" />
+                Initial each acknowledgment
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <p className="font-paragraph text-foreground/80">
+                Before applying your main signature, please confirm each
+                acknowledgment below. Your initials will be stamped beside each
+                section in the final signed PDF.
+              </p>
+              <div>
+                <Label htmlFor="initialsInput">Your initials *</Label>
+                <Input
+                  id="initialsInput"
+                  value={initialsValue}
+                  onChange={(e) =>
+                    setInitialsValue(
+                      e.target.value
+                        .toUpperCase()
+                        .replace(/[^A-Z]/g, '')
+                        .slice(0, 4)
+                    )
+                  }
+                  placeholder="e.g. JD"
+                  className="max-w-[160px] font-bold"
+                  maxLength={4}
+                />
+                <p className="text-xs text-foreground/60 mt-1">
+                  Auto-derived from your name. Edit if you prefer different
+                  initials (max 4 letters).
+                </p>
+              </div>
+
+              <div className="border rounded-lg divide-y bg-white">
+                {initialTargets.map((t) => {
+                  const checked = initialedIds.has(t.id);
+                  return (
+                    <label
+                      key={t.id}
+                      className="flex items-start gap-3 p-3 cursor-pointer hover:bg-bg-soft"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) => {
+                          setInitialedIds((prev) => {
+                            const next = new Set(prev);
+                            if (e.target.checked) next.add(t.id);
+                            else next.delete(t.id);
+                            return next;
+                          });
+                        }}
+                        className="mt-1"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-paragraph text-foreground/80">
+                          {t.label}
+                        </div>
+                      </div>
+                      <span
+                        className={
+                          'flex-shrink-0 w-14 h-7 border rounded text-center text-sm flex items-center justify-center font-bold ' +
+                          (checked
+                            ? 'border-amber-500 bg-amber-50 text-primary italic'
+                            : 'border-foreground/30 text-foreground/40')
+                        }
+                        style={
+                          checked
+                            ? { fontFamily: '"Allura", "Lora", cursive, serif', fontSize: '18px' }
+                            : {}
+                        }
+                      >
+                        {checked ? initialsValue || '—' : 'INIT'}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-2">
+                <p className="text-xs text-foreground/60">
+                  {initialedIds.size} of {initialTargets.length} acknowledgments
+                  confirmed
+                  {initialedIds.size === initialTargets.length && ' ✓'}
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setPhase('review')}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    disabled={
+                      !initialsValue.trim() ||
+                      initialedIds.size !== initialTargets.length
+                    }
+                    onClick={() => setPhase('signing')}
+                    className="bg-primary hover:bg-primary/90 text-white"
+                  >
+                    Continue to signature
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {phase === 'signing' && doc && (
           <DocumentSignature
             documentId={doc._id}
@@ -573,7 +760,9 @@ export default function PublicSignPage() {
             // manual draw mode.
             enableQuickSign={false}
             onSignatureComplete={handleSignatureComplete}
-            onCancel={() => setPhase('review')}
+            onCancel={() =>
+              setPhase(initialTargets.length > 0 ? 'initialing' : 'review')
+            }
           />
         )}
 
