@@ -22,10 +22,10 @@ export default function IRBRepresentationPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Immigration & Refugee Board (IRB) Representation
+                Immigration & Refugee Board (IRB) — Pre-Hearing Support
               </h1>
               <p className="font-paragraph text-lg text-foreground/80 mb-8">
-                Licensed paralegal representation for Immigration & Refugee Board proceedings in Ontario. Our licensed paralegals provide skilled support for refugee claims, appeals, and immigration matters within paralegal scope of practice.
+                Paralegals are <strong>not authorized</strong> to provide representation before the Immigration & Refugee Board (IRB). Representation before the IRB is reserved for lawyers and Regulated Canadian Immigration Consultants (RCICs). What we can do is help you prepare your documentation, organize evidence, and refer you to a lawyer or RCIC for the IRB proceeding itself.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/contact">
@@ -100,7 +100,7 @@ export default function IRBRepresentationPage() {
               <p className="font-paragraph text-foreground/80">Paralegal Services Available</p>
             </div>
             <div className="bg-pastelbeige/30 rounded-lg p-6 border border-pastelbeige">
-              <div className="text-4xl font-bold text-primary mb-2">Expert Referrals</div>
+              <div className="text-4xl font-bold text-primary mb-2">Lawyer & RCIC Referrals</div>
               <p className="font-paragraph text-foreground/80">Immigration Lawyers & RCICs</p>
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function IRBRepresentationPage() {
 
             <div className="bg-white rounded-lg p-8 border border-gray-100">
               <CheckCircle className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-heading text-xl font-bold text-foreground mb-3">Expert Referrals</h3>
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">Lawyer & RCIC Referrals</h3>
               <p className="font-paragraph text-foreground/80">
                 We maintain relationships with qualified immigration lawyers and RCICs to refer you for formal representation.
               </p>

@@ -14,7 +14,7 @@ export default function WorkplaceDiscriminationPage() {
   const processSteps = [
     { step: '1', title: 'Case Assessment', description: 'Determine if discrimination occurred and which grounds apply.' },
     { step: '2', title: 'HRTO Application', description: 'File detailed application within limitation period (1 year).' },
-    { step: '3', title: 'Tribunal Process', description: 'Mediation attempt, then hearing if no resolution.' }
+    { step: '3', title: 'Tribunal Process', description: 'Mandatory mediation under HRTO Rule 15 (since June 1, 2025), then hearing if not resolved.' }
   ];
 
   const reassuranceItems = [

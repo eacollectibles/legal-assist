@@ -240,7 +240,7 @@ const CallbackForm: React.FC = () => {
           onChange={handleChange}
           required
           className="w-full px-4 py-3 border border-secondary/20 rounded-lg font-paragraph text-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-          placeholder="(416) 555-0123"
+          placeholder="(226) 555-0123"
         />
       </div>
 

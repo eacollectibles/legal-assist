@@ -129,7 +129,7 @@ export default function AboutPage() {
                 Your Advocate
               </h3>
               <p className="font-paragraph text-foreground/80">
-                We fight for your rights and work tirelessly to achieve the best possible outcomes for you.
+                We advocate strongly for your rights and work diligently to advance your position on every file.
               </p>
             </div>
           </div>
@@ -292,8 +292,8 @@ export default function AboutPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-heading font-bold text-foreground mb-1">Deliver Results</p>
-                  <p className="font-paragraph text-sm text-foreground/80">Work tirelessly to achieve the best possible outcome for your situation</p>
+                  <p className="font-heading font-bold text-foreground mb-1">Advocate Effectively</p>
+                  <p className="font-paragraph text-sm text-foreground/80">Work diligently to advance your position based on the facts and law of your case</p>
                 </div>
               </div>
             </div>

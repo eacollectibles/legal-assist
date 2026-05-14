@@ -342,7 +342,7 @@ export default function HomePageNew() {
               <div className="mt-10 space-y-6">
                 {[
                   { icon: MessageSquare, title: 'Clear Communication', text: 'No legal jargon. We explain your situation and options in plain language so you always know where you stand.' },
-                  { icon: Target, title: 'Strategic Approach', text: 'Every case is assessed on its merits. We develop a focused strategy tailored to achieve the strongest possible outcome.' },
+                  { icon: Target, title: 'Strategic Approach', text: 'Every case is assessed on its merits. We develop a focused strategy tailored to the facts, evidence, and law of your matter.' },
                   { icon: Scale, title: 'Professional Representation', text: 'Licensed and regulated by the Law Society of Ontario. Experienced in Small Claims Court, LTB, and tribunal proceedings.' },
                   { icon: Users, title: 'Client-Focused Service', text: 'Your matter is not a file number. We are responsive, accessible, and committed to moving your case forward efficiently.' },
                 ].map((item, i) => (

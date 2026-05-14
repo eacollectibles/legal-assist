@@ -466,7 +466,7 @@ export default function SmallClaimsPage() {
                   Property Damage Claims
                 </h3>
                 <p className="text-foreground/80 mb-3">
-                  <strong>With photo/video evidence:</strong> Strong cases typically recover 70-100% of documented repair costs.
+                  <strong>With photo/video evidence:</strong> Well-documented cases give you the best position to seek recovery of repair costs. Actual amounts depend on the evidence, the defendant's response, and the court's findings.
                 </p>
                 <p className="text-foreground/80 mb-3">
                   <strong>Without documentation:</strong> Much harder - courts want proof of damage AND proof of who caused it.
@@ -482,7 +482,7 @@ export default function SmallClaimsPage() {
                   Security Deposit Recovery
                 </h3>
                 <p className="text-foreground/80 mb-3">
-                  <strong>Typical recovery:</strong> Tenants often recover 80-100% of wrongfully withheld deposits.
+                  <strong>Recovery potential:</strong> Landlords are required to return last-month's-rent deposits if a tenancy is properly terminated and no rent is owed. Recovery depends on the evidence, including the lease, payment records, and the landlord's basis (if any) for withholding.
                 </p>
                 <p className="text-foreground/80 mb-3">
                   <strong>Timeline:</strong> Often faster resolution as landlords frequently settle to avoid court.

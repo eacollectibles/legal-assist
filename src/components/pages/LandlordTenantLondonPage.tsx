@@ -97,7 +97,7 @@ export default function LandlordTenantLondonPage() {
               <div className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Scale className="w-6 h-6" /></div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">LTB Hearing Representation</h3>
               <p className="font-paragraph text-foreground/70 mb-2">Full representation at all Landlord and Tenant Board hearings for the London region, both in-person and virtual.</p>
-              <p className="font-paragraph text-foreground/50 text-sm mb-4">We prepare your case, organize evidence, and advocate for the best possible outcome at the London LTB.</p>
+              <p className="font-paragraph text-foreground/50 text-sm mb-4">We prepare your case, organize evidence, and advocate effectively at the London LTB.</p>
               <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </Link>
           </div>
@@ -135,7 +135,7 @@ export default function LandlordTenantLondonPage() {
             <div>
               <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mb-4 font-heading font-bold text-lg">1</div>
               <h3 className="font-heading text-lg font-bold text-foreground mb-2">Free Case Review</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">We review your situation, explain your rights under the RTA, and advise on the best course of action for your London rental matter.</p>
+              <p className="font-paragraph text-foreground/70 text-sm">We review your situation, explain your rights under the RTA, and advise on your options for your London rental matter.</p>
             </div>
             <div>
               <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mb-4 font-heading font-bold text-lg">2</div>
@@ -150,7 +150,7 @@ export default function LandlordTenantLondonPage() {
             <div>
               <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mb-4 font-heading font-bold text-lg">4</div>
               <h3 className="font-heading text-lg font-bold text-foreground mb-2">LTB Representation</h3>
-              <p className="font-paragraph text-foreground/70 text-sm">We represent you at the hearing, negotiate settlements where appropriate, and ensure the best possible outcome for your matter.</p>
+              <p className="font-paragraph text-foreground/70 text-sm">We represent you at the hearing, negotiate settlements where appropriate, and advance your position with the evidence and arguments available.</p>
             </div>
           </div>
         </div>

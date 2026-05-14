@@ -289,7 +289,7 @@ We handle appeals for:
       '30-day appeal deadline',
       'Procedural familiarity with SBT Rules of Procedure and evidence expectations',
       'Free tribunal filing',
-      'Expert knowledge of regulations',
+      'Strong working knowledge of SBT regulations',
       'Strong documentation and advocacy'
     ],
     costInfo: 'Hourly rates $150-250/hour or flat fees for straightforward appeals. Free initial consultation.',
