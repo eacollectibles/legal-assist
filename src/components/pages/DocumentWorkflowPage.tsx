@@ -1155,6 +1155,61 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // unaffected.
       documentContent = documentContent.replace(/\{DATE_SHORT\}/g, format(new Date(), 'yyyyMMdd'));
 
+      // ============================================================
+      // LTB Tenant retainer template — rental unit + landlord aliases
+      // ------------------------------------------------------------
+      // The LTB Tenant template (templates/ltb-tenant-retainer-template.html)
+      // uses {RENTAL_*} placeholders for the rental address fields and
+      // {LANDLORD_NAME} for the opposing party. For tenant matters the
+      // rental unit IS the client's home address — so we map these to the
+      // same client profile fields. If a future workflow adds explicit
+      // "rental address" fields to the file we can swap the source here.
+      //
+      // The IS_RENTAL_INFO_EMPTY flag hides the entire rental-address row
+      // when neither street nor city is set, instead of showing ", Ontario"
+      // with empty street/city/postal.
+      // ============================================================
+      const cityValue = (client.city || '').trim();
+      const provinceValue = (client.state || '').trim();
+      const postalValue = (client.zipCode || '').trim();
+      // For LTB Tenant matters, the client's home address is the rental
+      // unit. Use the natureOfMatter dialog field as the landlord name
+      // fallback — paralegals typically include the landlord's name there
+      // (e.g., "Eviction defence — landlord John Doe"). If that's blank,
+      // leave a dash so the conditional row hides cleanly.
+      const landlordValue = (() => {
+        const nat = (natureOfMatter || '').trim();
+        // Try to extract a landlord name from the nature field if it
+        // includes "landlord X" or "vs X" — best-effort only.
+        const m = nat.match(/(?:landlord|vs\.?|against|opposing)[:\s]+([^.;,\n]{2,80})/i);
+        return (m && m[1].trim()) || '';
+      })();
+      const hstRegValue = '855041234RT0001'; // Firm CRA HST registration — update if it changes
+
+      documentContent = documentContent.replace(/\{RENTAL_ADDRESS\}/g, addressValue || '—');
+      documentContent = documentContent.replace(/\{RENTAL_UNIT\}/g, unitValue || '—');
+      documentContent = documentContent.replace(/\{RENTAL_CITY\}/g, cityValue || '—');
+      documentContent = documentContent.replace(/\{RENTAL_PROVINCE\}/g, provinceValue || 'Ontario');
+      documentContent = documentContent.replace(/\{RENTAL_POSTAL_CODE\}/g, postalValue || '—');
+      documentContent = documentContent.replace(/\{LANDLORD_NAME\}/g, landlordValue || '—');
+      documentContent = documentContent.replace(/\{HST_REGISTRATION_NUMBER\}/g, hstRegValue);
+
+      // Conditional-row flags for LTB Tenant
+      const rentalInfoEmpty = !addressValue && !cityValue;
+      documentContent = documentContent.replace(/\{IS_RENTAL_INFO_EMPTY\}/g, flag(rentalInfoEmpty));
+      documentContent = documentContent.replace(/\{IS_RENTAL_UNIT_EMPTY\}/g, flag(!unitValue));
+      documentContent = documentContent.replace(/\{IS_LANDLORD_NAME_EMPTY\}/g, flag(!landlordValue));
+      // Back-compat: earlier draft of the LTB template referenced these
+      // narrower per-field flags. Map them to the consolidated
+      // rentalInfoEmpty rule so the rows still hide correctly even if a
+      // CMS row is still on the older template.
+      documentContent = documentContent.replace(/\{IS_RENTAL_ADDRESS_EMPTY\}/g, flag(!addressValue));
+      documentContent = documentContent.replace(/\{IS_RENTAL_CITY_EMPTY\}/g, flag(!cityValue));
+
+      // CLIENT_CITY conditional flag for HRTO template (was previously
+      // unwired, causing "—, Ontario —" to render when no city was set).
+      documentContent = documentContent.replace(/\{IS_CLIENT_CITY_EMPTY\}/g, flag(!cityValue));
+
       // Generate PDF from content
       const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;
       const pdfDataUrl = await generatePDF(documentContent, docName);

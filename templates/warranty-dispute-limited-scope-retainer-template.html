@@ -1,0 +1,415 @@
+<!--
+  Limited Scope Retainer — Warranty Dispute (Documents, Calls & Settlement Negotiation Only) — v3 (FINAL)
+  Source of truth: Wix CMS row in `documenttemplates`
+    Suggested templateName:     "Warranty Dispute — Limited Scope (Negotiation)"
+    Suggested templateCategory: "Limited Scope"
+
+  AUTHORITIES (LSO):
+    - Paralegal Rule 3.02(1.1) + commentary — Limited Scope Retainers.
+    - Paralegal Rule 3.04 — Confidentiality.
+    - Paralegal Rule 3.05 — File preservation, access, transfer.
+    - Paralegal Rule 3.07 / 3.08 — Joint Retainers & Withdrawal.
+    - Paralegal Rule 5.01 + By-Law 9 — Fees, billing, trust accounts, Form 9A.
+    - By-Law 7.1 — Client identification & verification.
+    - Electronic Commerce Act, 2000 (Ontario), s. 11 — electronic signatures.
+    - PIPEDA, S.C. 2000, c. 5 — personal information protection.
+    - Canada's Anti-Spam Legislation, S.C. 2010, c. 23 — commercial electronic messages.
+
+  APPLICABLE LAW (Ontario warranty disputes):
+    - Sale of Goods Act, R.S.O. 1990, c. S.1 — implied conditions/warranties.
+    - Consumer Protection Act, 2002, S.O. 2002, c. 30, Sch. A — consumer warranty +
+      s. 9 (implied warranties; cannot be waived); s. 96 (notice of rescission).
+    - Limitations Act, 2002, S.O. 2002, c. 24, Sch. B — s. 4 (2-year basic limitation);
+      s. 5 (discoverability rule).
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Limited Scope Retainer — Warranty Dispute</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f2a4a; --navy-2: #14315a; --gold: #b08a3e;
+      --ink: #1f2937; --ink-2: #374151; --mute: #6b7280;
+      --bg: #ffffff; --bg-soft: #f7f9fc; --bg-warm: #fdfaf3;
+      --line: #e2e8f0; --line-2: #cbd5e1;
+      --danger: #b91c1c; --danger-soft: #fef2f2;
+      --ok: #166534; --ok-soft: #f0fdf4;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font: 400 13.5px/1.55 Inter, Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased; hyphens: none; }
+    p, li, td, h1, h2, h3, h4 { hyphens: none; text-align: left; }
+    .doc { max-width: 760px; margin: 0 auto; padding: 32px 40px 48px; }
+    h1, h2, h3, h4 { font-family: Inter, Arial, sans-serif; color: var(--navy); line-height: 1.25; margin: 0 0 8px; }
+    h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+    h2 { font-size: 18px; font-weight: 700; margin-top: 28px; padding-bottom: 6px; border-bottom: 2px solid var(--gold); }
+    h3 { font-size: 14.5px; font-weight: 700; margin-top: 18px; }
+    h4 { font-size: 13px; font-weight: 600; margin-top: 14px; color: var(--ink); }
+    p { margin: 0 0 10px; }
+    ul, ol { margin: 6px 0 12px 22px; padding: 0; }
+    li { margin: 0 0 4px; }
+    strong { color: var(--ink); }
+    small { color: var(--mute); font-size: 11.5px; }
+    .callout, .card, .fee-row, .meta-grid, .ack-list, .signature-row,
+    .summary-card, .scope-grid, .scope-card, .ila-card, .casl-card {
+      page-break-inside: avoid; break-inside: avoid;
+    }
+    h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break-before { page-break-before: always; break-before: page; }
+    [data-empty="true"] { display: none !important; }
+    .cover { padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+    .title-block { margin-bottom: 12px; }
+    .firm { font-family: Lora, Georgia, serif; font-style: italic; font-size: 14px; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .doc-title { font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 2px; line-height: 1.2; }
+    .doc-sub { font-size: 13px; color: var(--ink-2); }
+    .meta-grid { display: table; width: 100%; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-top: 10px; }
+    .meta-row { display: table-row; }
+    .meta-cell { display: table-cell; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 12.5px; vertical-align: top; }
+    .meta-cell.k { background: var(--bg-soft); width: 33%; color: var(--mute); font-weight: 600; }
+    .meta-row:last-child .meta-cell { border-bottom: none; }
+    .callout { padding: 12px 14px; border-left: 4px solid var(--gold); background: var(--bg-warm); margin: 12px 0; border-radius: 4px; }
+    .callout.danger { border-left-color: var(--danger); background: var(--danger-soft); }
+    .callout.ok { border-left-color: var(--ok); background: var(--ok-soft); }
+    .callout.ila { border-left-color: var(--navy); background: #eff6ff; }
+    .callout h4 { margin-top: 0; }
+    .scope-grid { display: table; width: 100%; border-collapse: collapse; margin: 10px 0 14px; }
+    .scope-row { display: table-row; }
+    .scope-card { display: table-cell; vertical-align: top; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; width: 50%; }
+    .scope-card.included { background: var(--ok-soft); border-color: #bbf7d0; }
+    .scope-card.excluded { background: var(--danger-soft); border-color: #fecaca; }
+    .scope-card h4 { color: var(--navy); margin-top: 0; }
+    .scope-card.included h4::before { content: "Included: "; color: var(--ok); font-weight: 700; }
+    .scope-card.excluded h4::before { content: "Excluded: "; color: var(--danger); font-weight: 700; }
+    .scope-spacer { display: table-cell; width: 12px; }
+    .fee-row { display: table; width: 100%; margin: 8px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg-soft); }
+    .fee-row .label { display: table-cell; font-weight: 600; }
+    .fee-row .amt { display: table-cell; text-align: right; font-weight: 700; color: var(--navy); min-width: 140px; white-space: nowrap; }
+    .ack-list { margin: 12px 0; }
+    .ack-row { display: table; width: 100%; margin-bottom: 8px; }
+    .box-cell { display: table-cell; width: 70px; vertical-align: top; padding-right: 12px; }
+    .txt-cell { display: table-cell; vertical-align: top; font-size: 12.5px; }
+    .box { width: 58px; height: 32px; border: 1.5px solid var(--navy); border-radius: 3px; text-align: center; line-height: 30px; font-size: 10px; color: var(--mute); letter-spacing: 0.05em; background: #fff; }
+    .box.initialled { font-family: 'Allura', cursive; font-size: 22px; color: var(--navy); line-height: 32px; letter-spacing: 0.01em; }
+    .casl-card { display: table; width: 100%; margin: 10px 0; border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; background: var(--bg-soft); }
+    .casl-options { display: table-row; }
+    .casl-opt { display: table-cell; padding-right: 12px; vertical-align: top; }
+    .casl-opt:last-child { padding-right: 0; padding-left: 12px; }
+    .casl-box { width: 22px; height: 22px; border: 1.5px solid var(--navy); border-radius: 3px; display: inline-block; vertical-align: middle; margin-right: 6px; background: #fff; }
+    .end-marker { position: relative; height: 90px; margin: 20px 0 0; border: 1px solid var(--line); border-radius: 6px; background: var(--bg-soft); }
+    .end-marker::after { content: "END OF SECTION — NO FURTHER CONDITIONS"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10.5px; color: var(--mute); letter-spacing: 0.08em; }
+    .end-marker::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top right, transparent 49.5%, var(--line-2) 49.5%, var(--line-2) 50.5%, transparent 50.5%); }
+  </style>
+</head>
+<body>
+  <div class="doc">
+
+    <div class="cover">
+      <div class="title-block">
+        <div class="firm">Legal Assist Paralegal Services</div>
+        <div class="doc-title">Limited Scope Retainer Agreement</div>
+        <div class="doc-sub">Warranty Dispute — Documents, Calls &amp; Settlement Negotiation Only</div>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-row"><div class="meta-cell k">Date</div><div class="meta-cell">{DATE_SHORT}</div></div>
+        <div class="meta-row" data-empty="{IS_FILE_REF_EMPTY}"><div class="meta-cell k">File Reference</div><div class="meta-cell">{FILE_REF}</div></div>
+        <div class="meta-row"><div class="meta-cell k">Client</div><div class="meta-cell">{CLIENT_FULL_NAME}<br><small>{CLIENT_EMAIL} &middot; {CLIENT_PHONE}</small><br><small>{CLIENT_ADDRESS}</small></div></div>
+        <div class="meta-row" data-empty="{IS_JOINT_CLIENT_EMPTY}"><div class="meta-cell k">Joint Client</div><div class="meta-cell">{JOINT_CLIENT_NAME}<br><small>{JOINT_CLIENT_EMAIL} &middot; {JOINT_CLIENT_PHONE}</small></div></div>
+        <div class="meta-row"><div class="meta-cell k">Paralegal</div><div class="meta-cell">Jean-Francois Demers, Licensed Paralegal<br><small>Law Society of Ontario — LSO #P22020</small></div></div>
+        <div class="meta-row"><div class="meta-cell k">Firm HST Reg. #</div><div class="meta-cell">{HST_REGISTRATION_NUMBER}</div></div>
+        <div class="meta-row"><div class="meta-cell k">Matter Type</div><div class="meta-cell">Warranty Dispute (Limited Scope — Negotiation Only)</div></div>
+        <div class="meta-row"><div class="meta-cell k">Opposing Party</div><div class="meta-cell">{OPPOSING_PARTY_NAME}<br><small>{OPPOSING_PARTY_DESCRIPTION}</small></div></div>
+      </div>
+    </div>
+
+    <h2>1. The Matter</h2>
+    <p>The Client has retained Legal Assist Paralegal Services to provide <strong>limited scope</strong> legal services in connection with a warranty dispute arising from the following:</p>
+    <div class="meta-grid">
+      <div class="meta-row"><div class="meta-cell k">Item / Goods or Services</div><div class="meta-cell">{PURCHASE_ITEM_DESCRIPTION}</div></div>
+      <div class="meta-row" data-empty="{IS_PURCHASE_DATE_EMPTY}"><div class="meta-cell k">Purchase Date</div><div class="meta-cell">{PURCHASE_DATE}</div></div>
+      <div class="meta-row" data-empty="{IS_PURCHASE_PRICE_EMPTY}"><div class="meta-cell k">Purchase Price</div><div class="meta-cell">{PURCHASE_PRICE}</div></div>
+      <div class="meta-row" data-empty="{IS_WARRANTY_TYPE_EMPTY}"><div class="meta-cell k">Warranty Basis</div><div class="meta-cell">{WARRANTY_TYPE} <small>(e.g., express written warranty, implied warranty under the Sale of Goods Act, statutory warranty under the Consumer Protection Act, 2002)</small></div></div>
+      <div class="meta-row"><div class="meta-cell k">Desired Outcome</div><div class="meta-cell">{DESIRED_OUTCOME} <small>(e.g., refund, replacement, repair, partial credit, damages)</small></div></div>
+    </div>
+
+    <h2>2. Scope of Services — What This Retainer Covers</h2>
+    <p>This retainer is expressly <strong>limited in scope</strong> as permitted by Rule 3.02(1.1) of the Paralegal Rules of Conduct. The services provided are restricted to items listed in the "Included" column below. Anything in the "Not Included" column is <strong>not</strong> part of this retainer and requires a separate written agreement.</p>
+    <div class="scope-grid">
+      <div class="scope-row">
+        <div class="scope-card included">
+          <h4>Included in this Retainer</h4>
+          <ul>
+            <li>One (1) intake interview and case-assessment meeting</li>
+            <li>Review of documents provided by the Client (receipts, warranty terms, photos, prior correspondence, repair records)</li>
+            <li>Legal research on applicable Ontario warranty law (Sale of Goods Act; Consumer Protection Act, 2002; common law)</li>
+            <li>Drafting <strong>one (1) formal demand / notice letter</strong> on firm letterhead, sent to the opposing party</li>
+            <li>Up to <strong>three (3) follow-up communications</strong> (telephone calls, letters or emails) with the opposing party or their representative</li>
+            <li>Up to <strong>two (2) rounds of settlement negotiation</strong> on the Client's behalf</li>
+            <li>Drafting a settlement agreement and full and final release <em>if</em> a settlement is reached within scope</li>
+            <li>Reasonable status updates to the Client during the active period of this retainer</li>
+          </ul>
+        </div>
+        <div class="scope-spacer"></div>
+        <div class="scope-card excluded">
+          <h4>NOT Included in this Retainer</h4>
+          <ul>
+            <li>Filing a claim, application, or any pleading in <strong>Small Claims Court</strong> or any court or tribunal</li>
+            <li>Representation at any court appearance, settlement conference, mediation, hearing, or trial</li>
+            <li>Examinations for discovery, motions, or interlocutory steps</li>
+            <li>Defending any counterclaim or third-party claim</li>
+            <li>Enforcement of any judgment or settlement (garnishment, writ of seizure, etc.)</li>
+            <li>Appeals or judicial review</li>
+            <li>Complaint to any regulator (Consumer Protection Ontario, Better Business Bureau, manufacturer ombuds, etc.)</li>
+            <li>Communications with insurers, sureties, or parties other than the named opposing party</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>2.1 Settlement Authority</h3>
+    <p>The Client <strong>retains sole authority</strong> to accept or reject any settlement offer. The Paralegal will:</p>
+    <ul>
+      <li>Promptly communicate to the Client every settlement offer, counter-offer, or material proposal received from the opposing party, in writing where practicable;</li>
+      <li>Provide the Client with the Paralegal's professional opinion on each offer (strengths, weaknesses, comparable outcomes);</li>
+      <li>Make, accept, reject, or counter an offer <strong>only</strong> on the Client's express written or recorded instruction;</li>
+      <li>Not bind the Client to any settlement, release, payment plan, or non-disclosure obligation without first obtaining specific instructions for the particular term.</li>
+    </ul>
+    <p>If the Client wishes to give the Paralegal advance authority to settle within a specified dollar range, the Client and the Paralegal will record that authority in writing (by email exchange or a written instruction sheet) and the Paralegal will operate strictly within those parameters.</p>
+
+    <div class="callout">
+      <h4>If matters fall outside this scope</h4>
+      <p>If negotiation does not resolve the dispute and the Client wishes to commence proceedings, defend a counterclaim, or take any step outside this retainer's scope, the Client must enter into a separate written retainer agreement <em>before</em> the firm performs any such work. The flat fee under this retainer does not include any such services and will not be credited against fees for further work.</p>
+    </div>
+
+    <h2>3. Limitation Periods — Time Limits on the Client's Rights</h2>
+    <div class="callout danger">
+      <h4>Important: Negotiation Does Not Stop the Clock</h4>
+      <p>Ontario law sets strict deadlines (called <em>limitation periods</em>) to start a legal claim. Engaging in negotiation, sending a demand letter, or waiting for the opposing party to respond <strong>does not pause or extend</strong> these deadlines.</p>
+    </div>
+    <p>The principal limitation periods that may apply include:</p>
+    <ul>
+      <li><strong>Limitations Act, 2002</strong>, s. 4 — a <strong>two (2) year</strong> basic limitation period running from the date the claim was, or ought reasonably to have been, discovered (s. 5 discoverability).</li>
+      <li><strong>Consumer Protection Act, 2002</strong>, s. 96 — written notice of rescission of a consumer agreement must generally be given within one (1) year, depending on the ground.</li>
+      <li>Specific contractual or warranty notice provisions in the goods or services agreement itself.</li>
+    </ul>
+    <p>The Paralegal will identify the applicable limitation period(s) as part of the intake assessment, and the Client agrees to keep track of any deadline communicated. <strong>If a limitation period is approaching, the Client must promptly retain counsel (this firm or another) to commence proceedings; this retainer does not include commencing proceedings.</strong></p>
+
+    <h2 class="page-break-before">4. Fees — Flat Fee Arrangement</h2>
+    <p>The Client agrees to pay the Paralegal a <strong>flat fee</strong> for all services included in Section 2. The flat fee is fixed and is not affected by the actual number of hours the Paralegal spends, provided the work remains within scope.</p>
+    <div class="fee-row"><div class="label">Flat Fee for Included Services</div><div class="amt">{FLAT_FEE} <small>+ HST</small></div></div>
+    <div class="fee-row"><div class="label">HST (13%)</div><div class="amt">{FLAT_FEE_HST}</div></div>
+    <div class="fee-row"><div class="label">Total Payable</div><div class="amt">{FLAT_FEE_TOTAL}</div></div>
+
+    <h3>4.1 What the Flat Fee Includes</h3>
+    <p>The flat fee covers each of the included items in Section 2, taken together, regardless of how much time the Paralegal spends within scope. The flat fee does <strong>not</strong> include disbursements (see s. 4.3) or any work outside Section 2.</p>
+
+    <h3>4.2 When Additional Fees May Apply</h3>
+    <p>If the Client requests work beyond Section 2 (for example, a fourth follow-up call, a third round of negotiation, drafting a regulatory complaint, or attending an in-person settlement meeting), the Paralegal will provide a written estimate in advance and the Client must agree in writing before any additional work is performed. Additional work is billed at the Paralegal's standard hourly rate of <strong>{HOURLY_RATE}/hour + HST</strong>, in 6-minute increments.</p>
+
+    <h3>4.3 Disbursements</h3>
+    <p>Reasonable out-of-pocket disbursements (courier, registered mail, large-record photocopying, search fees) are <strong>not</strong> included in the flat fee and are billed at cost plus HST. The Paralegal will obtain the Client's consent before incurring any disbursement over $100.</p>
+
+    <h3>4.4 Payment &amp; Trust Account</h3>
+    <p>The flat fee is payable as follows:</p>
+    <ul>
+      <li><strong>50% deposit</strong> on signing of this retainer, held in the firm's trust account until earned, per By-Law 9 of the Law Society of Ontario.</li>
+      <li><strong>50% balance</strong> on delivery of the demand letter to the opposing party, or thirty (30) days from the date of this retainer, whichever is earlier.</li>
+    </ul>
+    <p>Payment may be made by e-transfer, credit card (Square — surcharge may apply), debit, or certified cheque. The Paralegal will issue a Form 9A trust receipt for the deposit and an HST invoice for the total at the conclusion of the matter. The Paralegal may transfer money from trust to general only when fees have been earned and rendered in accordance with By-Law 9.</p>
+
+    <h3>4.5 Costs Recovered in Negotiation</h3>
+    <p>If, as part of a settlement, the opposing party agrees to pay the Client a separate amount on account of legal costs, that amount is paid to the Paralegal up to the unpaid balance of fees and disbursements owing under this retainer; any surplus is paid to the Client. The flat fee is not reduced by costs that may be recovered.</p>
+
+    <h3>4.6 Communications &amp; Response Time</h3>
+    <p>The Paralegal will use reasonable efforts to respond to client communications within two (2) business days. Substantive responses requiring research or drafting may take longer; the Paralegal will acknowledge receipt and provide a target response date. Preferred channels for non-urgent matters: email to <strong>jeanfrancois@legalassist.london</strong>. Urgent matters: telephone <strong>226-272-5153</strong> during business hours (Mon–Fri, 9:00 a.m. – 5:00 p.m. Eastern). After-hours messages are returned the next business day.</p>
+
+    <h2>5. Client Obligations</h2>
+    <p>To enable the Paralegal to provide the included services effectively, the Client agrees to:</p>
+    <ul>
+      <li>Provide all relevant documents and information promptly and truthfully (receipts, warranty terms, prior correspondence, photos, repair invoices, chronology of events);</li>
+      <li>Provide acceptable identification on request and complete any identity-verification step required by By-Law 7.1 (see Section 8);</li>
+      <li>Not contact the opposing party directly once the demand letter has been sent, unless first cleared with the Paralegal;</li>
+      <li>Respond to requests for instructions within five (5) business days;</li>
+      <li>Keep the Paralegal informed of any change in address, telephone, or email;</li>
+      <li>Pay fees and disbursements when due;</li>
+      <li>Promptly correct the Paralegal in writing if anything in this retainer or in the Paralegal's understanding of the matter is not accurate.</li>
+    </ul>
+    <p>If the Client fails to meet these obligations and the Paralegal is unable to perform the included services as a result, the Paralegal may suspend work on written notice. Fees already earned are non-refundable.</p>
+
+    <h2>6. Withdrawal of Services</h2>
+    <h3>6.1 By the Client</h3>
+    <p>The Client may terminate this retainer at any time on written notice. The Paralegal will, on termination, prepare a final account, refund any unearned balance held in trust, and return the Client's original documents per Section 11.</p>
+
+    <h3>6.2 By the Paralegal</h3>
+    <p>Consistent with Rule 3.08 of the Paralegal Rules of Conduct, the Paralegal may withdraw from this retainer on reasonable written notice if:</p>
+    <ul>
+      <li>The Client fails to pay fees or disbursements when due;</li>
+      <li>A material conflict of interest arises that cannot be resolved with informed consent;</li>
+      <li>The Client provides instructions the Paralegal cannot ethically carry out (for example, instructions to mislead the opposing party, withhold material facts, or make a representation the Paralegal knows to be false);</li>
+      <li>The trust relationship between the Client and the Paralegal has broken down such that the Paralegal can no longer effectively represent the Client;</li>
+      <li>The Client persistently fails to communicate or provide instructions despite reasonable requests.</li>
+    </ul>
+    <p>Where the Paralegal withdraws, the Paralegal will give reasonable notice, complete steps reasonably required to protect the Client's interests in the short term, account for any trust money held, and return the Client's documents per Section 11.</p>
+
+    <h3>6.3 Refund on Withdrawal</h3>
+    <p>On termination by either party, refund of the flat fee is calculated as follows:</p>
+    <ul>
+      <li>Demand letter <strong>not yet sent</strong>: refund of <strong>50%</strong> of the flat fee (less HST already remitted and any disbursements incurred);</li>
+      <li>Demand letter <strong>sent</strong> but follow-up communications not exhausted: refund of <strong>25%</strong> of the flat fee (less HST and disbursements);</li>
+      <li>Demand letter <strong>sent</strong> and all follow-up communications and negotiation rounds completed: <strong>no refund</strong> payable.</li>
+    </ul>
+
+    <h2>7. Confidentiality, Conflicts, Joint Retainer &amp; Complaints</h2>
+    <p><strong>Confidentiality.</strong> All information the Client shares with the Paralegal is protected by paralegal-client privilege and held strictly confidential under Rule 3.04 of the Paralegal Rules of Conduct, including communications made before the signing of this retainer where they were made for the purpose of obtaining legal advice. Exceptions to confidentiality exist only as permitted or required by law (for example, where disclosure is required to prevent imminent serious harm, or in response to a valid subpoena or order).</p>
+    <p><strong>Conflicts of Interest.</strong> The Paralegal has conducted a conflicts check and is not aware of any current or former-client relationship that would prevent acting for the Client on this matter. If a conflict arises later, the Paralegal will promptly disclose it and, where appropriate, withdraw under Section 6.2.</p>
+    <div data-empty="{IS_JOINT_CLIENT_EMPTY}">
+      <p><strong>Joint Retainer.</strong> Where two or more clients have retained the Paralegal jointly under this retainer, the Client(s) acknowledge that:</p>
+      <ul>
+        <li>The Paralegal will receive instructions from and report to all joint clients;</li>
+        <li>There is <strong>no confidentiality between joint clients</strong> on matters relevant to this retainer — information from one will be shared with the other;</li>
+        <li>If a conflict arises between joint clients, the Paralegal may be required to withdraw from acting for both;</li>
+        <li>Each joint client is jointly and severally responsible for the fees and disbursements payable under this retainer.</li>
+      </ul>
+    </div>
+    <p><strong>Complaints.</strong> If the Client has any concern about the services, the Client is encouraged to raise it directly with the Paralegal. The Client may also contact the Law Society of Ontario Complaints &amp; Compliance line at <strong>1-800-668-7380</strong> or visit <strong>lso.ca</strong>.</p>
+
+    <h2>8. Identity Verification &amp; Client Information</h2>
+    <p>Under By-Law 7.1 of the Law Society of Ontario, the Paralegal must identify each client and, in certain circumstances, verify the Client's identity using acceptable government-issued identification. The Client agrees to provide, on request, current government-issued photo identification (driver's licence, passport, or other LSO-accepted document) and, where applicable, documents confirming the Client's address. The Paralegal will record this information in the file and retain it for the period required by By-Law 7.1.</p>
+
+    <h2>9. No Guarantee of Outcome</h2>
+    <p>The Paralegal will perform the included services diligently and in accordance with the standards of the profession. However, the Paralegal makes no representation or warranty about the outcome of any negotiation. Whether the opposing party agrees to a refund, replacement, repair, or any other resolution is entirely outside the Paralegal's control. The flat fee is earned for performing the included services, regardless of the result.</p>
+
+    <h2>10. Right to Independent Legal Advice</h2>
+    <div class="callout ila">
+      <h4>Important — Limited Scope Retainers</h4>
+      <p>Because this is a <strong>limited scope</strong> retainer, the Paralegal has expressly told the Client that the Client may, before signing, seek independent legal advice from another paralegal or a lawyer about (a) whether the limited scope of this retainer is appropriate for the matter, (b) the risks of negotiating without launching a claim, and (c) the impact of any limitation period. The Client confirms that the Client has had a reasonable opportunity to do so before signing.</p>
+    </div>
+
+    <h2>11. File Closing, Access &amp; Return of Original Documents</h2>
+    <p>When this retainer ends — by completion of the included services, settlement, or earlier termination — the Paralegal will:</p>
+    <ul>
+      <li>Send the Client a closing letter confirming the work done and any next steps the Client should consider (including any applicable limitation period);</li>
+      <li>Return the Client's original documents on request;</li>
+      <li>Retain a copy of the file (including correspondence, drafts, and the final settlement document, if any) for at least <strong>seven (7) years</strong> from the closing date, in accordance with By-Law 9 and Rule 3.05;</li>
+      <li>Destroy the retained copy securely at the end of the retention period unless the Client requests earlier return.</li>
+    </ul>
+    <p><strong>Right to Access File During Retainer.</strong> Consistent with Rule 3.05, the Client may, on reasonable notice and during the active retainer, request access to or copies of the file. A reasonable copying disbursement may apply for large requests.</p>
+
+    <h2>12. Use of Supervised Staff</h2>
+    <p>The Paralegal may delegate clerical, administrative, and research tasks to firm staff (paralegal students, law clerks, articling/placement students, administrative assistants) under the Paralegal's direct supervision. The Paralegal remains responsible for the work product and for all legal advice given to the Client. No legal advice will be provided by any person other than a licensee of the Law Society of Ontario.</p>
+
+    <h2 class="page-break-before">13. Client Acknowledgments — Initials Required</h2>
+    <p>Please place initials in each box below to confirm understanding of the following key terms. Each acknowledgment is a separate term of this retainer.</p>
+    <div class="ack-list">
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-limited-scope">INIT</div></div>
+        <div class="txt-cell">I understand that this is a <strong>limited scope retainer</strong>. The Paralegal is only providing the services in Section 2 under "Included" and will <strong>not</strong> file a claim or appear at any court or tribunal under this retainer.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-flat-fee">INIT</div></div>
+        <div class="txt-cell">I understand the flat fee is fixed for the services in Section 2 and that <strong>any work outside Section 2 requires a separate written agreement and additional fees</strong> at the hourly rate disclosed in Section 4.2.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-deadline-risk">INIT</div></div>
+        <div class="txt-cell">I understand that <strong>limitation periods continue to run during negotiation</strong>, that the Paralegal will advise me of any applicable deadline, and that if I want to file a claim before a deadline I must retain the Paralegal (or another representative) separately and in advance.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-settlement-authority">INIT</div></div>
+        <div class="txt-cell">I retain <strong>sole authority over settlement</strong>. The Paralegal will not accept, reject, or bind me to any offer without my express instruction, and will promptly communicate every offer received from the opposing party.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-no-guarantee">INIT</div></div>
+        <div class="txt-cell">I understand that the Paralegal makes <strong>no guarantee of outcome</strong>, and that whether the opposing party agrees to settle is outside the Paralegal's control.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-no-direct-contact">INIT</div></div>
+        <div class="txt-cell">I agree <strong>not to contact the opposing party directly</strong> after the demand letter is sent, unless cleared with the Paralegal in advance.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-trust-money">INIT</div></div>
+        <div class="txt-cell">I understand my <strong>50% deposit will be held in trust</strong> under By-Law 9 of the Law Society of Ontario and drawn against as the flat fee is earned. I will receive a Form 9A trust receipt for the deposit.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-ila">INIT</div></div>
+        <div class="txt-cell">I confirm that the Paralegal has told me I may seek <strong>independent legal advice</strong> from another paralegal or a lawyer about whether this limited scope retainer is appropriate, and that I have had a reasonable opportunity to do so before signing.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-id-verify">INIT</div></div>
+        <div class="txt-cell">I agree to provide acceptable government-issued <strong>identification</strong> on request so the Paralegal can complete identity verification under By-Law 7.1.</div>
+      </div>
+      <div class="ack-row">
+        <div class="box-cell"><div class="box" data-initial-target="ack-privacy">INIT</div></div>
+        <div class="txt-cell">I have read Section 16 (<strong>Privacy &amp; Personal Information</strong>) and consent to the collection, use and disclosure of my personal information as described, for the purposes of this retainer.</div>
+      </div>
+    </div>
+
+    <h2>14. Electronic Signature, Capacity &amp; Receipt of Copy</h2>
+    <p>By signing this retainer (including by typed name, drawn signature, or electronic signature), the Client confirms each of the following:</p>
+    <ul>
+      <li><strong>Electronic signatures.</strong> The Client consents to signing this retainer electronically under the <em>Electronic Commerce Act, 2000</em> (Ontario), s. 11, and agrees that an electronic signature has the same legal effect as a handwritten signature.</li>
+      <li><strong>Capacity.</strong> The Client is of the age of majority and has the legal capacity to enter into this retainer. If signing on behalf of a corporation or other entity, the signatory has authority to bind that entity.</li>
+      <li><strong>Language &amp; understanding.</strong> The Client has read this retainer in a language the Client understands, has had a reasonable opportunity to ask questions, and has had the answers explained to the Client's satisfaction.</li>
+      <li><strong>Receipt of copy.</strong> The Client has received, or will receive on signing, a complete copy of this retainer (including the signed signature page).</li>
+    </ul>
+
+    <h2>15. General Terms</h2>
+    <ul>
+      <li><strong>Effective Date.</strong> This retainer takes effect on the date the last of the Client and the Paralegal signs it (the "Effective Date"). Where the parties sign on different dates, the Effective Date is the date of the later signature.</li>
+      <li><strong>Counterparts.</strong> This retainer may be signed in counterparts (including by electronic signature), each of which is an original and all of which together constitute one and the same agreement.</li>
+      <li><strong>Entire Agreement.</strong> This retainer is the entire agreement between the Client and the Paralegal regarding the matter, and supersedes all prior discussions and representations.</li>
+      <li><strong>Amendments.</strong> Any change to this retainer must be in writing and signed (including electronically) by both parties. An email exchange clearly evidencing both parties' agreement to a specific change is sufficient.</li>
+      <li><strong>Severability.</strong> If any provision of this retainer is found to be unenforceable, the remaining provisions remain in force.</li>
+      <li><strong>No Waiver.</strong> A party's failure or delay in enforcing any provision of this retainer is not a waiver of that provision or of any future right to enforce it.</li>
+      <li><strong>Survival.</strong> The following provisions survive termination of this retainer: Section 7 (Confidentiality), Section 8 (Identity Verification), Section 11 (File Closing &amp; Retention), Section 15 (this section), Section 16 (Privacy), and any obligation to pay fees or disbursements earned or incurred before termination.</li>
+      <li><strong>Governing Law.</strong> This retainer is governed by the laws of the Province of Ontario and the federal laws of Canada applicable in Ontario.</li>
+      <li><strong>Notice.</strong> Any written notice required under this retainer may be given by email to the addresses recorded on the cover page, or by hand delivery or registered mail to the address recorded for the recipient. Notice is deemed received on the first business day after sending by email and three (3) business days after mailing.</li>
+      <li><strong>Successors &amp; Assigns.</strong> This retainer binds and benefits the parties and their respective heirs, executors, administrators, personal representatives, successors, and permitted assigns.</li>
+      <li><strong>Assignment.</strong> This retainer is personal to the Paralegal and the Client and may not be assigned by the Client without the Paralegal's written consent.</li>
+    </ul>
+
+    <h2 class="page-break-before">16. Privacy, Insurance &amp; Marketing Notices</h2>
+
+    <h3>16.1 Privacy &amp; Personal Information (PIPEDA)</h3>
+    <p>The Paralegal collects personal information from the Client for the purpose of providing the legal services described in this retainer, complying with the Paralegal's professional obligations under the Law Society of Ontario, and meeting record-keeping requirements under By-Law 7.1, By-Law 9, and applicable tax legislation. By signing this retainer, the Client consents to the Paralegal:</p>
+    <ul>
+      <li>Collecting personal information directly from the Client and, where reasonably necessary for the matter, from third parties identified by the Client (for example, a manufacturer, retailer, repair shop, or insurer named by the Client);</li>
+      <li>Using the personal information to provide the services in Section 2, to communicate with the Client and the opposing party, and to administer billing and trust accounting;</li>
+      <li>Disclosing personal information to (a) the opposing party or its representatives, only as reasonably necessary to advance the matter; (b) the Paralegal's supervised staff under Section 12; (c) the Law Society of Ontario if required by audit, investigation, or regulatory request; and (d) any other third party only with the Client's prior consent or as required by law;</li>
+      <li>Retaining the information for the file-retention period in Section 11 and then securely destroying it.</li>
+    </ul>
+    <p>The Client may, on reasonable written request, access, correct, or withdraw consent for further use of the Client's personal information (subject to the Paralegal's legal and regulatory retention obligations). Inquiries about personal information should be directed to the Paralegal at <strong>jeanfrancois@legalassist.london</strong>.</p>
+
+    <h3>16.2 Professional Liability Insurance</h3>
+    <p>The Paralegal maintains errors and omissions ("E&amp;O") professional liability insurance through LawPRO (Lawyers' Professional Indemnity Company) in the amount required by the Law Society of Ontario for licensed paralegals. Coverage details are available on request.</p>
+
+    <h3>16.3 Email &amp; Communications Risk</h3>
+    <p>The Client acknowledges that ordinary email is not a perfectly secure channel and that, despite reasonable safeguards, electronic communications can be intercepted, lost, or delayed. The Client consents to communications by email for non-urgent and routine matters. The Client should not send time-critical instructions by email alone, and should telephone the firm to confirm receipt of any urgent message.</p>
+
+    <h3>16.4 Marketing Communications (CASL)</h3>
+    <div class="casl-card">
+      <p style="margin-bottom: 8px;">Under Canada's Anti-Spam Legislation (CASL), the Paralegal may send messages directly related to this retainer (such as updates on the Client's matter, billing notices, and the closing letter) as part of an existing business relationship. The Paralegal does not currently send unsolicited marketing emails. If, in the future, the firm circulates a newsletter or legal-update bulletin, the Client may opt in or out as follows:</p>
+      <div class="casl-options">
+        <div class="casl-opt"><span class="casl-box"></span><strong>OPT IN</strong> — I consent to receive non-transactional communications from the firm (newsletters, legal-update bulletins).</div>
+        <div class="casl-opt"><span class="casl-box"></span><strong>OPT OUT</strong> — I prefer to receive only communications directly related to my matter.</div>
+      </div>
+      <p style="margin-top: 8px; font-size: 11.5px; color: var(--mute);">The Client may change this preference at any time by emailing the Paralegal.</p>
+    </div>
+
+    <h3>16.5 Accessibility &amp; Accommodation</h3>
+    <p>The Paralegal is committed to providing services in a manner consistent with the Accessibility for Ontarians with Disabilities Act, 2005, and will make reasonable accommodations on request for clients with disabilities (for example, large-print documents, alternative meeting formats, or longer appointment times). The Client is encouraged to request any accommodation needed.</p>
+
+    <h2>17. Signatures</h2>
+    <p>By signing below, the Client and the Paralegal confirm they have read, understood, and agreed to the terms of this Limited Scope Retainer Agreement.</p>
+
+    {SIGNATURE_SECTION}
+
+    <div class="end-marker"></div>
+
+  </div>
+</body>
+</html>

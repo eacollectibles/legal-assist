@@ -49,7 +49,7 @@ export default function WhatIsAParalegalPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Summary Conviction Offences:</strong> Criminal charges tried in Provincial Court</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Summary Conviction Offences:</strong> Eligible Criminal Code matters with a statutory maximum penalty of 6 months imprisonment (per LSO By-Law 4, s. 6), heard in the Ontario Court of Justice</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
@@ -77,15 +77,15 @@ export default function WhatIsAParalegalPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Commissioner of Oaths:</strong> Administration of oaths and statutory declarations</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Commissioner for Taking Affidavits:</strong> Where individually appointed under the Commissioners for Taking Affidavits Act — administration of oaths, affirmations and statutory declarations</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Commissioner of Oaths Services:</strong> Document certification and witnessing</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Notary Public:</strong> Where individually appointed under the Notaries Act (Ontario) — certified true copies and notarized documents</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Legal Advice:</strong> Guidance within the scope of paralegal practice</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Legal Advice:</strong> Guidance within the authorized scope of paralegal practice</span>
                   </li>
                 </ul>
               </div>
@@ -140,7 +140,7 @@ export default function WhatIsAParalegalPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                  <span className="font-paragraph text-foreground/80">Formal client communications (after retainer) are protected by paralegal-client privilege</span>
+                  <span className="font-paragraph text-foreground/80">Confidential communications made for the purpose of obtaining legal advice are protected by paralegal-client privilege, including during initial consultations</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />

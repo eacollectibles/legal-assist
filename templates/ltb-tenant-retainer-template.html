@@ -1,18 +1,23 @@
 <!--
-  HRTO Retainer Agreement — HTML Template (v2.5)
-  v2.5 fixes (from v2.4 rendering audit):
-    - TOC rewritten as <table> (CSS grid was orphaning items 19/20/39)
-    - City/Province row given data-empty handling (was rendering "—, Ontario —")
-    - Timeline-table headers given inline style (html2canvas was dropping background)
-    - §3 wrapped in data-keep-together so warning callout doesn't split off
-    - End-markers added after §4 (Scope), §19 (Recording), §25 (File Assignment), §33 (Unbundled)
+  LTB Tenant Retainer Agreement — HTML Template (v1.0)
+  Source of truth: Wix CMS row in `documenttemplates` (templateName: "LTB Tenant")
+  Substitutions: DocumentWorkflowPage.tsx + retainer-html-generator.ts.
+  Feature parity with HRTO Retainer v2.6 — tenant-side content for the Landlord and Tenant Board.
+
+  AUTHORITY (LSO + Ontario):
+    - Paralegal Rule 3.02(1.1), 3.04, 3.05, 3.07, 3.08, 5.01; By-Law 4, 7.1, 9.
+    - Residential Tenancies Act, 2006 (RTA), S.O. 2006, c. 17.
+    - O. Reg. 516/06 (General).
+    - Tribunals Ontario Common Rules of Procedure / LTB Rules (current).
+    - Bill 97 (Helping Homebuyers, Protecting Tenants Act, 2023) — N12/N13 reforms.
+    - Limitations Act, 2002; PIPEDA; CASL; ECA 2000; AODA.
 -->
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Retainer Agreement — Human Rights Tribunal of Ontario</title>
+<title>Retainer Agreement — Landlord and Tenant Board (Tenant)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -33,7 +38,7 @@ li { margin: 0 0 4px; }
 strong { color: var(--ink); }
 small { color: var(--mute); font-size: 11.5px; }
 a { color: var(--navy); text-decoration: underline; }
-.callout, .card, .fee-row, .protected-grounds, .signature-row, .timeline, .ack-list, .meta-grid, .summary-card, .why-card, .receipt, .end-marker, .lso-id, .lim-warning, .pre-sign, .cover-toc, .contingency-card, .ack-block, .casl-card, .timeline-table, .intake-checklist, .qr-block, [data-keep-together] { page-break-inside: avoid; break-inside: avoid; }
+.callout, .card, .fee-row, .forms-grid, .signature-row, .timeline, .ack-list, .meta-grid, .summary-card, .why-card, .receipt, .end-marker, .lso-id, .lim-warning, .pre-sign, .cover-toc, .contingency-card, .ack-block, .casl-card, .timeline-table, .intake-checklist, .qr-block, .notice-table, [data-keep-together] { page-break-inside: avoid; break-inside: avoid; }
 h2, h3 { page-break-after: avoid; break-after: avoid; }
 [data-empty="true"] { display: none !important; }
 .fee-row { position: relative; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 9px 14px 9px 38px; margin: 6px 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; }
@@ -118,10 +123,19 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 .callout h4 { margin: 0 0 6px; font: 700 12px/1.2 Inter, sans-serif; letter-spacing: 0.02em; }
 .callout p { margin: 0 0 6px; font-size: 12.5px; color: var(--ink-2); }
 .callout p:last-child { margin: 0; }
-.protected-grounds { margin: 14px 0; padding: 14px 18px; border: 1px solid var(--line-2); border-radius: 8px; background: #fff; }
-.protected-grounds h4 { margin: 0 0 8px; font: 700 11.5px/1.2 Inter, sans-serif; letter-spacing: 0.02em; color: var(--navy); }
-.protected-grounds ul { margin: 0; padding-left: 18px; column-count: 2; column-gap: 24px; }
-.protected-grounds li { break-inside: avoid; font-size: 12px; color: var(--ink-2); margin: 0 0 3px; }
+.forms-grid { margin: 14px 0; padding: 14px 18px; border: 1px solid var(--line-2); border-radius: 8px; background: #fff; }
+.forms-grid h4 { margin: 0 0 8px; font: 700 11.5px/1.2 Inter, sans-serif; letter-spacing: 0.02em; color: var(--navy); }
+.forms-grid table { width: 100%; border-collapse: collapse; }
+.forms-grid th, .forms-grid td { padding: 5px 8px; font-size: 11.5px; text-align: left; vertical-align: top; }
+.forms-grid th { background: var(--bg-soft); color: var(--navy); font-weight: 700; border-bottom: 1px solid var(--line); }
+.forms-grid td { border-bottom: 1px solid var(--line); color: var(--ink-2); }
+.forms-grid tr:last-child td { border-bottom: 0; }
+.forms-grid .code { font: 700 11.5px/1.3 Inter, sans-serif; color: var(--navy); white-space: nowrap; }
+.notice-table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; border: 1px solid var(--line-2); border-radius: 6px; overflow: hidden; }
+.notice-table th { background: var(--navy); color: #fff; padding: 7px 10px; text-align: left; font: 700 10.5px/1.3 Inter, sans-serif; letter-spacing: 0.02em; }
+.notice-table td { padding: 6px 10px; border-top: 1px solid var(--line); font: 500 11.5px/1.35 Inter, sans-serif; color: var(--ink-2); vertical-align: top; }
+.notice-table td.code { font: 700 11.5px/1.3 Inter, sans-serif; color: var(--navy); white-space: nowrap; width: 70px; }
+.notice-table tbody tr:nth-child(even) td { background: var(--bg-soft); }
 .intake-checklist { margin: 14px 0; padding: 14px 18px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--bg-warm); }
 .intake-checklist h4 { margin: 0 0 8px; font: 700 12px/1.2 Inter, sans-serif; color: var(--navy); letter-spacing: 0.02em; }
 .intake-checklist ul { list-style: none; padding-left: 0; margin: 0; column-count: 2; column-gap: 24px; }
@@ -165,7 +179,6 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   .toc-table td.toc-col-right { padding-left: 0; border-left: 0; }
   .meta-grid { grid-template-columns: 1fr; }
   .signature-row { grid-template-columns: 1fr; }
-  .protected-grounds ul { column-count: 1; }
   .intake-checklist ul { column-count: 1; }
   .timeline-step .label { font-size: 9px; }
   .casl-options { flex-direction: column; gap: 10px; }
@@ -188,16 +201,16 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
     </div>
   </div>
   <h1 class="cover-title">Retainer Agreement</h1>
-  <p class="cover-sub">Human Rights Tribunal of Ontario (HRTO)</p>
+  <p class="cover-sub">Landlord and Tenant Board &mdash; Tenant Representation</p>
   <p class="cover-tag">Please read this agreement carefully. It explains the work we will perform, how we charge, and the rights and obligations of both parties. Your signature confirms you have had the opportunity to ask questions and to seek independent advice.</p>
-  <div class="lim-warning" role="alert"><strong>Important — One-Year Limitation</strong><p>HRTO applications generally must be filed within <strong>one year</strong> of the alleged discrimination under s. 34 of the <em>Ontario Human Rights Code</em>. Late filings are accepted only in narrow circumstances. Confirm relevant dates with the Paralegal immediately.</p></div>
-  <p class="pre-sign">No paralegal&#8209;client relationship is formed, no work is commenced on the file, and the Paralegal is <strong>not responsible for preserving any limitation period or filing deadline</strong>, until this Agreement is signed and accepted by both parties and any required retainer funds are received in the firm&rsquo;s trust account.</p>
+  <div class="lim-warning" role="alert"><strong>Important — Time Limits Apply</strong><p>Most tenant applications under the <em>Residential Tenancies Act, 2006</em> must be filed within <strong>one year</strong> of the event complained of (RTA s. 29(2)). Eviction notices (N4, N5, N6, N7, N8, N12, N13) have <strong>short compliance/void periods</strong> that may be as little as <strong>5 days</strong>. Bring every notice and date to the Paralegal immediately.</p></div>
+  <p class="pre-sign">No paralegal&#8209;client relationship is formed, no work is commenced on the file, and the Paralegal is <strong>not responsible for preserving any limitation period, eviction notice deadline, or compliance/void period</strong>, until this Agreement is signed and accepted by both parties and any required retainer funds are received in the firm&rsquo;s trust account.</p>
   <div class="cover-meta">
     <div class="row"><span class="lab">Prepared For</span><span class="val">{CLIENT_NAME}</span></div>
     <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">File Reference</span><span class="val">{FILE_REFERENCE}</span></div>
     <div class="row"><span class="lab">Date Prepared</span><span class="val">{DATE}</span></div>
     <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}"><span class="lab">Matter Type</span><span class="val">{MATTER_TYPE}</span></div>
-    <div class="row"><span class="lab">Tribunal</span><span class="val">Human Rights Tribunal of Ontario</span></div>
+    <div class="row"><span class="lab">Tribunal</span><span class="val">Landlord and Tenant Board (LTB)</span></div>
     <div class="row"><span class="lab">Governing Law</span><span class="val">Province of Ontario</span></div>
     <div class="row"><span class="lab">HST Reg. #</span><span class="val">{HST_REGISTRATION_NUMBER}</span></div>
   </div>
@@ -230,11 +243,11 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
           <li><span class="num">10</span>What We Need From You</li>
           <li><span class="num">11</span>Client Identification &amp; Verification</li>
           <li><span class="num">12</span>Evidence Preservation &amp; Disclosure</li>
-          <li><span class="num">13</span>Limitation Period</li>
-          <li><span class="num">14</span>Mediation Confidentiality</li>
-          <li><span class="num">15</span>Tribunal Scheduling, Delay &amp; No Guaranteed Outcome</li>
+          <li><span class="num">13</span>Limitation &amp; Notice Periods</li>
+          <li><span class="num">14</span>Case Management Hearing &amp; Mediation</li>
+          <li><span class="num">15</span>Board Scheduling, Delay &amp; No Guaranteed Outcome</li>
           <li><span class="num">16</span>Tax &amp; Settlement Considerations</li>
-          <li><span class="num">17</span>No Employment&#8209;Law Advice</li>
+          <li><span class="num">17</span>No Self&#8209;Help, Rent Withholding or Repair&#8209;and&#8209;Deduct</li>
           <li><span class="num">18</span>Client Conduct &amp; Anti&#8209;Harassment</li>
           <li><span class="num">19</span>Recording, Witnesses &amp; Media</li>
           <li><span class="num">20</span>Virtual Hearing &amp; Videoconference Consent</li>
@@ -267,93 +280,120 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   </div>
   <div class="cover-foot">
     <div class="left">Legal Assist Paralegal Services is licensed and insured by the Law Society of Ontario (LSO). Verify our licensing at <a href="https://lso.ca/directory">LSO.ca/directory</a> or by scanning the QR code above. This agreement is governed by the laws of the Province of Ontario.</div>
-    <div class="right"><small>Document</small>HRTO&#8209;RET&#8209;{DATE_SHORT}<div class="version">Version: HRTO Retainer v2.6 · Last updated {DATE}</div></div>
+    <div class="right"><small>Document</small>LTB&#8209;T&#8209;RET&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Tenant Retainer v1.1</div><div class="version" style="white-space:nowrap;">Last updated {DATE}</div></div>
   </div>
 </section>
 
-<div class="summary-card"><h3>In plain English</h3><p>You are hiring <strong>{PARALEGAL_NAME}</strong> at Legal Assist Paralegal Services to represent you in a Human Rights Tribunal of Ontario application. This document explains what we will do, what we will not do, what it costs, and what we both need from each other. If anything in this document is unclear, ask us before signing.</p></div>
-<div class="why-card"><h3>Why clients choose us for HRTO matters</h3><ul><li>Focused practice in human rights and tribunal advocacy in London and Southwestern Ontario.</li><li>Transparent fees — you receive a written estimate before work begins and a detailed account with every invoice.</li><li>Direct paralegal access — you speak with the licensee handling your file, not a call centre.</li><li>LSO&#8209;licensed, insured, and bound by the Paralegal Rules of Conduct.</li></ul></div>
+<div class="summary-card"><h3>In plain English</h3><p>You are hiring <strong>{PARALEGAL_NAME}</strong> at Legal Assist Paralegal Services to represent you as a tenant before the Ontario Landlord and Tenant Board. This document explains what we will do, what we will not do, what it costs, and what we both need from each other. If anything is unclear, ask us before signing.</p></div>
+<div class="why-card"><h3>Why clients choose us for LTB matters</h3><ul><li>Focused tenant&#8209;side practice in Southwestern Ontario.</li><li>Transparent fees — written estimate before work begins; detailed account with every invoice.</li><li>Direct paralegal access — you speak with the licensee handling your file.</li><li>LSO&#8209;licensed, insured, and bound by the Paralegal Rules of Conduct.</li></ul></div>
 
-<h3 style="margin-top:24px;">How an HRTO matter typically moves</h3>
+<h3 style="margin-top:24px;">How an LTB tenant matter typically moves</h3>
 <div class="timeline">
-  <div class="timeline-step"><span class="dot">1</span><span class="label">Consult</span><span class="sub">Intake</span></div>
-  <div class="timeline-step"><span class="dot">2</span><span class="label">Application</span><span class="sub">Form 1</span></div>
-  <div class="timeline-step"><span class="dot">3</span><span class="label">Response</span><span class="sub">Form 2</span></div>
-  <div class="timeline-step"><span class="dot">4</span><span class="label">Disclosure</span><span class="sub">Exchange</span></div>
-  <div class="timeline-step"><span class="dot">5</span><span class="label">Mediation</span><span class="sub">or CMC</span></div>
-  <div class="timeline-step"><span class="dot">6</span><span class="label">Hearing</span><span class="sub">Merits</span></div>
-  <div class="timeline-step"><span class="dot">7</span><span class="label">Decision</span><span class="sub">Remedy</span></div>
+  <div class="timeline-step"><span class="dot">1</span><span class="label">Intake</span><span class="sub">Consult</span></div>
+  <div class="timeline-step"><span class="dot">2</span><span class="label">Notice</span><span class="sub">or Issue</span></div>
+  <div class="timeline-step"><span class="dot">3</span><span class="label">Application</span><span class="sub">T or L Form</span></div>
+  <div class="timeline-step"><span class="dot">4</span><span class="label">CMH</span><span class="sub">Mediation</span></div>
+  <div class="timeline-step"><span class="dot">5</span><span class="label">Disclosure</span><span class="sub">Exchange</span></div>
+  <div class="timeline-step"><span class="dot">6</span><span class="label">Hearing</span><span class="sub">Virtual</span></div>
+  <div class="timeline-step"><span class="dot">7</span><span class="label">Order</span><span class="sub">Decision</span></div>
 </div>
 
 <table class="timeline-table">
   <thead><tr><th style="background:#0f2a4a;color:#fff;">Stage</th><th style="background:#0f2a4a;color:#fff;">Typical Timeline</th></tr></thead>
   <tbody>
-    <tr><td>Application filed (Form 1)</td><td>Day 1</td></tr>
-    <tr><td>Response due (Form 2)</td><td>~35 days after service</td></tr>
-    <tr><td>Reply due (Form 3)</td><td>~21 days after Response</td></tr>
-    <tr><td>Mediation scheduled</td><td>~4&#8211;12 months from filing</td></tr>
-    <tr><td>Merits hearing</td><td>~1&#8211;3 years from filing</td></tr>
-    <tr><td>Decision released</td><td>~3&#8211;6 months after hearing</td></tr>
+    <tr><td>Tenant application filed (T1, T2, T3, T5, T6, T7)</td><td>Day 1</td></tr>
+    <tr><td>Landlord response / disclosure exchanged</td><td>Per Board directions</td></tr>
+    <tr><td>Case Management Hearing (CMH) / mediation</td><td>~2&#8211;5 months from filing</td></tr>
+    <tr><td>Merits hearing (virtual unless ordered in&#8209;person)</td><td>~6&#8211;12 months from filing</td></tr>
+    <tr><td>Order issued (RTA s. 197)</td><td>~30&#8211;60 days after hearing</td></tr>
+    <tr><td>Request for Review (RTA s. 21.2 / LTB Rule 26)</td><td>30 days from order</td></tr>
   </tbody>
-  <caption>Timelines are typical estimates only. The HRTO controls all scheduling — see Section 15.</caption>
+  <caption>Timelines are typical estimates only. The LTB controls all scheduling — see Section 15.</caption>
 </table>
 
 <h2>1. Parties &amp; Matter</h2>
 <p>This Retainer Agreement (the &ldquo;<strong>Agreement</strong>&rdquo;) is made between <strong>{CLIENT_NAME}</strong> (the &ldquo;<strong>Client</strong>&rdquo;) and <strong>Legal Assist Paralegal Services</strong>, acting through <strong>{PARALEGAL_NAME}</strong>, Licensed Paralegal (Law Society of Ontario), Licence No. {PARALEGAL_LSO} (the &ldquo;<strong>Paralegal</strong>&rdquo; or &ldquo;<strong>we</strong>&rdquo;).</p>
 <div class="meta-grid">
-  <div class="row"><span class="lab">Client</span><span class="val">{CLIENT_NAME}</span></div>
+  <div class="row"><span class="lab">Client (Tenant)</span><span class="val">{CLIENT_NAME}</span></div>
   <div class="row"><span class="lab">Email</span><span class="val">{CLIENT_EMAIL}</span></div>
   <div class="row" data-empty="{IS_CLIENT_PHONE_EMPTY}"><span class="lab">Phone</span><span class="val">{CLIENT_PHONE}</span></div>
-  <div class="row" data-empty="{IS_CLIENT_ADDRESS_EMPTY}"><span class="lab">Address</span><span class="val">{CLIENT_ADDRESS}</span></div>
-  <div class="row" data-empty="{IS_CLIENT_UNIT_EMPTY}"><span class="lab">Unit</span><span class="val">{CLIENT_UNIT}</span></div>
-  <div class="row" data-empty="{IS_CLIENT_CITY_EMPTY}"><span class="lab">City / Province</span><span class="val">{CLIENT_CITY}, {CLIENT_PROVINCE} {CLIENT_POSTAL_CODE}</span></div>
+  <div class="row" data-empty="{IS_RENTAL_INFO_EMPTY}"><span class="lab">Rental Unit</span><span class="val">{RENTAL_ADDRESS}</span></div>
+  <div class="row" data-empty="{IS_RENTAL_UNIT_EMPTY}"><span class="lab">Unit #</span><span class="val">{RENTAL_UNIT}</span></div>
+  <div class="row" data-empty="{IS_RENTAL_INFO_EMPTY}"><span class="lab">City / Province</span><span class="val">{RENTAL_CITY}, {RENTAL_PROVINCE} {RENTAL_POSTAL_CODE}</span></div>
+  <div class="row" data-empty="{IS_LANDLORD_NAME_EMPTY}"><span class="lab">Landlord</span><span class="val">{LANDLORD_NAME}</span></div>
   <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">File Ref</span><span class="val">{FILE_REFERENCE}</span></div>
   <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}"><span class="lab">Matter Type</span><span class="val">{MATTER_TYPE}</span></div>
   <div class="row" data-empty="{IS_NATURE_EMPTY}" style="grid-column:1 / -1;"><span class="lab">Nature</span><span class="val">{NATURE_OF_MATTER}</span></div>
 </div>
 
 <h2>2. Conflict of Interest Check</h2>
-<p>This retainer is subject to confirmation that no conflict of interest exists under the <em>Paralegal Rules of Conduct</em>. The Client agrees to disclose, on request, the identity of opposing parties, related entities, and material witnesses to permit a complete conflict check. If a conflict is identified after execution of this Agreement, the Paralegal may withdraw in accordance with applicable professional obligations under Rules 3.04 to 3.05 of the <em>Paralegal Rules of Conduct</em>.</p>
+<p>This retainer is subject to confirmation that no conflict of interest exists under the <em>Paralegal Rules of Conduct</em>. The Client agrees to disclose, on request, the identity of the landlord, property manager, co&#8209;tenants, occupants, building owner, and any related entities to permit a complete conflict check. If a conflict is identified after execution of this Agreement, the Paralegal may withdraw under Rules 3.04 to 3.05 of the <em>Paralegal Rules of Conduct</em>.</p>
 
 <div data-keep-together>
   <h2>3. Retainer, Relationship &amp; Limitation Preservation</h2>
-  <p>The Client retains the Paralegal to represent the Client before the Human Rights Tribunal of Ontario (the &ldquo;<strong>HRTO</strong>&rdquo; or the &ldquo;<strong>Tribunal</strong>&rdquo;) in respect of the matter described in Section 1. The Paralegal accepts the retainer subject to the terms of this Agreement.</p>
+  <p>The Client retains the Paralegal to represent the Client as a tenant before the Ontario Landlord and Tenant Board (the &ldquo;<strong>LTB</strong>&rdquo; or the &ldquo;<strong>Board</strong>&rdquo;) in respect of the matter described in Section 1. The Paralegal accepts the retainer subject to the terms of this Agreement.</p>
   <p>The Paralegal acts only within the scope of practice authorized by By&#8209;Law 4 of the Law Society of Ontario for Class P1 paralegals. Nothing in this Agreement creates a solicitor&#8209;client relationship with a lawyer or an obligation on us to provide legal services that fall outside paralegal scope.</p>
-  <div class="callout warn"><h4>No Limitation Preservation Until Acceptance</h4><p>For greater certainty, <strong>until this Agreement is signed, accepted by the Paralegal, and any required retainer funds are received in the firm&rsquo;s trust account, the Paralegal is not responsible for preserving any limitation period or filing deadline applicable to the Client&rsquo;s matter.</strong> The Client remains solely responsible for monitoring deadlines, including the one&#8209;year limit under s. 34 of the <em>Code</em>, until acceptance is confirmed in writing.</p></div>
+  <div class="callout warn"><h4>No Limitation or Notice&#8209;Period Preservation Until Acceptance</h4><p>For greater certainty, <strong>until this Agreement is signed, accepted by the Paralegal, and any required retainer funds are received in the firm&rsquo;s trust account, the Paralegal is not responsible for preserving any limitation period, eviction&#8209;notice compliance period, void period, or filing deadline applicable to the Client&rsquo;s matter.</strong> The Client remains solely responsible for monitoring deadlines (including the one&#8209;year limit under RTA s. 29(2) and the compliance/void periods on N&#8209;notices) until acceptance is confirmed in writing.</p></div>
 </div>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">4. Scope of Services</h2>
 <p>Subject to Section 5, our services include:</p>
 <ul>
-  <li>Reviewing the facts and assessing whether they engage one or more grounds protected by the Ontario <em>Human Rights Code</em>;</li>
-  <li>Drafting and filing an <strong>Application (Form 1)</strong> with the HRTO under s. 34 of the <em>Code</em>, or filing a <strong>Response (Form 2)</strong> on behalf of a respondent within the 35&#8209;day deadline after service;</li>
-  <li>Drafting an applicant&rsquo;s <strong>Reply (Form 3)</strong> within 21 days of receiving the Response, where appropriate;</li>
-  <li>Preparing and exchanging disclosure of documents under HRTO Rule 16 and witness statements under Rule 17;</li>
-  <li>Drafting and responding to routine procedural motions, scheduling correspondence, adjournment requests, and accommodation requests;</li>
-  <li>Representing the Client at <strong>mediation</strong> (scheduled in every application as of June 1, 2025 under Rule 15) and at any <strong>Case Assessment Direction (CAD)</strong> or <strong>summary hearing under Rule 19A</strong>;</li>
-  <li>Drafting and reviewing settlement offers, Minutes of Settlement, and Form 25 Confirmation of Settlement;</li>
-  <li>Representing the Client at the merits hearing, including examination&#8209;in&#8209;chief, cross&#8209;examination, and submissions;</li>
-  <li>Receiving and explaining the Tribunal&rsquo;s decision and any remedy ordered under s. 45.2 of the <em>Code</em>.</li>
+  <li>Reviewing the facts and assessing whether the matter is governed by the <em>Residential Tenancies Act, 2006</em> (the &ldquo;<strong>RTA</strong>&rdquo;) and within the LTB&rsquo;s jurisdiction;</li>
+  <li>Reviewing the tenancy agreement (including the Ontario Standard Lease, Form 2229), prior notices, ledgers, and correspondence;</li>
+  <li>Filing tenant applications on the appropriate form (T1, T2, T3, T5, T6, T7) and serving the landlord per LTB Rules;</li>
+  <li>Defending landlord&#8209;initiated applications (L1, L2, L3, L4, L9) where the Client has been named as a tenant respondent;</li>
+  <li>Responding to landlord notices (N4 non&#8209;payment of rent, N5 substantial interference/damage, N6 illegal act, N7 serious impairment, N8 persistent late payment, N12 landlord&rsquo;s own use, N13 demolition/conversion/repairs) and advising on cure/void periods under RTA ss. 59, 62, 64;</li>
+  <li>Preparing and exchanging disclosure under LTB Rules;</li>
+  <li>Drafting written submissions, adjournment requests, and procedural correspondence;</li>
+  <li>Representing the Client at the <strong>Case Management Hearing (CMH)</strong>, at <strong>LTB mediation</strong>, and at the <strong>merits hearing</strong> (virtual unless ordered in&#8209;person);</li>
+  <li>Negotiating settlements and drafting Mediated Settlement Agreements or consent orders;</li>
+  <li>Where applicable, requesting <strong>relief from eviction under RTA s. 83</strong> and presenting circumstances supporting such relief;</li>
+  <li>Receiving and explaining the LTB&rsquo;s order under RTA s. 197;</li>
+  <li>Advising on next steps, including the right to request a Review under RTA s. 21.2 (LTB Rule 26.8) within 30 days of the order.</li>
 </ul>
-<div class="protected-grounds"><h4>Protected grounds under the Ontario Human Rights Code</h4><ul><li>Race</li><li>Ancestry</li><li>Place of origin</li><li>Colour</li><li>Ethnic origin</li><li>Citizenship</li><li>Creed</li><li>Sex (incl. pregnancy)</li><li>Sexual orientation</li><li>Gender identity</li><li>Gender expression</li><li>Age</li><li>Marital status</li><li>Family status</li><li>Disability</li><li>Receipt of public assistance (housing only — s. 2)</li><li>Record of offences (employment only — s. 5)</li><li>Association with a person identified by a protected ground (s. 12)</li></ul></div>
+<div class="forms-grid">
+  <h4>Common tenant applications filed at the LTB</h4>
+  <table>
+    <tr><th>Form</th><th>What it covers</th></tr>
+    <tr><td class="code">T1</td><td>Tenant Application for a Rebate (money the landlord owes the tenant, including illegal charges and last&#8209;month&#8209;rent deposit issues)</td></tr>
+    <tr><td class="code">T2</td><td>Application about Tenant Rights — substantial interference with reasonable enjoyment, harassment, withholding services, illegal entry, withholding consent to assignment</td></tr>
+    <tr><td class="code">T3</td><td>Rent Reduction — discontinuance or reduction of services (RTA s. 130)</td></tr>
+    <tr><td class="code">T5</td><td>Bad&#8209;faith N12 / N13 — landlord gave notice in bad faith (RTA s. 57)</td></tr>
+    <tr><td class="code">T6</td><td>Maintenance — landlord&rsquo;s failure to maintain the unit, building, or services (RTA s. 20)</td></tr>
+    <tr><td class="code">T7</td><td>Suite Meters — disputes about utility/suite&#8209;meter billing</td></tr>
+  </table>
+</div>
+<div class="forms-grid">
+  <h4>Common landlord notices a tenant may need to respond to</h4>
+  <table class="notice-table">
+    <thead><tr><th style="background:#0f2a4a;color:#fff;">Notice</th><th style="background:#0f2a4a;color:#fff;">Reason</th><th style="background:#0f2a4a;color:#fff;">Termination period</th><th style="background:#0f2a4a;color:#fff;">Void period?</th></tr></thead>
+    <tr><td class="code">N4</td><td>Non&#8209;payment of rent (RTA s. 59)</td><td>14 days (monthly), 7 days (weekly)</td><td>Yes — pay full arrears + filing fee before order issued</td></tr>
+    <tr><td class="code">N5</td><td>Substantial interference, damage, or overcrowding (RTA s. 62 &amp; 63)</td><td>20 days (first); 14 days (second)</td><td>Yes (1st N5 only) — 7 days to void by stopping conduct/paying for damage</td></tr>
+    <tr><td class="code">N6</td><td>Illegal act / misrepresentation of income in RGI housing (RTA s. 61)</td><td>10 days (illegal act); 20 days (misrep)</td><td>No</td></tr>
+    <tr><td class="code">N7</td><td>Serious impairment of safety / damage (RTA s. 65, 66)</td><td>10 days</td><td>No</td></tr>
+    <tr><td class="code">N8</td><td>Persistent late payment / end&#8209;of&#8209;term (RTA s. 58)</td><td>60 days (monthly)</td><td>No</td></tr>
+    <tr><td class="code">N12</td><td>Landlord&rsquo;s, purchaser&rsquo;s, or family member&rsquo;s own use (RTA s. 48, 49)</td><td>60 days, end of term</td><td>No — but tenant entitled to one month&rsquo;s rent compensation (RTA s. 48.1, 49.1)</td></tr>
+    <tr><td class="code">N13</td><td>Demolition, conversion, extensive repairs (RTA s. 50)</td><td>120 days, end of term</td><td>No — compensation rights under RTA s. 52, 54, 55</td></tr>
+  </table>
+</div>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">5. Excluded Services</h2>
 <p>This retainer does <strong>not</strong> include, and we are not authorized or retained to provide:</p>
 <ul>
   <li>Appearances before the Divisional Court, Superior Court of Justice, Federal Court, or Court of Appeal (paralegals do not have rights of audience in those courts);</li>
-  <li>Judicial review or appeals of any HRTO decision to the Divisional Court;</li>
-  <li><strong>Reconsideration requests under Rule 26 of the HRTO Rules, including preparation, drafting, attendance, and submissions relating to any reconsideration motion</strong> (separately retained if requested);</li>
-  <li>Costs proceedings outside of the HRTO;</li>
-  <li>Enforcement proceedings (registration of an HRTO order with the Superior Court for collection requires separate retainer);</li>
-  <li>External or workplace investigations under the OHSA, OWA, or any other statute;</li>
-  <li>Civil claims for damages outside the HRTO&rsquo;s jurisdiction (e.g. wrongful dismissal at common law, defamation, contract claims);</li>
-  <li>Drafting or negotiating severance, employment, or release agreements unrelated to the HRTO matter;</li>
-  <li>Federal human rights matters under the <em>Canadian Human Rights Act</em>;</li>
-  <li>Criminal, family, immigration, or estates matters;</li>
+  <li>Appeals or judicial review of an LTB order to the Divisional Court (s. 210 of the RTA);</li>
+  <li><strong>Review motions under LTB Rule 26 / RTA s. 21.2</strong>, including preparation, drafting, attendance, and submissions, unless separately retained;</li>
+  <li>Stay motions or set&#8209;aside motions before the Divisional Court;</li>
+  <li>Enforcement of an LTB order (including filing with the Court Enforcement Office / Sheriff for eviction); these steps require separate retainer or a lawyer;</li>
+  <li>Small Claims Court actions for damages (e.g., breach of the tenancy agreement at common law) exceeding the LTB&rsquo;s monetary jurisdiction;</li>
+  <li>Defamation, harassment torts, or other civil claims unrelated to LTB jurisdiction;</li>
+  <li>Human Rights Tribunal of Ontario applications (separate retainer if discrimination claims arise);</li>
+  <li>Criminal, family, immigration, employment, or estates matters;</li>
   <li>Tax, accounting, or financial advice;</li>
-  <li>Government benefits, EI, ODSP, OW, CPP&#8209;D, or WSIB advice or applications.</li>
+  <li>Government benefits (Ontario Works, ODSP, EI, CPP&#8209;D, RGI subsidy applications) and Rental Housing Enforcement Unit complaints (these are administrative remedies the Client may pursue directly).</li>
 </ul>
 
 <h2>6. Fee Structure, Payment &amp; Overdue Interest</h2>
@@ -363,7 +403,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 <div class="fee-row" data-struck="{STRUCK_HYBRID}"><span class="name">Hybrid Retainer (flat + hourly overage)</span><span class="amt">${HYBRID_FLAT_FEE} + HST · ${HYBRID_HOURLY_RATE}/hr beyond cap</span></div>
 <div class="fee-row" data-struck="{STRUCK_CONTINGENCY}"><span class="name">Contingency Fee</span><span class="amt">{CONTINGENCY_PERCENT}% of recovery + HST</span></div>
 <div class="fee-row" data-struck="{STRUCK_DEPOSIT}"><span class="name">Initial Retainer Deposit</span><span class="amt">${RETAINER_DEPOSIT} + HST</span></div>
-<p style="margin-top:12px;">Disbursements — out&#8209;of&#8209;pocket costs incurred on the Client&rsquo;s behalf (filing fees, courier, copying, transcripts, expert reports, witness expenses) — are billed at cost. Invoices are issued monthly and are due on receipt.</p>
+<p style="margin-top:12px;">Disbursements — out&#8209;of&#8209;pocket costs incurred on the Client&rsquo;s behalf (LTB application/filing fees, courier, copying, transcripts, expert reports, witness expenses, registered mail for service) — are billed at cost. Invoices are issued monthly and are due on receipt.</p>
 <div class="callout warn"><h4>Interest on Overdue Accounts</h4><p>Accounts not paid within thirty (30) days of the invoice date may accrue interest at the rate of <strong>1.5% per month (18% per annum)</strong>, compounded monthly, until paid in full. The Paralegal may at its discretion waive accrued interest where payment in full is received.</p></div>
 {PAYMENT_SECTION}
 {PAYMENT_ARRANGEMENT_SECTION}
@@ -373,15 +413,15 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   <h3>Contingency Fee Terms</h3>
   <p>The following terms apply <strong>only</strong> where the Client has selected the Contingency Fee model in Section 6. These terms are made in compliance with <strong>Rule 5.01 of the <em>Paralegal Rules of Conduct</em></strong> and the Law Society of Ontario&rsquo;s requirements applicable to paralegal contingency&#8209;fee arrangements.</p>
   <h4>Calculation of fee</h4>
-  <p>The Paralegal&rsquo;s fee is <strong>{CONTINGENCY_PERCENT}%</strong> of the gross amount recovered by the Client, calculated <em>before</em> the deduction of HST and disbursements. &ldquo;<strong>Recovery</strong>&rdquo; means: (a) settlement money paid to or on behalf of the Client; (b) money awarded to the Client by the Tribunal or by any court; and (c) any lump&#8209;sum payment made in lieu of a non&#8209;monetary remedy where the payment has an agreed dollar value. Non&#8209;monetary remedies that do not have an agreed dollar value are <em>not</em> included in &ldquo;recovery&rdquo; for fee calculation. HST at 13% is calculated on the fee amount.</p>
+  <p>The Paralegal&rsquo;s fee is <strong>{CONTINGENCY_PERCENT}%</strong> of the gross amount recovered by the Client, calculated <em>before</em> the deduction of HST and disbursements. &ldquo;<strong>Recovery</strong>&rdquo; means: (a) money awarded to the Client by the LTB (including rent abatements, rebates of illegal charges, and any general damages); (b) money paid to the Client by the landlord under a signed Mediated Settlement Agreement or consent order; and (c) any cash payment made in lieu of a non&#8209;monetary remedy (for example, a cash settlement in lieu of repairs) where the payment has an agreed dollar value. Non&#8209;monetary remedies that do not have an agreed dollar value (for example, a repair order alone, an order to restore services, or a declaration) are <em>not</em> included in &ldquo;recovery&rdquo; for fee calculation.</p>
   <h4>Disbursements</h4>
-  <p>Disbursements are payable by the Client as incurred or, where agreed in writing, deducted from the Client&rsquo;s share of the recovery. The Client remains responsible for disbursements <strong>regardless of the outcome</strong>, including where there is no recovery.</p>
+  <p>Disbursements (LTB filing fees, expert reports, transcripts, witness expenses, courier, copying) are payable by the Client as they are incurred or, where the Client and Paralegal agree in writing, deducted from the Client&rsquo;s share of the recovery. The Client remains responsible for disbursements <strong>regardless of the outcome</strong> of the matter, including where there is no recovery.</p>
   <h4>Costs orders</h4>
-  <p>The HRTO does not generally award legal costs to a successful applicant. <em>If applicable</em>, costs awarded in the Client&rsquo;s favour are part of &ldquo;recovery&rdquo; for fee calculation. Where a costs order is made against the Client, the Client is responsible for paying that award.</p>
+  <p>The LTB rarely awards legal costs and only in cases of unreasonable conduct (LTB Rule 23). If costs are awarded in the Client&rsquo;s favour, those costs are part of &ldquo;recovery&rdquo; for fee calculation. Where a costs order is made against the Client, the Client is responsible for paying that award.</p>
   <h4>Settlement, refusal of a reasonable offer, and discontinuance</h4>
-  <p>The Client retains sole authority to accept or reject any settlement offer. If the Client instructs the Paralegal to discontinue or to refuse a settlement offer the Paralegal has recommended in writing, the Paralegal may be entitled to fees on a quantum meruit basis for work performed.</p>
+  <p>The Client retains sole authority to accept or reject any settlement offer. If the Client instructs the Paralegal to discontinue or to refuse a settlement offer the Paralegal has recommended in writing, the Paralegal may be entitled to fees on a <em>quantum meruit</em> basis for work performed.</p>
   <h4>Termination of this retainer</h4>
-  <p>If this retainer is terminated before the matter resolves, the Paralegal is entitled to be paid disbursements incurred and may claim fees on a quantum meruit basis. Where the matter later resolves favourably, the quantum meruit claim may be asserted against the recovery.</p>
+  <p>If this retainer is terminated before the matter resolves, the Paralegal is entitled to be paid disbursements incurred and may claim fees on a <em>quantum meruit</em> basis. Where the matter later resolves favourably, the quantum meruit claim may be asserted against the recovery.</p>
   <h4>Client rights</h4>
   <ul>
     <li>The contingency percentage is <strong>negotiable</strong> before signing.</li>
@@ -395,15 +435,15 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 <p>Retainer funds and any settlement proceeds received on the Client&rsquo;s behalf are deposited into the firm&rsquo;s pooled trust account in accordance with By&#8209;Law 9 of the Law Society of Ontario. Funds are drawn against on issued invoices in accordance with the LSO&rsquo;s mixed&#8209;trust account rules. The Client is entitled to a copy of the trust ledger for the file on request.</p>
 
 <h2>8. Settlement Authority &amp; Client Control</h2>
-<p>The Paralegal will not accept or reject any settlement offer, sign Minutes of Settlement, or release any claim on the Client&rsquo;s behalf without the Client&rsquo;s express written instructions. We will advise on the relative strengths and weaknesses of an offer; the decision to accept or refuse rests entirely with the Client.</p>
-<p>Strategic decisions on the conduct of the file — including whether to file, mediate, proceed to hearing, settle, or discontinue — ultimately remain the Client&rsquo;s responsibility, on the basis of the advice provided by the Paralegal.</p>
+<p>The Paralegal will not accept or reject any settlement offer, sign a Mediated Settlement Agreement, or consent to any order on the Client&rsquo;s behalf without the Client&rsquo;s express written instructions. We will advise on the relative strengths and weaknesses of any offer (including any payment plan, conditional order, abatement, or end&#8209;of&#8209;tenancy term); the decision to accept or refuse rests entirely with the Client.</p>
+<p>Strategic decisions on the conduct of the file — including whether to file, mediate, proceed to hearing, accept a payment plan, or vacate the unit — ultimately remain the Client&rsquo;s responsibility, on the basis of the advice provided by the Paralegal.</p>
 
 <h2>9. Client Responsibilities &amp; Truthfulness</h2>
 <ul>
   <li>Provide complete, accurate, and timely instructions and information;</li>
   <li>Respond to our requests for documents and information within the time we specify;</li>
-  <li>Attend all scheduled meetings, mediations, and hearings;</li>
-  <li>Keep us informed of any change in address, phone number, email, or employment status;</li>
+  <li>Attend all scheduled meetings, case management hearings, mediations, and hearings;</li>
+  <li>Keep us informed of any change in address, phone number, email, or change in occupancy of the rental unit;</li>
   <li>Pay invoices in accordance with this Agreement;</li>
   <li><strong>Confirm that all information provided to the Paralegal is truthful and complete to the best of the Client&rsquo;s knowledge</strong>, and promptly correct any inaccuracy that comes to the Client&rsquo;s attention.</li>
 </ul>
@@ -414,89 +454,100 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   <h4>Initial document checklist</h4>
   <ul>
     <li>A written timeline of the relevant events (dates, places, names)</li>
-    <li>All emails, text messages, and instant messages with the opposing party</li>
-    <li>Voicemails or recorded messages (where lawfully recorded)</li>
-    <li>Photographs, videos, or audio evidence</li>
-    <li>Witness names and contact information</li>
-    <li>Medical records or notes (if disability or medical accommodation is in issue)</li>
-    <li>Employment records (offer letter, contract, pay stubs, performance reviews, discipline letters, termination letter)</li>
-    <li>Workplace policies and the employer&rsquo;s anti&#8209;discrimination/harassment policy</li>
-    <li>Any internal complaint or investigation file and outcome</li>
-    <li>Social media screenshots (yours and the opposing party&rsquo;s) — do not delete originals</li>
+    <li>The signed lease/tenancy agreement (Ontario Standard Lease Form 2229 where applicable)</li>
+    <li>Any prior leases, renewals, or addenda</li>
+    <li>All rent receipts, e&#8209;transfer records, bank statements, or other proof of rent payment</li>
+    <li>Last&#8209;month&#8209;rent (LMR) deposit and key&#8209;deposit receipts</li>
+    <li>Every landlord notice served on the Client (N4, N5, N6, N7, N8, N12, N13) including envelopes</li>
+    <li>Every LTB notice of hearing, application, or order received</li>
+    <li>All emails, texts, voicemails, and letters to/from the landlord, property manager, or superintendent</li>
+    <li>Photographs and videos of the unit and any maintenance issues (with dates)</li>
+    <li>Maintenance/repair requests sent to the landlord and any responses</li>
+    <li>Property Standards complaints, by&#8209;law orders, or municipal work orders</li>
+    <li>Medical notes (if disability, health, or accommodation is in issue)</li>
+    <li>Names and contact information for any witnesses (co&#8209;tenants, neighbours, etc.)</li>
     <li>Government&#8209;issued photo identification (see Section 11)</li>
-    <li>Any prior correspondence with the HRTO or other tribunals on the same facts</li>
   </ul>
 </div>
 
 <h2>11. Client Identification &amp; Verification</h2>
-<p>Under By&#8209;Law 7.1 of the Law Society of Ontario, the Paralegal must identify the Client and, in certain circumstances, verify the Client&rsquo;s identity using acceptable government&#8209;issued identification. The Client agrees to provide, on request, current government&#8209;issued photo identification (driver&rsquo;s licence, passport, or other LSO&#8209;accepted document) and, where applicable, documents confirming the Client&rsquo;s address and any entity authority. The Paralegal will record this information in the file and retain it for the period required by By&#8209;Law 7.1.</p>
+<p>Under By&#8209;Law 7.1 of the Law Society of Ontario, the Paralegal must identify the Client and, in certain circumstances, verify the Client&rsquo;s identity using acceptable government&#8209;issued identification. The Client agrees to provide, on request, current government&#8209;issued photo identification (driver&rsquo;s licence, passport, or other LSO&#8209;accepted document) and, where applicable, documents confirming the Client&rsquo;s address. The Paralegal will record this information in the file and retain it for the period required by By&#8209;Law 7.1.</p>
 
 <h2>12. Evidence Preservation &amp; Disclosure</h2>
-<p>The Client agrees to preserve and promptly provide all potentially relevant evidence, including emails, text messages, voicemail recordings, photographs, medical records, employment documents, social media communications, and any related metadata. Destruction, alteration, or selective deletion of evidence — whether physical or electronic — may result in adverse inferences being drawn by the Tribunal and may negatively affect the proceeding.</p>
-<p>Disclosure of documents and witness information to the opposing party and to the Tribunal is governed by HRTO Rules 16 and 17. The Paralegal will manage disclosure on the Client&rsquo;s behalf based on the materials the Client provides.</p>
+<p>The Client agrees to preserve and promptly provide all potentially relevant evidence, including text messages, emails, voicemail recordings, photographs, videos, ledgers, receipts, maintenance requests, property standards orders, and any related metadata. Destruction, alteration, or selective deletion of evidence — whether physical or electronic — may result in adverse inferences being drawn by the Board and may negatively affect the proceeding.</p>
+<p>Disclosure of documents and witness information to the opposing party and to the Board is governed by the LTB Rules. The Paralegal will manage disclosure on the Client&rsquo;s behalf based on the materials the Client provides.</p>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
-<h2 class="page-break-before">13. Limitation Period</h2>
-<div class="callout warn"><h4>Strict One-Year Limit</h4><p>Under <strong>s. 34(1) of the Ontario Human Rights Code</strong>, an Application must be filed within <strong>one year</strong> of the alleged incident — or, where there is a series of incidents, within one year of the last incident in the series. The Tribunal may extend this period under s. 34(2) only where the delay was in good faith and no substantial prejudice will result, which is a high threshold and is not granted as a matter of course.</p><p>The Client confirms that they have advised the Paralegal of all relevant dates and that the Application can be filed within the limitation period, or that the Client is aware of the risks of seeking an extension.</p></div>
+<h2 class="page-break-before">13. Limitation &amp; Notice Periods</h2>
+<div class="callout warn"><h4>Tenant Applications — One-Year Limit</h4><p>Under <strong>RTA s. 29(2)</strong>, a tenant application generally must be filed within <strong>one year</strong> after the conduct or event complained of. For T6 maintenance issues, the one&#8209;year clock runs from the most recent breach in the pattern of conduct. For T1 last&#8209;month&#8209;rent rebate claims after the tenancy has ended, additional rules apply.</p></div>
+<div class="callout warn"><h4>Defending an Eviction — Days, Not Months</h4><p>If the Client has been served a landlord notice (N4, N5, N6, N7, N8, N12, N13), the compliance, void, or notice period may be as short as <strong>5 days</strong>. The notice itself is not an order — the landlord must still file at the LTB and obtain a hearing. The Paralegal will identify all applicable deadlines on intake.</p></div>
+<p>The Client confirms that they have advised the Paralegal of every notice received and every relevant date, and that the Application or Response can be filed within the applicable period, or that the Client is aware of the risks where a period is approaching or has passed.</p>
 
-<h2>14. Mediation Confidentiality</h2>
-<p>Under <strong>HRTO Rule 15</strong>, anything said, written, or produced during mediation is confidential and without prejudice. The parties, their representatives, and any intervenors or affected persons present at mediation must sign the Tribunal&rsquo;s confidentiality agreement before the mediation begins. Matters disclosed during mediation may not be raised before the Tribunal or in other proceedings except (a) a final, written, signed settlement agreement, or (b) where disclosure is otherwise required by law.</p>
-<p>Effective June 1, 2025, the HRTO schedules mediation in every application as standard practice. The Client may request an exemption only in exceptional circumstances.</p>
+<h2>14. Case Management Hearing (CMH) &amp; Mediation</h2>
+<p>Many LTB matters are scheduled for a <strong>Case Management Hearing (CMH)</strong> before the merits hearing. A CMH is conducted by a Board mediator or member to attempt resolution and, where unresolved, to identify the issues, schedule the hearing, and direct disclosure. The Paralegal will attend the CMH with the Client.</p>
+<p>If a settlement is reached at mediation or at the CMH, the parties typically sign a <strong>Mediated Settlement Agreement</strong> that is enforceable as an LTB order. Discussions, offers, and admissions made in mediation are <strong>without prejudice</strong> and are not admissible at the merits hearing if mediation fails, except for the final, signed written settlement and to the extent disclosure is otherwise required by law.</p>
 
-<h2>15. Tribunal Scheduling, Delay &amp; No Guaranteed Outcome</h2>
-<p>The Paralegal has not made and cannot make any promise, prediction, or guarantee about the outcome of the Client&rsquo;s HRTO matter. Past results in similar cases do not predict future results. The Tribunal retains sole discretion regarding credibility findings, admissibility of evidence, procedural rulings, and the remedies (if any) ordered under s. 45.2 of the <em>Code</em>.</p>
-<p><strong>The Client expressly acknowledges that the Human Rights Tribunal of Ontario exclusively controls scheduling, mediation dates, hearing dates, and the release of decisions. The Paralegal cannot expedite Tribunal processes except through appropriate procedural requests (for example, requests for expedited scheduling on grounds of urgency).</strong></p>
-<p>The Client acknowledges that HRTO proceedings frequently take many months or years to conclude due to Tribunal scheduling, backlog, adjournments, and procedural delays that are beyond the Paralegal&rsquo;s control. The estimated timelines on the cover page of this Agreement are typical ranges only and are <em>not</em> a guarantee.</p>
+<h2>15. Board Scheduling, Delay &amp; No Guaranteed Outcome</h2>
+<p>The Paralegal has not made and cannot make any promise, prediction, or guarantee about the outcome of the Client&rsquo;s LTB matter. Past results in similar cases do not predict future results. The Board retains sole discretion regarding credibility findings, admissibility of evidence, the granting of relief from eviction under RTA s. 83, remedies under RTA Part X, and any costs award under LTB Rule 23.</p>
+<p><strong>The Client expressly acknowledges that the Landlord and Tenant Board exclusively controls scheduling, the format of the hearing (virtual or in&#8209;person), the CMH date, the hearing date, and the release of orders. The Paralegal cannot expedite Board processes except through appropriate procedural requests (for example, an urgency request under the LTB Rules, or a request to consolidate related files).</strong></p>
+<p>The Client acknowledges that LTB proceedings frequently take many months or longer to conclude due to Board scheduling, backlog, adjournments, and procedural delays that are beyond the Paralegal&rsquo;s control. The estimated timelines on the cover page of this Agreement are typical ranges only and are <em>not</em> a guarantee.</p>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">16. Tax &amp; Settlement Considerations</h2>
-<p>The Paralegal does not provide tax, accounting, or financial&#8209;planning advice. Settlement payments and any monetary award by the Tribunal may have tax consequences and may affect the Client&rsquo;s entitlement to government benefits, including Employment Insurance, the Ontario Disability Support Program, the Canada Pension Plan, or the Workplace Safety and Insurance Board. The Client is encouraged to obtain independent accounting or tax advice regarding any proposed settlement or award.</p>
-<p><strong>Tax reporting.</strong> Settlement payments may be reported to the Canada Revenue Agency by the payor where legally required (for example, T4A reporting for some payments characterized as taxable income). The Client is responsible for the income tax consequences of any settlement and for obtaining independent tax advice on the proper reporting and characterization of any settlement payment.</p>
-<p>The Paralegal cannot guarantee that any settlement reached or monetary award ordered will ultimately be collectible from the opposing party. Enforcement of an HRTO order may require a separate proceeding before the Superior Court and is outside the scope of this retainer.</p>
+<p>The Paralegal does not provide tax, accounting, or financial&#8209;planning advice. A rent abatement, rebate, or monetary award may have tax consequences and may affect the Client&rsquo;s entitlement to government benefits, including Employment Insurance, the Ontario Disability Support Program, Ontario Works, the Canada Pension Plan, or rent&#8209;geared&#8209;to&#8209;income (RGI) housing subsidies. The Client is encouraged to obtain independent accounting or tax advice regarding any proposed settlement or award.</p>
+<p>The Paralegal cannot guarantee that any settlement reached or order made will ultimately be collectible from the landlord. Enforcement of an LTB order against a landlord (for example, garnishment of bank accounts) may require a separate proceeding before the Superior Court of Justice and is outside the scope of this retainer.</p>
 
-<h2>17. No Employment&#8209;Law Advice</h2>
-<p>Unless expressly stated in writing in this Agreement or in a separate written retainer, this retainer does not include advice on wrongful dismissal at common law, constructive dismissal, statutory or common&#8209;law severance entitlements, pension matters, employment standards complaints, or workplace investigations. Where such matters arise alongside the HRTO claim, the Paralegal may refer the Client to a lawyer under Section 22 of this Agreement.</p>
+<h2>17. No Self&#8209;Help, Rent Withholding or Repair&#8209;and&#8209;Deduct</h2>
+<div class="callout warn"><h4>Critical Tenant Warning</h4><p>Ontario law <strong>does not permit a tenant to unilaterally withhold rent, deduct repair costs from rent, or hire a contractor and bill the landlord</strong>, even where the landlord is in breach of the RTA. Unilateral withholding is the single most common reason that tenants with valid complaints end up evicted.</p></div>
+<p>The Client agrees:</p>
+<ul>
+  <li><strong>To continue paying rent in full and on time</strong> for the duration of this retainer, including during any LTB proceeding;</li>
+  <li>Not to deduct any amount from rent (including for repairs, alleged overpayment, or set&#8209;off) without first obtaining either (a) the landlord&rsquo;s written consent, or (b) a written LTB order authorizing the deduction;</li>
+  <li>Not to hire contractors and demand reimbursement from the landlord without prior written authorization;</li>
+  <li>Not to vacate the unit without first consulting the Paralegal, as moving out can defeat or limit several remedies available under the RTA.</li>
+</ul>
+<p>Where the Client believes a remedy such as rent abatement or a repair order is appropriate, the proper procedure is to apply to the LTB on the correct form (typically T2 or T6) and seek the remedy from the Board.</p>
 
 <h2>18. Client Conduct &amp; Anti&#8209;Harassment</h2>
-<p>The Client agrees to behave courteously toward the Paralegal, firm personnel, Tribunal staff, mediators, witnesses, opposing parties, and opposing counsel. Threatening, harassing, abusive, or discriminatory conduct directed at any of the foregoing — whether in person, by email, by phone, or on social media — will not be tolerated and is grounds for the Paralegal to withdraw from the retainer under Section 28.</p>
+<p>The Client agrees to behave courteously toward the Paralegal, firm personnel, Board staff, mediators, witnesses, the landlord, the landlord&rsquo;s representatives, and any other participant in the proceeding. Threatening, harassing, abusive, or discriminatory conduct directed at any of the foregoing — whether in person, by email, by phone, or on social media — will not be tolerated and is grounds for the Paralegal to withdraw from the retainer under Section 28.</p>
 
 <h2>19. Recording, Witnesses &amp; Media</h2>
 <p>The Client agrees:</p>
 <ul>
-  <li><strong>Not to secretly record</strong> telephone calls, video conferences, in&#8209;person meetings, staff interactions, or any internal firm communications with the Paralegal, firm personnel, witnesses, mediators, the Tribunal, or any participant in the proceeding, unless expressly authorized by law;</li>
-  <li><strong>Not to contact</strong> represented parties, Tribunal members, or potential witnesses inappropriately or in any manner that could compromise the integrity of the proceeding;</li>
+  <li><strong>Not to secretly record</strong> telephone calls, video conferences, in&#8209;person meetings, staff interactions, or any internal firm communications with the Paralegal, firm personnel, witnesses, mediators, the Board, or any participant in the proceeding, unless expressly authorized by law;</li>
+  <li><strong>Not to contact</strong> represented parties, Board members, or potential witnesses inappropriately or in any manner that could compromise the integrity of the proceeding;</li>
   <li><strong>Not to communicate</strong> with media outlets, journalists, or commentators regarding the proceeding without first consulting the Paralegal.</li>
 </ul>
-<p><strong>Witness availability.</strong> The Paralegal cannot compel non&#8209;party witnesses to cooperate voluntarily. Where a witness will not attend voluntarily, the Tribunal&rsquo;s summons process under Rule 22 must be invoked, and the Client agrees to fund any related witness fees and disbursements.</p>
+<p><strong>Witness availability.</strong> The Paralegal cannot compel non&#8209;party witnesses (co&#8209;tenants, neighbours, building staff, repair contractors) to cooperate voluntarily. Where a witness will not attend voluntarily, a <strong>summons under LTB Rule 16</strong> must be requested from the Board, and the Client agrees to fund any related witness fees and disbursements.</p>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">20. Virtual Hearing &amp; Videoconference Consent</h2>
-<p>Mediations, case conferences, and hearings before the HRTO are frequently conducted by videoconference (Zoom or similar) or by teleconference. The Client consents to participation in virtual proceedings and agrees to take reasonable steps to ensure suitable technology (working internet, camera, microphone, and a private, quiet location free from interruption). If the Client lacks the necessary technology or location, the Client must advise the Paralegal as early as possible so an accommodation can be requested from the Tribunal. The Tribunal generally does not permit recording of virtual proceedings without leave.</p>
+<p>The LTB conducts <strong>most hearings by videoconference</strong> (Zoom) or by teleconference. The Client consents to participation in virtual proceedings and agrees to take reasonable steps to ensure suitable technology (a working internet connection, camera, microphone, and a private, quiet location free from interruption). If the Client lacks the necessary technology or a private location, the Client must advise the Paralegal as early as possible so an accommodation request or a request for an in&#8209;person hearing can be made under the LTB&rsquo;s digital&#8209;first directive. Recording of virtual proceedings is not permitted without the Board&rsquo;s leave.</p>
 
 <h2>21. Accommodation &amp; Interpretation</h2>
-<p>The Client shall promptly advise the Paralegal of any disability&#8209;related accommodation needs affecting communication, attendance, deadlines, or participation in the proceeding so that appropriate Tribunal accommodations can be requested.</p>
-<p>If interpretation or translation services are required, the Client remains responsible for the associated costs unless otherwise agreed in writing. The HRTO may provide French&#8209;language services on request under the <em>French Language Services Act</em>.</p>
+<p>The Client shall promptly advise the Paralegal of any disability&#8209;related accommodation needs affecting communication, attendance, deadlines, or participation in the proceeding so that appropriate Board accommodations can be requested.</p>
+<p>If interpretation or translation services are required, the Client remains responsible for the associated costs unless otherwise agreed in writing. The LTB may provide French&#8209;language services on request under the <em>French Language Services Act</em>.</p>
 
 <h2>22. Referral &amp; Other Counsel</h2>
-<p>The Client may consult or retain a lawyer at any time. The Paralegal may, where appropriate and with the Client&rsquo;s consent, refer the Client to a lawyer (for example, where the matter exceeds paralegal scope or where parallel Superior Court proceedings are advisable). Any referral is made in the Client&rsquo;s best interests and not for any referral fee.</p>
+<p>The Client may consult or retain a lawyer at any time. The Paralegal may, where appropriate and with the Client&rsquo;s consent, refer the Client to a lawyer (for example, where the matter exceeds paralegal scope, where a Divisional Court review or appeal is advisable, or where a parallel Small Claims Court or Superior Court proceeding is required). Any referral is made in the Client&rsquo;s best interests and not for any referral fee.</p>
 
 <h2>23. Parallel Proceedings</h2>
-<p>Under <strong>s. 34(11) of the Code</strong>, the HRTO will not deal with an application that is the subject of a civil proceeding seeking the same remedy. The Client must inform the Paralegal of any other proceeding — civil, criminal, regulatory, or before another tribunal — that arises out of the same facts.</p>
+<p>The Client must inform the Paralegal of any other proceeding arising out of the same tenancy — including Small Claims Court actions, criminal proceedings against the landlord or tenant, Property Standards or Rental Housing Enforcement Unit (RHEU) complaints, Human Rights Tribunal of Ontario applications, or social&#8209;housing reviews. Parallel proceedings may affect or be affected by the LTB matter and may need to be coordinated.</p>
 
 <h2>24. Communication</h2>
 <p>Primary communication is by email to <strong>{CLIENT_EMAIL}</strong>. We aim to respond to client emails within two business days. Telephone calls are returned within two business days unless we are in a hearing or attending mediation. The firm&rsquo;s general office line is <strong>226&#8209;272&#8209;5153</strong> and the firm&rsquo;s general email is <strong>contact@legalassist.london</strong>.</p>
-<p><strong>Email is not continuously monitored.</strong> Email should not be used for emergencies, urgent limitation&#8209;period questions, or service of documents requiring immediate attention. For urgent matters, telephone the office and follow up in writing.</p>
+<p><strong>Email is not continuously monitored.</strong> Email should not be used for emergencies, urgent eviction&#8209;notice deadlines, or service of documents requiring immediate attention. For urgent matters, telephone the office and follow up in writing.</p>
 
 <h2>25. File Assignment</h2>
 <p>The file is assigned to <strong>{PARALEGAL_NAME}</strong>. In the event of illness, vacation, or a scheduling conflict, another licensed paralegal at Legal Assist Paralegal Services may attend on the file. The Client will be advised in writing of any extended reassignment.</p>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">26. Social Media</h2>
-<div class="callout warn"><h4>Do Not Post — and Do Not Delete</h4><p>The Client agrees not to post, comment, or share anything about the matter, the parties, the witnesses, the mediator, or the Tribunal on any social&#8209;media platform — including Facebook, Instagram, X (Twitter), TikTok, LinkedIn, Reddit, or any blog. Posts can be subpoenaed, can damage credibility, and can be cited against the Client at the hearing.</p><p>The Client is also instructed <strong>not to delete</strong> existing social media content that may relate to the proceeding without first consulting the Paralegal. Deletion can itself amount to spoliation of evidence.</p></div>
+<div class="callout warn"><h4>Do Not Post — and Do Not Delete</h4><p>The Client agrees not to post, comment, or share anything about the landlord, the rental unit, the building, the witnesses, the mediator, or the Board on any social&#8209;media platform — including Facebook, Instagram, X (Twitter), TikTok, LinkedIn, Reddit, Google reviews, or any blog. Posts can be subpoenaed, can damage credibility, and can be cited against the Client at the hearing.</p><p>The Client is also instructed <strong>not to delete</strong> existing social media content that may relate to the proceeding without first consulting the Paralegal. Deletion can itself amount to spoliation of evidence.</p></div>
 
 <h2>27. No Action Without Funding</h2>
-<p>Where the Client has selected an Hourly, Flat Fee, Hybrid, or Deposit&#8209;based fee model under Section 6, the Paralegal is not obliged to commence, continue, or complete any step (including filing the Application, attending mediation, or attending the hearing) unless the Client&rsquo;s account is current and any required deposit has been received in the firm&rsquo;s trust account.</p>
-<p>In all cases, the Client agrees that delay caused by non&#8209;payment of fees or disbursements is at the Client&rsquo;s risk, including the loss of limitation rights under s. 34 of the <em>Code</em>.</p>
+<p>Where the Client has selected an Hourly, Flat Fee, Hybrid, or Deposit&#8209;based fee model under Section 6, the Paralegal is not obliged to commence, continue, or complete any step (including filing a T&#8209;form, attending a CMH, attending mediation, or attending the merits hearing) unless the Client&rsquo;s account is current and any required deposit has been received in the firm&rsquo;s trust account.</p>
+<p>In all cases, the Client agrees that delay caused by non&#8209;payment of fees or disbursements is at the Client&rsquo;s risk, including the loss of rights under the RTA, the missing of a limitation period under RTA s. 29(2), or the missing of a void/compliance period on an N&#8209;notice.</p>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">28. Withdrawal, Termination &amp; Administrative Closure</h2>
@@ -509,7 +560,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 
 <h2>30. Electronic Communications &amp; Signatures</h2>
 <p>The Client consents to receiving documents and communications by email. The Client acknowledges that email is not perfectly secure and that, despite reasonable precautions, communications may be intercepted, lost, or delayed. The Client agrees to advise the Paralegal of any change to the email address on file.</p>
-<p>Electronic signatures and scanned signatures shall be deemed equivalent to original wet&#8209;ink signatures for all purposes of this Agreement and any document executed in connection with the HRTO matter, in accordance with the <em>Electronic Commerce Act, 2000</em> (Ontario), s. 11.</p>
+<p>Electronic signatures and scanned signatures shall be deemed equivalent to original wet&#8209;ink signatures for all purposes of this Agreement and any document executed in connection with the LTB matter, in accordance with the <em>Electronic Commerce Act, 2000</em> (Ontario), s. 11.</p>
 
 <h2>31. Technology, Artificial Intelligence &amp; Cloud Storage</h2>
 <p>The Paralegal may use technology&#8209;assisted drafting and research tools, including artificial&#8209;intelligence&#8209;assisted systems, in accordance with the Paralegal&rsquo;s professional obligations relating to confidentiality, competence, and supervision under the <em>Paralegal Rules of Conduct</em>. All substantive legal work product is reviewed by the licensed Paralegal before it is filed, served, or sent to the Client.</p>
@@ -519,14 +570,14 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 <p>On conclusion of the matter, the Paralegal will retain the closed file for a minimum of <strong>seven (7) years</strong> in accordance with LSO best practice. After that period, the file may be destroyed without further notice unless the Client has previously requested the return of the original materials. Trust account records are retained for at least <strong>ten (10) years</strong> as required by By&#8209;Law 9.</p>
 
 <h2>33. Unbundled Services &amp; Future Retainers</h2>
-<p>The parties may agree in writing to limited&#8209;scope or &ldquo;unbundled&rdquo; services for specific portions of the proceeding (for example, drafting an Application only, or representation at mediation only). Any services outside the scope of this Agreement, including new matters or representation in any appeal, reconsideration, or enforcement proceeding, require a separate written retainer.</p>
+<p>The parties may agree in writing to limited&#8209;scope or &ldquo;unbundled&rdquo; services for specific portions of the proceeding (for example, drafting a T6 application only, representing at mediation only, or providing a one&#8209;time consultation only). Any services outside the scope of this Agreement, including new matters or representation in any review, appeal, judicial review, or enforcement proceeding, require a separate written retainer.</p>
 <div class="end-marker" data-keep-together aria-label="End of section — no further conditions"><svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg><span class="end-label">End of Section — No Further Conditions</span></div>
 
 <h2 class="page-break-before">34. Privacy &amp; Personal Information (PIPEDA)</h2>
 <p>The Paralegal collects personal information from the Client for the purpose of providing the legal services described in this Agreement, complying with the Paralegal&rsquo;s professional obligations under the Law Society of Ontario, and meeting record&#8209;keeping requirements under By&#8209;Law 7.1, By&#8209;Law 9, and applicable tax legislation. By signing this Agreement, the Client consents to the Paralegal:</p>
 <ul>
-  <li>Collecting personal information directly from the Client and, where reasonably necessary for the matter, from third parties identified by the Client (witnesses, medical providers, employers, the opposing party, the HRTO);</li>
-  <li>Using the personal information to provide the services in Section 4, to communicate with the Client, the Tribunal, and the opposing party, and to administer billing and trust accounting;</li>
+  <li>Collecting personal information directly from the Client and, where reasonably necessary for the matter, from third parties identified by the Client (witnesses, neighbours, co&#8209;tenants, medical providers, the landlord, property manager, the LTB);</li>
+  <li>Using the personal information to provide the services in Section 4, to communicate with the Client, the Board, and the opposing party, and to administer billing and trust accounting;</li>
   <li>Disclosing personal information to (a) the opposing party or its representatives, only as reasonably necessary to advance the matter; (b) the Paralegal&rsquo;s supervised staff; (c) the Law Society of Ontario if required by audit, investigation, or regulatory request; and (d) any other third party only with the Client&rsquo;s prior consent or as required by law;</li>
   <li>Retaining the information for the file&#8209;retention period in Section 32 and then securely destroying it.</li>
 </ul>
@@ -562,7 +613,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 <p>This Agreement is governed by the laws of the Province of Ontario and the federal laws of Canada applicable in Ontario. The parties submit to the exclusive jurisdiction of the courts of Ontario for any dispute arising under this Agreement that is not within the jurisdiction of the Law Society Tribunal.</p>
 
 <h2>38. Entire Agreement</h2>
-<p>This Agreement constitutes the entire agreement between the parties with respect to the HRTO matter described in Section 1 and supersedes all prior discussions, representations, or agreements, whether oral or written. Any amendment must be in writing and signed by both parties.</p>
+<p>This Agreement constitutes the entire agreement between the parties with respect to the LTB matter described in Section 1 and supersedes all prior discussions, representations, or agreements, whether oral or written. Any amendment must be in writing and signed by both parties.</p>
 
 <div class="ack-block">
   <h2>39. Acknowledgment</h2>
@@ -579,12 +630,13 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
     <div class="item"><div class="box" data-initial-target="ack-scope">INIT</div><div class="txt">I have read and understand <strong>Sections 4 &amp; 5 — Scope and Excluded Services</strong>.</div></div>
     <div class="item"><div class="box" data-initial-target="ack-fees">INIT</div><div class="txt">I have read and understand <strong>Section 6 — Fee Structure</strong>, including how the selected fee model is calculated, how disbursements and HST are billed, and the <strong>1.5%/month interest on overdue accounts</strong>.</div></div>
     <div class="item"><div class="box" data-initial-target="ack-contingency">INIT</div><div class="txt"><strong>If Contingency Fee is selected:</strong> I have read the <strong>Contingency Fee Terms</strong> in Section 6.</div></div>
-    <div class="item"><div class="box" data-initial-target="ack-no-limitation-preservation">INIT</div><div class="txt">I have read and understand <strong>Section 3 — No Limitation Preservation Until Acceptance</strong>; until the retainer is accepted and funded, I remain solely responsible for monitoring deadlines.</div></div>
-    <div class="item"><div class="box" data-initial-target="ack-limitation">INIT</div><div class="txt">I have read and understand <strong>Section 13 — Limitation Period</strong> and the one&#8209;year deadline under s. 34 of the <em>Human Rights Code</em>.</div></div>
-    <div class="item"><div class="box" data-initial-target="ack-scheduling">INIT</div><div class="txt">I have read and understand <strong>Section 15 — Tribunal Scheduling, Delay &amp; No Guaranteed Outcome</strong>; the HRTO controls scheduling and decisions.</div></div>
-    <div class="item"><div class="box" data-initial-target="ack-tax">INIT</div><div class="txt">I have read and understand <strong>Section 16 — Tax &amp; Settlement Considerations</strong>, including the tax reporting risk.</div></div>
+    <div class="item"><div class="box" data-initial-target="ack-no-limitation-preservation">INIT</div><div class="txt">I have read and understand <strong>Section 3 — No Limitation Preservation Until Acceptance</strong>; until the retainer is accepted and funded, I remain solely responsible for monitoring deadlines and notice periods.</div></div>
+    <div class="item"><div class="box" data-initial-target="ack-limitation">INIT</div><div class="txt">I have read and understand <strong>Section 13 — Limitation &amp; Notice Periods</strong>, including the one&#8209;year limit under RTA s. 29(2) and the short compliance/void periods on N&#8209;notices.</div></div>
+    <div class="item"><div class="box" data-initial-target="ack-scheduling">INIT</div><div class="txt">I have read and understand <strong>Section 15 — Board Scheduling, Delay &amp; No Guaranteed Outcome</strong>; the LTB controls scheduling and decisions.</div></div>
+    <div class="item"><div class="box" data-initial-target="ack-tax">INIT</div><div class="txt">I have read and understand <strong>Section 16 — Tax &amp; Settlement Considerations</strong>, including the possible effect on benefits and RGI subsidy.</div></div>
+    <div class="item"><div class="box" data-initial-target="ack-no-self-help">INIT</div><div class="txt">I have read and understand <strong>Section 17 — No Self&#8209;Help, Rent Withholding or Repair&#8209;and&#8209;Deduct</strong>, and I agree to continue paying rent in full and on time during this retainer.</div></div>
     <div class="item"><div class="box" data-initial-target="ack-recording">INIT</div><div class="txt">I have read and understand <strong>Section 19 — Recording, Witnesses &amp; Media</strong>, including the prohibition on secretly recording calls, meetings, or staff.</div></div>
-    <div class="item"><div class="box" data-initial-target="ack-virtual">INIT</div><div class="txt">I have read and understand <strong>Section 20 — Virtual Hearing Consent</strong> and agree to participate by videoconference where directed by the Tribunal.</div></div>
+    <div class="item"><div class="box" data-initial-target="ack-virtual">INIT</div><div class="txt">I have read and understand <strong>Section 20 — Virtual Hearing Consent</strong> and agree to participate by videoconference where directed by the Board.</div></div>
     <div class="item"><div class="box" data-initial-target="ack-social">INIT</div><div class="txt">I have read and understand <strong>Section 26 — Social Media</strong> and I agree neither to post about my matter nor to delete existing posts.</div></div>
     <div class="item"><div class="box" data-initial-target="ack-admin-closure">INIT</div><div class="txt">I have read and understand <strong>Section 28 — Withdrawal, Termination &amp; Administrative Closure</strong>; if I fail to respond for 30 days, my file may be placed inactive and closed.</div></div>
     <div class="item"><div class="box" data-initial-target="ack-privacy">INIT</div><div class="txt">I have read <strong>Section 34 — Privacy</strong> and consent to the collection, use and disclosure of my personal information as described.</div></div>
@@ -615,7 +667,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 </div>
 
 <div class="doc-footer">
-  <div class="left">Legal Assist Paralegal Services · 226&#8209;272&#8209;5153 · contact@legalassist.london<br><a href="https://legalassist.london">legalassist.london</a> · HRTO Retainer Agreement<div class="version">Document Version: HRTO Retainer v2.6 · Last updated {DATE}</div></div>
+  <div class="left">Legal Assist Paralegal Services · 226&#8209;272&#8209;5153 · contact@legalassist.london<br><a href="https://legalassist.london">legalassist.london</a> · LTB Tenant Retainer Agreement<div class="version">Document Version: LTB Tenant Retainer v1.1 · Last updated {DATE}</div></div>
   <div class="right">VERIFY OUR LICENSING<br><a href="https://lso.ca/directory">LSO.ca/directory</a></div>
 </div>
 

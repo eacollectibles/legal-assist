@@ -355,6 +355,10 @@ export default function PublicSignPage() {
         // client's signature appended (documentUrl is a real PDF).
         (doc as any).documentContent || undefined,
         initialsPayload,
+        // Pass the client's typed name from the sign-token flow so the
+        // "Electronically signed by ___" line in the certification block
+        // shows the actual signer instead of the generic "Client".
+        signerName,
       );
 
       // Try Wix Media for permanent hosting

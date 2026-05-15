@@ -90,10 +90,10 @@ export default function AboutPage() {
                 <Award className="w-6 h-6" />
               </div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">
-                Professional Excellence
+                Licensed & Accountable
               </h3>
               <p className="font-paragraph text-foreground/80">
-                Our paralegals are fully licensed and maintain the highest professional standards in all matters.
+                Our paralegals are licensed by the Law Society of Ontario and bound by the LSO Paralegal Rules of Conduct.
               </p>
             </div>
 
@@ -327,7 +327,7 @@ export default function AboutPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Summary Conviction Offences:</strong> Criminal charges tried in Provincial Court</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Summary Conviction Offences:</strong> Eligible Criminal Code matters with a statutory maximum penalty of 6 months imprisonment (per LSO By-Law 4, s. 6), heard in the Ontario Court of Justice</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
@@ -355,15 +355,15 @@ export default function AboutPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Commissioner of Oaths:</strong> Administration of oaths and statutory declarations</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Commissioner for Taking Affidavits:</strong> Where individually appointed under the Commissioners for Taking Affidavits Act — administration of oaths, affirmations and statutory declarations</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Commissioner of Oaths Services:</strong> Document certification and witnessing</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Notary Public:</strong> Where individually appointed under the Notaries Act (Ontario) — certified true copies and notarized documents</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="font-paragraph text-foreground/80"><strong>Legal Advice:</strong> Guidance within the scope of paralegal practice</span>
+                    <span className="font-paragraph text-foreground/80"><strong>Legal Advice:</strong> Guidance within the authorized scope of paralegal practice</span>
                   </li>
                 </ul>
               </div>
@@ -418,7 +418,7 @@ export default function AboutPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                  <span className="font-paragraph text-foreground/80">Formal client communications (after retainer) are protected by paralegal-client privilege</span>
+                  <span className="font-paragraph text-foreground/80">Confidential communications made for the purpose of obtaining legal advice are protected by paralegal-client privilege, including during initial consultations</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
@@ -479,7 +479,7 @@ export default function AboutPage() {
                   <tr className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 font-heading font-semibold text-foreground">Scope of Practice</td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
-                      Limited to defined areas: Provincial Court criminal matters, Small Claims Court (up to $50,000), Landlord-Tenant Board, Human Rights Tribunal, and other specified tribunals
+                      Limited to defined areas: eligible matters in the Ontario Court of Justice (provincial offences and authorized summary conviction matters), Small Claims Court (up to $50,000), Landlord and Tenant Board, Human Rights Tribunal of Ontario, and other tribunals listed in LSO By-Law 4
                     </td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
                       Broad scope across all areas of law: Superior Court, Court of Appeal, family law, real estate, corporate law, and all tribunals
@@ -488,7 +488,7 @@ export default function AboutPage() {
                   <tr className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 font-heading font-semibold text-foreground">Court Representation</td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
-                      Can represent clients in Provincial Court and Small Claims Court; Cannot appear in Superior Court or Court of Appeal
+                      Can represent clients in the Ontario Court of Justice (provincial offences and eligible summary conviction matters) and Small Claims Court; cannot appear in the Superior Court of Justice or Court of Appeal
                     </td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
                       Can represent clients in all courts including Superior Court, Court of Appeal, and Supreme Court of Canada
@@ -533,10 +533,10 @@ export default function AboutPage() {
                   <tr className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 font-heading font-semibold text-foreground">Client Privilege</td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
-                      Client communications (after retainer) are protected by paralegal-client privilege
+                      Confidential communications made to obtain legal advice are protected by paralegal-client privilege (the paralegal equivalent of solicitor-client privilege)
                     </td>
                     <td className="px-6 py-4 font-paragraph text-foreground/80">
-                      Client communications (after retainer) are protected by solicitor-client privilege
+                      Confidential communications made to obtain legal advice are protected by solicitor-client privilege
                     </td>
                   </tr>
                 </tbody>
@@ -555,7 +555,7 @@ export default function AboutPage() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="font-paragraph text-foreground/80">Your matter is in Provincial Court or Small Claims Court</span>
+                  <span className="font-paragraph text-foreground/80">Your matter is in the Ontario Court of Justice (provincial offences/eligible summary conviction) or Small Claims Court</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -631,7 +631,7 @@ export default function AboutPage() {
                 <strong>Both Are Regulated Professionals:</strong> Both paralegals and lawyers are licensed and regulated by the Law Society of Ontario. Both must adhere to strict professional conduct standards and ethical obligations. Both maintain professional liability insurance and are subject to discipline procedures.
               </p>
               <p>
-                <strong>Client Privilege:</strong> Once a formal client relationship is established through a signed retainer agreement, communications with both paralegals (paralegal-client privilege) and lawyers (solicitor-client privilege) are protected. Please note that information shared prior to signing a retainer is handled securely but is not subject to privilege.
+                <strong>Client Privilege:</strong> Confidential communications made for the purpose of obtaining legal advice — including during an initial consultation, before any retainer is signed — are generally protected by paralegal-client privilege (with paralegals) or solicitor-client privilege (with lawyers). Information shared with us is always handled in strict confidence in accordance with our professional obligations under the Law Society of Ontario rules.
               </p>
               <p>
                 <strong>Cost Savings:</strong> Paralegals typically charge lower hourly rates than lawyers, making them an affordable option for matters within their scope of practice. This can result in significant cost savings for clients.

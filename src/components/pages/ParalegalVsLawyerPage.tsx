@@ -79,7 +79,7 @@ export default function ParalegalVsLawyerPage() {
               { area: 'Traffic Tickets', desc: 'Speeding, careless driving, stunt driving, all Highway Traffic Act offences' },
               { area: 'Provincial Offences', desc: 'By-law violations, regulatory offences, trespass charges' },
               { area: 'Human Rights Tribunal', desc: 'Discrimination complaints, accommodation issues, harassment' },
-              { area: 'Minor Criminal Matters', desc: 'Summary conviction offences with max 6 months jail (theft under, mischief, simple assault)' },
+              { area: 'Minor Criminal Matters', desc: 'Eligible Criminal Code summary conviction offences with a statutory maximum penalty of 6 months imprisonment (per LSO By-Law 4, s. 6). Hybrid offences elected as summary by the Crown generally fall outside paralegal scope — we will confirm scope before retainer.' },
               { area: 'Workplace Safety Appeals', desc: 'WSIB appeals and workplace safety matters' },
               { area: 'Statutory Accident Benefits', desc: 'Auto insurance disputes and SABS claims' },
             ].map((item, index) => (

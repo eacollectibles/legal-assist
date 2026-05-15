@@ -151,6 +151,17 @@ export async function embedSignatureInPDF(
    * into the final signed PDF.
    */
   initialsPayload?: { initials: string; sectionIds: string[] },
+  /**
+   * Optional: explicit display name of the person signing the document.
+   * When provided, this is used in the "Electronically signed by ___"
+   * line under the signature image. If omitted, falls back to
+   * `signatureData.signedByParalegalName`, then to "Client".
+   *
+   * PublicSignPage passes the signer's full name here so the certificate
+   * block correctly identifies the client instead of showing the
+   * generic "Client" placeholder.
+   */
+  signerNameOverride?: string,
 ): Promise<string> {
   const documentId = `DOC-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
   const signedDate = new Date().toISOString();
@@ -247,8 +258,21 @@ export async function embedSignatureInPDF(
     }
   }
 
-  // Get signer name from signature data (if available) or use a default
-  const signerName = 'Client'; // You can pass this as a parameter if needed
+  // Get signer name with precedence:
+  //   1. Explicit override passed by the caller (e.g. PublicSignPage
+  //      passes the client's full name from the sign-token flow).
+  //   2. signatureData.signedByParalegalName — set by DocumentSignature
+  //      when Quick Sign was used (cursive auto-signature).
+  //   3. Fallback to a generic "Client" label.
+  //
+  // This replaces the previous hard-coded "Client" string which caused
+  // every signed document — including Authorization & Direction — to
+  // display "Electronically signed by Client" regardless of who actually
+  // signed it.
+  const signerName =
+    (signerNameOverride && signerNameOverride.trim()) ||
+    (signatureData.signedByParalegalName && signatureData.signedByParalegalName.trim()) ||
+    'Client';
   
   // Create the signature HTML block following traditional legal document layout
   let signatureBlockHtml = '';
@@ -405,9 +429,47 @@ ${finalContent}
 </html>
   `;
 
+  // ----------------------------------------------------------------
+  // Pre-decode the signature data-URL image BEFORE handing the HTML to
+  // html2canvas. Without this, the html2canvas rasteriser frequently
+  // captures the <img> tag while the inline data: URL is still decoding
+  // and produces an empty signature box in the final PDF (this is the
+  // root cause of "missing signature on Authorization & Direction" and
+  // similar reports).
+  //
+  // We force the browser to actually decode the image into the image
+  // cache here; html2canvas's own cloned <img> draws from that decoded
+  // cache instantly when it captures.
+  // ----------------------------------------------------------------
+  if (signatureData.signatureDataUrl) {
+    try {
+      await new Promise<void>((resolve) => {
+        const img = new Image();
+        // The data: URL has no cross-origin concerns, but set this
+        // anyway so html2canvas's later capture doesn't taint.
+        img.crossOrigin = 'anonymous';
+        const done = () => resolve();
+        img.onload = done;
+        img.onerror = done; // resolve on error rather than reject —
+                            // we'd still rather emit a PDF than crash
+                            // the whole signing flow.
+        img.src = signatureData.signatureDataUrl;
+        // Belt-and-suspenders: if decode() exists, await it explicitly.
+        if (typeof (img as any).decode === 'function') {
+          (img as any).decode().then(done).catch(done);
+        }
+        // Hard timeout in case neither load/error fires (very rare for
+        // data: URLs, but defends against a stuck Promise).
+        setTimeout(done, 2000);
+      });
+    } catch {
+      /* non-fatal — fall through to render */
+    }
+  }
+
   // Convert HTML to PDF
   const signedPdfDataUrl = await htmlToPDF(htmlContent);
-  
+
   return signedPdfDataUrl;
 }
 
