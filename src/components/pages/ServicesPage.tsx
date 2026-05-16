@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel, Briefcase } from 'lucide-react';
+import { ArrowRight, Scale, Users, FileText, AlertCircle, Home, Handshake, Shield, Stamp, CheckCircle, Landmark, Gavel, Briefcase, Plane } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -356,6 +356,35 @@ IMPORTANT SCOPE LIMITATIONS: Paralegals can represent clients in Small Claims Co
     costInfo: 'Hourly rates $150-250/hour or flat fees for specific services. Free initial consultation to assess your employment situation and confirm it falls within paralegal scope.',
     timeline: 'Initial assessment: 1-2 weeks. Negotiation phase: 4-12 weeks. Small Claims Court proceedings (if necessary): 3-6 months.',
     eligibility: 'Available to employees in Ontario with employment disputes within paralegal scope of practice. Claims must fall within Small Claims Court jurisdiction (up to $50,000) for court representation. We will advise if your matter requires a lawyer.'
+  },
+  {
+    id: 'airline-disputes',
+    name: 'Airline Compensation',
+    tribunal: 'Air Passenger Protection Regulations (APPR) / Small Claims Court',
+    shortDescription: 'Recover compensation from airlines for flight delays, cancellations, denied boarding, and lost or damaged baggage under the federal APPR.',
+    icon: <Plane className="w-8 h-8" />,
+    image: 'https://static.wixstatic.com/media/99571b_79f0959236c14ac39708e40fd1377c6e~mv2.png?id=airline-disputes',
+    learnMore: `The Air Passenger Protection Regulations (APPR), SOR/2019-150, made under the Canada Transportation Act, set out fixed compensation amounts that airlines must pay passengers for flight delays, cancellations, denied boarding, and certain baggage issues. The amounts are not negotiable — they are set by federal regulation — but airlines routinely deny claims or lowball passengers who don't know their rights.
+
+We help passengers in Ontario recover what the airline owes them through three avenues:
+
+- Demand letters citing the specific APPR provisions the airline breached and the regulated compensation owed
+- Preparing complaints to the Canadian Transportation Agency (CTA) when an airline refuses to pay or ignores the demand
+- Small Claims Court action in Ontario (up to $50,000) to recover the regulated compensation as a debt where the airline still refuses to pay
+
+Compensation amounts under the APPR for delays caused by the airline and within its control (not safety-related): $400 for arrival 3–6 hours late, $700 for 6–9 hours late, and $1,000 for 9+ hours late on large airlines; $125, $250, and $500 respectively on small airlines. Denied boarding (involuntary bumping) compensation is higher — $900 to $2,400 — and must be paid within 48 hours. Baggage liability under the Montreal Convention is approximately $2,900 CAD for lost, damaged, or delayed baggage.
+
+IMPORTANT SCOPE NOTE: Paralegals can prepare APPR demand letters, draft and submit CTA complaints, and represent passengers in Small Claims Court (up to $50,000). Paralegals do not have rights of audience in the Federal Court of Canada — if a CTA decision needs to be judicially reviewed at the Federal Court, you will need a lawyer. We can refer you out if your matter goes there.`,
+    keyPoints: [
+      'Flight delay & cancellation compensation ($400–$1,000 large airlines / $125–$500 small airlines)',
+      'Denied boarding compensation ($900–$2,400)',
+      'Lost, damaged, or delayed baggage claims (Montreal Convention, ~$2,900 CAD)',
+      'CTA complaint preparation when the airline refuses to pay',
+      'Small Claims Court action to recover regulated compensation (up to $50,000)'
+    ],
+    costInfo: 'Many airline compensation matters can be handled on contingency — if the airline does not pay, you do not pay. Hourly or flat-fee arrangements are also available. Free 30-minute consultation to assess the file.',
+    timeline: 'Demand letter to the airline: 1–2 weeks. Many airlines settle within 30–60 days once a formal demand is filed by a representative. CTA complaint decisions are currently delayed (18–24+ months backlog). Small Claims Court timelines align with the rest of our civil practice (settlement conference 6–12 months from filing).',
+    eligibility: 'You have up to 1 year from the date of the disrupted flight to claim compensation under the APPR. Coverage applies to all flights to, from, and within Canada on any airline (large or small). Damaged baggage must be reported to the airline within 7 days; delayed baggage within 21 days.'
   }
 ];
 
@@ -492,6 +521,11 @@ export default function ServicesPage() {
                         </Link>
                       ) : service.id === 'employment-issues' ? (
                         <Link to="/services/employment-issues" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : service.id === 'airline-disputes' ? (
+                        <Link to="/services/airline-disputes" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
