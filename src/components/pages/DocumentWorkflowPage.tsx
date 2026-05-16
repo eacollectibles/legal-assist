@@ -1280,19 +1280,34 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // least saves.
       let storedDocumentContent: string = '';
       let documentContentUrl: string | undefined;
+      // Wix Media rejects `text/html` uploads as a security policy
+      // (HTML hosted on a public CDN is an XSS vector). Upload the
+      // rendered retainer as a generic .bin blob with
+      // `application/octet-stream`; we don't care what MIME the CDN
+      // declares because PublicSignPage just calls .text() on the
+      // response and parses the bytes as HTML.
       try {
+        const htmlBlob = new Blob([documentContent], {
+          type: 'application/octet-stream',
+        });
+        const htmlFileName = safeFileName.replace(/\.pdf$/, '.html.bin');
         const htmlUpload = await uploadToWixMedia(
-          new Blob([documentContent], { type: 'text/html' }),
-          safeFileName.replace(/\.pdf$/, '.html'),
-          'text/html'
+          htmlBlob,
+          htmlFileName,
+          'application/octet-stream'
         );
         if (htmlUpload?.url) {
           documentContentUrl = htmlUpload.url;
+        } else {
+          // eslint-disable-next-line no-console
+          console.error(
+            '[DocumentWorkflow] HTML upload to Wix Media returned no URL — ' +
+              'check the /api/media/upload server response in the network tab.'
+          );
         }
-      } catch {
-        /* Media upload failure is non-fatal here — we'll save with
-           an empty documentContent and the document is still usable
-           via the documentUrl PDF. */
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('[DocumentWorkflow] HTML upload threw:', err);
       }
       // If Media upload of HTML failed and the body is small enough
       // to fit inline (under 80KB to give margin for other fields),
@@ -1300,6 +1315,18 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // network round trip.
       if (!documentContentUrl && approxByteLength(documentContent) < 80_000) {
         storedDocumentContent = documentContent;
+      }
+      // Hard-fail with a visible error if BOTH paths failed — without
+      // this guard the doc would save with both fields empty and the
+      // sign flow would later die with "could not load original HTML".
+      // Better to refuse to save a broken doc up front.
+      if (!documentContentUrl && !storedDocumentContent) {
+        throw new Error(
+          'The generated document could not be saved: the HTML body is too ' +
+            'large to fit inline AND the Wix Media upload failed. Check the ' +
+            'browser console for the underlying upload error, then retry. ' +
+            '(LA_WIX_API_KEY may need SITE_MEDIA.MANAGE scope.)'
+        );
       }
 
       const newDoc: any = {

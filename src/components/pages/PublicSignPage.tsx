@@ -364,8 +364,21 @@ export default function PublicSignPage() {
       // embedder gets an empty body and emits only the 1-page
       // signature-certificate — which is what was happening before
       // this fix.
+      //
+      // Diagnostics: log what's actually on the doc so the paralegal
+      // can see which path is broken when this fails. This lands in
+      // the browser console for the signer's session.
+      // eslint-disable-next-line no-console
+      console.log('[PublicSign] doc fields:', {
+        _id: doc._id,
+        hasDocumentContent: !!(doc as any).documentContent,
+        documentContentLen: ((doc as any).documentContent || '').length,
+        documentContentUrl: (doc as any).documentContentUrl || null,
+        documentUrl: doc.documentUrl || null,
+      });
       let originalHtml: string | undefined =
         (doc as any).documentContent || undefined;
+      let fetchDiag: string = '';
       if (!originalHtml || !originalHtml.trim()) {
         const htmlUrl = (doc as any).documentContentUrl;
         if (htmlUrl && typeof htmlUrl === 'string') {
@@ -374,13 +387,17 @@ export default function PublicSignPage() {
             if (r.ok) {
               originalHtml = await r.text();
             } else {
+              fetchDiag = `HTTP ${r.status} from documentContentUrl`;
               // eslint-disable-next-line no-console
-              console.error('Failed to fetch documentContentUrl:', r.status);
+              console.error('[PublicSign]', fetchDiag, htmlUrl);
             }
-          } catch (e) {
+          } catch (e: any) {
+            fetchDiag = `fetch threw: ${e?.message || e}`;
             // eslint-disable-next-line no-console
-            console.error('Error fetching documentContentUrl:', e);
+            console.error('[PublicSign]', fetchDiag, htmlUrl);
           }
+        } else {
+          fetchDiag = 'documentContentUrl is missing on the CMS row';
         }
       }
       if (!originalHtml || !originalHtml.trim()) {
@@ -388,9 +405,10 @@ export default function PublicSignPage() {
         // certificate-only PDF. The paralegal will see this banner
         // and re-generate the source document.
         throw new Error(
-          'The original document HTML could not be loaded. Please contact ' +
-            'our office — the retainer needs to be regenerated before it can ' +
-            'be signed.'
+          'The original document HTML could not be loaded. ' +
+            (fetchDiag ? `Reason: ${fetchDiag}. ` : '') +
+            'Please contact our office — the retainer needs to be regenerated ' +
+            'before it can be signed.'
         );
       }
 
