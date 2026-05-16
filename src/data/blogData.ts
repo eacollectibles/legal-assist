@@ -14,6 +14,114 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'supreme-court-canada-intimate-partner-violence-tort-ahluwalia-2026',
+    title: 'Supreme Court of Canada Recognizes a New Civil Tort for Intimate Partner Violence',
+    description: 'In Ahluwalia v. Ahluwalia (May 15, 2026), the Supreme Court of Canada created a new civil tort of intimate partner violence — recognizing that the cumulative pattern of coercive control, isolation, financial abuse, and intimidation in an intimate relationship is itself an actionable wrong.',
+    category: 'general',
+    date: '2026-05-16',
+    readTime: '7 min',
+    content: `
+      <p>On May 15, 2026, the Supreme Court of Canada released its decision in <em>Ahluwalia v. Ahluwalia</em>, recognizing &mdash; for the first time in Canadian law &mdash; a new civil tort of <strong>intimate partner violence</strong>. In a 6&ndash;3 majority, the Court held that survivors of intimate partner violence can sue a former spouse or partner for civil damages for a pattern of coercive, controlling, or abusive conduct that existing torts (assault, battery, intentional infliction of emotional distress) do not fully capture.</p>
+      <p>For survivors in Ontario, this is a major shift. This post explains what the ruling does, what it does not do, and what it means in practical terms &mdash; including what falls within paralegal scope of practice and what does not.</p>
+
+      <h2>What the Court Decided</h2>
+      <p>The case involved Kuldeep Ahluwalia, a woman who had endured roughly 16 years of physical, emotional, and financial abuse during her marriage. In 2022, the Ontario Superior Court of Justice (Justice Renu Mandhane) awarded her $150,000 in damages and recognized a new tort of <em>family violence</em>. The Ontario Court of Appeal reversed that finding in 2023, holding that existing torts already covered the conduct and reducing damages to $100,000.</p>
+      <p>The Supreme Court took a middle path. Writing for the majority, Justice Nicholas Kasirer:</p>
+      <ul>
+        <li><strong>Created a new, narrower tort</strong> specifically for <strong>intimate partner violence</strong> &mdash; not "family violence" broadly.</li>
+        <li><strong>Confirmed the harm</strong> Ms. Ahluwalia suffered fell within the scope of the new tort.</li>
+        <li><strong>Held that existing torts</strong> &mdash; assault, battery, intentional infliction of emotional distress &mdash; were inadequate to capture the cumulative pattern of coercive control that defines intimate partner violence.</li>
+      </ul>
+      <p>Justice Andromache Karakatsanis agreed with the creation of the new tort but dissented in part. Justices Mahmud Jamal, Suzanne C&ocirc;t&eacute;, and Malcolm Rowe dissented in full.</p>
+
+      <h2>The Three-Part Test</h2>
+      <p>To succeed in a civil claim under the new tort, a plaintiff must prove:</p>
+      <ol>
+        <li><strong>The wrongful conduct occurred during, or after, an intimate partnership</strong>;</li>
+        <li><strong>The defendant intentionally engaged in the abusive conduct</strong>; and</li>
+        <li><strong>The conduct amounted to coercive control.</strong></li>
+      </ol>
+      <p>Justice Kasirer described an intimate partnership broadly &mdash; "a relationship of close personal connection, sustained over a period of time, and marked by mutual interdependence, care or commitment, and the presence of domestic, emotional, financial or physical intimacy." The Court was clear that an intimate partnership is <strong>not</strong> strictly defined by marriage, cohabitation, or sexual relations. What matters is the substantive interdependence between the partners.</p>
+
+      <h2>What Counts as "Coercive Control"</h2>
+      <p>The new tort moves Canadian civil law beyond isolated incidents toward recognizing <strong>patterns of behaviour</strong>. The Court identified the following as falling within the scope of intimate partner violence:</p>
+      <ul>
+        <li>Physical violence (assault, battery)</li>
+        <li>Sexual coercion</li>
+        <li>Isolation tactics (cutting a partner off from family, friends, or support networks)</li>
+        <li>Manipulation and humiliation</li>
+        <li>Surveillance and monitoring</li>
+        <li><strong>Economic abuse</strong> &mdash; controlling access to money, employment, or financial decisions</li>
+        <li>Intimidation, threats, and conduct intended to inflict fear or emotional distress</li>
+      </ul>
+      <p>The Court emphasized that intimate partner violence can impact people of any gender, while acknowledging that <strong>women are disproportionately affected</strong>.</p>
+
+      <h2>Why This Matters in Ontario</h2>
+      <p>Before <em>Ahluwalia</em>, survivors who wanted civil compensation had to force their experience into the elements of older torts &mdash; assault for a physical incident, intentional infliction of emotional distress for a specific outburst, and so on. Each tort captured a moment. None captured the <strong>cumulative, ongoing nature</strong> of an abusive relationship.</p>
+      <p>This new tort is designed precisely for that gap. The Court recognized that abuse in intimate relationships is rarely a single event; it is typically a long pattern of fear, control, isolation, and erosion of autonomy. The cumulative harm is the wrong &mdash; not just any one incident.</p>
+      <p>Practical consequences in Ontario:</p>
+      <ul>
+        <li>A survivor may bring a civil claim for damages <strong>in addition to</strong> any family law proceeding, criminal proceeding, or restraining order application.</li>
+        <li>A claim may be brought <strong>after</strong> an intimate relationship has ended.</li>
+        <li>The Court did <strong>not</strong> set a fixed limitation period for the new tort. Ontario&rsquo;s general civil limitation rules under the <em>Limitations Act, 2002</em> will likely apply, with the discoverability principle potentially extending the start of the limitation clock for survivors who could not reasonably have brought a claim earlier.</li>
+      </ul>
+
+      <h2>What Damages Might Look Like</h2>
+      <p>The trial judge awarded Ms. Ahluwalia $150,000 in general, aggravated, and punitive damages. The Court of Appeal reduced this to $100,000. The Supreme Court did not disturb the appellate court&rsquo;s damages assessment; it affirmed liability under the new tort.</p>
+      <p>Damages in intimate partner violence cases will turn on the duration of the abuse, the severity of the conduct, the impact on the survivor&rsquo;s physical and mental health, lost income, and the need for deterrence. Like all damages awards, they will be fact-specific.</p>
+
+      <h2>What This Decision Does Not Do</h2>
+      <ul>
+        <li><strong>It is not a criminal law.</strong> The Criminal Code continues to govern criminal liability for assault, sexual assault, criminal harassment, uttering threats, and the federal coercive control offences under Bill C-332 (in force since 2024). The civil tort runs parallel to &mdash; not in place of &mdash; the criminal process.</li>
+        <li><strong>It does not change family law remedies.</strong> The <em>Divorce Act</em> and the <em>Family Law Act</em> continue to govern divorce, decision-making responsibility, parenting time, child and spousal support, and division of family property. A finding of family violence under the <em>Divorce Act</em> (s. 16) remains a separate issue from a civil damages claim.</li>
+        <li><strong>It does not lower the standard of proof.</strong> Civil claims still require proof on the <strong>balance of probabilities</strong> &mdash; more likely than not &mdash; but plaintiffs must still adduce evidence of the pattern of conduct.</li>
+      </ul>
+
+      <h2>Practical Steps for Survivors Considering a Civil Claim</h2>
+      <ul>
+        <li><strong>Preserve evidence</strong>: text messages, emails, voicemails, photos, medical records, journal entries, financial statements showing patterns of control, and any police or hospital reports.</li>
+        <li><strong>Build a chronology</strong>: a written timeline of relevant events, with dates, places, names of witnesses, and a description of the pattern of behaviour.</li>
+        <li><strong>Speak to support services first</strong> if you are still in the relationship or recently out of it. The Assaulted Women&rsquo;s Helpline (1-866-863-0511) and Victim Services can connect you with safety planning resources.</li>
+        <li><strong>Get a clear picture of any parallel proceedings</strong> &mdash; criminal charges, family court matters, restraining orders, or Children&rsquo;s Aid Society involvement &mdash; because they often affect strategy and timing.</li>
+      </ul>
+
+      <h2>Scope of Practice &mdash; What a Paralegal Can and Cannot Do</h2>
+      <p>Under <strong>By-Law 4</strong> of the Law Society of Ontario, licensed paralegals (Class P1) have authority to represent clients in defined areas, including <strong>Small Claims Court</strong> matters up to a monetary limit of <strong>$35,000</strong>, Provincial Offences Court matters, Landlord and Tenant Board matters, and certain administrative tribunals.</p>
+      <p>What this means for the new tort:</p>
+      <ul>
+        <li><strong>A civil claim for intimate partner violence valued at $35,000 or less</strong> can, in principle, be filed in the <strong>Small Claims Court</strong> of Ontario, where a licensed paralegal may represent the plaintiff.</li>
+        <li><strong>A claim valued above $35,000</strong> &mdash; which most serious intimate partner violence cases will likely be &mdash; must proceed in the <strong>Superior Court of Justice</strong>, where a <strong>lawyer</strong> is required to provide representation. Paralegals do not have rights of audience in the Superior Court of Justice, the Divisional Court, or any appellate court.</li>
+        <li><strong>Divorce, decision-making responsibility, parenting time, child or spousal support, and the division of family property</strong> are not within paralegal scope and require a family lawyer.</li>
+        <li><strong>Criminal charges</strong> related to the abuse are conducted by Crown counsel; the accused is typically represented by a criminal defence lawyer.</li>
+      </ul>
+      <p>If your matter falls outside paralegal scope, we will say so directly and, where appropriate, refer you to a lawyer.</p>
+
+      <h2>Support Resources (Ontario)</h2>
+      <ul>
+        <li><strong>Assaulted Women&rsquo;s Helpline</strong> &mdash; 1-866-863-0511 (24/7, multilingual, free)</li>
+        <li><strong>Victim Services Ontario</strong> &mdash; find a local unit at <a href="https://www.ontario.ca/page/find-victim-services">ontario.ca/page/find-victim-services</a></li>
+        <li><strong>Talk4Healing</strong> (Indigenous women) &mdash; 1-855-554-4325</li>
+        <li><strong>Ontario Network of Sexual Assault/Domestic Violence Treatment Centres</strong> &mdash; care at hospitals across the province</li>
+        <li><strong>Family Court Support Worker Program</strong> &mdash; through your local Victim Services agency</li>
+        <li><strong>Legal Aid Ontario</strong> &mdash; domestic violence intake line: 1-800-668-8258</li>
+      </ul>
+      <p>If you or someone you know is in immediate danger, call <strong>9-1-1</strong>.</p>
+
+      <h2>Final Word</h2>
+      <p><em>Ahluwalia v. Ahluwalia</em> is a significant moment in Canadian tort law and a long-overdue recognition that the harm caused by intimate partner violence is more than the sum of its individual incidents. It will take years for lower courts to fully work out the contours of the new tort &mdash; damages ranges, limitation periods, evidentiary thresholds, and the interaction with criminal and family proceedings &mdash; but the door is now open.</p>
+      <p>If you are considering a civil claim and want to understand how the new tort might apply to your situation, call <a href="tel:+12262725153">226-272-5153</a> for a consultation. We will give you an honest assessment of whether your matter falls within paralegal scope, and where it does not, we will refer you to qualified family or civil litigation counsel.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. It does not create a paralegal-client or solicitor-client relationship. The law described above applies in Canada and Ontario as of the date of publication; legal developments are ongoing. For advice on your specific matter, consult a licensed paralegal or lawyer.</em></p>
+    `,
+    faqs: [
+      { q: 'Can I sue my former partner for emotional abuse alone, without physical violence?', a: 'Yes. The new tort recognizes that coercive control — isolation, financial control, surveillance, humiliation, intimidation — can amount to intimate partner violence on its own, even without physical assault. You must prove the conduct occurred during or after an intimate partnership, was intentional, and amounted to coercive control.' },
+      { q: 'How long do I have to file a claim under the new tort?', a: 'The Supreme Court did not set a fixed limitation period. Ontario\'s Limitations Act, 2002 provides a general two-year limitation from discovery, but the discoverability principle can extend the start of the clock for survivors who could not reasonably have appreciated the harm earlier. Get advice on the limitation analysis for your specific situation as soon as possible.' },
+      { q: 'Does my partner have to be criminally convicted before I can sue?', a: 'No. The civil tort is independent of the criminal process. The civil standard of proof is the balance of probabilities — more likely than not — which is lower than the criminal standard of beyond a reasonable doubt. You can succeed in a civil claim even where a criminal prosecution does not proceed or results in an acquittal.' },
+      { q: 'Can a licensed paralegal handle this kind of case?', a: 'Within Small Claims Court limits — currently $35,000 in Ontario — yes, a licensed paralegal can represent the plaintiff. Most serious intimate partner violence cases will exceed that limit and must be brought in the Superior Court of Justice, which requires a lawyer. Divorce, parenting, and family property issues also require a family lawyer.' },
+      { q: 'I am still in the relationship. Should I document things?', a: 'If you can do so safely, yes — preserving evidence is important regardless of whether you ultimately bring a civil claim. The most important thing is your safety. Call the Assaulted Women\'s Helpline at 1-866-863-0511 (24/7) or 9-1-1 in an emergency before worrying about evidence preservation.' }
+    ]
+  },
+  {
     slug: 'cpp-disability-appeal-denied-social-security-tribunal',
     title: 'CPP Disability Denied? Your Options at the Social Security Tribunal',
     description: 'Service Canada denied your CPP Disability claim? You have appeal rights through reconsideration, the SST General Division, and the Appeal Division. Here is how each stage works.',

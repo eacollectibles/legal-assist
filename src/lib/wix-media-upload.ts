@@ -116,3 +116,81 @@ export function approxByteLength(s: string): number {
   }
   return s.length * 2;
 }
+
+// ============================================================
+// Compressed inline storage for HTML bodies.
+// ------------------------------------------------------------
+// The 200KB retainer HTML doesn't fit in a Wix Data text field
+// (~177KB cap) and Wix Media rejects text/html uploads.
+// Solution: gzip the HTML in the browser (CompressionStream) → base64.
+// HTML compresses ~8-10× (lots of repeated tags + whitespace), so a
+// 200KB retainer becomes ~25KB compressed, ~35KB base64, which fits
+// inline comfortably. The reader (PublicSignPage) detects the magic
+// prefix and inflates back to the original HTML.
+// ============================================================
+
+const COMPRESSED_PREFIX = 'gz1:';
+
+/**
+ * Compress a UTF-8 string with gzip and return `gz1:<base64>` so
+ * the reader can detect-and-decompress.
+ *
+ * Falls back to returning the input untouched if CompressionStream
+ * isn't available (very old browsers). Caller can size-guard the
+ * result against the inline field limit.
+ */
+export async function compressHtmlForInline(html: string): Promise<string> {
+  if (
+    typeof (globalThis as any).CompressionStream === 'undefined' ||
+    typeof Response === 'undefined'
+  ) {
+    return html;
+  }
+  try {
+    const stream = new Blob([html]).stream().pipeThrough(
+      new (globalThis as any).CompressionStream('gzip')
+    );
+    const compressedBuf = await new Response(stream).arrayBuffer();
+    const bytes = new Uint8Array(compressedBuf);
+    let binary = '';
+    const chunkSize = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+    }
+    const base64 = btoa(binary);
+    return COMPRESSED_PREFIX + base64;
+  } catch {
+    return html;
+  }
+}
+
+/**
+ * Inverse of compressHtmlForInline. If the value starts with `gz1:`
+ * it's a gzip+base64 blob; inflate and return. Otherwise return as-is
+ * so legacy uncompressed rows keep working.
+ */
+export async function decompressHtmlFromInline(stored: string): Promise<string> {
+  if (!stored || !stored.startsWith(COMPRESSED_PREFIX)) return stored;
+  if (
+    typeof (globalThis as any).DecompressionStream === 'undefined' ||
+    typeof Response === 'undefined'
+  ) {
+    throw new Error(
+      'Browser lacks DecompressionStream — cannot inflate compressed HTML. ' +
+        'Use a modern browser (Chrome 80+, Firefox 113+, Safari 16.4+).'
+    );
+  }
+  const base64 = stored.slice(COMPRESSED_PREFIX.length);
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  const inflated = new Blob([bytes]).stream().pipeThrough(
+    new (globalThis as any).DecompressionStream('gzip')
+  );
+  return await new Response(inflated).text();
+}
+
+/** Detect whether a stored string is a compressed-HTML blob. */
+export function isCompressedHtml(s: string | null | undefined): boolean {
+  return !!s && typeof s === 'string' && s.startsWith(COMPRESSED_PREFIX);
+}

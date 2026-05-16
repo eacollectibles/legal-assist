@@ -17,7 +17,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { FileText, Plus, Send, Printer, CheckCircle, Clock, AlertCircle, Mail, Download, Eye, Edit, Archive, Zap, Users, TrendingUp, Calendar, Bell, Copy, History, BarChart3, Workflow, Bot, MessageSquare, Trash2, PenTool, Link2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { generatePDF, embedSignatureInPDF, downloadPDF } from '@/lib/pdf-generator';
-import { uploadToWixMedia, approxByteLength } from '@/lib/wix-media-upload';
+import {
+  uploadToWixMedia,
+  approxByteLength,
+  compressHtmlForInline,
+} from '@/lib/wix-media-upload';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 import UploadLinkGenerator from '@/components/UploadLinkGenerator';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
@@ -1280,12 +1284,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // least saves.
       let storedDocumentContent: string = '';
       let documentContentUrl: string | undefined;
-      // Wix Media rejects `text/html` uploads as a security policy
-      // (HTML hosted on a public CDN is an XSS vector). Upload the
-      // rendered retainer as a generic .bin blob with
-      // `application/octet-stream`; we don't care what MIME the CDN
-      // declares because PublicSignPage just calls .text() on the
-      // response and parses the bytes as HTML.
+      // PATH 1 — Wix Media. Wix Media rejects `text/html` uploads as
+      // a security policy (HTML hosted on a public CDN is an XSS
+      // vector). Upload as `application/octet-stream` — the CDN
+      // doesn't care, and PublicSignPage just calls .text() on the
+      // response and parses the bytes as HTML regardless of MIME.
       try {
         const htmlBlob = new Blob([documentContent], {
           type: 'application/octet-stream',
@@ -1302,30 +1305,56 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
           // eslint-disable-next-line no-console
           console.error(
             '[DocumentWorkflow] HTML upload to Wix Media returned no URL — ' +
-              'check the /api/media/upload server response in the network tab.'
+              'falling back to compressed inline storage. Check the ' +
+              '/api/media/upload server response in the network tab if you ' +
+              'want to fix the upload path.'
           );
         }
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('[DocumentWorkflow] HTML upload threw:', err);
       }
-      // If Media upload of HTML failed and the body is small enough
-      // to fit inline (under 80KB to give margin for other fields),
-      // keep the inline copy so View/Edit still works without a
-      // network round trip.
+      // PATH 2 — small docs go inline uncompressed (saves a fetch).
       if (!documentContentUrl && approxByteLength(documentContent) < 80_000) {
         storedDocumentContent = documentContent;
       }
-      // Hard-fail with a visible error if BOTH paths failed — without
-      // this guard the doc would save with both fields empty and the
-      // sign flow would later die with "could not load original HTML".
-      // Better to refuse to save a broken doc up front.
+      // PATH 3 — compressed inline. HTML is highly compressible
+      // (~8-10× with gzip). A 200KB retainer becomes ~25KB gzipped,
+      // ~35KB base64-encoded — fits easily in a single 177KB Wix
+      // text field. PublicSignPage detects the `gz1:` prefix and
+      // inflates on read.
+      if (!documentContentUrl && !storedDocumentContent) {
+        try {
+          const compressed = await compressHtmlForInline(documentContent);
+          if (
+            compressed &&
+            compressed !== documentContent &&
+            approxByteLength(compressed) < 160_000
+          ) {
+            storedDocumentContent = compressed;
+            // eslint-disable-next-line no-console
+            console.log(
+              '[DocumentWorkflow] Using compressed inline HTML storage. ' +
+                'Original: ' +
+                approxByteLength(documentContent) +
+                ' bytes → gzip+base64: ' +
+                approxByteLength(compressed) +
+                ' bytes.'
+            );
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('[DocumentWorkflow] HTML compression failed:', err);
+        }
+      }
+      // Hard-fail only if ALL three paths failed.
       if (!documentContentUrl && !storedDocumentContent) {
         throw new Error(
-          'The generated document could not be saved: the HTML body is too ' +
-            'large to fit inline AND the Wix Media upload failed. Check the ' +
-            'browser console for the underlying upload error, then retry. ' +
-            '(LA_WIX_API_KEY may need SITE_MEDIA.MANAGE scope.)'
+          'The generated document could not be saved: Wix Media upload ' +
+            'failed AND the compressed-inline fallback failed. Check the ' +
+            'browser console — this typically means LA_WIX_API_KEY lacks ' +
+            'SITE_MEDIA.MANAGE scope AND the browser is too old for ' +
+            'CompressionStream (needs Chrome 80+, Firefox 113+, Safari 16.4+).'
         );
       }
 

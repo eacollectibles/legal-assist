@@ -31,7 +31,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AlertCircle, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
-import { uploadToWixMedia } from '@/lib/wix-media-upload';
+import {
+  uploadToWixMedia,
+  decompressHtmlFromInline,
+  isCompressedHtml,
+} from '@/lib/wix-media-upload';
 import {
   validateSignToken,
   markSignTokenSigned,
@@ -378,6 +382,16 @@ export default function PublicSignPage() {
       });
       let originalHtml: string | undefined =
         (doc as any).documentContent || undefined;
+      // Detect-and-inflate compressed inline storage (gz1: prefix).
+      if (originalHtml && isCompressedHtml(originalHtml)) {
+        try {
+          originalHtml = await decompressHtmlFromInline(originalHtml);
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('[PublicSign] decompress inline HTML failed:', e);
+          originalHtml = undefined;
+        }
+      }
       let fetchDiag: string = '';
       if (!originalHtml || !originalHtml.trim()) {
         const htmlUrl = (doc as any).documentContentUrl;
@@ -645,6 +659,14 @@ export default function PublicSignPage() {
                       // copy first; fall through to the Media URL if
                       // empty.
                       let html = (doc as any).documentContent || '';
+                      // Inflate compressed inline storage if needed.
+                      if (html && isCompressedHtml(html)) {
+                        try {
+                          html = await decompressHtmlFromInline(html);
+                        } catch {
+                          html = '';
+                        }
+                      }
                       if (!html || !html.trim()) {
                         const htmlUrl = (doc as any).documentContentUrl;
                         if (htmlUrl) {
