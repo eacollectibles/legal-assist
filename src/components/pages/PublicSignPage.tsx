@@ -43,6 +43,15 @@ interface GeneratedDoc {
   documentName?: string;
   documentUrl?: string;
   documentContent?: string;
+  /**
+   * Wix Media URL to the rendered HTML body. The CMS row stores either
+   * an inline `documentContent` (small docs) OR a `documentContentUrl`
+   * pointing at the HTML in Wix Media (the common case once docs grow
+   * past ~80KB). Without this field the signing flow would only see
+   * the empty inline copy and produce a 1-page signature-certificate
+   * PDF instead of the full signed retainer.
+   */
+  documentContentUrl?: string;
   signedDocumentUrl?: string;
   clientId?: string;
   clientEmail?: string;
@@ -136,6 +145,7 @@ export default function PublicSignPage() {
                   ra.documentName || 'Retainer Agreement',
                 documentUrl: ra.documentUrl || '',
                 documentContent: ra.documentContent || undefined,
+                documentContentUrl: ra.documentContentUrl || undefined,
                 signedDocumentUrl: ra.signedDocumentUrl || undefined,
                 clientId: ra.clientId || undefined,
                 clientEmail: ra.clientEmail || undefined,
@@ -347,13 +357,50 @@ export default function PublicSignPage() {
             sectionIds: Array.from(initialedIds),
           }
         : undefined;
+      // Resolve the original HTML body. The CMS row stores either an
+      // inline `documentContent` (small docs, < 80KB) OR a Wix Media
+      // URL at `documentContentUrl` (the common case for full
+      // retainers, which are ~200KB of HTML). Without this lookup the
+      // embedder gets an empty body and emits only the 1-page
+      // signature-certificate — which is what was happening before
+      // this fix.
+      let originalHtml: string | undefined =
+        (doc as any).documentContent || undefined;
+      if (!originalHtml || !originalHtml.trim()) {
+        const htmlUrl = (doc as any).documentContentUrl;
+        if (htmlUrl && typeof htmlUrl === 'string') {
+          try {
+            const r = await fetch(htmlUrl, { credentials: 'omit' });
+            if (r.ok) {
+              originalHtml = await r.text();
+            } else {
+              // eslint-disable-next-line no-console
+              console.error('Failed to fetch documentContentUrl:', r.status);
+            }
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('Error fetching documentContentUrl:', e);
+          }
+        }
+      }
+      if (!originalHtml || !originalHtml.trim()) {
+        // Surface the problem instead of silently emitting a
+        // certificate-only PDF. The paralegal will see this banner
+        // and re-generate the source document.
+        throw new Error(
+          'The original document HTML could not be loaded. Please contact ' +
+            'our office — the retainer needs to be regenerated before it can ' +
+            'be signed.'
+        );
+      }
+
       const signedPdfDataUrl = await embedSignatureInPDF(
         doc.documentUrl || '',
         sig,
         doc.documentName || 'Document',
         // Pass the original HTML so the embedder can re-render with the
         // client's signature appended (documentUrl is a real PDF).
-        (doc as any).documentContent || undefined,
+        originalHtml,
         initialsPayload,
         // Pass the client's typed name from the sign-token flow so the
         // "Electronically signed by ___" line in the certification block
@@ -567,13 +614,32 @@ export default function PublicSignPage() {
                       !acceptedTerms ||
                       !doc.documentUrl
                     }
-                    onClick={() => {
+                    onClick={async () => {
                       // Extract initialing targets from the document's
                       // stored HTML. If the document is from an older
                       // template (no [data-initial-target] markup) skip
                       // the initialing phase and go straight to the
                       // main signature.
-                      const html = (doc as any).documentContent || '';
+                      //
+                      // The HTML lives at either `documentContent`
+                      // (inline, small docs) or `documentContentUrl`
+                      // (Wix Media, the common case). Try the inline
+                      // copy first; fall through to the Media URL if
+                      // empty.
+                      let html = (doc as any).documentContent || '';
+                      if (!html || !html.trim()) {
+                        const htmlUrl = (doc as any).documentContentUrl;
+                        if (htmlUrl) {
+                          try {
+                            const r = await fetch(htmlUrl, {
+                              credentials: 'omit',
+                            });
+                            if (r.ok) html = await r.text();
+                          } catch {
+                            /* fall through to skipping initialing */
+                          }
+                        }
+                      }
                       const targets = extractInitialTargets(html);
                       if (targets.length > 0) {
                         setInitialTargets(targets);

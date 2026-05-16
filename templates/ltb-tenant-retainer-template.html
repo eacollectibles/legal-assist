@@ -25,7 +25,7 @@
 :root { --navy:#0f2a4a; --navy-2:#14315a; --gold:#b08a3e; --ink:#1f2937; --ink-2:#374151; --mute:#6b7280; --bg:#ffffff; --bg-soft:#f7f9fc; --bg-warm:#fdfaf3; --line:#e2e8f0; --line-2:#cbd5e1; --danger:#b91c1c; --danger-soft:#fef2f2; --ok:#166534; --ok-soft:#f0fdf4; }
 * { box-sizing: border-box; hyphens: none !important; -webkit-hyphens: none !important; -moz-hyphens: none !important; -ms-hyphens: none !important; }
 html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font: 400 13.5px/1.55 Inter, Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; text-align: left; }
-.doc { max-width: 760px; margin: 0 auto; padding: 32px 40px 48px; text-align: left; }
+.doc { max-width: 760px; margin: 0 auto; padding: 32px 40px 12px; text-align: left; }
 p, li { text-align: left; word-break: normal; overflow-wrap: break-word; }
 h1, h2, h3, h4 { font-family: Inter, Arial, sans-serif; color: var(--navy); line-height: 1.25; margin: 0 0 8px; word-break: normal; text-align: left; }
 h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
@@ -167,7 +167,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 .sig-card .cursive { font: italic 400 22px/1 "Allura", "Lora", cursive, serif; color: var(--navy); margin: 8px 0 0; letter-spacing: 0.01em; min-height: 36px; }
 .sig-card .sig-area { height: 44px; }
 .sig-card .date { font: 500 11px/1.3 Inter, sans-serif; color: var(--ink-2); }
-.doc-footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); font: 500 10.5px/1.45 Inter, sans-serif; color: var(--mute); display: flex; justify-content: space-between; gap: 14px; }
+.doc-footer { margin-top: 16px; padding-top: 10px; margin-bottom: 0; border-top: 1px solid var(--line); font: 500 10.5px/1.45 Inter, sans-serif; color: var(--mute); display: flex; justify-content: space-between; gap: 14px; page-break-inside: avoid; break-inside: avoid; page-break-after: avoid; break-after: avoid; }
 .doc-footer a { color: var(--mute); }
 .doc-footer .right { text-align: right; }
 .doc-footer .version { margin-top: 4px; font-size: 9.5px; }
@@ -196,7 +196,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
     <div class="header-contact">
       <span class="lab">Office</span>
       <span class="row"><a href="tel:+12262725153">226&#8209;272&#8209;5153</a></span>
-      <span class="row"><a href="mailto:contact@legalassist.london">contact@legalassist.london</a></span>
+      <span class="row"><a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a></span>
       <span class="row"><a href="https://legalassist.london">legalassist.london</a></span>
     </div>
   </div>
@@ -280,7 +280,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   </div>
   <div class="cover-foot">
     <div class="left">Legal Assist Paralegal Services is licensed and insured by the Law Society of Ontario (LSO). Verify our licensing at <a href="https://lso.ca/directory">LSO.ca/directory</a> or by scanning the QR code above. This agreement is governed by the laws of the Province of Ontario.</div>
-    <div class="right"><small>Document</small>LTB&#8209;T&#8209;RET&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Tenant Retainer v1.1</div><div class="version" style="white-space:nowrap;">Last updated {DATE}</div></div>
+    <div class="right"><small>Document</small>LTB&#8209;T&#8209;RET&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Tenant Retainer v1.4</div><div class="version" style="white-space:nowrap;">Last updated {DATE}</div></div>
   </div>
 </section>
 
@@ -289,13 +289,13 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 
 <h3 style="margin-top:24px;">How an LTB tenant matter typically moves</h3>
 <div class="timeline">
-  <div class="timeline-step"><span class="dot">1</span><span class="label">Intake</span><span class="sub">Consult</span></div>
-  <div class="timeline-step"><span class="dot">2</span><span class="label">Notice</span><span class="sub">or Issue</span></div>
-  <div class="timeline-step"><span class="dot">3</span><span class="label">Application</span><span class="sub">T or L Form</span></div>
-  <div class="timeline-step"><span class="dot">4</span><span class="label">CMH</span><span class="sub">Mediation</span></div>
-  <div class="timeline-step"><span class="dot">5</span><span class="label">Disclosure</span><span class="sub">Exchange</span></div>
-  <div class="timeline-step"><span class="dot">6</span><span class="label">Hearing</span><span class="sub">Virtual</span></div>
-  <div class="timeline-step"><span class="dot">7</span><span class="label">Order</span><span class="sub">Decision</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">1</span><span class="label">Intake</span><span class="sub">Consult</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">2</span><span class="label">Notice</span><span class="sub">or Issue</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">3</span><span class="label">Application</span><span class="sub">T or L Form</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">4</span><span class="label">CMH</span><span class="sub">Mediation</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">5</span><span class="label">Disclosure</span><span class="sub">Exchange</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">6</span><span class="label">Hearing</span><span class="sub">Virtual</span></div>
+  <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">7</span><span class="label">Order</span><span class="sub">Decision</span></div>
 </div>
 
 <table class="timeline-table">
@@ -330,7 +330,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 <p>This retainer is subject to confirmation that no conflict of interest exists under the <em>Paralegal Rules of Conduct</em>. The Client agrees to disclose, on request, the identity of the landlord, property manager, co&#8209;tenants, occupants, building owner, and any related entities to permit a complete conflict check. If a conflict is identified after execution of this Agreement, the Paralegal may withdraw under Rules 3.04 to 3.05 of the <em>Paralegal Rules of Conduct</em>.</p>
 
 <div data-keep-together>
-  <h2>3. Retainer, Relationship &amp; Limitation Preservation</h2>
+  <h2 class="page-break-before">3. Retainer, Relationship &amp; Limitation Preservation</h2>
   <p>The Client retains the Paralegal to represent the Client as a tenant before the Ontario Landlord and Tenant Board (the &ldquo;<strong>LTB</strong>&rdquo; or the &ldquo;<strong>Board</strong>&rdquo;) in respect of the matter described in Section 1. The Paralegal accepts the retainer subject to the terms of this Agreement.</p>
   <p>The Paralegal acts only within the scope of practice authorized by By&#8209;Law 4 of the Law Society of Ontario for Class P1 paralegals. Nothing in this Agreement creates a solicitor&#8209;client relationship with a lawyer or an obligation on us to provide legal services that fall outside paralegal scope.</p>
   <div class="callout warn"><h4>No Limitation or Notice&#8209;Period Preservation Until Acceptance</h4><p>For greater certainty, <strong>until this Agreement is signed, accepted by the Paralegal, and any required retainer funds are received in the firm&rsquo;s trust account, the Paralegal is not responsible for preserving any limitation period, eviction&#8209;notice compliance period, void period, or filing deadline applicable to the Client&rsquo;s matter.</strong> The Client remains solely responsible for monitoring deadlines (including the one&#8209;year limit under RTA s. 29(2) and the compliance/void periods on N&#8209;notices) until acceptance is confirmed in writing.</p></div>
@@ -448,7 +448,8 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   <li><strong>Confirm that all information provided to the Paralegal is truthful and complete to the best of the Client&rsquo;s knowledge</strong>, and promptly correct any inaccuracy that comes to the Client&rsquo;s attention.</li>
 </ul>
 
-<h2>10. What We Need From You — Initial Checklist</h2>
+<h2 class="page-break-before">10. What We Need From You — Initial Checklist</h2>
+<div data-keep-together>
 <p>To open and properly assess the file, please provide the following promptly. The list is not exhaustive and the Paralegal may request additional materials as the matter develops:</p>
 <div class="intake-checklist">
   <h4>Initial document checklist</h4>
@@ -468,6 +469,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
     <li>Names and contact information for any witnesses (co&#8209;tenants, neighbours, etc.)</li>
     <li>Government&#8209;issued photo identification (see Section 11)</li>
   </ul>
+</div>
 </div>
 
 <h2>11. Client Identification &amp; Verification</h2>
@@ -667,7 +669,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 </div>
 
 <div class="doc-footer">
-  <div class="left">Legal Assist Paralegal Services · 226&#8209;272&#8209;5153 · contact@legalassist.london<br><a href="https://legalassist.london">legalassist.london</a> · LTB Tenant Retainer Agreement<div class="version">Document Version: LTB Tenant Retainer v1.1 · Last updated {DATE}</div></div>
+  <div class="left">Legal Assist Paralegal Services · 226&#8209;272&#8209;5153 · contact@legalassist.london<br><a href="https://legalassist.london">legalassist.london</a> · LTB Tenant Retainer Agreement<div class="version">Document Version: LTB Tenant Retainer v1.4 · Last updated {DATE}</div></div>
   <div class="right">VERIFY OUR LICENSING<br><a href="https://lso.ca/directory">LSO.ca/directory</a></div>
 </div>
 

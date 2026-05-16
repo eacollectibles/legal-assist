@@ -877,12 +877,36 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // a UUID). We'd rather print "—" than a hex blob in the
       // retainer's Email field.
       const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
-      const clientAccount = userAccounts.find(u => u._id === selectedClientId);
+      // Match the useraccount in three ways because Wix sometimes
+      // stores the linkage as _id, sometimes as a separate
+      // clientProfileId/loginEmail/contactId field. Without all three
+      // checks, retainers for clients who logged in through SSO had no
+      // email substituted and the cover page printed "—".
+      const clientAccount = userAccounts.find(
+        u =>
+          u._id === selectedClientId ||
+          (u as any).clientProfileId === selectedClientId ||
+          (u as any).contactId === selectedClientId
+      );
       const looksLikeEmail = (s?: string) =>
         !!s && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
+      // Pull from every plausible field on both the useraccount AND the
+      // clientprofile. Wix collections use different field names across
+      // the codebase (`email`, `emailAddress`, `clientEmail`,
+      // `primaryEmail`, `loginEmail`), and the intake form has written
+      // to several of these over time. We pick the first one that
+      // looks like a valid email.
       const clientEmailAddress =
-        [clientAccount?.email, (client as any).email, (client as any).emailAddress]
-          .find(looksLikeEmail) || '';
+        [
+          clientAccount?.email,
+          (clientAccount as any)?.loginEmail,
+          (clientAccount as any)?.primaryEmail,
+          (client as any).email,
+          (client as any).emailAddress,
+          (client as any).clientEmail,
+          (client as any).primaryEmail,
+          (client as any).contactEmail,
+        ].find(looksLikeEmail) || '';
 
       // Replace placeholders in template content. cleanTemplateContent
       // strips any legacy <form> scaffolding ("CONFIGURE FEE STRUCTURE"
@@ -1037,6 +1061,20 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // how the signature block is laid out.
       const signParalegal = getParalegalById(selectedParalegalId);
       const todayFormatted = format(new Date(), 'MMMM d, yyyy');
+
+      // Per-paralegal letterhead email. The shared `paralegals.ts` `email`
+      // field is `EMAIL_PRIMARY` (the firm's generic inbox) but the
+      // retainer letterhead should show each paralegal's direct address.
+      // Keyed by paralegal id so adding a paralegal is one line here +
+      // one entry in paralegals.ts.
+      const PARALEGAL_EMAIL_MAP: Record<string, string> = {
+        'jeanfrancois-demers': 'jeanfrancois@legalassist.london',
+        'candice-fogarty': 'candice@legalassist.london',
+      };
+      const paralegalEmailValue =
+        (signParalegal && PARALEGAL_EMAIL_MAP[signParalegal.id]) ||
+        'contact@legalassist.london';
+
       if (autoSignAsParalegal && signParalegal) {
         const cursiveBlock =
           `<span style="font-family:'Allura','Segoe Script','Brush Script MT',cursive;` +
@@ -1061,6 +1099,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         documentContent = documentContent.replace(/\{PARALEGAL_CREDENTIAL\}/g, signParalegal?.credentialLine || '—');
         documentContent = documentContent.replace(/\{PARALEGAL_SIGN_DATE\}/g, todayFormatted);
       }
+      documentContent = documentContent.replace(/\{PARALEGAL_EMAIL\}/g, paralegalEmailValue);
 
       // ============================================================
       // HRTO retainer template (and any future template using the
