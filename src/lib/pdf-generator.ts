@@ -979,15 +979,39 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     // data-pagebreak-before="true" in the template. Overrides MIN_FILL.
     const forcedBreaks: number[] = [];
 
+    // "Danger zones" — Y ranges (in canvas pixels) where a horizontal
+    // page cut would slice through the middle of a heading. Any cut
+    // candidate that falls inside one of these zones MUST be pulled
+    // back up to the top of the zone so the heading lands on the next
+    // page. Each zone is widened by an 8-px buffer on either side so
+    // we don't cut right at the heading's edge either.
+    const dangerZones: Array<[number, number]> = [];
     host
       .querySelectorAll('h1, h2, h3, h4')
       .forEach((el) => {
         const r = (el as HTMLElement).getBoundingClientRect();
-        const yInCanvas = (r.top - hostRect.top) * 2;
-        if (yInCanvas > 0 && yInCanvas < canvas.height) {
-          sectionTops.push(yInCanvas);
+        const top = (r.top - hostRect.top) * 2;
+        const bottom = (r.bottom - hostRect.top) * 2;
+        if (bottom > 0 && top < canvas.height) {
+          sectionTops.push(top);
+          // Widen by 8 px on each side (16 canvas px at scale: 2).
+          dangerZones.push([top - 16, bottom + 16]);
         }
       });
+    // Sort danger zones by top edge for fast lookup.
+    dangerZones.sort((a, b) => a[0] - b[0]);
+
+    /**
+     * If `y` falls inside any heading's danger zone, return the
+     * coordinate just ABOVE that zone (so the heading appears on the
+     * next page). Otherwise return `y` unchanged.
+     */
+    const avoidHeadingSlice = (y: number): number => {
+      for (const [lo, hi] of dangerZones) {
+        if (y > lo && y < hi) return lo;
+      }
+      return y;
+    };
 
     host
       .querySelectorAll(
@@ -1080,6 +1104,17 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
         if (cutAt > target + canvasPerPage * 0.20) {
           cutAt = beforeTarget ?? target;
         }
+      }
+
+      // FINAL SAFETY: pull the cut UP if it would slice through any
+      // heading's danger zone. This catches all the paths above —
+      // forced breaks, sectionTops, blockBottoms, and the last-resort
+      // target fallback — so headings can never be cut in half.
+      const safeCut = avoidHeadingSlice(cutAt);
+      // Only apply if it doesn't shrink the page below the MIN_FILL
+      // threshold or push us backwards (sanity check).
+      if (safeCut > currentY + 100 && safeCut <= cutAt) {
+        cutAt = safeCut;
       }
 
       breaks.push(cutAt);
