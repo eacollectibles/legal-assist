@@ -835,8 +835,15 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       logging: false,
       // Force the cloned host to be fully visible so html2canvas
       // captures the content even if the live host is opacity:0 or
-      // otherwise visually suppressed.
-      onclone: (clonedDoc: Document) => {
+      // otherwise visually suppressed. Also defuse two failure modes
+      // that have broken signature rendering in production:
+      //   (1) `Cannot read properties of null (reading 'cssRules')`
+      //       from html2canvas trying to read cross-origin CSS in the
+      //       cloned doc — we strip those <link> tags from the clone.
+      //   (2) Dynamically-injected <img data-pdf-sig> tags that
+      //       hadn't fully decoded in the live DOM before clone — we
+      //       re-set the src in the clone and await decode there.
+      onclone: async (clonedDoc: Document) => {
         const clonedHost = clonedDoc.querySelector(
           `[data-pdf-host="${HOST_MARK}"]`
         ) as HTMLElement | null;
@@ -847,6 +854,52 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
           clonedHost.style.zIndex = 'auto';
           clonedHost.style.position = 'static';
         }
+        // Strip cross-origin stylesheets from the clone to avoid the
+        // `Cannot read properties of null (reading 'cssRules')` error.
+        // Only inline <style> tags survive, which is fine because all
+        // template/document CSS is already inline-injected.
+        try {
+          const links = clonedDoc.querySelectorAll(
+            'link[rel="stylesheet"], link[as="style"]'
+          );
+          links.forEach((l) => {
+            try { l.parentNode?.removeChild(l); } catch { /* */ }
+          });
+        } catch { /* */ }
+        // Re-decode every <img> in the clone so the signature data:URL
+        // is fully decoded into the offscreen DOM that html2canvas
+        // captures from. Belt-and-braces with the parent-DOM image
+        // await: the cloned <img> elements are SEPARATE DOM nodes and
+        // may not inherit the parent's decoded image cache in every
+        // browser.
+        try {
+          const clonedImgs = Array.from(
+            (clonedHost || clonedDoc.body).querySelectorAll('img')
+          );
+          await Promise.all(
+            clonedImgs.map(
+              (img) =>
+                new Promise<void>((resolve) => {
+                  const finish = () => resolve();
+                  const timeout = setTimeout(finish, 1500);
+                  const done = () => {
+                    clearTimeout(timeout);
+                    if (typeof (img as any).decode === 'function') {
+                      (img as any).decode().then(finish).catch(finish);
+                    } else {
+                      finish();
+                    }
+                  };
+                  if (img.complete && img.naturalWidth > 0) {
+                    done();
+                  } else {
+                    img.addEventListener('load', done, { once: true });
+                    img.addEventListener('error', finish, { once: true });
+                  }
+                })
+            )
+          );
+        } catch { /* */ }
       },
     });
 
