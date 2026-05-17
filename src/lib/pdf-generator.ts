@@ -274,58 +274,174 @@ export async function embedSignatureInPDF(
     (signatureData.signedByParalegalName && signatureData.signedByParalegalName.trim()) ||
     'Client';
   
-  // Create the signature HTML block following traditional legal document layout
-  let signatureBlockHtml = '';
-  
-  // Build signature block with traditional legal formatting
+  // ----------------------------------------------------------------
+  // Build the signature artifacts. We need TWO things:
+  //   (A) The signature image itself, sized to drop into the empty
+  //       `<div class="sig-area"></div>` inside the Client Signature
+  //       card of the LTB / HRTO / Warranty templates.
+  //   (B) A compact e-signature audit trail (date, time, IP, cert
+  //       statement) that goes BELOW the signature row — not as a
+  //       new "Section 6" with its own page break.
+  //
+  // The previous implementation only emitted one big "6. ELECTRONIC
+  // SIGNATURE" block and appended it to the end of the document,
+  // which left the Client Signature card empty on page 20 and created
+  // an orphaned page 21. This version drops the image into the card
+  // and adds a small footer audit-trail block right after the
+  // signature row.
+  // ----------------------------------------------------------------
+  let sigImgHtml = '';
+  let auditTrailHtml = '';
   if (signatureData.signatureDataUrl) {
-    signatureBlockHtml = `
-    <div style="margin-top: 40px; page-break-before: avoid;">
-      <h2 style="font-size: 12pt; font-weight: bold; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px;">6. ELECTRONIC SIGNATURE</h2>
-      
-      <div style="border: 1px solid #000; padding: 12px; background: #ffffff; margin-bottom: 12px;">
-        <img src="${signatureData.signatureDataUrl}" alt="Electronic Signature" style="max-width: 300px; max-height: 60px; display: block; margin: 0;" />
-        <div style="border-top: 1px solid #000; margin-top: 8px; padding-top: 4px; font-size: 10pt; line-height: 1.2;">Electronically signed by ${escapeHtml(signerName)}</div>
-      </div>
-
-      <div style="display: table; width: 100%; margin-bottom: 12px; font-size: 10pt; line-height: 1.2;">
+    // The image is sized to match the paralegal cursive slot in the
+    // sig-card. Template CSS for the paralegal:
+    //   .sig-card .cursive { min-height: 36px; margin: 8px 0 0; ... }
+    // We mirror those values here so the client signature visually
+    // occupies the same vertical space as the paralegal's cursive
+    // signature. crossorigin="anonymous" lets html2canvas rasterise
+    // without tainting the canvas; explicit width+height tell the
+    // browser to reserve layout before the image decodes (otherwise
+    // html2canvas can capture a zero-height box).
+    sigImgHtml =
+      `<img src="${signatureData.signatureDataUrl}" alt="Client Signature" ` +
+      `crossorigin="anonymous" ` +
+      `style="display:block;max-width:260px;max-height:46px;width:auto;height:auto;margin:0;padding:0;" />`;
+    auditTrailHtml = `
+    <div style="margin: 10px 0 6px; padding: 10px 14px; background: #fdfaf3; ` +
+      `border: 1px solid #e2e8f0; border-radius: 6px; font: 500 10pt/1.3 Inter, Arial, sans-serif; ` +
+      `color: #374151; page-break-inside: avoid;">
+      <div style="font: 700 9pt/1.2 Inter, sans-serif; color: #6b7280; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px;">Electronic Signature Audit Trail</div>
+      <div style="font-size: 10pt; line-height: 1.4; color: #1f2937;">Electronically signed by <strong>${escapeHtml(signerName)}</strong></div>
+      <div style="display: table; width: 100%; margin-top: 6px; font-size: 9.5pt;">
         <div style="display: table-row;">
-          <div style="display: table-cell; width: 50%; padding-right: 8px; padding-bottom: 6px;"><strong>Date:</strong> ${escapeHtml(signatureData.signedDate)}</div>
-          <div style="display: table-cell; width: 50%; padding-left: 8px; padding-bottom: 6px;"><strong>IP Address:</strong> ${escapeHtml(signatureData.ipAddress)}</div>
+          <div style="display: table-cell; width: 50%; padding-right: 8px; padding-bottom: 3px;"><strong>Date:</strong> ${escapeHtml(signatureData.signedDate)}</div>
+          <div style="display: table-cell; width: 50%; padding-left: 8px; padding-bottom: 3px;"><strong>IP Address:</strong> ${escapeHtml(signatureData.ipAddress)}</div>
         </div>
         <div style="display: table-row;">
           <div style="display: table-cell; width: 50%; padding-right: 8px;"><strong>Time:</strong> ${escapeHtml(signatureData.signedTime)}</div>
           <div style="display: table-cell; width: 50%; padding-left: 8px;"><strong>Timestamp:</strong> ${signatureData.timestamp.toISOString()}</div>
         </div>
       </div>
-
-      <div style="padding: 12px; background: #ffff99; border: 1px solid #000; font-size: 9pt; line-height: 1.2;">
-        <strong>CERTIFICATION:</strong> This document has been electronically signed. The signature, date, time, and IP address have been permanently affixed to this document and cannot be altered.
-      </div>
-    </div>
-  `;
+      <div style="margin-top: 6px; font-size: 8.5pt; color: #6b7280; font-style: italic;">This document has been electronically signed. The signature, date, time, and IP address have been permanently affixed to this document.</div>
+    </div>`;
   }
 
-  // CRITICAL: If signatureBlockHtml is empty, use fallback marker
+  // Legacy combined block kept for templates that use the
+  // {SIGNATURE} / {SIGNATURE_SECTION} placeholders. Newer LTB / HRTO /
+  // Warranty templates do NOT use these placeholders — they have a
+  // proper Client Signature card with an empty <div class="sig-area">.
+  let signatureBlockHtml = '';
+  if (signatureData.signatureDataUrl) {
+    signatureBlockHtml = `
+    <div style="margin-top: 24px; page-break-before: avoid;">
+      <div style="border: 1px solid #000; padding: 12px; background: #ffffff; margin-bottom: 12px;">
+        ${sigImgHtml}
+        <div style="border-top: 1px solid #000; margin-top: 8px; padding-top: 4px; font-size: 10pt; line-height: 1.2;">Electronically signed by ${escapeHtml(signerName)}</div>
+      </div>
+      ${auditTrailHtml}
+    </div>`;
+  }
   if (!signatureBlockHtml || signatureBlockHtml.trim() === '') {
     signatureBlockHtml = '__SIGNATURE_NOT_AVAILABLE__';
   }
 
-  // Replace signature placeholder if found, otherwise append at the end
-  let finalContent;
-  if (foundPlaceholder) {
-    // Replace ONLY the first occurrence of the found placeholder
-    finalContent = originalContent.replace(foundPlaceholder, signatureBlockHtml);
-    
-    // CRITICAL: Verify that the placeholder was actually replaced
-    if (finalContent.includes(foundPlaceholder)) {
-      console.error('Signature placeholder replacement failed - placeholder still exists');
-      // Force replace all occurrences as fallback
-      finalContent = originalContent.split(foundPlaceholder).join(signatureBlockHtml);
+  // ----------------------------------------------------------------
+  // PRIMARY embed path: target the LTB / HRTO / Warranty template's
+  // Client Signature card directly. Each of those templates has this
+  // structure (line-broken for readability):
+  //
+  //   <div class="sig-card">
+  //     <div class="lab">Client Signature</div>
+  //     <div class="sig-area"></div>     <-- drop the image here
+  //     <div class="line"></div>
+  //     <div class="name">{CLIENT_NAME}</div>
+  //     ...
+  //   </div>
+  //
+  // We find the FIRST `<div class="sig-area"></div>` (the Client side
+  // — the Paralegal side uses `.cursive`, not `.sig-area`) and stuff
+  // the signature image into it. Then we insert the audit-trail
+  // block immediately after the `<div class="signature-row">...</div>`
+  // wrapper so it appears below the cards on the same page.
+  // ----------------------------------------------------------------
+  let finalContent: string;
+  let usedCardEmbed = false;
+  if (signatureData.signatureDataUrl && sigImgHtml) {
+    // Try multiple patterns to maximise the chance of matching the
+    // real CMS-stored HTML, which may have minor whitespace, quote,
+    // or attribute-order variations from the canonical template.
+    // Each pattern is tried in turn until one matches.
+    const sigAreaPatterns: RegExp[] = [
+      /<div\s+class\s*=\s*["']sig-area["']\s*>\s*<\/div>/i,
+      /<div\s+class\s*=\s*["']sig-area["'][^>]*>\s*<\/div>/i,
+      /<div[^>]*\bclass\s*=\s*["'][^"']*\bsig-area\b[^"']*["'][^>]*>\s*<\/div>/i,
+    ];
+    let matchedPattern: RegExp | null = null;
+    for (const p of sigAreaPatterns) {
+      if (p.test(originalContent)) {
+        matchedPattern = p;
+        break;
+      }
+    }
+    if (matchedPattern) {
+      // 1. Replace the empty sig-area with a sig-area containing the
+      //    client's signature image. The replacement div uses the
+      //    EXACT same inline layout as the paralegal `.cursive` slot
+      //    on the other side of the row, so the two signatures sit at
+      //    the same vertical position above their respective lines.
+      const replacement =
+        `<div class="sig-area" ` +
+        `style="min-height:46px;margin:8px 0 0;padding:0;` +
+        `display:flex;align-items:flex-end;justify-content:flex-start;` +
+        `overflow:hidden;">${sigImgHtml}</div>`;
+      let withCardImg = originalContent.replace(matchedPattern, replacement);
+
+      // 2. Insert the audit-trail block immediately BEFORE the
+      //    .doc-footer so it lands below the signature row on the
+      //    same page.
+      const docFooterIdx = withCardImg.search(/<div\s+class\s*=\s*["']doc-footer["']/i);
+      if (docFooterIdx !== -1) {
+        withCardImg =
+          withCardImg.slice(0, docFooterIdx) +
+          auditTrailHtml +
+          withCardImg.slice(docFooterIdx);
+      } else {
+        withCardImg = withCardImg + auditTrailHtml;
+      }
+      finalContent = withCardImg;
+      usedCardEmbed = true;
+      // eslint-disable-next-line no-console
+      console.log(
+        '[pdf-generator] Embedded client signature into <div class="sig-area"> ' +
+          'using pattern: ' + matchedPattern.source
+      );
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[pdf-generator] No <div class="sig-area"> match found in the document HTML — ' +
+          'falling back to legacy placeholder / append path. The Client Signature card ' +
+          'will be empty unless the template includes either the sig-area div or a ' +
+          '{SIGNATURE} placeholder.'
+      );
+      finalContent = originalContent;
     }
   } else {
-    // Append signature at the end if no placeholder found
-    finalContent = originalContent + signatureBlockHtml;
+    finalContent = originalContent;
+  }
+
+  // SECONDARY: legacy {SIGNATURE} / {SIGNATURE_SECTION} placeholders.
+  if (!usedCardEmbed) {
+    if (foundPlaceholder) {
+      finalContent = originalContent.replace(foundPlaceholder, signatureBlockHtml);
+      if (finalContent.includes(foundPlaceholder)) {
+        console.error('Signature placeholder replacement failed - placeholder still exists');
+        finalContent = originalContent.split(foundPlaceholder).join(signatureBlockHtml);
+      }
+    } else {
+      // LAST RESORT: append at the end. Should never hit this for
+      // LTB / HRTO / Warranty templates.
+      finalContent = originalContent + signatureBlockHtml;
+    }
   }
 
   // Final verification: ensure NO placeholders remain in the final content
@@ -657,6 +773,41 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       try { await (document as any).fonts.ready; } catch { /* non-fatal */ }
     }
     await new Promise((r) => requestAnimationFrame(() => r(null)));
+
+    // Wait for every <img> inside the host to actually finish decoding
+    // before we hand the DOM to html2canvas. The signature image is a
+    // data: URL injected dynamically; if html2canvas runs before it
+    // decodes, the Client Signature card renders empty. Each image is
+    // awaited explicitly (load+decode) with a hard timeout so we never
+    // hang forever on a broken image.
+    try {
+      const imgs = Array.from(host.querySelectorAll('img'));
+      await Promise.all(
+        imgs.map(
+          (img) =>
+            new Promise<void>((resolve) => {
+              const finish = () => resolve();
+              const timeout = setTimeout(finish, 2000);
+              const done = () => {
+                clearTimeout(timeout);
+                if (typeof (img as any).decode === 'function') {
+                  (img as any).decode().then(finish).catch(finish);
+                } else {
+                  finish();
+                }
+              };
+              if (img.complete && img.naturalWidth > 0) {
+                done();
+              } else {
+                img.addEventListener('load', done, { once: true });
+                img.addEventListener('error', finish, { once: true });
+              }
+            })
+        )
+      );
+    } catch {
+      /* non-fatal */
+    }
     await new Promise((r) => setTimeout(r, 120));
 
     const pdf = new jsPDF({
