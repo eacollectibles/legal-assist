@@ -3202,10 +3202,13 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
               </Dialog>
             </div>
 
-            {/* Templates grouped by LSO By-Law 7.1 section. The previous
-                flat list made it hard to find the right template by
-                compliance section; grouping mirrors the structure of the
-                client-file Section A-K tabs paralegals work with daily. */}
+            {/* Templates grouped by area of law (HRTO, Traffic, LTB,
+                Small Claims, etc.) — same grouping logic used by the
+                Generate Document picker so the paralegal sees the
+                same category structure in both places. Within each
+                area, templates are sorted alphabetically by name.
+                Previously grouped by LSO By-Law 7.1 section, which
+                made finding-to-edit templates harder than necessary. */}
             <div className="space-y-6" style={{ minHeight: '400px' }}>
               {isLoading ? null : templates.length === 0 ? (
                 <Card>
@@ -3217,23 +3220,40 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                   </CardContent>
                 </Card>
               ) : (() => {
-                // Bucket templates by LSO section (with stable ordering)
+                // Bucket templates by area of law, using the same
+                // classifier the Generate Document picker uses.
                 const buckets = new Map<string, DocumentTemplate[]>();
-                LSO_SECTIONS.forEach(s => buckets.set(s.value, []));
+                AREA_DISPLAY_ORDER.forEach(a => buckets.set(a, []));
                 templates.forEach(t => {
-                  const key = (t.lsoSection && buckets.has(t.lsoSection)) ? t.lsoSection : 'OTHER';
-                  buckets.get(key)!.push(t);
+                  const area = classifyTemplateArea(t);
+                  if (!buckets.has(area)) buckets.set(area, []);
+                  buckets.get(area)!.push(t);
                 });
-                return LSO_SECTIONS.filter(s => (buckets.get(s.value) || []).length > 0).map(section => (
-                  <div key={section.value}>
+                // Sort each bucket alphabetically by templateName so
+                // it's easy to scan within a section.
+                buckets.forEach(list => {
+                  list.sort((a, b) =>
+                    (a.templateName || '').localeCompare(b.templateName || '')
+                  );
+                });
+                // Render in canonical order first, then any unknown
+                // areas the paralegal entered as a free-text category.
+                const orderedAreas = [
+                  ...AREA_DISPLAY_ORDER.filter(a => (buckets.get(a) || []).length > 0),
+                  ...Array.from(buckets.keys())
+                    .filter(a => !AREA_DISPLAY_ORDER.includes(a) && (buckets.get(a) || []).length > 0)
+                    .sort(),
+                ];
+                return orderedAreas.map(area => (
+                  <div key={area}>
                     <h3 className="font-heading text-lg font-bold text-foreground mb-3 flex items-center gap-2 sticky top-0 bg-background py-1 z-10 border-b border-gray-100">
-                      {section.label}
+                      {area}
                       <Badge variant="outline" className="text-xs">
-                        {buckets.get(section.value)!.length}
+                        {buckets.get(area)!.length}
                       </Badge>
                     </h3>
                     <div className="grid gap-4">
-                      {buckets.get(section.value)!.map((template) => (
+                      {buckets.get(area)!.map((template) => (
                         <Card key={template._id} className="hover:shadow-lg transition-shadow">
                           <CardHeader>
                             <div className="flex justify-between items-start">
