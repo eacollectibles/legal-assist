@@ -14,6 +14,276 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'rooming-house-vs-tenancy-rta-section-5i-ontario',
+    title: 'Rooming House or Tenancy? When the RTA Does Not Apply (s. 5(i))',
+    description: 'Sharing a kitchen or bathroom with the owner of the property? The Residential Tenancies Act may not protect you. A plain-English guide to the s. 5(i) exemption, what it means for evictions, and what rights you do have at common law.',
+    category: 'ltb',
+    date: '2026-05-17',
+    readTime: '7 min',
+    content: `
+      <p>One of the most misunderstood corners of Ontario residential housing law is the &ldquo;shared-facilities&rdquo; exemption in section 5(i) of the <em>Residential Tenancies Act, 2006</em> (RTA). If it applies, you are not a tenant under the RTA &mdash; you are a boarder or licensee. That changes almost everything: the notice you are owed, where any dispute is heard, and how quickly the owner can ask you to leave.</p>
+      <p>This post explains the exemption, what falls inside and outside it, and what rights you do have when the RTA does not apply.</p>
+
+      <h2>What section 5(i) actually says</h2>
+      <p>Section 5(i) of the RTA states that the Act does <strong>not</strong> apply to:</p>
+      <p style="margin-left:18px;"><em>&ldquo;Living accommodation whose occupant or occupants are required to share a bathroom or kitchen facility with the owner, the owner&rsquo;s spouse, child or parent or the spouse&rsquo;s child or parent and where the owner, spouse, child or parent lives in the building in which the living accommodation is located.&rdquo;</em></p>
+      <p>Three elements must <strong>all</strong> be true:</p>
+      <ol>
+        <li>The occupant must be <strong>required</strong> to share a kitchen or bathroom (sharing only a hallway, laundry, or entrance is not enough).</li>
+        <li>The person they are sharing with must be the <strong>owner</strong>, or the owner&rsquo;s <strong>spouse, child, parent, or spouse&rsquo;s child or parent</strong>. Sharing with anyone else does not trigger the exemption.</li>
+        <li>That owner or family member must actually <strong>live in the building</strong>. An owner who only visits, stores belongings, or stays overnight occasionally does not qualify.</li>
+      </ol>
+      <p>If any one of these is missing, the RTA applies in the normal way.</p>
+
+      <h2>Why this matters</h2>
+      <p>If the RTA applies, the occupant is a tenant. The landlord cannot evict without serving a proper notice (N4, N5, N6, N7, N8, N12, or N13), filing the right application at the Landlord and Tenant Board, and obtaining an order. Notice periods are measured in weeks, not days.</p>
+      <p>If section 5(i) applies, none of that is true. The occupant is treated as a boarder or licensee. The owner can revoke the licence to occupy on <strong>reasonable notice at common law</strong> &mdash; which courts have historically treated as anywhere from a few days to a month, depending on how long the person has lived there and what was agreed. The owner does not need an LTB order.</p>
+      <p>If the occupant refuses to leave after a clear, written revocation and a reasonable notice period, the owner can ask the police to attend under the <em>Trespass to Property Act</em>, R.S.O. 1990, c. T.21.</p>
+
+      <h2>What still applies even when the RTA does not</h2>
+      <p>The s. 5(i) exemption removes the RTA but does <strong>not</strong> remove all law. Even when the occupant is a boarder:</p>
+      <ul>
+        <li>The <strong>Trespass to Property Act</strong> applies. Police may attend to remove a person who refuses to leave after lawful revocation of permission.</li>
+        <li>The <strong>Criminal Code</strong> applies. Threats, assault, mischief, and uttering threats are criminal regardless of housing status.</li>
+        <li>The <strong>Ontario Human Rights Code</strong> still applies. The owner cannot evict on a discriminatory basis (race, disability, family status, gender identity, etc.).</li>
+        <li>The <strong>Small Claims Court</strong> remains available for claims about unpaid rent or board, damage deposits, lost belongings, or similar civil disputes up to $50,000.</li>
+        <li>Locks, utilities, and access remain regulated indirectly &mdash; an owner cannot lock out, cut power, or remove belongings without legal process. Doing so can support civil claims and may attract police attention.</li>
+      </ul>
+
+      <h2>Common situations that fall inside s. 5(i)</h2>
+      <ul>
+        <li>A homeowner who rents out a spare bedroom and shares the kitchen and one bathroom with the renter.</li>
+        <li>An owner whose adult child or parent lives in the main home and rents the basement room to a boarder, with shared bathroom upstairs.</li>
+        <li>A boarding arrangement in a single-family home where meals or kitchen access are part of the deal.</li>
+      </ul>
+
+      <h2>Common situations that fall OUTSIDE s. 5(i)</h2>
+      <ul>
+        <li>A basement apartment with its own kitchen and bathroom &mdash; even if the owner lives upstairs. No required sharing = RTA applies.</li>
+        <li>Two co-tenants who share a kitchen with each other but not with the owner. The owner does not live in the building, so s. 5(i) does not apply.</li>
+        <li>A rooming house operated as a business where the owner does not live on site. RTA applies; the LTB has jurisdiction.</li>
+        <li>An arrangement where the &ldquo;owner&rdquo; on title is a numbered company or trust, and the person living there is a director or employee. Courts often look at who actually <em>lives</em> there, not the corporate paper trail.</li>
+      </ul>
+
+      <h2>Practical guide for owners considering revocation</h2>
+      <p>If you are an owner relying on s. 5(i), the following steps protect the position:</p>
+      <ul>
+        <li><strong>Document the shared-facilities arrangement in writing.</strong> A short licence agreement that names the shared kitchen/bathroom and the owner&rsquo;s residence in the building avoids later disputes.</li>
+        <li><strong>Give written notice revoking the licence to occupy.</strong> State the date by which the person must vacate (typically reasonable notice in the circumstances) and the legal basis (s. 5(i) exemption and Trespass to Property Act).</li>
+        <li><strong>Contact the local police service in advance</strong> so an officer can speak to the occupant about their status and the consequences of refusing to vacate.</li>
+        <li><strong>Do not lock the person out, remove belongings, or cut utilities.</strong> Those steps create civil exposure and undermine the position.</li>
+        <li><strong>Where the occupant has been there for several months, get advice before serving notice</strong> &mdash; a court may find a longer reasonable-notice period applies.</li>
+      </ul>
+
+      <h2>Practical guide for occupants who think s. 5(i) is being misused</h2>
+      <ul>
+        <li>Check whether you are <strong>required</strong> to share the kitchen or bathroom, or just permitted. Required means the unit was never set up to have its own.</li>
+        <li>Check whether the person you are sharing with is the actual <strong>owner</strong> on title, or someone else (a manager, an adult child of the owner who does not live in the building, a friend renting the property from the owner). Only the owner or close family members count.</li>
+        <li>Confirm the owner or family member <strong>actually lives in the building</strong> on a continuous basis. Stays overnight occasionally do not qualify.</li>
+        <li>If even one of these elements is wrong, the RTA applies, and you have full tenant rights. The owner must use an N-notice and apply to the LTB to evict you.</li>
+      </ul>
+
+      <h2>Time limits and other rules</h2>
+      <ul>
+        <li>Because the LTB has no jurisdiction over s. 5(i) arrangements, the <strong>one-year limitation period in RTA s. 29(2)</strong> does not apply.</li>
+        <li>Civil claims for unpaid board, damage, or property loss are subject to the general <strong>two-year basic limitation</strong> under the <em>Limitations Act, 2002</em>, S.O. 2002, c. 24, Sched. B.</li>
+        <li>Where the dispute involves a written agreement, the agreement&rsquo;s own notice clauses may apply in addition to the common-law reasonable-notice rule.</li>
+      </ul>
+
+      <h2>Final word</h2>
+      <p>Section 5(i) is a narrow but powerful exemption. It works when the facts are clean: real shared kitchen or bathroom, real owner (or close family) living in the same building. It does not work when the unit is self-contained, when the owner lives elsewhere, or when the &ldquo;sharing&rdquo; is bookkeeping rather than reality.</p>
+      <p>Whether you are the owner or the occupant, getting the s. 5(i) analysis wrong is expensive. An owner who tries to revoke a licence when the RTA actually applies can face an LTB order for damages and a finding of illegal lockout. An occupant who refuses to leave when s. 5(i) truly applies can face arrest under the Trespass to Property Act.</p>
+      <p>If you are not sure which side of the line your situation falls on, call <a href="tel:+12262725153">226-272-5153</a> for a consultation before you serve notice or refuse to vacate.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. The s. 5(i) analysis is fact-specific. For your matter, consult a licensed paralegal or lawyer.</em></p>
+    `,
+    faqs: [
+      { q: 'I share a kitchen with the homeowner. Am I a tenant or a boarder?', a: 'If the owner — or the owner\'s spouse, child, parent, or spouse\'s child or parent — actually lives in the building, and you are required to share a kitchen or bathroom with them, you are a boarder under RTA s. 5(i) and the RTA does not protect you. If any of those elements is missing, the RTA applies and you are a tenant.' },
+      { q: 'How much notice does an owner have to give a s. 5(i) boarder?', a: 'There is no fixed statutory notice period. Common-law reasonable notice applies, which depends on how long you have lived there, what was agreed, and the surrounding circumstances. In practice, courts and police generally treat 7 to 30 days as reasonable for short-term arrangements; longer for established occupants. Always confirm with a paralegal or lawyer before relying on a short notice.' },
+      { q: 'Can the owner just change the locks if s. 5(i) applies?', a: 'No. Even where the RTA does not apply, an owner cannot use self-help to remove a person\'s belongings or change the locks while they are still occupying. The correct route is written revocation of the licence, reasonable notice to vacate, and (if necessary) a police trespass attendance after the notice period expires.' },
+      { q: 'What if I have lived there for years — does s. 5(i) still apply?', a: 'The exemption still applies as long as the three elements (required sharing, with the owner or close family member, who lives in the building) remain true. But length of occupancy will affect what counts as "reasonable notice" at common law. Long-term boarders are typically entitled to substantially more notice than someone who just moved in.' },
+      { q: 'Does s. 5(i) apply if my landlord is a numbered company?', a: 'It depends on who actually lives in the building. The exemption looks at the actual owner — and a court will look beyond the corporate name to see who lives there. If a director or family member of the corporation lives there and shares facilities, the exemption may apply. If only a manager or unrelated employee lives there, it usually does not.' }
+    ]
+  },
+  {
+    slug: 't6-maintenance-application-ontario-tenant-repairs-rta-section-20',
+    title: 'Landlord Won\'t Fix It? How a T6 Maintenance Application Works in Ontario',
+    description: 'Your landlord is ignoring repair requests. The Residential Tenancies Act requires landlords to maintain the unit — and the Landlord and Tenant Board can order them to fix things, refund part of your rent, or both. A plain-English guide to the T6 application.',
+    category: 'ltb',
+    date: '2026-05-17',
+    readTime: '7 min',
+    content: `
+      <p>Section 20 of the <em>Residential Tenancies Act, 2006</em> (RTA) is one of the strongest rights tenants have in Ontario. It requires landlords to keep the rental unit and building in a <strong>good state of repair, fit for habitation, and in compliance with health, safety, housing and maintenance standards</strong>. That obligation applies even if the tenant knew about the problem before they moved in.</p>
+      <p>When a landlord fails to meet that obligation, the tenant&rsquo;s tool at the Landlord and Tenant Board (LTB) is the <strong>Form T6 Tenant Application about Maintenance</strong>. This post explains when to use it, what the LTB can order, and the deadlines to watch.</p>
+
+      <h2>What the landlord owes you under s. 20</h2>
+      <p>The s. 20 obligation covers three overlapping standards:</p>
+      <ul>
+        <li><strong>Good state of repair.</strong> Doors, windows, locks, plumbing, electrical, heating, appliances supplied with the unit, balconies, stairs, walkways, common areas.</li>
+        <li><strong>Fit for habitation.</strong> Heat in winter (Ontario rental housing standards generally require 21&deg;C from September to June), running hot and cold water, working bathroom, no major pest infestation, no mould creating a health risk.</li>
+        <li><strong>Health, safety, housing and maintenance standards.</strong> Municipal property-standards by-laws, fire-code requirements, smoke and carbon-monoxide alarms.</li>
+      </ul>
+      <p>It is important to know that the landlord&rsquo;s obligation is <strong>not excused</strong> by the fact that the tenant accepted the unit with the problem already present. The LTB has consistently held that the obligation is a continuing one.</p>
+
+      <h2>Before you file: paper trail</h2>
+      <p>The single biggest factor in the strength of a T6 application is the quality of the written record. Before you file:</p>
+      <ul>
+        <li><strong>Report each problem in writing</strong> to the landlord (email or text is fine) with the date and a clear description. Keep copies.</li>
+        <li><strong>Photograph and video everything</strong> &mdash; the problem, the date, the location, the impact.</li>
+        <li><strong>Keep receipts</strong> for anything you had to buy or pay for because of the problem (space heaters, repaired clothing, hotel nights, food spoiled by a broken fridge).</li>
+        <li><strong>Get a property-standards inspection</strong> from your municipality. In London, this is the City of London Property Standards Officer. An inspector&rsquo;s report or order is strong evidence and the LTB often gives it significant weight.</li>
+        <li><strong>Keep a chronology</strong> &mdash; one page that lists what happened, when, and what was reported. The LTB will ask you for this.</li>
+      </ul>
+
+      <h2>How to file the T6</h2>
+      <p>The T6 is filed at the Landlord and Tenant Board. As of the date of this post:</p>
+      <ul>
+        <li>The filing fee is <strong>$53</strong>, paid online when you file the application through the Tribunals Ontario Portal.</li>
+        <li>You file electronically at the portal at <a href="https://tribunalsontario.ca">tribunalsontario.ca</a>. Paper filing is also available but slower.</li>
+        <li>You will need to attach copies of your evidence (written requests, photos, receipts, by-law orders).</li>
+        <li>You can ask the LTB to waive the filing fee if paying it would cause financial hardship.</li>
+      </ul>
+      <p>Once the application is filed, the LTB schedules a hearing. Most maintenance applications are scheduled by videoconference (Zoom). The current waiting time can vary &mdash; tenant applications have historically taken several months to be heard.</p>
+
+      <h2>What the LTB can order (RTA s. 30)</h2>
+      <p>If the LTB finds the landlord breached s. 20, section 30 gives it a range of remedies, including:</p>
+      <ul>
+        <li><strong>Order the work to be done</strong> by a specified deadline, and require the landlord to report back on completion.</li>
+        <li><strong>Rent abatement</strong> &mdash; a refund of part of the rent for the period the unit was not properly maintained. The amount depends on the severity (the LTB often awards percentages of monthly rent based on how badly the problem affected the unit&rsquo;s use; in serious cases, abatements have exceeded 50% of rent for the affected period).</li>
+        <li><strong>Reimbursement</strong> for costs the tenant incurred because of the breach (for example, replacement food after the fridge broke, hotel stays during loss of heat, medical or cleaning costs).</li>
+        <li><strong>Authorize the tenant to do the work</strong> at the landlord&rsquo;s expense, in narrow circumstances.</li>
+        <li><strong>Terminate the tenancy</strong> on the tenant&rsquo;s request, in severe cases where the unit is uninhabitable.</li>
+        <li><strong>Prohibit the landlord</strong> from raising the rent until the work is done.</li>
+        <li><strong>Make any other order the LTB considers appropriate</strong>, including damages for the tenant&rsquo;s losses.</li>
+      </ul>
+
+      <h2>Critical deadline: the one-year limit</h2>
+      <p>Under <strong>RTA s. 29(2)</strong>, a T6 application must generally be filed within <strong>one year</strong> of the date the breach occurred. For a single discrete event (e.g., a flood that ruined property), the clock runs from that date. For an ongoing or recurring breach (the more common situation with maintenance issues), the LTB treats the limitation as running from the most recent date the standard was not met &mdash; meaning that as long as the problem is continuing, the one-year window remains open. But once the landlord fixes the issue, the clock starts running. Do not delay.</p>
+
+      <h2>Critical rule: keep paying rent</h2>
+      <p>Ontario law <strong>does not permit a tenant to withhold rent</strong>, deduct repair costs, or hire a contractor and bill the landlord, even when the landlord is in clear breach of s. 20. Tenants who withhold rent end up facing an N4 (non-payment of rent) and a possible eviction order &mdash; even if the LTB later finds the underlying maintenance complaint was valid.</p>
+      <p>The proper procedure is: pay rent in full, file a T6, and ask the LTB for abatement. The Board will then refund the appropriate portion of rent to you as part of the order.</p>
+
+      <h2>Final word</h2>
+      <p>A T6 application is one of the most powerful tools in tenant-side LTB practice when used carefully. The strength of the case comes from the paper trail. Build the record first, file second.</p>
+      <p>If you are dealing with a maintenance issue your landlord is ignoring and you want to know whether a T6 is the right move, call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation. We will look at your evidence, advise on the likely range of remedies, and quote a fixed fee where appropriate.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. LTB rules, filing fees, and scheduling change periodically. For advice on your specific matter, consult a licensed paralegal or lawyer.</em></p>
+    `,
+    faqs: [
+      { q: 'Can I withhold rent until my landlord fixes the problem?', a: 'No. Ontario law does not permit unilateral rent withholding, deductions, or "repair-and-deduct." Tenants who withhold rent end up evicted on an N4 application even when their underlying maintenance complaint is valid. Pay rent in full, file a T6, and ask the LTB to award abatement.' },
+      { q: 'How much can I get back in rent abatement on a T6?', a: 'It depends on severity, duration, and how much the problem affected your use of the unit. The LTB has awarded abatement ranging from a small monthly percentage for minor inconvenience up to 50% or more of monthly rent for serious habitability problems (no heat for extended periods, severe pest infestation, units that are unsafe to live in). Each case turns on its facts and evidence.' },
+      { q: 'My landlord says I knew about the problem when I moved in. Does that defeat my T6?', a: 'No. The landlord\'s obligation under s. 20 is a continuing one. The LTB has consistently held that a tenant\'s knowledge of an existing problem at move-in does not relieve the landlord from the duty to maintain the unit going forward.' },
+      { q: 'How long does a T6 take to be decided?', a: 'LTB scheduling has been substantially delayed since 2020. Most maintenance applications are heard six to twelve months after filing, with some longer. Urgent cases (no heat in winter, no water, no working bathroom) can sometimes be expedited on request.' },
+      { q: 'Can I file a T6 if I have already moved out?', a: 'Yes, but the limitation period is strict. You have one year from the date of the breach (or from the date the breach was last continuing, where the issue was ongoing). Former tenants regularly file T6 applications for the period when they were living in the unit, asking for abatement and reimbursement of costs.' }
+    ]
+  },
+  {
+    slug: 'termination-pay-severance-pay-common-law-notice-ontario-difference',
+    title: 'Termination Pay vs. Severance Pay vs. Common Law Notice: Ontario\'s Three Different Entitlements',
+    description: 'These three terms get used interchangeably — they should not be. Each is a separate Ontario entitlement with its own rules. A plain-English guide to what each one means, who qualifies, and how to know whether you are being paid what you are owed.',
+    category: 'employment',
+    date: '2026-05-17',
+    readTime: '8 min',
+    content: `
+      <p>If you have just been let go in Ontario, you have probably heard three different terms used to describe what you are owed: <strong>termination pay</strong>, <strong>severance pay</strong>, and <strong>common law notice</strong> (or &ldquo;reasonable notice&rdquo;).</p>
+      <p>They sound interchangeable. They are not. They are three separate entitlements with three different sets of rules &mdash; and many employees end up signing away the most valuable of the three because they did not realize it existed.</p>
+      <p>This post explains each one in plain English, who qualifies, and how to know whether the package being offered to you is actually fair.</p>
+
+      <h2>1. Termination Pay (ESA Notice or Pay in Lieu)</h2>
+      <p>Termination pay is the statutory minimum notice &mdash; or pay in lieu of notice &mdash; that an employer must give an employee whose employment is being ended without cause. It is set out in sections 54 to 58 of the <em>Employment Standards Act, 2000</em>.</p>
+      <p>The ESA notice formula for an individual termination is:</p>
+      <ul>
+        <li>Less than 3 months: 0 weeks</li>
+        <li>3 months to less than 1 year: 1 week</li>
+        <li>1 year to less than 3 years: 2 weeks</li>
+        <li>3 years to less than 4 years: 3 weeks</li>
+        <li>4 years to less than 5 years: 4 weeks</li>
+        <li>5 years to less than 6 years: 5 weeks</li>
+        <li>6 years to less than 7 years: 6 weeks</li>
+        <li>7 years to less than 8 years: 7 weeks</li>
+        <li><strong>8 years or more: 8 weeks (this is the maximum under the ESA)</strong></li>
+      </ul>
+      <p>The employer can either give you working notice (you continue to work through the notice period) or pay you in lieu, or a combination. Most large employers pay in lieu.</p>
+      <p><strong>Key limit:</strong> termination pay maxes out at 8 weeks no matter how long you worked. A 25-year employee gets the same 8 weeks of ESA termination pay as an 8-year employee. That is the floor &mdash; not the ceiling.</p>
+
+      <h2>2. Severance Pay (ESA s. 64)</h2>
+      <p>Severance pay is a <strong>separate</strong> ESA entitlement that some employees qualify for in addition to termination pay. It is not the same thing as termination pay, even though both are called &ldquo;severance&rdquo; in everyday speech.</p>
+      <p>To qualify for ESA severance pay under section 64, an employee must have:</p>
+      <ol>
+        <li><strong>Five (5) or more years of service</strong> with the employer, AND</li>
+        <li>One of the following:
+          <ul>
+            <li>The employer has a <strong>payroll of $2.5 million or more</strong>. The Divisional Court has held in <em>Hawkes v. Max Aicher (North America) Limited</em> that this payroll figure includes the employer&rsquo;s <strong>global</strong> payroll, not just its Ontario payroll. Many Ontario employees of multinational employers qualify even if the Ontario operation itself is small; OR</li>
+            <li>The termination is part of a permanent discontinuance of all or part of the employer&rsquo;s business that severs <strong>50 or more</strong> employees within a six-month period.</li>
+          </ul>
+        </li>
+      </ol>
+      <p>If you qualify, severance pay is calculated as <strong>one week of regular wages per completed year of service</strong>, plus a pro-rated portion for partial years, up to a <strong>maximum of 26 weeks</strong>.</p>
+      <p>Severance pay is <strong>paid on top of termination pay</strong>. So a qualifying 20-year employee gets 8 weeks of termination pay + 20 weeks of severance pay = 28 weeks of ESA minimums, before common-law notice is even considered.</p>
+      <p>Many employers either do not realize this entitlement applies or quietly hope the employee will not notice. Knowing whether your employer&rsquo;s payroll exceeds $2.5 million (often it does if it is part of a national chain or has parent-company affiliates) can mean tens of thousands of dollars.</p>
+
+      <h2>3. Common Law Notice (Reasonable Notice)</h2>
+      <p>This is almost always the biggest entitlement &mdash; and it is the one that does not appear anywhere in the ESA.</p>
+      <p>If you do not have a valid written employment contract that limits your termination entitlements to the ESA minimums, the common law presumes you are entitled to <strong>reasonable notice</strong> of termination. This is a separate, court-made entitlement that has been recognized in Ontario for decades.</p>
+      <p>Reasonable notice is determined by what are called the <strong>Bardal factors</strong>, from <em>Bardal v. Globe &amp; Mail Ltd.</em>, [1960] O.W.N. 253 (H.C.J.). Courts weigh:</p>
+      <ul>
+        <li><strong>Length of service</strong> &mdash; longer service generally means longer notice.</li>
+        <li><strong>Age</strong> &mdash; older employees often face more difficulty finding comparable work, which lengthens the notice period.</li>
+        <li><strong>Character of employment</strong> &mdash; senior, specialized, or hard-to-replace roles attract longer notice than entry-level positions.</li>
+        <li><strong>Availability of similar employment</strong> &mdash; the realistic state of the job market for someone with this employee&rsquo;s background.</li>
+      </ul>
+      <p>Common-law notice is usually quoted as a <strong>range of months</strong>, not weeks. A useful rule of thumb is <strong>roughly one month per year of service</strong>, with adjustments up or down based on the other Bardal factors. Common-law notice is not capped at 24 months by statute, but Ontario courts have rarely exceeded 24 months except in exceptional circumstances.</p>
+      <p><strong>The critical difference from the ESA</strong>: an employer&rsquo;s offer of &ldquo;8 weeks plus 20 weeks severance&rdquo; (the ESA minimums) is often a small fraction of what the same employee would be entitled to under common-law notice. Common-law reasonable notice is the &ldquo;upgrade.&rdquo;</p>
+
+      <h2>How does the contract affect this?</h2>
+      <p>The single biggest factor in whether you are entitled to common-law notice is your <strong>employment contract</strong>. If you signed an employment agreement that contains a termination clause limiting you to the ESA minimums, the common-law presumption is displaced &mdash; <strong>provided the clause is enforceable</strong>.</p>
+      <p>Many termination clauses are unenforceable. Ontario courts (especially after <em>Waksdale v. Swegon North America Inc.</em>, 2020 ONCA 391, leave to appeal to the Supreme Court of Canada dismissed) have struck down termination clauses where any part of the clause violates the ESA &mdash; even if the employer never actually applied the offending part. Common drafting failures include:</p>
+      <ul>
+        <li>A &ldquo;just cause&rdquo; provision that allows dismissal without notice on a lower standard than the ESA permits;</li>
+        <li>Failure to address ESA severance pay separately;</li>
+        <li>Notice formulas that fall below the ESA minimums in some scenarios;</li>
+        <li>Failure to continue benefits during the ESA notice period.</li>
+      </ul>
+      <p>If your contract has an enforceability problem &mdash; and many do &mdash; you may be entitled to common-law notice notwithstanding the contract&rsquo;s wording. This is one of the most important reasons to have a contract and termination package reviewed before signing a release.</p>
+
+      <h2>Worked example</h2>
+      <p>A 52-year-old marketing manager with 14 years of service at an Ontario subsidiary of a multinational, $80,000/year salary, fired without cause:</p>
+      <ul>
+        <li><strong>ESA termination pay:</strong> 8 weeks (the maximum) = roughly $12,300</li>
+        <li><strong>ESA severance pay (qualifies &mdash; 14 years + parent-co payroll over $2.5M):</strong> 14 weeks = roughly $21,500</li>
+        <li><strong>ESA minimum total:</strong> ~$33,800 (about 5 months&rsquo; pay)</li>
+        <li><strong>Common-law reasonable notice (ballpark):</strong> 14&ndash;18 months based on Bardal factors = roughly $93,000 to $120,000</li>
+      </ul>
+      <p>If the employer offers the ESA minimum and the employee signs a release, they may have left $60,000 to $90,000 on the table. If the contract is unenforceable, that money would have been recoverable.</p>
+
+      <h2>What to do before signing a release</h2>
+      <ul>
+        <li><strong>Do not sign a release the day you are terminated.</strong> Ask for a reasonable period to consider the offer &mdash; one to two weeks is standard.</li>
+        <li><strong>Get the package reviewed</strong> by a licensed paralegal or employment lawyer. The review usually takes a few days and will tell you whether the offer is fair, light, or substantially below market.</li>
+        <li><strong>Keep applying for jobs.</strong> Mitigation is required under common-law notice &mdash; courts will reduce the award by what you actually earned (or reasonably could have earned) during the notice period.</li>
+        <li><strong>Keep records</strong> of every job application and rejection. This evidence supports your mitigation efforts at any later negotiation or hearing.</li>
+      </ul>
+
+      <h2>Scope of practice &mdash; what we can and cannot do</h2>
+      <p>Under <strong>By-Law 4</strong> of the Law Society of Ontario, licensed paralegals (Class P1) can represent employees in <strong>Small Claims Court</strong> matters up to $50,000 (raised from $35,000 effective January 1, 2025). That includes wrongful-dismissal claims for severance up to that amount.</p>
+      <p>For claims above $50,000 (common with senior employees and long-service workers), or in the <strong>Superior Court of Justice</strong>, you need an employment lawyer. We can review your package, advise on whether the offer is fair, draft a counter-offer or demand letter, and refer you to a lawyer when the matter exceeds paralegal scope.</p>
+
+      <h2>Final word</h2>
+      <p>Termination pay, severance pay, and common-law notice are three distinct entitlements. Many employers offer only the first two and hope the employee will not realize the third one exists. Many employment contracts try to displace the third one &mdash; and many of those contracts are unenforceable for technical drafting reasons.</p>
+      <p>Before signing a release, call <a href="tel:+12262725153">226-272-5153</a> for a consultation. A short review can tell you whether your package is on, above, or well below market.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. ESA thresholds, case law, and termination-clause enforceability change periodically. For advice on your specific matter, consult a licensed paralegal or employment lawyer.</em></p>
+    `,
+    faqs: [
+      { q: 'How do I know if my contract\'s termination clause is enforceable?', a: 'Have it reviewed by a paralegal or employment lawyer. Common enforceability problems include "just cause" provisions that fall below the ESA standard, failure to address severance pay separately, notice formulas that dip below the ESA minimums in any scenario, and failure to continue benefits during the ESA notice period. The Ontario Court of Appeal has been aggressive about striking down flawed termination clauses, even where the flaw was theoretical.' },
+      { q: 'Does the $2.5 million payroll threshold include my employer\'s parent company?', a: 'Yes, in many cases. The Ontario Divisional Court in Hawkes v. Max Aicher (North America) Limited held that the $2.5 million payroll threshold includes global payroll — not just Ontario payroll. So an Ontario subsidiary of a multinational employer can trigger severance-pay eligibility even if the Ontario operation\'s own payroll is small.' },
+      { q: 'How long do I have to sue for wrongful dismissal?', a: 'In Ontario, a wrongful dismissal claim is subject to the two-year basic limitation period under the Limitations Act, 2002 (s. 4). The clock generally runs from the date of termination. Do not delay — claims filed late are usually struck out regardless of merit.' },
+      { q: 'Can a paralegal handle my wrongful-dismissal case?', a: 'For claims of $50,000 or less, yes — a licensed paralegal can represent you in Small Claims Court under By-Law 4 of the Law Society of Ontario. For claims above $50,000, or where the matter requires the Superior Court of Justice (typical for senior or long-service employees), you need an employment lawyer. We refer out where appropriate.' },
+      { q: 'What happens if I sign a release and then realize I was underpaid?', a: 'A signed release is generally binding and very difficult to set aside. Courts will only revisit a release in narrow circumstances — unconscionability, duress, mistake, or misrepresentation. The right time to get advice is before you sign, not after. Most employers will agree to a one- or two-week consideration period if you ask.' }
+    ]
+  },
+  {
     slug: 'supreme-court-canada-intimate-partner-violence-tort-ahluwalia-2026',
     title: 'Supreme Court of Canada Recognizes a New Civil Tort for Intimate Partner Violence',
     description: 'In Ahluwalia v. Ahluwalia (May 15, 2026), the Supreme Court of Canada created a new civil tort of intimate partner violence — recognizing that the cumulative pattern of coercive control, isolation, financial abuse, and intimidation in an intimate relationship is itself an actionable wrong.',
@@ -86,11 +356,11 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Scope of Practice &mdash; What a Paralegal Can and Cannot Do</h2>
-      <p>Under <strong>By-Law 4</strong> of the Law Society of Ontario, licensed paralegals (Class P1) have authority to represent clients in defined areas, including <strong>Small Claims Court</strong> matters up to a monetary limit of <strong>$35,000</strong>, Provincial Offences Court matters, Landlord and Tenant Board matters, and certain administrative tribunals.</p>
+      <p>Under <strong>By-Law 4</strong> of the Law Society of Ontario, licensed paralegals (Class P1) have authority to represent clients in defined areas, including <strong>Small Claims Court</strong> matters up to a monetary limit of <strong>$50,000</strong> (raised from $35,000 effective January 1, 2025), Provincial Offences Court matters, Landlord and Tenant Board matters, and certain administrative tribunals.</p>
       <p>What this means for the new tort:</p>
       <ul>
-        <li><strong>A civil claim for intimate partner violence valued at $35,000 or less</strong> can, in principle, be filed in the <strong>Small Claims Court</strong> of Ontario, where a licensed paralegal may represent the plaintiff.</li>
-        <li><strong>A claim valued above $35,000</strong> &mdash; which most serious intimate partner violence cases will likely be &mdash; must proceed in the <strong>Superior Court of Justice</strong>, where a <strong>lawyer</strong> is required to provide representation. Paralegals do not have rights of audience in the Superior Court of Justice, the Divisional Court, or any appellate court.</li>
+        <li><strong>A civil claim for intimate partner violence valued at $50,000 or less</strong> can, in principle, be filed in the <strong>Small Claims Court</strong> of Ontario, where a licensed paralegal may represent the plaintiff.</li>
+        <li><strong>A claim valued above $50,000</strong> &mdash; which most serious intimate partner violence cases will likely be &mdash; must proceed in the <strong>Superior Court of Justice</strong>, where a <strong>lawyer</strong> is required to provide representation. Paralegals do not have rights of audience in the Superior Court of Justice, the Divisional Court, or any appellate court.</li>
         <li><strong>Divorce, decision-making responsibility, parenting time, child or spousal support, and the division of family property</strong> are not within paralegal scope and require a family lawyer.</li>
         <li><strong>Criminal charges</strong> related to the abuse are conducted by Crown counsel; the accused is typically represented by a criminal defence lawyer.</li>
       </ul>
@@ -117,7 +387,7 @@ export const blogPosts: BlogPost[] = [
       { q: 'Can I sue my former partner for emotional abuse alone, without physical violence?', a: 'Yes. The new tort recognizes that coercive control — isolation, financial control, surveillance, humiliation, intimidation — can amount to intimate partner violence on its own, even without physical assault. You must prove the conduct occurred during or after an intimate partnership, was intentional, and amounted to coercive control.' },
       { q: 'How long do I have to file a claim under the new tort?', a: 'The Supreme Court did not set a fixed limitation period. Ontario\'s Limitations Act, 2002 provides a general two-year limitation from discovery, but the discoverability principle can extend the start of the clock for survivors who could not reasonably have appreciated the harm earlier. Get advice on the limitation analysis for your specific situation as soon as possible.' },
       { q: 'Does my partner have to be criminally convicted before I can sue?', a: 'No. The civil tort is independent of the criminal process. The civil standard of proof is the balance of probabilities — more likely than not — which is lower than the criminal standard of beyond a reasonable doubt. You can succeed in a civil claim even where a criminal prosecution does not proceed or results in an acquittal.' },
-      { q: 'Can a licensed paralegal handle this kind of case?', a: 'Within Small Claims Court limits — currently $35,000 in Ontario — yes, a licensed paralegal can represent the plaintiff. Most serious intimate partner violence cases will exceed that limit and must be brought in the Superior Court of Justice, which requires a lawyer. Divorce, parenting, and family property issues also require a family lawyer.' },
+      { q: 'Can a licensed paralegal handle this kind of case?', a: 'Within Small Claims Court limits — currently $50,000 in Ontario (raised from $35,000 effective January 1, 2025) — yes, a licensed paralegal can represent the plaintiff. Most serious intimate partner violence cases will exceed that limit and must be brought in the Superior Court of Justice, which requires a lawyer. Divorce, parenting, and family property issues also require a family lawyer.' },
       { q: 'I am still in the relationship. Should I document things?', a: 'If you can do so safely, yes — preserving evidence is important regardless of whether you ultimately bring a civil claim. The most important thing is your safety. Call the Assaulted Women\'s Helpline at 1-866-863-0511 (24/7) or 9-1-1 in an emergency before worrying about evidence preservation.' }
     ]
   },
