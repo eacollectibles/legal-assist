@@ -256,7 +256,7 @@ export default function LocationsHubPage() {
                 {cities.map(city => (
                   <Link
                     key={city.slug}
-                    to={city.slug}
+                    to={`/locations/${city.slug}`}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/5 transition-colors group"
                   >
                     <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
