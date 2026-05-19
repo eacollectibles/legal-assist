@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "wix dev",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "wix build",
     "preview": "wix preview",
     "release": "wix release",
