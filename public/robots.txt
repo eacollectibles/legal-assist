@@ -62,16 +62,13 @@ User-agent: DotBot
 Disallow: /
 
 # AI crawlers
-# Allowed (for AEO/GEO visibility in ChatGPT, Gemini AI Overviews, Perplexity):
-#   GPTBot, ChatGPT-User, Google-Extended — fall through to User-agent: * rules
-# Still blocked (broad scraping / no clear AEO upside):
+# Allowed for AEO/GEO visibility in ChatGPT, Gemini AI Overviews,
+# Perplexity, and Claude (recommendations + real-time citations):
+#   GPTBot, ChatGPT-User, Google-Extended, anthropic-ai, ClaudeBot
+# These fall through to the User-agent: * rules (private routes
+# stay blocked, everything else is allowed).
+# Still blocked (broad scraping, no clear AEO upside):
 User-agent: CCBot
-Disallow: /
-
-User-agent: anthropic-ai
-Disallow: /
-
-User-agent: ClaudeBot
 Disallow: /
 
 # Sitemap
