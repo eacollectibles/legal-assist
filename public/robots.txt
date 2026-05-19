@@ -61,17 +61,11 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
-# Block AI training bots
-User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
-Disallow: /
-
+# AI crawlers
+# Allowed (for AEO/GEO visibility in ChatGPT, Gemini AI Overviews, Perplexity):
+#   GPTBot, ChatGPT-User, Google-Extended — fall through to User-agent: * rules
+# Still blocked (broad scraping / no clear AEO upside):
 User-agent: CCBot
-Disallow: /
-
-User-agent: Google-Extended
 Disallow: /
 
 User-agent: anthropic-ai
