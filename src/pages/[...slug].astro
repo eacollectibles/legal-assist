@@ -103,13 +103,87 @@ const schemaData = {
           "closes": "14:00"
         }
       ],
-      "priceRange": "$",
+      "priceRange": "$$",
       "currenciesAccepted": "CAD",
       "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Interac e-Transfer"],
       "knowsLanguage": ["en", "English"],
       "slogan": "Affordable Legal Help When You Need It Most",
       "foundingDate": "2024",
-      "legalName": "Legal Assist Paralegal Services"
+      "legalName": "Legal Assist Paralegal Services",
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional License",
+          "identifier": "P22020",
+          "name": "Licensed Paralegal — Jean-Francois Demers",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Law Society of Ontario",
+            "url": "https://lso.ca"
+          }
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "Professional License",
+          "identifier": "P21479",
+          "name": "Licensed Paralegal — Candice Fogarty",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Law Society of Ontario",
+            "url": "https://lso.ca"
+          }
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Paralegal Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Traffic Ticket Defence",
+              "url": "https://www.legalassist.london/services/traffic-tickets"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Small Claims Court Representation",
+              "url": "https://www.legalassist.london/services/small-claims-court"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Landlord and Tenant Board Representation",
+              "url": "https://www.legalassist.london/services/landlord-tenant-board"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Human Rights Tribunal Representation",
+              "url": "https://www.legalassist.london/services/human-rights-tribunal"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Provincial Offences Defence",
+              "url": "https://www.legalassist.london/services/provincial-offences"
+            }
+          }
+        ]
+      },
+      "sameAs": [
+        "https://www.facebook.com/legalassistparalegal",
+        "https://www.linkedin.com/company/legalassist-paralegal"
+      ]
     },
     {
       "@type": "WebSite",
