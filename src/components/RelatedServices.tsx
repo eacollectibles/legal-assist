@@ -60,7 +60,7 @@ export function RelatedServices({
                 </p>
               )}
               <span className="inline-flex items-center text-primary text-sm font-medium">
-                Learn More <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                Learn about {service.title} <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
           ))}

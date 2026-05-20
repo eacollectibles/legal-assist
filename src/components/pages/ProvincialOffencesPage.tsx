@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, CheckCircle, AlertTriangle, FileText, Gavel, Car, Building } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function ProvincialOffencesPage() {
   // SEO handled by AutoSEO component
@@ -236,6 +237,11 @@ export default function ProvincialOffencesPage() {
           </p>
         </div>
       </section>
+
+      <RelatedServices
+        services={relatedServicesConfig.trafficTickets}
+        title="Related Provincial Offences services"
+      />
 
       <Footer />
     </div>

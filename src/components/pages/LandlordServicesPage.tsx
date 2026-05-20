@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Phone, Home, Shield, Clock, FileText, Scale } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function LandlordServicesPage() {
   // SEO handled by AutoSEO component
@@ -136,6 +137,11 @@ export default function LandlordServicesPage() {
           </div>
         </div>
       </section>
+
+      <RelatedServices
+        services={relatedServicesConfig.landlordTenant}
+        title="Related landlord-tenant services"
+      />
 
       <Footer />
     </div>

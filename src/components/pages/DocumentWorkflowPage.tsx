@@ -2067,14 +2067,18 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                       <Label htmlFor="template">Select Template</Label>
                       <Select value={selectedTemplateId} onValueChange={setSelectedTemplateId}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Choose a template" />
+                          <SelectValue placeholder="Choose a template — grouped by practice area" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="max-h-[480px]">
                           {(() => {
                             // Group active templates by inferred area of
                             // law, sort areas by AREA_DISPLAY_ORDER, and
                             // sort templates alphabetically within each
-                            // area for fast paralegal lookup.
+                            // area for fast paralegal lookup. The area
+                            // labels are styled prominently — bold navy
+                            // text, count badge, top separator — so the
+                            // grouping is visually obvious in the
+                            // dropdown.
                             const active = templates.filter((t) => t.isActive);
                             const byArea: Record<string, DocumentTemplate[]> = {};
                             for (const t of active) {
@@ -2097,15 +2101,56 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                                 )
                               );
                             }
-                            return orderedAreas.map((area) => (
+                            if (orderedAreas.length === 0) {
+                              return (
+                                <div className="px-3 py-6 text-center text-sm text-foreground/60">
+                                  No active templates available.
+                                </div>
+                              );
+                            }
+                            return orderedAreas.map((area, areaIdx) => (
                               <SelectGroup key={area}>
-                                <SelectLabel>{area}</SelectLabel>
+                                <SelectLabel
+                                  className={
+                                    'flex items-center justify-between gap-2 ' +
+                                    'px-3 py-2 ' +
+                                    'text-[11px] font-bold uppercase tracking-wider ' +
+                                    'text-white bg-primary ' +
+                                    (areaIdx > 0 ? 'mt-1 ' : '') +
+                                    'sticky top-0 z-10'
+                                  }
+                                  style={{
+                                    background: '#0f2a4a',
+                                    color: '#ffffff',
+                                  }}
+                                >
+                                  <span>{area}</span>
+                                  <span
+                                    className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                                    style={{
+                                      background: '#b08a3e',
+                                      color: '#ffffff',
+                                    }}
+                                  >
+                                    {byArea[area].length}
+                                  </span>
+                                </SelectLabel>
                                 {byArea[area].map((template) => (
-                                  <SelectItem key={template._id} value={template._id}>
-                                    {template.templateName}
-                                    {template.templateType
-                                      ? ` (${template.templateType})`
-                                      : ''}
+                                  <SelectItem
+                                    key={template._id}
+                                    value={template._id}
+                                    className="pl-6 py-2"
+                                  >
+                                    <div className="flex flex-col items-start gap-0.5">
+                                      <span className="font-medium text-sm">
+                                        {template.templateName}
+                                      </span>
+                                      {template.templateType && (
+                                        <span className="text-[10px] uppercase tracking-wider text-foreground/55 font-semibold">
+                                          {template.templateType}
+                                        </span>
+                                      )}
+                                    </div>
                                   </SelectItem>
                                 ))}
                               </SelectGroup>
@@ -2113,6 +2158,9 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                           })()}
                         </SelectContent>
                       </Select>
+                      <p className="text-[11px] text-foreground/55 mt-1">
+                        Templates are grouped by area of law. Use the <strong>Templates</strong> tab to edit or add templates.
+                      </p>
                     </div>
 
                     <div className="space-y-2">

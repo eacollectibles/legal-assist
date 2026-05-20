@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Phone, Home, TrendingUp, CheckCircle, AlertTriangle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 
 export default function RentIncreaseGuidePage() {
   return (
@@ -81,6 +82,11 @@ export default function RentIncreaseGuidePage() {
           </div>
         </div>
       </section>
+
+      <RelatedServices
+        services={relatedServicesConfig.landlordTenant}
+        title="Related landlord-tenant services"
+      />
 
       <Footer />
     </div>

@@ -471,62 +471,62 @@ export default function ServicesPage() {
                     <div className="px-6 py-4 border-t border-gray-100 mt-auto">
                       {service.id === 'small-claims' ? (
                         <Link to="/services/small-claims-court" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'landlord-tenant' ? (
                         <Link to="/services/landlord-tenant-board" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'hrto' ? (
                         <Link to="/services/human-rights-tribunal" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'traffic-tickets' ? (
                         <Link to="/services/traffic-tickets" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'mediation' ? (
                         <Link to="/services/mediation" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'criminal-matters' ? (
                         <Link to="/services/criminal-matters" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'notary-public' ? (
                         <Link to="/services/notary-public" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'commissioner-of-oaths' ? (
                         <Link to="/services/commissioner-of-oaths" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'social-benefits-tribunal' ? (
                         <Link to="/services/social-benefits-tribunal" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'defamation-slander' ? (
                         <Link to="/services/defamation-slander" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'employment-issues' ? (
                         <Link to="/services/employment-issues" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : service.id === 'airline-disputes' ? (
                         <Link to="/services/airline-disputes" className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2">
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       ) : (
@@ -534,7 +534,7 @@ export default function ServicesPage() {
                           onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
                           className="w-full flex items-center justify-between text-primary font-paragraph font-semibold group-hover:gap-3 transition-all py-2"
                         >
-                          <span>Learn More</span>
+                          <span>Learn about {service.name}</span>
                           <ArrowRight className="w-4 h-4" />
                         </button>
                       )}
