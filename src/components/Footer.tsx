@@ -104,13 +104,19 @@ export default function Footer() {
               >
                 Small Claims Guide
               </Link>
+              <Link
+                to="/guides"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                All Guides &rarr;
+              </Link>
             </nav>
           </div>
 
-          {/* London Services Section */}
+          {/* Service Areas Section */}
           <div>
-            <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">London Services</h3>
-            <nav className="flex flex-col gap-0.5" aria-label="London paralegal services">
+            <h3 className="font-heading text-lg sm:text-xl font-bold mb-4 sm:mb-6">Service Areas</h3>
+            <nav className="flex flex-col gap-0.5" aria-label="Paralegal service areas">
               <Link
                 to="/paralegal-london-ontario"
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
@@ -140,6 +146,48 @@ export default function Footer() {
                 className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
               >
                 Human Rights Tribunal London
+              </Link>
+              <Link
+                to="/st-thomas-paralegal"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal St. Thomas
+              </Link>
+              <Link
+                to="/woodstock-paralegal"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal Woodstock
+              </Link>
+              <Link
+                to="/strathroy-chatham-paralegal"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal Strathroy &amp; Chatham
+              </Link>
+              <Link
+                to="/tillsonburg-paralegal"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal Tillsonburg
+              </Link>
+              <Link
+                to="/aylmer-paralegal"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal Aylmer
+              </Link>
+              <Link
+                to="/ingersoll-paralegal"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Paralegal Ingersoll
+              </Link>
+              <Link
+                to="/locations"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring font-semibold"
+              >
+                All Service Areas &rarr;
               </Link>
             </nav>
           </div>
