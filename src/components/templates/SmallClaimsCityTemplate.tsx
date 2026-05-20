@@ -168,7 +168,13 @@ export default function SmallClaimsCityTemplate({ city }: Props) {
             <h3 className="font-heading text-lg font-bold text-foreground mb-3 flex items-center gap-2"><Building2 className="w-5 h-5 text-primary" /> Courthouse Details</h3>
             <p className="font-paragraph text-foreground/70 text-sm mb-1"><strong>Location:</strong> {city.courthouse.name}</p>
             <p className="font-paragraph text-foreground/70 text-sm mb-1"><strong>Address:</strong> {city.courthouse.address}</p>
+            {city.courthouse.smallClaims && city.courthouse.smallClaims !== city.courthouse.address && (
+              <p className="font-paragraph text-foreground/70 text-sm mb-1"><strong>Small Claims division:</strong> {city.courthouse.smallClaims}</p>
+            )}
             <p className="font-paragraph text-foreground/60 text-sm">This is where all {city.name} Small Claims Court matters including settlement conferences and trials are heard.</p>
+            {city.nearestMajorCity && city.nearestMajorCity !== city.name && (
+              <p className="font-paragraph text-foreground/60 text-sm mt-2">Some {city.name} matters may also be filed in nearby {city.nearestMajorCity} if that is the more convenient venue.</p>
+            )}
           </div>
 
           <h3 className="font-heading text-2xl font-bold text-foreground mb-8 text-center">The Small Claims Court Process</h3>

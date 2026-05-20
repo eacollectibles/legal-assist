@@ -85,9 +85,14 @@ export default function LTBCityTemplate({ city }: Props) {
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-4 max-w-3xl">
               Licensed paralegal representation for landlords and tenants at the Landlord and Tenant Board in {city.name} and {regionText}. From eviction hearings to rent disputes, we handle all LTB matters with local knowledge and affordable rates.
             </p>
-            <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
+            <p className="font-paragraph text-base text-foreground/60 mb-4 max-w-3xl">
               Whether you are a landlord dealing with non-payment of rent, a tenant facing an unjust eviction, or either party navigating above-guideline rent increases, Legal Assist provides licensed paralegal representation for every stage of the LTB process in {city.name}.
             </p>
+            {city.ltbOffice && (
+              <p className="font-paragraph text-base text-foreground/60 mb-8 max-w-3xl">
+                LTB hearings for {city.name}{city.population ? ` (population approximately ${city.population})` : ''} are administered through the <strong>{city.ltbOffice}</strong> region of the Landlord and Tenant Board. Most hearings are now held by video conference, with in-person hearings scheduled where the circumstances require it.
+              </p>
+            )}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-paragraph font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary/90">
                 Book Free Consultation <ArrowRight className="w-5 h-5" />
