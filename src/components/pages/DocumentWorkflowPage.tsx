@@ -1237,6 +1237,18 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{LANDLORD_NAME\}/g, landlordValue || '—');
       documentContent = documentContent.replace(/\{HST_REGISTRATION_NUMBER\}/g, hstRegValue);
 
+      // Small Claims Tiered Retainer tokens — gracefully fall back to
+      // empty fillable lines or sensible defaults so the literal
+      // {TOKEN} text never leaks into a generated PDF if the template
+      // pre-dates the per-matter UI prompts.
+      const fillableLine = '<span style="display:inline-block;min-width:200px;border-bottom:1px solid #000;line-height:1.4;">&nbsp;</span>';
+      const fillableSmall = '<span style="display:inline-block;min-width:90px;border-bottom:1px solid #000;line-height:1.4;">&nbsp;</span>';
+      documentContent = documentContent.replace(/\{OPPOSING_PARTY_NAME\}/g, fillableLine);
+      documentContent = documentContent.replace(/\{COURT_MATTER_TYPE\}/g, matterTypeValue || 'Small Claims Court of Ontario');
+      documentContent = documentContent.replace(/\{CLIENT_PARTY_ROLE\}/g, fillableLine);
+      documentContent = documentContent.replace(/\{PHASE2_FLAT_FEE\}/g, fillableSmall);
+      documentContent = documentContent.replace(/\{PHASE2_ADDITIONAL_TRIAL_DAY_RATE\}/g, fillableSmall);
+
       // Conditional-row flags for LTB Tenant
       const rentalInfoEmpty = !addressValue && !cityValue;
       documentContent = documentContent.replace(/\{IS_RENTAL_INFO_EMPTY\}/g, flag(rentalInfoEmpty));
