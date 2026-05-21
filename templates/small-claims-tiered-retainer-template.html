@@ -1,0 +1,446 @@
+<!--
+  Small Claims Court Tiered Retainer Agreement — v3 (FINAL, all 10 recommendations applied)
+  Source of truth: Wix CMS row in `documenttemplates`
+    templateName:     "Small Claims Court — Tiered Retainer (Negotiation + Defence-on-Litigation Expansion)"
+    templateCategory: "Small Claims"
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small Claims Court Tiered Retainer Agreement &ndash; Legal Assist Paralegal Services</title>
+<style>
+  :root{ --ink:#111827; --muted:#6B7280; --line:#E5E7EB; --paper:#FFFFFF; --bg:#F9FAFB; --sig:#1F2D5C; --warn:#7c2d12; --warn-bg:#fef2f2; --ok:#166534; --ok-bg:#f0fdf4; }
+  @page { margin: 0.75in; size: letter; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; padding:24px; background:var(--bg); color:var(--ink); font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; }
+  .page{ max-width:920px; margin:0 auto; background:var(--paper); border:1px solid #000; padding:24px; }
+  header{ margin-bottom:14px; }
+  .toprow{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  h1{ font-size:19px; margin:0 0 4px; }
+  .subtitle{ font-size:13px; color:var(--muted); margin:0; }
+  .meta{ font-size:13px; min-width:260px; }
+  .meta strong{ font-weight:700; }
+  hr{ border:none; border-top:1px solid #000; margin:16px 0; }
+  h2{ font-size:13px; margin:18px 0 8px; text-transform:uppercase; letter-spacing:.06em; page-break-after:avoid; }
+  h3{ font-size:13.5px; margin:12px 0 6px; page-break-after:avoid; }
+  p{ margin:8px 0; }
+  ul, ol{ margin:8px 0 8px 18px; }
+  li{ margin:6px 0; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }
+  .field{ border-bottom:1px solid #000; padding:4px 0; min-height:24px; }
+  .field span{ font-weight:700; }
+  .checkline{ margin:6px 0; }
+  .note-box, .nature-box{ border:1px solid #000; padding:12px; margin:12px 0; background:#fff; page-break-inside:avoid; }
+  .nature-box .nature-label{ font-weight:700; text-transform:uppercase; font-size:12px; letter-spacing:.06em; margin:0 0 6px; }
+  .danger-box{ border:1px solid var(--warn); background:var(--warn-bg); padding:12px; margin:12px 0; page-break-inside:avoid; }
+  .danger-box h4{ margin:0 0 6px; color:var(--warn); text-transform:uppercase; font-size:12px; letter-spacing:.06em; }
+  .ok-box{ border:1px solid var(--ok); background:var(--ok-bg); padding:12px; margin:12px 0; page-break-inside:avoid; }
+  .ok-box h4{ margin:0 0 6px; color:var(--ok); text-transform:uppercase; font-size:12px; letter-spacing:.06em; }
+  .summary-box{ border:2px solid #000; padding:14px 16px; margin:12px 0 18px; background:#fff; page-break-inside:avoid; }
+  .summary-box h4{ margin:0 0 8px; text-transform:uppercase; font-size:12.5px; letter-spacing:.06em; }
+  .summary-box ol{ margin:0; padding-left:18px; }
+  .summary-box li{ margin:5px 0; }
+  .timeline-table{ width:100%; border-collapse:collapse; margin:8px 0; font-size:13px; }
+  .timeline-table th, .timeline-table td{ border:1px solid #000; padding:6px 8px; text-align:left; vertical-align:top; }
+  .timeline-table th{ background:#f3f4f6; font-weight:700; text-transform:uppercase; font-size:11.5px; letter-spacing:.04em; }
+  .ack-list{ margin:10px 0; }
+  .ack-row{ display:grid; grid-template-columns:60px 1fr; gap:10px; padding:8px 0; border-bottom:1px dashed var(--line); page-break-inside:avoid; }
+  .ack-box{ border:1.5px solid #000; width:46px; height:36px; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--muted); letter-spacing:.05em; }
+  .ack-txt{ font-size:13px; }
+  .sig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px; }
+  .sig-card{ border:1px solid #000; padding:14px; min-height:150px; }
+  .sig-title{ font-weight:700; margin:0 0 10px; }
+  .sig-line{ border-bottom:1px solid #000; min-height:24px; margin-top:20px; }
+  .sig-label{ font-size:12px; color:var(--muted); margin-top:4px; }
+  .sig-typed{ font-family:'Allura','Segoe Script','Brush Script MT','Lucida Handwriting',cursive; font-size:36px; color:var(--sig); padding:4px 0 0; line-height:1.1; }
+  .sig-date{ font-size:13px; color:var(--ink); margin-top:4px; }
+  footer{ margin-top:18px; font-size:12px; text-align:center; color:var(--muted); }
+  footer a{ color:var(--muted); text-decoration:none; }
+  .casl-options{ display:flex; gap:12px; flex-wrap:wrap; margin:8px 0; }
+  .casl-opt{ border:1px solid #000; padding:8px 12px; flex:1; min-width:240px; }
+  .casl-box{ display:inline-block; width:18px; height:18px; border:1.5px solid #000; vertical-align:middle; margin-right:6px; background:#fff; }
+  .page-break-before{ page-break-before:always; }
+  @media (max-width:720px){ .grid,.sig-grid,.ack-row{ grid-template-columns:1fr; } .ack-box{ width:46px; } .casl-options{ flex-direction:column; } }
+  @media print{ body{ background:#fff; padding:0; } .page{ border:none; } }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="toprow">
+        <div>
+          <h1>Legal Assist Paralegal Services</h1>
+          <p class="subtitle">Small Claims Court Tiered Retainer Agreement &ndash; Civil Matters up to $50,000</p>
+          <p class="subtitle">Phase 1: Negotiation &amp; Mediation &mdash; Phase 2: Automatic Defence-on-Litigation Expansion</p>
+        </div>
+        <div class="meta">
+          <div><strong>Client:</strong> {CLIENT_NAME}</div>
+          <div><strong>File Ref:</strong> {MATTER_REFERENCE}</div>
+          <div><strong>Date:</strong> {DATE}</div>
+          <div><strong>HST Reg. #:</strong> {HST_REGISTRATION_NUMBER}</div>
+        </div>
+      </div>
+    </header>
+    <hr>
+
+    <div class="summary-box">
+      <h4>Plain-Language Summary</h4>
+      <ol>
+        <li><strong>Phase 1 (active on signing).</strong> Demand letter, negotiation, and one mediation session. Fee in Section 6.</li>
+        <li><strong>Phase 2 (auto-triggers if the other side sues you in Small Claims Court).</strong> Separate flat fee (Section 7). You have <strong>5 business days</strong> to opt out in writing.</li>
+        <li><strong>You may have to pay the other side&rsquo;s costs if you lose</strong> &mdash; up to 15% of the amount in dispute, plus disbursements (Section 10).</li>
+        <li><strong>You can challenge our bill</strong> by court assessment under the <em>Solicitors Act</em> (Section 27).</li>
+      </ol>
+      <p style="margin:8px 0 0; font-size:12px; color:var(--muted);">Read the full agreement and ask questions before signing.</p>
+    </div>
+
+    <div class="ok-box">
+      <h4>What Happens Next &mdash; The Process at a Glance</h4>
+      <ol>
+        <li>You sign this retainer and pay the Phase 1 retainer deposit.</li>
+        <li>We open the file, conduct a conflicts check, and verify your identity.</li>
+        <li>We draft a demand or response letter and send it to the Opposing Party.</li>
+        <li>We follow up with calls or emails and negotiate on your behalf.</li>
+        <li>If both parties agree, we attend one private mediation session.</li>
+        <li>If a resolution is reached, we draft the settlement agreement and release.</li>
+        <li>If the Opposing Party sues you in Small Claims Court, Phase 2 auto-triggers and we defend the claim (you may opt out within 5 business days).</li>
+      </ol>
+    </div>
+
+    <h2>1. Parties</h2>
+    <div class="grid">
+      <div class="field"><span>Client Name:</span> {CLIENT_NAME}</div>
+      <div class="field"><span>Phone:</span> {CLIENT_PHONE}</div>
+      <div class="field"><span>Email:</span> {CLIENT_EMAIL}</div>
+      <div class="field"><span>File Ref:</span> {MATTER_REFERENCE}</div>
+      <div class="field"><span>Address:</span> {CLIENT_ADDRESS_LINE1}</div>
+      <div class="field"><span>Unit:</span> {CLIENT_ADDRESS_LINE2}</div>
+      <div class="field"><span>City:</span> {CLIENT_CITY}</div>
+      <div class="field"><span>Province:</span> {CLIENT_PROVINCE}</div>
+      <div class="field"><span>Postal Code:</span> {CLIENT_POSTAL_CODE}</div>
+      <div class="field"><span>Court / Matter Type:</span> {COURT_MATTER_TYPE}</div>
+      <div class="field"><span>Opposing Party:</span> {OPPOSING_PARTY_NAME}</div>
+      <div class="field"><span>Client&rsquo;s Role:</span> {CLIENT_PARTY_ROLE}</div>
+    </div>
+    <p>This Retainer Agreement is between <strong>Legal Assist Paralegal Services</strong> (the &ldquo;Paralegal&rdquo;) and <strong>{CLIENT_NAME}</strong> (the &ldquo;Client&rdquo;).</p>
+
+    <h2>2. Retainer, Relationship &amp; Two-Phase Structure</h2>
+    <p>The Client retains the Paralegal for a civil dispute that is, or may become, a matter before the Small Claims Court of Ontario, governed by the <em>Courts of Justice Act</em>, R.S.O. 1990, c. C.43, and the <em>Rules of the Small Claims Court</em>, O. Reg. 258/98. The Court&rsquo;s monetary jurisdiction is $50,000, exclusive of interest and costs.</p>
+    <ul>
+      <li><strong>Phase 1 (default on signing).</strong> Pre-litigation services. See Section 3 (scope), Section 6 (fees).</li>
+      <li><strong>Phase 2 (auto-triggered).</strong> If the Opposing Party serves a Plaintiff&rsquo;s Claim on the Client. See Section 4 (scope), Section 7 (fees). The Client may opt out within 5 business days.</li>
+    </ul>
+    <p>No paralegal-client relationship exists until this agreement is signed and required funds are received. The Paralegal is not responsible for monitoring deadlines, taking procedural steps, or commencing work until retainer funds have cleared the firm&rsquo;s trust account.</p>
+    <div class="nature-box">
+      <p class="nature-label">Nature of the Claim / Dispute</p>
+      <p>{NATURE_OF_MATTER}</p>
+    </div>
+
+    <h3>2.1 Typical Timeline (For Information Only)</h3>
+    <table class="timeline-table">
+      <tr><th>Stage</th><th>Typical Duration</th></tr>
+      <tr><td>Phase 1 negotiation (demand to settlement or impasse)</td><td>4 to 8 weeks</td></tr>
+      <tr><td>Phase 2 Defence (Form 9A) deadline after Plaintiff&rsquo;s Claim served</td><td>20 days (strict)</td></tr>
+      <tr><td>Phase 2 Settlement Conference</td><td>3 to 6 months after Defence filed</td></tr>
+      <tr><td>Phase 2 Trial</td><td>9 to 18 months after Plaintiff&rsquo;s Claim filed</td></tr>
+    </table>
+
+    <h2>3. Phase 1 &mdash; Scope of Services (Negotiation Phase)</h2>
+    <p>Phase 1 is limited in scope under Rule 3.02(1.1) of the Paralegal Rules of Conduct. Phase 1 includes:</p>
+    <ul>
+      <li>Intake interview and case assessment</li>
+      <li>Document review and legal research</li>
+      <li>One (1) formal demand or response letter on firm letterhead</li>
+      <li>Up to three (3) follow-up communications with the Opposing Party</li>
+      <li>Up to two (2) rounds of settlement negotiation</li>
+      <li>If both parties agree, one (1) private mediation session (up to 3 hours, in-person or video)</li>
+      <li>Settlement agreement and full and final release if Phase 1 resolves</li>
+      <li>Reasonable status updates</li>
+    </ul>
+    <p><strong>Phase 1 does NOT include</strong> filing a Plaintiff&rsquo;s Claim, court attendance, defending counterclaims from third parties, contribution and indemnity claims under Rules 10 and 11, judgment enforcement, or appeals.</p>
+
+    <h3>3.1 Settlement Authority</h3>
+    <p>The Client retains sole authority to accept or reject any settlement offer. The Paralegal will communicate every offer received and act only on the Client&rsquo;s express instruction.</p>
+
+    <h3>3.2 Opposing Party Participation Is Not Guaranteed</h3>
+    <p>The Paralegal <strong>cannot compel</strong> the Opposing Party to respond, negotiate, mediate, or participate in settlement discussions. If the Opposing Party refuses to engage, Phase 1 may end without a substantive response. Phase 1 fees are earned for the work performed regardless of whether the Opposing Party participates.</p>
+
+    <h3>3.3 Mediation Costs</h3>
+    <p>If a mediation session is held, the mediator&rsquo;s fee and any room/platform fees are split <strong>50% by the Client and 50% by the Opposing Party</strong>, unless agreed otherwise in writing. Mediation costs are a disbursement charged at cost; the Paralegal will obtain the Client&rsquo;s consent for any mediation cost above $500. Mediation discussions are without prejudice and confidential under common-law mediation privilege.</p>
+
+    <h3>3.4 Phase 1 Drift into Inactivity</h3>
+    <p>If no meaningful negotiation activity has occurred for sixty (60) consecutive days, the Paralegal will send a written status notice. If no further instructions arrive within thirty (30) days, the Paralegal may close the Phase 1 file. The 30-day post-Phase-1 Phase 2 trigger window in Section 4 continues to run from the date the file is closed.</p>
+
+    <h2>4. Phase 2 &mdash; Automatic Expansion If the Opposing Party Sues the Client</h2>
+    <div class="danger-box">
+      <h4>Trigger</h4>
+      <p>If, during the active period of Phase 1 (or within thirty (30) days after Phase 1 ends), the Opposing Party (or any person related to or claiming through them) <strong>commences a Plaintiff&rsquo;s Claim in the Small Claims Court of Ontario against the Client</strong> arising out of the matter in Section 2, this retainer <strong>automatically expands</strong> to include the Phase 2 services in Section 4.1. The Client agrees to notify the Paralegal within five (5) business days of becoming aware of the Trigger Event.</p>
+    </div>
+
+    <h3>4.1 Services Included in Phase 2</h3>
+    <ul>
+      <li>Review of the Plaintiff&rsquo;s Claim and attachments</li>
+      <li>Preparation and filing of the Defence (Form 9A) within the 20-day deadline</li>
+      <li>Preparation and filing of a Defendant&rsquo;s Claim (counterclaim) arising out of the same matter, if instructed</li>
+      <li>Service of pleadings under O. Reg. 258/98 Rule 8</li>
+      <li>Preparation for and attendance at the Settlement Conference (Rule 13)</li>
+      <li>Preparation for and attendance at up to one (1) day of trial (defined in Section 4.2)</li>
+      <li>Continuing settlement negotiation throughout Phase 2</li>
+      <li>Drafting a settlement agreement and release if Phase 2 resolves</li>
+    </ul>
+    <p><strong>Still excluded</strong> (require a separate written agreement): motions beyond routine procedural motions, appeals, judicial review, multi-day trials beyond one full day, third-party claims for contribution and indemnity, enforcement of judgment.</p>
+
+    <h3>4.2 Definition of &ldquo;One Day of Trial&rdquo;</h3>
+    <p>&ldquo;One (1) day of trial&rdquo; means <strong>up to six (6) hours of court time on a single trial date</strong>, plus reasonable pre-trial preparation and travel within the firm&rsquo;s usual service area. Trials exceeding six hours, or that are continued or adjourned to additional dates, are billed at the rate in Section 7.2.</p>
+
+    <h3>4.3 Trigger Limited to Small Claims Court</h3>
+    <p>Phase 2 applies <strong>only</strong> if the claim is in Small Claims Court of Ontario. A claim in the Superior Court of Justice or any other forum is <strong>not</strong> a trigger, because paralegals do not have a right of appearance there under By-Law 4. If a Superior Court action is commenced, the Paralegal will refer the Client to a lawyer; any referral arrangement required to be disclosed under the Paralegal Rules of Conduct will be disclosed to the Client.</p>
+
+    <h3>4.4 Limited to the Named Opposing Party</h3>
+    <p>Phase 2 applies only where the Plaintiff&rsquo;s Claim is commenced by the named Opposing Party (or a party related to or claiming through them &mdash; for example, an insurer or assignee). An unrelated third-party claim does not trigger Phase 2.</p>
+
+    <h3>4.5 Client&rsquo;s Right to Opt Out</h3>
+    <p>Within <strong>five (5) business days</strong> of the Trigger Event, the Client may, by written notice, decline the Phase 2 expansion. On opt-out, the Paralegal will deliver the file and refund any unearned Phase 2 deposit. The Client is then responsible for engaging another representative or self-representing.</p>
+    <div class="danger-box">
+      <h4>Deadline Warning</h4>
+      <p>The 20-day Defence deadline does <strong>not</strong> pause for the Client&rsquo;s opt-out. Failing to file a Defence within 20 days of being served can result in default judgment.</p>
+    </div>
+
+    <h3>4.6 Multiple Plaintiffs</h3>
+    <p>If the Opposing Party adds co-plaintiffs to the same Plaintiff&rsquo;s Claim, Phase 2 covers the consolidated claim. Separate actions by unrelated plaintiffs do not trigger Phase 2.</p>
+
+    <h2>5. Excluded Services</h2>
+    <p>This retainer does not include (unless separately agreed in writing):</p>
+    <ul>
+      <li>Claims exceeding $50,000 (Superior Court of Justice, requires a lawyer)</li>
+      <li>Appeals to the Divisional Court</li>
+      <li>Third-party claims for contribution and indemnity (Rules 10/11)</li>
+      <li>Sheriff coordination, payment plan supervision, or hands-on collections</li>
+      <li><em>Insurance Act</em> tort actions, statutory accident benefits, LAT proceedings</li>
+      <li>Family, criminal, or RTA matters; bankruptcy or insolvency</li>
+      <li>Any forum where paralegals lack a right of appearance under By-Law 4</li>
+    </ul>
+
+    <h2>6. Phase 1 Fee Structure</h2>
+    <div class="checkline">{HOURLY_CHECK} <strong>Hourly:</strong> ${HOURLY_RATE}/hour + HST</div>
+    <div class="checkline">{FLAT_CHECK} <strong>Flat Fee:</strong> ${FLAT_FEE} + HST</div>
+    <div class="checkline">{HYBRID_CHECK} <strong>Hybrid:</strong> ${HYBRID_FLAT_FEE} + HST flat, then ${HYBRID_HOURLY_RATE}/hour + HST</div>
+    <div class="checkline">{CONTINGENCY_CHECK} <strong>Contingency:</strong> {CONTINGENCY_PERCENT}% of monetary recovery, plus HST where applicable</div>
+    <p>Selected billing model: <strong>{SELECTED_FEE_MODEL}</strong></p>
+
+    <h3>6.1 Retainer Deposit and Trust Account</h3>
+    <p>The Client pays an initial retainer deposit of <strong>${RETAINER_AMOUNT} + HST</strong>, held in the firm&rsquo;s trust account under By-Law 9. A Form 9A trust receipt will be issued. <strong>No work begins until the deposit clears.</strong></p>
+
+    <h3>6.2 Trust Top-Up</h3>
+    <p>When the trust balance falls below $500, the Paralegal may require the Client to replenish to a level sufficient for 30 days of anticipated work, within seven (7) days of written notice. Failure to replenish may result in suspension of services or withdrawal.</p>
+    {PAYMENT_SECTION}
+    {PAYMENT_ARRANGEMENT_SECTION}
+    {SPECIAL_PROVISIONS_BLOCK}
+
+    <h3>6.3 Disbursements</h3>
+    <p>Disbursements (court filing fees, process service, witness attendance money, mediator fees, transcripts, expert fees, sheriff fees, travel) are billed at cost in addition to legal fees. The Paralegal will obtain the Client&rsquo;s consent before any single disbursement above $250. HST is charged on legal fees and taxable disbursements; HST-exempt court filing fees are passed through without HST.</p>
+
+    <h3>6.4 Payment Terms</h3>
+    <p>Invoices are due on receipt. Overdue accounts may be charged interest at 2% per month (24% annually). The Paralegal may suspend services for non-payment, subject to professional obligations.</p>
+
+    <h3>6.5 Solicitor&rsquo;s Lien / Set-Off</h3>
+    <p>To the extent permitted at law, the Paralegal has a solicitor&rsquo;s lien on settlement proceeds, costs awarded, and documents in the Paralegal&rsquo;s possession for unpaid fees and disbursements, and may apply (set off) those funds against unpaid amounts before paying the balance to the Client.</p>
+
+    <h3>6.6 Direct Settlement by the Client / Quantum Meruit</h3>
+    <p>If the Client settles directly with the Opposing Party without first instructing the Paralegal, withdraws the matter, or otherwise prevents completion of the included services, the Paralegal is entitled to fair value of services performed to that date (quantum meruit), plus disbursements and HST.</p>
+
+
+    <h3>6.7 Chargebacks, NSF Fees &amp; Reversed Payments</h3>
+    <p>The Client is responsible for any NSF fees, chargebacks, declined payments, payment reversals, credit-card disputes, EFT reversals, failed installment-plan payments, or merchant processing costs arising from unsuccessful or reversed payments. Any such amount may be charged back against the Client&rsquo;s account, deducted from the trust balance, or invoiced separately at the firm&rsquo;s discretion.</p>
+
+    <h2>7. Phase 2 Fee Structure</h2>
+    <div class="grid">
+      <div class="field"><span>Phase 2 Flat Fee:</span> ${PHASE2_FLAT_FEE} + HST</div>
+      <div class="field"><span>Additional Trial Days:</span> ${PHASE2_ADDITIONAL_TRIAL_DAY_RATE} + HST per additional half-day</div>
+      <div class="field"><span>Out-of-Scope Hourly:</span> ${HOURLY_RATE}/hour + HST (with prior written approval)</div>
+      <div class="field"><span>Disbursement Pre-Approval:</span> &gt; $250 requires Client consent</div>
+    </div>
+
+    <h3>7.1 Payment of Phase 2 Fee</h3>
+    <p>The Phase 2 fee is payable: 50% deposit within seven (7) days of the Trigger Event (held in trust); 50% balance on or before the Settlement Conference, or sixty (60) days from the Trigger Event, whichever is earlier.</p>
+
+    <h3>7.2 Additional Trial Days</h3>
+    <p>Trials extending beyond one day (Section 4.2) are billed at <strong>${PHASE2_ADDITIONAL_TRIAL_DAY_RATE} + HST per additional half-day or part thereof</strong>. Written notice will be given as soon as additional trial time appears likely.</p>
+
+    <h3>7.3 Phase 2 Is Additional to Phase 1</h3>
+    <p>The Phase 2 flat fee is in addition to the Phase 1 fee (which has been earned for the Phase 1 work). Phase 1 fees are not credited against Phase 2.</p>
+
+    <h2>8. Contingency Fee Terms (If Applicable)</h2>
+    <p>Any contingency arrangement applies only to monetary recovery actually obtained for the Client &mdash; not to non-monetary relief or to purely defensive outcomes (including Phase 2 defence). If the Client settles directly, withdraws, or fails to cooperate, the Paralegal may claim quantum meruit (Section 6.6).</p>
+
+    <h2>9. Outcome, Collectability, and No Tax/Financial Advice</h2>
+    <p>The Paralegal does not guarantee any particular outcome. Whether the Court awards relief, the amount of any award, and the recoverability of any judgment depend on factors outside the Paralegal&rsquo;s control. Outcomes depend on the law, the evidence, credibility findings, and the decision of the Deputy Judge.</p>
+    <p><strong>No tax or financial advice.</strong> The Paralegal does not provide accounting, tax, investment, or financial advice. The Client is encouraged to obtain independent advice on tax or financial consequences of any settlement, judgment, debt forgiveness, structured payment, or business-loss claim arising from this matter.</p>
+
+    <h2>10. Costs Payable IF THE CLIENT LOSES</h2>
+    <div class="danger-box">
+      <h4>Important &mdash; You May Have to Pay the Other Side&rsquo;s Costs</h4>
+      <p>If the Court rules against the Client, the Client may be ordered to pay the Opposing Party&rsquo;s costs. Section 29 of the <em>Courts of Justice Act</em> limits costs in Small Claims to <strong>15% of the amount claimed</strong>, except in exceptional circumstances. In addition, the losing party may be ordered to pay the other side&rsquo;s disbursements, a representation fee under Rule 19, and additional costs for unreasonable conduct.</p>
+      <p>The Paralegal will discuss costs risk before settlement conference and trial. Consider this risk when deciding whether to accept or reject settlement offers.</p>
+    </div>
+
+    <h2>11. Limitation Periods &mdash; Strict Deadlines</h2>
+    <div class="danger-box">
+      <h4>NEGOTIATION DOES NOT STOP THE LIMITATION CLOCK</h4>
+      <p>Ontario law sets strict deadlines for civil claims. <strong>The Client understands that participation in negotiation or mediation does not suspend, toll, or extend any limitation period unless expressly agreed in writing by all parties or ordered by the Court.</strong></p>
+    </div>
+    <p>Applicable limitation periods include:</p>
+    <ul>
+      <li><strong>Limitations Act, 2002</strong>, s. 4 &mdash; two (2) year basic limitation from discovery (s. 5).</li>
+      <li><strong>Defence deadline</strong> &mdash; 20 days from service of a Plaintiff&rsquo;s Claim, under the Rules of the Small Claims Court.</li>
+      <li>Specific contractual limitation provisions in any agreement between the parties.</li>
+    </ul>
+    <p>Phase 1 does not include commencing a Plaintiff&rsquo;s Claim. If the Client wishes to file before a limitation period expires, the Client must separately retain the Paralegal or another representative for that purpose.</p>
+
+    <h2>12. Client Responsibilities</h2>
+    <ul>
+      <li>Provide complete, accurate, truthful information and all relevant documents</li>
+      <li>Respond to requests for instructions within five (5) business days</li>
+      <li>Provide identification under By-Law 7.1</li>
+      <li>Attend settlement conferences and trial in person, as required by the Rules</li>
+      <li>Keep contact information current</li>
+      <li>Not contact the Opposing Party directly after the demand letter is sent</li>
+      <li>Pay fees, disbursements, and trust top-ups when due</li>
+    </ul>
+
+    <h2>13. Evidence Preservation, Witness Fees &amp; Subpoenas</h2>
+    <p><strong>Evidence preservation.</strong> The Client agrees <strong>not to destroy, delete, alter, or dispose of</strong> potentially relevant evidence, including text messages, emails, photographs, recordings, voicemails, invoices, contracts, receipts, repair records, or social media content. Destruction of relevant evidence can result in adverse inferences, costs against the Client, or other sanctions.</p>
+    <p><strong>Witnesses.</strong> The Client is responsible for identifying witnesses and ensuring their availability. Non-party witnesses are entitled to <strong>attendance money</strong> under Rule 18 of O. Reg. 258/98 (currently $50/day plus reasonable travel and accommodation). The Paralegal will prepare and serve a <strong>Summons to Witness (Form 18A)</strong> on instruction; the cost is a disbursement.</p>
+    <p><strong>Expert witnesses.</strong> Not included in any flat fee. Expert reports and testimony require Client approval and a separate written estimate.</p>
+
+    <h2>14. Settlement Conference and Trial Attendance</h2>
+    <p>The Rules of the Small Claims Court require the parties to attend the settlement conference in person and to be available for trial. Failure to attend may result in dismissal, judgment against the Client, or costs.</p>
+
+    <h2>15. Client Conduct &amp; Public Statements</h2>
+    <p>The Client agrees not to contact the Opposing Party directly, undermine the legal strategy, conceal documents, take unilateral steps that affect the matter, or post online about the dispute. Serious misconduct may result in withdrawal.</p>
+
+    <h2>16. Communication Policy &amp; Recording Consent</h2>
+    <p>Normal response time is 1 to 2 business days. Email: <strong>jeanfrancois@legalassist.london</strong>. Phone (business hours): <strong>226-272-5153</strong>.</p>
+    <p><strong>Recording consent.</strong> The Paralegal may record calls and meetings (audio or audio-video) where the Client is a participant, for accurate file-keeping. The Client consents to such recording by signing this retainer and may revoke this consent in writing prospectively. Recordings are part of the file under Sections 26 and 29.</p>
+
+    <h2>17. File Abandonment &amp; No Action Without Funding</h2>
+    <p>If the Client stops responding or fails to fund the file, the Paralegal may close the file or withdraw. The Paralegal is not required to begin or continue work unless funds are paid and the account is current.</p>
+
+    <h2>18. Withdrawal of Services &amp; Notice of Change of Representation</h2>
+    <h3>18.1 By the Client</h3>
+    <p>The Client may terminate this retainer in writing at any time. The Paralegal will prepare a final account, refund any unearned trust balance, and return the Client&rsquo;s documents.</p>
+    <h3>18.2 By the Paralegal</h3>
+    <p>Under Rule 3.08, the Paralegal may withdraw on reasonable notice for non-payment, conflict of interest, ethical issues, breakdown of trust, or persistent failure to communicate.</p>
+    <h3>18.3 Notice of Change of Representation (Form 14B)</h3>
+    <p>If this retainer ends while a Small Claims action is active, the Paralegal will file <strong>Form 14B</strong> with the Court and serve it on the opposing party. Until that notice is filed, the Paralegal remains on the record. The Client is responsible for filing a replacement Notice of Representation or a Notice of Self-Representation.</p>
+
+    <h2>19. Confidentiality, Conflicts, Joint Retainer &amp; Complaints</h2>
+    <p><strong>Confidentiality (Rule 3.04).</strong> Communications between the Client and the Paralegal are protected by paralegal-client privilege. Exceptions exist only as permitted or required by law.</p>
+    <p><strong>Conflicts.</strong> The Paralegal has run a conflicts check and is not aware of any conflict. If one arises later, the Paralegal will disclose and may withdraw.</p>
+    <p><strong>Joint retainer.</strong> Where two or more clients retain the Paralegal jointly, there is no confidentiality between them on relevant matters, instructions are received from all, and they are jointly and severally responsible for fees.</p>
+    <p><strong>Complaints.</strong> Raise concerns with the Paralegal first; the Law Society of Ontario Complaints line is 1-800-668-7380 (lso.ca).</p>
+
+    <h2>20. No Guarantee of Outcome</h2>
+    <p>The Paralegal will perform services diligently but makes no representation about the outcome of any negotiation, motion, settlement conference, or trial. Fees are earned for the work performed regardless of the result.</p>
+
+    <h2>21. Right to Independent Legal Advice</h2>
+    <div class="ok-box">
+      <h4>Independent Legal Advice (Limited Scope Phase)</h4>
+      <p>The Client may, before signing, seek independent legal advice about the limited scope of Phase 1, the implications of the Phase 2 automatic expansion, limitation period risks, and the costs risks in Section 10. The Client confirms a reasonable opportunity to do so before signing.</p>
+    </div>
+
+    <h2>22. Use of Supervised Staff</h2>
+    <p>The Paralegal may delegate clerical, administrative, and research tasks to firm staff under the Paralegal&rsquo;s direct supervision. The Paralegal remains responsible for the work product. No legal advice will be provided by any non-licensee.</p>
+
+    <h2>23. Limitation of Liability &amp; Indemnity</h2>
+    <p>To the extent permitted by law, the Paralegal is not responsible for delays, court-scheduling issues, technology failures outside the Paralegal&rsquo;s control, third-party acts, or the ultimate decision of the Court. The Client indemnifies the Paralegal against claims arising from false, misleading, or concealed information provided by the Client.</p>
+
+    <h2>24. Identity Verification (By-Law 7.1)</h2>
+    <p>Under By-Law 7.1, the Paralegal must identify and, in certain circumstances, verify the Client&rsquo;s identity using acceptable government-issued identification. The Client agrees to provide ID on request.</p>
+
+    <h2>25. Electronic Signature, Capacity &amp; Receipt</h2>
+    <p>By signing, the Client confirms: (a) consent to electronic signature under the <em>Electronic Commerce Act, 2000</em> s. 11; (b) capacity to enter the retainer (and authority to bind a corporation if applicable); (c) the Client has read and understood the retainer; (d) consent to email communication, recognizing that email is not perfectly secure; (e) receipt of a complete copy.</p>
+
+    <h2>26. File Closing, Access &amp; Return of Documents</h2>
+    <p>On closing, the Paralegal will send a closing letter, return original documents on request, retain a file copy for seven (7) years under By-Law 9 and Rule 3.05, then securely destroy it. The Client may access the file on reasonable notice during the active retainer.</p>
+
+    <h2 class="page-break-before">27. Right to Bill Assessment</h2>
+    <p>The Client has the right to have any account assessed by an officer of the Superior Court of Justice under the <em>Solicitors Act</em>, R.S.O. 1990, c. S.15. Generally: one month for paid accounts; twelve months for unpaid accounts. The Paralegal will not retaliate for exercising this right. This is in addition to the right to complain to the LSO (Section 19).</p>
+
+    <h2>28. General Terms &amp; Governing Law</h2>
+    <ul>
+      <li><strong>Effective Date</strong> &mdash; the later of the two signatures.</li>
+      <li><strong>Counterparts</strong> &mdash; electronic counterparts each constitute originals.</li>
+      <li><strong>Entire Agreement</strong> &mdash; supersedes prior discussions.</li>
+      <li><strong>Amendments</strong> &mdash; in writing, signed by both parties (email exchange is sufficient).</li>
+      <li><strong>Severability</strong> &mdash; if any provision is unenforceable, the rest stand.</li>
+      <li><strong>Survival</strong> &mdash; Sections 6.5, 6.6, 19, 24, 26, 27, 28, 29 and unpaid fee obligations survive termination.</li>
+      <li><strong>Governing Law</strong> &mdash; Ontario.</li>
+      <li><strong>Notice</strong> &mdash; email is deemed received next business day; mail three (3) business days after sending.</li>
+    </ul>
+
+    <h2>29. Privacy &amp; Personal Information (PIPEDA)</h2>
+    <p>The Paralegal collects personal information to provide services and meet LSO and tax record-keeping requirements. By signing, the Client consents to collection, use, and disclosure of personal information as reasonably necessary for the matter, with disclosure to opposing parties, firm staff, and the LSO as required, and retention for the file-retention period in Section 26. The Client may access, correct, or withdraw consent on reasonable written request, subject to legal retention obligations.</p>
+
+    <h2>30. Professional Liability Insurance, CASL &amp; Accessibility</h2>
+    <p><strong>Insurance.</strong> The Paralegal maintains E&amp;O insurance through LawPRO. LawPRO coverage does not extend to fee disputes (which proceed through the assessment process in Section 27).</p>
+    <p><strong>CASL.</strong> Messages directly related to this retainer are sent under the existing-business-relationship exemption. Marketing communications (if any) require the Client&rsquo;s opt-in:</p>
+    <div class="casl-options">
+      <div class="casl-opt"><span class="casl-box"></span><strong>OPT IN</strong> &mdash; I consent to non-transactional communications.</div>
+      <div class="casl-opt"><span class="casl-box"></span><strong>OPT OUT</strong> &mdash; Matter-related communications only.</div>
+    </div>
+    <p><strong>Accessibility (AODA).</strong> Reasonable accommodations available on request.</p>
+
+    <h2 class="page-break-before">31. Client Acknowledgments &mdash; Initials Required</h2>
+    <p>Initial each box to confirm understanding. Each acknowledgment is a separate term of this retainer.</p>
+    <div class="ack-list">
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">This is a <strong>tiered retainer</strong>. Phase 1 is limited to Section 3 services; the Paralegal will not start a Plaintiff&rsquo;s Claim on my behalf under Phase 1.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt"><strong>Phase 2 auto-triggers</strong> only if the Opposing Party sues me in Small Claims Court (not in any other court). Phase 2 fee is <strong>${PHASE2_FLAT_FEE} + HST</strong>, separate from and in addition to the Phase 1 fee.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I have a <strong>5-business-day opt-out window</strong> after being served. The <strong>20-day Defence deadline does not pause</strong> for my opt-out.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">&ldquo;One day of trial&rdquo; means <strong>up to 6 hours of court time on one date</strong>; additional trial time is billed at the rate in Section 7.2.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt"><strong>I may be ordered to pay the other side&rsquo;s costs if I lose</strong> &mdash; up to 15% of the amount claimed plus disbursements (Section 10).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt"><strong>Negotiation does not stop the limitation clock.</strong> I am responsible for being aware of any deadline that affects my rights (Section 11).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I will <strong>preserve relevant evidence</strong> &mdash; texts, emails, photos, recordings, invoices, contracts, social media (Section 13).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">If I <strong>settle directly</strong> with the Opposing Party without instructing the Paralegal, the Paralegal is entitled to <strong>quantum meruit</strong> plus disbursements (Section 6.6).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">My deposit is held in trust under By-Law 9; I may be required to <strong>top up the trust account</strong> on 7 days&rsquo; notice when the balance drops below the floor.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">The Paralegal has a <strong>solicitor&rsquo;s lien / right of set-off</strong> on settlement proceeds for unpaid fees (Section 6.5).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I consent to <strong>recording</strong> of calls and meetings where I am a participant. I may revoke this consent in writing prospectively.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">The Paralegal <strong>cannot compel the Opposing Party to participate</strong> in negotiation or mediation; Phase 1 fees are earned regardless (Section 3.2).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">The Paralegal does <strong>not provide tax or financial advice</strong>; I will seek independent advice on tax consequences of any settlement or judgment (Section 9).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I have a right to have any account <strong>assessed under the Solicitors Act</strong> (Section 27), and to complain to the LSO (Section 19).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">The Paralegal told me I may seek <strong>independent legal advice</strong> before signing and I have had a reasonable opportunity to do so.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I am responsible for any <strong>NSF fees, chargebacks, declined payments, payment reversals, or merchant processing costs</strong> arising from unsuccessful or reversed payments (Section 6.7).</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I will provide acceptable <strong>identification</strong> under By-Law 7.1.</div></div>
+      <div class="ack-row"><div class="ack-box">INIT</div><div class="ack-txt">I have read Section 29 (<strong>Privacy</strong>) and consent to the handling of my personal information as described.</div></div>
+    </div>
+
+    <h2>32. Signatures</h2>
+    <p>By signing below, the Client confirms reading, understanding, and agreement to this retainer.</p>
+    <hr>
+    <div class="sig-grid">
+      <div class="sig-card">
+        <div class="sig-title">Client Electronic Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Client Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Printed Name</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Date</div>
+      </div>
+      <div class="sig-card">
+        <div class="sig-title">Paralegal Signature</div>
+        <div class="sig-typed">{PARALEGAL_SIGNATURE}</div>
+        <div class="sig-label">{PARALEGAL_NAME}, {PARALEGAL_CREDENTIAL}</div>
+        <div class="sig-label">LSO #{PARALEGAL_LSO}</div>
+        <div class="sig-date">{PARALEGAL_SIGN_DATE}</div>
+        <div class="sig-label">Date</div>
+      </div>
+    </div>
+    <footer>
+      Legal Assist Paralegal Services &bull; Small Claims Court Tiered Retainer Agreement v3 &bull; <a href="https://www.legalassist.london">www.legalassist.london</a>
+    </footer>
+  </div>
+</body>
+</html>
