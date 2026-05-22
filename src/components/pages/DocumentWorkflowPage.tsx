@@ -940,12 +940,23 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{MATTER_REFERENCE\}/g, matterRef);
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
 
-      // Retainer-specific field replacements
+      // Retainer-specific field replacements.
+      // In a flat-fee retainer the "Retainer Deposit Amount" IS the flat
+      // fee (the client pays the whole flat fee upfront and it sits in
+      // trust until earned). Same idea for the initial portion of a
+      // Hybrid retainer. So when the paralegal has selected Flat Fee or
+      // Hybrid and left the corresponding fee field blank, fall back to
+      // retainerAmount so the §6 checkline reflects the same number the
+      // §6.1 deposit paragraph shows.
+      const isFlat = selectedFeeModel === 'Flat Fee';
+      const isHybrid = selectedFeeModel === 'Hybrid Retainer';
+      const flatFeeEffective = flatFeeAmount || (isFlat ? retainerAmount : '') || '—';
+      const hybridFlatEffective = hybridFlatFee || (isHybrid ? retainerAmount : '') || '—';
       documentContent = documentContent.replace(/\{SELECTED_FEE_MODEL\}/g, selectedFeeModel || '—');
       documentContent = documentContent.replace(/\{RETAINER_AMOUNT\}/g, retainerAmount || '—');
       documentContent = documentContent.replace(/\{HOURLY_RATE\}/g, hourlyRate || '—');
-      documentContent = documentContent.replace(/\{FLAT_FEE\}/g, flatFeeAmount || '—');
-      documentContent = documentContent.replace(/\{HYBRID_FLAT_FEE\}/g, hybridFlatFee || '—');
+      documentContent = documentContent.replace(/\{FLAT_FEE\}/g, flatFeeEffective);
+      documentContent = documentContent.replace(/\{HYBRID_FLAT_FEE\}/g, hybridFlatEffective);
       documentContent = documentContent.replace(/\{HYBRID_HOURLY_RATE\}/g, hybridHourlyRate || '—');
       documentContent = documentContent.replace(/\{CONTINGENCY_PERCENT\}/g, contingencyPercent || '—');
 
@@ -1246,6 +1257,10 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{OPPOSING_PARTY_NAME\}/g, fillableLine);
       documentContent = documentContent.replace(/\{COURT_MATTER_TYPE\}/g, matterTypeValue || 'Small Claims Court of Ontario');
       documentContent = documentContent.replace(/\{CLIENT_PARTY_ROLE\}/g, fillableLine);
+      // Phase 2 fees — Small Claims tiered retainer hardcodes these in
+      // the template HTML (v3.6+: $3,500 + HST flat, $1,000 + HST per
+      // additional trial half-day). Defensive substitution remains in
+      // case an older CMS row still has the {TOKEN} placeholders.
       documentContent = documentContent.replace(/\{PHASE2_FLAT_FEE\}/g, fillableSmall);
       documentContent = documentContent.replace(/\{PHASE2_ADDITIONAL_TRIAL_DAY_RATE\}/g, fillableSmall);
 
@@ -2363,6 +2378,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                               />
                             </div>
                           )}
+
                         </div>
                       );
                     })()}
