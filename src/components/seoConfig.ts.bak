@@ -57,7 +57,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/': {
     title: 'Legal Assist Paralegal Services | London Ontario | Affordable Legal Help',
-    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation.',
+    description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 226-272-5153.',
     keywords: 'paralegal london ontario, legal services london, traffic ticket lawyer london, LTB paralegal, small claims court london',
     schema: {
       type: 'LocalBusiness',
@@ -113,7 +113,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/about': {
-    title: 'About Legal Assist | Licensed Paralegal Services',
+    title: 'About Legal Assist | Licensed Paralegal Services | London Ontario',
     description: 'Learn about Legal Assist Paralegal Services. Licensed by the Law Society of Ontario. Serving London and Southwestern Ontario with affordable legal representation.',
     keywords: 'about legalassist, licensed paralegal ontario, LSO paralegal london, paralegal credentials',
     breadcrumbs: [
@@ -142,8 +142,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/about/student-placement': {
-    title: 'Student Placement Program | Paralegal Field Placement',
-    description: 'Legal Assist accepts student placements from accredited Ontario paralegal and law clerk programs.',
+    title: 'Student Placement Program | Paralegal Field Placement | Legal Assist London',
+    description: 'Legal Assist accepts student placements from accredited Ontario paralegal and law clerk programs. Learn about our high standards, application process, interview, speaking test, and onboarding requirements.',
     keywords: 'paralegal student placement ontario, paralegal field placement london, law clerk placement, paralegal internship, student placement program, paralegal co-op ontario, legal placement london ontario',
     schema: { type: 'Article', name: 'Student Placement Program' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }, { name: 'Student Placements', url: '/about/student-placement' }],
@@ -156,7 +156,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services': {
-    title: 'Legal Services | Traffic Tickets, LTB, Small Claims',
+    title: 'Legal Services | Traffic Tickets, LTB, Small Claims | Legal Assist',
     description: 'Full range of paralegal services: traffic ticket defence, landlord-tenant board, small claims court, human rights tribunal, employment issues. London, Ontario.',
     keywords: 'paralegal services london, legal services ontario, affordable legal help, licensed paralegal',
     breadcrumbs: [
@@ -190,7 +190,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // TRAFFIC TICKETS - MAIN & SUB-PAGES (18 pages)
   // ============================================
   '/services/traffic-tickets': {
-    title: 'Traffic Ticket Defence | Fight Your Ticket London Ontario',
+    title: 'Traffic Ticket Defence | Fight Your Ticket | London Ontario Paralegal',
     description: 'Fight your traffic ticket in London, Ontario. Speeding, careless driving, stunt driving, red lights. Protect your licence and insurance rates. Free consultation.',
     keywords: 'traffic ticket lawyer london, fight speeding ticket ontario, traffic court paralegal, demerit points defence',
     schema: {
@@ -263,7 +263,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/careless-driving-defence': {
-    title: 'Careless Driving Defence | 6 Demerit Points London Ontario',
+    title: 'Careless Driving Defence | 6 Demerit Points | London Ontario Paralegal',
     description: 'Careless driving charge in London, Ontario? 6 demerit points and up to $2,000 fine at stake. Expert defence to protect your licence. Free consultation.',
     keywords: 'careless driving defence london, careless driving ticket ontario, 6 demerit points, HTA 130',
     schema: {
@@ -374,7 +374,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/red-light-tickets': {
-    title: 'Red Light Ticket Defence | Run Red Light London Ontario',
+    title: 'Red Light Ticket Defence | Run Red Light | London Ontario Paralegal',
     description: 'Fight your red light ticket in London, Ontario. Camera tickets and officer-issued tickets. Protect your driving record. Free consultation.',
     keywords: 'red light ticket defence london, run red light ontario, red light camera ticket, intersection violation',
     schema: {
@@ -448,7 +448,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/demerit-points-guide': {
-    title: 'Demerit Points Guide Ontario | How Points Work',
+    title: 'Demerit Points Guide Ontario | How Points Work | Legal Assist',
     description: 'Understand Ontario\'s demerit point system. How points are assigned, when your licence is at risk, and how to protect your driving record. Free consultation.',
     keywords: 'demerit points ontario, how demerit points work, licence suspension points, driving record ontario',
     schema: {
@@ -596,7 +596,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/stop-sign-ticket': {
-    title: 'Stop Sign Ticket Defence | Rolling Stop London Ontario',
+    title: 'Stop Sign Ticket Defence | Rolling Stop | London Ontario Paralegal',
     description: 'Fight your stop sign ticket in London, Ontario. Rolling stops and failure to stop violations. Protect your driving record. Free consultation.',
     keywords: 'stop sign ticket london, rolling stop defence, failure to stop ontario, stop sign violation',
     schema: {
@@ -633,7 +633,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/street-racing': {
-    title: 'Street Racing Defence | Racing Charge London Ontario',
+    title: 'Street Racing Defence | Racing Charge | London Ontario Paralegal',
     description: 'Charged with street racing in Ontario? Face licence suspension and vehicle seizure. Aggressive defence strategies. Free consultation in London.',
     keywords: 'street racing charge ontario, racing ticket defence london, contest racing violation, drag racing ticket',
     schema: {
@@ -895,7 +895,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // LANDLORD TENANT BOARD - MAIN & SUB-PAGES (21 pages)
   // ============================================
   '/services/landlord-tenant-board': {
-    title: 'Landlord Tenant Board | LTB Representation London Ontario',
+    title: 'Landlord Tenant Board | LTB Representation | London Ontario Paralegal',
     description: 'LTB representation for landlords and tenants in London, Ontario. Evictions, rent disputes, maintenance issues, N12/N13 notices. Free consultation.',
     keywords: 'landlord tenant board london, LTB paralegal, eviction defence ontario, tenant rights london',
     schema: {
@@ -968,7 +968,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/tenant-services': {
-    title: 'Tenant Services | Eviction Defence London Ontario',
+    title: 'Tenant Services | Eviction Defence | London Ontario Paralegal',
     description: 'Paralegal services for tenants in London, Ontario. Fight wrongful evictions, maintenance issues, rent disputes. Know your rights. Free consultation.',
     keywords: 'tenant paralegal london, eviction defence ontario, tenant rights help, fight eviction london',
     schema: {
@@ -1042,7 +1042,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/n12-personal-use-eviction': {
-    title: 'N12 Eviction | Landlord Personal Use London Ontario',
+    title: 'N12 Eviction | Landlord Personal Use | London Ontario Paralegal',
     description: 'N12 eviction for landlord personal use in London, Ontario. Navigate the requirements and process. Representation for landlords and tenants.',
     keywords: 'N12 eviction ontario, landlord personal use eviction, own use eviction london, N12 notice',
     schema: {
@@ -1079,7 +1079,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/n13-renovation-eviction': {
-    title: 'N13 Eviction | Renovation Eviction London Ontario',
+    title: 'N13 Eviction | Renovation Eviction | London Ontario Paralegal',
     description: 'N13 renovation eviction in London, Ontario. Extensive renovations requiring vacant possession. Landlord and tenant representation available.',
     keywords: 'N13 eviction ontario, renovation eviction london, renoviction defence, vacant possession eviction',
     schema: {
@@ -1153,7 +1153,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/maintenance-repairs': {
-    title: 'Maintenance and Repairs | T6 Application London Ontario',
+    title: 'Maintenance and Repairs | T6 Application | London Ontario Paralegal',
     description: 'Landlord won\'t do repairs? File a T6 application with the LTB. Get maintenance orders and rent abatement. Tenant representation in London, Ontario.',
     keywords: 'landlord maintenance repairs ontario, T6 application LTB, rent abatement repairs, tenant maintenance rights',
     schema: {
@@ -1190,7 +1190,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/bad-faith-eviction': {
-    title: 'Bad Faith Eviction | T5 Application London Ontario',
+    title: 'Bad Faith Eviction | T5 Application | London Ontario Paralegal',
     description: 'Were you evicted in bad faith? Landlord didn\'t move in after N12? File T5 for compensation. Tenant representation in London, Ontario.',
     keywords: 'bad faith eviction ontario, T5 application LTB, landlord didnt move in, N12 bad faith',
     schema: {
@@ -1227,7 +1227,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/rent-increase-guide': {
-    title: 'Rent Increase Guide Ontario | Legal Rent Increases',
+    title: 'Rent Increase Guide Ontario | Legal Rent Increases | Legal Assist',
     description: 'Understand legal rent increases in Ontario. Annual guidelines, notice requirements, and when increases are illegal. Information for tenants and landlords.',
     keywords: 'rent increase ontario, legal rent increase, rent guideline 2024, rent increase notice requirements',
     schema: {
@@ -1264,7 +1264,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/illegal-lockout': {
-    title: 'Illegal Lockout | Landlord Changed Locks London Ontario',
+    title: 'Illegal Lockout | Landlord Changed Locks | London Ontario Paralegal',
     description: 'Landlord locked you out illegally? Get back in your home. Illegal lockouts violate the RTA. Emergency tenant representation in London, Ontario.',
     keywords: 'illegal lockout ontario, landlord changed locks, wrongful eviction, illegal eviction tenant',
     schema: {
@@ -1301,7 +1301,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/landlord-harassment': {
-    title: 'Landlord Harassment | T2 Application London Ontario',
+    title: 'Landlord Harassment | T2 Application | London Ontario Paralegal',
     description: 'Being harassed by your landlord? Interfering with your enjoyment of the unit? File T2 application. Tenant representation in London, Ontario.',
     keywords: 'landlord harassment ontario, T2 application harassment, tenant harassment help, landlord interfering',
     schema: {
@@ -1412,7 +1412,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/roommate-disputes': {
-    title: 'Roommate Disputes | Shared Living Issues London Ontario',
+    title: 'Roommate Disputes | Shared Living Issues | London Ontario Paralegal',
     description: 'Roommate problems in London, Ontario? Understand your rights as a tenant vs. roommate. Get help resolving shared living disputes.',
     keywords: 'roommate dispute ontario, shared living legal issues, roommate not paying rent, remove roommate',
     schema: {
@@ -1523,7 +1523,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/noise-complaints-defence': {
-    title: 'Noise Complaints Defence | N5 Notice London Ontario',
+    title: 'Noise Complaints Defence | N5 Notice | London Ontario Paralegal',
     description: 'Facing eviction for noise complaints? N5 notice for interference? We can help defend. Tenant representation in London, Ontario.',
     keywords: 'noise complaint eviction ontario, N5 notice defence, loud tenant eviction, noise interference tenant',
     schema: {
@@ -2500,7 +2500,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // CRIMINAL & PROVINCIAL OFFENCES (10 pages)
   // ============================================
   '/services/criminal-matters': {
-    title: 'Criminal Matters | Summary Offences London Ontario',
+    title: 'Criminal Matters | Summary Offences | London Ontario Paralegal',
     description: 'Criminal defence for summary conviction matters in London, Ontario. Minor criminal charges, theft under $5000, assault, mischief.',
     keywords: 'criminal paralegal london, summary offence defence, minor criminal charges, criminal lawyer alternative',
     schema: { type: 'LegalService', name: 'Criminal Defence', serviceType: 'Summary Conviction Defence', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2769,7 +2769,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/paralegal-london-ontario': {
     title: 'Paralegal London Ontario | Affordable Legal Services London ON',
-    description: 'Licensed paralegal in London, Ontario. Small Claims Court, Landlord & Tenant Board, traffic tickets, human rights tribunal. Serving London & Middlesex County.',
+    description: 'Licensed paralegal in London, Ontario. Small Claims Court, Landlord & Tenant Board, traffic tickets, human rights tribunal. Serving London & Middlesex County. Free consultation.',
     keywords: 'paralegal london ontario, paralegal london on, london paralegal services, small claims court london, landlord tenant board london, traffic ticket london, licensed paralegal london ontario, affordable paralegal london',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Paralegal London Ontario', areaServed: ['London', 'Middlesex County', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }],
@@ -2792,7 +2792,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/landlord-tenant-paralegal-london': {
     title: 'Landlord Tenant Paralegal London Ontario | LTB Representation London',
-    description: 'Licensed paralegal for landlord and tenant disputes in London, Ontario. Evictions, rent disputes, LTB hearings, N4/N5/N12 notices. Serving London & Middlesex County.',
+    description: 'Licensed paralegal for landlord and tenant disputes in London, Ontario. Evictions, rent disputes, LTB hearings, N4/N5/N12 notices. Serving London & Middlesex County. Free consultation.',
     keywords: 'landlord tenant paralegal london, ltb london ontario, eviction paralegal london, landlord tenant board london, tenant rights london, landlord services london ontario',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Landlord Tenant Paralegal London', areaServed: ['London', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Landlord & Tenant', url: '/landlord-tenant-paralegal-london' }],
@@ -2805,7 +2805,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/small-claims-paralegal-london': {
     title: 'Small Claims Court Paralegal London Ontario | Claims up to $50,000',
-    description: 'Licensed paralegal for Small Claims Court in London, Ontario. Debt recovery, contract disputes, property damage claims up to $50,000. London courthouse experience.',
+    description: 'Licensed paralegal for Small Claims Court in London, Ontario. Debt recovery, contract disputes, property damage claims up to $50,000. London courthouse experience. Free consultation.',
     keywords: 'small claims court paralegal london, small claims london ontario, debt recovery london, contract dispute london, sue someone london ontario, paralegal small claims london',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Small Claims Paralegal London', areaServed: ['London', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Small Claims Court', url: '/small-claims-paralegal-london' }],
@@ -2818,7 +2818,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/traffic-ticket-paralegal-london': {
     title: 'Traffic Ticket Paralegal London Ontario | Fight Your London Ticket',
-    description: 'Licensed paralegal to fight traffic tickets in London, Ontario. Speeding, careless driving, stunt driving, red light cameras.',
+    description: 'Licensed paralegal to fight traffic tickets in London, Ontario. Speeding, careless driving, stunt driving, red light cameras. London Provincial Offences Court experience. Free consultation.',
     keywords: 'traffic ticket paralegal london, fight speeding ticket london, careless driving london ontario, stunt driving london, london provincial offences court, traffic lawyer london ontario',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Traffic Ticket Paralegal London', areaServed: ['London', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Traffic Tickets', url: '/traffic-ticket-paralegal-london' }],
@@ -2831,7 +2831,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/hrto-paralegal-london': {
     title: 'HRTO Paralegal London Ontario | Human Rights Tribunal Representation',
-    description: 'Licensed paralegal for Human Rights Tribunal (HRTO) applications in London, Ontario. Employment discrimination, housing discrimination, harassment.',
+    description: 'Licensed paralegal for Human Rights Tribunal (HRTO) applications in London, Ontario. Employment discrimination, housing discrimination, harassment. Serving London & Middlesex County.',
     keywords: 'hrto paralegal london, human rights tribunal london ontario, discrimination paralegal london, workplace discrimination london, housing discrimination london, hrto application london',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - HRTO Paralegal London', areaServed: ['London', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Paralegal London Ontario', url: '/paralegal-london-ontario' }, { name: 'Human Rights Tribunal', url: '/hrto-paralegal-london' }],
@@ -3522,7 +3522,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/airline-disputes': {
     title: 'Airline Disputes & Compensation Claims | Flight Delay, Cancellation, Lost Baggage | Ontario',
-    description: 'Fight airline compensation denials in Ontario. Flight delays ($400-$1,000), denied boarding ($900-$2,400), lost baggage (up to $2,900). APPR experts.',
+    description: 'Fight airline compensation denials in Ontario. Flight delays ($400-$1,000), denied boarding ($900-$2,400), lost baggage (up to $2,900). APPR experts. CTA complaints filed. Free consultation.',
     keywords: 'airline compensation canada, flight delay compensation, appr claim, denied boarding compensation, lost baggage claim, cta complaint, airline dispute ontario, flight cancellation refund',
     schema: { type: 'LegalService', name: 'Airline Dispute Services', serviceType: 'Air Passenger Compensation Claims', areaServed: ['Ontario', 'Canada'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Airline Disputes', url: '/services/airline-disputes' }],
@@ -3535,7 +3535,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/wsib-claims': {
-    title: 'WSIB Claims & Appeals | Workplace Injury London Ontario',
+    title: 'WSIB Claims & Appeals | Workplace Injury | London Ontario Paralegal',
     description: 'WSIB claims representation in London, Ontario. Workplace injury benefits, denied claims appeals, WSIAT hearings. Get the benefits you deserve.',
     keywords: 'wsib claims london, workplace injury ontario, wsib appeal, wsib denied claim, wsiat hearing, workplace safety',
     schema: { type: 'LegalService', name: 'WSIB Claims Services', serviceType: 'WSIB Representation', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3549,7 +3549,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/odsp-appeals': {
-    title: 'ODSP Appeals | Disability Benefits London Ontario',
+    title: 'ODSP Appeals | Disability Benefits | London Ontario Paralegal',
     description: 'ODSP appeal representation in London, Ontario. Ontario Disability Support Program denials, Social Benefits Tribunal hearings. Protect your disability benefits.',
     keywords: 'odsp appeal london, disability benefits ontario, social benefits tribunal, odsp denied, odsp eligibility',
     schema: { type: 'LegalService', name: 'ODSP Appeals Services', serviceType: 'Disability Benefits Appeals', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3563,7 +3563,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/ontario-works-appeals': {
-    title: 'Ontario Works Appeals | OW Benefits London Ontario',
+    title: 'Ontario Works Appeals | OW Benefits | London Ontario Paralegal',
     description: 'Ontario Works appeal representation in London, Ontario. OW benefit denials, reduction appeals, Social Benefits Tribunal hearings.',
     keywords: 'ontario works appeal london, ow benefits denied, social assistance appeal, ontario works eligibility',
     schema: { type: 'LegalService', name: 'Ontario Works Appeals', serviceType: 'Social Assistance Appeals', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3577,7 +3577,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/workplace-harassment': {
-    title: 'Workplace Harassment | OHSA Complaints London Ontario',
+    title: 'Workplace Harassment | OHSA Complaints | London Ontario Paralegal',
     description: 'Workplace harassment representation in London, Ontario. OHSA complaints, MOL investigations, Bill 132 compliance, constructive dismissal claims.',
     keywords: 'workplace harassment london, ohsa complaint ontario, workplace bullying, constructive dismissal, bill 132',
     schema: { type: 'LegalService', name: 'Workplace Harassment Services', serviceType: 'Employment Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3591,7 +3591,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/insurance-disputes': {
-    title: 'Insurance Disputes | Accident Benefits London Ontario',
+    title: 'Insurance Disputes | Accident Benefits | London Ontario Paralegal',
     description: 'Insurance dispute representation in London, Ontario. Denied accident benefits, SABS claims, LAT hearings. Fight denied insurance claims.',
     keywords: 'insurance dispute london, denied accident benefits, sabs claim, lat hearing ontario, auto insurance dispute',
     schema: { type: 'LegalService', name: 'Insurance Dispute Services', serviceType: 'Insurance Claims Advocacy', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3605,7 +3605,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/bylaw-infractions': {
-    title: 'Bylaw Infractions | Provincial Offences London Ontario',
+    title: 'Bylaw Infractions | Provincial Offences | London Ontario Paralegal',
     description: 'Bylaw infraction defence in London, Ontario. Municipal bylaw violations, noise complaints, property standards, fire code violations, trespassing charges.',
     keywords: 'bylaw infraction london, provincial offence defence, noise bylaw, property standards, fire code violation',
     schema: { type: 'LegalService', name: 'Bylaw Infraction Defence', serviceType: 'Provincial Offences Defence', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3619,7 +3619,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/parking-tickets': {
-    title: 'Parking Ticket Disputes | Fight Parking Tickets London Ontario',
+    title: 'Parking Ticket Disputes | Fight Parking Tickets | London Ontario Paralegal',
     description: 'Parking ticket dispute representation in London, Ontario. Municipal parking tickets, private lot tickets, meter disputes. Fight unfair parking tickets.',
     keywords: 'parking ticket dispute london, fight parking ticket ontario, parking fine appeal, meter dispute',
     schema: { type: 'LegalService', name: 'Parking Ticket Defence', serviceType: 'Parking Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3647,7 +3647,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/dangerous-dog-hearings': {
-    title: 'Dangerous Dog Hearings | Dog Owners Liability London Ontario',
+    title: 'Dangerous Dog Hearings | Dog Owners Liability | London Ontario Paralegal',
     description: 'Dangerous dog hearing representation in London, Ontario. Dog bite defence, muzzle orders, destruction order appeals, breed-specific legislation.',
     keywords: 'dangerous dog hearing london, dog owners liability act, dog bite defence, muzzle order, pit bull ban ontario',
     schema: { type: 'LegalService', name: 'Dangerous Dog Defence', serviceType: 'Animal Control Hearings', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3679,7 +3679,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
   '/resources/forms/ltb': {
     title: 'Ontario LTB Forms Directory | All Landlord and Tenant Board Forms',
-    description: 'Complete directory of Ontario Landlord and Tenant Board (LTB) forms. Download L1-L10 landlord applications, T1-T6 tenant applications, N-series notices, and…',
+    description: 'Complete directory of Ontario Landlord and Tenant Board (LTB) forms. Download L1-L10 landlord applications, T1-T6 tenant applications, N-series notices, and co-op forms with filing instructions.',
     keywords: 'ltb forms ontario, landlord tenant board forms, L1 form ontario, T2 form ontario, N12 notice, N4 notice, eviction forms ontario, ltb application, tenant forms ontario, landlord forms ontario',
     schema: { type: 'CollectionPage', name: 'Ontario LTB Forms Directory', areaServed: ['Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/ltb' }, { name: 'LTB Forms', url: '/resources/forms/ltb' }],
@@ -3707,7 +3707,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/resources/forms/traffic-tickets': {
     title: 'Ontario Traffic Ticket Forms & Court Directory | POA Forms by City',
-    description: 'Complete directory of Ontario traffic ticket (POA) forms and city-by-city court information.',
+    description: 'Complete directory of Ontario traffic ticket (POA) forms and city-by-city court information. Find your local court, pay or dispute your ticket online, and download Provincial Offences Act forms.',
     keywords: 'traffic ticket forms ontario, POA forms, provincial offences act forms, pay traffic ticket online, fight traffic ticket ontario, notice of intention to appear, form 8 POA, early resolution, traffic court ontario, pay ticket london, pay ticket kitchener, pay ticket windsor, paytickets.ca',
     schema: { type: 'CollectionPage', name: 'Ontario Traffic Ticket Forms & Court Directory', areaServed: ['Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/traffic-tickets' }, { name: 'Traffic Ticket Forms', url: '/resources/forms/traffic-tickets' }],
@@ -3721,7 +3721,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/resources/forms/hrto': {
     title: 'HRTO Forms Directory | Human Rights Tribunal of Ontario Forms',
-    description: 'Complete directory of Human Rights Tribunal of Ontario (HRTO) forms. Download Application (Form 1), Response (Form 2), and all tribunal forms with filing…',
+    description: 'Complete directory of Human Rights Tribunal of Ontario (HRTO) forms. Download Application (Form 1), Response (Form 2), and all tribunal forms with filing instructions and deadlines.',
     keywords: 'hrto forms, human rights tribunal ontario forms, form 1 hrto, discrimination complaint form, hrto application, human rights complaint ontario, hrto response form, form 2 hrto, hrto filing',
     schema: { type: 'CollectionPage', name: 'HRTO Forms Directory', areaServed: ['Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/hrto' }, { name: 'HRTO Forms', url: '/resources/forms/hrto' }],
@@ -3830,7 +3830,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/ontario-landlord-rights': {
     title: 'Complete Ontario Landlord Guide 2026 | RTA Rights, Evictions, Rent Rules',
-    description: 'The most comprehensive Ontario landlord guide. Covers your rights under the RTA, eviction notices (N4-N13), LTB applications (L1-L10), rent increases (2.1% for…',
+    description: 'The most comprehensive Ontario landlord guide. Covers your rights under the RTA, eviction notices (N4-N13), LTB applications (L1-L10), rent increases (2.1% for 2026), standard lease, tenant screening, and more.',
     keywords: 'ontario landlord rights 2026, landlord guide ontario, eviction process ontario, n4 notice, ltb application, rent increase 2026, landlord tenant law ontario, n12 eviction',
     schema: { type: 'Article', name: 'Ontario Landlord Rights Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'Ontario Landlord Rights', url: '/guides/ontario-landlord-rights' }],
@@ -4165,7 +4165,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/minor-criminal-charges': {
-    title: 'Minor Criminal Charges | Summary Offences London Ontario',
+    title: 'Minor Criminal Charges | Summary Offences | London Ontario Paralegal',
     description: 'Minor criminal charge defence in London, Ontario. Summary conviction offences handled by licensed paralegals.',
     keywords: 'minor criminal charge ontario, summary offence defence, paralegal criminal, petty crime lawyer',
     schema: { type: 'LegalService', name: 'Minor Criminal Defence', serviceType: 'Summary Offence Representation', areaServed: ['London', 'Southwestern Ontario'] },
@@ -4810,8 +4810,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
 
   '/locations/pembroke': {
-    title: 'Pembroke Paralegal | Legal Services Renfrew County',
-    description: 'Licensed paralegal services in Pembroke and Renfrew County, Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes.',
+    title: 'Pembroke Paralegal | Legal Services Renfrew County | Legal Assist',
+    description: 'Licensed paralegal services in Pembroke and Renfrew County, Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal pembroke, pembroke lawyer, renfrew county legal services, traffic ticket pembroke, small claims pembroke, landlord tenant pembroke',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Pembroke', areaServed: ['Pembroke', 'Renfrew County', 'Petawawa', 'Deep River', 'Arnprior'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Pembroke', url: '/locations/pembroke' }],
@@ -4824,8 +4824,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/perth': {
-    title: 'Perth Paralegal | Legal Services Lanark County',
-    description: 'Licensed paralegal services in Perth and Lanark County, Ontario. Traffic tickets, landlord-tenant disputes, small claims court. Serving Smiths Falls, Carleton Place.',
+    title: 'Perth Paralegal | Legal Services Lanark County | Legal Assist',
+    description: 'Licensed paralegal services in Perth and Lanark County, Ontario. Traffic tickets, landlord-tenant disputes, small claims court. Serving Smiths Falls, Carleton Place. Free consultation.',
     keywords: 'paralegal perth ontario, perth lawyer, lanark county legal services, traffic ticket perth, small claims perth, smiths falls paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Perth', areaServed: ['Perth', 'Lanark County', 'Smiths Falls', 'Carleton Place', 'Mississippi Mills'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Perth', url: '/locations/perth' }],
@@ -4838,8 +4838,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/napanee': {
-    title: 'Napanee Paralegal | Legal Services Lennox & Addington',
-    description: 'Licensed paralegal services in Napanee and Lennox & Addington County. Traffic ticket defence on Highway 401, small claims court, landlord-tenant disputes.',
+    title: 'Napanee Paralegal | Legal Services Lennox & Addington | Legal Assist',
+    description: 'Licensed paralegal services in Napanee and Lennox & Addington County. Traffic ticket defence on Highway 401, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal napanee, napanee lawyer, lennox addington legal services, traffic ticket napanee, highway 401 ticket napanee',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Napanee', areaServed: ['Napanee', 'Lennox & Addington', 'Greater Napanee', 'Loyalist Township'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Napanee', url: '/locations/napanee' }],
@@ -4852,7 +4852,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/bracebridge': {
-    title: 'Bracebridge Paralegal | Legal Services Muskoka',
+    title: 'Bracebridge Paralegal | Legal Services Muskoka | Legal Assist',
     description: 'Licensed paralegal services in Bracebridge and Muskoka District. Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal bracebridge, muskoka lawyer, muskoka legal services, traffic ticket bracebridge, highway 11 ticket muskoka',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Bracebridge', areaServed: ['Bracebridge', 'Muskoka', 'Gravenhurst', 'Huntsville', 'Lake of Bays'] },
@@ -4866,7 +4866,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/parry-sound': {
-    title: 'Parry Sound Paralegal | Legal Services Parry Sound District',
+    title: 'Parry Sound Paralegal | Legal Services Parry Sound District | Legal Assist',
     description: 'Licensed paralegal services in Parry Sound, Ontario. Traffic ticket defence on Highway 400/69, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal parry sound, parry sound lawyer, parry sound legal services, traffic ticket parry sound, highway 400 ticket',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Parry Sound', areaServed: ['Parry Sound', 'Parry Sound District'] },
@@ -4880,7 +4880,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/kenora': {
-    title: 'Kenora Paralegal | Legal Services Northwestern Ontario',
+    title: 'Kenora Paralegal | Legal Services Northwestern Ontario | Legal Assist',
     description: 'Licensed paralegal services in Kenora, Northwestern Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal kenora, kenora lawyer, northwestern ontario legal services, traffic ticket kenora, highway 17 ticket kenora',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Kenora', areaServed: ['Kenora', 'Kenora District', 'Northwestern Ontario'] },
@@ -4894,7 +4894,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/cochrane': {
-    title: 'Cochrane Paralegal | Legal Services Northeastern Ontario',
+    title: 'Cochrane Paralegal | Legal Services Northeastern Ontario | Legal Assist',
     description: 'Licensed paralegal services in Cochrane, Northeastern Ontario. Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal cochrane ontario, cochrane lawyer, northeastern ontario legal services, traffic ticket cochrane, highway 11 ticket',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Cochrane', areaServed: ['Cochrane', 'Cochrane District'] },
@@ -4908,7 +4908,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/dryden': {
-    title: 'Dryden Paralegal | Legal Services Northwestern Ontario',
+    title: 'Dryden Paralegal | Legal Services Northwestern Ontario | Legal Assist',
     description: 'Licensed paralegal services in Dryden, Northwestern Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal dryden, dryden lawyer, dryden legal services, traffic ticket dryden, highway 17 ticket dryden',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Dryden', areaServed: ['Dryden', 'Dryden District'] },
@@ -4922,7 +4922,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/fort-frances': {
-    title: 'Fort Frances Paralegal | Legal Services Rainy River District',
+    title: 'Fort Frances Paralegal | Legal Services Rainy River District | Legal Assist',
     description: 'Licensed paralegal services in Fort Frances and Rainy River District. Traffic ticket defence, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal fort frances, fort frances lawyer, rainy river legal services, traffic ticket fort frances',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Fort Frances', areaServed: ['Fort Frances', 'Rainy River District'] },
@@ -4936,8 +4936,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/temiskaming-shores': {
-    title: 'Temiskaming Shores Paralegal | Temiskaming District',
-    description: 'Licensed paralegal services in Temiskaming Shores (Haileybury/New Liskeard). Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes.',
+    title: 'Temiskaming Shores Paralegal | Legal Services Temiskaming District | Legal Assist',
+    description: 'Licensed paralegal services in Temiskaming Shores (Haileybury/New Liskeard). Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal temiskaming shores, haileybury lawyer, new liskeard legal services, traffic ticket temiskaming, highway 11 ticket',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Temiskaming Shores', areaServed: ['Temiskaming Shores', 'Haileybury', 'New Liskeard', 'Temiskaming District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Temiskaming Shores', url: '/locations/temiskaming-shores' }],
@@ -4950,7 +4950,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/espanola': {
-    title: 'Espanola Paralegal | Legal Services Sudbury District',
+    title: 'Espanola Paralegal | Legal Services Sudbury District | Legal Assist',
     description: 'Licensed paralegal services in Espanola and Sudbury District. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal espanola, espanola lawyer, espanola legal services, traffic ticket espanola, elliot lake paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Espanola', areaServed: ['Espanola', 'Elliot Lake', 'Blind River', 'Massey'] },
@@ -4964,7 +4964,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/picton': {
-    title: 'Picton Paralegal | Legal Services Prince Edward County',
+    title: 'Picton Paralegal | Legal Services Prince Edward County | Legal Assist',
     description: 'Licensed paralegal services in Picton and Prince Edward County. Traffic ticket defence, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal picton, prince edward county lawyer, picton legal services, traffic ticket picton, PEC paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Picton', areaServed: ['Picton', 'Prince Edward County', 'Wellington', 'Bloomfield'] },
@@ -4978,7 +4978,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/hawkesbury': {
-    title: 'Hawkesbury Paralegal | Legal Services Prescott-Russell',
+    title: 'Hawkesbury Paralegal | Legal Services Prescott-Russell | Legal Assist',
     description: 'Licensed paralegal services in Hawkesbury and Prescott-Russell. Traffic ticket defence on Highway 17/34, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal hawkesbury, hawkesbury lawyer, prescott russell legal services, traffic ticket hawkesbury',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Hawkesbury', areaServed: ['Hawkesbury', 'Prescott-Russell', 'Casselman', 'Rockland', 'Embrun'] },
@@ -4992,8 +4992,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/petawawa': {
-    title: 'Petawawa Paralegal | Legal Services Renfrew County',
-    description: 'Licensed paralegal services in Petawawa, Ontario. Traffic ticket defence, small claims court, landlord-tenant disputes. Serving CFB Petawawa military personnel.',
+    title: 'Petawawa Paralegal | Legal Services Renfrew County | Legal Assist',
+    description: 'Licensed paralegal services in Petawawa, Ontario. Traffic ticket defence, small claims court, landlord-tenant disputes. Serving CFB Petawawa military personnel. Free consultation.',
     keywords: 'paralegal petawawa, petawawa lawyer, CFB petawawa legal services, traffic ticket petawawa, military paralegal petawawa',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Petawawa', areaServed: ['Petawawa', 'Renfrew County', 'CFB Petawawa', 'Deep River', 'Chalk River'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Petawawa', url: '/locations/petawawa' }],
@@ -5006,8 +5006,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/smiths-falls': {
-    title: 'Smiths Falls Paralegal | Legal Services Lanark County',
-    description: 'Licensed paralegal services in Smiths Falls, Ontario. Traffic ticket defence, small claims court, landlord-tenant disputes. Serving Rideau Lakes and area.',
+    title: 'Smiths Falls Paralegal | Legal Services Lanark County | Legal Assist',
+    description: 'Licensed paralegal services in Smiths Falls, Ontario. Traffic ticket defence, small claims court, landlord-tenant disputes. Serving Rideau Lakes and area. Free consultation.',
     keywords: 'paralegal smiths falls, smiths falls lawyer, lanark county legal services, traffic ticket smiths falls, rideau lakes paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Smiths Falls', areaServed: ['Smiths Falls', 'Lanark County', 'Rideau Lakes', 'Merrickville'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Smiths Falls', url: '/locations/smiths-falls' }],
@@ -5020,7 +5020,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/gravenhurst': {
-    title: 'Gravenhurst Paralegal | Legal Services Muskoka',
+    title: 'Gravenhurst Paralegal | Legal Services Muskoka | Legal Assist',
     description: 'Licensed paralegal services in Gravenhurst, Muskoka. Traffic ticket defence on Highway 11, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal gravenhurst, gravenhurst lawyer, muskoka legal services, traffic ticket gravenhurst, highway 11 ticket gravenhurst',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Gravenhurst', areaServed: ['Gravenhurst', 'Muskoka', 'Muskoka Lakes'] },
@@ -5048,7 +5048,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/carleton-place': {
-    title: 'Carleton Place Paralegal | Legal Services Lanark County',
+    title: 'Carleton Place Paralegal | Legal Services Lanark County | Legal Assist',
     description: 'Licensed paralegal services in Carleton Place and Mississippi Mills. Traffic ticket defence on Highway 7, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal carleton place, carleton place lawyer, mississippi mills legal services, almonte paralegal, traffic ticket carleton place',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Carleton Place', areaServed: ['Carleton Place', 'Mississippi Mills', 'Almonte', 'Beckwith', 'Lanark County'] },
@@ -5062,7 +5062,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/arnprior': {
-    title: 'Arnprior Paralegal | Legal Services Renfrew County',
+    title: 'Arnprior Paralegal | Legal Services Renfrew County | Legal Assist',
     description: 'Licensed paralegal services in Arnprior, Ontario. Traffic ticket defence on Highway 17, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal arnprior, arnprior lawyer, renfrew county legal services, traffic ticket arnprior, highway 17 ticket arnprior',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Arnprior', areaServed: ['Arnprior', 'Renfrew County', 'McNab/Braeside', 'Greater Madawaska'] },
@@ -5076,7 +5076,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/bancroft': {
-    title: 'Bancroft Paralegal | Legal Services Hastings Highlands',
+    title: 'Bancroft Paralegal | Legal Services Hastings Highlands | Legal Assist',
     description: 'Licensed paralegal services in Bancroft and Hastings Highlands. Traffic ticket defence on Highway 62/28, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal bancroft, bancroft lawyer, hastings highlands legal services, traffic ticket bancroft, highway 62 ticket',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Bancroft', areaServed: ['Bancroft', 'Hastings Highlands', 'Faraday', 'Wollaston'] },
@@ -5090,8 +5090,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/haldimand-county': {
-    title: 'Haldimand County Paralegal | Cayuga Caledonia Dunnville',
-    description: 'Licensed paralegal services in Haldimand County. Traffic ticket defence on Highway 6, small claims court, landlord-tenant disputes.',
+    title: 'Haldimand County Paralegal | Legal Services Cayuga Caledonia Dunnville | Legal Assist',
+    description: 'Licensed paralegal services in Haldimand County. Traffic ticket defence on Highway 6, small claims court, landlord-tenant disputes. Serving Cayuga, Caledonia, Dunnville. Free consultation.',
     keywords: 'paralegal haldimand county, cayuga lawyer, caledonia paralegal, dunnville legal services, traffic ticket haldimand',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Haldimand County', areaServed: ['Haldimand County', 'Cayuga', 'Caledonia', 'Dunnville', 'Hagersville'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Haldimand County', url: '/locations/haldimand-county' }],
@@ -5104,7 +5104,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/alliston': {
-    title: 'Alliston Paralegal | Legal Services New Tecumseth',
+    title: 'Alliston Paralegal | Legal Services New Tecumseth | Legal Assist',
     description: 'Licensed paralegal services in Alliston and New Tecumseth. Traffic ticket defence on Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal alliston, alliston lawyer, new tecumseth legal services, traffic ticket alliston, beeton paralegal, tottenham paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Alliston', areaServed: ['Alliston', 'New Tecumseth', 'Beeton', 'Tottenham', 'South Simcoe'] },
@@ -5118,7 +5118,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/wasaga-beach': {
-    title: 'Wasaga Beach Paralegal | Legal Services Simcoe County',
+    title: 'Wasaga Beach Paralegal | Legal Services Simcoe County | Legal Assist',
     description: 'Licensed paralegal services in Wasaga Beach and Simcoe County. Traffic ticket defence on Highway 26, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal wasaga beach, wasaga beach lawyer, simcoe county legal services, traffic ticket wasaga beach, clearview paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Wasaga Beach', areaServed: ['Wasaga Beach', 'Simcoe County', 'Stayner', 'Clearview Township', 'Collingwood'] },
@@ -5132,7 +5132,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/port-colborne': {
-    title: 'Port Colborne Paralegal | Legal Services Niagara Region',
+    title: 'Port Colborne Paralegal | Legal Services Niagara Region | Legal Assist',
     description: 'Licensed paralegal services in Port Colborne, Niagara Region. Traffic ticket defence on Highway 3, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal port colborne, port colborne lawyer, niagara legal services, traffic ticket port colborne, wainfleet paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Port Colborne', areaServed: ['Port Colborne', 'Wainfleet', 'Niagara Region'] },
@@ -5146,7 +5146,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/locations/goderich': {
-    title: 'Goderich Paralegal | Legal Services Huron County',
+    title: 'Goderich Paralegal | Legal Services Huron County | Legal Assist',
     description: 'Licensed paralegal services in Goderich and Huron County. Traffic ticket defence on Highway 8/21, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal goderich, goderich lawyer, huron county legal services, traffic ticket goderich, clinton paralegal, seaforth paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Goderich', areaServed: ['Goderich', 'Huron County', 'Clinton', 'Seaforth', 'Exeter', 'Wingham'] },
@@ -5160,7 +5160,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   // Additional Service Pages
   '/services/debt-negotiation': {
-    title: 'Debt Negotiation Services Ontario | Debt Settlement',
+    title: 'Debt Negotiation Services Ontario | Debt Settlement | Legal Assist',
     description: 'Professional debt negotiation and settlement services in Ontario. We negotiate with creditors to reduce your debt and arrange manageable payment plans.',
     keywords: 'debt negotiation ontario, debt settlement, negotiate debt, reduce debt ontario, debt relief paralegal',
     schema: { type: 'LegalService', name: 'Debt Negotiation Services', areaServed: ['London', 'Ontario'] },
@@ -5175,7 +5175,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations': {
     title: 'Ontario Paralegal Services | All Locations | Legal Assist',
-    description: 'Licensed paralegal services across 150+ Ontario cities and towns. Find affordable legal representation near you for traffic tickets, small claims,…',
+    description: 'Licensed paralegal services across 150+ Ontario cities and towns. Find affordable legal representation near you for traffic tickets, small claims, landlord-tenant disputes, and more.',
     keywords: 'ontario paralegal, paralegal near me, ontario legal services, find paralegal ontario, paralegal locations',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Ontario Locations', areaServed: ['Ontario', 'Southwestern Ontario', 'Greater Toronto Area', 'Eastern Ontario', 'Northern Ontario', 'Niagara Region', 'Ottawa'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }],
@@ -5188,7 +5188,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/locations/brant': {
     title: 'Brant Paralegal | Legal Services Brant County | Legal Assist',
-    description: 'Licensed paralegal services in Brant and Brant County. Traffic ticket defence on Highway 403 and Highway 24, small claims court, landlord-tenant disputes.',
+    description: 'Licensed paralegal services in Brant and Brant County. Traffic ticket defence on Highway 403 and Highway 24, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal brant, brant lawyer, brant county legal services, traffic ticket brant, paris paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Brant', areaServed: ['Paris', 'St. George', 'Burford', 'Mount Pleasant', 'Oakland', 'Brant County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brant', url: '/locations/brant' }],
@@ -5200,8 +5200,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/clarence-rockland': {
-    title: 'Clarence-Rockland Paralegal | Prescott & Russell',
-    description: 'Licensed paralegal services in Clarence-Rockland and Prescott & Russell. Traffic ticket defence on Highway 17 and County Road 17, small claims court,…',
+    title: 'Clarence-Rockland Paralegal | Legal Services Prescott & Russell | Legal Assist',
+    description: 'Licensed paralegal services in Clarence-Rockland and Prescott & Russell. Traffic ticket defence on Highway 17 and County Road 17, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal clarence rockland, clarence rockland lawyer, prescott & russell legal services, traffic ticket clarence rockland, rockland paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Clarence-Rockland', areaServed: ['Clarence-Rockland', 'Rockland', 'Clarence Creek', 'Bourget', 'Hammond', 'Wendover'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Clarence-Rockland', url: '/locations/clarence-rockland' }],
@@ -5213,8 +5213,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/elliot-lake': {
-    title: 'Elliot Lake Paralegal | Legal Services Algoma District',
-    description: 'Licensed paralegal services in Elliot Lake and Algoma District. Traffic ticket defence on Highway 17 and Highway 108, small claims court, landlord-tenant disputes.',
+    title: 'Elliot Lake Paralegal | Legal Services Algoma District | Legal Assist',
+    description: 'Licensed paralegal services in Elliot Lake and Algoma District. Traffic ticket defence on Highway 17 and Highway 108, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal elliot lake, elliot lake lawyer, algoma district legal services, traffic ticket elliot lake, blind river paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Elliot Lake', areaServed: ['Elliot Lake', 'Blind River', 'Thessalon', 'Iron Bridge', 'Algoma District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Elliot Lake', url: '/locations/elliot-lake' }],
@@ -5226,8 +5226,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/prince-edward-county': {
-    title: 'Prince Edward County Paralegal | Prince Edward County',
-    description: 'Licensed paralegal services in Prince Edward County and Prince Edward County. Traffic ticket defence on Highway 49 and Highway 62, small claims court,…',
+    title: 'Prince Edward County Paralegal | Legal Services Prince Edward County | Legal Assist',
+    description: 'Licensed paralegal services in Prince Edward County and Prince Edward County. Traffic ticket defence on Highway 49 and Highway 62, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal prince edward county, prince edward county lawyer, prince edward county legal services, traffic ticket prince edward county, picton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Prince Edward County', areaServed: ['Picton', 'Wellington', 'Bloomfield', 'Consecon', 'Ameliasburgh'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Prince Edward County', url: '/locations/prince-edward-county' }],
@@ -5239,8 +5239,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/quinte-west': {
-    title: 'Quinte West Paralegal | Legal Services Hastings County',
-    description: 'Licensed paralegal services in Quinte West and Hastings County. Traffic ticket defence on Highway 401 and Highway 33, small claims court, landlord-tenant disputes.',
+    title: 'Quinte West Paralegal | Legal Services Hastings County | Legal Assist',
+    description: 'Licensed paralegal services in Quinte West and Hastings County. Traffic ticket defence on Highway 401 and Highway 33, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal quinte west, quinte west lawyer, hastings county legal services, traffic ticket quinte west, trenton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Quinte West', areaServed: ['Trenton', 'Frankford', 'Batawa', 'Murray', 'Sidney', 'Quinte West'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Quinte West', url: '/locations/quinte-west' }],
@@ -5252,8 +5252,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/amherstburg': {
-    title: 'Amherstburg Paralegal | Legal Services Essex County',
-    description: 'Licensed paralegal services in Amherstburg and Essex County. Traffic ticket defence on County Road 20 and Highway 18, small claims court, landlord-tenant disputes.',
+    title: 'Amherstburg Paralegal | Legal Services Essex County | Legal Assist',
+    description: 'Licensed paralegal services in Amherstburg and Essex County. Traffic ticket defence on County Road 20 and Highway 18, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal amherstburg, amherstburg lawyer, essex county legal services, traffic ticket amherstburg, mcgregor paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Amherstburg', areaServed: ['Amherstburg', 'McGregor', 'Anderdon', 'Harrow', 'Essex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Amherstburg', url: '/locations/amherstburg' }],
@@ -5265,8 +5265,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/bradford-west-gwillimbury': {
-    title: 'Bradford West Gwillimbury Paralegal | Simcoe County',
-    description: 'Licensed paralegal services in Bradford West Gwillimbury and Simcoe County. Traffic ticket defence on Highway 400 and Highway 88, small claims court,…',
+    title: 'Bradford West Gwillimbury Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in Bradford West Gwillimbury and Simcoe County. Traffic ticket defence on Highway 400 and Highway 88, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal bradford west gwillimbury, bradford west gwillimbury lawyer, simcoe county legal services, traffic ticket bradford west gwillimbury, bradford paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Bradford West Gwillimbury', areaServed: ['Bradford', 'Bond Head', 'Newton Robinson', 'South Simcoe'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Bradford West Gwillimbury', url: '/locations/bradford-west-gwillimbury' }],
@@ -5278,8 +5278,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/east-gwillimbury': {
-    title: 'East Gwillimbury Paralegal | Legal Services York Region',
-    description: 'Licensed paralegal services in East Gwillimbury and York Region. Traffic ticket defence on Highway 404 and Woodbine Avenue, small claims court, landlord-tenant…',
+    title: 'East Gwillimbury Paralegal | Legal Services York Region | Legal Assist',
+    description: 'Licensed paralegal services in East Gwillimbury and York Region. Traffic ticket defence on Highway 404 and Woodbine Avenue, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal east gwillimbury, east gwillimbury lawyer, york region legal services, traffic ticket east gwillimbury, holland landing paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist East Gwillimbury', areaServed: ['Holland Landing', 'Mount Albert', 'Sharon', 'Queensville', 'East Gwillimbury'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'East Gwillimbury', url: '/locations/east-gwillimbury' }],
@@ -5291,8 +5291,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/erin': {
-    title: 'Erin Paralegal | Legal Services Wellington County',
-    description: 'Licensed paralegal services in Erin and Wellington County. Traffic ticket defence on Highway 24 and Highway 124, small claims court, landlord-tenant disputes.',
+    title: 'Erin Paralegal | Legal Services Wellington County | Legal Assist',
+    description: 'Licensed paralegal services in Erin and Wellington County. Traffic ticket defence on Highway 24 and Highway 124, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal erin, erin lawyer, wellington county legal services, traffic ticket erin, hillsburgh paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Erin', areaServed: ['Erin', 'Hillsburgh', 'Ballinafad', 'Wellington County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Erin', url: '/locations/erin' }],
@@ -5305,7 +5305,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
   '/locations/essex': {
     title: 'Essex Paralegal | Legal Services Essex County | Legal Assist',
-    description: 'Licensed paralegal services in Essex and Essex County. Traffic ticket defence on Highway 3 and County Road 8, small claims court, landlord-tenant disputes.',
+    description: 'Licensed paralegal services in Essex and Essex County. Traffic ticket defence on Highway 3 and County Road 8, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal essex, essex lawyer, essex county legal services, traffic ticket essex, harrow paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Essex', areaServed: ['Essex', 'Harrow', 'Colchester', 'McGregor', 'Essex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Essex', url: '/locations/essex' }],
@@ -5317,8 +5317,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/fergus-elora': {
-    title: 'Fergus-Elora Paralegal | Legal Services Wellington County',
-    description: 'Licensed paralegal services in Fergus-Elora and Wellington County. Traffic ticket defence on Highway 6 and Highway 7, small claims court, landlord-tenant disputes.',
+    title: 'Fergus-Elora Paralegal | Legal Services Wellington County | Legal Assist',
+    description: 'Licensed paralegal services in Fergus-Elora and Wellington County. Traffic ticket defence on Highway 6 and Highway 7, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal fergus elora, fergus elora lawyer, wellington county legal services, traffic ticket fergus elora, fergus paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Fergus-Elora', areaServed: ['Fergus', 'Elora', 'Salem', 'Belwood', 'Centre Wellington'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Fergus-Elora', url: '/locations/fergus-elora' }],
@@ -5330,7 +5330,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/fort-erie': {
-    title: 'Fort Erie Paralegal | Legal Services Niagara Region',
+    title: 'Fort Erie Paralegal | Legal Services Niagara Region | Legal Assist',
     description: 'Licensed paralegal services in Fort Erie and Niagara Region. Traffic ticket defence on QEW and Highway 3, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal fort erie, fort erie lawyer, niagara region legal services, traffic ticket fort erie, ridgeway paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Fort Erie', areaServed: ['Fort Erie', 'Ridgeway', 'Crystal Beach', 'Stevensville', 'South Niagara'] },
@@ -5343,8 +5343,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/gananoque': {
-    title: 'Gananoque Paralegal | Legal Services Leeds and Grenville',
-    description: 'Licensed paralegal services in Gananoque and Leeds and Grenville. Traffic ticket defence on Highway 401 and Highway 32, small claims court, landlord-tenant disputes.',
+    title: 'Gananoque Paralegal | Legal Services Leeds and Grenville | Legal Assist',
+    description: 'Licensed paralegal services in Gananoque and Leeds and Grenville. Traffic ticket defence on Highway 401 and Highway 32, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal gananoque, gananoque lawyer, leeds and grenville legal services, traffic ticket gananoque, thousand islands paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Gananoque', areaServed: ['Gananoque', 'Thousand Islands', 'Leeds and Grenville'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Gananoque', url: '/locations/gananoque' }],
@@ -5356,8 +5356,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/georgina': {
-    title: 'Georgina Paralegal | Legal Services York Region',
-    description: 'Licensed paralegal services in Georgina and York Region. Traffic ticket defence on Highway 48 and Woodbine Avenue, small claims court, landlord-tenant disputes.',
+    title: 'Georgina Paralegal | Legal Services York Region | Legal Assist',
+    description: 'Licensed paralegal services in Georgina and York Region. Traffic ticket defence on Highway 48 and Woodbine Avenue, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal georgina, georgina lawyer, york region legal services, traffic ticket georgina, keswick paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Georgina', areaServed: ['Keswick', 'Sutton', 'Pefferlaw', 'Jackson\'s Point', 'Georgina'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Georgina', url: '/locations/georgina' }],
@@ -5369,8 +5369,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/innisfil': {
-    title: 'Innisfil Paralegal | Legal Services Simcoe County',
-    description: 'Licensed paralegal services in Innisfil and Simcoe County. Traffic ticket defence on Highway 400 and Highway 89, small claims court, landlord-tenant disputes.',
+    title: 'Innisfil Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in Innisfil and Simcoe County. Traffic ticket defence on Highway 400 and Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal innisfil, innisfil lawyer, simcoe county legal services, traffic ticket innisfil, alcona paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Innisfil', areaServed: ['Innisfil', 'Alcona', 'Cookstown', 'Lefroy', 'Stroud', 'South Simcoe'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Innisfil', url: '/locations/innisfil' }],
@@ -5382,8 +5382,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/hanover': {
-    title: 'Hanover Paralegal | Legal Services Grey County',
-    description: 'Licensed paralegal services in Hanover and Grey County. Traffic ticket defence on Highway 4 and Highway 10, small claims court, landlord-tenant disputes.',
+    title: 'Hanover Paralegal | Legal Services Grey County | Legal Assist',
+    description: 'Licensed paralegal services in Hanover and Grey County. Traffic ticket defence on Highway 4 and Highway 10, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal hanover, hanover lawyer, grey county legal services, traffic ticket hanover, walkerton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Hanover', areaServed: ['Hanover', 'Walkerton', 'Durham', 'Grey County', 'Bruce County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Hanover', url: '/locations/hanover' }],
@@ -5395,8 +5395,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/hearst': {
-    title: 'Hearst Paralegal | Legal Services Cochrane District',
-    description: 'Licensed paralegal services in Hearst and Cochrane District. Traffic ticket defence on Highway 11 and Highway 583, small claims court, landlord-tenant disputes.',
+    title: 'Hearst Paralegal | Legal Services Cochrane District | Legal Assist',
+    description: 'Licensed paralegal services in Hearst and Cochrane District. Traffic ticket defence on Highway 11 and Highway 583, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal hearst, hearst lawyer, cochrane district legal services, traffic ticket hearst, kapuskasing paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Hearst', areaServed: ['Hearst', 'Kapuskasing', 'Mattice', 'Constance Lake', 'Cochrane District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Hearst', url: '/locations/hearst' }],
@@ -5408,8 +5408,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/kapuskasing': {
-    title: 'Kapuskasing Paralegal | Legal Services Cochrane District',
-    description: 'Licensed paralegal services in Kapuskasing and Cochrane District. Traffic ticket defence on Highway 11 and Highway 581, small claims court, landlord-tenant disputes.',
+    title: 'Kapuskasing Paralegal | Legal Services Cochrane District | Legal Assist',
+    description: 'Licensed paralegal services in Kapuskasing and Cochrane District. Traffic ticket defence on Highway 11 and Highway 581, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal kapuskasing, kapuskasing lawyer, cochrane district legal services, traffic ticket kapuskasing, smooth rock falls paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Kapuskasing', areaServed: ['Kapuskasing', 'Smooth Rock Falls', 'Moonbeam', 'Opasatika', 'Cochrane District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kapuskasing', url: '/locations/kapuskasing' }],
@@ -5421,8 +5421,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/kincardine': {
-    title: 'Kincardine Paralegal | Legal Services Bruce County',
-    description: 'Licensed paralegal services in Kincardine and Bruce County. Traffic ticket defence on Highway 21 and Highway 9, small claims court, landlord-tenant disputes.',
+    title: 'Kincardine Paralegal | Legal Services Bruce County | Legal Assist',
+    description: 'Licensed paralegal services in Kincardine and Bruce County. Traffic ticket defence on Highway 21 and Highway 9, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal kincardine, kincardine lawyer, bruce county legal services, traffic ticket kincardine, tiverton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Kincardine', areaServed: ['Kincardine', 'Tiverton', 'Ripley', 'Lucknow', 'Bruce County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kincardine', url: '/locations/kincardine' }],
@@ -5434,8 +5434,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/kingsville': {
-    title: 'Kingsville Paralegal | Legal Services Essex County',
-    description: 'Licensed paralegal services in Kingsville and Essex County. Traffic ticket defence on County Road 20 and Highway 3, small claims court, landlord-tenant disputes.',
+    title: 'Kingsville Paralegal | Legal Services Essex County | Legal Assist',
+    description: 'Licensed paralegal services in Kingsville and Essex County. Traffic ticket defence on County Road 20 and Highway 3, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal kingsville, kingsville lawyer, essex county legal services, traffic ticket kingsville, ruthven paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Kingsville', areaServed: ['Kingsville', 'Ruthven', 'Cottam', 'Essex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kingsville', url: '/locations/kingsville' }],
@@ -5447,8 +5447,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/kirkland-lake': {
-    title: 'Kirkland Lake Paralegal | Timiskaming District',
-    description: 'Licensed paralegal services in Kirkland Lake and Timiskaming District. Traffic ticket defence on Highway 11 and Highway 66, small claims court, landlord-tenant…',
+    title: 'Kirkland Lake Paralegal | Legal Services Timiskaming District | Legal Assist',
+    description: 'Licensed paralegal services in Kirkland Lake and Timiskaming District. Traffic ticket defence on Highway 11 and Highway 66, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal kirkland lake, kirkland lake lawyer, timiskaming district legal services, traffic ticket kirkland lake, larder lake paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Kirkland Lake', areaServed: ['Kirkland Lake', 'Larder Lake', 'Englehart', 'Timiskaming District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kirkland Lake', url: '/locations/kirkland-lake' }],
@@ -5460,8 +5460,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/lakeshore': {
-    title: 'Lakeshore Paralegal | Legal Services Essex County',
-    description: 'Licensed paralegal services in Lakeshore and Essex County. Traffic ticket defence on Highway 401 and Highway 77, small claims court, landlord-tenant disputes.',
+    title: 'Lakeshore Paralegal | Legal Services Essex County | Legal Assist',
+    description: 'Licensed paralegal services in Lakeshore and Essex County. Traffic ticket defence on Highway 401 and Highway 77, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal lakeshore, lakeshore lawyer, essex county legal services, traffic ticket lakeshore, belle river paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Lakeshore', areaServed: ['Belle River', 'Stoney Point', 'Comber', 'Tilbury', 'Lakeshore'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Lakeshore', url: '/locations/lakeshore' }],
@@ -5473,8 +5473,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/lasalle': {
-    title: 'LaSalle Paralegal | Legal Services Essex County',
-    description: 'Licensed paralegal services in LaSalle and Essex County. Traffic ticket defence on Highway 18 and Huron Church Road, small claims court, landlord-tenant disputes.',
+    title: 'LaSalle Paralegal | Legal Services Essex County | Legal Assist',
+    description: 'Licensed paralegal services in LaSalle and Essex County. Traffic ticket defence on Highway 18 and Huron Church Road, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal lasalle, lasalle lawyer, essex county legal services, traffic ticket lasalle, windsor paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist LaSalle', areaServed: ['LaSalle', 'Windsor', 'Amherstburg', 'Essex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'LaSalle', url: '/locations/lasalle' }],
@@ -5486,7 +5486,7 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/lincoln': {
-    title: 'Lincoln Paralegal | Legal Services Niagara Region',
+    title: 'Lincoln Paralegal | Legal Services Niagara Region | Legal Assist',
     description: 'Licensed paralegal services in Lincoln and Niagara Region. Traffic ticket defence on QEW and Highway 8, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal lincoln, lincoln lawyer, niagara region legal services, traffic ticket lincoln, beamsville paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Lincoln', areaServed: ['Beamsville', 'Vineland', 'Jordan', 'Lincoln', 'Niagara Region'] },
@@ -5499,8 +5499,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/marathon': {
-    title: 'Marathon Paralegal | Legal Services Thunder Bay District',
-    description: 'Licensed paralegal services in Marathon and Thunder Bay District. Traffic ticket defence on Highway 17 (Trans-Canada) and Highway 626, small claims court,…',
+    title: 'Marathon Paralegal | Legal Services Thunder Bay District | Legal Assist',
+    description: 'Licensed paralegal services in Marathon and Thunder Bay District. Traffic ticket defence on Highway 17 (Trans-Canada) and Highway 626, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal marathon, marathon lawyer, thunder bay district legal services, traffic ticket marathon, white river paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Marathon', areaServed: ['Marathon', 'White River', 'Manitouwadge', 'Thunder Bay District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Marathon', url: '/locations/marathon' }],
@@ -5512,8 +5512,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/meaford': {
-    title: 'Meaford Paralegal | Legal Services Grey County',
-    description: 'Licensed paralegal services in Meaford and Grey County. Traffic ticket defence on Highway 26 and County Road 7, small claims court, landlord-tenant disputes.',
+    title: 'Meaford Paralegal | Legal Services Grey County | Legal Assist',
+    description: 'Licensed paralegal services in Meaford and Grey County. Traffic ticket defence on Highway 26 and County Road 7, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal meaford, meaford lawyer, grey county legal services, traffic ticket meaford, thornbury paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Meaford', areaServed: ['Meaford', 'Thornbury', 'Clarksburg', 'Grey County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Meaford', url: '/locations/meaford' }],
@@ -5525,8 +5525,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/mississippi-mills': {
-    title: 'Mississippi Mills Paralegal | Legal Services Lanark County',
-    description: 'Licensed paralegal services in Mississippi Mills and Lanark County. Traffic ticket defence on Highway 7 and Highway 29, small claims court, landlord-tenant disputes.',
+    title: 'Mississippi Mills Paralegal | Legal Services Lanark County | Legal Assist',
+    description: 'Licensed paralegal services in Mississippi Mills and Lanark County. Traffic ticket defence on Highway 7 and Highway 29, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal mississippi mills, mississippi mills lawyer, lanark county legal services, traffic ticket mississippi mills, almonte paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Mississippi Mills', areaServed: ['Almonte', 'Pakenham', 'Appleton', 'Lanark County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Mississippi Mills', url: '/locations/mississippi-mills' }],
@@ -5538,8 +5538,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/mono': {
-    title: 'Mono Paralegal | Legal Services Dufferin County',
-    description: 'Licensed paralegal services in Mono and Dufferin County. Traffic ticket defence on Highway 10 and Highway 89, small claims court, landlord-tenant disputes.',
+    title: 'Mono Paralegal | Legal Services Dufferin County | Legal Assist',
+    description: 'Licensed paralegal services in Mono and Dufferin County. Traffic ticket defence on Highway 10 and Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal mono, mono lawyer, dufferin county legal services, traffic ticket mono, orangeville paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Mono', areaServed: ['Mono', 'Orangeville', 'Shelburne', 'Dufferin County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Mono', url: '/locations/mono' }],
@@ -5551,8 +5551,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/new-tecumseth': {
-    title: 'New Tecumseth Paralegal | Legal Services Simcoe County',
-    description: 'Licensed paralegal services in New Tecumseth and Simcoe County. Traffic ticket defence on Highway 89 and Highway 400, small claims court, landlord-tenant disputes.',
+    title: 'New Tecumseth Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in New Tecumseth and Simcoe County. Traffic ticket defence on Highway 89 and Highway 400, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal new tecumseth, new tecumseth lawyer, simcoe county legal services, traffic ticket new tecumseth, alliston paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist New Tecumseth', areaServed: ['Alliston', 'Tottenham', 'Beeton', 'New Tecumseth', 'Simcoe County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'New Tecumseth', url: '/locations/new-tecumseth' }],
@@ -5564,8 +5564,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/niagara-on-the-lake': {
-    title: 'Niagara-on-the-Lake Paralegal | Niagara Region',
-    description: 'Licensed paralegal services in Niagara-on-the-Lake and Niagara Region. Traffic ticket defence on Niagara Parkway and Highway 55, small claims court,…',
+    title: 'Niagara-on-the-Lake Paralegal | Legal Services Niagara Region | Legal Assist',
+    description: 'Licensed paralegal services in Niagara-on-the-Lake and Niagara Region. Traffic ticket defence on Niagara Parkway and Highway 55, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal niagara on the lake, niagara on the lake lawyer, niagara region legal services, traffic ticket niagara on the lake, virgil paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Niagara-on-the-Lake', areaServed: ['Niagara-on-the-Lake', 'Virgil', 'St. Davids', 'Queenston', 'Niagara Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Niagara-on-the-Lake', url: '/locations/niagara-on-the-lake' }],
@@ -5577,8 +5577,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/pelham': {
-    title: 'Pelham Paralegal | Legal Services Niagara Region',
-    description: 'Licensed paralegal services in Pelham and Niagara Region. Traffic ticket defence on Highway 20 and Canboro Road, small claims court, landlord-tenant disputes.',
+    title: 'Pelham Paralegal | Legal Services Niagara Region | Legal Assist',
+    description: 'Licensed paralegal services in Pelham and Niagara Region. Traffic ticket defence on Highway 20 and Canboro Road, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal pelham, pelham lawyer, niagara region legal services, traffic ticket pelham, fonthill paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Pelham', areaServed: ['Fonthill', 'Fenwick', 'Ridgeville', 'Pelham', 'Niagara Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Pelham', url: '/locations/pelham' }],
@@ -5590,8 +5590,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/penetanguishene': {
-    title: 'Penetanguishene Paralegal | Legal Services Simcoe County',
-    description: 'Licensed paralegal services in Penetanguishene and Simcoe County. Traffic ticket defence on Highway 93 and Highway 12, small claims court, landlord-tenant disputes.',
+    title: 'Penetanguishene Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in Penetanguishene and Simcoe County. Traffic ticket defence on Highway 93 and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal penetanguishene, penetanguishene lawyer, simcoe county legal services, traffic ticket penetanguishene, midland paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Penetanguishene', areaServed: ['Penetanguishene', 'Midland', 'Tiny', 'North Simcoe'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Penetanguishene', url: '/locations/penetanguishene' }],
@@ -5603,8 +5603,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/petrolia': {
-    title: 'Petrolia Paralegal | Legal Services Lambton County',
-    description: 'Licensed paralegal services in Petrolia and Lambton County. Traffic ticket defence on Highway 21 and County Road 4, small claims court, landlord-tenant disputes.',
+    title: 'Petrolia Paralegal | Legal Services Lambton County | Legal Assist',
+    description: 'Licensed paralegal services in Petrolia and Lambton County. Traffic ticket defence on Highway 21 and County Road 4, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal petrolia, petrolia lawyer, lambton county legal services, traffic ticket petrolia, wyoming paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Petrolia', areaServed: ['Petrolia', 'Wyoming', 'Oil Springs', 'Lambton County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Petrolia', url: '/locations/petrolia' }],
@@ -5616,8 +5616,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/plympton-wyoming': {
-    title: 'Plympton-Wyoming Paralegal | Legal Services Lambton County',
-    description: 'Licensed paralegal services in Plympton-Wyoming and Lambton County. Traffic ticket defence on Highway 21 and Highway 402, small claims court, landlord-tenant…',
+    title: 'Plympton-Wyoming Paralegal | Legal Services Lambton County | Legal Assist',
+    description: 'Licensed paralegal services in Plympton-Wyoming and Lambton County. Traffic ticket defence on Highway 21 and Highway 402, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal plympton wyoming, plympton wyoming lawyer, lambton county legal services, traffic ticket plympton wyoming, wyoming paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Plympton-Wyoming', areaServed: ['Wyoming', 'Camlachie', 'Plympton-Wyoming', 'Lambton County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Plympton-Wyoming', url: '/locations/plympton-wyoming' }],
@@ -5629,8 +5629,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/prescott': {
-    title: 'Prescott Paralegal | Legal Services Leeds and Grenville',
-    description: 'Licensed paralegal services in Prescott and Leeds and Grenville. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes.',
+    title: 'Prescott Paralegal | Legal Services Leeds and Grenville | Legal Assist',
+    description: 'Licensed paralegal services in Prescott and Leeds and Grenville. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal prescott, prescott lawyer, leeds and grenville legal services, traffic ticket prescott, cardinal paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Prescott', areaServed: ['Prescott', 'Cardinal', 'Brockville', 'Leeds and Grenville'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Prescott', url: '/locations/prescott' }],
@@ -5642,8 +5642,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/renfrew': {
-    title: 'Renfrew Paralegal | Legal Services Renfrew County',
-    description: 'Licensed paralegal services in Renfrew and Renfrew County. Traffic ticket defence on Highway 17 and Highway 132, small claims court, landlord-tenant disputes.',
+    title: 'Renfrew Paralegal | Legal Services Renfrew County | Legal Assist',
+    description: 'Licensed paralegal services in Renfrew and Renfrew County. Traffic ticket defence on Highway 17 and Highway 132, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal renfrew, renfrew lawyer, renfrew county legal services, traffic ticket renfrew, arnprior paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Renfrew', areaServed: ['Renfrew', 'Arnprior', 'Pembroke', 'Renfrew County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Renfrew', url: '/locations/renfrew' }],
@@ -5655,8 +5655,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/saugeen-shores': {
-    title: 'Saugeen Shores Paralegal | Legal Services Bruce County',
-    description: 'Licensed paralegal services in Saugeen Shores and Bruce County. Traffic ticket defence on Highway 21 and Highway 9, small claims court, landlord-tenant disputes.',
+    title: 'Saugeen Shores Paralegal | Legal Services Bruce County | Legal Assist',
+    description: 'Licensed paralegal services in Saugeen Shores and Bruce County. Traffic ticket defence on Highway 21 and Highway 9, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal saugeen shores, saugeen shores lawyer, bruce county legal services, traffic ticket saugeen shores, port elgin paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Saugeen Shores', areaServed: ['Port Elgin', 'Southampton', 'Saugeen Shores', 'Bruce County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Saugeen Shores', url: '/locations/saugeen-shores' }],
@@ -5668,8 +5668,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/shelburne': {
-    title: 'Shelburne Paralegal | Legal Services Dufferin County',
-    description: 'Licensed paralegal services in Shelburne and Dufferin County. Traffic ticket defence on Highway 10 and Highway 89, small claims court, landlord-tenant disputes.',
+    title: 'Shelburne Paralegal | Legal Services Dufferin County | Legal Assist',
+    description: 'Licensed paralegal services in Shelburne and Dufferin County. Traffic ticket defence on Highway 10 and Highway 89, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal shelburne, shelburne lawyer, dufferin county legal services, traffic ticket shelburne, orangeville paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Shelburne', areaServed: ['Shelburne', 'Orangeville', 'Grand Valley', 'Dufferin County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Shelburne', url: '/locations/shelburne' }],
@@ -5681,8 +5681,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/sioux-lookout': {
-    title: 'Sioux Lookout Paralegal | Legal Services Kenora District',
-    description: 'Licensed paralegal services in Sioux Lookout and Kenora District. Traffic ticket defence on Highway 72 and Highway 664, small claims court, landlord-tenant disputes.',
+    title: 'Sioux Lookout Paralegal | Legal Services Kenora District | Legal Assist',
+    description: 'Licensed paralegal services in Sioux Lookout and Kenora District. Traffic ticket defence on Highway 72 and Highway 664, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal sioux lookout, sioux lookout lawyer, kenora district legal services, traffic ticket sioux lookout, hudson paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Sioux Lookout', areaServed: ['Sioux Lookout', 'Hudson', 'Kenora District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Sioux Lookout', url: '/locations/sioux-lookout' }],
@@ -5694,8 +5694,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/south-bruce-peninsula': {
-    title: 'South Bruce Peninsula Paralegal | Bruce County',
-    description: 'Licensed paralegal services in South Bruce Peninsula and Bruce County. Traffic ticket defence on Highway 6 and Highway 21, small claims court, landlord-tenant…',
+    title: 'South Bruce Peninsula Paralegal | Legal Services Bruce County | Legal Assist',
+    description: 'Licensed paralegal services in South Bruce Peninsula and Bruce County. Traffic ticket defence on Highway 6 and Highway 21, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal south bruce peninsula, south bruce peninsula lawyer, bruce county legal services, traffic ticket south bruce peninsula, wiarton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist South Bruce Peninsula', areaServed: ['Wiarton', 'Sauble Beach', 'Hepworth', 'South Bruce Peninsula'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Bruce Peninsula', url: '/locations/south-bruce-peninsula' }],
@@ -5707,8 +5707,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/st-marys': {
-    title: 'St. Marys Paralegal | Legal Services Perth County',
-    description: 'Licensed paralegal services in St. Marys and Perth County. Traffic ticket defence on Highway 7 and Highway 19, small claims court, landlord-tenant disputes.',
+    title: 'St. Marys Paralegal | Legal Services Perth County | Legal Assist',
+    description: 'Licensed paralegal services in St. Marys and Perth County. Traffic ticket defence on Highway 7 and Highway 19, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal st marys, st marys lawyer, perth county legal services, traffic ticket st marys, stratford paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist St. Marys', areaServed: ['St. Marys', 'Stratford', 'Mitchell', 'Perth County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'St. Marys', url: '/locations/st-marys' }],
@@ -5720,8 +5720,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/tecumseh': {
-    title: 'Tecumseh Paralegal | Legal Services Essex County',
-    description: 'Licensed paralegal services in Tecumseh and Essex County. Traffic ticket defence on Manning Road and County Road 22, small claims court, landlord-tenant disputes.',
+    title: 'Tecumseh Paralegal | Legal Services Essex County | Legal Assist',
+    description: 'Licensed paralegal services in Tecumseh and Essex County. Traffic ticket defence on Manning Road and County Road 22, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal tecumseh, tecumseh lawyer, essex county legal services, traffic ticket tecumseh, maidstone paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Tecumseh', areaServed: ['Tecumseh', 'Maidstone', 'St. Clair Beach', 'Essex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Tecumseh', url: '/locations/tecumseh' }],
@@ -5733,8 +5733,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/blue-mountains': {
-    title: 'The Blue Mountains Paralegal | Legal Services Grey County',
-    description: 'Licensed paralegal services in The Blue Mountains and Grey County. Traffic ticket defence on Highway 26 and Grey Road 19, small claims court, landlord-tenant…',
+    title: 'The Blue Mountains Paralegal | Legal Services Grey County | Legal Assist',
+    description: 'Licensed paralegal services in The Blue Mountains and Grey County. Traffic ticket defence on Highway 26 and Grey Road 19, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal blue mountains, blue mountains lawyer, grey county legal services, traffic ticket blue mountains, thornbury paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist The Blue Mountains', areaServed: ['Thornbury', 'Clarksburg', 'Craigleith', 'The Blue Mountains', 'Grey County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'The Blue Mountains', url: '/locations/blue-mountains' }],
@@ -5746,8 +5746,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/brighton': {
-    title: 'Brighton Paralegal | Legal Services Northumberland County',
-    description: 'Licensed paralegal services in Brighton and Northumberland County. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes.',
+    title: 'Brighton Paralegal | Legal Services Northumberland County | Legal Assist',
+    description: 'Licensed paralegal services in Brighton and Northumberland County. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal brighton, brighton lawyer, northumberland county legal services, traffic ticket brighton, trenton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Brighton', areaServed: ['Brighton', 'Presqu\'ile', 'Smithfield', 'Northumberland County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brighton', url: '/locations/brighton' }],
@@ -5759,8 +5759,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/port-hope': {
-    title: 'Port Hope Paralegal | Legal Services Northumberland County',
-    description: 'Licensed paralegal services in Port Hope and Northumberland County. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes.',
+    title: 'Port Hope Paralegal | Legal Services Northumberland County | Legal Assist',
+    description: 'Licensed paralegal services in Port Hope and Northumberland County. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal port hope, port hope lawyer, northumberland county legal services, traffic ticket port hope, cobourg paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Port Hope', areaServed: ['Port Hope', 'Cobourg', 'Northumberland County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Port Hope', url: '/locations/port-hope' }],
@@ -5772,8 +5772,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/kemptville': {
-    title: 'Kemptville Paralegal | Legal Services Leeds and Grenville',
-    description: 'Licensed paralegal services in Kemptville and Leeds and Grenville. Traffic ticket defence on Highway 416 and Highway 43, small claims court, landlord-tenant disputes.',
+    title: 'Kemptville Paralegal | Legal Services Leeds and Grenville | Legal Assist',
+    description: 'Licensed paralegal services in Kemptville and Leeds and Grenville. Traffic ticket defence on Highway 416 and Highway 43, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal kemptville, kemptville lawyer, leeds and grenville legal services, traffic ticket kemptville, oxford mills paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Kemptville', areaServed: ['Kemptville', 'North Grenville', 'Oxford Mills', 'Merrickville'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kemptville', url: '/locations/kemptville' }],
@@ -5785,8 +5785,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/uxbridge': {
-    title: 'Uxbridge Paralegal | Legal Services Durham Region',
-    description: 'Licensed paralegal services in Uxbridge and Durham Region. Traffic ticket defence on Highway 47 and Highway 12, small claims court, landlord-tenant disputes.',
+    title: 'Uxbridge Paralegal | Legal Services Durham Region | Legal Assist',
+    description: 'Licensed paralegal services in Uxbridge and Durham Region. Traffic ticket defence on Highway 47 and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal uxbridge, uxbridge lawyer, durham region legal services, traffic ticket uxbridge, port perry paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Uxbridge', areaServed: ['Uxbridge', 'Port Perry', 'Durham Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Uxbridge', url: '/locations/uxbridge' }],
@@ -5798,8 +5798,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/scugog': {
-    title: 'Scugog Paralegal | Legal Services Durham Region',
-    description: 'Licensed paralegal services in Scugog and Durham Region. Traffic ticket defence on Highway 7A and Highway 12, small claims court, landlord-tenant disputes.',
+    title: 'Scugog Paralegal | Legal Services Durham Region | Legal Assist',
+    description: 'Licensed paralegal services in Scugog and Durham Region. Traffic ticket defence on Highway 7A and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal scugog, scugog lawyer, durham region legal services, traffic ticket scugog, port perry paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Scugog', areaServed: ['Port Perry', 'Blackstock', 'Caesarea', 'Scugog', 'Durham Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Scugog', url: '/locations/scugog' }],
@@ -5824,8 +5824,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/oro-medonte': {
-    title: 'Oro-Medonte Paralegal | Legal Services Simcoe County',
-    description: 'Licensed paralegal services in Oro-Medonte and Simcoe County. Traffic ticket defence on Highway 11 and Highway 93, small claims court, landlord-tenant disputes.',
+    title: 'Oro-Medonte Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in Oro-Medonte and Simcoe County. Traffic ticket defence on Highway 11 and Highway 93, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal oro medonte, oro medonte lawyer, simcoe county legal services, traffic ticket oro medonte, hawkestone paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Oro-Medonte', areaServed: ['Oro-Medonte', 'Hawkestone', 'Shanty Bay', 'Moonstone', 'Simcoe County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Oro-Medonte', url: '/locations/oro-medonte' }],
@@ -5837,8 +5837,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/clearview': {
-    title: 'Clearview Paralegal | Legal Services Simcoe County',
-    description: 'Licensed paralegal services in Clearview and Simcoe County. Traffic ticket defence on Highway 26 and Highway 91, small claims court, landlord-tenant disputes.',
+    title: 'Clearview Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in Clearview and Simcoe County. Traffic ticket defence on Highway 26 and Highway 91, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal clearview, clearview lawyer, simcoe county legal services, traffic ticket clearview, stayner paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Clearview', areaServed: ['Stayner', 'Creemore', 'Nottawa', 'Clearview', 'Simcoe County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Clearview', url: '/locations/clearview' }],
@@ -5850,8 +5850,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/severn': {
-    title: 'Severn Paralegal | Legal Services Simcoe County',
-    description: 'Licensed paralegal services in Severn and Simcoe County. Traffic ticket defence on Highway 11 and Highway 12, small claims court, landlord-tenant disputes.',
+    title: 'Severn Paralegal | Legal Services Simcoe County | Legal Assist',
+    description: 'Licensed paralegal services in Severn and Simcoe County. Traffic ticket defence on Highway 11 and Highway 12, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal severn, severn lawyer, simcoe county legal services, traffic ticket severn, washago paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Severn', areaServed: ['Washago', 'Coldwater', 'Severn Bridge', 'Severn', 'Simcoe County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Severn', url: '/locations/severn' }],
@@ -5863,8 +5863,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/trent-hills': {
-    title: 'Trent Hills Paralegal | Legal Services Northumberland County',
-    description: 'Licensed paralegal services in Trent Hills and Northumberland County. Traffic ticket defence on Highway 30 and Highway 45, small claims court, landlord-tenant…',
+    title: 'Trent Hills Paralegal | Legal Services Northumberland County | Legal Assist',
+    description: 'Licensed paralegal services in Trent Hills and Northumberland County. Traffic ticket defence on Highway 30 and Highway 45, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal trent hills, trent hills lawyer, northumberland county legal services, traffic ticket trent hills, campbellford paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Trent Hills', areaServed: ['Campbellford', 'Hastings', 'Warkworth', 'Trent Hills'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Trent Hills', url: '/locations/trent-hills' }],
@@ -5876,8 +5876,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/norwich': {
-    title: 'Norwich Paralegal | Legal Services Oxford County',
-    description: 'Licensed paralegal services in Norwich and Oxford County. Traffic ticket defence on Highway 59 and Highway 19, small claims court, landlord-tenant disputes.',
+    title: 'Norwich Paralegal | Legal Services Oxford County | Legal Assist',
+    description: 'Licensed paralegal services in Norwich and Oxford County. Traffic ticket defence on Highway 59 and Highway 19, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal norwich, norwich lawyer, oxford county legal services, traffic ticket norwich, otterville paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Norwich', areaServed: ['Norwich', 'Otterville', 'Oxford County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Norwich', url: '/locations/norwich' }],
@@ -5889,8 +5889,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/west-lincoln': {
-    title: 'West Lincoln Paralegal | Legal Services Niagara Region',
-    description: 'Licensed paralegal services in West Lincoln and Niagara Region. Traffic ticket defence on Highway 20 and Regional Road 14, small claims court, landlord-tenant…',
+    title: 'West Lincoln Paralegal | Legal Services Niagara Region | Legal Assist',
+    description: 'Licensed paralegal services in West Lincoln and Niagara Region. Traffic ticket defence on Highway 20 and Regional Road 14, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal west lincoln, west lincoln lawyer, niagara region legal services, traffic ticket west lincoln, smithville paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist West Lincoln', areaServed: ['Smithville', 'Grimsby', 'West Lincoln', 'Niagara Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'West Lincoln', url: '/locations/west-lincoln' }],
@@ -5902,8 +5902,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/woolwich': {
-    title: 'Woolwich Paralegal | Legal Services Waterloo Region',
-    description: 'Licensed paralegal services in Woolwich and Waterloo Region. Traffic ticket defence on Highway 85 and Arthur Street, small claims court, landlord-tenant disputes.',
+    title: 'Woolwich Paralegal | Legal Services Waterloo Region | Legal Assist',
+    description: 'Licensed paralegal services in Woolwich and Waterloo Region. Traffic ticket defence on Highway 85 and Arthur Street, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal woolwich, woolwich lawyer, waterloo region legal services, traffic ticket woolwich, elmira paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Woolwich', areaServed: ['Elmira', 'St. Jacobs', 'Breslau', 'Woolwich', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Woolwich', url: '/locations/woolwich' }],
@@ -5915,8 +5915,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/wilmot': {
-    title: 'Wilmot Paralegal | Legal Services Waterloo Region',
-    description: 'Licensed paralegal services in Wilmot and Waterloo Region. Traffic ticket defence on Highway 7/8 and Nafziger Road, small claims court, landlord-tenant disputes.',
+    title: 'Wilmot Paralegal | Legal Services Waterloo Region | Legal Assist',
+    description: 'Licensed paralegal services in Wilmot and Waterloo Region. Traffic ticket defence on Highway 7/8 and Nafziger Road, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal wilmot, wilmot lawyer, waterloo region legal services, traffic ticket wilmot, new hamburg paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Wilmot', areaServed: ['New Hamburg', 'Baden', 'Wilmot', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Wilmot', url: '/locations/wilmot' }],
@@ -5928,8 +5928,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/north-dumfries': {
-    title: 'North Dumfries Paralegal | Legal Services Waterloo Region',
-    description: 'Licensed paralegal services in North Dumfries and Waterloo Region. Traffic ticket defence on Highway 401 and Fountain Street, small claims court, landlord-tenant…',
+    title: 'North Dumfries Paralegal | Legal Services Waterloo Region | Legal Assist',
+    description: 'Licensed paralegal services in North Dumfries and Waterloo Region. Traffic ticket defence on Highway 401 and Fountain Street, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal north dumfries, north dumfries lawyer, waterloo region legal services, traffic ticket north dumfries, ayr paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist North Dumfries', areaServed: ['Ayr', 'North Dumfries', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Dumfries', url: '/locations/north-dumfries' }],
@@ -5941,8 +5941,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/centre-wellington': {
-    title: 'Centre Wellington Paralegal | Wellington County',
-    description: 'Licensed paralegal services in Centre Wellington and Wellington County. Traffic ticket defence on Highway 6 and Highway 7, small claims court, landlord-tenant…',
+    title: 'Centre Wellington Paralegal | Legal Services Wellington County | Legal Assist',
+    description: 'Licensed paralegal services in Centre Wellington and Wellington County. Traffic ticket defence on Highway 6 and Highway 7, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal centre wellington, centre wellington lawyer, wellington county legal services, traffic ticket centre wellington, fergus paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Centre Wellington', areaServed: ['Fergus', 'Elora', 'Salem', 'Centre Wellington', 'Wellington County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Centre Wellington', url: '/locations/centre-wellington' }],
@@ -5954,8 +5954,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/mapleton': {
-    title: 'Mapleton Paralegal | Legal Services Wellington County',
-    description: 'Licensed paralegal services in Mapleton and Wellington County. Traffic ticket defence on Highway 6 and Wellington Road 7, small claims court, landlord-tenant…',
+    title: 'Mapleton Paralegal | Legal Services Wellington County | Legal Assist',
+    description: 'Licensed paralegal services in Mapleton and Wellington County. Traffic ticket defence on Highway 6 and Wellington Road 7, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal mapleton, mapleton lawyer, wellington county legal services, traffic ticket mapleton, drayton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Mapleton', areaServed: ['Drayton', 'Moorefield', 'Alma', 'Mapleton', 'Wellington County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Mapleton', url: '/locations/mapleton' }],
@@ -5967,8 +5967,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/wellesley': {
-    title: 'Wellesley Paralegal | Legal Services Waterloo Region',
-    description: 'Licensed paralegal services in Wellesley and Waterloo Region. Traffic ticket defence on Lobsinger Line and Ament Line, small claims court, landlord-tenant disputes.',
+    title: 'Wellesley Paralegal | Legal Services Waterloo Region | Legal Assist',
+    description: 'Licensed paralegal services in Wellesley and Waterloo Region. Traffic ticket defence on Lobsinger Line and Ament Line, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal wellesley, wellesley lawyer, waterloo region legal services, traffic ticket wellesley, st. clements paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Wellesley', areaServed: ['Wellesley', 'St. Clements', 'Linwood', 'Crosshill', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Wellesley', url: '/locations/wellesley' }],
@@ -5980,8 +5980,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/west-grey': {
-    title: 'West Grey Paralegal | Legal Services Grey County',
-    description: 'Licensed paralegal services in West Grey and Grey County. Traffic ticket defence on Highway 4 and Highway 6, small claims court, landlord-tenant disputes.',
+    title: 'West Grey Paralegal | Legal Services Grey County | Legal Assist',
+    description: 'Licensed paralegal services in West Grey and Grey County. Traffic ticket defence on Highway 4 and Highway 6, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal west grey, west grey lawyer, grey county legal services, traffic ticket west grey, durham paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist West Grey', areaServed: ['Durham', 'Neustadt', 'Ayton', 'West Grey', 'Grey County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'West Grey', url: '/locations/west-grey' }],
@@ -5993,8 +5993,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/brockton': {
-    title: 'Brockton Paralegal | Legal Services Bruce County',
-    description: 'Licensed paralegal services in Brockton and Bruce County. Traffic ticket defence on Highway 4 and Highway 9, small claims court, landlord-tenant disputes.',
+    title: 'Brockton Paralegal | Legal Services Bruce County | Legal Assist',
+    description: 'Licensed paralegal services in Brockton and Bruce County. Traffic ticket defence on Highway 4 and Highway 9, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal brockton, brockton lawyer, bruce county legal services, traffic ticket brockton, walkerton paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Brockton', areaServed: ['Walkerton', 'Cargill', 'Elmwood', 'Brockton', 'Bruce County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brockton', url: '/locations/brockton' }],
@@ -6006,8 +6006,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/south-huron': {
-    title: 'South Huron Paralegal | Legal Services Huron County',
-    description: 'Licensed paralegal services in South Huron and Huron County. Traffic ticket defence on Highway 4 and Highway 83, small claims court, landlord-tenant disputes.',
+    title: 'South Huron Paralegal | Legal Services Huron County | Legal Assist',
+    description: 'Licensed paralegal services in South Huron and Huron County. Traffic ticket defence on Highway 4 and Highway 83, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal south huron, south huron lawyer, huron county legal services, traffic ticket south huron, exeter paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist South Huron', areaServed: ['Exeter', 'Huron Park', 'South Huron', 'Huron County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Huron', url: '/locations/south-huron' }],
@@ -6019,8 +6019,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/north-perth': {
-    title: 'North Perth Paralegal | Legal Services Perth County',
-    description: 'Licensed paralegal services in North Perth and Perth County. Traffic ticket defence on Highway 23 and Highway 86, small claims court, landlord-tenant disputes.',
+    title: 'North Perth Paralegal | Legal Services Perth County | Legal Assist',
+    description: 'Licensed paralegal services in North Perth and Perth County. Traffic ticket defence on Highway 23 and Highway 86, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal north perth, north perth lawyer, perth county legal services, traffic ticket north perth, listowel paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist North Perth', areaServed: ['Listowel', 'Atwood', 'Monkton', 'North Perth', 'Perth County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Perth', url: '/locations/north-perth' }],
@@ -6032,8 +6032,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/zorra': {
-    title: 'Zorra Paralegal | Legal Services Oxford County',
-    description: 'Licensed paralegal services in Zorra and Oxford County. Traffic ticket defence on Highway 19 and Highway 2, small claims court, landlord-tenant disputes.',
+    title: 'Zorra Paralegal | Legal Services Oxford County | Legal Assist',
+    description: 'Licensed paralegal services in Zorra and Oxford County. Traffic ticket defence on Highway 19 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal zorra, zorra lawyer, oxford county legal services, traffic ticket zorra, embro paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Zorra', areaServed: ['Embro', 'Thamesford', 'Lakeside', 'Zorra', 'Oxford County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Zorra', url: '/locations/zorra' }],
@@ -6045,8 +6045,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/south-stormont': {
-    title: 'South Stormont Paralegal | Legal Services SDG Counties',
-    description: 'Licensed paralegal services in South Stormont and SDG Counties. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes.',
+    title: 'South Stormont Paralegal | Legal Services SDG Counties | Legal Assist',
+    description: 'Licensed paralegal services in South Stormont and SDG Counties. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal south stormont, south stormont lawyer, sdg counties legal services, traffic ticket south stormont, long sault paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist South Stormont', areaServed: ['Long Sault', 'Ingleside', 'South Stormont', 'SDG Counties'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Stormont', url: '/locations/south-stormont' }],
@@ -6058,8 +6058,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/russell': {
-    title: 'Russell Paralegal | Legal Services Prescott and Russell',
-    description: 'Licensed paralegal services in Russell and Prescott and Russell. Traffic ticket defence on Highway 417 and Highway 138, small claims court, landlord-tenant disputes.',
+    title: 'Russell Paralegal | Legal Services Prescott and Russell | Legal Assist',
+    description: 'Licensed paralegal services in Russell and Prescott and Russell. Traffic ticket defence on Highway 417 and Highway 138, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal russell, russell lawyer, prescott and russell legal services, traffic ticket russell, embrun paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Russell', areaServed: ['Russell', 'Embrun', 'Limoges', 'Prescott and Russell'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Russell', url: '/locations/russell' }],
@@ -6071,8 +6071,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/south-dundas': {
-    title: 'South Dundas Paralegal | Legal Services SDG Counties',
-    description: 'Licensed paralegal services in South Dundas and SDG Counties. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes.',
+    title: 'South Dundas Paralegal | Legal Services SDG Counties | Legal Assist',
+    description: 'Licensed paralegal services in South Dundas and SDG Counties. Traffic ticket defence on Highway 401 and Highway 2, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal south dundas, south dundas lawyer, sdg counties legal services, traffic ticket south dundas, morrisburg paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist South Dundas', areaServed: ['Morrisburg', 'Iroquois', 'South Dundas', 'SDG Counties'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Dundas', url: '/locations/south-dundas' }],
@@ -6084,8 +6084,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/north-glengarry': {
-    title: 'North Glengarry Paralegal | Legal Services SDG Counties',
-    description: 'Licensed paralegal services in North Glengarry and SDG Counties. Traffic ticket defence on Highway 34 and Highway 43, small claims court, landlord-tenant disputes.',
+    title: 'North Glengarry Paralegal | Legal Services SDG Counties | Legal Assist',
+    description: 'Licensed paralegal services in North Glengarry and SDG Counties. Traffic ticket defence on Highway 34 and Highway 43, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal north glengarry, north glengarry lawyer, sdg counties legal services, traffic ticket north glengarry, alexandria paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist North Glengarry', areaServed: ['Alexandria', 'Maxville', 'North Glengarry', 'SDG Counties'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Glengarry', url: '/locations/north-glengarry' }],
@@ -6097,8 +6097,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/south-glengarry': {
-    title: 'South Glengarry Paralegal | Legal Services SDG Counties',
-    description: 'Licensed paralegal services in South Glengarry and SDG Counties. Traffic ticket defence on Highway 401 and Highway 34, small claims court, landlord-tenant disputes.',
+    title: 'South Glengarry Paralegal | Legal Services SDG Counties | Legal Assist',
+    description: 'Licensed paralegal services in South Glengarry and SDG Counties. Traffic ticket defence on Highway 401 and Highway 34, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal south glengarry, south glengarry lawyer, sdg counties legal services, traffic ticket south glengarry, lancaster paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist South Glengarry', areaServed: ['Lancaster', 'Williamstown', 'Glen Walter', 'South Glengarry', 'SDG Counties'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'South Glengarry', url: '/locations/south-glengarry' }],
@@ -6110,8 +6110,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/loyalist': {
-    title: 'Loyalist Paralegal | Legal Services Lennox and Addington',
-    description: 'Licensed paralegal services in Loyalist and Lennox and Addington. Traffic ticket defence on Highway 401 and Highway 33, small claims court, landlord-tenant disputes.',
+    title: 'Loyalist Paralegal | Legal Services Lennox and Addington | Legal Assist',
+    description: 'Licensed paralegal services in Loyalist and Lennox and Addington. Traffic ticket defence on Highway 401 and Highway 33, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal loyalist, loyalist lawyer, lennox and addington legal services, traffic ticket loyalist, bath paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Loyalist', areaServed: ['Bath', 'Amherstview', 'Odessa', 'Loyalist', 'Lennox and Addington'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Loyalist', url: '/locations/loyalist' }],
@@ -6123,8 +6123,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/blind-river': {
-    title: 'Blind River Paralegal | Legal Services Algoma District',
-    description: 'Licensed paralegal services in Blind River and Algoma District. Traffic ticket defence on Highway 17 (Trans-Canada), small claims court, landlord-tenant disputes.',
+    title: 'Blind River Paralegal | Legal Services Algoma District | Legal Assist',
+    description: 'Licensed paralegal services in Blind River and Algoma District. Traffic ticket defence on Highway 17 (Trans-Canada), small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal blind river, blind river lawyer, algoma district legal services, traffic ticket blind river, thessalon paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Blind River', areaServed: ['Blind River', 'Thessalon', 'Iron Bridge', 'Algoma District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Blind River', url: '/locations/blind-river' }],
@@ -6136,8 +6136,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/atikokan': {
-    title: 'Atikokan Paralegal | Legal Services Rainy River District',
-    description: 'Licensed paralegal services in Atikokan and Rainy River District. Traffic ticket defence on Highway 11 and Highway 622, small claims court, landlord-tenant disputes.',
+    title: 'Atikokan Paralegal | Legal Services Rainy River District | Legal Assist',
+    description: 'Licensed paralegal services in Atikokan and Rainy River District. Traffic ticket defence on Highway 11 and Highway 622, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal atikokan, atikokan lawyer, rainy river district legal services, traffic ticket atikokan, fort frances paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Atikokan', areaServed: ['Atikokan', 'Rainy River District'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Atikokan', url: '/locations/atikokan' }],
@@ -6149,8 +6149,8 @@ export const seoConfig: Record<string, SEOConfig> = {
     ]
   },
   '/locations/deep-river': {
-    title: 'Deep River Paralegal | Legal Services Renfrew County',
-    description: 'Licensed paralegal services in Deep River and Renfrew County. Traffic ticket defence on Highway 17 and Highway 62, small claims court, landlord-tenant disputes.',
+    title: 'Deep River Paralegal | Legal Services Renfrew County | Legal Assist',
+    description: 'Licensed paralegal services in Deep River and Renfrew County. Traffic ticket defence on Highway 17 and Highway 62, small claims court, landlord-tenant disputes. Free consultation.',
     keywords: 'paralegal deep river, deep river lawyer, renfrew county legal services, traffic ticket deep river, chalk river paralegal',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Deep River', areaServed: ['Deep River', 'Chalk River', 'Petawawa', 'Renfrew County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Deep River', url: '/locations/deep-river' }],

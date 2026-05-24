@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle, MessageSqu
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import PageHeader from '@/components/PageHeader';
 import { cn } from '@/lib/utils';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact';
 
@@ -474,6 +475,12 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
 
+      {/* SEO/a11y: single source-of-truth h1 for the page */}
+      <PageHeader
+        title="Contact Legal Assist Paralegal Services"
+        subtitle="Licensed paralegals serving London and Southwestern Ontario. Free consultation by phone, text, email or callback request."
+      />
+
       {/* CONTACT METHODS SECTION */}
       <section className="py-16 md:py-24 lg:py-32 bg-background">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -638,7 +645,6 @@ export default function ContactPage() {
                   <div className="space-y-2 font-paragraph text-secondary/80">
                     <p><span className="font-semibold">Monday - Friday:</span> 9:00 AM - 6:00 PM</p>
                     <p><span className="font-semibold">Saturday:</span> 10:00 AM - 4:00 PM</p>
-                    <p><span className="font-semibold">Sunday:</span> Closed</p>
                     <p className="text-sm text-secondary/60 mt-4">
                       * Emergency matters may be accommodated outside regular hours. Please call to inquire.
                     </p>

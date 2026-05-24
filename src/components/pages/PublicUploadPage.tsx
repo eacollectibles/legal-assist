@@ -189,7 +189,9 @@ export default function PublicUploadPage() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader>
-          <CardTitle className="text-3xl font-heading">Secure File Upload</CardTitle>
+          <h1 className="text-3xl font-heading font-bold leading-none tracking-tight">
+            Secure File Upload
+          </h1>
           <CardDescription className="text-base">
             Upload documents for {uploadToken?.clientName}
             {uploadToken?.matterReference && ` - ${uploadToken.matterReference}`}

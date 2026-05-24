@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import PageHeader from '@/components/PageHeader';
 import { useMember } from '@/integrations';
 import { signup } from '@/lib/auth-service';
 import { EMAIL_PRIMARY } from '@/lib/contact';
@@ -143,9 +144,13 @@ export default function ClientSignupPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <PageHeader
+        title="Client Portal — Sign Up or Sign In"
+        subtitle="Create a secure account to track your matter, upload documents, view invoices, and message your paralegal. Existing clients can sign in below."
+      />
 
       {/* Signup Form Section */}
-      <section className="w-full py-16 md:py-24 bg-white">
+      <section className="w-full py-12 md:py-16 bg-white">
         <div className="max-w-[100rem] mx-auto px-4 md:px-8">
           {!showSignupForm ? (
             // Initial state: Show buttons in the middle

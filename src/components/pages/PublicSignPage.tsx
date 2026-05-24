@@ -25,6 +25,7 @@ import { useParams } from 'react-router-dom';
 import { BaseCrudService } from '@/integrations';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import PageHeader from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -532,6 +533,11 @@ export default function PublicSignPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <PageHeader
+        title="Sign Your Document"
+        subtitle="Review your retainer or agreement, initial each acknowledgment, and add your signature. Your link is single-use."
+        withTopSpacing={false}
+      />
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-12">
         {phase === 'validating' && (
           <Card>

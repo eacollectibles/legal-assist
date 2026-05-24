@@ -11,6 +11,7 @@
  */
 import AppRouter from "@/components/Router";
 import { seoConfig, businessInfo, generateFAQSchema, generateBreadcrumbSchema } from "@/components/seoConfig";
+import { blogPosts } from "@/data/blogData";
 import { PHONE_TEL } from "@/lib/contact";
 import "@wix/wix-vibe-plugins/plugins-vars.css";
 import "@wix/wix-vibe-plugins/plugins-theme.css";
@@ -49,6 +50,180 @@ const faqSchema = pageConfig.faqs && pageConfig.faqs.length > 0
 const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length > 0
   ? generateBreadcrumbSchema(pageConfig.breadcrumbs, businessInfo.url)
   : null;
+
+// -----------------------------------------------------------------------
+// SEO: Article / LegalArticle JSON-LD for blog posts
+// -----------------------------------------------------------------------
+// Adding per-blog-post Article schema unlocks Article rich snippets in
+// Google SERPs (date stamp, author byline, headline). For procedural
+// posts ("How to file a plaintiff's claim", "HRTO Form 1 walkthrough"),
+// LegalArticle is a more accurate subtype than the generic Article and
+// is recognized by Google as Article-equivalent for rich-result eligibility.
+//
+// We match the URL slug to the blog post in src/data/blogData.ts. If the
+// path is /blog/<slug> and a matching post exists, we emit the schema.
+// Otherwise this block is null and adds nothing to the head.
+//
+// The author is the default paralegal (Jean-Francois Demers, LSO #P22020).
+// The publisher is the LegalService organization defined in `schemaData`
+// above — we reference it by @id rather than duplicating its full graph.
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// SEO: Person schema for the firm's licensed paralegals
+// -----------------------------------------------------------------------
+// Google's E-E-A-T (Experience, Expertise, Authoritativeness,
+// Trustworthiness) framework weights legal content heavily on author
+// credentials. The /about/meet-our-team page is where we put names,
+// faces, licence numbers, and credentials in front of users — adding a
+// Person graph here teaches search engines who the licensed
+// professionals behind the legal content actually are, and connects
+// them by @id to the LegalService organization above.
+//
+// Source of truth for paralegal data: src/lib/paralegals.ts (React)
+// and letterhead/letterhead.py (Python). Both are checked in.
+// -----------------------------------------------------------------------
+let teamSchema: Record<string, unknown> | null = null;
+if (normalizedPath === '/about/meet-our-team') {
+  teamSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.legalassist.london/about/meet-our-team#jean-francois-demers",
+        "name": "Jean-Francois Demers",
+        "alternateName": "Johnny Demers",
+        "givenName": "Jean-Francois",
+        "familyName": "Demers",
+        "jobTitle": "Licensed Paralegal",
+        "description": "Licensed Paralegal with the Law Society of Ontario (LSO #P22020) representing clients across Ontario at the Landlord and Tenant Board, Small Claims Court, Human Rights Tribunal of Ontario, and Licence Appeal Tribunal.",
+        "image": "https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png",
+        "email": "mailto:jeanfrancois@legalassist.london",
+        "telephone": PHONE_TEL,
+        "url": "https://www.legalassist.london/about/meet-our-team#johnny-demers",
+        "worksFor": { "@id": "https://www.legalassist.london/#organization" },
+        "memberOf": {
+          "@type": "Organization",
+          "name": "Law Society of Ontario",
+          "url": "https://lso.ca"
+        },
+        "knowsAbout": [
+          "Landlord and Tenant Board (Ontario)",
+          "Small Claims Court (Ontario)",
+          "Human Rights Tribunal of Ontario",
+          "Licence Appeal Tribunal",
+          "Provincial Offences"
+        ],
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Licensed Paralegal (LSO #P22020)",
+            "credentialCategory": "license",
+            "recognizedBy": { "@type": "Organization", "name": "Law Society of Ontario" }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Paralegal Diploma with Distinction",
+            "credentialCategory": "degree"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Commissioner for Taking Affidavits (Ontario)",
+            "credentialCategory": "license"
+          }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://www.legalassist.london/about/meet-our-team#candice-fogarty",
+        "name": "Candice Fogarty",
+        "givenName": "Candice",
+        "familyName": "Fogarty",
+        "jobTitle": "Licensed Paralegal",
+        "description": "Licensed Paralegal with the Law Society of Ontario (LSO #P21479) practising at the Landlord and Tenant Board, Small Claims Court, Provincial Offences Court, Human Rights Tribunal of Ontario, and workplace dispute matters where permitted.",
+        "image": "https://static.wixstatic.com/media/99571b_placeholder2~mv2.jpg",
+        "email": "mailto:candice@legalassist.london",
+        "telephone": PHONE_TEL,
+        "url": "https://www.legalassist.london/about/meet-our-team#candice-fogarty",
+        "worksFor": { "@id": "https://www.legalassist.london/#organization" },
+        "memberOf": {
+          "@type": "Organization",
+          "name": "Law Society of Ontario",
+          "url": "https://lso.ca"
+        },
+        "knowsAbout": [
+          "Landlord and Tenant Board (Ontario)",
+          "Small Claims Court (Ontario)",
+          "Provincial Offences",
+          "Human Rights Tribunal of Ontario",
+          "Workplace Disputes",
+          "Traffic and Driving Offences"
+        ],
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Licensed Paralegal (LSO #P21479)",
+            "credentialCategory": "license",
+            "recognizedBy": { "@type": "Organization", "name": "Law Society of Ontario" }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Notary Public (Ontario)",
+            "credentialCategory": "license"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Paralegal Diploma with Distinction",
+            "credentialCategory": "degree"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Commissioner for Taking Affidavits (Ontario)",
+            "credentialCategory": "license"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Qualified Addictions Counselor",
+            "credentialCategory": "certification"
+          }
+        ]
+      }
+    ]
+  };
+}
+
+let articleSchema: Record<string, unknown> | null = null;
+if (normalizedPath.startsWith('/blog/')) {
+  const blogSlug = normalizedPath.slice('/blog/'.length);
+  const post = blogPosts.find((p) => p.slug === blogSlug);
+  if (post) {
+    articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "LegalArticle",
+      "headline": post.title,
+      "description": post.description,
+      "datePublished": post.date,
+      "dateModified": post.date,
+      "inLanguage": "en-CA",
+      "url": canonicalUrl,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
+      },
+      "image": `${businessInfo.url}/og-image.jpg`,
+      "author": {
+        "@type": "Person",
+        "name": "Jean-Francois Demers",
+        "jobTitle": "Licensed Paralegal",
+        "identifier": "LSO #P22020",
+        "worksFor": { "@id": "https://www.legalassist.london/#organization" },
+        "url": "https://www.legalassist.london/about/meet-our-team"
+      },
+      "publisher": { "@id": "https://www.legalassist.london/#organization" },
+      "articleSection": post.category,
+      "keywords": pageConfig.keywords || ''
+    };
+  }
+}
 
 // Schema.org structured data
 const schemaData = {
@@ -277,7 +452,7 @@ const currentYear = new Date().getFullYear();
     <meta name="language" content="en-CA" />
     
     <!-- SERVER-SIDE SEO: Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={normalizedPath.startsWith('/blog/') ? 'article' : 'website'} />
     <meta property="og:site_name" content="Legal Assist Paralegal Services" />
     <meta property="og:title" content={pageConfig.title} />
     <meta property="og:description" content={pageConfig.description} />
@@ -327,6 +502,12 @@ const currentYear = new Date().getFullYear();
     
     <!-- SERVER-SIDE SEO: Breadcrumb Schema if present -->
     {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
+
+    <!-- SERVER-SIDE SEO: LegalArticle Schema for blog posts -->
+    {articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
+
+    <!-- SERVER-SIDE SEO: Person Schema (E-E-A-T) on /about/meet-our-team -->
+    {teamSchema && <script type="application/ld+json" set:html={JSON.stringify(teamSchema)} />}
     
     <!-- ============================================
          PERFORMANCE: Critical CSS (Inline)

@@ -4,12 +4,17 @@
  *
  * Regenerates public/sitemap.xml from the canonical data sources:
  *   - src/components/seoConfig.ts (static routes)
- *   - src/data/blogData.ts        (blog post slugs → /blog/{slug})
+ *   - src/data/blogData.ts        (blog post slugs and dates → /blog/{slug})
  *   - src/data/cityData.ts        (city slugs → /locations/{slug})
  *
  * Skips private/noindex routes (admin, dashboards, login flows) using the
  * SAME regex as src/pages/[...slug].astro — keep them in sync if either
  * changes.
+ *
+ * lastmod policy (added in the SEO sweep):
+ *   - Blog posts use their own publication date from blogData.ts.
+ *   - Homepage and /blog index use the most-recent blog post date.
+ *   - Everything else uses TODAY (build date).
  *
  * Run via:
  *   node scripts/generate-sitemap.mjs
@@ -48,8 +53,6 @@ const PRIVATE_PATH_REGEX =
 const seoConfigPath = join(ROOT, 'src/components/seoConfig.ts');
 const seoConfigSrc = readFileSync(seoConfigPath, 'utf8');
 
-// Matches keys like:   '/services/traffic-tickets': {
-// at the start of a line within the seoConfig object.
 const staticRoutes = new Set();
 const routeRegex = /^\s*'(\/[^']*)':\s*{/gm;
 let match;
@@ -58,7 +61,7 @@ while ((match = routeRegex.exec(seoConfigSrc)) !== null) {
 }
 
 // ---------------------------------------------------------------------------
-// Extract blog post slugs from blogData.ts
+// Extract blog post slugs + dates from blogData.ts
 // ---------------------------------------------------------------------------
 
 const blogDataPath = join(ROOT, 'src/data/blogData.ts');
@@ -68,6 +71,18 @@ const blogSlugs = new Set();
 const blogSlugRegex = /^\s*slug:\s*'([^']+)'/gm;
 while ((match = blogSlugRegex.exec(blogDataSrc)) !== null) {
   blogSlugs.add(match[1]);
+}
+
+// Slug → date map. Each blog post object has shape
+// { slug: 'foo', title: '...', date: 'YYYY-MM-DD', ... }. The date field
+// follows the slug within ~400 chars.
+const blogDates = new Map();
+{
+  const blogPostRegex = /slug:\s*'([^']+)'[\s\S]{0,400}?date:\s*'(\d{4}-\d{2}-\d{2})'/g;
+  let m;
+  while ((m = blogPostRegex.exec(blogDataSrc)) !== null) {
+    blogDates.set(m[1], m[2]);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -101,15 +116,15 @@ for (const path of staticRoutes) {
 }
 
 for (const slug of blogSlugs) {
-  urls.add(`/blog/${slug}`);
+  urls.add('/blog/' + slug);
 }
 
 for (const slug of citySlugs) {
-  urls.add(`/locations/${slug}`);
+  urls.add('/locations/' + slug);
 }
 
 // ---------------------------------------------------------------------------
-// Change-frequency policy by URL pattern
+// Change-frequency policy
 // ---------------------------------------------------------------------------
 
 function changefreqFor(path) {
@@ -125,6 +140,26 @@ function changefreqFor(path) {
 }
 
 // ---------------------------------------------------------------------------
+// lastmod policy — per-post dates for blog, latest-post for homepage,
+// TODAY for everything else.
+// ---------------------------------------------------------------------------
+
+const latestBlogDate = blogDates.size > 0
+  ? [...blogDates.values()].sort().pop()
+  : TODAY;
+
+function lastmodFor(path) {
+  if (path.startsWith('/blog/')) {
+    const slug = path.slice('/blog/'.length);
+    return blogDates.get(slug) || TODAY;
+  }
+  if (path === '/' || path === '/blog') {
+    return latestBlogDate;
+  }
+  return TODAY;
+}
+
+// ---------------------------------------------------------------------------
 // Emit XML
 // ---------------------------------------------------------------------------
 
@@ -136,11 +171,11 @@ const xmlLines = [
 ];
 
 for (const path of sortedUrls) {
-  const fullUrl = `${SITE}${path === '/' ? '/' : path}`;
+  const fullUrl = SITE + (path === '/' ? '/' : path);
   xmlLines.push('  <url>');
-  xmlLines.push(`    <loc>${fullUrl}</loc>`);
-  xmlLines.push(`    <lastmod>${TODAY}</lastmod>`);
-  xmlLines.push(`    <changefreq>${changefreqFor(path)}</changefreq>`);
+  xmlLines.push('    <loc>' + fullUrl + '</loc>');
+  xmlLines.push('    <lastmod>' + lastmodFor(path) + '</lastmod>');
+  xmlLines.push('    <changefreq>' + changefreqFor(path) + '</changefreq>');
   xmlLines.push('  </url>');
 }
 
@@ -165,24 +200,25 @@ const breakdown = {
   locations: sortedUrls.filter((p) => p.startsWith('/locations/')).length,
   guides: sortedUrls.filter((p) => p.startsWith('/guides/')).length,
   resources: sortedUrls.filter((p) => p.startsWith('/resources/')).length,
-  other: sortedUrls.filter(
-    (p) =>
-      p !== '/' &&
-      !p.startsWith('/services') &&
-      !p.startsWith('/blog/') &&
-      !p.startsWith('/locations/') &&
-      !p.startsWith('/guides/') &&
-      !p.startsWith('/resources/')
+  other: sortedUrls.filter((p) =>
+    p !== '/' &&
+    !p.startsWith('/services') &&
+    !p.startsWith('/blog/') &&
+    !p.startsWith('/locations/') &&
+    !p.startsWith('/guides/') &&
+    !p.startsWith('/resources/')
   ).length,
 };
 
-console.log(`Generated sitemap → ${outPath}`);
-console.log(`  Total URLs:                 ${sortedUrls.length}`);
-console.log(`  Source counts:`);
-console.log(`    seoConfig.ts routes:      ${staticRoutes.size} (${skippedPrivate} private skipped)`);
-console.log(`    blogData.ts posts:        ${blogSlugs.size}`);
-console.log(`    cityData.ts cities:       ${citySlugs.size}`);
-console.log(`  Breakdown by section:`);
+console.log('Generated sitemap -> ' + outPath);
+console.log('  Total URLs:                 ' + sortedUrls.length);
+console.log('  Source counts:');
+console.log('    seoConfig.ts routes:      ' + staticRoutes.size + ' (' + skippedPrivate + ' private skipped)');
+console.log('    blogData.ts posts:        ' + blogSlugs.size);
+console.log('    cityData.ts cities:       ' + citySlugs.size);
+console.log('    blog posts with dates:    ' + blogDates.size);
+console.log('  Breakdown by section:');
 for (const [section, count] of Object.entries(breakdown)) {
-  console.log(`    ${section.padEnd(26)}${count}`);
+  console.log('    ' + section.padEnd(26) + count);
 }
+

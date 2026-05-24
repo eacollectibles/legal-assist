@@ -1,5 +1,5 @@
 <!--
-  LTB Tenant Retainer Agreement — HTML Template (v1.0)
+  LTB Tenant Retainer Agreement — HTML Template (v1.8 — added §6.1 Phase 1/Phase 2 tiered structure: Phase 1 = letter writing + communication at {RETAINER_DEPOSIT}, Phase 2 = $1,200 + HST hardcoded for LTB application/hearing representation)
   Source of truth: Wix CMS row in `documenttemplates` (templateName: "LTB Tenant")
   Substitutions: DocumentWorkflowPage.tsx + retainer-html-generator.ts.
   Feature parity with HRTO Retainer v2.6 — tenant-side content for the Landlord and Tenant Board.
@@ -281,7 +281,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   </div>
   <div class="cover-foot">
     <div class="left">Legal Assist Paralegal Services is licensed and insured by the Law Society of Ontario (LSO). Verify our licensing at <a href="https://lso.ca/directory">LSO.ca/directory</a> or by scanning the QR code above. This agreement is governed by the laws of the Province of Ontario.</div>
-    <div class="right"><small>Document</small>LTB&#8209;T&#8209;RET&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Tenant Retainer v1.7</div><div class="version" style="white-space:nowrap;">Last updated {DATE}</div></div>
+    <div class="right"><small>Document</small>LTB&#8209;T&#8209;RET&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Tenant Retainer v1.8</div><div class="version" style="white-space:nowrap;">Last updated {DATE}</div></div>
   </div>
 </section>
 
@@ -404,6 +404,24 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 <div class="fee-row" data-struck="{STRUCK_HYBRID}"><span class="name">Hybrid Retainer (flat + hourly overage)</span><span class="amt">${HYBRID_FLAT_FEE} + HST · ${HYBRID_HOURLY_RATE}/hr beyond cap</span></div>
 <div class="fee-row" data-struck="{STRUCK_CONTINGENCY}"><span class="name">Contingency Fee</span><span class="amt">{CONTINGENCY_PERCENT}% of recovery + HST</span></div>
 <div class="fee-row" data-struck="{STRUCK_DEPOSIT}"><span class="name">Initial Retainer Deposit</span><span class="amt">${RETAINER_DEPOSIT} + HST</span></div>
+
+<h3 style="margin-top:22px;">6.1 Two&#8209;Phase Tiered Structure</h3>
+<p>The fee for this retainer is split into two phases. <strong>Phase 1 begins on signing.</strong> <strong>Phase 2 auto&#8209;triggers</strong> only if the matter cannot be resolved by letter writing and communication and proceeds to a formal LTB filing or hearing.</p>
+
+<div style="border:1px solid var(--line);background:var(--bg-warm);border-radius:8px;padding:14px 18px;margin:10px 0;page-break-inside:avoid;break-inside:avoid;" data-keep-together>
+  <div style="font:700 11px/1.2 Inter, sans-serif; color:var(--gold); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Phase 1 &mdash; Letter Writing &amp; Communication</div>
+  <div style="font:700 17px/1.2 Inter, sans-serif; color:var(--navy); margin-bottom:8px;">${RETAINER_DEPOSIT} + HST</div>
+  <div style="font:500 12.5px/1.5 Inter, sans-serif; color:var(--ink-2);">Includes: demand or response letters to the landlord on firm letterhead, follow&#8209;up communications by phone, email and post, review of landlord notices (N4, N5, N6, N7, N8, N12, N13) and advice on cure/void periods, informal negotiation, and one (1) Mediated Settlement Agreement if Phase 1 resolves the dispute. <strong>Does not include</strong> filing any T&#8209;application, defending any L&#8209;application, attending the Case Management Hearing, attending mediation at the Board, or attending the merits hearing.</div>
+</div>
+
+<div style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:14px 18px;margin:10px 0;page-break-inside:avoid;break-inside:avoid;" data-keep-together>
+  <div style="font:700 11px/1.2 Inter, sans-serif; color:var(--navy); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Phase 2 &mdash; LTB Application &amp; Hearing Representation</div>
+  <div style="font:700 17px/1.2 Inter, sans-serif; color:var(--navy); margin-bottom:8px;">$1,200.00 + HST</div>
+  <div style="font:500 12.5px/1.5 Inter, sans-serif; color:var(--ink-2);"><strong>Auto&#8209;triggers</strong> if the Client instructs the Paralegal to file a tenant application (T1, T2, T3, T5, T6, T7), if the landlord files an LTB application (L1, L2, L3, L4, L9) naming the Client as respondent, or if formal representation at the Case Management Hearing, mediation, or merits hearing is required. Covers preparation and filing of the application or response on the correct form, preparation and exchange of disclosure, drafting of submissions, and attendance at the CMH, mediation, and up to one (1) day of merits hearing. Additional hearing days, review motions (RTA s. 21.2 / LTB Rule 26), Divisional Court appeals, and enforcement steps are not included and require a separate written agreement.</div>
+</div>
+
+<div class="callout warn"><h4>Phase 2 Is Additional to Phase 1</h4><p>The Phase 2 fee is in addition to the Phase 1 fee, which has been earned for the Phase 1 work. Phase 1 fees are not credited against Phase 2. The Phase 2 fee is payable as a 50% deposit within seven (7) days of the Phase 2 trigger (held in trust) and 50% on or before the merits hearing date.</p></div>
+
 <p style="margin-top:12px;">Disbursements — out&#8209;of&#8209;pocket costs incurred on the Client&rsquo;s behalf (LTB application/filing fees, courier, copying, transcripts, expert reports, witness expenses, registered mail for service) — are billed at cost. Invoices are issued monthly and are due on receipt.</p>
 <div class="callout warn"><h4>Interest on Overdue Accounts</h4><p>Accounts not paid within thirty (30) days of the invoice date may accrue interest at the rate of <strong>1.5% per month (18% per annum)</strong>, compounded monthly, until paid in full. The Paralegal may at its discretion waive accrued interest where payment in full is received.</p></div>
 {PAYMENT_SECTION}
@@ -682,7 +700,7 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 </div>
 
 <div class="doc-footer">
-  <div class="left">Legal Assist Paralegal Services · 226&#8209;272&#8209;5153 · contact@legalassist.london<br><a href="https://legalassist.london">legalassist.london</a> · LTB Tenant Retainer Agreement<div class="version">Document Version: LTB Tenant Retainer v1.7 · Last updated {DATE}</div></div>
+  <div class="left">Legal Assist Paralegal Services · 226&#8209;272&#8209;5153 · contact@legalassist.london<br><a href="https://legalassist.london">legalassist.london</a> · LTB Tenant Retainer Agreement<div class="version">Document Version: LTB Tenant Retainer v1.8 · Last updated {DATE}</div></div>
   <div class="right">VERIFY OUR LICENSING<br><a href="https://lso.ca/directory">LSO.ca/directory</a></div>
 </div>
 

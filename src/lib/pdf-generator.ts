@@ -1132,6 +1132,16 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       segCanvas.height = segH;
       const ctx = segCanvas.getContext('2d');
       if (ctx) {
+        // CRITICAL: paint the segCanvas white BEFORE drawing the strip.
+        // JPEG (used below at toDataURL) does NOT support transparency,
+        // so any transparent pixel in the source canvas renders as
+        // pure BLACK in the output JPEG. Tall documents (post-signature
+        // with embedded image + audit trail) can push html2canvas past
+        // the browser canvas-size limit and leave transparent regions.
+        // Without this white fill, those regions come out as fully
+        // black pages alternating with white-content pages.
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, segH);
         ctx.drawImage(canvas, 0, breaks[i], canvas.width, segH, 0, 0, canvas.width, segH);
         const segImg = segCanvas.toDataURL('image/jpeg', 0.95);
         const segImgHeightOnPage = (segH * imgWidth) / canvas.width;

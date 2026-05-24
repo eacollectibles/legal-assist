@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Traffic Ticket Retainer Agreement — Legal Assist Paralegal Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Allura&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f2a4a; --gold: #b08a3e;
+      --ink: #1f2937; --ink-2: #374151; --mute: #6b7280;
+      --bg: #ffffff; --bg-soft: #f7f9fc; --bg-warm: #fdfaf3;
+      --line: #e2e8f0; --line-2: #cbd5e1;
+      --danger: #b91c1c; --danger-soft: #fef2f2;
+      --ok: #166534; --ok-soft: #f0fdf4;
+    }
+    * { box-sizing: border-box; }
+    p, li, td, h1, h2, h3, h4 {
+      hyphens: none; -webkit-hyphens: none; -moz-hyphens: none; -ms-hyphens: none;
+      word-break: normal; overflow-wrap: break-word;
+    }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font: 400 13.5px/1.55 Inter, Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-align: left;
+    }
+    .doc, p, li, h1, h2, h3, h4, .cover-tag, .lim-warning p, .pre-sign,
+    .summary-card p, .why-card li, .callout p, .nature-box p, .note-box p {
+      text-align: left !important;
+    }
+    .doc { max-width: 760px; margin: 0 auto; padding: 32px 40px 12px; }
+    h1, h2, h3, h4 { font-family: Inter, Arial, sans-serif; color: var(--navy); line-height: 1.25; margin: 0 0 8px; }
+    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+    h2 { font-size: 18px; font-weight: 700; margin-top: 28px; padding-bottom: 6px; border-bottom: 2px solid var(--gold); }
+    h3 { font-size: 14.5px; font-weight: 700; margin-top: 18px; }
+    h4 { font-size: 13px; font-weight: 600; margin-top: 14px; color: var(--ink); }
+    p { margin: 0 0 10px; }
+    ul, ol { margin: 6px 0 12px 22px; padding: 0; }
+    li { margin: 0 0 4px; }
+    strong { color: var(--ink); }
+    small { color: var(--mute); font-size: 11.5px; }
+    a { color: var(--navy); text-decoration: underline; }
+    .callout, .fee-row, .signature-row, .ack-list, .meta-grid,
+    .summary-card, .why-card, .lso-id, .lim-warning, .pre-sign, .cover-toc,
+    .ack-block, .nature-box, .note-box, .scope-table, .title-block, .cover-meta, .end-marker,
+    .phase-card,
+    [data-keep-together], .ack-list tr, .ack-list table tr {
+      page-break-inside: avoid; break-inside: avoid;
+    }
+    h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+    [data-empty="true"] { display: none !important; }
+    .fee-row { position: relative; display: flex; justify-content: space-between; align-items: baseline;
+      gap: 16px; padding: 9px 14px 9px 38px; margin: 6px 0;
+      background: #fff; border: 1px solid var(--line); border-radius: 6px; }
+    .fee-row::before { content: '\2611'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      font: 700 16px/1 Arial, sans-serif; color: var(--ok); }
+    .fee-row[data-struck="true"]::before { content: '\2610'; color: var(--mute); }
+    .fee-row[data-struck="true"] .name { text-decoration: line-through;
+      text-decoration-color: rgba(0,0,0,0.55); color: var(--mute); }
+    .fee-row[data-struck="true"] .amt { font-size: 0 !important; color: transparent !important;
+      position: relative; white-space: nowrap; min-width: 150px; flex: 0 0 auto; text-align: right; }
+    .fee-row[data-struck="true"] .amt::after { content: "Option not selected"; display: inline-block;
+      font: italic 500 11.5px/1.3 Inter, sans-serif; color: var(--mute); white-space: nowrap; }
+    .fee-row .name { font: 600 12.5px/1.3 Inter, sans-serif; color: var(--ink); }
+    .fee-row .amt { font: 700 13px/1.3 Inter, sans-serif; color: var(--navy); }
+    .page-break-before { page-break-before: always; break-before: page; }
+    .end-marker {
+      position: relative; height: 110px; margin: 20px 0 0;
+      border: 1px dashed var(--line-2); border-radius: 4px;
+      background: #fff; overflow: hidden;
+    }
+    .end-marker .end-stroke { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+    .end-marker .end-label {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: #fff; padding: 4px 10px; border: 1px solid var(--line); border-radius: 3px;
+      font: 600 9.5px/1 Inter, sans-serif; color: var(--mute);
+      letter-spacing: 0.04em; z-index: 2; white-space: nowrap;
+    }
+    .cover { min-height: 980px; padding: 32px 0 24px; display: flex; flex-direction: column;
+      page-break-after: always; break-after: page; }
+    .cover-brand { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 14px;
+      border-bottom: 3px solid var(--gold); }
+    .cover-brand .mark { width: 44px; height: 44px; border-radius: 8px; background: var(--navy); color: var(--gold);
+      display: inline-flex; align-items: center; justify-content: center;
+      font: 700 18px/1 Inter, sans-serif; flex: 0 0 44px; }
+    .cover-brand .firm { font: 700 18px/1.2 Inter, sans-serif; color: var(--navy); flex: 1 1 auto; }
+    .cover-brand .firm small { display: block; font: 400 11.5px/1.3 Inter, sans-serif; color: var(--mute);
+      margin-top: 4px; max-width: 360px; }
+    .cover-brand .header-contact { flex: 0 0 auto; text-align: right;
+      font: 500 11px/1.55 Inter, sans-serif; color: var(--ink-2); }
+    .cover-brand .header-contact a { color: var(--navy); text-decoration: none; font-weight: 600; display: block; }
+    .title-block { margin-top: 44px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+    .title-block h1 { font-size: 36px; line-height: 1.1; margin: 0; }
+    .title-block .subtitle { margin: 8px 0 0; font: 500 15px/1.4 Inter, sans-serif; color: var(--ink-2); }
+    .cover-tag { margin: 18px 0 0; font: 400 13px/1.55 Lora, Georgia, serif; color: var(--ink-2); max-width: 560px; font-style: italic; }
+    .cover-meta { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px;
+      padding: 18px 22px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; }
+    .cover-meta .row { display: flex; flex-direction: column; gap: 3px; }
+    .cover-meta .lab { font: 700 9.5px/1 Inter, sans-serif; color: var(--mute); letter-spacing: 0.06em; }
+    .cover-meta .val { font: 600 13.5px/1.4 Inter, sans-serif; color: var(--ink); }
+    .lso-id { margin: 14px 0 0; padding: 14px 20px;
+      background: #fff; border: 1.5px solid var(--gold); border-radius: 8px;
+      display: flex; align-items: center; gap: 16px; }
+    .lso-id .lab { font: 700 10px/1.2 Inter, sans-serif; color: var(--gold);
+      letter-spacing: 0.04em; flex: 0 0 auto; }
+    .lso-id .pname { font: 700 14px/1.2 Inter, sans-serif; color: var(--navy); flex: 1 1 auto; }
+    .lso-id .pmeta { font: 500 11px/1.3 Inter, sans-serif; color: var(--mute); flex: 0 0 auto; text-align: right; }
+    .lso-id .plic { font: 700 12px/1.3 Inter, sans-serif; color: var(--ink); }
+    .lim-warning { margin: 16px 0 0; padding: 12px 18px;
+      background: var(--danger-soft); border-left: 4px solid var(--danger); border-radius: 6px; }
+    .lim-warning > strong { color: var(--danger); display: block;
+      font: 700 12.5px/1.2 Inter, sans-serif; margin-bottom: 6px; }
+    .lim-warning p strong { display: inline; color: inherit; font: inherit; letter-spacing: inherit; margin: 0; }
+    .lim-warning p { margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+    .pre-sign { margin: 14px 0 0; padding: 10px 14px;
+      background: var(--bg-soft); border: 1px dashed var(--line-2); border-radius: 6px;
+      font: 500 11.5px/1.5 Inter, sans-serif; color: var(--mute); font-style: italic; }
+    .cover-toc { margin-top: 16px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    .cover-toc h4 { margin: 0 0 8px; font: 700 12px/1.2 Inter, sans-serif; color: var(--navy); }
+    .cover-toc .toc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; position: relative; }
+    .cover-toc .toc-cols::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 1px; background: var(--line); transform: translateX(-12px); }
+    .cover-toc ol { list-style: none; margin: 0; padding: 0; }
+    .cover-toc ol li { break-inside: avoid; font: 500 10.5px/1.6 Inter, sans-serif;
+      color: var(--ink-2); margin: 0 0 1px; display: block; }
+    .cover-toc ol li .num { display: inline-block; width: 24px;
+      font: 700 9.5px/1.6 Inter, sans-serif; color: var(--gold); }
+    .cover-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; }
+    .cover-foot .left { font: 400 10.5px/1.5 Inter, sans-serif; color: var(--mute); max-width: 460px; }
+    .cover-foot .right { font: 600 10.5px/1.3 Inter, sans-serif; color: var(--navy); text-align: right; }
+    .cover-foot .right small { display: block; font: 400 10.5px/1.3 Inter, sans-serif; color: var(--mute); margin-bottom: 3px; }
+    .cover-foot .version { margin-top: 6px; font: 500 9.5px/1.3 Inter, sans-serif; color: var(--mute); }
+    .summary-card { margin: 18px 0; padding: 16px 20px; background: var(--bg-warm);
+      border-left: 4px solid var(--gold); border-radius: 6px; }
+    .summary-card h3 { margin: 0 0 6px; font: 700 13.5px/1.2 Inter, sans-serif; color: var(--navy); }
+    .summary-card p { margin: 0; color: var(--ink-2); font-size: 13px; }
+    .why-card { margin: 14px 0; padding: 16px 20px; background: #fff; border: 1px solid var(--line);
+      border-left: 4px solid var(--navy); border-radius: 6px; }
+    .why-card h3 { margin: 0 0 8px; font: 700 13.5px/1.2 Inter, sans-serif; color: var(--navy); }
+    .why-card ul { margin: 0; padding-left: 18px; }
+    .why-card li { color: var(--ink-2); font-size: 12.5px; margin: 0 0 3px; }
+    .timeline { padding: 20px 14px 14px; margin: 18px 0 24px;
+      background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px;
+      display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 4px 0; }
+    .timeline-step { display: table-cell; text-align: center; vertical-align: top; }
+    .timeline-step .dot { display: inline-block; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--navy); color: #fff; font: 700 12px/28px Inter, sans-serif; text-align: center;
+      margin-bottom: 8px; }
+    .timeline-step .label { display: block; font: 600 10px/1.25 Inter, sans-serif; color: var(--ink);
+      white-space: normal; padding: 0 2px; }
+    .timeline-step .sub { display: block; font: 500 9px/1.2 Inter, sans-serif; color: var(--mute); margin-top: 2px; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 8px 0 14px;
+      padding: 14px 18px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; }
+    .meta-grid .row { display: flex; gap: 6px; align-items: baseline; }
+    .meta-grid .lab { flex: 0 0 110px; font: 600 11px/1.4 Inter, sans-serif; color: var(--mute); }
+    .meta-grid .val { flex: 1 1 0; font: 500 12.5px/1.4 Inter, sans-serif; color: var(--ink); }
+    .callout { margin: 14px 0; padding: 14px 18px; border-radius: 8px;
+      background: var(--bg-soft); border-left: 4px solid var(--navy); }
+    .callout.warn { background: var(--danger-soft); border-left-color: var(--danger); }
+    .callout.warn h4 { color: var(--danger); }
+    .callout h4 { margin: 0 0 6px; font: 700 12px/1.2 Inter, sans-serif; }
+    .callout p { margin: 0 0 6px; font-size: 12.5px; color: var(--ink-2); }
+    .callout p:last-child { margin: 0; }
+    .nature-box, .note-box { margin: 14px 0; padding: 14px 18px; border: 1px solid var(--line-2);
+      border-radius: 8px; background: var(--bg-soft); }
+    .nature-box .nature-label, .note-box .note-label {
+      font: 700 11px/1.2 Inter, sans-serif; color: var(--navy);
+      margin-bottom: 6px; display: block; }
+    .scope-table { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 14px 0;
+      border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .scope-table .scope-col { padding: 14px 18px; }
+    .scope-table .scope-col.included { background: var(--ok-soft); border-right: 1px solid var(--line); }
+    .scope-table .scope-col.excluded { background: var(--danger-soft); }
+    .scope-table h4 { margin: 0 0 8px; font: 700 11px/1.2 Inter, sans-serif; }
+    .scope-table .included h4 { color: var(--ok); }
+    .scope-table .excluded h4 { color: var(--danger); }
+    .scope-table ul { margin: 0; padding-left: 18px; font-size: 12px; }
+    .scope-table li { margin: 4px 0; color: var(--ink-2); }
+    /* Phase 1 / Phase 2 tiered structure -------------------------
+       Stacked (not 2-column) so html2canvas + jsPDF render
+       reliably and the block never gets squeezed into a half-
+       width column. Each card is its own keep-together block. */
+    .phase-card {
+      margin: 14px 0;
+      padding: 18px 22px;
+      border-radius: 8px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .phase-card.phase-1 {
+      background: var(--bg-warm);
+      border: 1px solid var(--gold);
+      border-left: 5px solid var(--gold);
+    }
+    .phase-card.phase-2 {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--navy);
+    }
+    .phase-card .phase-tag {
+      display: inline-block;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+    .phase-card.phase-1 .phase-tag { color: var(--gold); }
+    .phase-card.phase-2 .phase-tag { color: var(--navy); }
+    .phase-card h4 {
+      margin: 0 0 8px;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--navy);
+    }
+    .phase-card .amount {
+      margin: 0 0 10px;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--navy);
+    }
+    .phase-card .desc {
+      margin: 0 0 10px;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+    .phase-card ul {
+      margin: 0 0 0 4px;
+      padding-left: 18px;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+    .phase-card ul li { margin: 4px 0; }
+    .ack-list { margin: 14px 0 18px; padding: 14px 18px; border: 1px solid var(--line);
+      border-radius: 8px; background: var(--bg-soft); }
+    .ack-list h4 { margin: 0 0 10px; font: 700 12px/1.2 Inter, sans-serif; color: var(--navy); }
+    .ack-list table { width: 100%; border-collapse: collapse; }
+    .ack-list tr { page-break-inside: avoid; break-inside: avoid; }
+    .ack-list tr td { padding: 6px 0; vertical-align: top; border-bottom: 1px dashed var(--line); }
+    .ack-list tr:last-child td { border-bottom: 0; }
+    .ack-list td.box-cell { width: 60px; padding-right: 10px; }
+    .ack-list td.box-cell .box { display: inline-block; width: 52px; height: 22px;
+      border: 1.5px solid var(--ink-2); border-radius: 3px; text-align: center;
+      font: 600 9px/22px Inter, sans-serif; color: var(--mute); }
+    .ack-list td.box-cell .box.initialled {
+      font: italic 700 14px/22px "Allura", "Lora", cursive, serif;
+      color: var(--navy); border-color: var(--gold); background: var(--bg-warm); }
+    .ack-list td.txt-cell { font: 500 11.5px/1.5 Inter, sans-serif; color: var(--ink-2); }
+    .ack-list td.txt-cell strong { color: var(--navy); }
+    .signature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0 12px; }
+    .sig-card { padding: 18px 20px; border: 1.5px solid var(--line-2); border-radius: 8px; background: #fff;
+      min-height: 200px; display: flex; flex-direction: column; }
+    .sig-card .lab { font: 700 11px/1.2 Inter, sans-serif; color: var(--mute); margin-bottom: 6px; }
+    .sig-card .sig-area { height: 60px; }
+    .sig-card .line { border-top: 2px solid var(--ink); height: 0; margin: 4px 0 6px; }
+    .sig-card .name { font: 700 14px/1.3 Inter, sans-serif; color: var(--ink); margin: 6px 0 2px; }
+    .sig-card .meta { font: 500 11.5px/1.35 Inter, sans-serif; color: var(--mute); margin-bottom: 8px; }
+    .sig-card .cursive { font: italic 400 26px/1 "Allura", "Lora", cursive, serif;
+      color: var(--navy); margin: 4px 0 0; min-height: 40px; }
+    .sig-card .date { font: 500 11px/1.3 Inter, sans-serif; color: var(--ink-2); }
+    .sig-card .esign-stamp { margin-top: auto; padding-top: 10px;
+      font: 500 9.5px/1.35 Inter, sans-serif; color: var(--mute); border-top: 1px dashed var(--line); }
+    .sig-card .esign-stamp strong { color: var(--ok); font-weight: 700; }
+    .doc-footer { margin-top: 16px; padding-top: 10px; margin-bottom: 0; border-top: 1px solid var(--line);
+      font: 500 10.5px/1.45 Inter, sans-serif; color: var(--mute);
+      display: flex; justify-content: space-between; gap: 14px;
+      page-break-inside: avoid; break-inside: avoid; page-break-after: avoid; break-after: avoid; }
+    .doc-footer a { color: var(--mute); }
+    .doc-footer .right { text-align: right; }
+    .doc-footer .version { margin-top: 4px; font-size: 9.5px; }
+    @media (max-width: 640px) {
+      .doc { padding: 18px 18px 32px; }
+      .cover-brand { flex-wrap: wrap; }
+      .cover-brand .header-contact { flex: 1 1 100%; text-align: left; margin-top: 10px; }
+      .cover-meta, .cover-toc .toc-cols, .meta-grid, .signature-row, .scope-table { grid-template-columns: 1fr; }
+      .cover-toc .toc-cols::before { display: none; }
+      .scope-table .scope-col.included { border-right: 0; border-bottom: 1px solid var(--line); }
+      .lso-id { flex-wrap: wrap; }
+      .lso-id .pmeta { text-align: left; }
+      .timeline { display: block; }
+      .timeline-step { display: block; margin: 8px 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <section class="cover">
+    <div class="cover-brand">
+      <span class="mark">LA</span>
+      <div class="firm">
+        Legal Assist Paralegal Services
+        <small>Licensed Paralegals in the Province of Ontario</small>
+      </div>
+      <div class="header-contact">
+        <a href="tel:+12262725153">226&#8209;272&#8209;5153</a>
+        <a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a>
+        <a href="https://legalassist.london">legalassist.london</a>
+      </div>
+    </div>
+    <div class="title-block">
+      <h1>Retainer Agreement</h1>
+      <p class="subtitle">Traffic Ticket &amp; Provincial Offences Matters</p>
+    </div>
+    <p class="cover-tag">Please read this agreement carefully. It explains the work we will perform, how we charge, and the rights and obligations of both parties. Your signature confirms that you have had the opportunity to ask questions and to seek independent advice.</p>
+    <div class="cover-meta">
+      <div class="row"><span class="lab">PREPARED FOR</span><span class="val">{CLIENT_NAME}</span></div>
+      <div class="row"><span class="lab">DATE PREPARED</span><span class="val">{DATE}</span></div>
+      <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">FILE REFERENCE</span><span class="val">{FILE_REFERENCE}</span></div>
+      <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}"><span class="lab">CHARGE / MATTER</span><span class="val">{MATTER_TYPE}</span></div>
+      <div class="row"><span class="lab">COURT</span><span class="val">Ontario Court of Justice (Provincial Offences)</span></div>
+      <div class="row"><span class="lab">GOVERNING LAW</span><span class="val">Province of Ontario</span></div>
+    </div>
+    <div class="lso-id">
+      <div class="lab">PARALEGAL OF RECORD</div>
+      <div class="pname">{PARALEGAL_NAME}</div>
+      <div class="pmeta">Licensed Paralegal<br><span class="plic">LSO #{PARALEGAL_LSO}</span></div>
+    </div>
+    <div class="lim-warning" role="alert">
+      <strong>Important &mdash; 15-Day Response Deadline</strong>
+      <p>You have 15 days from being served with the Offence Notice to file a Notice of Intention to Appear, pay the set fine, or request an Early Resolution Meeting where available. Missing this deadline can result in conviction in absentia under s.&nbsp;9.1 of the Provincial Offences Act. Confirm your filing window with the Paralegal immediately.</p>
+    </div>
+    <p class="pre-sign">No paralegal-client relationship is formed, and no work is commenced on the file, until this Agreement is signed and any required retainer is received.</p>
+    <div class="end-marker" data-keep-together aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+      </svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+    <div class="cover-toc page-break-before">
+      <h4>What&#8217;s in this agreement</h4>
+      <div class="toc-cols">
+        <ol>
+          <li><span class="num">01</span>Parties &amp; Matter</li>
+          <li><span class="num">02</span>Conflict of Interest Check</li>
+          <li><span class="num">03</span>Retainer &amp; Specific Licensee Retained</li>
+          <li><span class="num">04</span>Scope of Services (Included vs. Excluded)</li>
+          <li><span class="num">05</span>Excluded Services &amp; Collateral Consequences</li>
+          <li><span class="num">06</span>Fee Structure &amp; Payment</li>
+          <li><span class="num">6.1</span>Two-Phase Tiered Structure (Phase 1 / Phase 2)</li>
+          <li><span class="num">07</span>Trust Account &amp; Disbursement Authorization</li>
+          <li><span class="num">08</span>Demerit Points, Insurance &amp; Outcome Disclaimer</li>
+          <li><span class="num">09</span>Plea Authority &amp; Client Control</li>
+          <li><span class="num">10</span>Client Responsibilities</li>
+          <li><span class="num">11</span>Evidence Preservation &amp; Disclosure</li>
+          <li><span class="num">12</span>Urgent or Last-Minute Matters</li>
+          <li><span class="num">13</span>Hearing Attendance &amp; Virtual Proceedings</li>
+          <li><span class="num">14</span>Client Conduct &amp; Anti-Harassment</li>
+          <li><span class="num">15</span>Recording, Witnesses &amp; Media</li>
+        </ol>
+        <ol>
+          <li><span class="num">16</span>Settlement</li>
+          <li><span class="num">17</span>No Guaranteed Outcome</li>
+          <li><span class="num">18</span>Accommodation, Interpretation &amp; Client Understanding</li>
+          <li><span class="num">19</span>Communication, SMS &amp; Instruction Authority</li>
+          <li><span class="num">20</span>File Assignment &amp; Coverage</li>
+          <li><span class="num">21</span>Online &amp; Social-Media Conduct</li>
+          <li><span class="num">22</span>No Action Without Funding</li>
+          <li><span class="num">23</span>Withdrawal, File Abandonment &amp; Termination</li>
+          <li><span class="num">24</span>Liability &amp; Limited Indemnity</li>
+          <li><span class="num">25</span>Electronic Communications &amp; Signatures</li>
+          <li><span class="num">26</span>Technology, Artificial Intelligence &amp; Document Automation</li>
+          <li><span class="num">27</span>File Retention &amp; Destruction</li>
+          <li><span class="num">28</span>Privacy &amp; Governing Law</li>
+          <li><span class="num">29</span>Entire Agreement &amp; Acknowledgment</li>
+        </ol>
+      </div>
+    </div>
+    <div class="cover-foot">
+      <div class="left">
+        Legal Assist Paralegal Services is operated by paralegals licensed and insured by the Law Society of Ontario. Verify licensee status at the <a href="https://lso.ca/directory">Law Society of Ontario Lawyer and Paralegal Directory</a>.
+      </div>
+      <div class="right">
+        <small>Document</small>
+        POA&#8209;RET&#8209;{DATE_SHORT}
+        <div class="version">Version: Traffic Retainer v3.8 &middot; Last updated {DATE}</div>
+      </div>
+    </div>
+  </section>
+  <div class="summary-card">
+    <h3>In plain English</h3>
+    <p>You are hiring <strong>{PARALEGAL_NAME}</strong> at Legal Assist Paralegal Services to represent you on a traffic or Provincial Offences charge. This document explains what we will do, what we will not do, what it costs, and what we both need from each other. If anything in this document is unclear, ask us before signing.</p>
+  </div>
+  <div class="why-card">
+    <h3>Why clients choose us for traffic matters</h3>
+    <ul>
+      <li>Focused practice in Provincial Offences and Highway Traffic Act defence across London and Southwestern Ontario.</li>
+      <li>Transparent fees &mdash; you receive a written estimate before work begins and a detailed account with every invoice.</li>
+      <li>Direct paralegal access &mdash; you speak with the licensee handling your file.</li>
+      <li>Bound by the Paralegal Rules of Conduct and insured for professional liability.</li>
+    </ul>
+  </div>
+  <h3 style="margin-top:24px;">How a Provincial Offences matter typically moves</h3>
+  <div class="timeline">
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">1</span><span class="label">Consult</span><span class="sub">Intake</span></div>
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">2</span><span class="label">Notice</span><span class="sub">Filed</span></div>
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">3</span><span class="label">Disclosure</span><span class="sub">Requested</span></div>
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">4</span><span class="label">Early Res.</span><span class="sub">Meeting</span></div>
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">5</span><span class="label">Pre-Trial</span><span class="sub">if needed</span></div>
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">6</span><span class="label">Trial</span><span class="sub">OCJ POA</span></div>
+    <div class="timeline-step"><span class="dot" style="background:#0f2a4a;color:#fff;">7</span><span class="label">Decision</span><span class="sub">Disposition</span></div>
+  </div>
+  <div data-keep-together>
+    <h2>1. Parties &amp; Matter</h2>
+    <p>This Retainer Agreement (the &ldquo;<strong>Agreement</strong>&rdquo;) is made between <strong>{CLIENT_NAME}</strong> (the &ldquo;<strong>Client</strong>&rdquo;) and <strong>Legal Assist Paralegal Services</strong>, acting through <strong>{PARALEGAL_NAME}</strong>, Licensed Paralegal (Law Society of Ontario), Licence No. {PARALEGAL_LSO} (the &ldquo;<strong>Paralegal</strong>&rdquo; or &ldquo;<strong>we</strong>&rdquo;). Proceedings under the <em>Provincial Offences Act</em> are prosecuted by the municipality or the Crown as applicable.</p>
+  </div>
+  <div class="meta-grid">
+    <div class="row"><span class="lab">Client</span><span class="val">{CLIENT_NAME}</span></div>
+    <div class="row"><span class="lab">Email</span><span class="val">{CLIENT_EMAIL}</span></div>
+    <div class="row" data-empty="{IS_CLIENT_PHONE_EMPTY}"><span class="lab">Phone</span><span class="val">{CLIENT_PHONE}</span></div>
+    <div class="row" data-empty="{IS_CLIENT_ADDRESS_EMPTY}"><span class="lab">Address</span><span class="val">{CLIENT_ADDRESS}</span></div>
+    <div class="row" data-empty="{IS_CLIENT_UNIT_EMPTY}"><span class="lab">Unit</span><span class="val">{CLIENT_UNIT}</span></div>
+    <div class="row"><span class="lab">City / Province</span><span class="val">{CLIENT_CITY}, {CLIENT_PROVINCE} {CLIENT_POSTAL_CODE}</span></div>
+    <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">File Ref</span><span class="val">{FILE_REFERENCE}</span></div>
+    <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}"><span class="lab">Charge Type</span><span class="val">{MATTER_TYPE}</span></div>
+  </div>
+  <div class="nature-box">
+    <span class="nature-label">Nature of the Charge</span>
+    <p style="margin:0;">{NATURE_OF_MATTER}</p>
+  </div>
+  <div data-keep-together>
+    <h2>2. Conflict of Interest Check</h2>
+    <p>This retainer is subject to confirmation that no conflict of interest exists under the <em>Paralegal Rules of Conduct</em>. The Client agrees to disclose, on request, the identity of any other parties involved in the underlying incident (drivers, passengers, witnesses, the issuing officer&rsquo;s force if known) to permit a complete conflict check. If a conflict is identified after execution of this Agreement, the Paralegal may withdraw in accordance with Rules 3.04 to 3.05 of the <em>Paralegal Rules of Conduct</em>.</p>
+  </div>
+  <div class="end-marker" data-keep-together aria-label="End of section — no further conditions">
+    <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+    </svg>
+    <span class="end-label">End of Section &mdash; No Further Conditions</span>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">3. Retainer &amp; Specific Licensee Retained</h2>
+    <p>The Client <strong>specifically retains {PARALEGAL_NAME}, Licensed Paralegal (LSO #{PARALEGAL_LSO}),</strong> to provide legal services in connection with a charge under the <em>Provincial Offences Act</em>, the <em>Highway Traffic Act</em>, the <em>Compulsory Automobile Insurance Act</em>, or related provincial offence legislation, as set out in the Certificate of Offence or Part III Information served on the Client. The Paralegal accepts the retainer subject to the terms of this Agreement and subject to Section 20 regarding alternate attendance coverage by another licensed paralegal at the firm.</p>
+    <p>The Paralegal acts only within the scope of practice authorized by By-Law 4 of the Law Society of Ontario for Class P1 paralegals. Nothing in this Agreement creates a solicitor-client relationship with a lawyer or an obligation on us to provide legal services that fall outside paralegal scope.</p>
+  </div>
+  <div class="end-marker" data-keep-together aria-label="End of section — no further conditions">
+    <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+    </svg>
+    <span class="end-label">End of Section &mdash; No Further Conditions</span>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">4. Scope of Services (Included vs. Excluded)</h2>
+    <p>This retainer covers the services in the &ldquo;Included&rdquo; column below for the specific charge(s) identified in Section 1. Items in the &ldquo;Not Included&rdquo; column require a separate written retainer.</p>
+  </div>
+  <div class="scope-table">
+    <div class="scope-col included">
+      <h4>Included in this retainer</h4>
+      <ul>
+        <li>Review of the Offence Notice and prosecution disclosure</li>
+        <li>Filing the Notice of Intention to Appear within 15 days</li>
+        <li>Disclosure request and review</li>
+        <li>First appearance and procedural attendances</li>
+        <li>Early Resolution Meeting or prosecutor pre-trial</li>
+        <li>Plea negotiations on Client instructions</li>
+        <li>Trial preparation and witness preparation</li>
+        <li><strong>One (1) trial date</strong> in the Ontario Court of Justice</li>
+        <li>Section 11 reopening application on Form 102, where available</li>
+        <li>Routine client communication throughout the matter</li>
+      </ul>
+    </div>
+    <div class="scope-col excluded">
+      <h4>Not included (separate retainer)</h4>
+      <ul>
+        <li>Appeals under Part VII or to the Court of Appeal (s. 139)</li>
+        <li>Criminal Code driving charges</li>
+        <li>MTO suspension review or driver-improvement interviews</li>
+        <li>Insurance disputes, rate or coverage appeals</li>
+        <li>Civil claims arising from the incident</li>
+        <li>Judicial review</li>
+        <li>Additional trial dates beyond the first</li>
+        <li>Client-caused adjournments</li>
+        <li>Reopening motions beyond the initial Form 102</li>
+        <li>Extraordinary or last-minute attendances outside ordinary practice</li>
+      </ul>
+    </div>
+  </div>
+  <p>Unless expanded in writing, the flat-fee or hybrid fee selected under Section 6 covers all work up to and including <strong>one (1) trial date</strong>. Adjournments caused by the Client, additional trial dates, appeals, reopening motions beyond the initial Form 102 application, or extraordinary attendances are billed separately.</p>
+  <div class="note-box">
+    <span class="note-label">Photo radar / Automated Speed Enforcement</span>
+    <p style="margin:0;">If the matter is an automated-speed-enforcement (photo-radar) ticket, liability attaches to the registered owner of the plate &mdash; there are no demerit points and no insurance-record impact. Ontario&rsquo;s ASE program was discontinued province-wide on November 14, 2025 under Bill 56; however, pre-ban captures may still be served by mail and remain enforceable.</p>
+  </div>
+  <div data-keep-together>
+    <h2>5. Excluded Services &amp; Collateral Consequences</h2>
+    <p>In addition to the items in the Section 4 table, this retainer does <strong>not</strong> include ongoing monitoring, advice on, or representation in respect of:</p>
+    <ul>
+      <li>Driver&rsquo;s licence reinstatement, MTO administrative hearings, or suspension reviews;</li>
+      <li>Roadside Administrative Driver&rsquo;s Licence Suspensions under HTA s. 48.3 or s. 172 &mdash; these run by operation of law and are not subject to plea negotiation;</li>
+      <li>Insurance underwriting, rate-setting, cancellation, non-renewal, or coverage disputes;</li>
+      <li><strong>Commercial Vehicle Operator&rsquo;s Registration (CVOR) consequences</strong> for commercial drivers or fleet operators;</li>
+      <li><strong>Immigration consequences</strong> of a conviction (admissibility, work-permit, sponsorship);</li>
+      <li><strong>Employment consequences</strong> (employer disclosure, driver-licence-condition jobs, professional regulatory disclosure);</li>
+      <li>Post-disposition enforcement issues (collections, plate-renewal blocks, default-fine matters) other than as specifically retained;</li>
+      <li><em>Criminal Code</em> driving offences (e.g. impaired driving s. 320.14, dangerous driving s. 320.13).</li>
+    </ul>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">6. Fee Structure &amp; Payment</h2>
+    <p>The Client agrees to pay fees and disbursements on the basis selected below. All amounts are in Canadian dollars and are subject to Harmonized Sales Tax (HST) at 13%. The selected fee model is marked with a checkmark. Alternatives are marked &ldquo;Option not selected&rdquo;.</p>
+    <div class="fee-row" data-struck="{STRUCK_HOURLY}">
+      <span class="name">Hourly Retainer</span>
+      <span class="amt">${HOURLY_RATE} per hour + HST</span>
+    </div>
+    <div class="fee-row" data-struck="{STRUCK_FLAT}">
+      <span class="name">Flat Fee</span>
+      <span class="amt">${FLAT_FEE_AMOUNT} + HST</span>
+    </div>
+    <div class="fee-row" data-struck="{STRUCK_HYBRID}">
+      <span class="name">Hybrid Retainer (flat + hourly overage)</span>
+      <span class="amt">${HYBRID_FLAT_FEE} + HST &middot; ${HYBRID_HOURLY_RATE}/hr beyond cap</span>
+    </div>
+    <div class="fee-row" data-struck="{STRUCK_DEPOSIT}">
+      <span class="name">Initial Retainer Deposit</span>
+      <span class="amt">${RETAINER_DEPOSIT} + HST</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       6.1 Two-Phase Tiered Structure — Phase 1 / Phase 2
+       Stacked layout (Phase 1 above Phase 2) for reliable PDF
+       rendering. Phase 1 pulls from {RETAINER_DEPOSIT}.
+       Phase 2 is hardcoded at $500.00 + HST.
+       ============================================================ -->
+  <div data-keep-together>
+    <h3 class="page-break-before" style="margin-top:0;">6.1 Two-Phase Tiered Structure</h3>
+    <p>The fees for this Provincial Offences matter are structured in <strong>two phases</strong>. The Paralegal first works to resolve the charge before trial (Phase 1). The Phase 2 fee is payable <strong>only if</strong> the matter does not resolve in Phase 1 and proceeds to a contested trial in the Ontario Court of Justice.</p>
+  </div>
+
+  <div class="phase-card phase-1" data-keep-together>
+    <span class="phase-tag">Phase 1</span>
+    <h4>Pre-Trial Resolution</h4>
+    <p class="amount">${RETAINER_DEPOSIT} + HST</p>
+    <p class="desc">Covers all work to attempt resolution <strong>before trial</strong> &mdash; document review, file preparation, and negotiations with the Crown prosecutor&rsquo;s office to seek withdrawal, amendment, or reduction of the charge:</p>
+    <ul>
+      <li>Review of the Offence Notice and prosecution disclosure</li>
+      <li>File preparation and analysis of the Crown&rsquo;s evidence</li>
+      <li>Filing the Notice of Intention to Appear within the 15-day window</li>
+      <li>Disclosure request and review</li>
+      <li>Negotiations with the Crown prosecutor&rsquo;s office to attempt reduction, amendment, or withdrawal of the charge</li>
+      <li>Early Resolution Meeting or prosecutor pre-trial</li>
+      <li>Routine client communication and strategy advice throughout Phase 1</li>
+    </ul>
+  </div>
+
+  <div class="phase-card phase-2" data-keep-together>
+    <span class="phase-tag">Phase 2</span>
+    <h4>Trial Representation</h4>
+    <p class="amount">$500.00 + HST</p>
+    <p class="desc">Payable <strong>only if</strong> Phase 1 does not resolve the matter and the file proceeds to a contested trial. Covers everything associated with trial representation:</p>
+    <ul>
+      <li>Trial preparation and witness preparation</li>
+      <li>One (1) trial date in the Ontario Court of Justice (Provincial Offences)</li>
+      <li>Cross-examination of the issuing officer and Crown witnesses</li>
+      <li>Submissions and argument on conviction and, if necessary, sentence</li>
+      <li>Post-disposition client briefing and explanation of the outcome</li>
+    </ul>
+  </div>
+
+  <div class="callout warn" data-keep-together>
+    <h4>Phase 2 Is Additional to Phase 1</h4>
+    <p>The Phase 2 fee of <strong>$500.00 + HST</strong> is <strong>in addition to</strong> the Phase 1 fee already paid; it is not a replacement, credit, or roll-over of Phase 1. If the charge is resolved in Phase 1 (withdrawal, amendment to a non-record offence, agreed plea, or other pre-trial disposition), the Phase 2 fee is <strong>not</strong> charged.</p>
+    <p>Additional trial dates beyond the first, appeals, reopening motions, and extraordinary attendances are <strong>not</strong> included in the Phase 2 fee and are billed separately under Section 6 above.</p>
+  </div>
+
+  <p style="margin-top:12px;"><strong>What the flat fee covers.</strong> Where the Flat Fee model is selected, the fee covers all work up to and including <strong>one trial date</strong> unless otherwise stated in writing in this Agreement.</p>
+  <p><strong>Additional fees apply</strong> for: additional trial dates, adjournments caused by the Client (including non-attendance, late provision of information, scheduling conflicts, or changes of instruction), appeals, reopening motions beyond the initial Form 102 application, or extraordinary attendances. The Paralegal will provide written notice of any additional fee before incurring it where reasonably possible.</p>
+  <p><strong>Adjournment costs.</strong> If the matter is adjourned due to the Client&rsquo;s conduct, non-attendance, late disclosure of information, scheduling conflicts, or change of instructions, additional fees may apply.</p>
+  <p><strong>Disbursements</strong> (court filing or transcript fees, courier, driver&rsquo;s abstract or MTO record, witness expenses, document production, photocopying) are billed at cost. The Client authorizes the Paralegal to incur reasonable disbursements necessary for the conduct of the matter.</p>
+  <p><strong>Payment terms.</strong> Invoices are due on receipt. Interest may be charged on overdue accounts at 2% per month (24% annually).</p>
+  <p><strong>Refunds.</strong> Fees paid before a trial date has commenced are refundable to the extent the work has not been performed and is not committed. <strong>Once a trial or contested hearing has commenced, fees earned are non-refundable</strong> except where required by law or by the <em>Paralegal Rules of Conduct</em>.</p>
+  <p>Contingency fee arrangements are generally not appropriate for Provincial Offences matters because there is no monetary recovery.</p>
+  {PAYMENT_SECTION}
+  {PAYMENT_ARRANGEMENT_SECTION}
+  <div data-keep-together>
+    <h2 class="page-break-before">7. Trust Account &amp; Disbursement Authorization</h2>
+    <p>Retainer funds received from the Client are deposited into the firm&rsquo;s pooled trust account in accordance with By-Law 9 of the Law Society of Ontario. Funds are drawn against on issued invoices in accordance with the LSO&rsquo;s mixed-trust account rules. The Client is entitled to a copy of the trust ledger for the file on request. The Client authorizes the Paralegal to apply trust funds toward reasonable disbursements as they are incurred.</p>
+  </div>
+  <div data-keep-together>
+    <h2>8. Demerit Points, Insurance &amp; Outcome Disclaimer</h2>
+    <p>The Client acknowledges that the Paralegal does not control the prosecutor, the Court, the Ministry of Transportation, or the Client&rsquo;s automobile insurer. The Paralegal does not promise or guarantee any particular outcome, including:</p>
+    <ul>
+      <li>Withdrawal or reduction of the charge;</li>
+      <li>Avoidance of demerit points or driver-record entries;</li>
+      <li>Avoidance of an insurance-rate increase, cancellation, or non-renewal;</li>
+      <li>Avoidance of a fine, surcharge, or victim-fine surcharge;</li>
+      <li>Avoidance of a driver&rsquo;s licence suspension where one applies by operation of law (for example, HTA s. 172 stunt driving carries a 30-day Administrative Driver&rsquo;s Licence Suspension and 14-day vehicle impound that attach at the roadside regardless of plea outcome).</li>
+    </ul>
+    <p><strong>Insurance &mdash; no prediction.</strong> The Paralegal cannot predict or guarantee how any insurer will assess the charge, conviction, amendment, withdrawal, plea, or final disposition for underwriting purposes. Insurance consequences depend on the insurer&rsquo;s own rules, the Client&rsquo;s driving history, and other factors outside the Paralegal&rsquo;s control. Clients with insurance concerns are encouraged to seek written confirmation from their insurer or broker.</p>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">9. Plea Authority &amp; Client Control</h2>
+    <p>The Paralegal will conduct plea negotiations in accordance with the Client&rsquo;s instructions. The decision whether to accept any plea offer or proposed resolution remains with the Client. The Paralegal will not enter a plea or accept a resolution without the Client&rsquo;s express authorization, except where the Client has provided prior written settlement authority.</p>
+    <p>The Client acknowledges that paying the set fine on the back of the Offence Notice (Option 1) is <strong>a plea of guilty</strong> under the <em>Provincial Offences Act</em> and disposes of the charge. The Client agrees not to take that step without consulting the Paralegal.</p>
+  </div>
+  <div data-keep-together>
+    <h2>10. Client Responsibilities</h2>
+    <ul>
+      <li>Provide the Paralegal with the original ticket, any related documents, and a complete written statement of the events;</li>
+      <li>Disclose any prior driving record, prior tickets, or related charges;</li>
+      <li>Respond promptly to requests for information, instructions, or document review;</li>
+      <li>Attend all required meetings and any in-person attendance the Court requires of the Client;</li>
+      <li>Keep contact information current;</li>
+      <li>Pay invoices in accordance with this Agreement.</li>
+    </ul>
+  </div>
+  <div data-keep-together>
+    <h2>11. Evidence Preservation &amp; Disclosure</h2>
+    <p>The Client agrees to preserve and promptly provide all potentially relevant evidence, including dashcam footage, surveillance footage, photographs, witness contact information, and a written recollection of the events. Destruction or alteration of evidence may negatively affect the proceeding.</p>
+    <p>The Client acknowledges that traffic matters often turn on evidence such as the officer&rsquo;s notes, photographs, dashcam or surveillance footage, witness statements, and the Client&rsquo;s own recollection. The Paralegal does not create evidence and cannot guarantee a successful outcome where evidence is incomplete, unavailable, inconsistent, or weak.</p>
+  </div>
+  <div data-keep-together>
+    <h2>12. Urgent or Last-Minute Matters</h2>
+    <p>If the Client retains the Paralegal close to a trial date, after a deadline has nearly expired, or in other urgent circumstances, preparation time may be limited and strategy may be restricted by available time, evidence, and court scheduling. The Paralegal is not responsible for prejudice caused by late retention, delayed disclosure, or incomplete instructions received shortly before a deadline or hearing.</p>
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+      </svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">13. Hearing Attendance &amp; Virtual Proceedings</h2>
+    <p>The Paralegal will attend on the Client&rsquo;s behalf where the <em>Provincial Offences Act</em> permits a paralegal to appear without the defendant. The Client must be available by phone for the duration of any appearance, and must attend in person where the Court requires the defendant&rsquo;s personal attendance (for example, certain Part III trials or where the Court so orders). Failure to attend, where attendance is required, may result in conviction in absentia, a bench warrant in serious matters, or other adverse consequences.</p>
+    <p><strong>Virtual hearings.</strong> Provincial Offences hearings may occur virtually by Zoom, audio conference, or other remote technology as directed by the Court. The Client agrees to ensure access to a quiet location, a working device, and a stable internet connection for any scheduled virtual appearance.</p>
+  </div>
+  <div data-keep-together>
+    <h2>14. Client Conduct &amp; Anti-Harassment</h2>
+    <p>The Client agrees to behave courteously toward the Paralegal, firm personnel, Court staff, witnesses, opposing counsel, and the prosecutor. Threatening, harassing, abusive, or discriminatory conduct directed at any of the foregoing &mdash; whether in person, by email, by phone, or online &mdash; will not be tolerated and is grounds for the Paralegal to withdraw from the retainer under Section 23.</p>
+  </div>
+  <div data-keep-together>
+    <h2>15. Recording, Witnesses &amp; Media</h2>
+    <p>Ontario is a one-party-consent jurisdiction for the recording of conversations. Without limiting any lawful right to record, the Client agrees:</p>
+    <ul>
+      <li><strong>Not to publish, disseminate, or misuse</strong> recordings of communications with the Paralegal, firm personnel, witnesses, or litigation participants;</li>
+      <li>To be aware that recordings of privileged communications may impair or waive privilege, and the Client is <strong>discouraged from recording privileged communications without notice</strong> to the Paralegal;</li>
+      <li><strong>Not to contact</strong> the prosecutor, the issuing officer, the Court, or potential witnesses directly without the Paralegal&rsquo;s knowledge;</li>
+      <li><strong>Not to send communications</strong> that undermine legal strategy;</li>
+      <li><strong>Not to communicate</strong> with media outlets, journalists, or commentators regarding the proceeding without first consulting the Paralegal.</li>
+    </ul>
+  </div>
+  <div data-keep-together>
+    <h2>16. Settlement</h2>
+    <p>The Client acknowledges that resolution may involve compromise, including a plea to a lesser offence. The Paralegal will provide advice, but the final decision whether to accept or reject a resolution remains with the Client unless the Client has given express written settlement authority.</p>
+  </div>
+  <div data-keep-together>
+    <h2>17. No Guaranteed Outcome</h2>
+    <p>The Client acknowledges that no result has been promised or guaranteed. Outcomes depend on the law, the evidence, credibility findings, and the decision of the Justice of the Peace or Judge.</p>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">18. Accommodation, Interpretation &amp; Client Understanding</h2>
+    <p>The Client shall promptly advise the Paralegal of any disability-related accommodation needs affecting communication, attendance, deadlines, or participation in the proceeding so that appropriate Court accommodations can be requested. If interpretation or translation services are required, the Client remains responsible for the associated costs unless otherwise agreed in writing. The Court may provide French-language services on request under the <em>French Language Services Act</em>.</p>
+    <p><strong>The Client remains responsible for ensuring that they fully understand the proceedings and any communications from the Paralegal.</strong> If at any time the Client is uncertain about anything explained, the Client agrees to say so and request clarification.</p>
+  </div>
+  <div data-keep-together>
+    <h2>19. Communication, SMS &amp; Instruction Authority</h2>
+    <p>Primary communication is by email to <strong>{CLIENT_EMAIL}</strong>. We aim to respond to client emails within two business days. Telephone calls are returned within two business days unless we are in a hearing or attending Court. The firm&rsquo;s general office line is <strong>226-272-5153</strong> and the firm&rsquo;s general email is <strong>contact@legalassist.london</strong>.</p>
+    <p><strong>SMS consent.</strong> The Client consents to communication by text message for scheduling and administrative purposes (appointment reminders, court-date confirmations, document requests). The Client may withdraw consent at any time by written notice.</p>
+    <p><strong>Instruction authority.</strong> The Paralegal may rely on instructions received from the Client through the email address, telephone number, or electronic signature identified in this Agreement, unless the Client has notified the Paralegal otherwise in writing.</p>
+    <p><strong>Email is not continuously monitored.</strong> Email should not be used for emergencies, urgent court-date questions, or service of documents requiring immediate attention. For urgent matters, telephone the office and follow up in writing.</p>
+  </div>
+  <div data-keep-together>
+    <h2>20. File Assignment &amp; Coverage</h2>
+    <p>The file is specifically assigned to <strong>{PARALEGAL_NAME}</strong>, LSO #{PARALEGAL_LSO}. In the event of illness, vacation, or a scheduling conflict, another licensed paralegal at Legal Assist Paralegal Services may attend on the file. The Client will be advised in writing of any extended reassignment.</p>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">21. Online &amp; Social-Media Conduct</h2>
+    <div class="callout warn">
+      <h4>Do Not Post &mdash; and Do Not Delete</h4>
+      <p>The Client agrees not to post, comment, or share anything about the charge, the underlying incident, the officer, or the proceeding on any social-media or online platform. Posts can be subpoenaed, can damage credibility, and can be cited against the Client at trial.</p>
+      <p>The Client is also instructed <strong>not to delete</strong> existing online content that may relate to the proceeding without first consulting the Paralegal. Deletion can itself amount to spoliation of evidence.</p>
+    </div>
+  </div>
+  <div data-keep-together>
+    <h2>22. No Action Without Funding</h2>
+    <p>The Paralegal is not obliged to commence, continue, or complete any step (including filing the Notice of Intention to Appear, attending court, or attending trial) unless the Client&rsquo;s account is current and any required deposit has been received in the firm&rsquo;s trust account. The Client agrees that delay caused by non-payment is at the Client&rsquo;s risk, including missing the 15-day deadline and being convicted in absentia under s. 9.1 of the <em>Provincial Offences Act</em>.</p>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">23. Withdrawal, File Abandonment &amp; Termination</h2>
+    <p>The Client may terminate this retainer at any time by written notice. The Paralegal may withdraw on reasonable notice for cause permitted by the <em>Paralegal Rules of Conduct</em>, including non-payment of accounts, loss of confidence, conflict of interest, inability to obtain instructions, the Client insisting on a dishonest or unethical course of conduct, or breach of Section 14. The Paralegal may also withdraw where continued representation would be unethical, impractical, or inconsistent with professional obligations.</p>
+    <p><strong>File abandonment.</strong> If the Client becomes unreachable for more than <strong>sixty (60) days</strong> despite reasonable efforts by the Paralegal to contact the Client, the Paralegal may close the file, subject to professional obligations and any imminent court deadlines. Fees and disbursements incurred to the date of closure remain payable.</p>
+    <p>On termination, the Client remains responsible for fees and disbursements incurred to the date of termination and for any reasonable file-transfer costs.</p>
+  </div>
+  <div data-keep-together>
+    <h2>24. Liability &amp; Limited Indemnity</h2>
+    <p>The Paralegal carries professional liability insurance as required by the Law Society of Ontario. Nothing in this Agreement limits liability where prohibited by law or by the <em>Paralegal Rules of Conduct</em>. This clause does not exclude liability for fraud, willful misconduct, professional negligence, or any liability that cannot lawfully be excluded. To the extent permitted by law, the Paralegal is not responsible for delays, court-scheduling issues, technology failures outside the Paralegal&rsquo;s control, third-party acts, or the ultimate decision of the Court.</p>
+    <p><strong>Limited indemnity.</strong> The Client agrees to indemnify and hold the Paralegal harmless from claims, losses, or expenses arising from <strong>inaccurate or misleading factual information knowingly provided by the Client</strong>, or from unauthorized actions taken by the Client without the Paralegal&rsquo;s knowledge.</p>
+  </div>
+  <div class="end-marker" data-keep-together aria-label="End of section — no further conditions">
+    <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="1" y1="1" x2="99" y2="29" stroke="#374151" stroke-width="0.3" vector-effect="non-scaling-stroke" />
+    </svg>
+    <span class="end-label">End of Section &mdash; No Further Conditions</span>
+  </div>
+  <div data-keep-together>
+    <h2 class="page-break-before">25. Electronic Communications &amp; Signatures</h2>
+    <p>The Client consents to receiving documents and communications by email. The Client acknowledges that email is not perfectly secure and that, despite reasonable precautions, communications may be intercepted, lost, or delayed. The Client agrees to advise the Paralegal of any change to the email address on file.</p>
+    <p>Electronic signatures and scanned signatures shall be deemed equivalent to original wet-ink signatures for all purposes of this Agreement and any document executed in connection with the Provincial Offences matter, in accordance with the <em>Electronic Commerce Act, 2000</em> (Ontario). Electronic copies of this Agreement shall be treated as effective originals.</p>
+  </div>
+  <div data-keep-together>
+    <h2>26. Technology, Artificial Intelligence &amp; Document Automation</h2>
+    <p>The Paralegal may use secure technology tools, including practice-management software, document-automation systems, transcription software, and artificial-intelligence-assisted research and drafting tools, to deliver services efficiently. <strong>Administrative drafting tools and document-automation software may be used in the preparation of non-substantive portions of documents, subject to professional review by the licensed Paralegal.</strong> No confidential information will intentionally be entered into public or non-secure artificial-intelligence systems.</p>
+    <p>The Client consents to the electronic storage of file materials using secure third-party cloud service providers, including providers whose servers may be located within or outside of Canada, in accordance with the LSO&rsquo;s <em>Practice Management Guidelines</em>.</p>
+  </div>
+  <div data-keep-together>
+    <h2>27. File Retention &amp; Destruction</h2>
+    <p>On conclusion of the matter, the Paralegal will retain the closed file for a minimum of <strong>seven (7) years</strong> in accordance with LSO best practice. After that period, the file may be destroyed without further notice unless the Client has previously requested the return of the original materials. Trust account records are retained for at least <strong>ten (10) years</strong> as required by By-Law 9.</p>
+  </div>
+  <div data-keep-together>
+    <h2>28. Privacy &amp; Governing Law</h2>
+    <p>Legal Assist Paralegal Services collects, uses, and stores personal information solely for the purpose of providing the legal services described in this Agreement and complying with the firm&rsquo;s professional obligations under PIPEDA and the <em>Paralegal Rules of Conduct</em>. The Client acknowledges receipt of, or access to, the firm&rsquo;s Privacy Policy available at <a href="https://legalassist.london">legalassist.london</a>.</p>
+    <p>This Agreement is governed by the laws of the Province of Ontario and the federal laws of Canada applicable in Ontario. The parties submit to the exclusive jurisdiction of the courts of Ontario for any dispute arising under this Agreement that is not within the jurisdiction of the Law Society Tribunal.</p>
+  </div>
+  <div class="ack-block">
+    <div data-keep-together>
+      <h2 class="page-break-before">29. Entire Agreement &amp; Acknowledgment</h2>
+      <p>This Agreement constitutes the entire agreement between the parties with respect to the Provincial Offences matter described in Section 1 and supersedes all prior discussions, representations, or agreements, whether oral or written. Any amendment must be in writing and signed by both parties.</p>
+      <p>By signing below, the Client confirms that:</p>
+      <ul>
+        <li>The Client has read this Agreement in its entirety;</li>
+        <li>The Client has had the opportunity to ask questions and to seek independent legal advice;</li>
+        <li>The Client was advised of the right to obtain independent legal advice before signing this Agreement and either obtained such advice or voluntarily chose not to do so;</li>
+        <li>The Client understands the scope of services, the fees, and the limitations described in this Agreement;</li>
+        <li>The Client retains Legal Assist Paralegal Services on the terms set out above.</li>
+      </ul>
+    </div>
+    <div class="ack-list">
+      <h4 data-keep-together>Initials Required</h4>
+      <table>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-scope">INIT</div></td>
+          <td class="txt-cell">I have read and understand the <strong>Scope of Services</strong> table in Section 4 and the <strong>Excluded Services and Collateral Consequences</strong> in Section 5.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-fees">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 6 (Fee Structure)</strong>, including what the flat fee covers (one trial date), the additional-fee triggers (adjournments, additional trials, appeals), and that fees earned after a trial has commenced are non-refundable.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-phases">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 6.1 (Two-Phase Tiered Structure)</strong>: Phase 1 covers pre-trial work and negotiations with the Crown, and the Phase 2 fee of <strong>$500.00 + HST is additional</strong> to Phase 1 and is payable only if the matter proceeds to a contested trial.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-deadline">INIT</div></td>
+          <td class="txt-cell">I have read and understand the <strong>15-day deadline</strong> to file a Notice of Intention to Appear and the risk of conviction in absentia under s. 9.1 of the <em>Provincial Offences Act</em>.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-demerits">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 8 (Demerit Points, Insurance and Outcome Disclaimer)</strong>, including the no-prediction language about insurance.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-collateral">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 5 (Collateral Consequences)</strong>, including that immigration, CVOR, employment, MTO, and insurance consequences are not within the scope of this retainer.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-plea">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 9 (Plea Authority)</strong>; paying the fine on the back of the ticket is a plea of guilty, and I will not take that step without consulting the Paralegal.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-sms">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 19</strong>; I consent to text-message communication for scheduling and administrative purposes, and I authorize the Paralegal to act on instructions sent from the email and phone number on file.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-no-guarantee">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 17 (No Guaranteed Outcome)</strong>; no prediction or promise has been made to me about the result of my matter.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-social">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 21 (Online and Social-Media Conduct)</strong> and I agree neither to post about my matter nor to delete existing posts.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-withdrawal">INIT</div></td>
+          <td class="txt-cell">I have read and understand <strong>Section 23 (Withdrawal, File Abandonment and Termination)</strong>, including the 60-day file-abandonment rule.</td></tr>
+        <tr><td class="box-cell"><div class="box" data-initial-target="ack-ila">INIT</div></td>
+          <td class="txt-cell">I confirm that I was advised of my right to <strong>independent legal advice</strong> before signing and either obtained it or chose not to.</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="signature-row">
+    <div class="sig-card">
+      <div class="lab">Client Signature</div>
+      <div class="sig-area"></div>
+      <div class="line"></div>
+      <div class="name">{CLIENT_NAME}</div>
+      <div class="meta">{CLIENT_EMAIL}</div>
+      <div class="date">Date: ____________________</div>
+      <div class="esign-stamp">
+        <strong>Signed electronically</strong> via the firm&rsquo;s secure sign portal. The signature IP address, date, and time are recorded by the system on submission and form part of the file record.
+      </div>
+    </div>
+    <div class="sig-card">
+      <div class="lab">Paralegal Signature</div>
+      <div class="cursive">{PARALEGAL_NAME}</div>
+      <div class="line"></div>
+      <div class="name">{PARALEGAL_NAME}</div>
+      <div class="meta">Licensed Paralegal &mdash; Law Society of Ontario &middot; Licence No. {PARALEGAL_LSO}</div>
+      <div class="date">Date: {DATE}</div>
+      <div class="esign-stamp">
+        <strong>Signed electronically</strong> by the Paralegal of record. Signature applied via secure document-automation system; IP and timestamp recorded with the file.
+      </div>
+    </div>
+  </div>
+  <div class="doc-footer">
+    <div class="left">
+      Legal Assist Paralegal Services &middot; 226-272-5153 &middot; contact@legalassist.london<br>
+      <a href="https://legalassist.london">legalassist.london</a> &middot; Traffic Ticket Retainer Agreement
+      <div class="version">Document Version: Traffic Retainer v3.8 &middot; Last updated {DATE}</div>
+    </div>
+    <div class="right">
+      VERIFY OUR LICENSEE STATUS<br>
+      <a href="https://lso.ca/directory">LSO.ca/directory</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

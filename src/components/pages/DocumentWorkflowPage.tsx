@@ -1202,7 +1202,13 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{MATTER_TYPE\}/g, matterTypeValue || 'Legal Matter');
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS\}/g, addressValue || '—');
       documentContent = documentContent.replace(/\{CLIENT_UNIT\}/g, unitValue || '—');
-      documentContent = documentContent.replace(/\{FLAT_FEE_AMOUNT\}/g, flatFeeAmount || '—');
+      // Use the same fallback as {FLAT_FEE} above: if the user selected
+      // the Flat Fee model and left the dedicated Flat Fee field blank,
+      // fall back to retainerAmount so the §6 fee-row reflects the same
+      // number the Phase 1 card shows. Without this fallback the Traffic
+      // and LTB templates render "$— + HST" even when the Retainer
+      // Amount field is filled in.
+      documentContent = documentContent.replace(/\{FLAT_FEE_AMOUNT\}/g, flatFeeEffective);
       documentContent = documentContent.replace(/\{RETAINER_DEPOSIT\}/g, retainerAmount || '—');
       // Compact YYYYMMDD date used in the HRTO cover-page document ID
       // ("HRTO-RET-20260512"). Templates without this placeholder are
