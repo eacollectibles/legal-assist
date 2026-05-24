@@ -1202,13 +1202,22 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{MATTER_TYPE\}/g, matterTypeValue || 'Legal Matter');
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS\}/g, addressValue || '—');
       documentContent = documentContent.replace(/\{CLIENT_UNIT\}/g, unitValue || '—');
-      // Use the same fallback as {FLAT_FEE} above: if the user selected
-      // the Flat Fee model and left the dedicated Flat Fee field blank,
-      // fall back to retainerAmount so the §6 fee-row reflects the same
-      // number the Phase 1 card shows. Without this fallback the Traffic
-      // and LTB templates render "$— + HST" even when the Retainer
-      // Amount field is filled in.
-      documentContent = documentContent.replace(/\{FLAT_FEE_AMOUNT\}/g, flatFeeEffective);
+      // Use the same fallback as {FLAT_FEE} earlier in the file: if the
+      // user selected the Flat Fee model and left the dedicated Flat Fee
+      // field blank, fall back to retainerAmount so the §6 fee-row
+      // reflects the same number the Phase 1 card shows. Without this
+      // fallback the Traffic and LTB templates render "$— + HST" even
+      // when the Retainer Amount field is filled in.
+      //
+      // NOTE: flatFeeEffective is declared inside handleGenerateDocument
+      // (line ~953) which closes around line 1088 — so it is NOT in
+      // scope here. We recompute the same expression locally using the
+      // component-level state variables (selectedFeeModel, flatFeeAmount,
+      // retainerAmount) which ARE in scope everywhere in this file.
+      const _isFlatHere = selectedFeeModel === 'Flat Fee';
+      const _flatFeeEffectiveHere =
+        flatFeeAmount || (_isFlatHere ? retainerAmount : '') || '—';
+      documentContent = documentContent.replace(/\{FLAT_FEE_AMOUNT\}/g, _flatFeeEffectiveHere);
       documentContent = documentContent.replace(/\{RETAINER_DEPOSIT\}/g, retainerAmount || '—');
       // Compact YYYYMMDD date used in the HRTO cover-page document ID
       // ("HRTO-RET-20260512"). Templates without this placeholder are

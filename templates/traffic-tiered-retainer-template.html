@@ -46,7 +46,6 @@
     .callout, .fee-row, .signature-row, .ack-list, .meta-grid,
     .summary-card, .why-card, .lso-id, .lim-warning, .pre-sign, .cover-toc,
     .ack-block, .nature-box, .note-box, .scope-table, .title-block, .cover-meta, .end-marker,
-    .phase-card,
     [data-keep-together], .ack-list tr, .ack-list table tr {
       page-break-inside: avoid; break-inside: avoid;
     }
@@ -180,73 +179,10 @@
     .scope-table .excluded h4 { color: var(--danger); }
     .scope-table ul { margin: 0; padding-left: 18px; font-size: 12px; }
     .scope-table li { margin: 4px 0; color: var(--ink-2); }
-    /* Phase 1 / Phase 2 tiered structure -------------------------
-       Stacked (not 2-column) so html2canvas + jsPDF render
-       reliably and the block never gets squeezed into a half-
-       width column. Each card is its own keep-together block. */
-    .phase-card {
-      margin: 14px 0;
-      padding: 18px 22px;
-      border-radius: 8px;
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-    .phase-card.phase-1 {
-      background: var(--bg-warm);
-      border: 1px solid var(--gold);
-      border-left: 5px solid var(--gold);
-    }
-    .phase-card.phase-2 {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-left: 5px solid var(--navy);
-    }
-    .phase-card .phase-tag {
-      display: inline-block;
-      font-family: Inter, Arial, sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin: 0 0 6px;
-    }
-    .phase-card.phase-1 .phase-tag { color: var(--gold); }
-    .phase-card.phase-2 .phase-tag { color: var(--navy); }
-    .phase-card h4 {
-      margin: 0 0 8px;
-      font-family: Inter, Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.25;
-      color: var(--navy);
-    }
-    .phase-card .amount {
-      margin: 0 0 10px;
-      font-family: Inter, Arial, sans-serif;
-      font-size: 19px;
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--navy);
-    }
-    .phase-card .desc {
-      margin: 0 0 10px;
-      font-family: Inter, Arial, sans-serif;
-      font-size: 12.5px;
-      font-weight: 500;
-      line-height: 1.55;
-      color: var(--ink-2);
-    }
-    .phase-card ul {
-      margin: 0 0 0 4px;
-      padding-left: 18px;
-      font-family: Inter, Arial, sans-serif;
-      font-size: 12.5px;
-      font-weight: 500;
-      line-height: 1.55;
-      color: var(--ink-2);
-    }
-    .phase-card ul li { margin: 4px 0; }
+    /* Phase 1 / Phase 2 tiered structure
+       Uses inline styles in the markup (mirrors the LTB template
+       which is proven to render cleanly). Kept as a comment marker
+       so future edits can find this section. */
     .ack-list { margin: 14px 0 18px; padding: 14px 18px; border: 1px solid var(--line);
       border-radius: 8px; background: var(--bg-soft); }
     .ack-list h4 { margin: 0 0 10px; font: 700 12px/1.2 Inter, sans-serif; color: var(--navy); }
@@ -388,7 +324,7 @@
       <div class="right">
         <small>Document</small>
         POA&#8209;RET&#8209;{DATE_SHORT}
-        <div class="version">Version: Traffic Retainer v3.8 &middot; Last updated {DATE}</div>
+        <div class="version">Version: Traffic Retainer v3.9 &middot; Last updated {DATE}</div>
       </div>
     </div>
   </section>
@@ -532,50 +468,25 @@
 
   <!-- ============================================================
        6.1 Two-Phase Tiered Structure — Phase 1 / Phase 2
-       Stacked layout (Phase 1 above Phase 2) for reliable PDF
-       rendering. Phase 1 pulls from {RETAINER_DEPOSIT}.
+       Compact LTB-style layout. Phase 1 pulls from {RETAINER_DEPOSIT}.
        Phase 2 is hardcoded at $500.00 + HST.
        ============================================================ -->
-  <div data-keep-together>
-    <h3 class="page-break-before" style="margin-top:0;">6.1 Two-Phase Tiered Structure</h3>
-    <p>The fees for this Provincial Offences matter are structured in <strong>two phases</strong>. The Paralegal first works to resolve the charge before trial (Phase 1). The Phase 2 fee is payable <strong>only if</strong> the matter does not resolve in Phase 1 and proceeds to a contested trial in the Ontario Court of Justice.</p>
+  <h3 style="margin-top:22px;">6.1 Two&#8209;Phase Tiered Structure</h3>
+  <p>The fee for this retainer is split into two phases. <strong>Phase 1 begins on signing.</strong> <strong>Phase 2 auto&#8209;triggers</strong> only if the matter cannot be resolved before trial and proceeds to a contested trial in the Ontario Court of Justice (Provincial Offences).</p>
+
+  <div style="border:1px solid var(--gold);background:var(--bg-warm);border-radius:8px;padding:14px 18px;margin:10px 0;page-break-inside:avoid;break-inside:avoid;" data-keep-together>
+    <div style="font:700 11px/1.2 Inter, sans-serif; color:var(--gold); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Phase 1 &mdash; Pre&#8209;Trial Resolution</div>
+    <div style="font:700 17px/1.2 Inter, sans-serif; color:var(--navy); margin-bottom:8px;">${RETAINER_DEPOSIT} + HST</div>
+    <div style="font:500 12.5px/1.5 Inter, sans-serif; color:var(--ink-2);">Includes: review of the Offence Notice and prosecution disclosure, file preparation and analysis of the Crown&rsquo;s evidence, filing the Notice of Intention to Appear within the 15&#8209;day window, disclosure request and review, negotiations with the Crown prosecutor&rsquo;s office to seek withdrawal, amendment, or reduction of the charge, the Early Resolution Meeting or prosecutor pre&#8209;trial, and routine client communication. <strong>Does not include</strong> trial preparation, attendance at trial, cross&#8209;examination of Crown witnesses, or any contested merits hearing.</div>
   </div>
 
-  <div class="phase-card phase-1" data-keep-together>
-    <span class="phase-tag">Phase 1</span>
-    <h4>Pre-Trial Resolution</h4>
-    <p class="amount">${RETAINER_DEPOSIT} + HST</p>
-    <p class="desc">Covers all work to attempt resolution <strong>before trial</strong> &mdash; document review, file preparation, and negotiations with the Crown prosecutor&rsquo;s office to seek withdrawal, amendment, or reduction of the charge:</p>
-    <ul>
-      <li>Review of the Offence Notice and prosecution disclosure</li>
-      <li>File preparation and analysis of the Crown&rsquo;s evidence</li>
-      <li>Filing the Notice of Intention to Appear within the 15-day window</li>
-      <li>Disclosure request and review</li>
-      <li>Negotiations with the Crown prosecutor&rsquo;s office to attempt reduction, amendment, or withdrawal of the charge</li>
-      <li>Early Resolution Meeting or prosecutor pre-trial</li>
-      <li>Routine client communication and strategy advice throughout Phase 1</li>
-    </ul>
+  <div style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:14px 18px;margin:10px 0;page-break-inside:avoid;break-inside:avoid;" data-keep-together>
+    <div style="font:700 11px/1.2 Inter, sans-serif; color:var(--navy); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Phase 2 &mdash; Trial Representation</div>
+    <div style="font:700 17px/1.2 Inter, sans-serif; color:var(--navy); margin-bottom:8px;">$500.00 + HST</div>
+    <div style="font:500 12.5px/1.5 Inter, sans-serif; color:var(--ink-2);"><strong>Auto&#8209;triggers</strong> if the matter does not resolve in Phase 1 and proceeds to a contested trial. Covers trial preparation and witness preparation, one (1) trial date in the Ontario Court of Justice (Provincial Offences), cross&#8209;examination of the issuing officer and Crown witnesses, submissions and argument on conviction and, if necessary, sentence, and post&#8209;disposition client briefing. Additional trial dates, appeals, reopening motions, and extraordinary attendances are not included and are billed separately under Section 6.</div>
   </div>
 
-  <div class="phase-card phase-2" data-keep-together>
-    <span class="phase-tag">Phase 2</span>
-    <h4>Trial Representation</h4>
-    <p class="amount">$500.00 + HST</p>
-    <p class="desc">Payable <strong>only if</strong> Phase 1 does not resolve the matter and the file proceeds to a contested trial. Covers everything associated with trial representation:</p>
-    <ul>
-      <li>Trial preparation and witness preparation</li>
-      <li>One (1) trial date in the Ontario Court of Justice (Provincial Offences)</li>
-      <li>Cross-examination of the issuing officer and Crown witnesses</li>
-      <li>Submissions and argument on conviction and, if necessary, sentence</li>
-      <li>Post-disposition client briefing and explanation of the outcome</li>
-    </ul>
-  </div>
-
-  <div class="callout warn" data-keep-together>
-    <h4>Phase 2 Is Additional to Phase 1</h4>
-    <p>The Phase 2 fee of <strong>$500.00 + HST</strong> is <strong>in addition to</strong> the Phase 1 fee already paid; it is not a replacement, credit, or roll-over of Phase 1. If the charge is resolved in Phase 1 (withdrawal, amendment to a non-record offence, agreed plea, or other pre-trial disposition), the Phase 2 fee is <strong>not</strong> charged.</p>
-    <p>Additional trial dates beyond the first, appeals, reopening motions, and extraordinary attendances are <strong>not</strong> included in the Phase 2 fee and are billed separately under Section 6 above.</p>
-  </div>
+  <div class="callout warn" data-keep-together><h4>Phase 2 Is Additional to Phase 1</h4><p>The Phase 2 fee of <strong>$500.00 + HST</strong> is in addition to the Phase 1 fee already paid; Phase 1 fees are not credited against Phase 2. If the charge is resolved in Phase 1 (withdrawal, amendment, agreed plea, or other pre&#8209;trial disposition), the Phase 2 fee is not charged.</p></div>
 
   <p style="margin-top:12px;"><strong>What the flat fee covers.</strong> Where the Flat Fee model is selected, the fee covers all work up to and including <strong>one trial date</strong> unless otherwise stated in writing in this Agreement.</p>
   <p><strong>Additional fees apply</strong> for: additional trial dates, adjournments caused by the Client (including non-attendance, late provision of information, scheduling conflicts, or changes of instruction), appeals, reopening motions beyond the initial Form 102 application, or extraordinary attendances. The Paralegal will provide written notice of any additional fee before incurring it where reasonably possible.</p>
@@ -796,7 +707,7 @@
     <div class="left">
       Legal Assist Paralegal Services &middot; 226-272-5153 &middot; contact@legalassist.london<br>
       <a href="https://legalassist.london">legalassist.london</a> &middot; Traffic Ticket Retainer Agreement
-      <div class="version">Document Version: Traffic Retainer v3.8 &middot; Last updated {DATE}</div>
+      <div class="version">Document Version: Traffic Retainer v3.9 &middot; Last updated {DATE}</div>
     </div>
     <div class="right">
       VERIFY OUR LICENSEE STATUS<br>
