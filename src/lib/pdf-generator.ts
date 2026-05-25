@@ -396,6 +396,35 @@ export async function embedSignatureInPDF(
         `overflow:hidden;">${sigImgHtml}</div>`;
       let withCardImg = originalContent.replace(matchedPattern, replacement);
 
+      // 1b. Replace the client-sign-date placeholder with today's
+      //     date. Template uses <div class="date client-sign-date">Date: To be
+      //     recorded on signing</div>. We rewrite it to "Date: <signed date>"
+      //     using the same `signedDate` computed at line 167 (above).
+      //     Display format: a friendly long form like "May 25, 2026".
+      const signedDateDisplay = new Date(signedDate).toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      const clientDatePatterns: RegExp[] = [
+        // Most specific: class list contains client-sign-date
+        /<div[^>]*\bclass\s*=\s*["'][^"']*\bclient-sign-date\b[^"']*["'][^>]*>[^<]*<\/div>/i,
+      ];
+      for (const pat of clientDatePatterns) {
+        if (pat.test(withCardImg)) {
+          withCardImg = withCardImg.replace(
+            pat,
+            `<div class="date client-sign-date">Date: ${signedDateDisplay}</div>`
+          );
+          // eslint-disable-next-line no-console
+          console.log(
+            '[pdf-generator] Stamped client signing date into .client-sign-date: ' +
+              signedDateDisplay
+          );
+          break;
+        }
+      }
+
       // 2. Insert the audit-trail block immediately BEFORE the
       //    .doc-footer so it lands below the signature row on the
       //    same page.
@@ -994,8 +1023,16 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
         const bottom = (r.bottom - hostRect.top) * 2;
         if (bottom > 0 && top < canvas.height) {
           sectionTops.push(top);
-          // Widen by 8 px on each side (16 canvas px at scale: 2).
-          dangerZones.push([top - 16, bottom + 16]);
+          // Widened from 16 → 60 canvas px (~30 px CSS). This is the
+          // "no cut" buffer around every heading. The 16px buffer was
+          // too narrow — when a heading had any meaningful margin-top
+          // (28px for h2) the cut could land between the previous
+          // paragraph and the heading, orphaning the heading. 60px
+          // covers the heading + first ~2 lines of content, so the
+          // algorithm always pushes the heading + first paragraph
+          // together to the next page rather than orphaning the
+          // heading on the previous page.
+          dangerZones.push([top - 60, bottom + 60]);
         }
       });
     // Sort danger zones by top edge for fast lookup.
@@ -1027,7 +1064,12 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
 
     host
       .querySelectorAll(
-        'p, table, hr, ul, ol, .signature-block, [data-keep-together]'
+        // Added `li` so the cut algorithm can land between bullet
+        // items, not only at the end of the whole <ul>/<ol>. Without
+        // this, a list that overflows the page would split MID-BULLET
+        // because the algorithm only saw the list's bottom as a cut
+        // candidate — and that was past the page boundary.
+        'p, table, hr, ul, ol, li, .signature-block, [data-keep-together]'
       )
       .forEach((el) => {
         const r = (el as HTMLElement).getBoundingClientRect();
@@ -1036,6 +1078,22 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
           blockBottoms.push(yInCanvas);
         }
       });
+
+    // Atomic blocks: end-markers and any element marked
+    // `data-atomic="true"` cannot be cut through. Add their full
+    // [top, bottom] range to dangerZones so any cut landing inside
+    // gets pulled to the top (pushing the element to the next page).
+    host
+      .querySelectorAll('.end-marker, [data-atomic="true"]')
+      .forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const top = (r.top - hostRect.top) * 2;
+        const bottom = (r.bottom - hostRect.top) * 2;
+        if (bottom > 0 && top < canvas.height) {
+          dangerZones.push([top - 8, bottom + 8]);
+        }
+      });
+    dangerZones.sort((a, b) => a[0] - b[0]);
 
     sectionTops.sort((a, b) => a - b);
     blockBottoms.sort((a, b) => a - b);
@@ -1056,12 +1114,17 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       const minCut = currentY + canvasPerPage * MIN_FILL;
 
       // Preference 0 (highest): forced page-break-before element
-      // within [currentY+100, target+15% page]. These OVERRIDE
+      // within (currentY+100, target+50% page]. These OVERRIDE
       // MIN_FILL so a section marked .page-break-before always
       // starts on a new page regardless of how short the previous
-      // page becomes.
+      // page becomes. Window widened from 15% → 50% — the narrow
+      // window meant that when a long-paragraph section (e.g. §6
+      // tail with Refunds/Contingency text) pushed the next forced
+      // break past +15%, the algorithm silently dropped the forced
+      // break and fell through to a mid-content cut. 50% lets the
+      // algorithm look further ahead and honor the forced break.
       let cutAt = forcedBreaks
-        .find((p) => p > currentY + 100 && p <= target + canvasPerPage * 0.15) ?? -1;
+        .find((p) => p > currentY + 100 && p <= target + canvasPerPage * 0.50) ?? -1;
 
       // Preference 1: section top within [minCut, target] — page
       // ends right before a heading on the next page.
@@ -1079,30 +1142,35 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
           .find((p) => p > minCut && p <= target) ?? -1;
       }
 
-      // Last resort: NEVER cut mid-content. Pick whichever block
-      // bottom is closer to target — the last one before target
-      // (gives a short page but clean boundary) or the first one
-      // after target (slight overflow but still clean). Only fall
-      // through to cutting at target if there are no block bottoms
-      // at all on this page (effectively never).
+      // Last resort: NEVER cut mid-content. STRONGLY prefer the last
+      // block bottom BEFORE target over any block bottom AFTER target.
+      // The old "pick whichever is closer" rule could pick an overflow
+      // point that cut a wrapping paragraph in half — even a 50-px
+      // overflow can split a paragraph across a page boundary because
+      // html2canvas renders the paragraph as a flat bitmap and the
+      // block-bottom array only marks where the paragraph ENDS, not
+      // where its individual line boxes are.
+      //
+      // New rule: always use beforeTarget if it exists. This may
+      // produce slightly shorter pages but guarantees clean paragraph
+      // boundaries. Only fall back to afterTarget (or to target as a
+      // last resort) when beforeTarget is undefined (e.g. the canvas
+      // starts with a paragraph that's taller than one page).
       if (cutAt < 0) {
         const beforeTarget = [...blockBottoms]
           .filter((p) => p > currentY + 100 && p <= target)
           .pop();
         const afterTarget = blockBottoms.find((p) => p > target);
 
-        if (beforeTarget !== undefined && afterTarget !== undefined) {
-          cutAt =
-            target - beforeTarget <= afterTarget - target
-              ? beforeTarget
-              : afterTarget;
+        if (beforeTarget !== undefined) {
+          // Always prefer ending the page at a clean paragraph break.
+          cutAt = beforeTarget;
+        } else if (afterTarget !== undefined && afterTarget <= target + canvasPerPage * 0.20) {
+          // No clean break BEFORE target — overflow slightly to find one.
+          cutAt = afterTarget;
         } else {
-          cutAt = beforeTarget ?? afterTarget ?? target;
-        }
-
-        // Hard cap overflow at 20% of a page.
-        if (cutAt > target + canvasPerPage * 0.20) {
-          cutAt = beforeTarget ?? target;
+          // Genuinely no clean cut available — cut at target. Rare.
+          cutAt = target;
         }
       }
 
@@ -1123,7 +1191,8 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     breaks.push(canvas.height);
 
     // Render each segment to its own page.
-    for (let i = 0; i < breaks.length - 1; i++) {
+    const totalPages = breaks.length - 1;
+    for (let i = 0; i < totalPages; i++) {
       if (i > 0) pdf.addPage();
       const segH = breaks[i + 1] - breaks[i];
       if (segH <= 0) continue;
@@ -1159,6 +1228,25 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
           'FAST'
         );
       }
+
+      // -----------------------------------------------------------------
+      // PAGE NUMBER — drawn programmatically at the bottom-center of every
+      // page after the canvas slice has been added. Format: "Page X of Y".
+      // This runs on EVERY retainer that uses pdf-generator (Traffic, LTB,
+      // Small Claims, HRTO, Warranty, A&D, etc.) — page numbers become a
+      // global feature.
+      // -----------------------------------------------------------------
+      const pageNum = i + 1;
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      pdf.setTextColor(107, 114, 128); // var(--mute) #6b7280
+      pdf.text(
+        `Page ${pageNum} of ${totalPages}`,
+        pageWidth / 2,
+        pageHeight - 6,
+        { align: 'center' }
+      );
+      pdf.setTextColor(0, 0, 0); // reset for any subsequent draws
     }
 
     return pdf.output('datauristring') as string;

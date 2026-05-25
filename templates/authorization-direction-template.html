@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Authorization &amp; Direction — Legal Assist Paralegal Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Allura&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f2a4a; --gold: #b08a3e;
+      --ink: #1f2937; --ink-2: #374151; --mute: #6b7280;
+      --bg: #ffffff; --bg-soft: #f7f9fc; --bg-warm: #fdfaf3;
+      --line: #e2e8f0; --line-2: #cbd5e1;
+      --danger: #b91c1c; --danger-soft: #fef2f2;
+      --ok: #166534; --ok-soft: #f0fdf4;
+    }
+    * { box-sizing: border-box; }
+    p, li, h1, h2, h3, h4 {
+      hyphens: none; -webkit-hyphens: none; -moz-hyphens: none; -ms-hyphens: none;
+      word-break: normal; overflow-wrap: break-word;
+    }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font: 400 13.5px/1.55 Inter, Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased; text-align: left;
+    }
+    .doc, p, li, h1, h2, h3, h4 { text-align: left !important; }
+    .doc { max-width: 760px; margin: 0 auto; padding: 32px 40px 48px; }
+    h1, h2, h3 { font-family: Inter, Arial, sans-serif; color: var(--navy); line-height: 1.25; margin: 0 0 8px; }
+    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+    h2 { font-size: 17px; font-weight: 700; margin-top: 24px; padding-bottom: 6px; border-bottom: 2px solid var(--gold); }
+    h2, h3 { page-break-after: avoid; break-after: avoid; }
+    p { margin: 0 0 10px; }
+    ul { margin: 8px 0 12px 22px; padding: 0; }
+    li { margin: 0 0 4px; }
+    strong { color: var(--ink); }
+    a { color: var(--navy); text-decoration: underline; }
+    /* Keep visual blocks together — but NOTE: .ack-list intentionally
+       NOT in this list. The initials table is too tall to fit on most
+       partial pages, so forcing it together caused the table to be
+       pushed wholesale to the next page, leaving big white space and
+       sometimes splitting awkwardly. Letting it break between rows
+       (via the .ack-list tr keep-together rule below) gives clean
+       row-aligned breaks. */
+    .callout, .meta-grid, .lim-note, .sig-mount, .title-block,
+    .records-grid, .records-grid .cat, .recipients-grid,
+    .lso-id {
+      page-break-inside: avoid; break-inside: avoid;
+    }
+    /* Header — matches retainer brand bar */
+    .brand { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 14px; border-bottom: 3px solid var(--gold); }
+    .brand .mark { width: 44px; height: 44px; border-radius: 8px; background: var(--navy); color: var(--gold);
+      display: inline-flex; align-items: center; justify-content: center;
+      font: 700 18px/1 Inter, sans-serif; flex: 0 0 44px; }
+    .brand .firm { font: 700 18px/1.2 Inter, sans-serif; color: var(--navy); flex: 1 1 auto; }
+    .brand .firm small {
+      display: block;
+      font: 600 10.5px/1.3 Inter, sans-serif;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+    .brand .firm .firm-sub {
+      display: block;
+      font: 400 11px/1.3 Inter, sans-serif;
+      color: var(--mute);
+      letter-spacing: 0;
+      margin-top: 2px;
+      max-width: 360px;
+    }
+    .brand .contact { flex: 0 0 auto; text-align: right; font: 500 11px/1.55 Inter, sans-serif; color: var(--ink-2); }
+    .brand .contact a { color: var(--navy); text-decoration: none; font-weight: 600; display: block; }
+    /* Title */
+    .title-block { margin-top: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+    .title-block h1 { font-size: 30px; line-height: 1.1; margin: 0; }
+    .title-block .subtitle { margin: 8px 0 0; font: 500 14px/1.4 Inter, sans-serif; color: var(--ink-2); }
+    /* Client meta grid */
+    .meta-grid { margin: 20px 0 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px;
+      padding: 18px 22px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; }
+    .meta-grid .row { display: flex; flex-direction: column; gap: 3px; }
+    .meta-grid .lab { font: 700 9.5px/1 Inter, sans-serif; color: var(--mute); letter-spacing: 0.06em; }
+    .meta-grid .val { font: 600 13.5px/1.4 Inter, sans-serif; color: var(--ink); }
+    [data-empty="true"] { display: none !important; }
+    /* LSO Identity card — with QR code to LSO directory */
+    .lso-id {
+      margin: 14px 0 0; padding: 14px 18px;
+      background: #fff; border: 1.5px solid var(--gold); border-radius: 8px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .lso-id .lso-text { flex: 1; }
+    .lso-id .lso-lab {
+      font: 700 11px/1.2 Inter, sans-serif; color: var(--gold);
+      letter-spacing: 0.04em; margin-bottom: 6px;
+    }
+    .lso-id .lso-name { font: 700 16px/1.2 Inter, sans-serif; color: var(--navy); margin-bottom: 2px; }
+    .lso-id .lso-role { font: 500 12.5px/1.4 Inter, sans-serif; color: var(--ink-2); }
+    .lso-id .lso-lic { font: 600 12.5px/1.4 Inter, sans-serif; color: var(--ink); margin-top: 2px; }
+    .lso-id .qr-block { flex: 0 0 auto; text-align: center; }
+    .lso-id .qr-block img {
+      display: block; width: 88px; height: 88px;
+      border: 1px solid var(--line); border-radius: 4px; background: #fff;
+    }
+    .lso-id .qr-block .qr-cap {
+      display: block; margin-top: 4px;
+      font: 600 8.5px/1.2 Inter, sans-serif; color: var(--mute);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    /* Records / Recipients grids */
+    .records-grid {
+      margin: 10px 0 14px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--navy);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .records-grid h4 {
+      margin: 0 0 8px;
+      font: 700 12px/1.2 Inter, sans-serif;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .records-grid .cat-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+    }
+    .records-grid .cat {
+      font: 500 12px/1.45 Inter, sans-serif;
+      color: var(--ink-2);
+      padding-left: 14px;
+      position: relative;
+    }
+    .records-grid .cat::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 7px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .records-grid .cat strong { color: var(--navy); }
+    .recipients-grid {
+      margin: 10px 0 14px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      background: var(--bg-soft);
+    }
+    .recipients-grid h4 {
+      margin: 0 0 8px;
+      font: 700 12px/1.2 Inter, sans-serif;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .recipients-grid .rg-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4px 20px;
+    }
+    .recipients-grid .rg-cols span {
+      font: 500 11.5px/1.5 Inter, sans-serif;
+      color: var(--ink-2);
+    }
+    .callout { margin: 18px 0; padding: 14px 18px; background: var(--bg-warm);
+      border-left: 4px solid var(--gold); border-radius: 6px; }
+    .callout strong { color: var(--navy); display: block; font: 700 11.5px/1.2 Inter, sans-serif; margin-bottom: 4px; }
+    .callout p { margin: 0 0 6px; font-size: 12.5px; color: var(--ink-2); }
+    .callout p:last-child { margin: 0; }
+    .callout.warn { background: var(--danger-soft); border-left-color: var(--danger); }
+    .callout.warn strong { color: var(--danger); }
+    .callout.ok { background: var(--ok-soft); border-left-color: var(--ok); }
+    .callout.ok strong { color: var(--ok); }
+    /* Initials list — uses .item flex rows so .box and .txt are siblings
+       inside the same parent. REQUIRED for PublicSignPage to extract the
+       acknowledgment label via parentElement.querySelector(".txt").
+       Each .item can move to a new page but never splits internally. */
+    .ack-list {
+      margin: 14px 0 18px; padding: 14px 18px;
+      border: 1px solid var(--line); border-radius: 8px; background: var(--bg-soft);
+    }
+    .ack-list h4 {
+      margin: 0 0 10px; font: 700 12px/1.2 Inter, sans-serif;
+      color: var(--navy); letter-spacing: 0.02em;
+      page-break-after: avoid; break-after: avoid;
+    }
+    .ack-list .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--line);
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    .ack-list .item:last-child { border-bottom: 0; }
+    .ack-list .item .box {
+      flex: 0 0 58px;
+      width: 58px;
+      height: 24px;
+      border: 1.5px solid var(--ink-2);
+      border-radius: 3px;
+      text-align: center;
+      font: 600 9px/24px Inter, sans-serif;
+      color: var(--mute);
+      box-sizing: border-box;
+    }
+    .ack-list .item .box.initialled {
+      font: italic 700 14px/24px "Allura", "Lora", cursive, serif;
+      color: var(--navy);
+      border-color: var(--gold);
+      background: var(--bg-warm);
+    }
+    .ack-list .item .txt {
+      flex: 1 1 0;
+      font: 500 11.5px/1.5 Inter, sans-serif;
+      color: var(--ink-2);
+    }
+    .ack-list .item .txt strong { color: var(--navy); }
+    /* Signature mount */
+    .sig-mount {
+      margin-top: 28px; padding: 22px 24px;
+      border: 1.5px solid var(--gold); border-radius: 8px; background: #fff;
+      min-height: 200px;
+    }
+    .sig-mount .sig-mount-label {
+      font: 700 11px/1.2 Inter, sans-serif; color: var(--gold);
+      letter-spacing: 0.04em; margin-bottom: 12px;
+    }
+    .sig-mount img {
+      max-width: 280px; max-height: 80px; height: auto;
+      display: block; margin: 10px 0 6px;
+    }
+    .sig-mount div[style*="background: #ffff99"] {
+      background: var(--bg-warm) !important; border-color: var(--gold) !important;
+    }
+    .pre-sig-name { margin-top: 16px; font: 700 14px/1.3 Inter, sans-serif; color: var(--ink); }
+    .pre-sig-meta { font: 500 11.5px/1.4 Inter, sans-serif; color: var(--mute); margin-top: 2px; }
+    .esign-note { margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line);
+      font: 500 10.5px/1.4 Inter, sans-serif; color: var(--mute); }
+    .esign-note strong { color: var(--ok); font-weight: 700; }
+    /* Witness box (optional, wet-ink) */
+    .witness-box {
+      margin-top: 18px; padding: 14px 18px;
+      border: 1px dashed var(--line-2); border-radius: 6px; background: var(--bg-soft);
+    }
+    .witness-box .wb-label {
+      font: 700 11px/1.2 Inter, sans-serif; color: var(--mute);
+      letter-spacing: 0.04em; margin-bottom: 6px;
+    }
+    .witness-box .wb-line {
+      border-bottom: 1px solid var(--ink); height: 18px; margin: 14px 0 4px;
+    }
+    .witness-box .wb-row {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 14px;
+    }
+    .witness-box .wb-mini {
+      font: 500 10px/1.2 Inter, sans-serif; color: var(--mute);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .doc-footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line);
+      font: 500 10.5px/1.5 Inter, sans-serif; color: var(--mute);
+      display: flex; justify-content: space-between; gap: 14px; }
+    .doc-footer a { color: var(--mute); }
+    .doc-footer .right { text-align: right; }
+    .doc-footer .version { margin-top: 4px; font-size: 9.5px; }
+    /* Page numbers (browser print) — won't render in html2canvas PDF
+       generator, but works for native browser-print fallback. */
+    @media print {
+      @page {
+        margin: 18mm 14mm;
+        @bottom-center {
+          content: "Page " counter(page) " of " counter(pages);
+          font: 500 9px Inter, sans-serif;
+          color: #6b7280;
+        }
+      }
+    }
+    .page-break-before { page-break-before: always; break-before: page; }
+    @media (max-width: 640px) {
+      .doc { padding: 20px 18px 32px; }
+      .brand { flex-wrap: wrap; }
+      .brand .contact { flex: 1 1 100%; text-align: left; margin-top: 10px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .records-grid .cat-list { grid-template-columns: 1fr; }
+      .recipients-grid .rg-cols { grid-template-columns: 1fr; }
+      .lso-id { flex-direction: column; align-items: flex-start; }
+      .witness-box .wb-row { grid-template-columns: 1fr; }
+      .doc-footer { flex-direction: column; }
+      .doc-footer .right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <div class="brand">
+    <span class="mark">LA</span>
+    <div class="firm">
+      Legal Assist Paralegal Services
+      <small>Licensed Paralegal Services &mdash; Law Society of Ontario</small>
+      <span class="firm-sub">Operated by paralegals regulated by the Law Society of Ontario.</span>
+    </div>
+    <div class="contact">
+      <a href="tel:+12262725153">226&#8209;272&#8209;5153</a>
+      <a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a>
+      <a href="https://legalassist.london">legalassist.london</a>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <h1>Authorization &amp; Direction</h1>
+    <p class="subtitle">Comprehensive authorization for Legal Assist Paralegal Services to act, communicate, and obtain records on the Client&rsquo;s behalf in the matter described below.</p>
+  </div>
+
+  <div class="meta-grid">
+    <div class="row"><span class="lab">CLIENT NAME</span><span class="val">{CLIENT_NAME}</span></div>
+    <div class="row"><span class="lab">DATE</span><span class="val">{DATE}</span></div>
+    <div class="row"><span class="lab">EMAIL</span><span class="val">{CLIENT_EMAIL}</span></div>
+    <div class="row"><span class="lab">PHONE</span><span class="val">{CLIENT_PHONE}</span></div>
+    <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">FILE REFERENCE</span><span class="val">{FILE_REFERENCE}</span></div>
+    <div class="row" data-empty="{IS_MATTER_TYPE_EMPTY}"><span class="lab">MATTER</span><span class="val">{MATTER_TYPE}</span></div>
+    <div class="row" data-empty="{IS_CLIENT_ADDRESS_EMPTY}" style="grid-column:1 / -1;"><span class="lab">ADDRESS</span><span class="val">{CLIENT_ADDRESS}{CLIENT_UNIT_PART} &middot; {CLIENT_CITY}, {CLIENT_PROVINCE} {CLIENT_POSTAL_CODE}</span></div>
+  </div>
+
+  <div class="lso-id">
+    <div class="lso-text">
+      <div class="lso-lab">PARALEGAL OF RECORD</div>
+      <div class="lso-name">{PARALEGAL_NAME}</div>
+      <div class="lso-role">Licensed Paralegal &mdash; Law Society of Ontario</div>
+      <div class="lso-lic">Licence No. {PARALEGAL_LSO}</div>
+    </div>
+    <div class="qr-block">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAACeElEQVR4nO2dzU1DMRAGCaIA+qAU6qUU+qCDcPXF0n7anecnmDmGxHZGq8Xxz77H8/l8EYbX0wP4yygXRLkgygVRLohyQZQL8rb7w/vH53hnP99fUV+79+8+u76/8voUu3EauSDKBVEuyDbnrlRy3w4ix03lU/p7GbkgygVRLkgp565Ucs3U/LTTfppPp/pdMXJBlAuiXJA4515Jmpc781YCIxdEuSDKBblFziXWBHb5+kqMXBDlgigXJM65RP4i1iLScRLfy8gFUS6IckFKOZfYB6v01cmblXbo72XkgigXRLkg25x7t7XRCsQ+WAcjF0S5IMoFeezuoRHnW4mzBGlfV47fyAVRLohyQbY5d0f6mz29p5C2WRnnStpvZwxGLohyQZQLEs9zK3TOIUzl9FPtrxi5IMoFUS5IKefuIM4PpO1M5d9KX5V+V4xcEOWCKBck3kNL57CdvNYZwy63pjm6s/5r5IIoF0S5IGM1buj1B+KuMLHuvGLkgigXRLkgrRo3nd/v6fs7+2aVdqb+B6wYuSDKBVEuCFLjpjNPTOekRP3GytisK3YY5YIoF2Ts3AJRx5aue5v26/ncG6FcEOWCxOdzp6DrlHfaTD+7w8gFUS6IckFaZ8VS6LoHnX0wYo/OyAVRLohyQY49J2Lq7tmpOpCu5x5GuSDKBTn2nIi0/XTvLv3sSmX+61mxwygXRLkgt65ZTq8VVO5NpONcMXJBlAuiXJBb5NyV9JzW1Fm0qXvDK0YuiHJBlAty7DkRnbu5RF2xyjhTjFwQ5YIoF+TYcyKurO/VwXoLN0W5IMoFOXY+9z9g5IIoF0S5IMoFUS6IckGUC/ILOHuXBGlgdNYAAAAASUVORK5CYII=" alt="Scan to verify LSO Licence on LSO Directory" />
+      <span class="qr-cap">Verify LSO Licence</span>
+    </div>
+  </div>
+
+  <h2>1. Authorization to Act</h2>
+  <p>I, <strong>{CLIENT_NAME}</strong> (the &ldquo;<strong>Client</strong>&rdquo;), authorize <strong>Legal Assist Paralegal Services</strong>, acting through <strong>{PARALEGAL_NAME}</strong>, Licensed Paralegal (Law Society of Ontario), Licence No. {PARALEGAL_LSO} (the &ldquo;<strong>Paralegal</strong>&rdquo;), and any other licensed paralegal of the firm to whom this file is assigned or transferred, to act on my behalf within the scope of practice permitted to Class P1 paralegals under By-Law 4 of the Law Society of Ontario, and subject to any written retainer agreement I have executed with the firm.</p>
+  <p>This Authorization is intended to provide <strong>comprehensive authority</strong> so the Paralegal can efficiently advance my matter without requiring a separate authorization for each individual record holder, ministry, agency, party, or transaction.</p>
+
+  <h2>2. Specific Authority Granted</h2>
+  <p>Without limiting the generality of Section 1, the Paralegal is specifically authorized to:</p>
+  <ul>
+    <li>Communicate &mdash; by telephone, email, secure portal, facsimile, post, courier, in person, or any other reasonable means &mdash; with opposing parties, opposing counsel or paralegal, witnesses, courts, tribunals, government ministries and agencies, insurers, employers, landlords, property managers, lenders, financial institutions, healthcare providers, educational institutions, and any other organization or individual relevant to my matter;</li>
+    <li>Request, receive, review, copy, and store records, documents, files, exhibits, photographs, audio and video recordings, electronic data, and any other materials relevant to my matter;</li>
+    <li>Provide records and information about me to opposing parties, the Court, and any tribunal where reasonably necessary for the conduct of my matter, including for the purposes of disclosure, discovery, settlement, mediation, or hearing;</li>
+    <li>Prepare and, <strong>where authorized by applicable rules or expressly instructed by the Client</strong>, sign and file procedural or administrative documents (including applications, notices, motions, responses, claims, defences, affidavits, statements, and written submissions) on the Client&rsquo;s behalf within paralegal scope;</li>
+    <li>Appear, advocate, and make submissions on my behalf before any court, tribunal, administrative body, prosecutor, mediator, or arbitrator where paralegal representation is authorized by law and within Class P1 scope;</li>
+    <li>Accept service of documents on my behalf, including notices of hearing, applications, orders, and disclosure packages;</li>
+    <li>Request adjournments, extensions of time, consent orders, and procedural directions where reasonably required;</li>
+    <li>Negotiate, conclude, and execute settlement agreements, Mediated Settlement Agreements, consent orders, minutes of settlement, and releases <strong>only upon the Client&rsquo;s express instructions</strong>;</li>
+    <li>Pay reasonable disbursements on my behalf (court filing fees, transcripts, witness expenses, copying, courier, etc.) and seek reimbursement from me in accordance with any retainer agreement;</li>
+    <li>Take any other step reasonably required to advance, defend, or conclude my matter <strong>consistent with applicable law, tribunal rules, and paralegal scope</strong>.</li>
+  </ul>
+
+  <h2>3. Direction to Third Parties</h2>
+  <p>I hereby <strong>direct</strong> every court, tribunal, administrative body, government ministry, agency, board, commission, police service, prosecutor, insurer, employer, landlord, property manager, lender, financial institution, healthcare provider, educational institution, medical practitioner, custodian of records, and any other person or organization holding records or information relating to me or to my matter:</p>
+  <ul>
+    <li>To <strong>release</strong> to <strong>Legal Assist Paralegal Services</strong> any records, documents, files, electronic data, audio or video recordings, photographs, or other information relating to my matter, upon written, electronic, or in-person request from the firm;</li>
+    <li>To <strong>communicate</strong> with the firm directly, by any reasonable means, and to provide responses to the firm&rsquo;s inquiries with the same effect as if directed to me personally;</li>
+    <li>To <strong>accept</strong> the firm&rsquo;s written, electronic, or in-person requests, instructions, and notices as fully authorized by me;</li>
+    <li>To <strong>permit</strong> the firm to inspect, photograph, scan, or copy original documents where the custodian retains the originals.</li>
+  </ul>
+  <p>A copy of this Authorization &amp; Direction (including an electronic, scanned, photographed, or facsimile copy) shall be sufficient written proof of my authorization and <strong>may be relied upon by</strong> any third party in the same manner as the original. No further authorization from me is required.</p>
+
+  <h2>4. Categories of Records &amp; Information Authorized</h2>
+  <p>Without limiting Sections 2 and 3, this Authorization extends to the following categories of records and information, to the extent they are relevant to my matter:</p>
+  <div class="records-grid">
+    <h4>Records I authorize the Paralegal to obtain on my behalf</h4>
+    <div class="cat-list">
+      <div class="cat"><strong>Court &amp; tribunal records</strong> &mdash; pleadings, motions, orders, transcripts, exhibits, dockets</div>
+      <div class="cat"><strong>Police &amp; Crown disclosure</strong> &mdash; officer notes, witness statements, video, audio, photos, scene diagrams</div>
+      <div class="cat"><strong>Driving / MTO records</strong> &mdash; abstracts, certified driver&rsquo;s record, accident reports, suspension records</div>
+      <div class="cat"><strong>Insurance records</strong> &mdash; policies, claim files, adjuster notes, denial letters, OCF/SABS forms</div>
+      <div class="cat"><strong>Employment records</strong> &mdash; personnel files, pay stubs, ROEs, T4s, contracts, performance reviews, termination letters</div>
+      <div class="cat"><strong>Medical &amp; health records</strong> &mdash; clinical notes, hospital records, imaging, prescription histories, OHIP summaries</div>
+      <div class="cat"><strong>Tenancy records</strong> &mdash; leases, ledgers, rent receipts, notices (N1&ndash;N13, L1&ndash;L9), inspection reports</div>
+      <div class="cat"><strong>Banking &amp; financial</strong> &mdash; statements, transaction histories, e&#8209;transfer logs, mortgage records</div>
+      <div class="cat"><strong>Government &amp; benefits</strong> &mdash; ESDC/EI, CPP/CPP&#8209;D, OW, ODSP, WSIB, CRA tax records, ServiceOntario data</div>
+      <div class="cat"><strong>Educational records</strong> &mdash; transcripts, accommodation plans, disciplinary files, where relevant</div>
+      <div class="cat"><strong>Municipal records</strong> &mdash; by-law orders, property standards, building permits, parking records</div>
+      <div class="cat"><strong>Vital &amp; ID records</strong> &mdash; certificates, government IDs, status documents (as relevant)</div>
+    </div>
+  </div>
+
+  <h2 class="page-break-before">5. Named Categories of Recipients</h2>
+  <p>This Authorization &amp; Direction may be served upon, and <strong>may be relied upon by</strong>, the following categories of record holders and parties (illustrative and non-exhaustive):</p>
+  <div class="recipients-grid">
+    <h4>Organizations &amp; individuals authorized to release records</h4>
+    <div class="rg-cols">
+      <span>&bull; Ontario Court of Justice</span>
+      <span>&bull; Superior Court of Justice</span>
+      <span>&bull; Small Claims Court</span>
+      <span>&bull; Landlord and Tenant Board (LTB)</span>
+      <span>&bull; Human Rights Tribunal of Ontario</span>
+      <span>&bull; Social Benefits Tribunal</span>
+      <span>&bull; Licence Appeal Tribunal</span>
+      <span>&bull; Provincial Offences Court</span>
+      <span>&bull; Crown Attorney&rsquo;s Office</span>
+      <span>&bull; Municipal prosecutors</span>
+      <span>&bull; All Ontario police services</span>
+      <span>&bull; Ministry of Transportation (MTO)</span>
+      <span>&bull; ServiceOntario</span>
+      <span>&bull; Ministry of Health &amp; OHIP</span>
+      <span>&bull; ESDC / Service Canada</span>
+      <span>&bull; Canada Revenue Agency (CRA)</span>
+      <span>&bull; WSIB</span>
+      <span>&bull; Ontario Works / ODSP</span>
+      <span>&bull; Auto, home, life &amp; disability insurers</span>
+      <span>&bull; Insurance adjusters and brokers</span>
+      <span>&bull; Current and former employers</span>
+      <span>&bull; Current and former landlords / property managers</span>
+      <span>&bull; Banks and credit unions</span>
+      <span>&bull; Mortgage lenders</span>
+      <span>&bull; Hospitals, clinics &amp; physicians</span>
+      <span>&bull; Therapists, counsellors &amp; specialists</span>
+      <span>&bull; Pharmacies</span>
+      <span>&bull; Schools, colleges &amp; universities</span>
+      <span>&bull; Municipal by-law &amp; building departments</span>
+      <span>&bull; Towing &amp; impound operators</span>
+    </div>
+  </div>
+
+  <h2>6. Personal Health Information (PHIPA)</h2>
+  <p>This Authorization <strong>expressly authorizes the release of personal health information</strong> where relevant to the Client&rsquo;s matter, including, <strong>where relevant and reasonably necessary to the matter</strong>, clinical notes, hospital records, imaging, prescriptions, OHIP summaries, and any other records held by a &ldquo;health information custodian&rdquo; as defined in the <em>Personal Health Information Protection Act, 2004</em> (Ontario). The Client confirms that this written consent satisfies the requirements of PHIPA, s. 18, for the disclosure of personal health information to the firm. Custodians may rely on this Authorization in the same manner as a custodian-specific consent form.</p>
+
+  <h2>7. Canada Revenue Agency &amp; Tax Records</h2>
+  <p>The Client authorizes the firm to communicate with the Canada Revenue Agency (CRA) and to receive tax records, transcripts, notices of assessment, and related information. The Client acknowledges that the CRA may require additional statutory or CRA&#8209;specific authorization forms (including <strong>RC59</strong>, <strong>AUT&#8209;01</strong>, <strong>Represent a Client</strong>, or successor forms) to release records or accept communications from a representative. The Client agrees to execute such forms promptly upon the firm&rsquo;s request.</p>
+
+  <h2>8. No Tax, Accounting, or Financial Advice</h2>
+  <p>Unless specifically retained to do so within permitted paralegal scope, <strong>the firm does not provide accounting, tax, investment, or financial-planning advice</strong>. Information obtained from the CRA, financial institutions, or other third parties under this Authorization is used solely to advance the Client&rsquo;s matter. The Client is encouraged to consult an accountant, tax professional, or financial advisor regarding any tax or financial implications of the matter, any settlement, or any award.</p>
+
+  <h2>9. Third-Party Costs Outside the Firm&rsquo;s Control</h2>
+  <p>Third-party fees and out-of-pocket costs &mdash; including court and tribunal filing fees, medical-record fees, transcription costs, courier, process-server fees, expert reports, MTO certified records, and other disbursements &mdash; <strong>may change without notice and are outside the firm&rsquo;s control</strong>. The Client agrees to pay or reimburse these costs at the rate set by the third party at the time the cost is incurred.</p>
+
+  <h2>10. Methods of Disclosure Authorized</h2>
+  <p>Records may be released to the Paralegal by any reasonable method, including: secure email to the firm&rsquo;s addresses ending in <strong>@legalassist.london</strong>, secure file-transfer or client portal, facsimile, courier, registered or ordinary mail, in-person collection by the Paralegal or firm personnel, electronic disclosure portal access (e.g., police-disclosure portals, Crown disclosure systems, court e-filing portals, insurer portals, tribunal portals), or any other secure transmission method the record holder customarily uses.</p>
+
+  <h2>11. Consent to Electronic Service &amp; Communications</h2>
+  <p>The Client consents to receiving communications, disclosure, invoices, notices, and legal documents <strong>electronically</strong> (including by email, secure portal, and SMS/text where appropriate) unless otherwise required by law. The Client further consents to <strong>SMS/text communication</strong> for scheduling, reminders, and short administrative messages, and may withdraw SMS consent at any time by written notice to the firm.</p>
+
+  <h2>12. Recording of Client Instructions &amp; Communications</h2>
+  <p>The Client acknowledges that <strong>telephone calls, virtual meetings, and electronic communications</strong> with the firm may be <strong>documented or summarized in the firm&rsquo;s file</strong> for accuracy, evidentiary, and supervision purposes. This documentation forms part of the firm&rsquo;s file record and assists in confirming instructions and authority.</p>
+
+  <h2>13. Identity Verification</h2>
+  <p>The Client authorizes the firm to verify the Client&rsquo;s identity using government-issued identification, electronic identity-verification services, secure upload portals, video-verification processes, or other reasonable means, as required by law, By-Law 7.1 of the Law Society of Ontario, or firm policy. The Client agrees to provide identification and any related information promptly upon request.</p>
+
+  <h2>14. Technology, AI &amp; Document Automation</h2>
+  <p>The firm may use secure technological tools &mdash; including document-automation systems, practice-management software, transcription tools, and <strong>secure artificial-intelligence-assisted systems that are subject to confidentiality safeguards</strong> &mdash; under licensed-paralegal supervision, to assist with drafting, organization, communication, and file management. <strong>No confidential information is intentionally disclosed contrary to the firm&rsquo;s professional obligations.</strong> All substantive legal work product is reviewed by the licensed Paralegal before it is filed, served, or sent to the Client.</p>
+
+  <h2>15. Cloud Storage &amp; Data Handling</h2>
+  <p>The Client <strong>acknowledges and expressly consents to</strong> the storage of file materials and communications electronically using secure cloud-based service providers, including providers whose servers may be located within or outside Canada (for example, Microsoft 365, Wix-hosted services, secure e-signature platforms, document portals, and backup providers), in accordance with the Law Society of Ontario&rsquo;s <em>Practice Management Guidelines</em> on technology and confidentiality. Reasonable safeguards are applied to protect confidentiality and integrity of the records.</p>
+
+  <h2>16. Use, Disclosure &amp; Safekeeping of Records</h2>
+  <p>Records obtained under this Authorization are used <strong>solely for the purpose of advancing, defending, settling, or concluding the Client&rsquo;s matter</strong>, including disclosure to opposing parties, the Court, and any tribunal where reasonably necessary. Records are handled in accordance with the firm&rsquo;s professional obligations under <em>PIPEDA</em>, <em>PHIPA</em> where applicable, and the <em>Paralegal Rules of Conduct</em>.</p>
+
+  <h2>17. File Retention &amp; Destruction</h2>
+  <p>On conclusion of the matter, closed files may be stored electronically and destroyed in accordance with the firm&rsquo;s file-retention policies and applicable Law Society of Ontario requirements. The firm retains closed files for a minimum of <strong>seven (7) years</strong> in accordance with LSO best practice; trust account records are retained for a minimum of <strong>ten (10) years</strong> as required by By-Law 9. After the retention period, the file may be destroyed <strong>unless otherwise required by law or previously requested by the Client</strong>.</p>
+
+  <h2>18. File Assignment &amp; Substitution</h2>
+  <p>I acknowledge that the file may be assigned to, or attended by, another licensed paralegal of <strong>Legal Assist Paralegal Services</strong> in the event of illness, vacation, conflict, or scheduling, and this Authorization extends to any such substitute paralegal of the firm. The Paralegal will advise me in writing of any extended reassignment.</p>
+
+  <h2>19. Client Communication Obligations</h2>
+  <p>The Client shall <strong>promptly notify the firm of any change</strong> in address, email, phone number, employment, or any other contact information used by the firm. The firm is entitled to rely on the most recent contact information provided by the Client. Failure to update contact information promptly may result in missed hearings, deadlines, or correspondence, and the firm is not responsible for prejudice arising from outdated information on file.</p>
+
+  <h2>20. Client Responsibility for Accuracy</h2>
+  <p>The Client confirms that all information provided to the firm is <strong>complete and accurate to the best of the Client&rsquo;s knowledge</strong> and agrees to <strong>promptly correct</strong> any inaccuracy or omission that comes to the Client&rsquo;s attention. The firm is entitled to rely on the information provided by the Client when advising, communicating with third parties, and conducting the matter.</p>
+  <p>The Client is also <strong>responsible for reviewing documents</strong> provided by the firm (including drafts, applications, settlement materials, and correspondence) and for <strong>promptly advising the firm of any errors, inaccuracies, or concerns</strong>.</p>
+
+  <h2>21. No Monitoring for Emergencies</h2>
+  <div class="callout warn">
+    <strong>Electronic Communications Are Not Monitored Continuously</strong>
+    <p>Email, SMS/text messages, and portal communications are <strong>not continuously monitored</strong>. The Client must not rely on electronic communications for urgent or emergency matters, court-date deadlines, limitation periods, eviction-notice compliance/void periods, or any other matter requiring immediate attention. For urgent matters, the Client must telephone the office at <strong>226-272-5153</strong> and follow up in writing. <strong>The sending of an email or text message does not, by itself, constitute notice actually received by the firm.</strong></p>
+  </div>
+
+  <h2>22. System Outages &amp; Force Majeure</h2>
+  <p>The firm is <strong>not liable for delays, failures, or interruptions</strong> caused by technical outages, third-party service-provider interruptions, cyber incidents, internet or telecommunications failures, court or tribunal closures, postal disruptions, public-health measures, natural disasters, or other circumstances beyond the firm&rsquo;s reasonable control.</p>
+
+  <h2>23. Limitation on Use by Third Parties</h2>
+  <p>This Authorization &amp; Direction is provided <strong>solely for purposes related to the Client&rsquo;s matter</strong> with the firm and <strong>may not be relied upon by third parties for unrelated purposes</strong>. Reliance by any third party on this Authorization for a purpose unconnected to the Client&rsquo;s matter is not authorized.</p>
+
+  <h2>24. Identity Verification &amp; Anti-Fraud Protection</h2>
+  <p>The firm <strong>may suspend or refuse to act</strong> on any instruction, settlement direction, communication, or document where identity, authenticity, the legitimacy of an authorization, or the genuineness of an instruction cannot reasonably be verified. This includes situations involving suspected email compromise, impersonation, fraudulent settlement instructions, or any other indicator of unauthorized activity. The firm may require independent verification (telephone confirmation, in-person attendance, government-issued ID, or other reasonable means) before acting in such circumstances.</p>
+
+  <h2>25. Accessibility, Accommodation &amp; Interpretation</h2>
+  <p>The Client shall advise the firm of any accessibility, accommodation, interpretation, or translation requirements affecting communication, attendance, or participation in the matter so that appropriate arrangements can be requested from the relevant court, tribunal, or third party. Where interpretation or translation services are required, the Client is responsible for the associated costs unless otherwise agreed in writing.</p>
+
+  <h2>26. No Guarantee of Outcome</h2>
+  <div class="callout warn">
+    <strong>No Guarantee</strong>
+    <p>The Paralegal and the firm make <strong>no guarantees, warranties, or promises</strong> regarding the outcome of any matter, proceeding, negotiation, mediation, or hearing. Past results in similar matters do not predict future results. Outcomes depend on the law, the evidence, credibility findings, the discretion of the decision-maker, and other factors outside the Paralegal&rsquo;s control.</p>
+    <p><strong>No Guarantee of Timeline.</strong> The firm also makes <strong>no guarantee regarding the timing or speed</strong> of any court, tribunal, agency, or third&#8209;party process (including the LTB, HRTO, ServiceOntario, MTO, Crown disclosure, insurers, or the CRA). Backlogs, scheduling, and procedural delays are outside the firm&rsquo;s control.</p>
+  </div>
+
+  <h2>27. Scope Limitations</h2>
+  <p>This Authorization &amp; Direction does <strong>not</strong>, on its own, create a paralegal&#8209;client relationship; a retainer relationship is established only by a separately executed written <em>Retainer Agreement</em>. Certain matters fall outside paralegal scope under By&#8209;Law 4 of the Law Society of Ontario (including, without limitation, most appearances before the Superior Court of Justice or the Divisional Court, criminal indictable offences, family law, wills and estates, and most immigration matters before the IRB) and may require representation by a lawyer.</p>
+
+  <h2>28. Independent Legal Advice</h2>
+  <p>The Client acknowledges having had the opportunity to seek <strong>independent legal advice</strong> from a lawyer prior to signing this Authorization &amp; Direction, and has either obtained such advice or voluntarily chosen not to do so.</p>
+
+  <h2>29. Duration &amp; Revocation</h2>
+  <p>This Authorization &amp; Direction takes effect on the date of signature below and remains in force until: (a) the Client revokes it in writing delivered to the firm; (b) the file is closed and the firm has completed its post&#8209;closure obligations; or (c) seven (7) years from the conclusion of the Client&rsquo;s matter, whichever first occurs. Revocation does not affect any action lawfully taken by the Paralegal prior to receiving written notice of revocation.</p>
+
+  <h2>30. Client Capacity</h2>
+  <p>The Client confirms that they are of the age of majority, are <strong>legally capable of providing instructions</strong>, and have authority to enter into this Authorization &amp; Direction (or, if signing on behalf of a corporation, partnership, or other entity, that the Client has authority to bind that entity).</p>
+
+  <h2>31. Entire Authorization</h2>
+  <p>This document constitutes <strong>the complete authorization granted by the Client regarding the matters described herein</strong> and supersedes any prior oral or written authorizations relating to the same subject matter. Any amendment, revocation, or expansion of this Authorization must be in writing and signed by the Client.</p>
+
+  <h2>32. Execution</h2>
+  <p>I confirm that I have read this Authorization &amp; Direction, that I have had the opportunity to ask questions about it, that I understand its comprehensive scope, and that I am signing it freely and voluntarily.</p>
+
+  <div class="callout">
+    <strong>Electronic Signature Notice</strong>
+    <p>This document may be executed electronically in accordance with the <em>Electronic Commerce Act, 2000</em> (Ontario). Electronic signatures and electronic copies are deemed equivalent to original wet&#8209;ink signatures. The signature IP address, date, and time are recorded by the firm&rsquo;s sign portal and form part of the file record.</p>
+    <p>A copy of this signed Authorization &amp; Direction (electronic, scanned, photographed, or facsimile) shall have the same force and effect as the original for purposes of presentation to any record holder.</p>
+  </div>
+
+  <h2 class="page-break-before">33. Initials Required</h2>
+  <p>Please initial each acknowledgment below to confirm understanding of high&#8209;risk and material clauses.</p>
+  <div class="ack-list">
+    <h4>Acknowledgments</h4>
+        <div class="item">
+      <div class="box" data-initial-target="ack-esign">INIT</div>
+      <div class="txt">I have read and understand the <strong>Electronic Signature Notice</strong> and consent to executing this document electronically.</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-disclosure">INIT</div>
+      <div class="txt">I have read and understand <strong>Sections 3, 4 &amp; 5 (Direction, Categories of Records &amp; Recipients)</strong>; I authorize the broad disclosure of records described above.</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-phipa">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 6 (PHIPA)</strong> and expressly consent to the release of my personal health information where relevant to my matter.</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-cra">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 7 (CRA &amp; Tax Records)</strong>, including my agreement to execute additional CRA&#8209;specific authorization forms (RC59, AUT&#8209;01, Represent a Client) on request.</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-settlement">INIT</div>
+      <div class="txt">I have read and understand that the Paralegal may negotiate, conclude, and execute settlement agreements <strong>only upon my express instructions</strong> (Section 2).</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-no-guarantee">INIT</div>
+      <div class="txt">I have read and understand <strong>Section 26 (No Guarantee of Outcome)</strong>; no result has been promised or guaranteed.</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-electronic">INIT</div>
+      <div class="txt">I consent to <strong>electronic service of documents and SMS/text communication</strong> as described in Section 11.</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-cloud">INIT</div>
+      <div class="txt">I acknowledge and consent to the <strong>cloud-based storage of my file materials</strong>, including by providers whose servers may be located outside Canada (Section 15).</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-capacity">INIT</div>
+      <div class="txt">I confirm that I am of the age of majority and am <strong>legally capable</strong> of providing instructions and entering into this Authorization &amp; Direction (Section 30).</div>
+    </div>
+    <div class="item">
+      <div class="box" data-initial-target="ack-ila">INIT</div>
+      <div class="txt">I confirm that I was advised of my right to <strong>independent legal advice</strong> (Section 28) before signing and either obtained it or chose not to.</div>
+    </div>
+  
+  </div>
+
+  <div class="sig-mount">
+    <div class="sig-mount-label">CLIENT SIGNATURE</div>
+    {SIGNATURE_SECTION}
+    <div class="pre-sig-name">{CLIENT_NAME}</div>
+    <div class="pre-sig-meta">{CLIENT_EMAIL} &middot; Date: {DATE}</div>
+    <div class="esign-note">
+      <strong>Signed electronically</strong> via the firm&rsquo;s secure sign portal. Until signed, this document is an unexecuted authorization and creates no obligations.
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <div class="left">
+      Legal Assist Paralegal Services &middot; 226-272-5153 &middot; contact@legalassist.london<br>
+      <a href="https://legalassist.london">legalassist.london</a> &middot; Authorization &amp; Direction
+      <div data-empty="{IS_FILE_REF_EMPTY}" style="margin-top:3px; font:600 10px/1.3 Inter, sans-serif; color:var(--ink-2);">Internal File ID: {FILE_REFERENCE}</div>
+      <div class="version">Document Version: A&amp;D v2.6 &middot; Last updated {DATE}</div>
+    </div>
+    <div class="right">
+      VERIFY LICENSEE STATUS<br>
+      <a href="https://lso.ca/directory">LSO.ca/directory</a>
+    </div>
+  </di

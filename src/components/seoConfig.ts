@@ -9,6 +9,15 @@ export interface SEOConfig {
   schema?: PageSchema;
   breadcrumbs?: BreadcrumbItem[];
   faqs?: FAQ[];
+  /**
+   * Optional per-page Open Graph image override.
+   * Absolute or root-relative path (e.g. "/og-special.jpg").
+   * If unset, [...slug].astro picks a cluster default based on URL
+   * prefix (og-ltb.jpg, og-small-claims.jpg, og-traffic-tickets.jpg,
+   * og-human-rights.jpg, og-employment.jpg, og-criminal.jpg,
+   * og-blog.jpg) and falls back to /og-image.jpg.
+   */
+  ogImage?: string;
 }
 
 export interface BreadcrumbItem {
@@ -56,7 +65,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // CORE PAGES (6 pages)
   // ============================================
   '/': {
-    title: 'Legal Assist Paralegal Services | London Ontario | Affordable Legal Help',
+    title: 'Legal Assist Paralegal Services | London Ontario',
     description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation.',
     keywords: 'paralegal london ontario, legal services london, traffic ticket lawyer london, LTB paralegal, small claims court london',
     schema: {
@@ -143,7 +152,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/about/student-placement': {
     title: 'Student Placement Program | Paralegal Field Placement',
-    description: 'Legal Assist accepts student placements from accredited Ontario paralegal and law clerk programs.',
+    description: 'Legal Assist accepts student placements from accredited Ontario paralegal and law clerk programs. Free consultation — call 226-272-5153.',
     keywords: 'paralegal student placement ontario, paralegal field placement london, law clerk placement, paralegal internship, student placement program, paralegal co-op ontario, legal placement london ontario',
     schema: { type: 'Article', name: 'Student Placement Program' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }, { name: 'Student Placements', url: '/about/student-placement' }],
@@ -226,7 +235,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/speeding-ticket-defence': {
-    title: 'Speeding Ticket Defence | Fight Your Speeding Ticket | London Ontario',
+    title: 'Speeding Ticket Defence | London Ontario',
     description: 'Fight your speeding ticket in London, Ontario. Reduce fines, avoid demerit points, protect your insurance. Experienced paralegal representation. Free consultation.',
     keywords: 'speeding ticket london, fight speeding ticket ontario, speeding fine defence, radar ticket defence',
     schema: {
@@ -337,7 +346,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/distracted-driving': {
-    title: 'Distracted Driving Defence | Cell Phone Ticket | London Ontario',
+    title: 'Distracted Driving Defence | London Ontario',
     description: 'Fight your distracted driving ticket in London, Ontario. Cell phone use while driving carries heavy fines and points. Expert defence. Free consultation.',
     keywords: 'distracted driving ticket london, cell phone ticket defence ontario, texting while driving fine',
     schema: {
@@ -411,7 +420,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/no-insurance-defence': {
-    title: 'No Insurance Defence | Drive Without Insurance | London Ontario',
+    title: 'No Insurance Defence | London Ontario',
     description: 'Charged with driving without insurance in Ontario? $5,000-$25,000 fine at stake. Expert defence strategies available. Free consultation in London.',
     keywords: 'no insurance ticket ontario, driving without insurance defence london, compulsory automobile insurance act',
     schema: {
@@ -485,7 +494,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/g1-g2-violations': {
-    title: 'G1 G2 Traffic Violations | Novice Driver Defence | London Ontario',
+    title: 'G1 G2 Traffic Violations | London Ontario',
     description: 'G1 or G2 traffic ticket in Ontario? Novice drivers face stricter penalties. Protect your graduated licence. Expert defence. Free consultation.',
     keywords: 'G1 traffic ticket, G2 violation ontario, novice driver defence, graduated licence suspension',
     schema: {
@@ -522,7 +531,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/commercial-vehicle-violations': {
-    title: 'Commercial Vehicle Violations | CVOR Defence | London Ontario',
+    title: 'Commercial Vehicle Violations | London Ontario',
     description: 'Commercial vehicle ticket in Ontario? Protect your CVOR record and commercial licence. Expert defence for truckers and fleet operators. Free consultation.',
     keywords: 'commercial vehicle ticket ontario, CVOR defence, truck driver violation, fleet violation defence',
     schema: {
@@ -559,7 +568,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/hov-lane-violations': {
-    title: 'HOV Lane Violation Defence | Carpool Lane Ticket | London Ontario',
+    title: 'HOV Lane Violation Defence | London Ontario',
     description: 'Fight your HOV lane ticket in Ontario. High occupancy vehicle lane violations carry fines and demerit points. Expert defence. Free consultation.',
     keywords: 'HOV lane ticket ontario, carpool lane violation, high occupancy vehicle fine, 403 HOV ticket',
     schema: {
@@ -707,7 +716,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/unsafe-lane-change': {
-    title: 'Unsafe Lane Change Defence | Improper Lane Change | London Ontario',
+    title: 'Unsafe Lane Change Defence | London Ontario',
     description: 'Fight your unsafe lane change ticket in London, Ontario. Improper lane change violations carry points and fines. Expert defence. Free consultation.',
     keywords: 'unsafe lane change ticket ontario, improper lane change defence, lane change violation london',
     schema: {
@@ -744,7 +753,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/following-too-closely': {
-    title: 'Following Too Closely Defence | Tailgating Ticket | London Ontario',
+    title: 'Following Too Closely Defence | London Ontario',
     description: 'Fight your following too closely ticket in London, Ontario. Tailgating charges carry 4 demerit points. Expert defence. Free consultation.',
     keywords: 'following too closely ticket ontario, tailgating defence london, 4 demerit points',
     schema: {
@@ -781,7 +790,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/driving-while-suspended': {
-    title: 'Driving While Suspended Defence | Suspended Licence | London Ontario',
+    title: 'Driving While Suspended Defence | London Ontario',
     description: 'Charged with driving while suspended in Ontario? Serious penalties including jail time possible. Expert defence strategies. Free consultation in London.',
     keywords: 'driving while suspended ontario, suspended licence defence london, drive under suspension charge',
     schema: {
@@ -818,7 +827,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/school-zone-speeding': {
-    title: 'School Zone Speeding Defence | Community Safety Zone | London Ontario',
+    title: 'School Zone Speeding Defence | London Ontario',
     description: 'Charged with speeding in a school zone in London, Ontario? Fines are doubled in community safety zones. Expert defence. Free consultation.',
     keywords: 'school zone speeding ticket ontario, community safety zone fine, doubled speeding fine defence',
     schema: {
@@ -855,7 +864,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/seatbelt-violations': {
-    title: 'Seatbelt Violation Defence | Seatbelt Ticket | London Ontario',
+    title: 'Seatbelt Violation Defence | London Ontario',
     description: 'Fight your seatbelt ticket in London, Ontario. Seatbelt violations affect your insurance rates. Expert defence available. Free consultation.',
     keywords: 'seatbelt ticket ontario, seatbelt violation defence london, no seatbelt fine',
     schema: {
@@ -1005,7 +1014,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/eviction-non-payment': {
-    title: 'Eviction for Non-Payment of Rent | L1 Application | London Ontario',
+    title: 'Eviction for Non-Payment of Rent | London Ontario',
     description: 'Landlord eviction for non-payment of rent in London, Ontario. L1 applications, N4 notices, LTB hearings. Fast, affordable representation.',
     keywords: 'eviction non payment rent london, L1 application ontario, N4 notice landlord, rent arrears eviction',
     schema: {
@@ -1116,7 +1125,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/above-guideline-increase': {
-    title: 'Above Guideline Rent Increase | AGI Application | London Ontario',
+    title: 'Above Guideline Rent Increase | London Ontario',
     description: 'Above guideline rent increase applications in London, Ontario. AGI for capital expenditures, taxes, utilities. Landlord and tenant representation.',
     keywords: 'above guideline increase ontario, AGI application LTB, rent increase above guideline, capital expenditure rent increase',
     schema: {
@@ -1560,7 +1569,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/ltb-hearing-preparation': {
-    title: 'LTB Hearing Preparation | Get Ready for Your Hearing | London Ontario',
+    title: 'LTB Hearing Preparation | London Ontario',
     description: 'Prepare for your Landlord and Tenant Board hearing. What to expect, evidence to gather, and how to present your case. London, Ontario.',
     keywords: 'LTB hearing preparation, landlord tenant board hearing, prepare for LTB, LTB evidence',
     schema: {
@@ -1597,7 +1606,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/rent-reduction-applications': {
-    title: 'Rent Reduction Application | Reduced Services | London Ontario',
+    title: 'Rent Reduction Application | London Ontario',
     description: 'Apply for rent reduction due to reduced services or amenities. Lost parking, laundry, or other services? Tenant representation in London.',
     keywords: 'rent reduction ontario, reduced services tenant, lost amenities rent decrease, T3 application',
     schema: {
@@ -1634,7 +1643,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/mobile-home-park-disputes': {
-    title: 'Mobile Home Park Disputes | Land Lease Communities | London Ontario',
+    title: 'Mobile Home Park Disputes | London Ontario',
     description: 'Mobile home park tenant issues? Land lease community disputes have special rules. Representation for mobile home owners in London, Ontario.',
     keywords: 'mobile home park ontario, land lease community, trailer park tenant rights, mobile home eviction',
     schema: {
@@ -1671,7 +1680,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/superintendent-housing-rights': {
-    title: 'Superintendent Housing Rights | Building Staff | London Ontario',
+    title: 'Superintendent Housing Rights | London Ontario',
     description: 'Rights for building superintendents and staff in Ontario. Employment-related housing has special rules. Superintendent representation in London.',
     keywords: 'superintendent housing rights ontario, building staff housing, caretaker eviction, employment housing',
     schema: {
@@ -1711,7 +1720,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // SMALL CLAIMS COURT - MAIN & SUB-PAGES (19 pages)
   // ============================================
   '/services/small-claims-court': {
-    title: 'Small Claims Court | Sue or Defend Up to $50,000 | London Ontario',
+    title: 'Small Claims Court | London Ontario',
     description: 'Small Claims Court representation in London, Ontario. Debt collection, contract disputes, property damage claims. Claims up to $50,000. Free consultation.',
     keywords: 'small claims court london, sue someone ontario, debt collection paralegal, contract dispute lawyer',
     schema: {
@@ -1816,7 +1825,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/judgement-enforcement': {
-    title: 'Judgment Enforcement | Collect Your Judgment | London Ontario',
+    title: 'Judgment Enforcement | London Ontario',
     description: 'Enforce your Small Claims judgment in London, Ontario. Wage garnishment, bank seizure, asset examination. Expert collection strategies. Call 226-272-5153.',
     keywords: 'judgment enforcement ontario, collect court judgment, garnishment',
     schema: { type: 'LegalService', name: 'Judgment Enforcement', serviceType: 'Judgment Collection', areaServed: ['London', 'Southwestern Ontario'] },
@@ -1885,7 +1894,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/security-deposits': {
-    title: 'Security Deposit Recovery | Get Deposit Back | London Ontario',
+    title: 'Security Deposit Recovery | London Ontario',
     description: 'Recover wrongfully withheld security deposits in London, Ontario. Landlord illegal deductions. Small Claims or LTB action. Free consultation.',
     keywords: 'security deposit recovery, get deposit back, landlord keeping deposit',
     schema: { type: 'LegalService', name: 'Deposit Recovery', serviceType: 'Security Deposit Claims', areaServed: ['London', 'Southwestern Ontario'] },
@@ -1954,7 +1963,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/home-improvement-disputes': {
-    title: 'Home Improvement Disputes | Contractor Problems | London Ontario',
+    title: 'Home Improvement Disputes | London Ontario',
     description: 'Home improvement disputes in London, Ontario. Bad contractors, incomplete work, poor quality. Small Claims Court representation. Free consultation.',
     keywords: 'contractor dispute, bad contractor claim, renovation problem',
     schema: { type: 'LegalService', name: 'Contractor Disputes', serviceType: 'Home Improvement Claims', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2045,7 +2054,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/breach-of-warranty': {
-    title: 'Breach of Warranty | Product Warranty Claims | London Ontario',
+    title: 'Breach of Warranty | London Ontario',
     description: 'Warranty breach claims in London, Ontario. Product and service warranties not honored. Expert Small Claims representation. Call 226-272-5153.',
     keywords: 'breach of warranty, warranty claim, product warranty dispute',
     schema: { type: 'LegalService', name: 'Warranty Claims', serviceType: 'Warranty Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2115,7 +2124,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/wrongful-dismissal-claims': {
     title: 'Wrongful Dismissal Claims | Small Claims | London Ontario',
-    description: 'Wrongful dismissal claims under $50,000. Fired without proper notice or severance.',
+    description: 'Wrongful dismissal claims under $50,000. Fired without proper notice or severance. Free consultation — call 226-272-5153.',
     keywords: 'wrongful dismissal small claims, fired without notice, termination pay claim',
     schema: { type: 'LegalService', name: 'Wrongful Dismissal', serviceType: 'Employment Termination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Wrongful Dismissal', url: '/services/wrongful-dismissal-claims' }],
@@ -2136,8 +2145,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/professional-negligence': {
-    title: 'Professional Negligence | Malpractice Claims | London Ontario',
-    description: 'Professional negligence claims. Accountant errors, contractor negligence under $50,000.',
+    title: 'Professional Negligence | London Ontario',
+    description: 'Professional negligence claims. Accountant errors, contractor negligence under $50,000. Free consultation — call 226-272-5153.',
     keywords: 'professional negligence, malpractice claim, accountant error',
     schema: { type: 'LegalService', name: 'Professional Negligence', serviceType: 'Malpractice Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Small Claims', url: '/services/small-claims' }, { name: 'Professional Negligence', url: '/services/professional-negligence' }],
@@ -2203,7 +2212,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/workplace-discrimination': {
-    title: 'Workplace Discrimination | Employment Human Rights | London Ontario',
+    title: 'Workplace Discrimination | London Ontario',
     description: 'Workplace discrimination claims in London, Ontario. Race, gender, disability, age discrimination at work. HRTO representation. Free consultation. 226-272-5153.',
     keywords: 'workplace discrimination ontario, employment discrimination, work harassment claim',
     schema: { type: 'LegalService', name: 'Workplace Discrimination', serviceType: 'Employment Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2225,7 +2234,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/housing-discrimination': {
-    title: 'Housing Discrimination | Rental Discrimination | London Ontario',
+    title: 'Housing Discrimination | London Ontario',
     description: 'Housing discrimination claims in London, Ontario via HRTO. Denied housing based on race, family status, disability. Free consultation. 226-272-5153.',
     keywords: 'housing discrimination ontario, rental discrimination, denied apartment, landlord discrimination',
     schema: { type: 'LegalService', name: 'Housing Discrimination', serviceType: 'Housing Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2248,7 +2257,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/disability-accommodation': {
-    title: 'Disability Accommodation | Accessibility Rights | London Ontario',
+    title: 'Disability Accommodation | London Ontario',
     description: 'Disability accommodation claims in London, Ontario. Duty to accommodate, workplace accessibility, AODA. HRTO representation. Free consultation. 226-272-5153.',
     keywords: 'disability accommodation ontario, workplace accessibility, duty to accommodate, AODA claims',
     schema: { type: 'LegalService', name: 'Disability Accommodation', serviceType: 'Accessibility Rights Claims', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2270,7 +2279,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/sexual-harassment': {
-    title: 'Sexual Harassment Claims | Workplace Harassment | London Ontario',
+    title: 'Sexual Harassment Claims | London Ontario',
     description: 'Sexual harassment claims in London, Ontario. Workplace harassment, hostile environment. HRTO representation. Expert support. Call 226-272-5153.',
     keywords: 'sexual harassment claim ontario, workplace harassment, hostile work environment, harassment complaint',
     schema: { type: 'LegalService', name: 'Sexual Harassment Claims', serviceType: 'Harassment Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2339,7 +2348,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/service-discrimination': {
     title: 'Service Discrimination | Denied Service | London Ontario',
-    description: 'Service discrimination claims in London. Denied service, refused entry, discriminatory treatment by businesses.',
+    description: 'Service discrimination claims in London. Denied service, refused entry, discriminatory treatment by businesses. Free consultation — call 226-272-5153.',
     keywords: 'service discrimination ontario, denied service, refused entry, business discrimination',
     schema: { type: 'LegalService', name: 'Service Discrimination', serviceType: 'Service Discrimination Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'Service Discrimination', url: '/services/service-discrimination' }],
@@ -2567,7 +2576,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/simple-assault': {
     title: 'Simple Assault Defence | Assault Charges | London Ontario',
-    description: 'Simple assault defence in London, Ontario. Assault charges, self-defence claims, bar fights, domestic disputes.',
+    description: 'Simple assault defence in London, Ontario. Assault charges, self-defence claims, bar fights, domestic disputes. Free consultation — call 226-272-5153.',
     keywords: 'assault defence london, simple assault charge, assault lawyer alternative, fight charge defence',
     schema: { type: 'LegalService', name: 'Assault Defence', serviceType: 'Simple Assault Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Simple Assault', url: '/services/simple-assault' }],
@@ -2588,7 +2597,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/mischief-under-5000': {
-    title: 'Mischief Under $5000 Defence | Property Damage | London Ontario',
+    title: 'Mischief Under $5000 Defence | London Ontario',
     description: 'Mischief under $5000 defence in London, Ontario. Vandalism, graffiti, property damage charges. Diversion options. Free consultation. 226-272-5153.',
     keywords: 'mischief under 5000, property damage charge, vandalism defence, graffiti charge',
     schema: { type: 'LegalService', name: 'Mischief Defence', serviceType: 'Mischief Under $5000 Defence', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2611,7 +2620,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/peace-bond': {
     title: 'Peace Bond | Section 810 | London Ontario Paralegal',
-    description: 'Peace bond applications and defence in London, Ontario. Section 810 recognizance, fear of injury, domestic situations.',
+    description: 'Peace bond applications and defence in London, Ontario. Section 810 recognizance, fear of injury, domestic situations. Free consultation — call 226-272-5153.',
     keywords: 'peace bond ontario, section 810, fear of injury, restraining order alternative',
     schema: { type: 'LegalService', name: 'Peace Bond Services', serviceType: 'Peace Bond Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Peace Bond', url: '/services/peace-bond' }],
@@ -2633,7 +2642,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/bail-hearings': {
     title: 'Bail Hearings | Get Released | London Ontario Paralegal',
-    description: 'Bail hearing representation in London, Ontario. Get released from custody, bail conditions, surety assistance.',
+    description: 'Bail hearing representation in London, Ontario. Get released from custody, bail conditions, surety assistance. Free consultation — call 226-272-5153.',
     keywords: 'bail hearing london, get released custody, bail conditions, surety bail',
     schema: { type: 'LegalService', name: 'Bail Hearing Services', serviceType: 'Bail Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Matters', url: '/services/criminal-matters' }, { name: 'Bail Hearings', url: '/services/bail-hearings' }],
@@ -2655,7 +2664,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/trespass-property': {
     title: 'Trespass to Property | Trespassing Charges | London Ontario',
-    description: 'Trespass to Property Act defence in London. Trespassing charges, banned from property, fail to leave.',
+    description: 'Trespass to Property Act defence in London. Trespassing charges, banned from property, fail to leave. Free consultation — call 226-272-5153.',
     keywords: 'trespass charge ontario, trespassing defence, banned from property, fail to leave charge',
     schema: { type: 'LegalService', name: 'Trespass Defence', serviceType: 'Trespass Act Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Trespass to Property', url: '/services/trespass-property' }],
@@ -2677,7 +2686,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/liquor-licence-act': {
     title: 'Liquor Licence Act | Alcohol Offences | London Ontario',
-    description: 'Liquor Licence Act defence in London. Open alcohol, underage drinking, intoxication in public, serving violations.',
+    description: 'Liquor Licence Act defence in London. Open alcohol, underage drinking, intoxication in public, serving violations. Free consultation — call 226-272-5153.',
     keywords: 'liquor licence act ontario, open alcohol charge, underage drinking, public intoxication',
     schema: { type: 'LegalService', name: 'Liquor Act Defence', serviceType: 'Alcohol Offence Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Liquor Licence Act', url: '/services/liquor-licence-act' }],
@@ -2700,7 +2709,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/municipal-bylaw': {
     title: 'Municipal Bylaw Defence | Bylaw Violations | London Ontario',
-    description: 'Municipal bylaw defence in London. Noise bylaws, property standards, parking violations, business licensing.',
+    description: 'Municipal bylaw defence in London. Noise bylaws, property standards, parking violations, business licensing. Free consultation — call 226-272-5153.',
     keywords: 'bylaw defence london, municipal violation, noise bylaw, property standards',
     schema: { type: 'LegalService', name: 'Bylaw Defence', serviceType: 'Municipal Bylaw Defence', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Municipal Bylaws', url: '/services/municipal-bylaw' }],
@@ -2721,7 +2730,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/regulatory-offences': {
-    title: 'Regulatory Offences | Administrative Violations | London Ontario',
+    title: 'Regulatory Offences | London Ontario',
     description: 'Regulatory offence defence in London, Ontario. OHSA, environmental, professional regulation violations. Professional representation. Free consultation.',
     keywords: 'regulatory offence ontario, administrative violation, OHSA charge, environmental offence',
     schema: { type: 'LegalService', name: 'Regulatory Defence', serviceType: 'Regulatory Offence Defence', areaServed: ['London', 'Southwestern Ontario'] },
@@ -2768,7 +2777,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // LOCATION PAGES (21 pages)
   // ============================================
   '/paralegal-london-ontario': {
-    title: 'Paralegal London Ontario | Affordable Legal Services London ON',
+    title: 'Paralegal London Ontario | Affordable Legal Services',
     description: 'Licensed paralegal in London, Ontario. Small Claims Court, Landlord & Tenant Board, traffic tickets, human rights tribunal. Serving London & Middlesex County.',
     keywords: 'paralegal london ontario, paralegal london on, london paralegal services, small claims court london, landlord tenant board london, traffic ticket london, licensed paralegal london ontario, affordable paralegal london',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Paralegal London Ontario', areaServed: ['London', 'Middlesex County', 'Southwestern Ontario'] },
@@ -2791,7 +2800,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/landlord-tenant-paralegal-london': {
-    title: 'Landlord Tenant Paralegal London Ontario | LTB Representation London',
+    title: 'LTB Paralegal London Ontario | Landlord & Tenant Board',
     description: 'Licensed paralegal for landlord and tenant disputes in London, Ontario. Evictions, rent disputes, LTB hearings, N4/N5/N12 notices. Serving London & Middlesex County.',
     keywords: 'landlord tenant paralegal london, ltb london ontario, eviction paralegal london, landlord tenant board london, tenant rights london, landlord services london ontario',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Landlord Tenant Paralegal London', areaServed: ['London', 'Middlesex County'] },
@@ -2804,7 +2813,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/small-claims-paralegal-london': {
-    title: 'Small Claims Court Paralegal London Ontario | Claims up to $50,000',
+    title: 'Small Claims Paralegal London Ontario | Up to $50,000',
     description: 'Licensed paralegal for Small Claims Court in London, Ontario. Debt recovery, contract disputes, property damage claims up to $50,000. London courthouse experience.',
     keywords: 'small claims court paralegal london, small claims london ontario, debt recovery london, contract dispute london, sue someone london ontario, paralegal small claims london',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Small Claims Paralegal London', areaServed: ['London', 'Middlesex County'] },
@@ -2817,7 +2826,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/traffic-ticket-paralegal-london': {
-    title: 'Traffic Ticket Paralegal London Ontario | Fight Your London Ticket',
+    title: 'Traffic Ticket Paralegal | London Ontario | Defence',
     description: 'Licensed paralegal to fight traffic tickets in London, Ontario. Speeding, careless driving, stunt driving, red light cameras.',
     keywords: 'traffic ticket paralegal london, fight speeding ticket london, careless driving london ontario, stunt driving london, london provincial offences court, traffic lawyer london ontario',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - Traffic Ticket Paralegal London', areaServed: ['London', 'Middlesex County'] },
@@ -2830,7 +2839,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/hrto-paralegal-london': {
-    title: 'HRTO Paralegal London Ontario | Human Rights Tribunal Representation',
+    title: 'HRTO Paralegal London Ontario | Human Rights Tribunal',
     description: 'Licensed paralegal for Human Rights Tribunal (HRTO) applications in London, Ontario. Employment discrimination, housing discrimination, harassment.',
     keywords: 'hrto paralegal london, human rights tribunal london ontario, discrimination paralegal london, workplace discrimination london, housing discrimination london, hrto application london',
     schema: { type: 'LocalBusiness', name: 'Legal Assist - HRTO Paralegal London', areaServed: ['London', 'Middlesex County'] },
@@ -3521,7 +3530,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
 
   '/services/airline-disputes': {
-    title: 'Airline Disputes & Compensation Claims | Flight Delay, Cancellation, Lost Baggage | Ontario',
+    title: 'Airline Disputes & Compensation Claims | Ontario',
     description: 'Fight airline compensation denials in Ontario. Flight delays ($400-$1,000), denied boarding ($900-$2,400), lost baggage (up to $2,900). APPR experts.',
     keywords: 'airline compensation canada, flight delay compensation, appr claim, denied boarding compensation, lost baggage claim, cta complaint, airline dispute ontario, flight cancellation refund',
     schema: { type: 'LegalService', name: 'Airline Dispute Services', serviceType: 'Air Passenger Compensation Claims', areaServed: ['Ontario', 'Canada'] },
@@ -3619,7 +3628,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/parking-tickets': {
-    title: 'Parking Ticket Disputes | Fight Parking Tickets London Ontario',
+    title: 'Parking Ticket Disputes | London Ontario',
     description: 'Parking ticket dispute representation in London, Ontario. Municipal parking tickets, private lot tickets, meter disputes. Fight unfair parking tickets.',
     keywords: 'parking ticket dispute london, fight parking ticket ontario, parking fine appeal, meter dispute',
     schema: { type: 'LegalService', name: 'Parking Ticket Defence', serviceType: 'Parking Dispute Resolution', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3661,7 +3670,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/accessibility-complaints': {
-    title: 'Accessibility Complaints | AODA | Disability Accommodation | London Ontario',
+    title: 'Accessibility Complaints | AODA | London Ontario',
     description: 'Accessibility complaint representation in London, Ontario. AODA violations, duty to accommodate, Human Rights Tribunal disability discrimination claims.',
     keywords: 'aoda complaint london, accessibility ontario, duty to accommodate, disability discrimination, human rights tribunal',
     schema: { type: 'LegalService', name: 'Accessibility Complaint Services', serviceType: 'Disability Rights Advocacy', areaServed: ['London', 'Southwestern Ontario'] },
@@ -3678,7 +3687,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // FORMS PAGES
   // ============================================
   '/resources/forms/ltb': {
-    title: 'Ontario LTB Forms Directory | All Landlord and Tenant Board Forms',
+    title: 'Ontario LTB Forms Directory | All N & L Forms',
     description: 'Complete directory of Ontario Landlord and Tenant Board (LTB) forms. Download L1-L10 landlord applications, T1-T6 tenant applications, N-series notices, and…',
     keywords: 'ltb forms ontario, landlord tenant board forms, L1 form ontario, T2 form ontario, N12 notice, N4 notice, eviction forms ontario, ltb application, tenant forms ontario, landlord forms ontario',
     schema: { type: 'CollectionPage', name: 'Ontario LTB Forms Directory', areaServed: ['Ontario'] },
@@ -3692,8 +3701,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/resources/forms/small-claims': {
-    title: 'Ontario Small Claims Court Forms Directory | All SCC Forms & Fees',
-    description: 'Complete directory of Ontario Small Claims Court forms under O. Reg. 258/98. Download Plaintiff\'s Claim (7A), Defence (9A), enforcement forms (20-series), and more with filing fees and instructions.',
+    title: 'Ontario Small Claims Forms | All SCC Forms & Fees',
+    description: 'Complete directory of Ontario Small Claims Court forms under O. Reg. 258/98. Download Plaintiff\'s Claim (7A), Defence (9A), and enforcement forms with filing fees.',
     keywords: 'small claims court forms ontario, form 7A ontario, plaintiff claim form, defence form 9A, small claims enforcement, garnishment form 20E, writ of seizure, default judgment 11B, small claims court fees ontario, ontario court forms',
     schema: { type: 'CollectionPage', name: 'Ontario Small Claims Court Forms Directory', areaServed: ['Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/small-claims' }, { name: 'Small Claims Court Forms', url: '/resources/forms/small-claims' }],
@@ -3706,8 +3715,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/resources/forms/traffic-tickets': {
-    title: 'Ontario Traffic Ticket Forms & Court Directory | POA Forms by City',
-    description: 'Complete directory of Ontario traffic ticket (POA) forms and city-by-city court information.',
+    title: 'Ontario Traffic Ticket Forms | POA Forms by City',
+    description: 'Complete directory of Ontario traffic ticket (POA) forms and city-by-city court information. Free consultation — call 226-272-5153.',
     keywords: 'traffic ticket forms ontario, POA forms, provincial offences act forms, pay traffic ticket online, fight traffic ticket ontario, notice of intention to appear, form 8 POA, early resolution, traffic court ontario, pay ticket london, pay ticket kitchener, pay ticket windsor, paytickets.ca',
     schema: { type: 'CollectionPage', name: 'Ontario Traffic Ticket Forms & Court Directory', areaServed: ['Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Resources', url: '/resources' }, { name: 'Forms', url: '/resources/forms/traffic-tickets' }, { name: 'Traffic Ticket Forms', url: '/resources/forms/traffic-tickets' }],
@@ -3720,7 +3729,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/resources/forms/hrto': {
-    title: 'HRTO Forms Directory | Human Rights Tribunal of Ontario Forms',
+    title: 'HRTO Forms | Human Rights Tribunal of Ontario',
     description: 'Complete directory of Human Rights Tribunal of Ontario (HRTO) forms. Download Application (Form 1), Response (Form 2), and all tribunal forms with filing…',
     keywords: 'hrto forms, human rights tribunal ontario forms, form 1 hrto, discrimination complaint form, hrto application, human rights complaint ontario, hrto response form, form 2 hrto, hrto filing',
     schema: { type: 'CollectionPage', name: 'HRTO Forms Directory', areaServed: ['Ontario'] },
@@ -3829,7 +3838,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/guides/ontario-landlord-rights': {
-    title: 'Complete Ontario Landlord Guide 2026 | RTA Rights, Evictions, Rent Rules',
+    title: 'Ontario Landlord Guide 2026 | RTA Rights & Evictions',
     description: 'The most comprehensive Ontario landlord guide. Covers your rights under the RTA, eviction notices (N4-N13), LTB applications (L1-L10), rent increases (2.1% for…',
     keywords: 'ontario landlord rights 2026, landlord guide ontario, eviction process ontario, n4 notice, ltb application, rent increase 2026, landlord tenant law ontario, n12 eviction',
     schema: { type: 'Article', name: 'Ontario Landlord Rights Guide' },
@@ -3853,7 +3862,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/small-claims-court-process': {
     title: 'Small Claims Court Process | Step by Step Guide | Ontario',
-    description: 'Complete guide to Small Claims Court in Ontario. Filing, serving, settlement conferences, trials, and enforcement.',
+    description: 'Complete guide to Small Claims Court in Ontario. Filing, serving, settlement conferences, trials, and enforcement. Free consultation — call 226-272-5153.',
     keywords: 'small claims court process ontario, how to sue small claims, small claims guide, court process steps',
     schema: { type: 'Article', name: 'Small Claims Court Process Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'Small Claims Process', url: '/guides/small-claims-court-process' }],
@@ -3876,7 +3885,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/ltb-hearing-preparation': {
     title: 'LTB Hearing Preparation | How to Prepare | Ontario Guide',
-    description: 'Prepare for your Landlord and Tenant Board hearing. What to bring, how to present evidence, and what to expect.',
+    description: 'Prepare for your Landlord and Tenant Board hearing. What to bring, how to present evidence, and what to expect. Free consultation — call 226-272-5153.',
     keywords: 'LTB hearing preparation, prepare for LTB, landlord tenant board hearing, LTB what to expect',
     schema: { type: 'Article', name: 'LTB Hearing Preparation Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'LTB Hearing Prep', url: '/guides/ltb-hearing-preparation' }],
@@ -3922,7 +3931,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/ontario-employment-rights': {
     title: 'Ontario Employment Rights | Employee Guide | Legal Assist',
-    description: 'Know your employment rights in Ontario. Minimum wage, overtime, termination, vacation, and workplace protections.',
+    description: 'Know your employment rights in Ontario. Minimum wage, overtime, termination, vacation, and workplace protections. Free consultation — call 226-272-5153.',
     keywords: 'ontario employment rights, employee rights ontario, ESA rights, workplace rights guide',
     schema: { type: 'Article', name: 'Ontario Employment Rights Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'Employment Rights', url: '/guides/ontario-employment-rights' }],
@@ -3944,7 +3953,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/legal-deadlines-ontario': {
     title: 'Legal Deadlines Ontario | Limitation Periods | Legal Assist',
-    description: 'Important legal deadlines in Ontario. Limitation periods for lawsuits, appeals, complaints, and filings.',
+    description: 'Important legal deadlines in Ontario. Limitation periods for lawsuits, appeals, complaints, and filings. Free consultation — call 226-272-5153.',
     keywords: 'legal deadlines ontario, limitation periods, time to sue, filing deadlines ontario',
     schema: { type: 'Article', name: 'Legal Deadlines Ontario Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'Legal Deadlines', url: '/guides/legal-deadlines-ontario' }],
@@ -3988,7 +3997,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/guides/what-to-do-when-sued': {
     title: 'What to Do When Sued | Defendant Guide | Ontario',
-    description: 'Been served with a lawsuit? Learn what to do, deadlines to respond, and how to defend yourself in Ontario courts.',
+    description: 'Been served with a lawsuit? Learn what to do, deadlines to respond, and how to defend yourself in Ontario courts. Free consultation — call 226-272-5153.',
     keywords: 'what to do when sued ontario, served with lawsuit, defendant guide, sued in small claims',
     schema: { type: 'Article', name: 'What to Do When Sued Guide' },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/services' }, { name: 'What to Do When Sued', url: '/guides/what-to-do-when-sued' }],
@@ -4013,8 +4022,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   // ============================================
 
   '/services/hrto-process': {
-    title: 'HRTO Process | How to File Human Rights Complaint | London Ontario',
-    description: 'Understanding the HRTO process in Ontario. How to file, what to expect, timelines. Human rights application guidance.',
+    title: 'HRTO Process | London Ontario',
+    description: 'Understanding the HRTO process in Ontario. How to file, what to expect, timelines. Human rights application guidance. Free consultation — call 226-272-5153.',
     keywords: 'HRTO process ontario, file human rights complaint, HRTO application how to, human rights tribunal process',
     schema: { type: 'LegalService', name: 'HRTO Process Guidance', serviceType: 'HRTO Application Assistance', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Human Rights', url: '/services/human-rights' }, { name: 'HRTO Process', url: '/services/hrto-process' }],
@@ -4053,7 +4062,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/employment-standards': {
     title: 'Employment Standards | ESA Claims | London Ontario',
-    description: 'Employment Standards Act claims in London, Ontario. Unpaid wages, overtime, vacation pay, termination pay.',
+    description: 'Employment Standards Act claims in London, Ontario. Unpaid wages, overtime, vacation pay, termination pay. Free consultation — call 226-272-5153.',
     keywords: 'employment standards ontario, ESA claim, unpaid wages, overtime pay, vacation pay',
     schema: { type: 'LegalService', name: 'Employment Standards Services', serviceType: 'ESA Claims', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment', url: '/services/employment' }, { name: 'Employment Standards', url: '/services/employment-standards' }],
@@ -4071,8 +4080,8 @@ export const seoConfig: Record<string, SEOConfig> = {
 
 
   '/services/severance-review': {
-    title: 'Severance Review | Termination Package Review | London Ontario',
-    description: 'Severance package review in London, Ontario. Is your termination package fair? Get a professional assessment.',
+    title: 'Severance Review | London Ontario',
+    description: 'Severance package review in London, Ontario. Is your termination package fair? Get a professional assessment. Free consultation — call 226-272-5153.',
     keywords: 'severance review ontario, termination package review, is my severance fair, negotiate severance',
     schema: { type: 'LegalService', name: 'Severance Review Services', serviceType: 'Severance Package Assessment', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Employment', url: '/services/employment' }, { name: 'Severance Review', url: '/services/severance-review' }],
@@ -4094,7 +4103,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/bylaw-violations': {
     title: 'Bylaw Violations | Municipal Bylaw Defence | London Ontario',
-    description: 'Bylaw violation defence in London, Ontario. Noise bylaws, property standards, parking tickets, business licensing.',
+    description: 'Bylaw violation defence in London, Ontario. Noise bylaws, property standards, parking tickets, business licensing. Free consultation — call 226-272-5153.',
     keywords: 'bylaw violation london, municipal bylaw defence, noise complaint ticket, property standards violation',
     schema: { type: 'LegalService', name: 'Bylaw Violation Defence', serviceType: 'Municipal Bylaw Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Bylaw Violations', url: '/services/bylaw-violations' }],
@@ -4112,7 +4121,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/trespass-charges': {
     title: 'Trespass Charges | Trespass to Property Act | London Ontario',
-    description: 'Trespass charge defence in London, Ontario. Trespass to Property Act violations. Protect your record.',
+    description: 'Trespass charge defence in London, Ontario. Trespass to Property Act violations. Protect your record. Free consultation — call 226-272-5153.',
     keywords: 'trespass charge ontario, trespass to property act, trespassing ticket defence',
     schema: { type: 'LegalService', name: 'Trespass Defence Services', serviceType: 'Trespass Charge Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Trespass Charges', url: '/services/trespass-charges' }],
@@ -4130,7 +4139,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/liquor-licence-violations': {
     title: 'Liquor Licence Violations | AGCO Defence | London Ontario',
-    description: 'Liquor licence violation defence in London, Ontario. AGCO matters, serving minors, over-serving, licence conditions.',
+    description: 'Liquor licence violation defence in London, Ontario. AGCO matters, serving minors, over-serving, licence conditions. Free consultation — call 226-272-5153.',
     keywords: 'liquor licence violation ontario, AGCO defence, bar licence suspension, serving minors charge',
     schema: { type: 'LegalService', name: 'Liquor Licence Defence', serviceType: 'AGCO Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Liquor Licence Violations', url: '/services/liquor-licence-violations' }],
@@ -4148,7 +4157,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/fire-code-violations': {
     title: 'Fire Code Violations | Fire Safety Defence | London Ontario',
-    description: 'Fire code violation defence in London, Ontario. Blocked exits, missing equipment, occupancy limits, fire safety orders.',
+    description: 'Fire code violation defence in London, Ontario. Blocked exits, missing equipment, occupancy limits, fire safety orders. Free consultation — call 226-272-5153.',
     keywords: 'fire code violation ontario, fire safety defence, blocked exit fine, fire marshall order',
     schema: { type: 'LegalService', name: 'Fire Code Defence', serviceType: 'Fire Safety Legal Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Provincial Offences', url: '/services/provincial-offences' }, { name: 'Fire Code Violations', url: '/services/fire-code-violations' }],
@@ -4166,7 +4175,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/minor-criminal-charges': {
     title: 'Minor Criminal Charges | Summary Offences London Ontario',
-    description: 'Minor criminal charge defence in London, Ontario. Summary conviction offences handled by licensed paralegals.',
+    description: 'Minor criminal charge defence in London, Ontario. Summary conviction offences handled by licensed paralegals. Free consultation — call 226-272-5153.',
     keywords: 'minor criminal charge ontario, summary offence defence, paralegal criminal, petty crime lawyer',
     schema: { type: 'LegalService', name: 'Minor Criminal Defence', serviceType: 'Summary Offence Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Defence', url: '/services/minor-criminal-charges' }],
@@ -4185,7 +4194,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/mischief-charges': {
     title: 'Mischief Charges | Property Damage Criminal | London Ontario',
-    description: 'Mischief charge defence in London, Ontario. Criminal property damage, vandalism charges. Paralegal representation.',
+    description: 'Mischief charge defence in London, Ontario. Criminal property damage, vandalism charges. Paralegal representation. Free consultation — call 226-272-5153.',
     keywords: 'mischief charge ontario, property damage criminal, vandalism defence, criminal mischief',
     schema: { type: 'LegalService', name: 'Mischief Defence Services', serviceType: 'Mischief Charge Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Defence', url: '/services/minor-criminal-charges' }, { name: 'Mischief Charges', url: '/services/mischief-charges' }],
@@ -4203,7 +4212,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/services/assault-charges': {
     title: 'Simple Assault Charges | Assault Defence | London Ontario',
-    description: 'Simple assault charge defence in London, Ontario. Summary assault matters handled by licensed paralegals.',
+    description: 'Simple assault charge defence in London, Ontario. Summary assault matters handled by licensed paralegals. Free consultation — call 226-272-5153.',
     keywords: 'simple assault charge ontario, assault defence paralegal, fighting charge, assault lawyer',
     schema: { type: 'LegalService', name: 'Assault Defence Services', serviceType: 'Simple Assault Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Defence', url: '/services/minor-criminal-charges' }, { name: 'Assault Charges', url: '/services/assault-charges' }],
@@ -4220,8 +4229,8 @@ export const seoConfig: Record<string, SEOConfig> = {
   },
 
   '/services/causing-disturbance': {
-    title: 'Causing a Disturbance | Public Disturbance Defence | London Ontario',
-    description: 'Causing a disturbance charge defence in London, Ontario. Fighting, shouting, impeding persons in public.',
+    title: 'Causing a Disturbance | London Ontario',
+    description: 'Causing a disturbance charge defence in London, Ontario. Fighting, shouting, impeding persons in public. Free consultation — call 226-272-5153.',
     keywords: 'causing disturbance charge ontario, public disturbance defence, disorderly conduct, fighting public',
     schema: { type: 'LegalService', name: 'Disturbance Defence Services', serviceType: 'Causing Disturbance Representation', areaServed: ['London', 'Southwestern Ontario'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: 'Criminal Defence', url: '/services/minor-criminal-charges' }, { name: 'Causing Disturbance', url: '/services/causing-disturbance' }],
@@ -4313,7 +4322,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/waterloo': {
     title: 'Paralegal Services Waterloo Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Waterloo, Ontario. Traffic tickets, landlord-tenant, small claims court representation.',
+    description: 'Licensed paralegal services in Waterloo, Ontario. Traffic tickets, landlord-tenant, small claims court representation. Free consultation — call 226-272-5153.',
     keywords: 'paralegal waterloo ontario, lawyer waterloo, legal services waterloo',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Waterloo', areaServed: ['Waterloo', 'Waterloo Region'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Waterloo', url: '/locations/waterloo' }],
@@ -4341,7 +4350,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/chatham': {
     title: 'Paralegal Services Chatham Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Chatham-Kent, Ontario. Traffic tickets, landlord-tenant, small claims court.',
+    description: 'Licensed paralegal services in Chatham-Kent, Ontario. Traffic tickets, landlord-tenant, small claims court. Free consultation — call 226-272-5153.',
     keywords: 'paralegal chatham ontario, lawyer chatham-kent, legal services chatham',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Chatham', areaServed: ['Chatham-Kent'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Chatham', url: '/locations/chatham' }],
@@ -4364,7 +4373,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/ingersoll': {
     title: 'Paralegal Services Ingersoll Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Ingersoll, Ontario. Traffic tickets, landlord-tenant, small claims. Oxford County.',
+    description: 'Licensed paralegal services in Ingersoll, Ontario. Traffic tickets, landlord-tenant, small claims. Oxford County. Free consultation — call 226-272-5153.',
     keywords: 'paralegal ingersoll ontario, lawyer ingersoll, legal services ingersoll',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Ingersoll', areaServed: ['Ingersoll', 'Oxford County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Ingersoll', url: '/locations/ingersoll' }],
@@ -4387,7 +4396,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/tillsonburg': {
     title: 'Paralegal Services Tillsonburg Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Tillsonburg, Ontario. Traffic tickets, landlord-tenant, small claims court.',
+    description: 'Licensed paralegal services in Tillsonburg, Ontario. Traffic tickets, landlord-tenant, small claims court. Free consultation — call 226-272-5153.',
     keywords: 'paralegal tillsonburg ontario, lawyer tillsonburg, legal services tillsonburg',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Tillsonburg', areaServed: ['Tillsonburg', 'Oxford County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Tillsonburg', url: '/locations/tillsonburg' }],
@@ -4410,7 +4419,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/aylmer': {
     title: 'Paralegal Services Aylmer Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Aylmer, Ontario. Traffic tickets, landlord-tenant, small claims. Elgin County.',
+    description: 'Licensed paralegal services in Aylmer, Ontario. Traffic tickets, landlord-tenant, small claims. Elgin County. Free consultation — call 226-272-5153.',
     keywords: 'paralegal aylmer ontario, lawyer aylmer, legal services aylmer elgin',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Aylmer', areaServed: ['Aylmer', 'Elgin County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Aylmer', url: '/locations/aylmer' }],
@@ -4433,7 +4442,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/strathroy': {
     title: 'Paralegal Services Strathroy Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Strathroy, Ontario. Traffic tickets, landlord-tenant, small claims. Middlesex County.',
+    description: 'Licensed paralegal services in Strathroy, Ontario. Traffic tickets, landlord-tenant, small claims. Middlesex County. Free consultation — call 226-272-5153.',
     keywords: 'paralegal strathroy ontario, lawyer strathroy, legal services strathroy',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Strathroy', areaServed: ['Strathroy', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Strathroy', url: '/locations/strathroy' }],
@@ -4456,7 +4465,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/dorchester': {
     title: 'Paralegal Services Dorchester Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Dorchester, Ontario. Traffic tickets, landlord-tenant, small claims.',
+    description: 'Licensed paralegal services in Dorchester, Ontario. Traffic tickets, landlord-tenant, small claims. Free consultation — call 226-272-5153.',
     keywords: 'paralegal dorchester ontario, lawyer dorchester, legal services dorchester',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Dorchester', areaServed: ['Dorchester', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Dorchester', url: '/locations/dorchester' }],
@@ -4479,7 +4488,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/komoka': {
     title: 'Paralegal Services Komoka Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Komoka, Ontario. Traffic tickets, landlord-tenant, small claims.',
+    description: 'Licensed paralegal services in Komoka, Ontario. Traffic tickets, landlord-tenant, small claims. Free consultation — call 226-272-5153.',
     keywords: 'paralegal komoka ontario, lawyer komoka, legal services komoka',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Komoka', areaServed: ['Komoka', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Komoka', url: '/locations/komoka' }],
@@ -4502,7 +4511,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/lucan': {
     title: 'Paralegal Services Lucan Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Lucan, Ontario. Traffic tickets, landlord-tenant, small claims court.',
+    description: 'Licensed paralegal services in Lucan, Ontario. Traffic tickets, landlord-tenant, small claims court. Free consultation — call 226-272-5153.',
     keywords: 'paralegal lucan ontario, lawyer lucan, legal services lucan',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Lucan', areaServed: ['Lucan', 'Middlesex County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Lucan', url: '/locations/lucan' }],
@@ -4525,7 +4534,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/exeter': {
     title: 'Paralegal Services Exeter Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Exeter, Ontario. Traffic tickets, landlord-tenant, small claims. Huron County.',
+    description: 'Licensed paralegal services in Exeter, Ontario. Traffic tickets, landlord-tenant, small claims. Huron County. Free consultation — call 226-272-5153.',
     keywords: 'paralegal exeter ontario, lawyer exeter, legal services huron county',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Exeter', areaServed: ['Exeter', 'Huron County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Exeter', url: '/locations/exeter' }],
@@ -4548,7 +4557,7 @@ export const seoConfig: Record<string, SEOConfig> = {
 
   '/locations/grand-bend': {
     title: 'Paralegal Services Grand Bend Ontario | Legal Assist',
-    description: 'Licensed paralegal services in Grand Bend, Ontario. Traffic tickets, landlord-tenant, small claims.',
+    description: 'Licensed paralegal services in Grand Bend, Ontario. Traffic tickets, landlord-tenant, small claims. Free consultation — call 226-272-5153.',
     keywords: 'paralegal grand bend ontario, lawyer grand bend, legal services grand bend',
     schema: { type: 'LocalBusiness', name: 'Legal Assist Grand Bend', areaServed: ['Grand Bend', 'Lambton County'] },
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Grand Bend', url: '/locations/grand-bend' }],
@@ -4573,7 +4582,7 @@ export const seoConfig: Record<string, SEOConfig> = {
   // GUIDE PAGES (12 pages)
   // ============================================
   '/guides': {
-    title: 'Legal Guides | Free Legal Information | Legal Assist London Ontario',
+    title: 'Legal Guides | Legal Assist London Ontario',
     description: 'Free legal guides and resources. Learn about traffic tickets, landlord rights, small claims court, human rights. Ontario legal information.',
     keywords: 'legal guides ontario, free legal information, know your rights, legal resources',
     breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides' }],
@@ -6278,7 +6287,6 @@ export function generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[], baseUrl:
       "name": item.name,
       "item": `${baseUrl}${item.url}`
     }))
-
   };
 }
 

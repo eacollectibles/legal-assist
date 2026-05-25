@@ -530,7 +530,7 @@ export default function AdminUserDetailPage() {
         <section className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
             <AlertCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
-            <h1 className="font-heading text-3xl font-bold text-foreground mb-4">Access Denied</h1>
+            <h2 className="font-heading text-3xl font-bold text-foreground mb-4">Access Denied</h2>
             <p className="font-paragraph text-foreground/80">You do not have permission to access this page.</p>
           </div>
         </section>
@@ -561,7 +561,7 @@ export default function AdminUserDetailPage() {
         <section className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8 text-center">
             <AlertCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
-            <h1 className="font-heading text-3xl font-bold text-foreground mb-4">User Not Found</h1>
+            <h2 className="font-heading text-3xl font-bold text-foreground mb-4">User Not Found</h2>
             <p className="font-paragraph text-foreground/80 mb-6">The requested user account could not be found.</p>
             <Button onClick={() => navigate('/admin/users')}>
               <ArrowLeft className="w-4 h-4 mr-2" />

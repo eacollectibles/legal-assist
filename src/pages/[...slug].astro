@@ -451,23 +451,61 @@ const currentYear = new Date().getFullYear();
     <meta name="copyright" content={`© ${currentYear} Legal Assist Paralegal Services`} />
     <meta name="language" content="en-CA" />
     
-    <!-- SERVER-SIDE SEO: Open Graph -->
+    <!-- ----------------------------------------------------------
+         Per-page Open Graph image with cluster fallback.
+         Resolution order:
+           1. pageConfig.ogImage           — explicit override on a page
+           2. cluster default              — e.g. /og-ltb.jpg for /landlord-tenant-board
+           3. /og-image.jpg                — site-wide fallback (always present)
+         When you upload new cluster images to /public/ they're picked up
+         automatically. og:image:alt is built from the page title so
+         social-share previews have meaningful alt text.
+         ---------------------------------------------------------- -->
     <meta property="og:type" content={normalizedPath.startsWith('/blog/') ? 'article' : 'website'} />
     <meta property="og:site_name" content="Legal Assist Paralegal Services" />
     <meta property="og:title" content={pageConfig.title} />
     <meta property="og:description" content={pageConfig.description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="en_CA" />
-    <meta property="og:image" content={`${businessInfo.url}/og-image.jpg`} />
+    <meta property="og:image" content={(() => {
+      // Explicit per-page override always wins
+      if (pageConfig.ogImage) return `${businessInfo.url}${pageConfig.ogImage}`;
+      // Cluster-based defaults — pick by URL prefix. Filenames match
+      // the existing assets in /public/. Drop /public/og-home.jpg
+      // (1200x630) to give the homepage a dedicated social image.
+      if (normalizedPath === '/') return `${businessInfo.url}/og-home.jpg`;
+      if (normalizedPath.startsWith('/blog/') || normalizedPath === '/blog') return `${businessInfo.url}/og-blog.jpg`;
+      if (normalizedPath.startsWith('/landlord-tenant') || normalizedPath.startsWith('/ltb')) return `${businessInfo.url}/og-landlord-tenant.jpg`;
+      if (normalizedPath.startsWith('/small-claims')) return `${businessInfo.url}/og-small-claims.jpg`;
+      if (normalizedPath.startsWith('/traffic') || normalizedPath.startsWith('/provincial-offences')) return `${businessInfo.url}/og-traffic-tickets.jpg`;
+      if (normalizedPath.startsWith('/human-rights') || normalizedPath.startsWith('/hrto')) return `${businessInfo.url}/og-human-rights.jpg`;
+      if (normalizedPath.startsWith('/employment')) return `${businessInfo.url}/og-employment.jpg`;
+      if (normalizedPath.startsWith('/criminal')) return `${businessInfo.url}/og-criminal.jpg`;
+      // Fallback for everything else (locations, guides, about, contact, etc.)
+      return `${businessInfo.url}/og-image.jpg`;
+    })()} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Legal Assist Paralegal Services - London, Ontario" />
-    
+    <meta property="og:image:alt" content={`${pageConfig.title.split(/\s*\|\s*/)[0]} — Legal Assist Paralegal Services, London Ontario`} />
+
     <!-- SERVER-SIDE SEO: Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageConfig.title} />
     <meta name="twitter:description" content={pageConfig.description} />
-    <meta name="twitter:image" content={`${businessInfo.url}/og-image.jpg`} />
+    <meta name="twitter:image" content={(() => {
+      // Mirrors the og:image resolution above so Twitter/X previews use
+      // the same per-cluster artwork.
+      if (pageConfig.ogImage) return `${businessInfo.url}${pageConfig.ogImage}`;
+      if (normalizedPath === '/') return `${businessInfo.url}/og-home.jpg`;
+      if (normalizedPath.startsWith('/blog/') || normalizedPath === '/blog') return `${businessInfo.url}/og-blog.jpg`;
+      if (normalizedPath.startsWith('/landlord-tenant') || normalizedPath.startsWith('/ltb')) return `${businessInfo.url}/og-landlord-tenant.jpg`;
+      if (normalizedPath.startsWith('/small-claims')) return `${businessInfo.url}/og-small-claims.jpg`;
+      if (normalizedPath.startsWith('/traffic') || normalizedPath.startsWith('/provincial-offences')) return `${businessInfo.url}/og-traffic-tickets.jpg`;
+      if (normalizedPath.startsWith('/human-rights') || normalizedPath.startsWith('/hrto')) return `${businessInfo.url}/og-human-rights.jpg`;
+      if (normalizedPath.startsWith('/employment')) return `${businessInfo.url}/og-employment.jpg`;
+      if (normalizedPath.startsWith('/criminal')) return `${businessInfo.url}/og-criminal.jpg`;
+      return `${businessInfo.url}/og-image.jpg`;
+    })()} />
     
     <!-- SERVER-SIDE SEO: Geo tags -->
     <meta name="geo.region" content="CA-ON" />

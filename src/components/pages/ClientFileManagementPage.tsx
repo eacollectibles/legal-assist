@@ -1370,7 +1370,7 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
                   {MATTER_TYPES[selectedFile.matterType]?.label || selectedFile.matterType}
                 </span>
               </div>
-              <h1 className="font-heading text-2xl font-bold text-gray-900 mb-1">{selectedFile.clientName}</h1>
+              <h2 className="font-heading text-2xl font-bold text-gray-900 mb-1">{selectedFile.clientName}</h2>
               <p className="font-paragraph text-gray-600">{selectedFile.matterDescription}</p>
               <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-gray-500">
                 <span className="flex items-center gap-1.5"><Mail className="w-4 h-4" /> {selectedFile.clientEmail}</span>
