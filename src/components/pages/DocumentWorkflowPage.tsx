@@ -1164,6 +1164,16 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{IS_CLIENT_ADDRESS_EMPTY\}/g, flag(!addressValue));
       documentContent = documentContent.replace(/\{IS_CLIENT_UNIT_EMPTY\}/g, flag(!unitValue));
 
+      // ---- LTB Tenant Retainer §6.1 — phased vs single-phase toggle ----
+      // Most LTB retainers are single-phase full representation. The
+      // phased structure (Phase 1 = letter-writing only, Phase 2 = LTB
+      // filing/hearing) is opt-in. To switch a specific matter to phased
+      // mode, flip these to: phasedRetainer = true.
+      // (Future: surface as a checkbox in the Generate Document UI.)
+      const phasedRetainer: boolean = false; // default: single-phase
+      documentContent = documentContent.replace(/\{IS_FULL_REP_EMPTY\}/g, flag(phasedRetainer));
+      documentContent = documentContent.replace(/\{IS_PHASED_EMPTY\}/g, flag(!phasedRetainer));
+
       // ---- Fee-row strike-through pattern ----
       // The HRTO template renders ALL four fee models but visually
       // strikes through the ones that aren't selected so the

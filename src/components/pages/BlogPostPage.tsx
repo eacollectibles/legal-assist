@@ -1,5 +1,4 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Clock, Calendar, Phone } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -30,50 +29,16 @@ export default function BlogPostPage() {
     return <Navigate to="/blog" replace />;
   }
 
-  const blogPostSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.description,
-    datePublished: post.date,
-    url: `https://www.legalassist.london/blog/${post.slug}`,
-    author: {
-      '@type': 'Organization',
-      name: 'Legal Assist Paralegal Services',
-    },
-    publisher: {
-      '@type': 'LegalService',
-      name: 'Legal Assist Paralegal Services',
-      url: 'https://www.legalassist.london',
-    },
-  };
+  // All SEO meta tags (title, description, canonical, OG, Twitter Card,
+  // article:published_time, article:section) and the LegalArticle
+  // JSON-LD schema for blog posts are now emitted server-side by
+  // src/pages/[...slug].astro — which looks up the post by slug in
+  // blogData and overrides pageConfig accordingly. This keeps crawlers
+  // and social-share previewers seeing the right tags even before JS
+  // hydrates.
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>{post.title} | Legal Assist Blog</title>
-        <meta name="description" content={post.description} />
-        <link rel="canonical" href={`https://www.legalassist.london/blog/${post.slug}`} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://www.legalassist.london/blog/${post.slug}`} />
-        <meta property="og:image" content="https://www.legalassist.london/og-image.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={post.title} />
-        <meta property="og:locale" content="en_CA" />
-        <meta property="og:site_name" content="Legal Assist Paralegal Services" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.description} />
-        <meta name="twitter:image" content="https://www.legalassist.london/og-image.jpg" />
-        <meta property="article:published_time" content={post.date} />
-        <meta property="article:section" content={post.category} />
-        <script type="application/ld+json">
-          {JSON.stringify(blogPostSchema)}
-        </script>
-      </Helmet>
       <Header />
 
       {/* Breadcrumb */}

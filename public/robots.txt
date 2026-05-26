@@ -61,12 +61,96 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
-# AI crawlers
-# Allowed for AEO/GEO visibility in ChatGPT, Gemini AI Overviews,
-# Perplexity, and Claude (recommendations + real-time citations):
-#   GPTBot, ChatGPT-User, Google-Extended, anthropic-ai, ClaudeBot
-# These fall through to the User-agent: * rules (private routes
-# stay blocked, everything else is allowed).
+# AI crawlers — explicit Allow grants for AEO/GEO visibility in
+# ChatGPT, Gemini AI Overviews, Perplexity, and Claude (real-time
+# citations + training-data inclusion where applicable). Private
+# routes are explicitly disallowed for each bot for parity with the
+# User-agent: * stanza above.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /client-dashboard
+Disallow: /client-intake
+Disallow: /client-login
+Disallow: /client-signup
+Disallow: /upload/
+Disallow: /paralegal-dashboard
+Disallow: /api/
+
 # Still blocked (broad scraping, no clear AEO upside):
 User-agent: CCBot
 Disallow: /

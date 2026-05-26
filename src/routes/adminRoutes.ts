@@ -20,6 +20,8 @@ const ClientFileManagementPage = lazy(() => import('@/components/pages/ClientFil
 // LSO compliance + paralegal-facing tools (sidebar links)
 const TrustAccountingPage = lazy(() => import('@/components/pages/TrustAccountingPage'));
 const PaymentsPage = lazy(() => import('@/components/pages/PaymentsPage'));
+const DisburseFundsPage = lazy(() => import('@/components/pages/DisburseFundsPage'));
+const MonthEndReconciliationPage = lazy(() => import('@/components/pages/MonthEndReconciliationPage'));
 const TimeBillingPage = lazy(() => import('@/components/pages/TimeBillingPage'));
 const DeadlineTrackerPage = lazy(() => import('@/components/pages/DeadlineTrackerPage'));
 const TicklerTaskPage = lazy(() => import('@/components/pages/TicklerTaskPage'));
@@ -58,6 +60,8 @@ export const adminRoutes = [
   // LSO Compliance — Paralegal-facing tools
   { path: '/admin/trust-accounting', element: TrustAccountingPage },
   { path: '/admin/payments', element: PaymentsPage },
+  { path: '/admin/disburse-funds', element: DisburseFundsPage },
+  { path: '/admin/month-end-reconciliation', element: MonthEndReconciliationPage },
   { path: '/admin/time-billing', element: TimeBillingPage },
   { path: '/admin/deadlines', element: DeadlineTrackerPage },
   { path: '/admin/tickler', element: TicklerTaskPage },

@@ -27,11 +27,60 @@ const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
 const isPrivateRoute = /^\/(admin|dashboard|client-dashboard|login|signup|client-login|client-signup|intake|booking|upload|paralegal-dashboard|meeting-request|meeting-dashboard|forgot-password|reset-password|conflict-detected)/.test(normalizedPath);
 
 // Get SEO config for this path, or use defaults
-const pageConfig = seoConfig[normalizedPath] || {
+let pageConfig: any = seoConfig[normalizedPath] || {
   title: 'Legal Assist Paralegal Services | London Ontario',
   description: 'Licensed paralegal services in London, Ontario. Traffic tickets, landlord-tenant disputes, small claims court, human rights tribunal. Free consultation. Call 226-272-5153.',
   keywords: 'paralegal london ontario, legal services, traffic ticket lawyer, LTB paralegal, small claims court'
 };
+
+// -----------------------------------------------------------------------
+// Blog-post SSR SEO override
+// -----------------------------------------------------------------------
+// For /blog/<slug> URLs, override pageConfig with per-post title /
+// description / keywords / breadcrumbs / faqs from blogData. Without
+// this, blog posts fall back to homepage defaults until Helmet
+// hydrates client-side — meaning crawlers that don't render JS (and
+// social-share previewers that snapshot the SSR HTML) see the wrong
+// tags.
+// -----------------------------------------------------------------------
+if (normalizedPath.startsWith('/blog/')) {
+  const blogSlug = normalizedPath.slice('/blog/'.length);
+  const post = blogPosts.find((p) => p.slug === blogSlug);
+  if (post) {
+    const categoryLabels: Record<string, string> = {
+      'traffic': 'Traffic Tickets',
+      'ltb': 'Landlord & Tenant',
+      'small-claims': 'Small Claims Court',
+      'employment': 'Employment',
+      'general': 'Legal Resources'
+    };
+    const categoryKeywords: Record<string, string> = {
+      'traffic': 'traffic ticket ontario, traffic ticket paralegal, ontario traffic ticket defence',
+      'ltb': 'landlord tenant ontario, ltb paralegal, residential tenancies act',
+      'small-claims': 'small claims court ontario, small claims paralegal, plaintiffs claim',
+      'employment': 'employment law ontario, employment standards act, employment paralegal',
+      'general': 'ontario paralegal, legal information ontario, licensed paralegal london'
+    };
+    // SEO-tight title: post headline first, then short brand suffix.
+    const ssrTitle = `${post.title} | Legal Assist Blog`;
+    pageConfig = {
+      title: ssrTitle,
+      description: post.description.length > 160
+        ? post.description.slice(0, 157).replace(/[\s,]+$/, '') + '...'
+        : post.description,
+      keywords: categoryKeywords[post.category] || categoryKeywords['general'],
+      breadcrumbs: [
+        { name: 'Home', url: '/' },
+        { name: 'Blog', url: '/blog' },
+        { name: categoryLabels[post.category] || 'Article', url: '/blog' },
+        { name: post.title, url: `/blog/${post.slug}` }
+      ],
+      faqs: (post.faqs && post.faqs.length > 0)
+        ? post.faqs.map((f) => ({ question: f.q, answer: f.a }))
+        : undefined
+    };
+  }
+}
 
 // Build canonical URL
 const canonicalUrl = `${businessInfo.url}${normalizedPath === '/' ? '' : normalizedPath}`;
@@ -73,7 +122,7 @@ const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length
 // -----------------------------------------------------------------------
 // Google's E-E-A-T (Experience, Expertise, Authoritativeness,
 // Trustworthiness) framework weights legal content heavily on author
-// credentials. The /about/meet-our-team page is where we put names,
+// credentials. The /about/team page is where we put names,
 // faces, licence numbers, and credentials in front of users — adding a
 // Person graph here teaches search engines who the licensed
 // professionals behind the legal content actually are, and connects
@@ -83,13 +132,13 @@ const breadcrumbSchema = pageConfig.breadcrumbs && pageConfig.breadcrumbs.length
 // and letterhead/letterhead.py (Python). Both are checked in.
 // -----------------------------------------------------------------------
 let teamSchema: Record<string, unknown> | null = null;
-if (normalizedPath === '/about/meet-our-team') {
+if (normalizedPath === '/about/team') {
   teamSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://www.legalassist.london/about/meet-our-team#jean-francois-demers",
+        "@id": "https://www.legalassist.london/about/team#jean-francois-demers",
         "name": "Jean-Francois Demers",
         "alternateName": "Johnny Demers",
         "givenName": "Jean-Francois",
@@ -99,7 +148,7 @@ if (normalizedPath === '/about/meet-our-team') {
         "image": "https://static.wixstatic.com/media/99571b_facd7ab6718046bc8572b74957bbf7e4~mv2.png",
         "email": "mailto:jeanfrancois@legalassist.london",
         "telephone": PHONE_TEL,
-        "url": "https://www.legalassist.london/about/meet-our-team#johnny-demers",
+        "url": "https://www.legalassist.london/about/team#johnny-demers",
         "worksFor": { "@id": "https://www.legalassist.london/#organization" },
         "memberOf": {
           "@type": "Organization",
@@ -134,7 +183,7 @@ if (normalizedPath === '/about/meet-our-team') {
       },
       {
         "@type": "Person",
-        "@id": "https://www.legalassist.london/about/meet-our-team#candice-fogarty",
+        "@id": "https://www.legalassist.london/about/team#candice-fogarty",
         "name": "Candice Fogarty",
         "givenName": "Candice",
         "familyName": "Fogarty",
@@ -143,7 +192,7 @@ if (normalizedPath === '/about/meet-our-team') {
         "image": "https://static.wixstatic.com/media/99571b_placeholder2~mv2.jpg",
         "email": "mailto:candice@legalassist.london",
         "telephone": PHONE_TEL,
-        "url": "https://www.legalassist.london/about/meet-our-team#candice-fogarty",
+        "url": "https://www.legalassist.london/about/team#candice-fogarty",
         "worksFor": { "@id": "https://www.legalassist.london/#organization" },
         "memberOf": {
           "@type": "Organization",
@@ -210,14 +259,11 @@ if (normalizedPath.startsWith('/blog/')) {
         "@id": canonicalUrl
       },
       "image": `${businessInfo.url}/og-image.jpg`,
-      "author": {
-        "@type": "Person",
-        "name": "Jean-Francois Demers",
-        "jobTitle": "Licensed Paralegal",
-        "identifier": "LSO #P22020",
-        "worksFor": { "@id": "https://www.legalassist.london/#organization" },
-        "url": "https://www.legalassist.london/about/meet-our-team"
-      },
+      // Reference the Person graph by @id so Google connects article
+      // authorship to the full credentials graph emitted on /about/team
+      // (LSO #P22020, hasCredential, worksFor LegalService org, etc.).
+      // This is the recommended E-E-A-T pattern for legal content.
+      "author": { "@id": "https://www.legalassist.london/about/team#jean-francois-demers" },
       "publisher": { "@id": "https://www.legalassist.london/#organization" },
       "articleSection": post.category,
       "keywords": pageConfig.keywords || ''
@@ -475,12 +521,15 @@ const currentYear = new Date().getFullYear();
       // (1200x630) to give the homepage a dedicated social image.
       if (normalizedPath === '/') return `${businessInfo.url}/og-home.jpg`;
       if (normalizedPath.startsWith('/blog/') || normalizedPath === '/blog') return `${businessInfo.url}/og-blog.jpg`;
-      if (normalizedPath.startsWith('/landlord-tenant') || normalizedPath.startsWith('/ltb')) return `${businessInfo.url}/og-landlord-tenant.jpg`;
-      if (normalizedPath.startsWith('/small-claims')) return `${businessInfo.url}/og-small-claims.jpg`;
-      if (normalizedPath.startsWith('/traffic') || normalizedPath.startsWith('/provincial-offences')) return `${businessInfo.url}/og-traffic-tickets.jpg`;
-      if (normalizedPath.startsWith('/human-rights') || normalizedPath.startsWith('/hrto')) return `${businessInfo.url}/og-human-rights.jpg`;
-      if (normalizedPath.startsWith('/employment')) return `${businessInfo.url}/og-employment.jpg`;
-      if (normalizedPath.startsWith('/criminal')) return `${businessInfo.url}/og-criminal.jpg`;
+      // NB: also accept the canonical `/services/<cluster>` URLs (the
+      // app's primary service routes) — previously only the short SEO
+      // route variants like `/landlord-tenant-paralegal-london` matched.
+      if (normalizedPath.startsWith('/landlord-tenant') || normalizedPath.startsWith('/ltb') || normalizedPath.startsWith('/services/landlord-tenant') || normalizedPath.startsWith('/services/condo') || normalizedPath.startsWith('/services/rental') || normalizedPath.startsWith('/services/eviction')) return `${businessInfo.url}/og-landlord-tenant.jpg`;
+      if (normalizedPath.startsWith('/small-claims') || normalizedPath.startsWith('/services/small-claims') || normalizedPath.startsWith('/services/debt') || normalizedPath.startsWith('/services/contract')) return `${businessInfo.url}/og-small-claims.jpg`;
+      if (normalizedPath.startsWith('/traffic') || normalizedPath.startsWith('/provincial-offences') || normalizedPath.startsWith('/services/traffic') || normalizedPath.startsWith('/services/provincial-offences') || normalizedPath.startsWith('/services/parking') || normalizedPath.startsWith('/services/dui') || normalizedPath.startsWith('/services/impaired')) return `${businessInfo.url}/og-traffic-tickets.jpg`;
+      if (normalizedPath.startsWith('/human-rights') || normalizedPath.startsWith('/hrto') || normalizedPath.startsWith('/services/human-rights') || normalizedPath.startsWith('/services/discrimination')) return `${businessInfo.url}/og-human-rights.jpg`;
+      if (normalizedPath.startsWith('/employment') || normalizedPath.startsWith('/services/employment') || normalizedPath.startsWith('/services/wsib') || normalizedPath.startsWith('/services/workplace') || normalizedPath.startsWith('/services/wrongful')) return `${businessInfo.url}/og-employment.jpg`;
+      if (normalizedPath.startsWith('/criminal') || normalizedPath.startsWith('/services/criminal') || normalizedPath.startsWith('/services/assault') || normalizedPath.startsWith('/services/theft')) return `${businessInfo.url}/og-criminal.jpg`;
       // Fallback for everything else (locations, guides, about, contact, etc.)
       return `${businessInfo.url}/og-image.jpg`;
     })()} />
@@ -498,12 +547,15 @@ const currentYear = new Date().getFullYear();
       if (pageConfig.ogImage) return `${businessInfo.url}${pageConfig.ogImage}`;
       if (normalizedPath === '/') return `${businessInfo.url}/og-home.jpg`;
       if (normalizedPath.startsWith('/blog/') || normalizedPath === '/blog') return `${businessInfo.url}/og-blog.jpg`;
-      if (normalizedPath.startsWith('/landlord-tenant') || normalizedPath.startsWith('/ltb')) return `${businessInfo.url}/og-landlord-tenant.jpg`;
-      if (normalizedPath.startsWith('/small-claims')) return `${businessInfo.url}/og-small-claims.jpg`;
-      if (normalizedPath.startsWith('/traffic') || normalizedPath.startsWith('/provincial-offences')) return `${businessInfo.url}/og-traffic-tickets.jpg`;
-      if (normalizedPath.startsWith('/human-rights') || normalizedPath.startsWith('/hrto')) return `${businessInfo.url}/og-human-rights.jpg`;
-      if (normalizedPath.startsWith('/employment')) return `${businessInfo.url}/og-employment.jpg`;
-      if (normalizedPath.startsWith('/criminal')) return `${businessInfo.url}/og-criminal.jpg`;
+      // NB: also accept the canonical `/services/<cluster>` URLs (the
+      // app's primary service routes) — previously only the short SEO
+      // route variants like `/landlord-tenant-paralegal-london` matched.
+      if (normalizedPath.startsWith('/landlord-tenant') || normalizedPath.startsWith('/ltb') || normalizedPath.startsWith('/services/landlord-tenant') || normalizedPath.startsWith('/services/condo') || normalizedPath.startsWith('/services/rental') || normalizedPath.startsWith('/services/eviction')) return `${businessInfo.url}/og-landlord-tenant.jpg`;
+      if (normalizedPath.startsWith('/small-claims') || normalizedPath.startsWith('/services/small-claims') || normalizedPath.startsWith('/services/debt') || normalizedPath.startsWith('/services/contract')) return `${businessInfo.url}/og-small-claims.jpg`;
+      if (normalizedPath.startsWith('/traffic') || normalizedPath.startsWith('/provincial-offences') || normalizedPath.startsWith('/services/traffic') || normalizedPath.startsWith('/services/provincial-offences') || normalizedPath.startsWith('/services/parking') || normalizedPath.startsWith('/services/dui') || normalizedPath.startsWith('/services/impaired')) return `${businessInfo.url}/og-traffic-tickets.jpg`;
+      if (normalizedPath.startsWith('/human-rights') || normalizedPath.startsWith('/hrto') || normalizedPath.startsWith('/services/human-rights') || normalizedPath.startsWith('/services/discrimination')) return `${businessInfo.url}/og-human-rights.jpg`;
+      if (normalizedPath.startsWith('/employment') || normalizedPath.startsWith('/services/employment') || normalizedPath.startsWith('/services/wsib') || normalizedPath.startsWith('/services/workplace') || normalizedPath.startsWith('/services/wrongful')) return `${businessInfo.url}/og-employment.jpg`;
+      if (normalizedPath.startsWith('/criminal') || normalizedPath.startsWith('/services/criminal') || normalizedPath.startsWith('/services/assault') || normalizedPath.startsWith('/services/theft')) return `${businessInfo.url}/og-criminal.jpg`;
       return `${businessInfo.url}/og-image.jpg`;
     })()} />
     
@@ -544,7 +596,7 @@ const currentYear = new Date().getFullYear();
     <!-- SERVER-SIDE SEO: LegalArticle Schema for blog posts -->
     {articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
 
-    <!-- SERVER-SIDE SEO: Person Schema (E-E-A-T) on /about/meet-our-team -->
+    <!-- SERVER-SIDE SEO: Person Schema (E-E-A-T) on /about/team -->
     {teamSchema && <script type="application/ld+json" set:html={JSON.stringify(teamSchema)} />}
     
     <!-- ============================================

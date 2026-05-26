@@ -8,7 +8,6 @@ import {
   MapPin, CheckCircle2, MessageCircle, Mail, Calendar,
   AlertCircle, Briefcase
 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PrimaryCTA from '@/components/PrimaryCTA';
@@ -132,11 +131,11 @@ export default function HomePageNew() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Legal Assist London | Licensed Paralegal Services in Ontario</title>
-        <meta name="description" content="Professional paralegal services in London, Ontario. Small Claims Court, Landlord & Tenant disputes, debt collection, and legal document preparation. Free case review." />
-        <link rel="canonical" href="https://legalassist.london" />
-      </Helmet>
+      {/* SEO meta tags (title, description, canonical, OG, schema) are
+          owned by the Astro SSR in src/pages/[...slug].astro, keyed
+          by route in src/components/seoConfig.ts. Removed the Helmet
+          override here because it regressed the 48-char title to a
+          62-char one and flipped the canonical from www to non-www. */}
 
       <Header />
 

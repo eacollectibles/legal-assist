@@ -151,19 +151,70 @@ export const POST: APIRoute = async ({ request, locals }) => {
       console.error('payments collection write failed:', paymentsWriteError);
     }
 
-    // 2) Trust accounting ledger entry (LSO Form 9A schema).
+    // 2) Trust / general accounting ledger entry (LSO Form 9A / 9D).
+    //
+    // - paymentType=trust_deposit  → goes into the Trust Account Journal
+    //   (Form 9A) as a trust receipt. Money is held on behalf of the
+    //   client and may not be drawn against until earned and supported
+    //   by a delivered invoice (By-Law 9 s. 18).
+    // - paymentType=invoice_payment → goes into the General Account
+    //   Receipts Journal (Form 9D equivalent) as a fee receipt.
+    //   Money is for work already done and may be deposited directly
+    //   into the operating account.
+    // - paymentType=consultation → general receipt (consultation fees
+    //   are earned at the time of consultation).
+    //
+    // If `fileId` is missing on the request but `clientId` is provided,
+    // we look up the client's most recent active file as a fallback so
+    // the entry still shows up under the client file's G. Financial
+    // Records section.
+    const paymentType = (body.paymentType || 'trust_deposit') as string;
+    const typeMap: Record<string, { transactionType: string; journalType: 'trust' | 'general' }> = {
+      'trust_deposit':    { transactionType: 'trust_deposit', journalType: 'trust' },
+      'invoice_payment':  { transactionType: 'payment',       journalType: 'general' },
+      'consultation':     { transactionType: 'payment',       journalType: 'general' },
+    };
+    const mapped = typeMap[paymentType] || typeMap['trust_deposit'];
+
+    let resolvedFileId: string | null = body.matterId || null;
+    let resolvedFileNumber: string | null = body.matterReference || null;
+    if (!resolvedFileId && body.clientId) {
+      try {
+        const filesResult = await BaseCrudService.getAll<any>('clientfiles', undefined, { limit: 1000 });
+        const clientFiles = (filesResult.items || [])
+          .filter((f: any) => f.clientId === body.clientId)
+          .sort((a: any, b: any) =>
+            new Date(b._createdDate || 0).getTime() - new Date(a._createdDate || 0).getTime()
+          );
+        const activeFile = clientFiles.find((f: any) => f.status === 'active') || clientFiles[0];
+        if (activeFile) {
+          resolvedFileId = activeFile._id;
+          resolvedFileNumber = resolvedFileNumber || activeFile.fileNumber || null;
+        }
+      } catch (lookupErr) {
+        // Non-fatal: we still write the record without fileId.
+        // eslint-disable-next-line no-console
+        console.warn('fileId fallback lookup failed:', lookupErr);
+      }
+    }
+
     try {
       await BaseCrudService.create('financialrecords', {
         _id: crypto.randomUUID(),
         clientId: body.clientId || null,
-        fileId: body.matterId || null,
-        transactionType: 'trust_deposit',
+        fileId: resolvedFileId,
+        // Discriminator so the UI can split Trust journal (9A) from
+        // General Receipts journal (9D equivalent). Existing rows
+        // without this field default to 'trust' for backwards-compat
+        // in the TrustAccountingPage filter logic.
+        journalType: mapped.journalType,
+        transactionType: mapped.transactionType,
         amount: amountDollars,
         transactionDate: new Date(),
         description:
-          `Square ${body.paymentType?.replace('_', ' ') || 'payment'} - ` +
+          `Square ${paymentType.replace('_', ' ')} - ` +
           `${body.clientName || body.buyerEmail || 'client'}` +
-          (body.matterReference ? ` - File: ${body.matterReference}` : '') +
+          (resolvedFileNumber ? ` - File: ${resolvedFileNumber}` : '') +
           (body.note ? ` - ${body.note}` : ''),
         referenceNumber: result.receiptNumber || result.paymentId || '',
         paymentMethod: 'credit_card',
@@ -176,6 +227,38 @@ export const POST: APIRoute = async ({ request, locals }) => {
       financialRecordsWriteError = e?.message || String(e);
       // eslint-disable-next-line no-console
       console.error('financialrecords write failed:', financialRecordsWriteError);
+    }
+
+    // 3) Communication log entry — Square automatically emails the
+    // client a receipt, which under LSO By-Law 7.1 s. 23(14) is a
+    // client communication that must be retained for 6+ years. Log
+    // it as an outbound email on the client file so the audit trail
+    // is complete.
+    if (resolvedFileId || body.clientId) {
+      try {
+        await BaseCrudService.create('communicationlog', {
+          _id: crypto.randomUUID(),
+          clientId: body.clientId || null,
+          fileId: resolvedFileId,
+          communicationType: 'email_outbound',
+          subject: `Payment Receipt - Square Auth #${result.paymentId || ''}`,
+          summary:
+            `Automated Square receipt emailed to ` +
+            `${body.buyerEmail || body.clientName || 'client'} ` +
+            `for $${amountDollars.toFixed(2)} CAD ` +
+            `(${paymentType.replace('_', ' ')}). ` +
+            (result.receiptUrl ? `Receipt URL: ${result.receiptUrl}` : ''),
+          direction: 'outbound',
+          method: 'email',
+          contactDate: new Date(),
+          recordedBy: 'Square (online payment)',
+          _createdDate: new Date(),
+        });
+      } catch (e: any) {
+        // Non-fatal: receipt is still on Square; just log and continue.
+        // eslint-disable-next-line no-console
+        console.warn('communicationlog write failed:', e?.message || e);
+      }
     }
   } catch (logErr: any) {
     // Top-level - likely failed to even import BaseCrudService.

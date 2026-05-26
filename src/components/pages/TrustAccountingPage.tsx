@@ -128,20 +128,47 @@ function getTransactionSign(type: string): string {
   return found?.sign || '';
 }
 
-function calculateBalance(records: FinancialRecord[], upToIndex: number): number {
-  let balance = 0;
-  for (let i = 0; i <= upToIndex; i++) {
-    const record = records[i];
+/**
+ * Pre-compute the running balance after each transaction, in
+ * CHRONOLOGICAL order (oldest first), and return a Map keyed by
+ * record _id. This way the table can be displayed in any order
+ * (typically newest-first) and each row still shows the correct
+ * cumulative balance at the time of that transaction.
+ *
+ * LSO By-Law 9 audit requirement: the journal balance column must
+ * reflect the cumulative balance AT THE TIME of each entry, not the
+ * value as you scroll through the page.
+ *
+ * Type signs:
+ *   '+' trust_deposit, billing, payment      (inflow)
+ *   '-' trust_withdrawal, disbursement, refund (outflow)
+ *   '~' transfer (trust-to-general)          (debit to trust account)
+ *
+ * A trust→general transfer DEBITS the trust account from this
+ * journal's perspective, so we treat it as a '-' here even though
+ * it shows up with the '~' badge in the UI.
+ */
+function buildRunningBalances(records: FinancialRecord[]): Map<string, number> {
+  const balances = new Map<string, number>();
+  const chronological = [...records].sort((a, b) => {
+    const da = new Date(a.transactionDate || a._createdDate || 0).getTime();
+    const db = new Date(b.transactionDate || b._createdDate || 0).getTime();
+    if (da !== db) return da - db;
+    // Stable tie-breaker: _createdDate, then _id
+    const ca = new Date(a._createdDate || 0).getTime();
+    const cb = new Date(b._createdDate || 0).getTime();
+    if (ca !== cb) return ca - cb;
+    return (a._id || '').localeCompare(b._id || '');
+  });
+  let running = 0;
+  for (const record of chronological) {
     const amount = record.amount || 0;
     const sign = getTransactionSign(record.transactionType || '');
-
-    if (sign === '+') {
-      balance += amount;
-    } else if (sign === '-') {
-      balance -= amount;
-    }
+    if (sign === '+') running += amount;
+    else if (sign === '-' || sign === '~') running -= amount;
+    balances.set(record._id || '', running);
   }
-  return balance;
+  return balances;
 }
 
 function daysAgo(date: Date | string | undefined): number {
@@ -191,6 +218,14 @@ export default function TrustAccountingPage() {
   const [journalClientFilter, setJournalClientFilter] = useState('');
   const [journalTypeFilter, setJournalTypeFilter] = useState('');
   const [journalSearch, setJournalSearch] = useState('');
+  // LSO By-Law 9 distinguishes Trust Account Journal (Form 9A) from
+  // the General Account Receipts & Disbursements Journal. They MUST
+  // be kept separate. We discriminate on the `journalType` field on
+  // each financialrecords row ('trust' | 'general'). Legacy rows
+  // without the field are treated as trust by default (existing data
+  // is virtually all trust deposits from Square + paralegal manual
+  // entries via the trust dialog).
+  const [journalScope, setJournalScope] = useState<'trust' | 'general'>('trust');
 
   // State: Ledger View
   const [selectedLedgerClient, setSelectedLedgerClient] = useState<ClientFile | null>(null);
@@ -370,6 +405,21 @@ export default function TrustAccountingPage() {
       return;
     }
 
+    // LSO By-Law 9 s. 18(8): every trust→general transfer MUST be
+    // supported by an invoice or fee bill that has been delivered (or
+    // made available) to the client. The reference number is how the
+    // journal entry links to that supporting document — without it,
+    // the transfer is non-compliant and the entry is unreadable on a
+    // Law Society audit. Block submission and ask for the invoice ref.
+    if (transactionType === 'transfer' && !transactionRefNumber.trim()) {
+      setTransactionError(
+        'Reference number is required for Trust→General transfers ' +
+        '(LSO By-Law 9 s. 18(8)). Enter the invoice or fee-bill number ' +
+        'that authorises this transfer.'
+      );
+      return;
+    }
+
     setSavingTransaction(true);
     setTransactionError(null);
 
@@ -381,9 +431,17 @@ export default function TrustAccountingPage() {
         return;
       }
 
+      // journalType discriminator so the Trust vs General views can
+      // filter correctly. Transfers, deposits, withdrawals, billings,
+      // refunds, disbursements that the paralegal records via this
+      // dialog are all trust-side entries (the dialog is on the Trust
+      // Accounting page). The DisburseFundsPage handles general-side.
+      const journalType: 'trust' | 'general' = 'trust';
+
       const newRecord: Partial<FinancialRecord> = {
         clientId: selectedClient.clientId,
         fileId: selectedClient._id,
+        journalType,
         transactionType,
         amount,
         transactionDate: new Date(transactionDate),
@@ -506,8 +564,28 @@ export default function TrustAccountingPage() {
   // FILTERED DATA
   // ============================================================
 
+  // Discriminator: legacy rows without journalType default to 'trust'
+  // (backward-compat with data created before the trust/general split).
+  const recordJournalType = (r: any): 'trust' | 'general' => {
+    if (r.journalType === 'general') return 'general';
+    return 'trust';
+  };
+
+  // Build the chronological running-balance map ONCE per journal
+  // scope (trust vs general) so each scope has its own correct
+  // running total. Use it to stamp the historical balance onto each
+  // displayed row regardless of how the user has filtered/sorted.
+  const journalRunningBalances = buildRunningBalances(
+    financialRecords.filter(r =>
+      r.transactionType &&
+      r.transactionType !== 'reconciliation' &&
+      recordJournalType(r) === journalScope
+    )
+  );
+
   const journalRecords = financialRecords
     .filter(r => r.transactionType && r.transactionType !== 'reconciliation')
+    .filter(r => recordJournalType(r) === journalScope)
     .filter(r => {
       if (journalDateFrom && new Date(r.transactionDate || 0) < new Date(journalDateFrom)) return false;
       if (journalDateTo && new Date(r.transactionDate || 0) > new Date(journalDateTo)) return false;
@@ -823,9 +901,48 @@ export default function TrustAccountingPage() {
           </TabsContent>
 
           {/* ============================================================
-              TAB 2: TRANSACTION JOURNAL (FORM 9A)
+              TAB 2: TRANSACTION JOURNAL — Trust Account (Form 9A) /
+              General Account (Form 9D equivalent). LSO By-Law 9
+              requires these to be kept as separate books of account
+              even when stored in the same database. The toggle below
+              switches the view + the running balance computation.
               ============================================================ */}
           <TabsContent value="journal" className="space-y-6">
+            {/* Trust vs General toggle */}
+            <div className="bg-white rounded-lg border border-foreground/10 p-4 flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setJournalScope('trust')}
+                  className={
+                    'px-4 py-2 rounded-md text-sm font-medium transition-colors ' +
+                    (journalScope === 'trust'
+                      ? 'bg-primary text-white shadow'
+                      : 'bg-foreground/5 text-foreground/70 hover:bg-foreground/10')
+                  }
+                >
+                  Trust Account Journal (Form 9A)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setJournalScope('general')}
+                  className={
+                    'px-4 py-2 rounded-md text-sm font-medium transition-colors ' +
+                    (journalScope === 'general'
+                      ? 'bg-primary text-white shadow'
+                      : 'bg-foreground/5 text-foreground/70 hover:bg-foreground/10')
+                  }
+                >
+                  General Account Journal (Form 9D)
+                </button>
+              </div>
+              <p className="text-xs text-foreground/60 max-w-md">
+                {journalScope === 'trust'
+                  ? 'Trust account movements only — receipts, disbursements, and transfers to General. Money held on behalf of clients.'
+                  : 'General account movements — paralegal pay-outs, office expenses, fees billed and collected directly, refunds from general.'}
+              </p>
+            </div>
+
             {/* Filters */}
             <div className="bg-white rounded-lg border border-foreground/10 p-6 space-y-4">
               <h3 className="font-heading text-lg font-bold text-foreground">Filters & Search</h3>
@@ -935,11 +1052,14 @@ export default function TrustAccountingPage() {
                         </td>
                       </tr>
                     ) : (
-                      journalRecords.map((record, idx) => {
+                      journalRunningBalances && journalRecords.map((record, idx) => {
                         const client = clientFiles.find(f => f.clientId === record.clientId);
                         const sign = getTransactionSign(record.transactionType);
                         const amount = record.amount || 0;
-                        const balance = calculateBalance(journalRecords, idx);
+                        // Chronological running balance pre-computed once
+                        // for the whole journal; same value regardless of
+                        // how the table is sorted/filtered for display.
+                        const balance = journalRunningBalances.get(record._id || '') ?? 0;
 
                         return (
                           <tr key={record._id} className="hover:bg-foreground/5 transition-colors">
@@ -1550,12 +1670,23 @@ export default function TrustAccountingPage() {
               />
             </div>
 
-            {/* Reference Number */}
+            {/* Reference Number — REQUIRED for Trust→General transfers
+                under LSO By-Law 9 s. 18(8) (every transfer must
+                reference the invoice or fee bill that authorises it). */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Reference Number</label>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Reference Number
+                {transactionType === 'transfer' && (
+                  <span className="text-red-600"> * required (invoice or fee-bill number)</span>
+                )}
+              </label>
               <Input
                 type="text"
-                placeholder="e.g., Cheque #1234, Invoice #INV-001"
+                placeholder={
+                  transactionType === 'transfer'
+                    ? 'Invoice or fee-bill number authorising this transfer'
+                    : 'e.g., Cheque #1234, Invoice #INV-001'
+                }
                 value={transactionRefNumber}
                 onChange={e => setTransactionRefNumber(e.target.value)}
                 className="font-paragraph"

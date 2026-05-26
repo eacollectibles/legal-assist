@@ -5949,7 +5949,12 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
 
   const loadRecords = async () => {
     try {
-      const result = await BaseCrudService.getAll<any>('financialrecords');
+      // ⚠ getAll() defaults to a 50-row page — must pass { limit }
+      // explicitly when scanning the whole financialrecords collection,
+      // otherwise a payment that lives past row 50 is invisible here
+      // and G. Financial Records will say "No records logged" even
+      // though the 9A Trust Journal has the entry.
+      const result = await BaseCrudService.getAll<any>('financialrecords', undefined, { limit: 1000 });
       const fileRecords = result.items
         .filter((r: any) => r.fileId === file._id)
         .map((r: any) => ({

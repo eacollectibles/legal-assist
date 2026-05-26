@@ -25,7 +25,7 @@ import {
   Link2, Settings, ChevronLeft, ChevronRight, Search,
   Bell, Phone, Menu, X, LogOut, Clock, AlertTriangle,
   CheckCircle, TrendingUp, Briefcase, Shield, ExternalLink,
-  DollarSign, CreditCard, BarChart3,
+  DollarSign, CreditCard, BarChart3, ArrowUpRight, ShieldCheck,
 } from 'lucide-react';
 import { ParalegalDashboardProvider, useParalegalDashboard } from './paralegal-dashboard/ParalegalDashboardContext';
 import { BaseCrudService } from '@/integrations';
@@ -57,6 +57,8 @@ const EXTERNAL_MODULES: Record<string, string> = {
   clientfiles: '/admin/client-files',
   trustaccounting: '/admin/trust-accounting',
   payments: '/admin/payments',
+  disbursefunds: '/admin/disburse-funds',
+  monthendreconciliation: '/admin/month-end-reconciliation',
   timebilling: '/admin/time-billing',
   deadlines: '/admin/deadlines',
   tickler: '/admin/tickler',
@@ -288,6 +290,8 @@ function DashboardShell() {
     { id: 'clientfiles', label: 'Client Files', icon: Scale, section: 'compliance' },
     { id: 'trustaccounting', label: 'Trust Accounting', icon: DollarSign, section: 'compliance' },
     { id: 'payments', label: 'Payments', icon: CreditCard, section: 'compliance' },
+    { id: 'disbursefunds', label: 'Disburse Funds', icon: ArrowUpRight, section: 'compliance' },
+    { id: 'monthendreconciliation', label: 'Month-End Reconciliation', icon: ShieldCheck, section: 'compliance' },
     { id: 'timebilling', label: 'Time & Billing', icon: Clock, section: 'compliance' },
     { id: 'deadlines', label: 'Deadlines', icon: AlertTriangle, section: 'compliance' },
     { id: 'tickler', label: 'Tasks / Tickler', icon: CheckCircle, section: 'compliance' },
