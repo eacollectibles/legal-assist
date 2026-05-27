@@ -12,7 +12,7 @@
  * and displayed with proper running balances and audit trails.
  */
 import { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, Plus, Download, AlertTriangle, TrendingUp, TrendingDown, Eye, Filter, Search, Loader2, AlertCircle, CheckCircle, DollarSign, FileText, Trash2, CalendarClock } from 'lucide-react';
+import { ChevronLeft, Plus, Download, AlertTriangle, TrendingUp, TrendingDown, Eye, Filter, Search, Loader2, AlertCircle, CheckCircle, DollarSign, FileText, Trash2, CalendarClock, RefreshCw } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -212,6 +212,12 @@ export default function TrustAccountingPage() {
   const [savingTransaction, setSavingTransaction] = useState(false);
   const [transactionError, setTransactionError] = useState<string | null>(null);
 
+  // State: One-time backfill of legacy financialrecords rows (rows
+  // created before the journalType / fileId-fallback columns landed).
+  // The button on the Overview tab runs the migration on demand.
+  const [isBackfilling, setIsBackfilling] = useState(false);
+  const [backfillReport, setBackfillReport] = useState<string | null>(null);
+
   // State: Journal Filters
   const [journalDateFrom, setJournalDateFrom] = useState('');
   const [journalDateTo, setJournalDateTo] = useState(new Date().toISOString().split('T')[0]);
@@ -337,9 +343,21 @@ export default function TrustAccountingPage() {
         const amount = record.amount || 0;
         const sign = getTransactionSign(record.transactionType);
 
-        if (sign === '+') {
+        // Use the SAME sign convention as the journal's
+        // buildRunningBalances: '+' is a trust receipt (credit to
+        // trust), '-' is a trust withdrawal/disbursement/refund
+        // (debit to trust), and '~' (trust→general transfer) is ALSO
+        // a debit to the trust account. This way the per-client
+        // ledger total cross-foots to the journal total — an LSO
+        // By-Law 9 reconciliation requirement.
+        // (We restrict to trust-side rows here; general-side rows
+        // belong to the General Account journal and don't move the
+        // trust balance.)
+        if (record.journalType && record.journalType !== 'trust') {
+          // Skip non-trust rows for the per-client TRUST balance.
+        } else if (sign === '+') {
           balance.balance += amount;
-        } else if (sign === '-') {
+        } else if (sign === '-' || sign === '~') {
           balance.balance -= amount;
         }
 
@@ -398,6 +416,136 @@ export default function TrustAccountingPage() {
   // ============================================================
   // HANDLERS
   // ============================================================
+
+  /**
+   * One-time backfill of legacy financialrecords rows.
+   *
+   * Two columns landed on the financialrecords schema AFTER many
+   * rows had already been written:
+   *   - `journalType` ('trust' | 'general'): discriminator for the
+   *     Trust journal (9A) vs General journal (9D) UI split. Rows
+   *     without this field are invisible to the journal scope filter
+   *     and miss validators that key off it.
+   *   - `fileId`: links the financialrecords row to a specific
+   *     clientfile so the G. Financial Records section on the client
+   *     file page picks the row up. Rows with `fileId: null` are
+   *     invisible there even when `clientId` is set.
+   *
+   * This migration:
+   *   1. Loads all financialrecords + clientfiles.
+   *   2. For each record missing `journalType`, infers it from the
+   *      transactionType (deposits/withdrawals/transfers/reconciliation
+   *      → 'trust'; billing/payment/disbursement → 'trust' by default
+   *      since these are legacy rows pre-dating the general account UI,
+   *      and were all stored against the trust journal). Paralegal can
+   *      manually re-tag any rows that should be 'general' afterward.
+   *   3. For each record missing `fileId` but with a `clientId`, looks
+   *      up the most recent active file for that client and patches.
+   *
+   * Idempotent: running it twice is safe — only patches rows missing
+   * the relevant field.
+   */
+  const handleBackfillLegacy = async () => {
+    if (!window.confirm(
+      'Run one-time backfill on legacy financialrecords?\n\n' +
+      'This will:\n' +
+      '  • Add `journalType: "trust"` to rows that are missing it (legacy rows).\n' +
+      '  • Set `fileId` on rows that have a clientId but no fileId, using the most recent active file for that client.\n\n' +
+      'Safe and idempotent — only patches missing fields. Continue?'
+    )) {
+      return;
+    }
+
+    setIsBackfilling(true);
+    setBackfillReport(null);
+
+    try {
+      const trustTransactionTypes = new Set([
+        'trust_deposit', 'trust_withdrawal', 'transfer',
+        'billing', 'payment', 'disbursement', 'refund',
+        'reconciliation',
+      ]);
+
+      let fileIdPatched = 0;
+      let journalTypePatched = 0;
+      let skipped = 0;
+      let failed = 0;
+      const failures: string[] = [];
+
+      // Build a clientId → most-recent-active-file map up front so
+      // we don't do N×M lookups in the loop.
+      const filesByClient = new Map<string, ClientFile>();
+      for (const file of clientFiles) {
+        if (!file.clientId) continue;
+        const existing = filesByClient.get(file.clientId);
+        const fileDate = new Date((file as any)._createdDate || 0).getTime();
+        const existingDate = existing
+          ? new Date((existing as any)._createdDate || 0).getTime()
+          : -1;
+        // Prefer active files; tie-break by recency.
+        const fileActive = (file as any).status === 'active';
+        const existingActive = existing
+          ? (existing as any).status === 'active'
+          : false;
+        if (!existing
+            || (fileActive && !existingActive)
+            || (fileActive === existingActive && fileDate > existingDate)) {
+          filesByClient.set(file.clientId, file);
+        }
+      }
+
+      for (const record of financialRecords) {
+        const patch: Record<string, unknown> = {};
+        const txnType = (record as any).transactionType as string | undefined;
+        const journalType = (record as any).journalType as string | undefined;
+        const fileId = (record as any).fileId as string | undefined;
+        const clientId = (record as any).clientId as string | undefined;
+
+        if (!journalType && txnType && trustTransactionTypes.has(txnType)) {
+          patch.journalType = 'trust';
+        }
+        if (!fileId && clientId) {
+          const fallbackFile = filesByClient.get(clientId);
+          if (fallbackFile?._id) {
+            patch.fileId = fallbackFile._id;
+          }
+        }
+
+        if (Object.keys(patch).length === 0) {
+          skipped++;
+          continue;
+        }
+
+        try {
+          await BaseCrudService.update('financialrecords', { _id: record._id, ...patch });
+          if (patch.fileId) fileIdPatched++;
+          if (patch.journalType) journalTypePatched++;
+        } catch (err: any) {
+          failed++;
+          failures.push(`${record._id}: ${err?.message || String(err)}`);
+        }
+      }
+
+      const lines = [
+        `Backfill complete.`,
+        `• journalType added to ${journalTypePatched} record(s)`,
+        `• fileId added to ${fileIdPatched} record(s)`,
+        `• ${skipped} record(s) already had both fields (skipped)`,
+      ];
+      if (failed > 0) {
+        lines.push(`• ${failed} record(s) FAILED to update`);
+        lines.push(...failures.slice(0, 5).map(f => `  ${f}`));
+      }
+      setBackfillReport(lines.join('\n'));
+
+      // Reload data so the UI reflects the patched rows.
+      await loadData();
+    } catch (err: any) {
+      setBackfillReport(`Backfill failed at top level: ${err?.message || String(err)}`);
+    } finally {
+      setIsBackfilling(false);
+    }
+  };
 
   const handleAddTransaction = async () => {
     if (!selectedClient || !transactionAmount || !transactionDate) {
@@ -809,6 +957,50 @@ export default function TrustAccountingPage() {
                 </div>
               </div>
             )}
+
+            {/* Legacy-records backfill — one-time migration the
+                paralegal runs after the trust/general journal split +
+                fileId-fallback fix ships. Idempotent: only patches
+                rows that are missing the new fields. */}
+            <div className="bg-white border border-amber-200 rounded-lg p-6">
+              <div className="flex items-start justify-between flex-wrap gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="bg-amber-100 rounded-full p-2 flex-shrink-0">
+                    <RefreshCw className="w-5 h-5 text-amber-700" />
+                  </div>
+                  <div>
+                    <p className="font-heading font-bold text-foreground">Backfill Legacy Records</p>
+                    <p className="text-sm text-foreground/70 mt-1 max-w-xl">
+                      One-time migration that adds <code className="px-1 bg-foreground/5 rounded text-xs">journalType</code> and <code className="px-1 bg-foreground/5 rounded text-xs">fileId</code> to financialrecords rows created before those columns existed. Run this once after deploying the LSO compliance update so the client file Financial Records section and the Month-End Wizard validators pick up your existing data. Safe to run twice.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  onClick={handleBackfillLegacy}
+                  disabled={isBackfilling}
+                  variant="outline"
+                  className="border-amber-400 text-amber-800 hover:bg-amber-50"
+                >
+                  {isBackfilling ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                      Backfilling…
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Run backfill
+                    </>
+                  )}
+                </Button>
+              </div>
+              {backfillReport && (
+                <pre className="mt-4 p-3 bg-foreground/5 border border-foreground/10 rounded text-xs font-mono whitespace-pre-wrap text-foreground/80">
+                  {backfillReport}
+                </pre>
+              )}
+            </div>
 
             {/* Client Trust Balances Table */}
             <div className="bg-white rounded-lg border border-foreground/10 overflow-hidden">

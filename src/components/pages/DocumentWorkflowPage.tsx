@@ -172,7 +172,7 @@ function classifyTemplateArea(template: DocumentTemplate): string {
     `${template.templateName || ''} ${template.templateType || ''}`.toLowerCase();
   // Order matters here - more specific keywords first.
   if (
-    /\bltb\b|landlord|tenant|n4|n5|n6|n7|n8|n11|n12|n13|l1\b|l2\b|t1\b|t2\b|t5\b|t6\b|residential tenanc/.test(
+    /\bltb\b|landlord|tenant|n4|n5|n6|n7|n8|n11|n12|n13|l1\b|l2\b|t1\b|t2\b|t5\b|t6\b|residential tenanc|cash[\s-]for[\s-]keys|cash for keys|buy[\s-]?out/.test(
       text
     )
   ) {
@@ -256,6 +256,21 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const [contingencyPercent, setContingencyPercent] = useState('');
   // New: nature-of-matter / nature-of-charge for the generated document.
   const [natureOfMatter, setNatureOfMatter] = useState('');
+  // ----------------------------------------------------------------
+  // LTB Cash-for-Keys retainer — per-matter inputs.
+  // Only surfaced in the dialog when the selected template is a
+  // Cash-for-Keys / Buy-Out template (see `isCashForKeys` below).
+  // These feed the token-substitution block at line ~1308:
+  //   - cfkSettlementFloor   → {SETTLEMENT_FLOOR}
+  //   - cfkRentalUnitOverride → {RENTAL_UNIT_ADDRESS} override
+  //   - cfkLandlordRep        → {LANDLORD_REPRESENTATIVE}
+  //   - cfkFeeOverride        → {CONTINGENCY_FEE_AMOUNT} override
+  // All four reset when the Generate dialog closes (see below).
+  // ----------------------------------------------------------------
+  const [cfkSettlementFloor, setCfkSettlementFloor] = useState('');
+  const [cfkRentalUnitOverride, setCfkRentalUnitOverride] = useState('');
+  const [cfkLandlordRep, setCfkLandlordRep] = useState('');
+  const [cfkFeeOverride, setCfkFeeOverride] = useState('');
   // Generation in-flight + user-visible error so the click isn't silent.
   const [isGenerating, setIsGenerating] = useState(false);
   const [generateError, setGenerateError] = useState<string | null>(null);
@@ -1305,6 +1320,152 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // unwired, causing "—, Ontario —" to render when no city was set).
       documentContent = documentContent.replace(/\{IS_CLIENT_CITY_EMPTY\}/g, flag(!cityValue));
 
+      // ============================================================
+      // LTB Cash-for-Keys Negotiation Retainer template
+      // (templates/ltb-cash-for-keys-retainer-template.html)
+      // ------------------------------------------------------------
+      // Tokens unique to the cash-for-keys retainer. Defaults to JFD
+      // paralegal info and $500.00 contingency fee per the user spec.
+      // The rental unit IS the client's home address for cash-for-keys
+      // matters (tenant being bought out of their home), so we mirror
+      // the LTB Tenant wiring above for the address fields.
+      // ============================================================
+      // {TODAY_DATE} and {FILE_NUMBER} aliases. {DATE} is already
+      // substituted above (line ~941) so re-running .replace here is
+      // a no-op for any template that uses {DATE} instead. We assign
+      // {TODAY_DATE} from the same value for templates that prefer
+      // the more explicit name.
+      documentContent = documentContent.replace(
+        /\{TODAY_DATE\}/g,
+        format(new Date(), 'MMMM d, yyyy')
+      );
+      documentContent = documentContent.replace(/\{FILE_NUMBER\}/g, fileRefValue || '—');
+      documentContent = documentContent.replace(
+        /\{FILE_OPENED_DATE\}/g,
+        format(new Date(), 'MMMM d, yyyy')
+      );
+
+      // {RENTAL_UNIT_ADDRESS} — fully composed single-line address
+      // for the rental unit. For tenant-side matters this is the
+      // client's home address. Falls back to a sensible em-dash if
+      // nothing is on file. (The companion {IS_RENTAL_UNIT_ADDRESS_EMPTY}
+      // hides the row when no rental address is available at all.)
+      //
+      // For Cash-for-Keys matters the paralegal can optionally enter
+      // a different rental unit address in the dialog (e.g. if the
+      // tenant has already moved). When `cfkRentalUnitOverride` is
+      // set, it takes precedence over the composed mailing address.
+      const rentalUnitAddressLine = (() => {
+        const parts: string[] = [];
+        if (addressValue) parts.push(addressValue);
+        if (unitValue) parts.push(`Unit ${unitValue}`);
+        const cityProvPost = [
+          cityValue,
+          provinceValue || 'Ontario',
+          postalValue,
+        ]
+          .filter((s) => s && s.trim() !== '' && s.trim() !== '—')
+          .join(', ');
+        if (cityProvPost) parts.push(cityProvPost);
+        return parts.join(', ');
+      })();
+      const cfkRentalUnit =
+        cfkRentalUnitOverride.trim() || rentalUnitAddressLine;
+      documentContent = documentContent.replace(
+        /\{RENTAL_UNIT_ADDRESS\}/g,
+        cfkRentalUnit || '—'
+      );
+      documentContent = documentContent.replace(
+        /\{IS_RENTAL_UNIT_ADDRESS_EMPTY\}/g,
+        flag(!cfkRentalUnit.trim())
+      );
+
+      // {LANDLORD_REPRESENTATIVE} — explicit dialog input. Hidden
+      // (data-empty="true") if the paralegal left the field blank.
+      const cfkLandlordRepValue = cfkLandlordRep.trim();
+      documentContent = documentContent.replace(
+        /\{LANDLORD_REPRESENTATIVE\}/g,
+        cfkLandlordRepValue
+      );
+      documentContent = documentContent.replace(
+        /\{IS_LANDLORD_REPRESENTATIVE_EMPTY\}/g,
+        flag(!cfkLandlordRepValue)
+      );
+
+      // {CONTINGENCY_FEE_AMOUNT} — defaults to "$500.00" per the
+      // user specification (cash-for-keys retainer). The amount is
+      // HST-inclusive. The paralegal can override this in the dialog
+      // for higher-value matters (e.g. "$1,500" on a $30K settlement).
+      const cfkFee = cfkFeeOverride.trim() || '$500.00';
+      documentContent = documentContent.replace(
+        /\{CONTINGENCY_FEE_AMOUNT\}/g,
+        cfkFee
+      );
+
+      // {SETTLEMENT_FLOOR} — the tenant's minimum acceptable settlement.
+      // Resolution order:
+      //   1. Explicit dialog input (cfkSettlementFloor).
+      //   2. Best-effort extraction from natureOfMatter (e.g. the
+      //      paralegal typed "$5,000 floor" into the nature field).
+      //   3. Fill line for hand-entry on the printed/signed copy.
+      const cfkFloor =
+        cfkSettlementFloor.trim() ||
+        (natureOfMatter || '').match(/\$\s?[\d,]+(?:\.\d{2})?/)?.[0] ||
+        '$_______________';
+      documentContent = documentContent.replace(
+        /\{SETTLEMENT_FLOOR\}/g,
+        cfkFloor
+      );
+
+      // {DISBURSEMENT_LIST} + {IS_DISBURSEMENTS_EMPTY} — anticipated
+      // disbursements for the matter. No dedicated capture; default
+      // to empty/hidden.
+      documentContent = documentContent.replace(/\{DISBURSEMENT_LIST\}/g, '—');
+      documentContent = documentContent.replace(
+        /\{IS_DISBURSEMENTS_EMPTY\}/g,
+        flag(true)
+      );
+
+      // {CONFLICT_CHECK_DATE} — assume the conflict check is run on
+      // file-open. Use today's date as the default.
+      documentContent = documentContent.replace(
+        /\{CONFLICT_CHECK_DATE\}/g,
+        format(new Date(), 'MMMM d, yyyy')
+      );
+
+      // {PARALEGAL_PHONE} — the firm's primary line. The cash-for-keys
+      // template surfaces this in the Communications section.
+      documentContent = documentContent.replace(
+        /\{PARALEGAL_PHONE\}/g,
+        signParalegal?.phone || '226-272-5153'
+      );
+
+      // {PARALEGAL_SIGNATURE_IMAGE} — alias for {PARALEGAL_SIGNATURE}
+      // that this template uses. If the auto-sign block was emitted
+      // above (line ~1093), {PARALEGAL_SIGNATURE} is already filled;
+      // otherwise it has been replaced with a blank line. Mirror that
+      // value onto the IMAGE alias by replacing the alias with the
+      // exact same content the SIGNATURE got.
+      if (autoSignAsParalegal && signParalegal) {
+        const cursiveBlock =
+          `<span style="font-family:'Allura','Segoe Script','Brush Script MT',cursive;` +
+          `font-size:32px;color:#1F2D5C;line-height:1.1;display:inline-block;` +
+          `padding:4px 0 0;">${signParalegal.displayName}</span>`;
+        documentContent = documentContent.replace(
+          /\{PARALEGAL_SIGNATURE_IMAGE\}/g,
+          cursiveBlock
+        );
+      } else {
+        documentContent = documentContent.replace(
+          /\{PARALEGAL_SIGNATURE_IMAGE\}/g,
+          '<span style="display:inline-block;border-bottom:1px solid #000;min-width:240px;height:24px;"></span>'
+        );
+      }
+
+      // NOTE: {IS_CLIENT_ADDRESS_EMPTY} is already substituted above
+      // (line ~1164) so the cash-for-keys template's "Mailing Address
+      // (if different)" row gets the correct data-empty flag.
+
       // Generate PDF from content
       const docName = documentName || `${template.templateName} - ${client.firstName} ${client.lastName}`;
       const pdfDataUrl = await generatePDF(documentContent, docName);
@@ -1460,6 +1621,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       setSpecialProvisions([]);
       setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
       setAutoSignAsParalegal(false);
+      // Reset Cash-for-Keys per-matter inputs
+      setCfkSettlementFloor('');
+      setCfkRentalUnitOverride('');
+      setCfkLandlordRep('');
+      setCfkFeeOverride('');
       // Reset payment-arrangement fields for next doc
       setPaymentArrangementEnabled(false);
       setPaymentArrangementType('full');
@@ -2102,6 +2268,11 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                   setGenerateError(null);
                   setSelectedParalegalId(DEFAULT_PARALEGAL_ID);
                   setAutoSignAsParalegal(false);
+                  // Reset Cash-for-Keys per-matter inputs
+                  setCfkSettlementFloor('');
+                  setCfkRentalUnitOverride('');
+                  setCfkLandlordRep('');
+                  setCfkFeeOverride('');
                 }
               }}>
                 <DialogTrigger asChild>
@@ -2404,6 +2575,113 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                             </div>
                           )}
 
+                        </div>
+                      );
+                    })()}
+
+                    {/* ---- Cash-for-Keys retainer — per-matter inputs ---- */}
+                    {/* Surfaced only when the selected template is a       */}
+                    {/* Cash-for-Keys / Buy-Out retainer. Mirrors the       */}
+                    {/* keyword check in classifyTemplateArea() at L175.    */}
+                    {(() => {
+                      const selectedTemplate = templates.find(
+                        (t) => t._id === selectedTemplateId
+                      );
+                      const nameLower = (
+                        selectedTemplate?.templateName || ''
+                      ).toLowerCase();
+                      const isCashForKeys =
+                        nameLower.includes('cash-for-keys') ||
+                        nameLower.includes('cash for keys') ||
+                        nameLower.includes('buy-out') ||
+                        nameLower.includes('buyout');
+                      if (!isCashForKeys) return null;
+                      return (
+                        <div className="space-y-3 p-4 border-2 border-amber-200 bg-amber-50 rounded-lg">
+                          <p className="text-sm font-semibold text-amber-900">
+                            Cash-for-Keys details
+                          </p>
+
+                          {/* Settlement Floor (required, but soft-fail) */}
+                          <div className="space-y-1">
+                            <Label htmlFor="cfkSettlementFloor">
+                              Settlement Floor (CAD)
+                            </Label>
+                            <Input
+                              id="cfkSettlementFloor"
+                              value={cfkSettlementFloor}
+                              onChange={(e) =>
+                                setCfkSettlementFloor(e.target.value)
+                              }
+                              placeholder="e.g., $5,000.00 — minimum amount the tenant will accept"
+                            />
+                            <p className="text-xs text-amber-800">
+                              The paralegal cannot agree to anything below
+                              this without your client&rsquo;s written consent.
+                            </p>
+                            {!cfkSettlementFloor.trim() && (
+                              <p className="text-xs text-yellow-800 bg-yellow-100 border border-yellow-300 rounded px-2 py-1 mt-1">
+                                Recommended &mdash; best practice to set the floor
+                                before sending the retainer.
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Rental Unit Address override */}
+                          <div className="space-y-1">
+                            <Label htmlFor="cfkRentalUnitOverride">
+                              Rental Unit Address (only if different from
+                              client&rsquo;s mailing address)
+                            </Label>
+                            <Input
+                              id="cfkRentalUnitOverride"
+                              value={cfkRentalUnitOverride}
+                              onChange={(e) =>
+                                setCfkRentalUnitOverride(e.target.value)
+                              }
+                              placeholder="Leave blank to use client's mailing address"
+                            />
+                            <p className="text-xs text-amber-800">
+                              If the tenant has already moved to a new
+                              address, enter the unit they&rsquo;re being paid to
+                              vacate here.
+                            </p>
+                          </div>
+
+                          {/* Landlord's Representative */}
+                          <div className="space-y-1">
+                            <Label htmlFor="cfkLandlordRep">
+                              Landlord&rsquo;s Representative (if any)
+                            </Label>
+                            <Input
+                              id="cfkLandlordRep"
+                              value={cfkLandlordRep}
+                              onChange={(e) =>
+                                setCfkLandlordRep(e.target.value)
+                              }
+                              placeholder="e.g., property manager, opposing paralegal, leasing agent"
+                            />
+                          </div>
+
+                          {/* Override Contingency Fee */}
+                          <div className="space-y-1">
+                            <Label htmlFor="cfkFeeOverride">
+                              Override Contingency Fee Amount (optional)
+                            </Label>
+                            <Input
+                              id="cfkFeeOverride"
+                              value={cfkFeeOverride}
+                              onChange={(e) =>
+                                setCfkFeeOverride(e.target.value)
+                              }
+                              placeholder="Defaults to $500.00 if blank"
+                            />
+                            <p className="text-xs text-amber-800">
+                              Use this for higher-value matters (e.g.,
+                              $1,500 from a $30K settlement). Leave blank
+                              for the standard $500 fee.
+                            </p>
+                          </div>
                         </div>
                       );
                     })()}

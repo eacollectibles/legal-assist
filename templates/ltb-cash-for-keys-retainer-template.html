@@ -60,7 +60,10 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
    except the first which follows the cover naturally. */
 .s { page-break-before: always; break-before: page; padding-top: 8px; }
 .page-break-before { page-break-before: always; break-before: page; }
-.end-marker { position: relative; height: 80px; margin: 22px 0 0; border: 1px dashed var(--line-2); border-radius: 4px; background: #fff; overflow: hidden; }
+/* End-of-section marker must stay with the preceding content — never
+   land as an orphan on its own page. The `break-before: avoid-page`
+   prevents a renderer from inserting a page break right before it. */
+.end-marker { position: relative; height: 56px; margin: 14px 0 0; border: 1px dashed var(--line-2); border-radius: 4px; background: #fff; overflow: hidden; page-break-before: avoid; break-before: avoid-page; }
 .end-marker .end-stroke { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
 .end-marker .end-label { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: #fff; padding: 4px 10px; border: 1px solid var(--line); border-radius: 3px; font: 600 9.5px/1 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; z-index: 2; white-space: nowrap; text-transform: uppercase; }
 .cover { min-height: 980px; padding: 0 0 24px; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
@@ -126,7 +129,12 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 .exclusions-box ul li { font-size: 12.5px; color: var(--ink-2); margin: 0 0 4px; }
 .exclusions-box ul li::marker { color: var(--danger); }
 .exclusions-box .trigger { margin-top: 12px; padding: 12px 14px; background: #fff; border: 1.5px dashed var(--danger); border-radius: 6px; }
-.exclusions-box .trigger strong { color: var(--danger); display: block; font: 700 11px/1.2 Inter, sans-serif; letter-spacing: 0.03em; margin-bottom: 6px; text-transform: uppercase; }
+/* Only the FIRST strong (the heading) renders as a block label; any
+   inline <strong> inside <p> stays inline and inherits paragraph
+   styling so emphasized phrases don't each get forced to their own
+   uppercase red line. */
+.exclusions-box .trigger > strong:first-child { color: var(--danger); display: block; font: 700 11px/1.2 Inter, sans-serif; letter-spacing: 0.03em; margin-bottom: 6px; text-transform: uppercase; }
+.exclusions-box .trigger p strong { font-weight: 600; color: inherit; }
 .exclusions-box .trigger p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
 /* §5 — Settlement floor card. Gold-bordered. */
 .floor-card { margin: 14px 0; padding: 16px 20px; background: var(--bg-warm); border-left: 4px solid var(--gold); border: 1.5px solid var(--gold); border-radius: 8px; }
@@ -135,13 +143,17 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 .floor-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-2); }
 .floor-card p:last-child { margin-bottom: 0; }
 /* §6 — Fee card. Highlight that $500 only comes out of settlement. */
-.fee-card { margin: 14px 0; padding: 16px 20px; background: var(--bg-warm); border-left: 4px solid var(--gold); border-radius: 6px; }
-.fee-card .label-strip { display: inline-block; padding: 4px 10px; margin-bottom: 10px; background: var(--gold); color: #fff; border-radius: 3px; font: 600 11px/1.2 Inter, sans-serif; letter-spacing: 0.01em; text-transform: uppercase; }
-.fee-card h3 { margin: 0 0 6px; font-size: 15px; }
-.fee-card .fee-amount { font: 700 24px/1.2 Inter, sans-serif; color: var(--navy); margin: 4px 0 6px; }
-.fee-card .fee-sub { font: italic 500 12px/1.3 Inter, sans-serif; color: var(--mute); margin-bottom: 8px; }
-.fee-card h4 { margin-top: 12px; }
-.fee-card p { font-size: 12.5px; color: var(--ink-2); }
+/* Tightened so the full fee card + 4-bullet termination list + the
+   end-of-section marker all fit on a single page. */
+.fee-card { margin: 10px 0; padding: 12px 18px; background: var(--bg-warm); border-left: 4px solid var(--gold); border-radius: 6px; }
+.fee-card .label-strip { display: inline-block; padding: 3px 10px; margin-bottom: 6px; background: var(--gold); color: #fff; border-radius: 3px; font: 600 10.5px/1.2 Inter, sans-serif; letter-spacing: 0.01em; text-transform: uppercase; }
+.fee-card h3 { margin: 0 0 2px; font-size: 14px; }
+.fee-card .fee-amount { font: 700 20px/1.15 Inter, sans-serif; color: var(--navy); margin: 0 0 3px; }
+.fee-card .fee-sub { font: italic 500 11.5px/1.3 Inter, sans-serif; color: var(--mute); margin-bottom: 4px; }
+.fee-card h4 { margin: 8px 0 2px; font-size: 12px; }
+.fee-card p { font-size: 12px; color: var(--ink-2); margin: 0 0 5px; }
+.fee-card ul { margin: 2px 0 4px 20px; }
+.fee-card ul li { font-size: 12px; margin: 0 0 2px; }
 .ack-list { margin: 14px 0 18px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-soft); }
 .ack-list h4 { margin: 0 0 8px; font: 700 12px/1.2 Inter, sans-serif; color: var(--navy); letter-spacing: 0.02em; }
 .ack-list .item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
@@ -218,6 +230,10 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
     <div class="cover-foot">
       <div class="left">Legal Assist Paralegal Services is licensed and insured by the Law Society of Ontario (LSO). This Agreement is governed by the laws of the Province of Ontario.</div>
       <div class="right"><small>Document</small>LTB&#8209;CFK&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Cash-for-Keys Retainer v1.0</div><div class="version" style="white-space:nowrap;">Last updated {TODAY_DATE}</div></div>
+    </div>
+    <div class="end-marker" aria-label="End of cover">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Cover &mdash; Continue to Section 1</span>
     </div>
   </section>
 
@@ -330,32 +346,27 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 
     <div class="exclusions-box">
       <span class="label-strip">Not Included &mdash; Read Carefully</span>
-      <h3>This Retainer does NOT authorize Legal Assist to do any of the following on the Tenant&rsquo;s behalf:</h3>
+      <h3>This Retainer covers cash-for-keys negotiation ONLY.</h3>
 
       <div class="not-included">
-        <p>LTB representation &mdash; categorically excluded:</p>
+        <p><strong>Anything else</strong> &mdash; that is, anything not directly related to negotiating and concluding a cash-for-keys agreement between the Tenant and the Landlord &mdash; <strong>is excluded from this Retainer and is not authorized</strong>.</p>
+
+        <p>For greater certainty, and without limiting the breadth of the foregoing exclusion, items that are <strong>not</strong> covered include (but are not limited to):</p>
         <ul>
-          <li><strong>Any representation at the Landlord and Tenant Board</strong> &mdash; no hearing attendance, no Case Management Hearing, no mediation attendance, no merits hearing, no application filing or response, no review motion under RTA s. 21.2 / LTB Rule 26.</li>
-          <li><strong>Drafting, filing, or responding to any LTB application</strong>, including but not limited to: L1 (non-payment of rent), L2 (termination/non-payment), L3 (uncontested termination), L4 (breach of mediated settlement), L9 (collect rent only), L10 (former tenant arrears), T1 (rebate), T2 (tenant rights), T3 (rent reduction), T5 (bad-faith N12/N13), T6 (maintenance), T7 (suite meter).</li>
-          <li><strong>Drafting, reviewing, serving, or responding to any LTB notice</strong>, including but not limited to: N4 (non-payment), N5 (interference/damage), N6 (illegal act), N7 (serious impairment), N8 (persistent late payment), N9 (tenant termination), N12 (landlord own use), N13 (demolition/conversion/repairs). The Tenant remains solely responsible for responding to any such notice within the strict statutory deadlines (some as short as <strong>5 days</strong>).</li>
-          <li><strong>Defending against an eviction</strong> at the LTB, including but not limited to seeking relief from eviction under RTA s. 83.</li>
-          <li><strong>Enforcement of an LTB order</strong> or filing for the Sheriff / Court Enforcement Office.</li>
+          <li>any representation, attendance, application, or response at the Landlord and Tenant Board;</li>
+          <li>drafting, reviewing, serving, or responding to any LTB notice or application (including any N-form or L-form / T-form);</li>
+          <li>court proceedings of any kind;</li>
+          <li>any matter unrelated to the cash-for-keys negotiation (for example: rent abatement, repairs, harassment, maintenance claims, deposit interest, or any other tenant-side claim under the RTA);</li>
+          <li>tax, accounting, financial, immigration, or independent legal advice; and</li>
+          <li>logistical support (housing search, movers, storage, etc.).</li>
         </ul>
 
-        <p>Other matters &mdash; categorically excluded:</p>
-        <ul>
-          <li><strong>Negotiating any matter unrelated to the cash-for-keys settlement</strong>, including but not limited to: rent abatement, repairs, harassment claims, T2 claims, T6 maintenance claims, return of last-month-rent deposit interest, illegal additional charges, or rent overpayments. If the Tenant believes any such claim exists, those claims should be discussed with the Paralegal separately and may require a separate retainer; otherwise, those claims may be <strong>released forever</strong> by signing the final Mutual Release (see Section 9).</li>
-          <li><strong>Court proceedings of any kind</strong>, including without limitation Small Claims Court (e.g., to enforce a signed Settlement the Landlord refuses to honour), the Superior Court of Justice, Divisional Court appeals or judicial review under RTA s. 210, and the Court of Appeal.</li>
-          <li><strong>Tax, accounting, or financial advice</strong> regarding the Settlement Proceeds (including possible effect on income tax, GST/HST, employment insurance, ODSP, Ontario Works, RGI subsidies, or any other government benefit).</li>
-          <li><strong>Immigration advice</strong> regarding loss of residence, change of address with IRCC, or related matters.</li>
-          <li><strong>Independent legal advice on the final Mutual Release.</strong> The Paralegal can draft and explain the Mutual Release but does <strong>not</strong> serve as &ldquo;independent&rdquo; counsel for the Tenant; the Tenant is strongly advised to obtain independent legal advice from a lawyer or a different paralegal before signing the final Mutual Release (see Section 9).</li>
-          <li><strong>Locating alternative housing</strong>, moving services, storage, or any logistical support related to the Tenant&rsquo;s move-out beyond the limited coordination described in Section 3.</li>
-        </ul>
+        <p>If the Tenant requires assistance with anything outside the scope of this Retainer, a <strong>separate written retainer</strong> is required. Any tenant-side claims that exist but are not negotiated as part of the cash-for-keys settlement may be <strong>released forever</strong> by signing the final Mutual Release &mdash; see Section 9.</p>
       </div>
 
       <div class="trigger">
         <strong>Automatic Termination Trigger</strong>
-        <p>If, at any time during the term of this Retainer, the Landlord (a) <strong>serves the Tenant with any LTB notice</strong> (including without limitation N4, N5, N6, N7, N8, N12, N13), <strong>OR</strong> (b) <strong>files any application at the LTB</strong> against the Tenant, <strong>OR</strong> (c) <strong>commences any court proceeding</strong> against the Tenant, <strong>this Retainer terminates automatically</strong> as of the date of service or filing. The Tenant must engage Legal Assist Paralegal Services <strong>or another licensed representative</strong> under a <strong>separate written retainer</strong> for any LTB or court matter. No fee is owed under this Retainer on automatic termination unless a Settlement was already in place; see Section 6.</p>
+        <p>If, at any time during the term of this Retainer, the Landlord (a) <strong>serves the Tenant with any LTB notice</strong>, <strong>OR</strong> (b) <strong>files any application at the LTB</strong> against the Tenant, <strong>OR</strong> (c) <strong>commences any court proceeding</strong> against the Tenant, <strong>this Retainer terminates automatically</strong> as of the date of service or filing. The Tenant must engage Legal Assist Paralegal Services <strong>or another licensed representative</strong> under a <strong>separate written retainer</strong> for any LTB or court matter. No fee is owed under this Retainer on automatic termination unless a Settlement was already in place; see Section 6.</p>
       </div>
     </div>
 
@@ -403,41 +414,31 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
   <section class="s" data-pagebreak-before="true">
     <h2>6. Fee Structure (Contingency)</h2>
 
-    <p>This is a <strong>contingency fee arrangement</strong> made in compliance with <strong>By-Law 4</strong> of the Law Society of Ontario and <strong>Rule 5.01</strong> of the <em>Paralegal Rules of Conduct</em>. Full disclosure of the contingency fee terms is set out below.</p>
-
-    <div class="fee-card">
-      <span class="label-strip">Contingency Fee</span>
+    <div class="fee-card" style="page-break-inside: auto; break-inside: auto;">
+      <span class="label-strip">Contingency Fee &mdash; By-Law 4 / Rule 5.01</span>
       <h3>Total Fee</h3>
       <div class="fee-amount">{CONTINGENCY_FEE_AMOUNT}</div>
-      <div class="fee-sub">Payable ONLY out of and from cash-for-keys settlement proceeds actually received from the Landlord. HST&#8209;inclusive.</div>
+      <div class="fee-sub">Inclusive of HST. Payable ONLY out of cash-for-keys settlement proceeds actually received from the Landlord.</div>
 
       <h4>No settlement, no fee</h4>
-      <p>If <strong>no</strong> cash-for-keys Settlement is reached, the Tenant owes Legal Assist <strong>nothing</strong> for the negotiation work performed under this Retainer. If a Settlement <em>is</em> reached but the Landlord <strong>fails to pay</strong> any of the agreed Settlement amount, the Tenant owes Legal Assist <strong>nothing</strong> (subject to the Termination provisions below and the Tenant&rsquo;s separate responsibility for any disbursements actually incurred).</p>
+      <p>If no Settlement is reached, or if a Settlement is reached but the Landlord fails to pay any of the agreed amount, the Tenant owes Legal Assist <strong>nothing</strong> for negotiation work (subject to disbursements actually incurred and the Termination provisions below).</p>
 
-      <h4>How the fee gets paid &mdash; mechanism</h4>
-      <p>The fee comes <strong>out of the Settlement Proceeds</strong>. Two payment paths are possible:</p>
+      <h4>How the fee gets paid</h4>
       <ul>
-        <li><strong>Path A &mdash; Payment to Trust (preferred).</strong> The Landlord pays the <strong>full Settlement amount</strong> to Legal Assist&rsquo;s pooled trust account under By-Law 9. Legal Assist deducts the {CONTINGENCY_FEE_AMOUNT} fee, issues an itemized invoice to the Tenant confirming the deduction, and remits the balance to the Tenant within <strong>five (5) business days</strong> of clearance.</li>
-        <li><strong>Path B &mdash; Payment Direct to Tenant.</strong> If the Landlord pays the Settlement amount directly to the Tenant (rather than to trust), the Tenant <strong>must remit</strong> the {CONTINGENCY_FEE_AMOUNT} fee to Legal Assist within <strong>five (5) business days</strong> of the Tenant&rsquo;s receipt of the Settlement Proceeds. The Tenant authorizes Legal Assist to issue an invoice in that amount payable on demand, and authorizes Legal Assist to enforce the invoice as a contract debt if not paid within the five-day window.</li>
+        <li><strong>Path A &mdash; To Trust (preferred):</strong> Landlord pays the full Settlement to Legal Assist&rsquo;s trust account; Legal Assist deducts the {CONTINGENCY_FEE_AMOUNT}, issues an itemized invoice, and remits the balance to the Tenant within <strong>five (5) business days</strong> of clearance.</li>
+        <li><strong>Path B &mdash; Direct to Tenant:</strong> If the Landlord pays the Tenant directly, the Tenant must remit the {CONTINGENCY_FEE_AMOUNT} to Legal Assist within <strong>five (5) business days</strong> of receipt and authorizes Legal Assist to issue an invoice enforceable as a contract debt.</li>
       </ul>
 
-      <h4>HST</h4>
-      <p>The {CONTINGENCY_FEE_AMOUNT} is <strong>inclusive of HST</strong>. No additional HST is added on top.</p>
-
       <h4>Disbursements</h4>
-      <p>Out-of-pocket disbursements actually incurred by Legal Assist on the Tenant&rsquo;s behalf (e.g., process server, courier, document delivery, registered mail) are billed <strong>at cost</strong> and are <strong>in addition to</strong> the contingency fee. Disbursements are deducted from Settlement Proceeds the same way as the fee (i.e., from the trust deposit on Path A; remitted by the Tenant on Path B).</p>
-      <p data-empty="{IS_DISBURSEMENTS_EMPTY}"><strong>Anticipated disbursements:</strong> {DISBURSEMENT_LIST}</p>
-      <p>For greater certainty, where <strong>no Settlement is reached</strong> the Tenant remains <strong>responsible for any disbursements actually incurred</strong> on the file (e.g., a registered-mail charge to deliver an initial offer letter to the Landlord). Disbursements will be itemized in writing and, where reasonably possible, the Tenant will be consulted before incurring any disbursement greater than $50.</p>
+      <p>Out-of-pocket disbursements (e.g., process server, courier, registered mail) are billed <strong>at cost</strong> in addition to the fee, deducted the same way as the fee. Where no Settlement is reached, the Tenant remains responsible for disbursements actually incurred. The Tenant will be consulted before any disbursement &gt; $50 where reasonably possible.<span data-empty="{IS_DISBURSEMENTS_EMPTY}"> <strong>Anticipated:</strong> {DISBURSEMENT_LIST}</span></p>
 
-      <h4>Client&rsquo;s right to negotiate the fee</h4>
-      <p>The Tenant has the right to <strong>negotiate</strong> the terms of this contingency fee before signing this Retainer. The Tenant is <strong>encouraged to obtain independent legal advice</strong> on the reasonableness of this fee arrangement before signing (see Section 9).</p>
-
-      <h4>Termination effect on fee</h4>
+      <h4>Right to negotiate &amp; termination effect</h4>
+      <p>The Tenant may <strong>negotiate</strong> these terms before signing and is encouraged to obtain independent legal advice on this fee arrangement (see Section 9). Termination effect on fee:</p>
       <ul>
-        <li>If the <strong>Tenant terminates</strong> this Retainer (Section 10) <strong>before</strong> a Settlement is reached: <strong>no fee is owed</strong>.</li>
-        <li>If the <strong>Tenant terminates</strong> this Retainer <strong>after</strong> a Settlement is reached but before payment is collected: the {CONTINGENCY_FEE_AMOUNT} fee <strong>remains owing</strong> on the basis that the work has been substantially completed.</li>
-        <li>If the Retainer terminates <strong>automatically</strong> under Section 4 (LTB notice / application / court filing) <strong>before</strong> a Settlement is signed: <strong>no fee is owed</strong>.</li>
-        <li>If the Retainer terminates automatically under Section 4 <strong>after</strong> a Settlement is signed: the {CONTINGENCY_FEE_AMOUNT} fee <strong>remains owing</strong>.</li>
+        <li><strong>Tenant terminates before</strong> a Settlement is reached: no fee owed.</li>
+        <li><strong>Tenant terminates after</strong> a Settlement is reached but before payment: {CONTINGENCY_FEE_AMOUNT} remains owing (work substantially completed).</li>
+        <li><strong>Automatic termination under Section 4 before</strong> a Settlement is signed: no fee owed.</li>
+        <li><strong>Automatic termination under Section 4 after</strong> a Settlement is signed: {CONTINGENCY_FEE_AMOUNT} remains owing.</li>
       </ul>
     </div>
 

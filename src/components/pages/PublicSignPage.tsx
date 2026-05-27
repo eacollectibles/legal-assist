@@ -351,7 +351,27 @@ export default function PublicSignPage() {
     if (!tokenRow || !doc) return;
     setPhase('submitting');
     try {
-      const { embedSignatureInPDF } = await import('@/lib/pdf-generator');
+      // Dynamic import of the PDF generator. If the user has had this
+      // page open since BEFORE the latest deploy, the chunk hash they
+      // recorded at load time no longer exists on the CDN — the
+      // import throws a TypeError with message "Failed to fetch"
+      // (Chrome) or "Loading chunk N failed" (Firefox) or "Importing
+      // a module script failed" (Safari). All three are the same
+      // stale-tab bug. Catch it specifically and tell the user what
+      // to do — a hard refresh fixes it.
+      let embedSignatureInPDF: typeof import('@/lib/pdf-generator')['embedSignatureInPDF'];
+      try {
+        const mod = await import('@/lib/pdf-generator');
+        embedSignatureInPDF = mod.embedSignatureInPDF;
+      } catch (importErr: any) {
+        // eslint-disable-next-line no-console
+        console.error('[PublicSign] dynamic import of pdf-generator failed:', importErr);
+        throw new Error(
+          'A new version of this page was deployed since you opened ' +
+          'it. Please refresh the page (Ctrl+R / Cmd+R) and try ' +
+          'signing again. Your link is still valid.'
+        );
+      }
       // Build the initials payload to pass to the embedder. The
       // embedder will rewrite each [data-initial-target] box in the
       // document HTML so that the chosen initials replace the "INIT"
@@ -516,13 +536,41 @@ export default function PublicSignPage() {
 
       setPhase('done');
     } catch (err: any) {
+      // Log the full error object including stack so the paralegal can
+      // see what actually failed (the user sees the friendly message
+      // below). The bare browser message "Failed to fetch" is too
+      // opaque to act on without the stack.
       // eslint-disable-next-line no-console
-      console.error('Sign submit failed:', err);
-      setError(
-        err?.message
-          ? `Could not complete signing: ${err.message}`
-          : 'Could not complete signing. Please try again.'
-      );
+      console.error('Sign submit failed:', err, {
+        name: err?.name,
+        message: err?.message,
+        stack: err?.stack,
+      });
+
+      // Detect the most common failure modes and rewrite the message
+      // into something a non-technical signer can actually act on.
+      const rawMessage = String(err?.message || '');
+      let userMessage: string;
+      if (/Failed to fetch|NetworkError|Load failed/i.test(rawMessage)) {
+        userMessage =
+          'A network error occurred while submitting your signature. ' +
+          'This usually means either (a) your internet connection ' +
+          'dropped momentarily, or (b) a new version of this page was ' +
+          'deployed since you opened it. Please refresh the page ' +
+          '(Ctrl+R / Cmd+R) and sign again. Your link is still valid.';
+      } else if (/chunk|importing a module script/i.test(rawMessage)) {
+        userMessage =
+          'The signing component could not be loaded. Please refresh ' +
+          'the page (Ctrl+R / Cmd+R) and try again. Your link is ' +
+          'still valid.';
+      } else if (rawMessage) {
+        userMessage = `Could not complete signing: ${rawMessage}`;
+      } else {
+        userMessage =
+          'Could not complete signing. Please try again, or contact ' +
+          'our office at 226-272-5153 if the problem continues.';
+      }
+      setError(userMessage);
       setPhase('review');
     }
   };
