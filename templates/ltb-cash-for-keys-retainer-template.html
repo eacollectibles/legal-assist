@@ -1,0 +1,631 @@
+<!--
+  LTB Cash-for-Keys Negotiation Retainer — HTML Template (v1.0)
+  Acting for: TENANT (always).
+
+  SCOPE: STRICTLY LIMITED — negotiation of a cash-for-keys settlement with
+  the landlord ONLY. NO LTB representation, NO N-form responses, NO L1/L2/
+  L9 applications, NO eviction defence, NO court attendance. If the
+  landlord serves an LTB notice or files an LTB application, this
+  retainer ENDS automatically and the Tenant must engage Legal Assist
+  (or another representative) under a SEPARATE retainer for any LTB or
+  court matter.
+
+  FEE: Contingency. $500.00 (HST-inclusive) deducted from any cash-for-
+  keys settlement actually collected. NO settlement → NO fee owed. Tenant
+  pays nothing up front.
+
+  AUTHORITY:
+    - Paralegal Rules of Conduct, Rule 3.02(1.1) (limited-scope), 3.03
+      (confidentiality), 3.04–3.05 (conflicts/withdrawal), 5.01
+      (contingency fees);
+    - LSO By-Law 4 (paralegal scope), By-Law 7.1 (client ID), By-Law 9
+      (trust accounting, file retention);
+    - Residential Tenancies Act, 2006, S.O. 2006, c. 17 (the "RTA").
+
+  Structure: v4.x one-section-per-page (each <section class="s"
+  data-pagebreak-before="true"> is forced onto its own page by the PDF
+  generator). All tokens substituted by DocumentWorkflowPage.tsx.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Retainer Agreement &mdash; Cash-for-Keys Negotiation (Tenant)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root { --navy:#0f2a4a; --navy-2:#14315a; --gold:#b08a3e; --ink:#1f2937; --ink-2:#374151; --mute:#6b7280; --bg:#ffffff; --bg-soft:#f7f9fc; --bg-warm:#fdfaf3; --line:#e2e8f0; --line-2:#cbd5e1; --danger:#b91c1c; --danger-soft:#fef2f2; --ok:#166534; --ok-soft:#f0fdf4; }
+@page { margin: 0.75in; size: letter; }
+* { box-sizing: border-box; hyphens: none !important; -webkit-hyphens: none !important; -moz-hyphens: none !important; -ms-hyphens: none !important; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font: 400 13.5px/1.55 Inter, Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; text-align: left; }
+.doc { max-width: 760px; margin: 0 auto; padding: 32px 40px 16px; text-align: left; }
+p, li { text-align: left; word-break: normal; overflow-wrap: break-word; }
+h1, h2, h3, h4 { font-family: Inter, Arial, sans-serif; color: var(--navy); line-height: 1.25; margin: 0 0 8px; word-break: normal; text-align: left; }
+h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 18px; font-weight: 700; margin-top: 4px; padding-bottom: 6px; border-bottom: 2px solid var(--gold); }
+h3 { font-size: 14.5px; font-weight: 700; margin-top: 18px; }
+h4 { font-size: 13px; font-weight: 600; margin-top: 14px; color: var(--ink); }
+p { margin: 0 0 10px; }
+ul, ol { margin: 6px 0 12px 22px; padding: 0; }
+li { margin: 0 0 4px; }
+strong { color: var(--ink); }
+small { color: var(--mute); font-size: 11.5px; }
+a { color: var(--navy); text-decoration: underline; }
+.callout, .card, .signature-row, .ack-list, .meta-grid, .summary-card, .end-marker, .lso-id, .lim-warning, .pre-sign, .scope-box, .exclusions-box, .fee-card, .floor-card, .not-included, [data-keep-together] { page-break-inside: avoid; break-inside: avoid; }
+h2, h3 { page-break-after: avoid; break-after: avoid; }
+[data-empty="true"] { display: none !important; }
+/* v4.x one-section-per-page: every <section.s> starts a new page,
+   except the first which follows the cover naturally. */
+.s { page-break-before: always; break-before: page; padding-top: 8px; }
+.page-break-before { page-break-before: always; break-before: page; }
+.end-marker { position: relative; height: 80px; margin: 22px 0 0; border: 1px dashed var(--line-2); border-radius: 4px; background: #fff; overflow: hidden; }
+.end-marker .end-stroke { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+.end-marker .end-label { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: #fff; padding: 4px 10px; border: 1px solid var(--line); border-radius: 3px; font: 600 9.5px/1 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; z-index: 2; white-space: nowrap; text-transform: uppercase; }
+.cover { min-height: 980px; padding: 0 0 24px; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
+.cover-brand { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 3px solid var(--gold); }
+.cover-brand .mark { width: 44px; height: 44px; border-radius: 8px; background: var(--navy); color: var(--gold); display: inline-flex; align-items: center; justify-content: center; font: 700 18px/1 Inter, sans-serif; letter-spacing: 0.02em; flex: 0 0 44px; }
+.cover-brand .firm { font: 700 17px/1.2 Inter, sans-serif; color: var(--navy); flex: 1 1 auto; }
+.cover-brand .firm small { display: block; font: 400 11.5px/1.3 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; margin-top: 2px; }
+.cover-brand .header-contact { flex: 0 0 auto; text-align: right; font: 500 11px/1.5 Inter, sans-serif; color: var(--ink-2); }
+.cover-brand .header-contact a { color: var(--navy); text-decoration: none; font-weight: 600; }
+.cover-brand .header-contact .lab { display: block; font: 700 9px/1 Inter, sans-serif; color: var(--mute); letter-spacing: 0.06em; margin-bottom: 4px; }
+.cover-brand .header-contact .row { display: block; font-size: 11px; }
+.cover-title { margin-top: 36px; font-size: 30px; line-height: 1.15; letter-spacing: -0.015em; }
+.cover-sub { margin-top: 6px; font: 500 15px/1.4 Inter, sans-serif; color: var(--ink-2); }
+.cover-tag { margin-top: 16px; font: italic 400 13px/1.55 Lora, Georgia, serif; color: var(--mute); max-width: 520px; }
+.lim-warning { margin: 18px 0 0; padding: 12px 16px; background: var(--danger-soft); border-left: 4px solid var(--danger); border-radius: 6px; }
+.lim-warning > strong { color: var(--danger); display: block; font: 700 12px/1.2 Inter, sans-serif; letter-spacing: 0.02em; margin-bottom: 4px; }
+.lim-warning p { margin: 0; font-size: 12px; color: var(--ink-2); }
+.lim-warning p strong { display: inline; color: inherit; font: inherit; letter-spacing: inherit; margin: 0; }
+.pre-sign { margin: 12px 0 0; padding: 10px 14px; background: var(--bg-soft); border: 1px dashed var(--line-2); border-radius: 6px; font: 500 11.5px/1.4 Inter, sans-serif; color: var(--mute); font-style: italic; }
+.cover-meta { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; padding: 18px 20px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; }
+.cover-meta .row { display: flex; flex-direction: column; gap: 2px; }
+.cover-meta .lab { font: 600 10.5px/1.2 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; }
+.cover-meta .val { font: 600 13.5px/1.4 Inter, sans-serif; color: var(--ink); }
+.lso-id { margin: 14px 0 0; padding: 14px 18px; background: #fff; border: 1.5px solid var(--gold); border-radius: 8px; }
+.lso-id .lab { font: 700 11px/1.2 Inter, sans-serif; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 6px; }
+.lso-id .name { font: 700 16px/1.2 Inter, sans-serif; color: var(--navy); margin-bottom: 2px; }
+.lso-id .role { font: 500 12.5px/1.4 Inter, sans-serif; color: var(--ink-2); }
+.lso-id .lic { font: 600 12.5px/1.4 Inter, sans-serif; color: var(--ink); margin-top: 2px; }
+.cover-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; }
+.cover-foot .left { font: 400 10.5px/1.5 Inter, sans-serif; color: var(--mute); max-width: 460px; }
+.cover-foot .right { font: 600 10.5px/1.3 Inter, sans-serif; color: var(--navy); text-align: right; }
+.cover-foot .right small { display: block; font: 400 10.5px/1.3 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; margin-bottom: 3px; }
+.cover-foot .version { margin-top: 6px; font: 500 9.5px/1.3 Inter, sans-serif; color: var(--mute); }
+.summary-card { margin: 18px 0 18px; padding: 16px 20px; background: var(--bg-warm); border-left: 4px solid var(--gold); border-radius: 6px; }
+.summary-card h3 { margin: 0 0 6px; font: 700 13.5px/1.2 Inter, sans-serif; color: var(--navy); letter-spacing: 0.02em; }
+.summary-card p { margin: 0; color: var(--ink-2); font-size: 13px; }
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 8px 0 14px; padding: 14px 18px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; }
+.meta-grid .row { display: flex; gap: 6px; align-items: baseline; }
+.meta-grid .lab { flex: 0 0 130px; font: 600 11px/1.4 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; }
+.meta-grid .val { flex: 1 1 0; font: 500 12.5px/1.4 Inter, sans-serif; color: var(--ink); }
+.callout { margin: 14px 0; padding: 14px 18px; border-radius: 8px; background: var(--bg-soft); border-left: 4px solid var(--navy); }
+.callout.warn { background: var(--danger-soft); border-left-color: var(--danger); }
+.callout.warn h4 { color: var(--danger); }
+.callout.ok { background: var(--ok-soft); border-left-color: var(--ok); }
+.callout h4 { margin: 0 0 6px; font: 700 12px/1.2 Inter, sans-serif; letter-spacing: 0.02em; }
+.callout p { margin: 0 0 6px; font-size: 12.5px; color: var(--ink-2); }
+.callout p:last-child { margin: 0; }
+/* §3 — Scope box. Big, colored, navy border. The single most important
+   thing the Tenant must understand about this retainer. */
+.scope-box { margin: 14px 0; padding: 18px 22px; background: var(--ok-soft); border: 2px solid var(--ok); border-radius: 8px; }
+.scope-box .label-strip { display: inline-block; padding: 4px 12px; margin-bottom: 12px; background: var(--ok); color: #fff; border-radius: 3px; font: 700 11px/1.2 Inter, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; }
+.scope-box h3 { margin: 0 0 8px; font-size: 15px; color: var(--ok); }
+.scope-box ul { margin: 8px 0 0 20px; }
+.scope-box ul li { font-size: 12.5px; color: var(--ink-2); margin: 0 0 4px; }
+.scope-box ul li strong { color: var(--ok); }
+/* §4 — Exclusions box. Red border, danger background. */
+.exclusions-box { margin: 14px 0; padding: 18px 22px; background: var(--danger-soft); border: 2px solid var(--danger); border-radius: 8px; }
+.exclusions-box .label-strip { display: inline-block; padding: 4px 12px; margin-bottom: 12px; background: var(--danger); color: #fff; border-radius: 3px; font: 700 11px/1.2 Inter, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; }
+.exclusions-box h3 { margin: 0 0 8px; font-size: 15px; color: var(--danger); }
+.exclusions-box .not-included { margin-top: 6px; }
+.exclusions-box .not-included p { margin: 0 0 6px; font-weight: 700; color: var(--danger); font-size: 12.5px; letter-spacing: 0.02em; }
+.exclusions-box ul { margin: 0 0 10px 20px; }
+.exclusions-box ul li { font-size: 12.5px; color: var(--ink-2); margin: 0 0 4px; }
+.exclusions-box ul li::marker { color: var(--danger); }
+.exclusions-box .trigger { margin-top: 12px; padding: 12px 14px; background: #fff; border: 1.5px dashed var(--danger); border-radius: 6px; }
+.exclusions-box .trigger strong { color: var(--danger); display: block; font: 700 11px/1.2 Inter, sans-serif; letter-spacing: 0.03em; margin-bottom: 6px; text-transform: uppercase; }
+.exclusions-box .trigger p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+/* §5 — Settlement floor card. Gold-bordered. */
+.floor-card { margin: 14px 0; padding: 16px 20px; background: var(--bg-warm); border-left: 4px solid var(--gold); border: 1.5px solid var(--gold); border-radius: 8px; }
+.floor-card .label-strip { display: inline-block; padding: 4px 10px; margin-bottom: 10px; background: var(--gold); color: #fff; border-radius: 3px; font: 600 11px/1.2 Inter, sans-serif; letter-spacing: 0.01em; text-transform: uppercase; }
+.floor-card .floor-amount { font: 700 22px/1.2 Inter, sans-serif; color: var(--navy); margin: 6px 0 10px; }
+.floor-card p { margin: 0 0 8px; font-size: 12.5px; color: var(--ink-2); }
+.floor-card p:last-child { margin-bottom: 0; }
+/* §6 — Fee card. Highlight that $500 only comes out of settlement. */
+.fee-card { margin: 14px 0; padding: 16px 20px; background: var(--bg-warm); border-left: 4px solid var(--gold); border-radius: 6px; }
+.fee-card .label-strip { display: inline-block; padding: 4px 10px; margin-bottom: 10px; background: var(--gold); color: #fff; border-radius: 3px; font: 600 11px/1.2 Inter, sans-serif; letter-spacing: 0.01em; text-transform: uppercase; }
+.fee-card h3 { margin: 0 0 6px; font-size: 15px; }
+.fee-card .fee-amount { font: 700 24px/1.2 Inter, sans-serif; color: var(--navy); margin: 4px 0 6px; }
+.fee-card .fee-sub { font: italic 500 12px/1.3 Inter, sans-serif; color: var(--mute); margin-bottom: 8px; }
+.fee-card h4 { margin-top: 12px; }
+.fee-card p { font-size: 12.5px; color: var(--ink-2); }
+.ack-list { margin: 14px 0 18px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-soft); }
+.ack-list h4 { margin: 0 0 8px; font: 700 12px/1.2 Inter, sans-serif; color: var(--navy); letter-spacing: 0.02em; }
+.ack-list .item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.ack-list .item:last-child { border-bottom: 0; }
+.ack-list .box { flex: 0 0 50px; height: 22px; border: 1.5px solid var(--ink-2); border-radius: 3px; text-align: center; font: 600 9px/22px Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; }
+.ack-list .box.initialled { font: italic 700 14px/22px "Allura", "Lora", cursive, serif; color: var(--navy); letter-spacing: 0; border-color: var(--gold); background: var(--bg-warm); }
+.ack-list .txt { flex: 1 1 0; font: 500 12px/1.45 Inter, sans-serif; color: var(--ink-2); }
+.ack-list .txt strong { color: var(--navy); }
+.signature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 16px 0 12px; }
+.sig-card { padding: 14px 18px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.sig-card .lab { font: 700 11px/1.2 Inter, sans-serif; letter-spacing: 0.04em; color: var(--mute); margin-bottom: 4px; }
+.sig-card .name { font: 700 14px/1.3 Inter, sans-serif; color: var(--ink); margin-top: 6px; margin-bottom: 2px; }
+.sig-card .meta { font: 500 11.5px/1.35 Inter, sans-serif; color: var(--mute); margin-bottom: 8px; }
+.sig-card .line { border-top: 1.5px solid var(--ink); height: 0; margin: 0 0 4px; }
+.sig-card .cursive { font: italic 400 22px/1 "Allura", "Lora", cursive, serif; color: var(--navy); margin: 8px 0 0; letter-spacing: 0.01em; min-height: 36px; }
+.sig-card .sig-area { height: 44px; }
+.sig-card .date { font: 500 11px/1.3 Inter, sans-serif; color: var(--ink-2); }
+.page-num { position: running(footer); }
+.doc-footer { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--line); font: 500 10.5px/1.45 Inter, sans-serif; color: var(--mute); display: flex; justify-content: space-between; gap: 14px; page-break-inside: avoid; break-inside: avoid; page-break-after: avoid; break-after: avoid; }
+.doc-footer a { color: var(--mute); }
+.doc-footer .right { text-align: right; }
+.doc-footer .version { margin-top: 4px; font-size: 9.5px; }
+@media (max-width: 640px) {
+  .doc { padding: 18px 18px 32px; }
+  .cover-brand { flex-wrap: wrap; }
+  .cover-brand .header-contact { flex: 1 1 100%; text-align: left; margin-top: 10px; }
+  .cover-meta { grid-template-columns: 1fr; }
+  .meta-grid { grid-template-columns: 1fr; }
+  .signature-row { grid-template-columns: 1fr; }
+}
+@media print { body { background: #fff; padding: 0; } }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ================================================================
+       COVER PAGE
+       ================================================================ -->
+  <section class="cover">
+    <div class="cover-brand">
+      <span class="mark">LA</span>
+      <div class="firm">Legal Assist Paralegal Services<small>Licensed Paralegals in the Province of Ontario</small></div>
+      <div class="header-contact">
+        <span class="lab">Office</span>
+        <span class="row"><a href="tel:+12262725153">226&#8209;272&#8209;5153</a></span>
+        <span class="row"><a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a></span>
+        <span class="row"><a href="https://legalassist.london">legalassist.london</a></span>
+      </div>
+    </div>
+    <h1 class="cover-title">Cash-for-Keys Negotiation Retainer</h1>
+    <p class="cover-sub">Strictly Limited Scope &mdash; Tenant Representation</p>
+    <p class="cover-tag">This is a <strong>limited-scope retainer under Rule 3.02(1.1)</strong> of the <em>Paralegal Rules of Conduct</em>. It authorizes negotiation of a private cash-for-keys settlement with the Landlord only. It does <strong>not</strong> authorize any representation at the Landlord and Tenant Board.</p>
+    <div class="lim-warning" role="alert"><strong>This Retainer Is Not LTB Representation</strong><p>If the Landlord serves an N&#8209;notice (N4, N5, N6, N7, N8, N12, N13) or files <strong>any</strong> application at the Landlord and Tenant Board, <strong>this Retainer ends automatically</strong> on the date of service or filing. You will need to sign a <strong>new, separate retainer</strong> to be represented at the LTB.</p></div>
+    <p class="pre-sign">No paralegal&#8209;client relationship is formed and no work is commenced until this Agreement is signed and accepted by both parties.</p>
+    <div class="cover-meta">
+      <div class="row"><span class="lab">Prepared For</span><span class="val">{CLIENT_NAME}</span></div>
+      <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">File Number</span><span class="val">{FILE_NUMBER}</span></div>
+      <div class="row"><span class="lab">Date Prepared</span><span class="val">{TODAY_DATE}</span></div>
+      <div class="row"><span class="lab">Matter Type</span><span class="val">LTB &mdash; Cash-for-Keys (Tenant Side)</span></div>
+      <div class="row"><span class="lab">Acting For</span><span class="val">Tenant</span></div>
+      <div class="row"><span class="lab">Fee Model</span><span class="val">Contingency &mdash; {CONTINGENCY_FEE_AMOUNT} from settlement</span></div>
+    </div>
+    <div class="lso-id">
+      <div class="lab">Licensee of Record</div>
+      <div class="name">{PARALEGAL_NAME}</div>
+      <div class="role">Licensed Paralegal &mdash; Law Society of Ontario</div>
+      <div class="lic">Licence No. {PARALEGAL_LSO}</div>
+    </div>
+    <div class="summary-card">
+      <h3>In plain English</h3>
+      <p>You are hiring <strong>{PARALEGAL_NAME}</strong> at Legal Assist Paralegal Services to <strong>negotiate a cash payment from your Landlord in exchange for you voluntarily moving out</strong>. That is all this Retainer covers. If the Landlord refuses to negotiate, files at the LTB, or serves you with an eviction notice, this Retainer ends and you will need a different retainer. You pay <strong>nothing up front</strong>. If a settlement is reached, <strong>{CONTINGENCY_FEE_AMOUNT}</strong> comes out of the settlement and the rest is yours. If no settlement is reached, you owe nothing.</p>
+    </div>
+    <div class="cover-foot">
+      <div class="left">Legal Assist Paralegal Services is licensed and insured by the Law Society of Ontario (LSO). This Agreement is governed by the laws of the Province of Ontario.</div>
+      <div class="right"><small>Document</small>LTB&#8209;CFK&#8209;{DATE_SHORT}<div class="version" style="white-space:nowrap;">Version: LTB Cash-for-Keys Retainer v1.0</div><div class="version" style="white-space:nowrap;">Last updated {TODAY_DATE}</div></div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §1. PARTIES & IDENTIFICATION
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>1. Parties &amp; Identification</h2>
+    <p>This Retainer Agreement (the &ldquo;<strong>Agreement</strong>&rdquo;) is made between <strong>{CLIENT_NAME}</strong> (the &ldquo;<strong>Tenant</strong>&rdquo; or &ldquo;<strong>Client</strong>&rdquo;) and <strong>Legal Assist Paralegal Services</strong>, acting through <strong>{PARALEGAL_NAME}</strong>, Licensed Paralegal (Law Society of Ontario), Licence No. {PARALEGAL_LSO} (the &ldquo;<strong>Paralegal</strong>&rdquo; or &ldquo;<strong>we</strong>&rdquo;).</p>
+
+    <h3>Tenant (Client)</h3>
+    <div class="meta-grid">
+      <div class="row"><span class="lab">Full Legal Name</span><span class="val">{CLIENT_NAME}</span></div>
+      <div class="row"><span class="lab">Email</span><span class="val">{CLIENT_EMAIL}</span></div>
+      <div class="row" data-empty="{IS_CLIENT_PHONE_EMPTY}"><span class="lab">Phone</span><span class="val">{CLIENT_PHONE}</span></div>
+      <div class="row" data-empty="{IS_RENTAL_UNIT_ADDRESS_EMPTY}" style="grid-column:1 / -1;"><span class="lab">Rental Unit Address</span><span class="val">{RENTAL_UNIT_ADDRESS}</span></div>
+      <div class="row" data-empty="{IS_CLIENT_ADDRESS_EMPTY}" style="grid-column:1 / -1;"><span class="lab">Mailing Address (if different)</span><span class="val">{CLIENT_ADDRESS}</span></div>
+    </div>
+
+    <h3>Opposing Party (Landlord)</h3>
+    <div class="meta-grid">
+      <div class="row" style="grid-column:1 / -1;"><span class="lab">Landlord Name</span><span class="val">{LANDLORD_NAME}</span></div>
+      <div class="row" data-empty="{IS_LANDLORD_REPRESENTATIVE_EMPTY}" style="grid-column:1 / -1;"><span class="lab">Landlord&rsquo;s Representative</span><span class="val">{LANDLORD_REPRESENTATIVE}</span></div>
+    </div>
+
+    <h3>Tribunal &amp; Jurisdiction</h3>
+    <p>The rental unit identified above is located in the Province of Ontario. The Tenant&rsquo;s tenancy is governed by the <em>Residential Tenancies Act, 2006</em>, S.O. 2006, c. 17 (the &ldquo;<strong>RTA</strong>&rdquo;), and any proceeding between the parties relating to the tenancy would ordinarily be heard by the <strong>Landlord and Tenant Board</strong> (the &ldquo;<strong>LTB</strong>&rdquo; or &ldquo;<strong>Board</strong>&rdquo;). The negotiation contemplated by this Retainer is <strong>private</strong> and is <strong>not</strong> a Board proceeding (see Section 2).</p>
+
+    <h3>File Reference</h3>
+    <div class="meta-grid">
+      <div class="row" data-empty="{IS_FILE_REF_EMPTY}"><span class="lab">File Number</span><span class="val">{FILE_NUMBER}</span></div>
+      <div class="row"><span class="lab">File Opened</span><span class="val">{FILE_OPENED_DATE}</span></div>
+    </div>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §2. NATURE OF THE MATTER & DEFINITIONS
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>2. Nature of the Matter &amp; Definitions</h2>
+
+    <h3>What &ldquo;cash for keys&rdquo; means</h3>
+    <p>&ldquo;<strong>Cash for keys</strong>&rdquo; (also called a &ldquo;buy&#8209;out&rdquo; or &ldquo;move&#8209;out incentive&rdquo;) is a <strong>private, negotiated payment from the Landlord to the Tenant</strong> in exchange for the Tenant&rsquo;s <strong>voluntary surrender of possession</strong> of the rental unit and a <strong>mutual release</strong> of all claims arising out of the tenancy. The bargain is normally executed by a written agreement variously called a:</p>
+    <ul>
+      <li><strong>Mutual Release and Termination Agreement</strong>, or</li>
+      <li><strong>Form N11 &mdash; Agreement to End the Tenancy</strong> together with a written side agreement recording the cash payment and mutual release.</li>
+    </ul>
+
+    <h3>What cash for keys is NOT</h3>
+    <div class="callout warn">
+      <h4>Cash for Keys Is a Private Deal &mdash; NOT an LTB Order</h4>
+      <p>A cash-for-keys settlement is <strong>not</strong> an order of the Landlord and Tenant Board. It is <strong>not</strong> supervised, approved, or enforced by the Board. It is <strong>not</strong> a Board&#8209;mediated settlement. It is a <strong>private contract</strong> between the Tenant and the Landlord. If the Landlord refuses to honour the agreement after signing, enforcement may require separate Small Claims Court proceedings, which are <strong>not</strong> included in this Retainer (see Section 4).</p>
+    </div>
+
+    <h3>Why landlords pay cash for keys</h3>
+    <p>Landlords offer cash for keys for a variety of reasons &mdash; including, for example, where they wish to renovate, demolish, convert, or sell the unit, or where they wish to avoid the time, cost, and risk of an LTB application. The Paralegal makes no representation about the Landlord&rsquo;s motivation, and the Tenant should not assume the Landlord has any particular legal entitlement to possession.</p>
+
+    <h3>Definitions used in this Retainer</h3>
+    <ul>
+      <li>&ldquo;<strong>Settlement</strong>&rdquo; means a written, signed cash-for-keys agreement (Mutual Release / Termination Agreement, or an N11 with a written side agreement) between the Tenant and the Landlord.</li>
+      <li>&ldquo;<strong>Settlement Proceeds</strong>&rdquo; means the cash actually paid by the Landlord to the Tenant (or to Legal Assist&rsquo;s trust account on the Tenant&rsquo;s behalf) under the Settlement.</li>
+      <li>&ldquo;<strong>Floor</strong>&rdquo; means the minimum dollar amount the Tenant has set as the lowest acceptable Settlement (see Section 5).</li>
+    </ul>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §3. SCOPE OF RETAINER — STRICTLY LIMITED
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>3. Scope of Retainer (Strictly Limited)</h2>
+
+    <div class="scope-box">
+      <span class="label-strip">Limited Scope &mdash; Rule 3.02(1.1)</span>
+      <h3>This Retainer is strictly limited to negotiating a cash-for-keys settlement between the Tenant and the Landlord. Nothing more.</h3>
+      <p>This is a <strong>limited-scope retainer</strong> under <strong>Rule 3.02(1.1)</strong> of the <em>Paralegal Rules of Conduct</em>. By signing, the Tenant acknowledges that the Paralegal&rsquo;s services are limited to the narrow scope set out below and that the Tenant remains responsible for everything else (including any LTB proceeding and any court matter), subject to retaining a paralegal or lawyer separately.</p>
+
+      <h4 style="margin-top:14px;">What this Retainer DOES include:</h4>
+      <ul>
+        <li><strong>Communications with the Landlord</strong> and the Landlord&rsquo;s representatives (property manager, real-estate agent, lawyer or paralegal acting for the Landlord) for the purpose of negotiating a cash-for-keys settlement.</li>
+        <li><strong>Drafting</strong> initial settlement offers and counter-offers on behalf of the Tenant; <strong>reviewing</strong> offers and counter-offers received from the Landlord; and <strong>advising</strong> the Tenant on the strengths and weaknesses of each offer.</li>
+        <li><strong>Drafting or reviewing the final Mutual Release and Termination Agreement</strong> (or N11 with a written side agreement) recording the agreed settlement, the agreed move-out date, the mutual release of all tenancy claims, and any other agreed terms.</li>
+        <li><strong>Coordinating</strong> the mechanics of payment (deposit of Settlement Proceeds into Legal Assist&rsquo;s trust account, or direct payment to the Tenant, as agreed) and the mechanics of move-out (return of keys, walk-through, utility shut-off coordination if applicable).</li>
+        <li><strong>One (1) follow-up</strong> with the Landlord or the Landlord&rsquo;s representative after signing the Settlement to confirm payment is in transit.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:14px; font-size:12px; color:var(--mute); font-style:italic;">The detailed list of services that this Retainer does NOT include &mdash; including all LTB representation &mdash; appears in Section 4 (Scope Exclusions).</p>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §4. SCOPE EXCLUSIONS — WHAT THIS RETAINER DOES NOT COVER
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>4. Scope Exclusions (What this Retainer Does NOT Cover)</h2>
+
+    <div class="exclusions-box">
+      <span class="label-strip">Not Included &mdash; Read Carefully</span>
+      <h3>This Retainer does NOT authorize Legal Assist to do any of the following on the Tenant&rsquo;s behalf:</h3>
+
+      <div class="not-included">
+        <p>LTB representation &mdash; categorically excluded:</p>
+        <ul>
+          <li><strong>Any representation at the Landlord and Tenant Board</strong> &mdash; no hearing attendance, no Case Management Hearing, no mediation attendance, no merits hearing, no application filing or response, no review motion under RTA s. 21.2 / LTB Rule 26.</li>
+          <li><strong>Drafting, filing, or responding to any LTB application</strong>, including but not limited to: L1 (non-payment of rent), L2 (termination/non-payment), L3 (uncontested termination), L4 (breach of mediated settlement), L9 (collect rent only), L10 (former tenant arrears), T1 (rebate), T2 (tenant rights), T3 (rent reduction), T5 (bad-faith N12/N13), T6 (maintenance), T7 (suite meter).</li>
+          <li><strong>Drafting, reviewing, serving, or responding to any LTB notice</strong>, including but not limited to: N4 (non-payment), N5 (interference/damage), N6 (illegal act), N7 (serious impairment), N8 (persistent late payment), N9 (tenant termination), N12 (landlord own use), N13 (demolition/conversion/repairs). The Tenant remains solely responsible for responding to any such notice within the strict statutory deadlines (some as short as <strong>5 days</strong>).</li>
+          <li><strong>Defending against an eviction</strong> at the LTB, including but not limited to seeking relief from eviction under RTA s. 83.</li>
+          <li><strong>Enforcement of an LTB order</strong> or filing for the Sheriff / Court Enforcement Office.</li>
+        </ul>
+
+        <p>Other matters &mdash; categorically excluded:</p>
+        <ul>
+          <li><strong>Negotiating any matter unrelated to the cash-for-keys settlement</strong>, including but not limited to: rent abatement, repairs, harassment claims, T2 claims, T6 maintenance claims, return of last-month-rent deposit interest, illegal additional charges, or rent overpayments. If the Tenant believes any such claim exists, those claims should be discussed with the Paralegal separately and may require a separate retainer; otherwise, those claims may be <strong>released forever</strong> by signing the final Mutual Release (see Section 9).</li>
+          <li><strong>Court proceedings of any kind</strong>, including without limitation Small Claims Court (e.g., to enforce a signed Settlement the Landlord refuses to honour), the Superior Court of Justice, Divisional Court appeals or judicial review under RTA s. 210, and the Court of Appeal.</li>
+          <li><strong>Tax, accounting, or financial advice</strong> regarding the Settlement Proceeds (including possible effect on income tax, GST/HST, employment insurance, ODSP, Ontario Works, RGI subsidies, or any other government benefit).</li>
+          <li><strong>Immigration advice</strong> regarding loss of residence, change of address with IRCC, or related matters.</li>
+          <li><strong>Independent legal advice on the final Mutual Release.</strong> The Paralegal can draft and explain the Mutual Release but does <strong>not</strong> serve as &ldquo;independent&rdquo; counsel for the Tenant; the Tenant is strongly advised to obtain independent legal advice from a lawyer or a different paralegal before signing the final Mutual Release (see Section 9).</li>
+          <li><strong>Locating alternative housing</strong>, moving services, storage, or any logistical support related to the Tenant&rsquo;s move-out beyond the limited coordination described in Section 3.</li>
+        </ul>
+      </div>
+
+      <div class="trigger">
+        <strong>Automatic Termination Trigger</strong>
+        <p>If, at any time during the term of this Retainer, the Landlord (a) <strong>serves the Tenant with any LTB notice</strong> (including without limitation N4, N5, N6, N7, N8, N12, N13), <strong>OR</strong> (b) <strong>files any application at the LTB</strong> against the Tenant, <strong>OR</strong> (c) <strong>commences any court proceeding</strong> against the Tenant, <strong>this Retainer terminates automatically</strong> as of the date of service or filing. The Tenant must engage Legal Assist Paralegal Services <strong>or another licensed representative</strong> under a <strong>separate written retainer</strong> for any LTB or court matter. No fee is owed under this Retainer on automatic termination unless a Settlement was already in place; see Section 6.</p>
+      </div>
+    </div>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §5. SETTLEMENT AUTHORITY & THE TENANT'S FLOOR
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>5. Settlement Authority and the Tenant&rsquo;s Floor</h2>
+
+    <p>The Tenant retains <strong>final authority</strong> over whether to accept or reject any cash-for-keys offer. The Paralegal&rsquo;s role is to <strong>recommend</strong>; the Tenant&rsquo;s role is to <strong>decide</strong>.</p>
+
+    <div class="floor-card">
+      <span class="label-strip">Tenant&rsquo;s Floor &mdash; Minimum Acceptable Settlement</span>
+      <div class="floor-amount">{SETTLEMENT_FLOOR}</div>
+      <p>The amount above is the <strong>Floor</strong> &mdash; the <strong>minimum dollar amount</strong> the Tenant will accept as a cash-for-keys Settlement, set by the Tenant at the time of signing this Retainer. The Tenant has set this Floor in light of (among other things) the Tenant&rsquo;s expected moving costs, expected rent differential at the next rental, expected time required to find replacement housing, and any other personal or financial considerations.</p>
+      <p>The Paralegal makes no representation about whether the Floor is the &ldquo;right&rdquo; amount in the circumstances; the Floor is the Tenant&rsquo;s decision.</p>
+    </div>
+
+    <h3>Authority Granted to the Paralegal</h3>
+    <ul>
+      <li>The Paralegal is <strong>authorized</strong>, without further consultation, to communicate offers, counter-offers, and proposed settlement terms to the Landlord <strong>at or above the Floor</strong>.</li>
+      <li>The Paralegal is <strong>NOT authorized</strong> to accept, agree to, recommend acceptance of, or sign on behalf of the Tenant <strong>any offer below the Floor</strong>, without the Tenant&rsquo;s <strong>express written consent</strong>. Email confirmation from the Tenant is sufficient for this purpose.</li>
+      <li>The Paralegal will <strong>report every offer received</strong> from the Landlord to the Tenant, regardless of whether the offer is at, above, or below the Floor. Reporting will be in writing (email) within one (1) business day of receipt.</li>
+      <li>The Tenant may <strong>revise the Floor at any time</strong> by written notice to the Paralegal. A revision is effective when received in writing by the Paralegal.</li>
+    </ul>
+
+    <h3>Final Authority Always Rests with the Tenant</h3>
+    <p>Even where an offer is at or above the Floor, the Tenant retains the right to reject the offer or to direct the Paralegal to counter-offer at a higher amount. The Paralegal will not sign any Settlement on the Tenant&rsquo;s behalf without the Tenant&rsquo;s express written instruction to do so for that specific Settlement.</p>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §6. FEE STRUCTURE — CONTINGENCY
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>6. Fee Structure (Contingency)</h2>
+
+    <p>This is a <strong>contingency fee arrangement</strong> made in compliance with <strong>By-Law 4</strong> of the Law Society of Ontario and <strong>Rule 5.01</strong> of the <em>Paralegal Rules of Conduct</em>. Full disclosure of the contingency fee terms is set out below.</p>
+
+    <div class="fee-card">
+      <span class="label-strip">Contingency Fee</span>
+      <h3>Total Fee</h3>
+      <div class="fee-amount">{CONTINGENCY_FEE_AMOUNT}</div>
+      <div class="fee-sub">Payable ONLY out of and from cash-for-keys settlement proceeds actually received from the Landlord. HST&#8209;inclusive.</div>
+
+      <h4>No settlement, no fee</h4>
+      <p>If <strong>no</strong> cash-for-keys Settlement is reached, the Tenant owes Legal Assist <strong>nothing</strong> for the negotiation work performed under this Retainer. If a Settlement <em>is</em> reached but the Landlord <strong>fails to pay</strong> any of the agreed Settlement amount, the Tenant owes Legal Assist <strong>nothing</strong> (subject to the Termination provisions below and the Tenant&rsquo;s separate responsibility for any disbursements actually incurred).</p>
+
+      <h4>How the fee gets paid &mdash; mechanism</h4>
+      <p>The fee comes <strong>out of the Settlement Proceeds</strong>. Two payment paths are possible:</p>
+      <ul>
+        <li><strong>Path A &mdash; Payment to Trust (preferred).</strong> The Landlord pays the <strong>full Settlement amount</strong> to Legal Assist&rsquo;s pooled trust account under By-Law 9. Legal Assist deducts the {CONTINGENCY_FEE_AMOUNT} fee, issues an itemized invoice to the Tenant confirming the deduction, and remits the balance to the Tenant within <strong>five (5) business days</strong> of clearance.</li>
+        <li><strong>Path B &mdash; Payment Direct to Tenant.</strong> If the Landlord pays the Settlement amount directly to the Tenant (rather than to trust), the Tenant <strong>must remit</strong> the {CONTINGENCY_FEE_AMOUNT} fee to Legal Assist within <strong>five (5) business days</strong> of the Tenant&rsquo;s receipt of the Settlement Proceeds. The Tenant authorizes Legal Assist to issue an invoice in that amount payable on demand, and authorizes Legal Assist to enforce the invoice as a contract debt if not paid within the five-day window.</li>
+      </ul>
+
+      <h4>HST</h4>
+      <p>The {CONTINGENCY_FEE_AMOUNT} is <strong>inclusive of HST</strong>. No additional HST is added on top.</p>
+
+      <h4>Disbursements</h4>
+      <p>Out-of-pocket disbursements actually incurred by Legal Assist on the Tenant&rsquo;s behalf (e.g., process server, courier, document delivery, registered mail) are billed <strong>at cost</strong> and are <strong>in addition to</strong> the contingency fee. Disbursements are deducted from Settlement Proceeds the same way as the fee (i.e., from the trust deposit on Path A; remitted by the Tenant on Path B).</p>
+      <p data-empty="{IS_DISBURSEMENTS_EMPTY}"><strong>Anticipated disbursements:</strong> {DISBURSEMENT_LIST}</p>
+      <p>For greater certainty, where <strong>no Settlement is reached</strong> the Tenant remains <strong>responsible for any disbursements actually incurred</strong> on the file (e.g., a registered-mail charge to deliver an initial offer letter to the Landlord). Disbursements will be itemized in writing and, where reasonably possible, the Tenant will be consulted before incurring any disbursement greater than $50.</p>
+
+      <h4>Client&rsquo;s right to negotiate the fee</h4>
+      <p>The Tenant has the right to <strong>negotiate</strong> the terms of this contingency fee before signing this Retainer. The Tenant is <strong>encouraged to obtain independent legal advice</strong> on the reasonableness of this fee arrangement before signing (see Section 9).</p>
+
+      <h4>Termination effect on fee</h4>
+      <ul>
+        <li>If the <strong>Tenant terminates</strong> this Retainer (Section 10) <strong>before</strong> a Settlement is reached: <strong>no fee is owed</strong>.</li>
+        <li>If the <strong>Tenant terminates</strong> this Retainer <strong>after</strong> a Settlement is reached but before payment is collected: the {CONTINGENCY_FEE_AMOUNT} fee <strong>remains owing</strong> on the basis that the work has been substantially completed.</li>
+        <li>If the Retainer terminates <strong>automatically</strong> under Section 4 (LTB notice / application / court filing) <strong>before</strong> a Settlement is signed: <strong>no fee is owed</strong>.</li>
+        <li>If the Retainer terminates automatically under Section 4 <strong>after</strong> a Settlement is signed: the {CONTINGENCY_FEE_AMOUNT} fee <strong>remains owing</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §7. COMMUNICATION & UPDATES
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>7. Communication and Updates</h2>
+
+    <h3>Primary Contact</h3>
+    <div class="meta-grid">
+      <div class="row"><span class="lab">Paralegal</span><span class="val">{PARALEGAL_NAME} (LSO #{PARALEGAL_LSO})</span></div>
+      <div class="row"><span class="lab">Email</span><span class="val">{PARALEGAL_EMAIL}</span></div>
+      <div class="row"><span class="lab">Phone</span><span class="val">{PARALEGAL_PHONE}</span></div>
+      <div class="row"><span class="lab">Office</span><span class="val">226&#8209;272&#8209;5153 &middot; legalassist.london</span></div>
+    </div>
+
+    <h3>Authority to Communicate with the Landlord</h3>
+    <p>The Tenant <strong>authorizes</strong> the Paralegal to communicate directly with the Landlord, the Landlord&rsquo;s representatives (property manager, real-estate agent), and the Landlord&rsquo;s lawyer or paralegal (if any), in respect of the cash-for-keys negotiation. Once this Retainer is signed and the Landlord has been notified that Legal Assist acts for the Tenant, the Tenant agrees <strong>not to communicate directly</strong> with the Landlord about the cash-for-keys negotiation without first consulting the Paralegal.</p>
+
+    <h3>Update Frequency</h3>
+    <ul>
+      <li>The Paralegal will <strong>update the Tenant in writing</strong> (email) on <strong>each substantive offer or counter-offer</strong> received from the Landlord, <strong>within one (1) business day</strong> of receipt.</li>
+      <li>The Paralegal will provide a routine status update at least every <strong>fourteen (14) calendar days</strong>, even if no offer activity has occurred, until a Settlement is reached or this Retainer terminates.</li>
+    </ul>
+
+    <h3>Tenant&rsquo;s Response Time</h3>
+    <ul>
+      <li>The Tenant must respond to any offer review request from the Paralegal <strong>within three (3) business days</strong>. If the Tenant does not respond within that window, the offer may <strong>lapse</strong>, or the Landlord may withdraw the offer, and the Tenant accepts that risk.</li>
+      <li>If the Tenant becomes uncontactable for <strong>fourteen (14) consecutive calendar days</strong> despite the Paralegal&rsquo;s reasonable efforts, the Paralegal may treat the file as inactive and may withdraw under Section 10.</li>
+    </ul>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §8. CONFIDENTIALITY, CONFLICTS, FILE RETENTION
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>8. Confidentiality, Conflicts &amp; File Retention</h2>
+
+    <h3>Confidentiality &amp; Privilege</h3>
+    <p>Communications between the Tenant and the Paralegal are protected by <strong>paralegal-client privilege</strong> and by the Paralegal&rsquo;s duty of confidentiality under <strong>Rule 3.03</strong> of the <em>Paralegal Rules of Conduct</em>. The Paralegal will not disclose confidential information without the Tenant&rsquo;s consent, except where disclosure is permitted or required by law or by the Paralegal Rules.</p>
+
+    <h3>Conflict of Interest Check</h3>
+    <p>The Paralegal has performed a conflict-of-interest check against the Landlord (and any disclosed representative of the Landlord) as of <strong>{CONFLICT_CHECK_DATE}</strong>, and confirms that <strong>no conflict</strong> has been identified that would prevent the Paralegal from acting for the Tenant under this Retainer. If a conflict is identified after this Retainer is signed, the Paralegal will disclose the conflict to the Tenant and may withdraw under <strong>Rules 3.04 to 3.05</strong>.</p>
+
+    <h3>Direct Contact with the Landlord by the Tenant</h3>
+    <p>The Tenant agrees to inform the Paralegal of any direct communication the Tenant has had with the Landlord or the Landlord&rsquo;s representatives about the cash-for-keys negotiation, both before signing this Retainer (to the best of the Tenant&rsquo;s memory) and during the Retainer.</p>
+
+    <h3>Personal Information &amp; PIPEDA</h3>
+    <p>The Paralegal collects personal information from the Tenant for the limited purpose of providing the services described in this Retainer, meeting record-keeping requirements under By-Law 7.1 and By-Law 9, and meeting applicable tax record-keeping obligations. The Tenant consents to the collection, use, and disclosure of personal information for those purposes.</p>
+
+    <h3>File Retention</h3>
+    <p>On conclusion of this matter, the Paralegal will retain the closed file for a minimum of <strong>six (6) years</strong> in accordance with LSO best practice and By-Law 9 retention requirements. After that period, the file may be securely destroyed without further notice. Trust account records are retained for the longer period required by By-Law 9.</p>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §9. INDEPENDENT LEGAL ADVICE (ILA)
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>9. Independent Legal Advice (ILA)</h2>
+
+    <div class="callout warn">
+      <h4>You Are Strongly Encouraged to Get Independent Legal Advice Before Signing the Mutual Release</h4>
+      <p>The Tenant is <strong>strongly encouraged</strong> to obtain <strong>independent legal advice</strong> from a lawyer or another paralegal (one who is not acting on this Retainer) before signing the <strong>final Mutual Release and Termination Agreement</strong> (or N11 with side agreement). The Paralegal acting on this Retainer drafted or reviewed the document for the Tenant and therefore cannot serve as &ldquo;independent&rdquo; counsel on it.</p>
+    </div>
+
+    <h3>Why ILA matters here</h3>
+    <p>A Mutual Release is a <strong>final, full, and forever release</strong> of all claims the Tenant has, or may ever have, arising out of the tenancy. By signing it, the Tenant is normally <strong>giving up</strong> any right to bring claims that the Tenant could otherwise have pursued at the Landlord and Tenant Board (e.g., T2 harassment / interference claims, T6 maintenance claims, T1 rebate claims for illegal charges or LMR deposit interest, T3 service-reduction claims) or in court (e.g., damages for breach of the tenancy agreement). Independent legal advice helps ensure that the Tenant understands what claims are being released and whether the Settlement amount is reasonable in the circumstances.</p>
+
+    <h3>When ILA is especially important</h3>
+    <ul>
+      <li>Where the Settlement amount is <strong>$5,000 or more</strong>;</li>
+      <li>Where the Tenant has, or may have, <strong>existing claims</strong> against the Landlord (e.g., a maintenance dispute, a harassment complaint, illegal charges, withheld LMR deposit interest) that would be released by signing;</li>
+      <li>Where the Tenant has, or may have, a potential <strong>bad-faith N12 or N13</strong> claim (RTA s. 57) against the Landlord that would be released;</li>
+      <li>Where the Tenant is being asked to sign any term other than the cash payment, the move-out date, and a standard mutual release (e.g., a non-disparagement clause, a confidentiality clause, an indemnity).</li>
+    </ul>
+
+    <h3>Acknowledgement of right to ILA</h3>
+    <p>By signing this Retainer, the Tenant <strong>acknowledges</strong> that the Tenant has been informed of the right to obtain independent legal advice before signing the final Mutual Release, and that the Tenant either has obtained, will obtain, or voluntarily chooses not to obtain such advice.</p>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §10. TERMINATION OF RETAINER
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>10. Termination of Retainer</h2>
+
+    <h3>Termination by the Tenant</h3>
+    <p>The Tenant may terminate this Retainer <strong>at any time</strong>, for any reason or no reason, by giving the Paralegal <strong>written notice</strong> (email is sufficient). Termination by the Tenant is effective on the date the notice is received by the Paralegal. The fee consequences of termination by the Tenant are set out in Section 6.</p>
+
+    <h3>Termination by the Paralegal</h3>
+    <p>The Paralegal may terminate this Retainer on <strong>five (5) business days&rsquo; written notice</strong> to the Tenant, for any reason permitted by the <em>Paralegal Rules of Conduct</em>, including without limitation: non-cooperation, failure to provide instructions, conflict of interest identified after engagement, breakdown of trust, threatening or abusive conduct, ethical impossibility, or any other reason permitted under Rule 3.08 of the Rules.</p>
+
+    <h3>Automatic Termination</h3>
+    <p>This Retainer terminates <strong>automatically</strong>, without notice and without any further act of either party, on the date the Landlord (a) serves the Tenant with any LTB notice (N4, N5, N6, N7, N8, N12, N13, or any other N-form), <strong>OR</strong> (b) files any application at the Landlord and Tenant Board, <strong>OR</strong> (c) commences any court proceeding against the Tenant arising out of the tenancy. On automatic termination:</p>
+    <ul>
+      <li>The Paralegal will confirm the termination in writing to the Tenant within one (1) business day of becoming aware of the triggering event.</li>
+      <li>The fee consequences set out in Section 6 apply.</li>
+      <li>If the Tenant wishes to be represented in respect of the LTB or court matter, the Tenant must <strong>sign a new, separate retainer</strong> with Legal Assist Paralegal Services (or with another paralegal or lawyer). The Paralegal will, on request, provide a referral.</li>
+    </ul>
+
+    <h3>Effect of Termination</h3>
+    <p>On termination (for any reason), the Paralegal will (a) cease all work on the file, (b) close out any pending communications with the Landlord with notice that the Paralegal no longer acts, (c) on the Tenant&rsquo;s written request and within a reasonable time, transfer the Tenant&rsquo;s file (or a copy) to the Tenant or to a successor representative, and (d) issue a final account if any amount is owing under Section 6.</p>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §11. ACKNOWLEDGMENTS AND INITIALS
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>11. Acknowledgments and Initials</h2>
+    <p>By initialling each box below, the Tenant separately acknowledges and agrees to each of the following statements. Each line is an independent acknowledgment.</p>
+
+    <div class="ack-list">
+      <h4>Initials Required</h4>
+      <div class="item"><div class="box" data-initial-target="ack-scope-negotiation">INIT</div><div class="txt">I understand this retainer is <strong>limited to NEGOTIATING a cash-for-keys settlement only</strong>.</div></div>
+      <div class="item"><div class="box" data-initial-target="ack-no-ltb-rep">INIT</div><div class="txt">I understand <strong>Legal Assist will NOT represent me at the Landlord and Tenant Board</strong> under this retainer.</div></div>
+      <div class="item"><div class="box" data-initial-target="ack-auto-terminate">INIT</div><div class="txt">I understand that <strong>if the landlord files an application at the LTB or serves an N-form notice, this retainer ENDS</strong> and I must sign a <strong>new, separate retainer</strong> to be represented at the LTB.</div></div>
+      <div class="item"><div class="box" data-initial-target="ack-fee-from-settlement">INIT</div><div class="txt">I understand the fee is <strong>{CONTINGENCY_FEE_AMOUNT} deducted from any settlement</strong>; if <strong>no settlement, no fee</strong>.</div></div>
+      <div class="item"><div class="box" data-initial-target="ack-floor-set">INIT</div><div class="txt">I have set a <strong>settlement Floor of {SETTLEMENT_FLOOR}</strong> and I understand the paralegal <strong>cannot accept below this Floor without my written consent</strong>.</div></div>
+      <div class="item"><div class="box" data-initial-target="ack-ila">INIT</div><div class="txt">I understand I am entitled to <strong>independent legal advice before signing the final Mutual Release</strong> and that the paralegal who drafted it cannot also be my &ldquo;independent&rdquo; advisor on it.</div></div>
+      <div class="item"><div class="box" data-initial-target="ack-questions-explained">INIT</div><div class="txt">I have been given the chance to <strong>ask questions</strong> and have had this retainer <strong>explained to me</strong>.</div></div>
+    </div>
+
+    <div class="end-marker" aria-label="End of section — no further conditions">
+      <svg class="end-stroke" viewBox="0 0 100 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="99" y2="29" stroke="#9ca3af" stroke-width="0.3" vector-effect="non-scaling-stroke" /></svg>
+      <span class="end-label">End of Section &mdash; No Further Conditions</span>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       §12. SIGNATURES
+       ================================================================ -->
+  <section class="s" data-pagebreak-before="true">
+    <h2>12. Signatures</h2>
+
+    <p>By signing below, each party confirms agreement to the terms of this Retainer. Electronic signatures are equivalent to wet-ink signatures under the <em>Electronic Commerce Act, 2000</em>, s. 11.</p>
+
+    <div class="signature-row">
+      <div class="sig-card">
+        <div class="lab">Tenant Signature</div>
+        <div class="sig-area"></div>
+        <div class="line"></div>
+        <div class="name">{CLIENT_NAME}</div>
+        <div class="meta">{CLIENT_EMAIL}</div>
+        <div class="date client-sign-date">Date: ____________________</div>
+      </div>
+      <div class="sig-card">
+        <div class="lab">Paralegal Signature</div>
+        <div class="cursive">{PARALEGAL_SIGNATURE_IMAGE}</div>
+        <div class="line"></div>
+        <div class="name">{PARALEGAL_NAME}</div>
+        <div class="meta">Licensed Paralegal &mdash; Law Society of Ontario &middot; Licence No. {PARALEGAL_LSO}</div>
+        <div class="date">Date: {TODAY_DATE}</div>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <div class="left">Legal Assist Paralegal Services &middot; 226&#8209;272&#8209;5153 &middot; <a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a><br><a href="https://legalassist.london">legalassist.london</a> &middot; LTB Cash-for-Keys Retainer Agreement<div class="version">Document Version: LTB Cash-for-Keys Retainer v1.0 &middot; Last updated {TODAY_DATE}</div></div>
+      <div class="right">VERIFY OUR LICENSING<br><a href="https://lso.ca/directory">LSO.ca/directory</a></div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
