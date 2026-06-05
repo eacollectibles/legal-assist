@@ -6,7 +6,7 @@ import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useMember } from '@/integrations';
-import { login } from '@/lib/auth-service';
+import { login, getPostLoginRoute } from '@/lib/auth-service';
 import { EMAIL_PRIMARY } from '@/lib/contact';
 
 interface LoginFormData {
@@ -96,13 +96,11 @@ export default function ClientLoginPage() {
         rememberMe: false,
       });
 
-      // Redirect to appropriate dashboard based on user role
+      // Redirect to appropriate dashboard based on user role.
+      // F-J: route through getPostLoginRoute so paralegal_student lands
+      // on /student-dashboard rather than /client-dashboard.
       setTimeout(() => {
-        if (result.user?.isAdmin) {
-          navigate('/paralegal-dashboard');
-        } else {
-          navigate('/client-dashboard');
-        }
+        navigate(getPostLoginRoute(result.user));
       }, 1500);
     } catch (err) {
       setError('Failed to log in. Please check your email and password and try again.');

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PaymentForm, { type PaymentType, type PaymentFormDefaults } from '@/components/payments/PaymentForm';
+import EtransferOption from '@/components/payments/EtransferOption';
 
 /**
  * Public payment page at /pay.
@@ -57,6 +58,17 @@ export default function PayPage() {
           <div className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm">
             <PaymentForm defaults={defaults} />
           </div>
+
+          {/* F-G: Interac e-Transfer as an alternative payment method.
+              Lower processing fee ($0.50 vs Square's 2.9% + $0.30).
+              Reference number maps the incoming auto-deposit back
+              to the right matter for manual reconciliation. */}
+          <EtransferOption
+            amountDollars={Number(defaults.amountDollars) || 0}
+            fileId={defaults.matterReference}
+            clientId={defaults.clientId}
+            clientName={defaults.clientName}
+          />
 
           <p className="mt-6 text-xs text-foreground/50">
             Legal Assist Paralegal Services &middot; Operated by Jean-Francois Demers, Licensed Paralegal

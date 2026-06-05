@@ -11,6 +11,7 @@ import {
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PrimaryCTA from '@/components/PrimaryCTA';
+import TrustBar from '@/components/TrustBar';
 import { PHONE_DISPLAY, PHONE_HREF, EMAIL_HREF, SMS_HREF } from '@/lib/contact';
 
 /* ============================================================
@@ -187,6 +188,12 @@ export default function HomePageNew() {
           <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-secondary/30" />
         </div>
       </section>
+
+      {/* ========== TRUST BAR (above-the-fold credibility strip) ==========
+          5 high-signal markers: LSO licence, free consultation, service
+          area, Small Claims jurisdiction, LTB representation. Added per
+          2026-05-29 SEO plan CRO #3 (Phase 1 priority). */}
+      <TrustBar />
 
       {/* ========== ORIGINAL CONVERSION STRIP ========== */}
       <section className="bg-primary py-4">

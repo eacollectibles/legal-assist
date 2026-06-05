@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "wix dev",
     "prebuild": "node scripts/generate-sitemap.mjs",
-    "build": "wix build",
+    "build": "node scripts/build.mjs",
+    "build:default-memory": "wix build",
     "preview": "wix preview",
     "release": "wix release",
     "env": "wix env pull",

@@ -144,6 +144,74 @@ interface MatterProfile {
 function getMatterProfile(templateName?: string): MatterProfile {
   const name = (templateName || '').toLowerCase();
 
+  // -------------------- Limited Scope — Single Letter / Demand Letter --------------------
+  // Flat-fee, one-shot engagement: paralegal drafts and sends ONE letter on
+  // the Client's behalf voicing their concerns / demands to the other side.
+  // Scope expressly ENDS the moment that letter is sent. No reply review,
+  // no follow-up, no negotiation, no representation — any further work is
+  // a separate retainer. Entered into in accordance with the LSO Paralegal
+  // Rules of Conduct provisions governing limited scope representation
+  // (see r. 3.02-1.1).
+  //
+  // Triggers (matched on lowercased templateName.includes):
+  //   - 'limited scope'
+  //   - 'demand letter'
+  //   - 'single letter'
+  //   - 'concerns letter'
+  //   - 'letter retainer'
+  if (
+    name.includes('limited scope') ||
+    name.includes('demand letter') ||
+    name.includes('single letter') ||
+    name.includes('concerns letter') ||
+    name.includes('letter retainer')
+  ) {
+    const heading = 'Limited Scope Retainer Agreement';
+    return {
+      documentTitle: heading,
+      subtitle: heading + ' &ndash; Single Correspondence (One Letter) Service',
+      pageTitle: heading + ' – Legal Assist Paralegal Services',
+      matterReferenceLabel: 'File Ref:',
+      matterTypeLabel: 'Recipient / Other Party:',
+      natureOfMatterLabel: 'Nature of the Dispute and Concerns to be Raised in the Letter',
+      retainerSentence:
+        '<strong>This is a LIMITED SCOPE retainer</strong> entered into in accordance with the Law Society of Ontario&rsquo;s Paralegal Rules of Conduct provisions governing limited scope representation. ' +
+        'The Client retains the Paralegal to provide ONE legal-correspondence service only: drafting a single letter on the Client&rsquo;s behalf setting out the Client&rsquo;s position, concerns, and any demands, and sending that letter to the identified recipient described above. ' +
+        '<strong>The Paralegal&rsquo;s engagement under this retainer ends when the letter has been sent.</strong> ' +
+        'The Paralegal is not retained to monitor for, review, or respond to any reply, to engage in further negotiation, to advise on litigation strategy, or to represent the Client in any proceeding arising from the dispute. Any further work requires a separate written retainer.',
+      scopeItems: [
+        'One (1) initial consultation regarding the dispute and the proposed letter',
+        'Drafting one (1) letter setting out the Client&rsquo;s position, concerns, and any demands',
+        'Review of the draft with the Client and incorporation of up to one round of reasonable revisions',
+        'Sending the finalized letter via the agreed delivery method (email, ordinary mail, or courier)',
+        'Providing the Client with a copy of the sent letter and, where reasonably available, proof of delivery',
+      ],
+      exclusions: [
+        '<strong>Any work after the letter is sent</strong> — including reviewing, advising on, or responding to any reply received from the recipient',
+        'A second demand letter, follow-up correspondence, or any further communication with the recipient',
+        'Negotiation, mediation, or settlement discussions with the recipient or their counsel',
+        'Drafting pleadings or commencing any proceeding (Small Claims, LTB, HRTO, Superior Court, etc.)',
+        'Representation at any court, tribunal, mediation, settlement conference, or hearing',
+        'Legal opinion on the merits of the dispute beyond what is reasonably necessary to draft the letter',
+        'Strategy or analysis of likely response, settlement value, or expected outcome',
+        'Investigation of facts beyond what the Client provides',
+        'Advice relating to tax, immigration, criminal, family, or other unrelated legal issues',
+        'Any assurance that the letter will be answered, that the dispute will be resolved, or that any deadline or limitation period will be paused, tolled, or extended by the letter',
+        'Monitoring or calendaring of any limitation period, deadline, or response date — these remain solely the Client&rsquo;s responsibility',
+      ],
+      disbursementItems: [
+        'Courier or registered mail charges (where used in lieu of email)',
+        'Postage for ordinary mail delivery',
+        'Photocopies, printing, or scanning if hard-copy delivery is requested',
+      ],
+      decisionMaker: 'the recipient of the letter (no adjudicator is involved in this engagement)',
+      footerCaption: 'Legal Assist Paralegal Services &bull; ' + heading + ' (Single Letter Scope) &bull; www.legalassist.london',
+      showRentObligations: false,
+      showFreeRentClause: false,
+      conductReferent: 'opposing_party',
+    };
+  }
+
   // -------------------- Provincial Offences / Traffic Ticket --------------------
   if (name.includes('provincial offence') || name.includes('traffic ticket') || name.includes('poa')) {
     const isTraffic = name.includes('traffic');

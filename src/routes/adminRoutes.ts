@@ -2,6 +2,10 @@ import { lazy } from 'react';
 
 // Admin & Dashboard Pages - All lazy loaded
 const ParalegalDashboardPage = lazy(() => import('@/components/pages/ParalegalDashboardPageNew'));
+// F-J Paralegal student dashboard (scoped to assigned files only)
+const StudentDashboardPage = lazy(() => import('@/components/pages/StudentDashboardPage'));
+const StudentNewFilePage = lazy(() => import('@/components/pages/StudentNewFilePage'));
+const StudentManagementPage = lazy(() => import('@/components/pages/StudentManagementPage'));
 const AdminUserManagementPage = lazy(() => import('@/components/pages/AdminUserManagementPage'));
 const AdminUserDetailPage = lazy(() => import('@/components/pages/AdminUserDetailPage'));
 const AdminMessagesPage = lazy(() => import('@/components/pages/AdminMessagesPage'));
@@ -32,7 +36,12 @@ const PayPage = lazy(() => import('@/components/pages/PayPage'));
 export const adminRoutes = [
   // Main Paralegal Dashboard
   { path: '/paralegal-dashboard', element: ParalegalDashboardPage },
-  
+
+  // F-J Paralegal student dashboard + supervisor's student-mgmt page
+  { path: '/student-dashboard', element: StudentDashboardPage },
+  { path: '/student/new-file', element: StudentNewFilePage },
+  { path: '/admin/students', element: StudentManagementPage },
+
   // Admin User Management
   { path: '/admin/users', element: AdminUserManagementPage },
   { path: '/admin/users/:userId', element: AdminUserDetailPage },

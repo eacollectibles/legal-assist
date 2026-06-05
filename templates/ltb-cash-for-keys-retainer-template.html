@@ -63,9 +63,55 @@ h2, h3 { page-break-after: avoid; break-after: avoid; }
 /* End-of-section marker must stay with the preceding content — never
    land as an orphan on its own page. The `break-before: avoid-page`
    prevents a renderer from inserting a page break right before it. */
-.end-marker { position: relative; height: 56px; margin: 14px 0 0; border: 1px dashed var(--line-2); border-radius: 4px; background: #fff; overflow: hidden; page-break-before: avoid; break-before: avoid-page; }
-.end-marker .end-stroke { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
-.end-marker .end-label { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: #fff; padding: 4px 10px; border: 1px solid var(--line); border-radius: 3px; font: 600 9.5px/1 Inter, sans-serif; color: var(--mute); letter-spacing: 0.04em; z-index: 2; white-space: nowrap; text-transform: uppercase; }
+/* End-of-section marker
+   ----------------------
+   Previously used position:relative + absolute-positioned SVG and
+   label. Chromium's `break-inside: avoid` does NOT honor that layout
+   reliably — the renderer split the marker box across two pages
+   (bottom half on the next page) on every single section in the
+   generated PDF.
+   The fix replaces the absolute layout with a simple flex row, and
+   draws the diagonal stroke via a CSS linear-gradient background
+   (no SVG, no absolute children, no overflow:hidden needed). With
+   the children flowing in normal flow, `break-inside: avoid` is
+   honored and the box stays on one page. */
+.end-marker {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 14px;
+  height: 36px;
+  margin: 14px 0 0;
+  border: 1px dashed var(--line-2);
+  border-radius: 4px;
+  background:
+    linear-gradient(
+      to bottom right,
+      transparent 0%,
+      transparent calc(50% - 0.3px),
+      #cbd5e1 calc(50% - 0.3px),
+      #cbd5e1 calc(50% + 0.3px),
+      transparent calc(50% + 0.3px),
+      transparent 100%
+    ),
+    #ffffff;
+  page-break-before: avoid;
+  break-before: avoid-page;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+.end-marker .end-stroke { display: none; }
+.end-marker .end-label {
+  background: #ffffff;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font: 600 9.5px/1 Inter, sans-serif;
+  color: var(--mute);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
 .cover { min-height: 980px; padding: 0 0 24px; display: flex; flex-direction: column; page-break-after: always; break-after: page; }
 .cover-brand { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 3px solid var(--gold); }
 .cover-brand .mark { width: 44px; height: 44px; border-radius: 8px; background: var(--navy); color: var(--gold); display: inline-flex; align-items: center; justify-content: center; font: 700 18px/1 Inter, sans-serif; letter-spacing: 0.02em; flex: 0 0 44px; }

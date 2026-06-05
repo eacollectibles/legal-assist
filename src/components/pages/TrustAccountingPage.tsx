@@ -459,89 +459,48 @@ export default function TrustAccountingPage() {
     setIsBackfilling(true);
     setBackfillReport(null);
 
+    // The backfill used to run client-side via BaseCrudService.update(),
+    // but the paralegal account's CMS role lacks UPDATE permission on
+    // financialrecords (WDE0027). We now POST to a server endpoint that
+    // does the same loop using the Wix SDK's ApiKeyStrategy, which has
+    // site-level permissions and bypasses the role restriction. See
+    // src/pages/api/admin/backfill-financialrecords.ts.
     try {
-      const trustTransactionTypes = new Set([
-        'trust_deposit', 'trust_withdrawal', 'transfer',
-        'billing', 'payment', 'disbursement', 'refund',
-        'reconciliation',
-      ]);
+      const resp = await fetch('/api/admin/backfill-financialrecords', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      const data = await resp.json().catch(() => null);
 
-      let fileIdPatched = 0;
-      let journalTypePatched = 0;
-      let skipped = 0;
-      let failed = 0;
-      const failures: string[] = [];
-
-      // Build a clientId → most-recent-active-file map up front so
-      // we don't do N×M lookups in the loop.
-      const filesByClient = new Map<string, ClientFile>();
-      for (const file of clientFiles) {
-        if (!file.clientId) continue;
-        const existing = filesByClient.get(file.clientId);
-        const fileDate = new Date((file as any)._createdDate || 0).getTime();
-        const existingDate = existing
-          ? new Date((existing as any)._createdDate || 0).getTime()
-          : -1;
-        // Prefer active files; tie-break by recency.
-        const fileActive = (file as any).status === 'active';
-        const existingActive = existing
-          ? (existing as any).status === 'active'
-          : false;
-        if (!existing
-            || (fileActive && !existingActive)
-            || (fileActive === existingActive && fileDate > existingDate)) {
-          filesByClient.set(file.clientId, file);
-        }
-      }
-
-      for (const record of financialRecords) {
-        const patch: Record<string, unknown> = {};
-        const txnType = (record as any).transactionType as string | undefined;
-        const journalType = (record as any).journalType as string | undefined;
-        const fileId = (record as any).fileId as string | undefined;
-        const clientId = (record as any).clientId as string | undefined;
-
-        if (!journalType && txnType && trustTransactionTypes.has(txnType)) {
-          patch.journalType = 'trust';
-        }
-        if (!fileId && clientId) {
-          const fallbackFile = filesByClient.get(clientId);
-          if (fallbackFile?._id) {
-            patch.fileId = fallbackFile._id;
-          }
-        }
-
-        if (Object.keys(patch).length === 0) {
-          skipped++;
-          continue;
-        }
-
-        try {
-          await BaseCrudService.update('financialrecords', { _id: record._id, ...patch });
-          if (patch.fileId) fileIdPatched++;
-          if (patch.journalType) journalTypePatched++;
-        } catch (err: any) {
-          failed++;
-          failures.push(`${record._id}: ${err?.message || String(err)}`);
-        }
+      if (!resp.ok || !data?.success) {
+        const msg =
+          data?.error ||
+          `Server returned ${resp.status} ${resp.statusText}`;
+        setBackfillReport(`Backfill failed: ${msg}`);
+        return;
       }
 
       const lines = [
         `Backfill complete.`,
-        `• journalType added to ${journalTypePatched} record(s)`,
-        `• fileId added to ${fileIdPatched} record(s)`,
-        `• ${skipped} record(s) already had both fields (skipped)`,
+        `• journalType added to ${data.journalTypePatched} record(s)`,
+        `• fileId added to ${data.fileIdPatched} record(s)`,
+        `• ${data.skipped} record(s) already had both fields (skipped)`,
       ];
-      if (failed > 0) {
-        lines.push(`• ${failed} record(s) FAILED to update`);
-        lines.push(...failures.slice(0, 5).map(f => `  ${f}`));
+      if (data.failed > 0) {
+        lines.push(`• ${data.failed} record(s) FAILED to update`);
+        if (Array.isArray(data.failures) && data.failures.length > 0) {
+          lines.push(...data.failures.slice(0, 5).map((f: string) => `  ${f}`));
+        }
       }
       setBackfillReport(lines.join('\n'));
 
-      // Reload data so the UI reflects the patched rows.
+      // Reload so the patched rows show up immediately in the UI.
       await loadData();
     } catch (err: any) {
-      setBackfillReport(`Backfill failed at top level: ${err?.message || String(err)}`);
+      setBackfillReport(
+        `Backfill failed at top level: ${err?.message || String(err)}`
+      );
     } finally {
       setIsBackfilling(false);
     }

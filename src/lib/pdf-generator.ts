@@ -31,79 +31,82 @@ export async function generatePDF(content: string, documentName: string): Promis
 <head>
   <meta charset="UTF-8">
   <style>
+    /* ----------------------------------------------------------------
+     * PDF wrapper CSS — minimal-on-purpose.
+     *
+     * Modern templates (Traffic v4+, HRTO, LTB Tenant, A&D, Small
+     * Claims, Cash-for-Keys) ship complete CSS as part of their HTML
+     * body (Inter, 13.5px, navy headings, orange dividers, callout
+     * boxes, etc.). The wrapper must NOT compete with them on body-
+     * level typography (font-family, font-size, text-align).
+     *
+     * An earlier revision of this wrapper forced
+     *   body  { font-family: 'Times New Roman'; font-size: 12pt; }
+     *   .content { text-align: justify; }
+     * Because .content outranks body in CSS specificity, the
+     * template's text-align: left lost — every paragraph rendered
+     * justified, words got stretched across the column with massive
+     * gaps, only a few words fit per line, and the result was a 39-
+     * page signed retainer of one-word-per-line garbage (Christophr
+     * Campsall, Traffic v4.6, May 27 2026 — see Task #226).
+     *
+     * The wrapper now keeps ONLY page-level rules and the
+     * .content.plain-text helper for legacy text-only documents
+     * that have no template CSS of their own.
+     *
+     * IMPORTANT: this entire block is rendered inside a JS template
+     * literal (the htmlContent backtick string), so DO NOT use
+     * backticks anywhere in this comment — they terminate the
+     * outer template literal and produce "Missing semicolon" Babel
+     * parse errors at build time.
+     * ---------------------------------------------------------------- */
     @page {
       size: letter;
       margin: 1in;
     }
-    body {
+    .content.plain-text {
+      white-space: pre-wrap;
       font-family: 'Times New Roman', Times, serif;
       font-size: 12pt;
       line-height: 1.6;
       color: #000;
-      margin: 0;
-      padding: 0;
     }
-    .content {
-      margin: 0;
-      text-align: justify;
-    }
-    .content.plain-text {
-      white-space: pre-wrap;
-    }
-    /* HTML content styling */
-    .content h1 {
-      font-size: 16pt;
-      font-weight: bold;
-      margin: 20px 0 10px 0;
-    }
-    .content h2 {
-      font-size: 14pt;
-      font-weight: bold;
-      margin: 18px 0 8px 0;
-    }
-    .content h3 {
-      font-size: 13pt;
-      font-weight: bold;
-      margin: 16px 0 6px 0;
-    }
-    .content p {
-      margin: 10px 0;
-    }
-    .content ul, .content ol {
-      margin: 10px 0;
-      padding-left: 30px;
-    }
-    .content li {
-      margin: 5px 0;
-    }
-    .content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 15px 0;
-    }
-    .content table th,
-    .content table td {
-      border: 1px solid #000;
-      padding: 8px;
-      text-align: left;
-    }
-    .content table th {
-      background-color: #f0f0f0;
-      font-weight: bold;
-    }
-    .content strong {
-      font-weight: bold;
-    }
-    .content em {
-      font-style: italic;
-    }
-    .content u {
-      text-decoration: underline;
-    }
-    .content hr {
-      border: none;
-      border-top: 1px solid #000;
-      margin: 20px 0;
+    /* ------------------------------------------------------------
+     * html2canvas whitespace-collapse defense.
+     *
+     * Symptom: words running together around <strong>, <b>, <em>
+     * boundaries: "Terminationof Retainer", "writtennotice",
+     * "settlementbetweenthe Tenantand". Visible on both pre-sign
+     * and post-sign PDFs (the post-sign run amplifies it because
+     * the cloned DOM is captured a second time).
+     *
+     * Root cause: html2canvas measures text run-by-run using the
+     * browser's TextMetrics API. When font-kerning is enabled
+     * (default for Inter at small sizes) the kerned-rendered
+     * width of "X " (with trailing space) can be measured as the
+     * non-kerned width of "X" — the trailing space is dropped,
+     * so the next inline element renders flush against the
+     * previous one.
+     *
+     * Fix: disable font-kerning globally for the rasterised DOM.
+     * This affects ONLY the PDF (the templates in the live React
+     * app keep their kerned rendering). Layout is otherwise
+     * unchanged — Inter without kerning is visually nearly
+     * identical at 13.5px — and word boundaries are now measured
+     * the same way they're drawn.
+     *
+     * The universal "*" selector with !important is required to
+     * override the templates' body-level font shorthand which
+     * implicitly resets font-kerning on every descendant.
+     * (No backticks anywhere in this comment — see the IMPORTANT
+     *  note above; backticks would terminate the outer JS template
+     *  literal and break the build with a Babel parse error, which
+     *  is exactly what happened on 2026-05-29.)
+     * ------------------------------------------------------------ */
+    *, *::before, *::after {
+      font-kerning: none !important;
+      -webkit-font-kerning: none !important;
+      font-feature-settings: "kern" 0 !important;
     }
   </style>
 </head>
@@ -490,79 +493,82 @@ export async function embedSignatureInPDF(
 <head>
   <meta charset="UTF-8">
   <style>
+    /* ----------------------------------------------------------------
+     * PDF wrapper CSS — minimal-on-purpose.
+     *
+     * Modern templates (Traffic v4+, HRTO, LTB Tenant, A&D, Small
+     * Claims, Cash-for-Keys) ship complete CSS as part of their HTML
+     * body (Inter, 13.5px, navy headings, orange dividers, callout
+     * boxes, etc.). The wrapper must NOT compete with them on body-
+     * level typography (font-family, font-size, text-align).
+     *
+     * An earlier revision of this wrapper forced
+     *   body  { font-family: 'Times New Roman'; font-size: 12pt; }
+     *   .content { text-align: justify; }
+     * Because .content outranks body in CSS specificity, the
+     * template's text-align: left lost — every paragraph rendered
+     * justified, words got stretched across the column with massive
+     * gaps, only a few words fit per line, and the result was a 39-
+     * page signed retainer of one-word-per-line garbage (Christophr
+     * Campsall, Traffic v4.6, May 27 2026 — see Task #226).
+     *
+     * The wrapper now keeps ONLY page-level rules and the
+     * .content.plain-text helper for legacy text-only documents
+     * that have no template CSS of their own.
+     *
+     * IMPORTANT: this entire block is rendered inside a JS template
+     * literal (the htmlContent backtick string), so DO NOT use
+     * backticks anywhere in this comment — they terminate the
+     * outer template literal and produce "Missing semicolon" Babel
+     * parse errors at build time.
+     * ---------------------------------------------------------------- */
     @page {
       size: letter;
       margin: 1in;
     }
-    body {
+    .content.plain-text {
+      white-space: pre-wrap;
       font-family: 'Times New Roman', Times, serif;
       font-size: 12pt;
       line-height: 1.6;
       color: #000;
-      margin: 0;
-      padding: 0;
     }
-    .content {
-      margin: 0;
-      text-align: justify;
-    }
-    .content.plain-text {
-      white-space: pre-wrap;
-    }
-    /* HTML content styling */
-    .content h1 {
-      font-size: 16pt;
-      font-weight: bold;
-      margin: 20px 0 10px 0;
-    }
-    .content h2 {
-      font-size: 14pt;
-      font-weight: bold;
-      margin: 18px 0 8px 0;
-    }
-    .content h3 {
-      font-size: 13pt;
-      font-weight: bold;
-      margin: 16px 0 6px 0;
-    }
-    .content p {
-      margin: 10px 0;
-    }
-    .content ul, .content ol {
-      margin: 10px 0;
-      padding-left: 30px;
-    }
-    .content li {
-      margin: 5px 0;
-    }
-    .content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 15px 0;
-    }
-    .content table th,
-    .content table td {
-      border: 1px solid #000;
-      padding: 8px;
-      text-align: left;
-    }
-    .content table th {
-      background-color: #f0f0f0;
-      font-weight: bold;
-    }
-    .content strong {
-      font-weight: bold;
-    }
-    .content em {
-      font-style: italic;
-    }
-    .content u {
-      text-decoration: underline;
-    }
-    .content hr {
-      border: none;
-      border-top: 1px solid #000;
-      margin: 20px 0;
+    /* ------------------------------------------------------------
+     * html2canvas whitespace-collapse defense.
+     *
+     * Symptom: words running together around <strong>, <b>, <em>
+     * boundaries: "Terminationof Retainer", "writtennotice",
+     * "settlementbetweenthe Tenantand". Visible on both pre-sign
+     * and post-sign PDFs (the post-sign run amplifies it because
+     * the cloned DOM is captured a second time).
+     *
+     * Root cause: html2canvas measures text run-by-run using the
+     * browser's TextMetrics API. When font-kerning is enabled
+     * (default for Inter at small sizes) the kerned-rendered
+     * width of "X " (with trailing space) can be measured as the
+     * non-kerned width of "X" — the trailing space is dropped,
+     * so the next inline element renders flush against the
+     * previous one.
+     *
+     * Fix: disable font-kerning globally for the rasterised DOM.
+     * This affects ONLY the PDF (the templates in the live React
+     * app keep their kerned rendering). Layout is otherwise
+     * unchanged — Inter without kerning is visually nearly
+     * identical at 13.5px — and word boundaries are now measured
+     * the same way they're drawn.
+     *
+     * The universal "*" selector with !important is required to
+     * override the templates' body-level font shorthand which
+     * implicitly resets font-kerning on every descendant.
+     * (No backticks anywhere in this comment — see the IMPORTANT
+     *  note above; backticks would terminate the outer JS template
+     *  literal and break the build with a Babel parse error, which
+     *  is exactly what happened on 2026-05-29.)
+     * ------------------------------------------------------------ */
+    *, *::before, *::after {
+      font-kerning: none !important;
+      -webkit-font-kerning: none !important;
+      font-feature-settings: "kern" 0 !important;
     }
   </style>
 </head>
@@ -1079,12 +1085,12 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
         }
       });
 
-    // Atomic blocks: end-markers and any element marked
-    // `data-atomic="true"` cannot be cut through. Add their full
+    // Atomic blocks marked `data-atomic="true"` (signature blocks,
+    // initials tables, etc.) cannot be cut through. Add their full
     // [top, bottom] range to dangerZones so any cut landing inside
     // gets pulled to the top (pushing the element to the next page).
     host
-      .querySelectorAll('.end-marker, [data-atomic="true"]')
+      .querySelectorAll('[data-atomic="true"]')
       .forEach((el) => {
         const r = (el as HTMLElement).getBoundingClientRect();
         const top = (r.top - hostRect.top) * 2;
@@ -1094,6 +1100,53 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
         }
       });
     dangerZones.sort((a, b) => a[0] - b[0]);
+
+    // End-of-section markers — OPPOSITE behaviour to dangerZones.
+    // A `.end-marker` is the closing visual stamp on a section. It
+    // MUST stay on the same page as the section's last content
+    // paragraph; it must NEVER be orphaned to the top of the next
+    // page (which is what was happening when end-markers were
+    // pushed into dangerZones — the pull-UP behaviour evicted the
+    // marker forward instead of keeping it with its section).
+    //
+    // We register each marker's [top, bottom] in a separate
+    // `endMarkerZones` array and apply a "push past" pass after
+    // the heading-slice safety check. If the chosen cut lands
+    // inside a marker OR within ~24 px just before it (which would
+    // orphan the marker), the cut is shifted DOWN to right after
+    // the marker so the marker rides on the current page.
+    const endMarkerZones: Array<[number, number]> = [];
+    host.querySelectorAll('.end-marker').forEach((el) => {
+      const r = (el as HTMLElement).getBoundingClientRect();
+      const top = (r.top - hostRect.top) * 2;
+      const bottom = (r.bottom - hostRect.top) * 2;
+      if (bottom > 0 && top < canvas.height) {
+        endMarkerZones.push([top, bottom]);
+      }
+    });
+    endMarkerZones.sort((a, b) => a[0] - b[0]);
+
+    /**
+     * If `y` falls inside an end-marker OR within ~24 px just
+     * before one, return the coordinate just AFTER the marker
+     * (marker rides on the current page with its section).
+     * Otherwise return `y` unchanged.
+     */
+    const keepMarkerWithSection = (y: number): number => {
+      for (const [top, bottom] of endMarkerZones) {
+        // Case 1: cut lands inside the marker → would split it.
+        // Case 2: cut lands just BEFORE the marker → would orphan
+        //         it to the next page. 24 px in canvas coords
+        //         (~12 CSS px) is the empirical threshold — wide
+        //         enough to catch typical "natural break right
+        //         before the marker" cuts, tight enough not to
+        //         disturb breaks that are well above the marker.
+        if (y >= top - 24 && y < bottom + 4) {
+          return bottom + 4;
+        }
+      }
+      return y;
+    };
 
     sectionTops.sort((a, b) => a - b);
     blockBottoms.sort((a, b) => a - b);
@@ -1183,6 +1236,26 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       // threshold or push us backwards (sanity check).
       if (safeCut > currentY + 100 && safeCut <= cutAt) {
         cutAt = safeCut;
+      }
+
+      // FINAL SAFETY #2: end-marker push-past. After all of the
+      // pull-UP logic above, the cut may now land just before or
+      // inside an end-marker (heading protection often pulls cuts
+      // back to ~60 px above the next section's heading — and the
+      // marker sits right there). Push DOWN past the marker so it
+      // stays glued to its section's content on the current page.
+      //
+      // The 8 % overflow allowance is the safety valve: if pushing
+      // past the marker would overflow the page by more than 8 %
+      // (rare — marker is only ~72 canvas px tall), we leave the
+      // cut where it is and accept the orphan rather than producing
+      // visible content clipping at the page bottom.
+      const markerCut = keepMarkerWithSection(cutAt);
+      if (
+        markerCut !== cutAt &&
+        markerCut <= currentY + canvasPerPage * 1.08
+      ) {
+        cutAt = markerCut;
       }
 
       breaks.push(cutAt);

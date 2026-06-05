@@ -4,6 +4,7 @@ import { ArrowRight, Shield, Home, Clock, CheckCircle, AlertTriangle, FileText, 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
+import DownloadGuideButton from '@/components/DownloadGuideButton';
 
 function CollapsibleSection({ title, icon: Icon, children, defaultOpen = false }: { title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
@@ -45,7 +46,13 @@ export default function LandlordRightsGuidePage() {
             <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-4 max-w-3xl">
               Everything you need to know about your rights and obligations under the Residential Tenancies Act, 2006. Written by a licensed paralegal who represents landlords at the Landlord and Tenant Board every week.
             </p>
-            <p className="font-paragraph text-sm text-foreground/50 mb-8">Last updated: April 2026 &bull; Covers 2026 rent guideline (2.1%)</p>
+            <p className="font-paragraph text-sm text-foreground/50 mb-4">Last updated: April 2026 &bull; Covers 2026 rent guideline (2.1%)</p>
+            {/* Take-home PDF affordance — Content Authority #2 per the
+                2026-05-29 SEO plan. Uses the browser print-to-PDF dialog. */}
+            <DownloadGuideButton
+              filename="Ontario-Landlord-Rights-Guide-Legal-Assist"
+              className="mb-6"
+            />
             <div className="flex flex-wrap gap-3">
               <a href="#quick-reference" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-paragraph font-semibold hover:bg-primary/90 transition-colors">
                 Jump to Quick Reference <ArrowRight className="w-4 h-4" />

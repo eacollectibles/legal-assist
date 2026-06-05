@@ -1,5 +1,6 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
 import SEO from '@/components/SEO';
+import AuthorityCitations, { TRAFFIC_AUTHORITIES } from '@/components/AuthorityCitations';
 import { CheckCircle, XCircle, AlertTriangle, Scale, Clock, DollarSign, FileText, Car, TrendingUp, HelpCircle, Shield, AlertCircle, Calculator, Gauge } from 'lucide-react';
 import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
 import {
@@ -610,6 +611,10 @@ export default function TrafficTicketsPage() {
             </a>
           </div>
         </div>
+
+        {/* Governing authorities — HTA, POA, Compulsory Auto Insurance Act.
+            Per 2026-05-29 SEO plan (Service Page SEO #4). */}
+        <AuthorityCitations authorities={TRAFFIC_AUTHORITIES} />
 
         <RelatedServices services={relatedServicesConfig.trafficTickets} />
       </ServicePageLayout>

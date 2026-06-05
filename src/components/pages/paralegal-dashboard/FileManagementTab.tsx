@@ -61,7 +61,38 @@ function toUnifiedGenDoc(doc: GeneratedDocument): UnifiedDocument {
 
 export default function FileManagementTab() {
   const navigate = useNavigate();
-  const { documents, generatedDocuments, setDocuments, setGeneratedDocuments, isLoading } = useParalegalDashboard();
+  const { documents, generatedDocuments, setDocuments, setGeneratedDocuments, clients, isLoading } = useParalegalDashboard();
+
+  // Build an email -> client and id -> client map ONCE for fast row
+  // joins. Uploaded ClientDocument rows only carry `clientEmail`
+  // (no clientId), so we resolve names by email; generated docs may
+  // carry clientId on the underlying record so we fall back through
+  // both keys.
+  const clientsByEmail = new Map<string, any>();
+  const clientsById = new Map<string, any>();
+  for (const c of clients) {
+    const email = (c as any)?.email;
+    if (email && typeof email === 'string') {
+      clientsByEmail.set(email.toLowerCase(), c);
+    }
+    if ((c as any)?._id) {
+      clientsById.set((c as any)._id, c);
+    }
+  }
+  const resolveClientName = (doc: UnifiedDocument): string => {
+    if (doc.clientName && doc.clientName.trim()) return doc.clientName.trim();
+    if (doc.clientEmail) {
+      const hit = clientsByEmail.get(doc.clientEmail.toLowerCase());
+      if (hit) {
+        const name = `${(hit as any).firstName || ''} ${(hit as any).lastName || ''}`.trim();
+        if (name) return name;
+      }
+      // Last resort: show the email itself rather than "N/A" so the
+      // paralegal at least knows whose document this is.
+      return doc.clientEmail;
+    }
+    return 'Unknown client';
+  };
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState('');
@@ -335,7 +366,7 @@ export default function FileManagementTab() {
                   <div>
                     <p className="font-paragraph text-foreground/60">Client</p>
                     <p className="font-paragraph font-semibold text-foreground">
-                      {doc.clientName || doc.clientEmail || 'N/A'}
+                      {resolveClientName(doc)}
                     </p>
                   </div>
                 </div>

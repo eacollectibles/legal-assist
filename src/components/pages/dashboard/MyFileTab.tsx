@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import type { ClientProfile, CurrentUser, ClientDocument } from './types';
+import CaseStatusTimeline from '@/components/client/CaseStatusTimeline';
 
 interface MyFileTabProps {
   currentUser: CurrentUser;
@@ -120,6 +121,22 @@ export default function MyFileTab({ currentUser, profile, documents, isLoadingPr
 
   return (
     <div className="space-y-6">
+      {/* Where's my case? timeline — F-C. Read-only view of the
+          paralegal-set status. Set fileStage 1-5 + fileStageNote on
+          clientfiles to surface updates here. */}
+      {fileAssignment && (
+        <CaseStatusTimeline
+          file={{
+            _id: fileAssignment._id,
+            fileNumber: fileAssignment.fileNumber,
+            matterType: fileAssignment.matterType,
+            fileStage: fileAssignment.fileStage,
+            fileStageNote: fileAssignment.fileStageNote,
+            fileStageUpdatedDate: fileAssignment.fileStageUpdatedDate,
+          }}
+        />
+      )}
+
       {/* File Summary Card */}
       <Card>
         <CardHeader>

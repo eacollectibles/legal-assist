@@ -46,6 +46,48 @@ function formatDate(d: Date | string | undefined): string {
   return new Date(d).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
+/**
+ * Trust account sign convention — MUST mirror getTransactionSign() in
+ * TrustAccountingPage.tsx exactly. If these two disagree, the Reports
+ * trust balance won't match the Trust Accounting balance and we get
+ * the user-visible "$1,988 vs $3,191" cross-foot bug (B-1 in the
+ * 2026-05-29 audit).
+ *
+ * '+' = inflow to trust    (trust_deposit, billing, payment)
+ * '-' = outflow from trust (trust_withdrawal, disbursement, refund)
+ * '~' = trust→general transfer — DEBITS the trust account, so treated
+ *       as '-' for balance purposes even though it shows the '~' badge
+ *       in the journal UI.
+ */
+function getTrustSign(type: string | undefined): '+' | '-' | '~' | '' {
+  switch (type) {
+    case 'trust_deposit':
+    case 'billing':
+    case 'payment':
+      return '+';
+    case 'trust_withdrawal':
+    case 'disbursement':
+    case 'refund':
+      return '-';
+    case 'transfer':
+      return '~';
+    default:
+      return '';
+  }
+}
+
+/** Sum trust amounts honouring the sign convention above. */
+function sumTrustSigned(records: { transactionType?: string; amount?: number }[]): number {
+  let total = 0;
+  for (const r of records) {
+    const sign = getTrustSign(r.transactionType);
+    const amt = r.amount || 0;
+    if (sign === '+') total += amt;
+    else if (sign === '-' || sign === '~') total -= amt;
+  }
+  return total;
+}
+
 function getMonthKey(d: Date | string): string {
   const date = new Date(d);
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -399,10 +441,44 @@ export default function ReportsAnalyticsPage() {
     const filteredInvoices = filterByDate(enrichedInvoices, 'invoiceDate');
     const filteredDockets = filterByDate(enrichedDockets, 'transactionDate');
 
+    // ----------------------------------------------------------------
+    // Square Canada online-card fees: 2.9% + $0.30 per transaction.
+    // Source: https://squareup.com/ca/en/pricing (online payments rate).
+    // We identify Square inflows as financialrecords where the
+    // recordedBy starts with "Square" OR paymentMethod is credit_card —
+    // both are stamped by /api/square/create-payment when a client
+    // pays via the PayPage. We do NOT charge fees on transfers,
+    // refunds, or manually entered receipts.
+    // ----------------------------------------------------------------
+    const SQUARE_FEE_PCT = 0.029;
+    const SQUARE_FEE_FIXED = 0.30;
+    const filteredFinancial = filterByDate(financialRecords, 'transactionDate');
+    const squareDeposits = filteredFinancial.filter((r) => {
+      const type = (r.transactionType || '').toLowerCase();
+      if (!['trust_deposit', 'payment', 'billing'].includes(type)) return false;
+      const recordedBy = String(r.recordedBy || '').toLowerCase();
+      const method = String(r.paymentMethod || '').toLowerCase();
+      return (
+        recordedBy.startsWith('square') ||
+        method === 'credit_card' ||
+        method === 'card'
+      );
+    });
+    const squareGross = squareDeposits.reduce((s, r) => s + (r.amount || 0), 0);
+    const squareFees = squareDeposits.reduce(
+      (s, r) => s + (r.amount || 0) * SQUARE_FEE_PCT + SQUARE_FEE_FIXED,
+      0,
+    );
+
     // Total revenue (paid invoices)
     const totalRevenue = filteredInvoices
       .filter(i => i.invStatus === 'paid')
       .reduce((s, i) => s + (i.total || 0), 0);
+
+    // Net revenue = total paid revenue minus Square processing fees.
+    // This is the cash actually deposited into the firm account after
+    // Square's cut — the number that matters for budgeting and HST.
+    const netRevenue = Math.max(0, totalRevenue - squareFees);
 
     // Total billed
     const totalBilled = filteredInvoices
@@ -465,8 +541,12 @@ export default function ReportsAnalyticsPage() {
       unbilledAmount,
       effectiveRate,
       byActivity,
+      squareGross,
+      squareFees,
+      netRevenue,
+      squareTxCount: squareDeposits.length,
     };
-  }, [enrichedInvoices, enrichedDockets, filterByDate]);
+  }, [enrichedInvoices, enrichedDockets, financialRecords, filterByDate]);
 
   // ============================================================
   // SECTION 3: TRUST ACCOUNT SUMMARY
@@ -475,24 +555,26 @@ export default function ReportsAnalyticsPage() {
   const trustData = useMemo(() => {
     const filtered = filterByDate(trustRecords, 'transactionDate');
 
-    // Total deposits & withdrawals
+    // Total deposits & withdrawals — now sign-aware so billing/payment
+    // are counted as inflows and transfer/refund as outflows, matching
+    // the Trust Accounting page exactly.
     const deposits = filtered
-      .filter(r => r.transactionType === 'trust_deposit')
+      .filter(r => getTrustSign(r.transactionType) === '+')
       .reduce((s, r) => s + (r.amount || 0), 0);
     const withdrawals = filtered
-      .filter(r => ['trust_withdrawal', 'disbursement'].includes(r.transactionType))
+      .filter(r => {
+        const s = getTrustSign(r.transactionType);
+        return s === '-' || s === '~';
+      })
       .reduce((s, r) => s + (r.amount || 0), 0);
 
-    // Current balance (all time)
-    const allDeposits = trustRecords
-      .filter(r => r.transactionType === 'trust_deposit')
-      .reduce((s, r) => s + (r.amount || 0), 0);
-    const allWithdrawals = trustRecords
-      .filter(r => ['trust_withdrawal', 'disbursement'].includes(r.transactionType))
-      .reduce((s, r) => s + (r.amount || 0), 0);
-    const currentBalance = allDeposits - allWithdrawals;
+    // Current balance (all time) — uses the shared sumTrustSigned helper
+    // so this page and Trust Accounting always agree.
+    const currentBalance = sumTrustSigned(trustRecords);
 
-    // Per-client trust balances
+    // Per-client trust balances. We track inflows and outflows separately
+    // so the UI can show "deposits / withdrawals" columns, but the net
+    // balance uses the same sign convention.
     const clientBalances: Record<string, { deposits: number; withdrawals: number; name: string }> = {};
     trustRecords.forEach(r => {
       const cid = r.clientId || r.fileId || 'unknown';
@@ -500,11 +582,10 @@ export default function ReportsAnalyticsPage() {
         const file = clientFiles.find(f => f._id === r.fileId || f.clientId === r.clientId);
         clientBalances[cid] = { deposits: 0, withdrawals: 0, name: file?.clientName || 'Unknown' };
       }
-      if (r.transactionType === 'trust_deposit') {
-        clientBalances[cid].deposits += r.amount || 0;
-      } else if (['trust_withdrawal', 'disbursement'].includes(r.transactionType || '')) {
-        clientBalances[cid].withdrawals += r.amount || 0;
-      }
+      const sign = getTrustSign(r.transactionType);
+      const amt = r.amount || 0;
+      if (sign === '+') clientBalances[cid].deposits += amt;
+      else if (sign === '-' || sign === '~') clientBalances[cid].withdrawals += amt;
     });
 
     // Transaction count by type
@@ -514,16 +595,15 @@ export default function ReportsAnalyticsPage() {
       txByType[t] = (txByType[t] || 0) + 1;
     });
 
-    // Monthly trust activity
+    // Monthly trust activity — same sign-aware bucketing.
     const monthlyActivity: Record<string, { deposits: number; withdrawals: number }> = {};
     filtered.forEach(r => {
       const key = getMonthKey(r.transactionDate || r._createdDate || new Date());
       if (!monthlyActivity[key]) monthlyActivity[key] = { deposits: 0, withdrawals: 0 };
-      if (r.transactionType === 'trust_deposit') {
-        monthlyActivity[key].deposits += r.amount || 0;
-      } else if (['trust_withdrawal', 'disbursement'].includes(r.transactionType || '')) {
-        monthlyActivity[key].withdrawals += r.amount || 0;
-      }
+      const sign = getTrustSign(r.transactionType);
+      const amt = r.amount || 0;
+      if (sign === '+') monthlyActivity[key].deposits += amt;
+      else if (sign === '-' || sign === '~') monthlyActivity[key].withdrawals += amt;
     });
 
     // Negative balance clients (compliance risk)
@@ -809,6 +889,35 @@ export default function ReportsAnalyticsPage() {
                   accentColor="#D97706" />
               </div>
 
+              {/* Square fee + Net Revenue row.
+                  Square Canada online card rate: 2.9% + $0.30 per
+                  transaction. We surface the deduction so the firm
+                  can see what actually lands in the operating account
+                  after processing fees. */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <StatCard
+                  icon={DollarSign}
+                  label="Gross Card Receipts"
+                  value={formatCurrency(revenueData.squareGross)}
+                  subValue={`${revenueData.squareTxCount} Square transaction${revenueData.squareTxCount === 1 ? '' : 's'}`}
+                  accentColor="#0EA5E9"
+                />
+                <StatCard
+                  icon={AlertCircle}
+                  label="Square Processing Fees"
+                  value={`− ${formatCurrency(revenueData.squareFees)}`}
+                  subValue="2.9% + $0.30 per online tx"
+                  accentColor="#DC2626"
+                />
+                <StatCard
+                  icon={TrendingUp}
+                  label="Net Revenue (after fees)"
+                  value={formatCurrency(revenueData.netRevenue)}
+                  subValue="Operating cash, post-Square"
+                  accentColor="#059669"
+                />
+              </div>
+
               {/* Revenue by month */}
               <div className="bg-white rounded-xl border border-[#E8DDD3] p-6">
                 <div className="flex items-center justify-between mb-4">
@@ -1077,19 +1186,52 @@ export default function ReportsAnalyticsPage() {
                   if (clients.length === 0) return <p className="text-sm text-[#6B5B50] font-paragraph">No outstanding balances.</p>;
                   return (
                     <div className="space-y-3">
-                      {clients.map(c => (
-                        <div key={c.id} className="flex items-center justify-between py-2 border-b border-[#E8DDD3] last:border-0">
-                          <div>
-                            <div className="font-medium font-paragraph text-[#4A2C23]">{c.name}</div>
-                            <div className="text-xs text-[#6B5B50]">
-                              {c.count} invoice{c.count !== 1 ? 's' : ''} · oldest: {c.oldest} days
+                      {clients.map(c => {
+                        // Look up client email so we can deep-link a mailto: reminder.
+                        // F-D action button: opens the user's mail client with a
+                        // pre-composed reminder. Past 60 days we bump to a firmer tone.
+                        const client = clientFiles.find((cf: any) => cf.clientId === c.id || cf._id === c.id);
+                        const clientEmail = (client as any)?.clientEmail || (client as any)?.email || '';
+                        const subject = encodeURIComponent(
+                          c.oldest > 60
+                            ? `Past-due account — ${c.name}`
+                            : `Payment reminder — ${c.name}`
+                        );
+                        const body = encodeURIComponent(
+                          (c.oldest > 60
+                            ? `Hello,\n\nOur records show an outstanding balance of ${formatCurrency(c.total)} on your account, with the oldest invoice now ${c.oldest} days past due. Please remit payment at your earliest convenience or contact us to discuss a payment arrangement.\n\nIf payment has been sent recently, please disregard this notice.\n\n— Legal Assist Paralegal Services`
+                            : `Hello,\n\nA gentle reminder that your account currently shows an outstanding balance of ${formatCurrency(c.total)} across ${c.count} invoice${c.count !== 1 ? 's' : ''}. Payment can be made through your client portal at www.legalassist.london/client-dashboard.\n\nThank you,\nLegal Assist Paralegal Services`)
+                        );
+                        const mailto = clientEmail
+                          ? `mailto:${clientEmail}?subject=${subject}&body=${body}`
+                          : '';
+                        return (
+                          <div key={c.id} className="flex items-center justify-between py-2 border-b border-[#E8DDD3] last:border-0 gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium font-paragraph text-[#4A2C23] truncate">{c.name}</div>
+                              <div className="text-xs text-[#6B5B50]">
+                                {c.count} invoice{c.count !== 1 ? 's' : ''} · oldest: {c.oldest} days
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <span className={`font-mono font-bold ${c.oldest > 60 ? 'text-red-600' : c.oldest > 30 ? 'text-amber-600' : 'text-[#4A2C23]'}`}>
+                                {formatCurrency(c.total)}
+                              </span>
+                              {mailto && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="border-[#D4C5B9] text-[#4A2C23] text-xs"
+                                  onClick={() => { window.location.href = mailto; }}
+                                  title={`Email ${clientEmail}`}
+                                >
+                                  Remind
+                                </Button>
+                              )}
                             </div>
                           </div>
-                          <span className={`font-mono font-bold ${c.oldest > 60 ? 'text-red-600' : c.oldest > 30 ? 'text-amber-600' : 'text-[#4A2C23]'}`}>
-                            {formatCurrency(c.total)}
-                          </span>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   );
                 })()}

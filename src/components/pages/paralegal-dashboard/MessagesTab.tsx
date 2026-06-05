@@ -74,32 +74,86 @@ export default function MessagesTab() {
     }
   }, [selectedConversation]);
 
-  // Load assigned clients with emails when compose is opened
+  // Load clients with emails when compose is opened.
+  //
+  // Previously this filtered by `fileAssignments.paralegalId === currentParalegalId`,
+  // which returned 0 rows because most files in this practice are owned
+  // through `clientfiles` directly (not the legacy fileassignments join
+  // table) AND because the assignment rows that DID exist used 'Active'
+  // capitalised while the filter compared lowercase. Net effect: clicking
+  // New Message showed "No assigned clients found" even when the firm
+  // had 16 active client files. Same root cause as B-2 Overview
+  // counters (#237).
+  //
+  // New behaviour: union the two sources —
+  //   1. Files owned through `clientfiles` (firm-wide, case-insensitive
+  //      active status). Pulls limit:1000 to be future-proof.
+  //   2. Files assigned through `fileassignments` to this paralegal (legacy
+  //      path, kept for backward compat with files that pre-date
+  //      clientfiles).
+  // Then de-duplicate by clientId and only keep rows where a user account
+  // with an email can be resolved.
   const handleOpenCompose = async () => {
     setIsComposing(true);
     setSelectedConversation(null);
     setIsLoadingClients(true);
 
     try {
-      // Get client IDs assigned to current paralegal
-      const assignedClientIds = fileAssignments
-        .filter(a => a.paralegalId === currentParalegalId)
-        .map(a => a.clientId);
+      // Source 1: firm-wide active clientfiles.
+      let firmClientIds: string[] = [];
+      try {
+        const { items: clientFiles } = await BaseCrudService.getAll<any>(
+          'clientfiles',
+          undefined,
+          { limit: 1000 },
+        );
+        firmClientIds = (clientFiles || [])
+          .filter((f: any) => {
+            const status = String(f.fileStatus || f.status || '').toLowerCase();
+            return status === 'active';
+          })
+          .map((f: any) => f.clientId)
+          .filter(Boolean);
+      } catch {
+        /* fall through to legacy-only path */
+      }
 
-      // Fetch user accounts to get emails
-      const { items: userAccounts } = await BaseCrudService.getAll<any>('useraccounts');
+      // Source 2: legacy fileassignments rows (case-insensitive paralegal +
+      // case-insensitive status).
+      const legacyAssignedIds = fileAssignments
+        .filter((a) => {
+          const sameParalegal =
+            String(a.paralegalId || '').toLowerCase() ===
+            String(currentParalegalId || '').toLowerCase();
+          const status = String(a.fileStatus || '').toLowerCase();
+          return sameParalegal && (!status || status === 'active');
+        })
+        .map((a) => a.clientId)
+        .filter(Boolean);
+
+      // Union + de-dupe.
+      const allClientIds = Array.from(
+        new Set([...firmClientIds, ...legacyAssignedIds]),
+      );
+
+      // Fetch user accounts to get emails. Bump limit to 1000 so we
+      // don't silently miss accounts past row 50 (default page size).
+      const { items: userAccounts } = await BaseCrudService.getAll<any>(
+        'useraccounts',
+        undefined,
+        { limit: 1000 },
+      );
 
       const clientList: AssignedClient[] = [];
-      for (const clientId of assignedClientIds) {
-        if (!clientId) continue;
-        const profile = clients.find(c => c._id === clientId);
+      for (const clientId of allClientIds) {
+        const profile = clients.find((c) => c._id === clientId);
         const account = userAccounts.find((u: any) => u._id === clientId);
 
         const name = profile
           ? `${profile.firstName || ''} ${profile.lastName || ''}`.trim()
           : account?.firstName
-          ? `${account.firstName || ''} ${account.lastName || ''}`.trim()
-          : 'Unknown Client';
+            ? `${account.firstName || ''} ${account.lastName || ''}`.trim()
+            : 'Unknown Client';
 
         const email = account?.email || '';
 
@@ -112,7 +166,7 @@ export default function MessagesTab() {
       clientList.sort((a, b) => a.clientName.localeCompare(b.clientName));
       setAssignedClients(clientList);
     } catch (error) {
-      console.error('Error loading assigned clients:', error);
+      console.error('Error loading clients for new message:', error);
     } finally {
       setIsLoadingClients(false);
     }
@@ -378,10 +432,13 @@ export default function MessagesTab() {
                       <span className="font-paragraph text-foreground/60">Loading clients...</span>
                     </div>
                   ) : assignedClients.length === 0 ? (
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center gap-3">
-                      <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
                       <p className="font-paragraph text-yellow-800 text-sm">
-                        No assigned clients found. Clients must be assigned to you via File Assignments before you can message them.
+                        No messageable clients found. To appear here, a client
+                        must have an active file and a user account with an email
+                        address. Check the Assignments tab to confirm at least one
+                        file is open and that the client signed up with an email.
                       </p>
                     </div>
                   ) : (

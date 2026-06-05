@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Home, Clock, CheckCircle, AlertTriangle, FileText, DollarSign, Wrench, Ban } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import DownloadGuideButton from '@/components/DownloadGuideButton';
 
 export default function TenantRightsGuidePage() {
   // SEO handled by AutoSEO component
@@ -22,9 +23,15 @@ export default function TenantRightsGuidePage() {
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
               Ontario Tenant Rights Guide
             </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
+            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-6 max-w-3xl">
               Know your rights as a tenant in Ontario. This guide covers the Residential Tenancies Act, your protections, and what to do when problems arise.
             </p>
+            {/* Take-home PDF affordance — Content Authority #2 per the
+                2026-05-29 SEO plan. Uses the browser print-to-PDF dialog. */}
+            <DownloadGuideButton
+              filename="Ontario-Tenant-Rights-Guide-Legal-Assist"
+              className="mb-2"
+            />
           </div>
         </div>
       </section>

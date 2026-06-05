@@ -472,7 +472,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background overflow-clip selection:bg-primary/20 selection:text-secondary">
+    <div className="min-h-screen bg-background overflow-x-clip selection:bg-primary/20 selection:text-secondary">
       <Header />
 
       {/* SEO/a11y: single source-of-truth h1 for the page */}

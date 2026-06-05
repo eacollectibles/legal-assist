@@ -91,7 +91,7 @@ export default function MeetOurTeamPage() {
               <div className="relative">
                 <div className="rounded-xl overflow-hidden shadow-xl aspect-[3/4] bg-pastellavender/30">
                   <Image
-                    src="https://static.wixstatic.com/media/99571b_placeholder2~mv2.jpg"
+                    src="https://static.wixstatic.com/media/99571b_c32a188dfc804dd2818850adee4ae3c6~mv2.jpeg"
                     alt="Candice Fogarty, Licensed Paralegal at Legal Assist"
                     width={400}
                     height={533}

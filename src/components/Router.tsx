@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { useEffect, lazy, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { MemberProvider } from '@/integrations';
+import StickyMobileCallBar from '@/components/StickyMobileCallBar';
+import { trackPageView } from '@/lib/analytics';
+import ClientChatBubble from '@/components/chat/ClientChatBubble';
 // ComingSoonModal removed - site is live
 
 // Route configurations
@@ -37,8 +40,32 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Fire a page-view to our own analytics endpoint. The tracker
+    // throttles per-(session, path) so re-renders don't multiply
+    // events. Skips the paralegal admin tree so internal navigation
+    // doesn't pollute the public-traffic stats.
+    if (!pathname.startsWith('/admin') && !pathname.startsWith('/paralegal-dashboard')) {
+      trackPageView(pathname);
+    }
   }, [pathname]);
   return null;
+}
+
+/**
+ * Route-aware wrapper around the public chat bubble. Suppresses
+ * the widget on paralegal-only routes (the paralegal uses the
+ * Live Chat tab inside the dashboard instead) and on the public
+ * sign route where it would distract from a high-friction action.
+ */
+function ChatBubbleGate() {
+  const { pathname } = useLocation();
+  const suppressed =
+    pathname.startsWith('/admin') ||
+    pathname.startsWith('/paralegal-dashboard') ||
+    pathname.startsWith('/sign/') ||
+    pathname === '/conflict-detected';
+  if (suppressed) return null;
+  return <ClientChatBubble />;
 }
 
 // Combine all route configs
@@ -99,6 +126,11 @@ export default function Router() {
             {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          {/* Conversion: sticky bottom CTA bar on mobile only.
+              The component handles its own route-suppression list. */}
+          <StickyMobileCallBar />
+          {/* F-I: live chat bubble — suppressed on admin/sign routes. */}
+          <ChatBubbleGate />
         </Suspense>
       </MemberProvider>
     </BrowserRouter>

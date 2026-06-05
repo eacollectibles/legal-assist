@@ -1,4 +1,5 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
+import AuthorityCitations, { LTB_AUTHORITIES } from '@/components/AuthorityCitations';
 import SEO from '@/components/SEO';
 import { CheckCircle, XCircle, AlertTriangle, Scale, Clock, DollarSign, FileText, Users, TrendingUp, HelpCircle, Home, Building } from 'lucide-react';
 import { RelatedServices, relatedServicesConfig } from '@/components/RelatedServices';
@@ -584,6 +585,11 @@ export default function LandlordTenantBoardPage() {
             </a>
           </div>
         </div>
+
+        {/* Governing authorities: RTA, O. Reg. 516/06, SPPA, LTB Rules.
+            Adds the E-E-A-T statute-citation block flagged by the
+            2026-05-29 SEO plan (Service Page SEO #4). */}
+        <AuthorityCitations authorities={LTB_AUTHORITIES} />
 
         <RelatedServices services={relatedServicesConfig.landlordTenant} />
       </ServicePageLayout>

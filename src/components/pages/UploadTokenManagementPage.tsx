@@ -380,9 +380,26 @@ export default function UploadTokenManagementPage({ embedded }: { embedded?: boo
                 <TableBody>
                   {tokens.map(token => {
                     const status = getTokenStatus(token);
+                    // Display name resolution: look up the live client by
+                    // token.clientId first so we always show the current name.
+                    // Fall back to the snapshot stored on the token when it
+                    // was created (legacy rows), and finally to "Unknown
+                    // client" instead of the misleading "New Account"
+                    // placeholder that older rows wrote.
+                    const liveClient = clients.find(c => c._id === (token as any).clientId);
+                    const liveName = liveClient
+                      ? `${liveClient.firstName || ''} ${liveClient.lastName || ''}`.trim()
+                      : '';
+                    const storedName = (token.clientName || '').trim();
+                    const displayName =
+                      liveName ||
+                      (storedName && storedName.toLowerCase() !== 'new account'
+                        ? storedName
+                        : '') ||
+                      'Unknown client';
                     return (
                       <TableRow key={token._id}>
-                        <TableCell className="font-medium">{token.clientName}</TableCell>
+                        <TableCell className="font-medium">{displayName}</TableCell>
                         <TableCell>{token.matterReference || '-'}</TableCell>
                         <TableCell className="text-sm">
                           {token.allowedPurpose?.replace(/_/g, ' ')}

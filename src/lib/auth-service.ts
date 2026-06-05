@@ -35,6 +35,10 @@ export interface AuthResponse {
      * that, use `_id` (above).
      */
     clientId?: string;
+    // F-J: role + supervision so callers can route + redact right after login.
+    userType?: string;
+    supervisingParalegalId?: string;
+    allowFinancialView?: boolean;
   };
 }
 
@@ -48,6 +52,13 @@ interface UserAccount {
   lastLoginDate?: Date | string;
   accountStatus?: string;
   clientId?: string;
+  // F-J Paralegal student support
+  /** 'paralegal' | 'paralegal_student' | 'client' | 'admin' */
+  userType?: string;
+  /** Student rows only: the supervising paralegal's useraccount _id. */
+  supervisingParalegalId?: string;
+  /** Student rows only: paralegal-controlled toggle to show financial fields. */
+  allowFinancialView?: boolean;
 }
 
 /**
@@ -203,13 +214,23 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
     const isAdminStatus = updatedUser?.isAdmin || false;
 
     const token = generateToken(credentials.email);
+    // F-J: include userType + student-supervision fields so the dashboard and
+    // permission helpers can route + redact appropriately.
+    const userType = updatedUser?.userType || (isAdminStatus ? 'paralegal' : 'client');
+    const supervisingParalegalId = updatedUser?.supervisingParalegalId || '';
+    const allowFinancialView = updatedUser?.allowFinancialView === true;
+
     localStorage.setItem('authToken', token);
     localStorage.setItem('currentUser', JSON.stringify({
+      _id: user._id,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       isAdmin: isAdminStatus,
       clientId: user.clientId,
+      userType,
+      supervisingParalegalId,
+      allowFinancialView,
     }));
 
     return {
@@ -223,6 +244,12 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
         lastName: user.lastName,
         isAdmin: isAdminStatus,
         clientId: user.clientId,
+        // F-J: surface the role + supervision fields so getPostLoginRoute()
+        // sees them when called immediately after login (callers pass
+        // `result.user`, which short-circuits the localStorage fallback).
+        userType,
+        supervisingParalegalId,
+        allowFinancialView,
       },
     };
   } catch (error) {
@@ -252,6 +279,29 @@ export function getCurrentUser(): any {
   } catch {
     return null;
   }
+}
+
+/**
+ * F-J: alias of logout() for naming consistency with new components.
+ */
+export function signOut(): void {
+  logout();
+}
+
+/**
+ * F-J: where should a freshly-logged-in user be redirected?
+ * Centralizes routing so login + signup pages all agree.
+ *
+ *   paralegal_student → /student-dashboard
+ *   admin/paralegal   → /paralegal-dashboard
+ *   client (default)  → /client-dashboard
+ */
+export function getPostLoginRoute(user?: any): string {
+  const u = user || getCurrentUser();
+  if (!u) return '/login';
+  if (u.userType === 'paralegal_student') return '/student-dashboard';
+  if (u.isAdmin || u.userType === 'paralegal' || u.userType === 'admin') return '/paralegal-dashboard';
+  return '/client-dashboard';
 }
 
 /**

@@ -48,6 +48,7 @@ import {
 } from '@/components/ui/select';
 import { isAuthenticated, isAdmin } from '@/lib/auth-service';
 import { getDefaultParalegal } from '@/lib/paralegals';
+import { generateForm9EPdf, type Form9ERow } from '@/lib/form9e-generator';
 
 // ============================================================
 // TYPES
@@ -330,6 +331,90 @@ export default function MonthEndReconciliationPage() {
     () => perClientBalances.reduce((s, b) => s + b.balance, 0),
     [perClientBalances]
   );
+
+  // --------------------------------------------------------------
+  // Form 9E rows — opening / deposits / withdrawals / closing for
+  // each client active during the selected period. Built off the
+  // same trust-journal data the rest of the wizard uses so the
+  // PDF cross-foots the locked snapshot exactly. By-Law 9 s.18(10).
+  // --------------------------------------------------------------
+  const form9eRows = useMemo<Form9ERow[]>(() => {
+    const periodStart = new Date(year, month - 1, 1).getTime();
+    // Walk the journal in chronological order; before-period rows
+    // accumulate into `opening`, in-period rows into deposits or
+    // withdrawals. closing = opening + deposits − withdrawals.
+    const map = new Map<string, Form9ERow>();
+    for (const r of trustRecordsThroughPeriodEnd) {
+      if (!r.clientId) continue;
+      const t = r.transactionType || '';
+      const amt = r.amount || 0;
+      const isReceipt = TRUST_RECEIPT_TYPES.has(t);
+      const isDebit = TRUST_DEBIT_TYPES.has(t);
+      if (!isReceipt && !isDebit) continue;
+      const raw = r.transactionDate || r._createdDate;
+      const rowDate = raw ? new Date(raw as any).getTime() : 0;
+      const inPeriod = rowDate >= periodStart;
+
+      if (!map.has(r.clientId)) {
+        const file = clientFiles.find((f) => f.clientId === r.clientId);
+        map.set(r.clientId, {
+          clientId: r.clientId,
+          clientName: file?.clientName || 'Unknown client',
+          openingBalance: 0,
+          deposits: 0,
+          withdrawals: 0,
+          closingBalance: 0,
+        });
+      }
+      const row = map.get(r.clientId)!;
+      if (!inPeriod) {
+        // Before-period activity rolls into opening.
+        row.openingBalance += isReceipt ? amt : -amt;
+      } else if (isReceipt) {
+        row.deposits += amt;
+      } else {
+        row.withdrawals += amt;
+      }
+    }
+    // Compute closing and drop rows where everything is zero (no
+    // activity during or before the period — nothing to list).
+    const rows = Array.from(map.values())
+      .map((r) => ({
+        ...r,
+        closingBalance: r.openingBalance + r.deposits - r.withdrawals,
+      }))
+      .filter(
+        (r) =>
+          Math.abs(r.openingBalance) > 0.005 ||
+          Math.abs(r.deposits) > 0.005 ||
+          Math.abs(r.withdrawals) > 0.005 ||
+          Math.abs(r.closingBalance) > 0.005,
+      )
+      .sort((a, b) => a.clientName.localeCompare(b.clientName));
+    return rows;
+  }, [trustRecordsThroughPeriodEnd, clientFiles, year, month]);
+
+  const [generatingForm9E, setGeneratingForm9E] = useState(false);
+  const [form9eError, setForm9eError] = useState<string>('');
+
+  async function handleGenerateForm9E() {
+    setGeneratingForm9E(true);
+    setForm9eError('');
+    try {
+      await generateForm9EPdf({
+        month,
+        year,
+        periodEndDate: lastDayOfMonth(year, month),
+        rows: form9eRows,
+        paralegalName: getDefaultParalegal().displayName,
+        paralegalLicense: getDefaultParalegal().lsoNumber,
+      });
+    } catch (err: any) {
+      setForm9eError(err?.message || 'Failed to generate Form 9E PDF.');
+    } finally {
+      setGeneratingForm9E(false);
+    }
+  }
 
   // Running journal total at end of period (cross-foot reference).
   const journalEndingTotal = useMemo(() => {
@@ -1311,9 +1396,31 @@ export default function MonthEndReconciliationPage() {
               </>
             )}
 
-            <div className="flex gap-2 print:hidden">
+            <div className="flex flex-wrap gap-2 print:hidden">
               <Button variant="outline" onClick={() => window.print()}>
                 <Printer className="w-4 h-4 mr-1" /> Print Report
+              </Button>
+              {/* Form 9E — LSO By-Law 9 s.18(10) monthly trust listing.
+                  Generated from the same per-client journal data the
+                  wizard just reconciled, so its totals match the
+                  locked snapshot. */}
+              <Button
+                variant="outline"
+                className="border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A]/5"
+                onClick={handleGenerateForm9E}
+                disabled={generatingForm9E}
+              >
+                {generatingForm9E ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                    Generating Form 9E…
+                  </>
+                ) : (
+                  <>
+                    <FileText className="w-4 h-4 mr-1" />
+                    Generate Form 9E Trust Listing PDF
+                  </>
+                )}
               </Button>
               <Button variant="outline" onClick={() => {
                 setLockedSnapshot(null);
@@ -1327,6 +1434,11 @@ export default function MonthEndReconciliationPage() {
                 Reconcile another period
               </Button>
             </div>
+            {form9eError && (
+              <div className="mt-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded p-2 print:hidden">
+                {form9eError}
+              </div>
+            )}
           </CardContent>
         </Card>
       );

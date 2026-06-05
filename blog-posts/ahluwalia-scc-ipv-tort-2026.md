@@ -99,15 +99,15 @@ If you are considering whether the new tort applies to your situation, the follo
 
 Honesty about scope is part of every retainer at Legal Assist Paralegal Services. Under **By-Law 4** of the Law Society of Ontario, licensed paralegals (Class P1) have authority to represent clients in defined areas, including:
 
-- **Small Claims Court** matters up to a monetary limit of **$35,000**
+- **Small Claims Court** matters up to a monetary limit of **$50,000** (raised from $35,000 effective January 1, 2025)
 - **Provincial Offences Court** (Part I and Part III)
 - **Landlord and Tenant Board** matters
 - **Certain administrative tribunals** (e.g., Human Rights Tribunal of Ontario, Social Benefits Tribunal, WSIAT)
 
 What this means for the new tort:
 
-- **A civil claim for intimate partner violence valued at $35,000 or less** can, in principle, be filed in the **Small Claims Court** of Ontario, where a licensed paralegal may represent the plaintiff.
-- **A claim valued above $35,000** — which most serious intimate partner violence cases will likely be — must proceed in the **Superior Court of Justice**, where a **lawyer** is required to provide representation. Paralegals do not have rights of audience in the Superior Court of Justice, the Divisional Court, or any appellate court.
+- **A civil claim for intimate partner violence valued at $50,000 or less** can, in principle, be filed in the **Small Claims Court** of Ontario, where a licensed paralegal may represent the plaintiff. (The Small Claims Court monetary limit was raised from $35,000 to $50,000 effective January 1, 2025.)
+- **A claim valued above $50,000** — which most serious intimate partner violence cases will likely be — must proceed in the **Superior Court of Justice**, where a **lawyer** is required to provide representation. Paralegals do not have rights of audience in the Superior Court of Justice, the Divisional Court, or any appellate court.
 - **Divorce, custody, child or spousal support, and the division of family property** are not within paralegal scope and require a family lawyer.
 - **Criminal charges** related to the abuse are conducted by Crown counsel; the accused is typically represented by a criminal defence lawyer.
 

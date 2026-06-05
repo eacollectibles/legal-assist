@@ -628,3 +628,77 @@ body.menu-open {
     opacity: 1;
   }
 }
+
+/* ============================================
+   PRINT / SAVE-AS-PDF STYLES
+   ============================================
+   When a guide page is sent through window.print() (via the
+   DownloadGuideButton component), the page should look like a clean
+   printable document — no nav, no footer, no hero gradients, no
+   sticky bars. Letter-paper margins, sober colours, breakable blocks.
+   Added per the 2026-05-29 SEO plan (Content Authority #2 — downloadable
+   resources). */
+
+@media print {
+  /* Drop fixed/sticky chrome */
+  header, nav, footer,
+  .print\:hidden,
+  [data-cta="sticky-call"],
+  [data-cta="sticky-book"],
+  [role="region"][aria-label="Quick contact"] {
+    display: none !important;
+  }
+
+  /* Letter-paper margins */
+  @page {
+    size: letter;
+    margin: 0.75in;
+  }
+
+  /* Reset backgrounds so the printer doesn't waste ink on hero
+     gradients or coloured section bands */
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+  section, div {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep headings with their content */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  /* Don't split images or callouts across pages */
+  img, blockquote, table, .card, .callout {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  /* Ensure links are still recognisable in print */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+  /* But not for internal anchors */
+  a[href^="#"]::after,
+  a[href^="javascript"]::after {
+    content: "";
+  }
+
+  /* Footer tagline so the printed copy carries provenance */
+  body::after {
+    content: "Legal Assist Paralegal Services • 226-272-5153 • legalassist.london";
+    display: block;
+    margin-top: 24pt;
+    padding-top: 8pt;
+    border-top: 0.5pt solid #999;
+    font-size: 8.5pt;
+    color: #555;
+    text-align: center;
+  }
+}

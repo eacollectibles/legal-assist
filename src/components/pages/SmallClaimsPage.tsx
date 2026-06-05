@@ -1,4 +1,5 @@
 import ServicePageLayout from '@/components/ServicePageLayout';
+import AuthorityCitations, { SMALL_CLAIMS_AUTHORITIES } from '@/components/AuthorityCitations';
 import SEO from '@/components/SEO';
 import { CheckCircle, Users, FileText, Clock, DollarSign, Scale, AlertTriangle, XCircle, ArrowRight, HelpCircle, TrendingUp, Gavel, Calculator, Target, Shield, Ban, Info, Briefcase } from 'lucide-react';
 import { FAQSection } from '@/components/FAQSection';
@@ -575,6 +576,11 @@ export default function SmallClaimsPage() {
         </div>
 
         {/* Related Services */}
+        {/* Governing authorities — Courts of Justice Act, Rules of the
+            Small Claims Court (O. Reg. 258/98), Limitations Act 2002.
+            Per 2026-05-29 SEO plan (Service Page SEO #4). */}
+        <AuthorityCitations authorities={SMALL_CLAIMS_AUTHORITIES} />
+
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
             <RelatedServices currentService="small-claims" />

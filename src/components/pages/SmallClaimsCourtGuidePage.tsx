@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ArrowRight, Shield, Scale, Clock, CheckCircle, AlertTriangle, FileText, Users, Gavel, MessageSquare } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import DownloadGuideButton from '@/components/DownloadGuideButton';
 
 export default function SmallClaimsCourtGuidePage() {
   // SEO handled by AutoSEO component
@@ -22,9 +23,15 @@ export default function SmallClaimsCourtGuidePage() {
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
               What to Expect at Small Claims Court
             </h1>
-            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-8 max-w-3xl">
-              Small Claims Court handles civil disputes up to $50,000. This guide explains the entire process from filing to judgment.
+            <p className="font-paragraph text-lg md:text-xl text-foreground/70 mb-6 max-w-3xl">
+              Small Claims Court handles civil disputes up to $50,000 (raised from $35,000 effective January 1, 2025). This guide explains the entire process from filing to judgment.
             </p>
+            {/* Take-home PDF affordance — Content Authority #2 per the
+                2026-05-29 SEO plan. Uses the browser print-to-PDF dialog. */}
+            <DownloadGuideButton
+              filename="Ontario-Small-Claims-Court-Guide-Legal-Assist"
+              className="mb-2"
+            />
           </div>
         </div>
       </section>

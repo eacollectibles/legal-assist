@@ -14,6 +14,153 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'ltb-limitation-period-one-year-tenant-claims-ontario',
+    title: 'The One-Year Clock on LTB Claims: Limitation Periods Every Ontario Tenant Should Know',
+    description: 'The Landlord and Tenant Board is not an open-ended forum. Most tenant applications must be filed within one year under the Residential Tenancies Act — not the two years people assume. A plain-English guide to the s. 29(2) one-year limit, the s. 135 window for illegal rent, when the clock starts, and the traps that bar otherwise winnable claims.',
+    category: 'ltb',
+    date: '2026-06-04',
+    readTime: '9 min',
+    content: `
+      <p>Most tenants assume they have plenty of time to bring a complaint to the Landlord and Tenant Board (LTB). They do not. The <em>Residential Tenancies Act, 2006</em> (RTA) sets its own limitation periods, and the main one is <strong>one year</strong> &mdash; shorter than the two-year period under the general <em>Limitations Act, 2002</em> that most people have in mind. Miss the one-year window and an otherwise strong case can be barred before it is ever heard.</p>
+
+      <h2>The default rule: one year (RTA s. 29(2))</h2>
+      <p>Section 29(1) of the RTA lists the orders a tenant or former tenant can ask the Board to make &mdash; from illegal entry and harassment to withheld services and disrepair. Section 29(2) then imposes the deadline:</p>
+      <p>&ldquo;No application under subsection (1) may be made more than one year after the day the alleged conduct giving rise to the application occurred.&rdquo;</p>
+      <p>That one-year clock applies to most tenant applications, including the T2 (tenant rights &mdash; illegal entry, illegal lockout, harassment, withholding or interfering with vital services, substantial interference) and the T6 (maintenance and repairs under ss. 20 and 161). &ldquo;Made&rdquo; means actually filed with the Board, not merely prepared.</p>
+
+      <h2>When does the clock start? Single vs. ongoing breaches</h2>
+      <p>The hard question is usually <em>when the conduct occurred</em>. The Board draws a line between one-time events and continuing problems:</p>
+      <ul>
+        <li><strong>Single events</strong> &mdash; an illegal entry, a one-day lockout, a single illegal charge &mdash; the clock starts the day it happened.</li>
+        <li><strong>Ongoing or recurring breaches</strong> &mdash; chronic disrepair, a service that stays shut off, persistent interference &mdash; the breach continues over time, and the one year runs from the date the problem is finally fixed or the conduct stops.</li>
+      </ul>
+      <p>There is a catch with ongoing breaches. Even when your application is &ldquo;in time,&rdquo; the <strong>remedy</strong> is usually capped. The Board has held that a rent abatement generally reaches back only twelve months before the application was filed (<em>Toronto Community Housing Corporation v. Vlahovich</em>; <em>Goodman v. Menyhart</em>). So waiting to file &mdash; even on a live, continuing problem &mdash; quietly throws away the months of abatement you could have recovered.</p>
+
+      <h2>Illegal rent and illegal charges: the s. 135 one-year window</h2>
+      <p>If your complaint is that the landlord <em>collected or kept money it was not entitled to</em> &mdash; an illegal rent increase, an unlawful deposit, a &ldquo;key&rdquo; or &ldquo;administration&rdquo; fee, an over-charge &mdash; the governing section is s. 135, and it has its own one-year limit. Section 135(4) bars any order on an application filed more than one year after the money was collected or retained in contravention of the Act.</p>
+      <p>In practice this means the Board can only order back the unlawful amounts you paid in the <strong>12 months before you file</strong>. Illegal increases collected longer ago are generally gone, no matter how clear the breach. The lesson is the same: file early, because every month you wait is a month of recovery that drops off the back end.</p>
+
+      <h2>Why it is one year, not two</h2>
+      <p>The two-year period in the <em>Limitations Act, 2002</em> is the default for civil claims, and it is what most people expect. It generally <strong>does not</strong> govern applications to the LTB &mdash; the RTA contains its own, shorter limitation periods, and they control. The two-year period becomes relevant only when a dispute leaves the Board and goes to court (see below). Assuming you have &ldquo;two years like everything else&rdquo; is the single most common way tenants lose access to a remedy.</p>
+
+      <h2>Claims too big for the Board (RTA s. 207)</h2>
+      <p>The Board&rsquo;s monetary jurisdiction is tied to the Small Claims Court limit under s. 207(1). When the Small Claims Court limit rose from $35,000 to <strong>$50,000 on October 1, 2025</strong>, the Board&rsquo;s ceiling rose with it. If your claim is larger than that, s. 207(2) lets you bring it in a court of competent jurisdiction instead.</p>
+      <p>But moving to court does not escape timing problems. Where a claim falls within the Board&rsquo;s <em>exclusive</em> subject-matter (for example, certain non-repair claims), courts have refused to rescue a claim that was already out of time under the RTA&rsquo;s one-year period (<em>Efrach v. Cherishome Living</em>). The interaction between the RTA one-year rule and the court&rsquo;s two-year rule is genuinely tricky &mdash; it is worth advice before you choose your forum.</p>
+
+      <h2>Former tenants and former landlords</h2>
+      <p>Section 29 covers a &ldquo;tenant <em>or former tenant</em>,&rdquo; so moving out does not end your right to apply &mdash; but it does <strong>not</strong> stop or reset the clock either. The one year keeps running after you hand back the keys. A former tenant who waits months to deal with an illegal charge or a lockout can find the window closed.</p>
+      <p>On the other side, a <strong>former landlord</strong> generally cannot use the LTB to chase rent arrears once the tenancy has ended; that claim belongs in Small Claims Court under the two-year <em>Limitations Act</em> period (<em>Kipiniak v. Dubiel</em>; LTB file SWL-17051-18). The forum literally changes the moment the tenant gives up possession.</p>
+
+      <h2>What about the landlord&rsquo;s own applications?</h2>
+      <p>Landlord applications for arrears and compensation (L1/L2) work differently from the tenant-rights claims governed by s. 29(2). While the tenant is still in possession, arrears claims go to the Board, and money orders are capped at the Board&rsquo;s monetary jurisdiction (now $50,000). There is no blanket one-year cut-off on arrears the way there is on tenant rights claims &mdash; but the jurisdictional ceiling and the former-tenant rule still bite. The practical takeaway for landlords: do not let arrears grow past the money cap, and do not let the tenancy end before you have addressed them.</p>
+
+      <h2>Does discoverability help if I did not know?</h2>
+      <p>Sometimes a tenant does not realize a charge was illegal, or does not connect a problem to the landlord, until much later. The general law recognizes a &ldquo;discoverability&rdquo; principle that can delay the start of a limitation period until a claimant knew or ought to have known of the claim (<em>Pioneer Corp. v. Godfrey</em>). But the RTA ties s. 29(2) to when the <em>conduct occurred</em>, and the Board has frequently applied that wording strictly. Do not build your case on the hope that a discoverability argument will excuse a late filing &mdash; treat the one-year clock as firm.</p>
+
+      <h2>What to do</h2>
+      <ol>
+        <li>Diary two dates the moment a problem arises: the day it happened, and the day one year later.</li>
+        <li>For disrepair or an ongoing problem, file <em>while it is still live</em> &mdash; do not wait for it to be fixed, or you lose recoverable months of abatement.</li>
+        <li>For illegal rent or illegal charges, file within a year; only the last 12 months are recoverable under s. 135.</li>
+        <li>If the claim is worth more than $50,000, get advice before choosing between the Board and the court.</li>
+        <li>Remember that moving out does not stop the clock &mdash; former tenants are bound by the same one year.</li>
+      </ol>
+
+      <h2>How we can help</h2>
+      <p>Legal Assist Paralegal Services represents tenants and landlords at the Landlord and Tenant Board across Ontario, including T2 and T6 applications, illegal-rent and illegal-charge claims, and arrears matters &mdash; and we can tell you quickly whether your one-year window is still open. Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Limitation questions turn on the specific facts and dates of your situation. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: "How long do I have to file a claim at the Landlord and Tenant Board?", a: "For most tenant applications, one year from the day the conduct occurred, under section 29(2) of the Residential Tenancies Act. Claims for money the landlord collected illegally (illegal rent increases, unlawful fees or deposits) have their own one-year limit under section 135(4), measured from when the money was collected." },
+      { q: "Isn't the limitation period two years like other legal claims?", a: "No. The two-year period under the Limitations Act, 2002 is the default for civil court claims, but it generally does not govern applications to the LTB. The RTA sets its own, shorter one-year periods, and they control at the Board. The two-year period mainly matters if a claim is large enough to be pursued in court instead." },
+      { q: "I have had serious disrepair for three years — can I still claim?", a: "Possibly. If the disrepair is ongoing, the one-year clock can run from when it is finally fixed, so the application may still be in time. But the remedy is usually limited: a rent abatement generally reaches back only the 12 months before you file. Waiting therefore reduces what you can recover even when the application itself is not late." },
+      { q: "Does moving out give me more time to file?", a: "No. Section 29 lets a former tenant apply, but moving out does not pause or reset the one-year clock — it keeps running after you leave. If you have a claim, file before the year is up, whether or not you still live there." },
+      { q: "My landlord wants years of unpaid rent — can the LTB order all of it?", a: "While you are still living in the unit, the Board can order arrears up to its monetary limit, which rose to $50,000 on October 1, 2025. Once the tenancy has ended, a former landlord generally cannot use the LTB for arrears at all and must sue in Small Claims Court under the two-year limitation period." },
+    ],
+  },
+  {
+    slug: 'selling-tobacco-vape-alcohol-to-minors-ontario-charges',
+    title: 'Charged With Selling Tobacco, Vape, or Alcohol to a Minor in Ontario? What Employees and Owners Face',
+    description: 'One compliance check and a clerk’s split-second decision can put both an employee and a business owner in provincial offences court. A practical guide to the Smoke-Free Ontario Act and Liquor Licence and Control Act offences for selling to anyone under 19 — the fines, the prohibition and licence consequences, who gets charged, and the due-diligence defence that only works if you built it in advance.',
+    category: 'general',
+    date: '2026-06-04',
+    readTime: '9 min',
+    content: `
+      <p>In Ontario, the line is simple and the consequences are not: you cannot sell or supply tobacco, vapour products, or alcohol to anyone under <strong>19</strong>. A single sale caught by a compliance inspector or test shopper can generate provincial offences charges against the employee who rang it through <em>and</em> the business that employed them &mdash; plus prohibition and licence consequences that often dwarf the fine itself. This is a defence-oriented guide to what employees and owners are actually facing, and the one defence that matters.</p>
+
+      <h2>Three products, two statutes, one age</h2>
+      <ul>
+        <li><strong>Tobacco and vapour products</strong> are governed by the <em>Smoke-Free Ontario Act, 2017</em> (SFOA). It prohibits selling or supplying these products to anyone under 19, and requires staff to ask for identification from anyone who appears to be under <strong>25</strong>.</li>
+        <li><strong>Alcohol</strong> is governed by the <em>Liquor Licence and Control Act, 2019</em> (LLCA). It prohibits selling or supplying liquor to anyone under 19, and requires an ID check where age is in doubt.</li>
+      </ul>
+      <p>The shared rule is 19. The shared safeguard is identification &mdash; and for tobacco and vape, the trigger to demand ID is whether the customer <em>looks</em> under 25, not whether they are actually underage.</p>
+
+      <h2>Who actually gets charged &mdash; the employee and the owner</h2>
+      <p>This is the part that surprises people. Liability is not limited to the business:</p>
+      <ul>
+        <li><strong>The employee, clerk, server, or bartender</strong> who made the sale is personally liable and can be charged in their own name.</li>
+        <li><strong>The owner or corporation</strong> is also on the hook. The SFOA makes the business owner responsible for sale violations committed in their business <em>unless</em> the owner exercised due diligence to prevent it. The LLCA exposes the licensee to penalties and licence action even when it was an employee who made the sale.</li>
+      </ul>
+      <p>So one transaction can produce parallel charges &mdash; one against the individual, one against the business &mdash; and they may need different strategies.</p>
+
+      <h2>Tobacco and vape penalties (SFOA)</h2>
+      <p>The fines escalate with each conviction, and the regulatory consequences can be worse than the fine:</p>
+      <ul>
+        <li><strong>An individual</strong> (including an employee who made the sale) faces a fine of up to $4,000 on a first conviction, rising to as much as $100,000 for a third or subsequent conviction.</li>
+        <li><strong>A corporation</strong> faces up to $10,000 on a first conviction and up to $150,000 for a third or subsequent.</li>
+        <li><strong>Directors and officers</strong> of a corporation that sells these products have a statutory duty to take reasonable care to prevent contraventions. Failing that duty is its own offence, punishable by a fine of up to $100,000.</li>
+        <li><strong>Automatic Prohibition</strong> &mdash; a conviction can trigger a ban on selling, storing, and delivering tobacco for a minimum of six months. A premises with two or more owner convictions within a five-year period becomes subject to an automatic prohibition that attaches to the <em>address</em> and survives a change of ownership.</li>
+      </ul>
+      <p>For a retailer, losing the ability to sell tobacco for six months &mdash; or permanently, at that location &mdash; can be an existential threat that a flat fine never would be.</p>
+
+      <h2>Alcohol penalties (LLCA)</h2>
+      <p>Selling or supplying liquor to a minor is treated as one of the most serious LLCA offences, and it runs on two tracks at once:</p>
+      <ul>
+        <li><strong>Provincial offences prosecution</strong> &mdash; on conviction of an LLCA offence, an individual can face fines up to $100,000 and/or up to one year imprisonment, and a corporation up to $250,000. Selling to a minor sits at the serious end of that range.</li>
+        <li><strong>AGCO regulatory action</strong> &mdash; separately from any court fine, the Alcohol and Gaming Commission of Ontario can impose monetary penalties on the licensee and can <em>suspend or revoke the liquor licence</em>. For a licensed bar, restaurant, or store, the licence consequence is frequently the bigger threat.</li>
+      </ul>
+      <p>Both the server who poured or sold and the licensee can be in the frame for the same incident.</p>
+
+      <h2>How a charge actually proceeds</h2>
+      <p>These are usually prosecuted under the <em>Provincial Offences Act</em> (POA):</p>
+      <ul>
+        <li>Charges are typically laid by public health inspectors or tobacco enforcement officers (tobacco and vape) or by police and AGCO inspectors (alcohol), often following a compliance inspection or a test-shopper purchase.</li>
+        <li>The POA process runs from a certificate of offence or summons, to a first attendance, to disclosure, to resolution discussions or a trial.</li>
+        <li>A guilty plea or conviction creates a record, advances you up the escalating-penalty ladder, and can trigger the prohibition or licence consequences above. That is exactly why &ldquo;just pay it and move on&rdquo; is often the most expensive choice a business can make.</li>
+      </ul>
+
+      <h2>The due-diligence defence &mdash; built before the sale, not after</h2>
+      <p>Both regimes turn on <strong>due diligence</strong>, and that is where cases are won or lost:</p>
+      <ul>
+        <li><strong>For the owner or licensee:</strong> a documented compliance system is a defence; a verbal &ldquo;we tell staff to check ID&rdquo; is not. The records that matter are the ones that already exist when the test purchase happens &mdash; written ID-check policies, Smart Serve or health-unit training certificates, signage, ID-scanner logs, and refusal logs.</li>
+        <li><strong>For the employee:</strong> a genuine, reasonable identification check and an honest belief that the customer was 19 or older &mdash; particularly where the customer produced apparently valid government ID &mdash; can support a defence.</li>
+      </ul>
+      <p>The defence is evidentiary. It is proven with paper that predates the charge, not with explanations offered afterward. A business that sets up and documents its compliance program is buying itself a defence; a business that does not is buying convictions.</p>
+
+      <h2>Practical steps if you are charged</h2>
+      <ol>
+        <li>Do not ignore the charge or reflexively pay it &mdash; for a business, the collateral consequences (prohibition, licence suspension) outlast the fine.</li>
+        <li>Preserve everything immediately: training records, staff schedules, POS and ID-scan logs, camera footage, and the ID involved if it was retained.</li>
+        <li>Identify exactly who is named &mdash; employee, owner, corporation &mdash; because each may need a different approach.</li>
+        <li>Get disclosure and scrutinize the charge: the correct section, the correct date, proper service, and the proof of the buyer&rsquo;s age.</li>
+        <li>Speak with a representative before the first court date or any AGCO deadline.</li>
+      </ol>
+
+      <h2>How we can help</h2>
+      <p>Legal Assist Paralegal Services represents employees and businesses on Provincial Offences Act charges under the Smoke-Free Ontario Act and the Liquor Licence and Control Act, and on related licence and AGCO matters within paralegal scope. We review the disclosure, test the due-diligence defence, and aim to protect both the fine exposure and the licence or right to sell. Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Penalty amounts are maximums and the outcome of any charge depends on the specific facts, the statute and section charged, and prior history. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: "Can both the employee and the business owner be charged for one sale to a minor?", a: "Yes. The employee who made the sale can be charged personally, and the business owner or corporation can be charged or sanctioned as well. Under the Smoke-Free Ontario Act the owner is responsible for sale violations in the business unless they exercised due diligence, and under the Liquor Licence and Control Act the licensee faces penalties and licence action even when an employee made the sale." },
+      { q: "What is the fine for selling tobacco or a vape to someone under 19?", a: "Under the Smoke-Free Ontario Act, 2017, an individual faces a fine of up to $4,000 on a first conviction, escalating to as much as $100,000 for a third or subsequent conviction. A corporation faces up to $10,000 on a first conviction and up to $150,000 for a third or subsequent. A conviction can also trigger a prohibition on selling tobacco for at least six months." },
+      { q: "What about selling alcohol to a minor?", a: "Under the Liquor Licence and Control Act, 2019, an individual convicted of an LLCA offence can face fines up to $100,000 and/or up to one year imprisonment, and a corporation up to $250,000. Separately, the AGCO can impose monetary penalties on the licensee and suspend or revoke the liquor licence — often the most serious consequence for a licensed business." },
+      { q: "Is “they showed me ID” a defence?", a: "It can be. Both regimes turn on due diligence. For an employee, a genuine and reasonable ID check together with an honest belief that the customer was 19 or older — especially where apparently valid government ID was produced — can support a defence. For the business, the defence depends on documented training, ID-check policies, and compliance records that existed before the sale." },
+      { q: "Can a paralegal represent me on a selling-to-minors charge?", a: "Yes. These are typically Provincial Offences Act charges, which paralegals are licensed to handle in Ontario. A paralegal can review the disclosure, raise the due-diligence defence, negotiate with the prosecutor, and represent you at trial, and can assist with related licence and AGCO matters within the scope of paralegal practice." },
+    ],
+  },
+  {
     slug: 'n5-notice-ontario-void-stay-in-home',
     title: 'Got an N5 Notice? Three Ways to Void It and Keep Your Home',
     description: 'An N5 termination notice from your landlord is not the end of your tenancy. The Residential Tenancies Act gives Ontario tenants three ways to defeat an N5 — cure within 7 days, attack a defective notice, or win on the merits at the hearing. A plain-English guide to stopping an N5 in its tracks.',
@@ -3188,6 +3335,91 @@ export const blogPosts: BlogPost[] = [
       { q: 'Can a paralegal represent me on a reopening?', a: 'Yes. Reopenings under the Provincial Offences Act fall within paralegal scope under By-Law 4 of the Law Society of Ontario. A paralegal can draft the Form 102 affidavit, commission your signature, file the application, and represent you at any hearing the court schedules.' },
       { q: 'What if my reopening is refused?', a: 'You have a right of appeal to a judge of the Ontario Court of Justice under Part VII of the POA. The appeal is on the record — the judge reviews the clerk’s decision and the affidavit, and decides whether the clerk’s refusal was reasonable.' },
       { q: 'Will reopening the conviction stop a plate-renewal block?', a: 'Yes, in most cases. Once the conviction is struck, the underlying fine is no longer due, and the Ministry of Transportation generally releases the plate block within a few business days. You may need to provide ServiceOntario with a copy of the order striking out the conviction.' }
+    ]
+  },
+  {
+    slug: 'defamation-libel-slander-ontario-elements-defences',
+    title: 'Defamation in Ontario: Libel, Slander, and the Defences That Actually Work',
+    description: 'Defamation in Ontario is governed by the Libel and Slander Act and the common law. A practical guide to the three elements of the cause of action, the major defences (truth, fair comment, qualified privilege, and the responsible-communication defence from Grant v. Torstar), the short notice and limitation deadlines, and what a paralegal can and cannot do in a defamation file.',
+    category: 'general',
+    date: '2026-06-01',
+    readTime: '11 min',
+    content: `
+      <p>Defamation law in Ontario protects reputation. A successful claim can recover damages for harm done by a false statement that lowers the plaintiff in the eyes of others. But defamation files are unusually deadline-driven and unusually defence-heavy &mdash; the law has been deliberately shaped to give breathing room to speech, journalism, employer references, and good-faith communication on matters of public interest. This post lays out the elements, the major defences, and the procedural traps that quietly kill most defamation claims before they ever reach a hearing.</p>
+
+      <h2>Libel vs. slander &mdash; the distinction still matters</h2>
+      <p>Ontario law preserves the old common-law split between <strong>libel</strong> (defamation in a permanent form &mdash; print, broadcast, an email, a Facebook post) and <strong>slander</strong> (defamation in a transient form &mdash; spoken words). Section 2 of the <em>Libel and Slander Act</em>, R.S.O. 1990, c. L.12 treats broadcast over the air as libel, and most courts now treat online posts as libel because they persist.</p>
+      <p>The practical difference: libel is actionable without proof of special damages &mdash; the plaintiff does not have to prove an out-of-pocket loss. Slander generally requires proof of special damages, with a handful of exceptions where slander is actionable per se (allegations of crime punishable by imprisonment, allegations of a contagious disease, allegations against a person in the way of their trade or business under s. 16 of the LSA, or imputations of unchastity in some historical contexts).</p>
+
+      <h2>The three elements of defamation</h2>
+      <p>To establish defamation on a balance of probabilities, a plaintiff must prove:</p>
+      <ol>
+        <li><strong>The words were defamatory.</strong> A statement is defamatory if it would tend to lower the plaintiff&rsquo;s reputation in the eyes of a reasonable person. The test is objective &mdash; how the words would be understood by an ordinary, right-thinking member of the community, not how the plaintiff personally felt about them. Words can be defamatory in their natural meaning or by &ldquo;legal innuendo&rdquo; (a hidden defamatory meaning a particular audience would understand from extrinsic facts).</li>
+        <li><strong>The words referred to the plaintiff.</strong> The statement must be reasonably understood as identifying the plaintiff. The plaintiff need not be named &mdash; identification by description, photograph, role, or context is enough. Group defamation is harder: where the group is large and unspecific, individual members usually cannot sue.</li>
+        <li><strong>The words were published to a third party.</strong> &ldquo;Published&rdquo; in defamation law just means communicated to at least one person other than the plaintiff. An email sent only to the plaintiff is not published. A complaint sent to one HR manager is published. A tweet, Facebook post, or Google review is published the moment a third party sees it.</li>
+      </ol>
+      <p>Once the plaintiff proves these three elements, falsity and damage are <em>presumed</em>. The burden shifts to the defendant to prove a recognised defence.</p>
+
+      <h2>The major defences</h2>
+
+      <h3>1. Justification (truth)</h3>
+      <p>The defence of justification is a complete answer: if the words are substantially true, the claim fails. Truth is a question of substance, not punctuation &mdash; minor inaccuracies that do not change the &ldquo;sting&rdquo; of the allegation will not defeat the defence. The burden is on the defendant to prove truth, and the evidence has to be admissible and concrete. Suspicion, rumour, or &ldquo;everyone said so&rdquo; will not do.</p>
+
+      <h3>2. Fair comment</h3>
+      <p>Fair comment protects opinions on matters of public interest, provided four conditions are met: the comment is on a matter of public interest, it is based on fact, it is recognisable as a comment rather than a statement of fact, and any person could honestly have expressed the opinion on the proven facts. The defence was modernised by the Supreme Court of Canada in <em>WIC Radio Ltd. v. Simpson</em>, 2008 SCC 40, which clarified that the bar is honest belief, not reasonableness. Malice (knowing falsity or reckless indifference) defeats the defence.</p>
+
+      <h3>3. Qualified privilege</h3>
+      <p>Qualified privilege protects communications made in the discharge of some legal, moral, or social duty to a person with a reciprocal interest in receiving them. Classic examples: employment references between former and prospective employers, complaints to police about suspected criminal conduct, internal corporate complaints, reports to regulatory bodies. The privilege is &ldquo;qualified&rdquo; because it is defeated by proof of express malice or by going wider than the occasion required.</p>
+
+      <h3>4. Responsible communication on matters of public interest</h3>
+      <p>The newest of the major defences, recognised by the Supreme Court of Canada in <em>Grant v. Torstar Corp.</em>, 2009 SCC 61. It protects publication on matters of public interest where the publisher acted responsibly &mdash; verifying sources, seeking the plaintiff&rsquo;s side, and acting within professional norms. Originally framed for journalism, the defence applies to anyone publishing on a matter of public interest. It does not require proof of truth; it requires proof of responsibility.</p>
+
+      <h3>5. Absolute privilege</h3>
+      <p>Some statements are absolutely protected, regardless of malice: statements made in court proceedings, in the Legislative Assembly, in formal regulatory hearings, and in certain official communications. The privilege exists to allow witnesses, parties, judges, counsel, and legislators to speak without fear of suit. Absolute privilege is a complete bar, not just a presumption.</p>
+
+      <h2>The notice trap &mdash; section 5 of the Libel and Slander Act</h2>
+      <p>Section 5(1) of the <em>Libel and Slander Act</em> imposes a written-notice requirement for actions arising out of libel in a <strong>newspaper</strong> or in a <strong>broadcast</strong>: the plaintiff must give the defendant written notice specifying the matter complained of within <strong>six weeks</strong> of becoming aware of the libel. No notice, no claim. The notice is jurisdictional &mdash; courts have struck claims where the notice was late, vague, or sent to the wrong party.</p>
+      <p>The Ontario Court of Appeal&rsquo;s decision in <em>John v. Ballingall</em>, 2017 ONCA 579 confirmed that &ldquo;newspaper&rdquo; in section 5 includes online versions of newspapers, so a libel claim against an online news outlet is also subject to the six-week notice. Outside newspapers and broadcasts &mdash; private blogs, social media posts by individuals, employer references, online reviews &mdash; section 5 does not apply, but other deadlines do.</p>
+
+      <h2>Limitation period</h2>
+      <p>Libel <em>in a newspaper or broadcast</em> is subject to a special <strong>three-month</strong> limitation period under section 6 of the <em>Libel and Slander Act</em>: the action must be commenced within three months of the plaintiff becoming aware of the libel. Other defamation claims fall under the general <strong>two-year</strong> limitation period in section 4 of the <em>Limitations Act, 2002</em>, S.O. 2002, c. 24, Sched. B, running from the date the plaintiff knew or ought to have known about the publication.</p>
+      <p>Online publication raises &ldquo;single-publication&rdquo; versus &ldquo;multiple-publication&rdquo; questions: Ontario follows a modified rule that treats the limitation period as starting on first publication, but evidence of ongoing republication (re-posting, sharing) can extend exposure. Get advice early &mdash; if the limitation period is approaching, the analysis is fact-specific and the clock does not pause for negotiations.</p>
+
+      <h2>Damages in defamation</h2>
+      <p>Three categories are available:</p>
+      <ul>
+        <li><strong>General damages</strong> for injury to reputation and feelings &mdash; these are at large and do not require proof of specific loss. Awards in modest cases typically range from a few thousand dollars to the low five figures; high-profile or particularly egregious cases can be six or seven figures.</li>
+        <li><strong>Special damages</strong> for actual financial losses caused by the publication &mdash; lost income, lost contracts, costs of mitigation. These must be specifically pleaded and proved.</li>
+        <li><strong>Aggravated and punitive damages</strong> &mdash; available where the defendant&rsquo;s conduct was high-handed, malicious, or compounded the injury (refusing to retract, repeating the libel, attacking the plaintiff at trial). Punitive damages are reserved for the worst cases.</li>
+      </ul>
+
+      <h2>Defamation and the anti-SLAPP regime</h2>
+      <p>Sections 137.1 to 137.5 of the <em>Courts of Justice Act</em>, R.S.O. 1990, c. C.43 give defendants in defamation actions (and other expression-based claims) a fast motion to dismiss claims that arise out of expression on a matter of public interest. If the defendant shows the action arose from such expression, the plaintiff must show the claim has substantial merit, the defendant has no valid defence, and the public interest in permitting the action outweighs the public interest in protecting the expression. The Supreme Court&rsquo;s decisions in <em>1704604 Ontario Ltd. v. Pointes Protection Association</em>, 2020 SCC 22 and <em>Bent v. Platnick</em>, 2020 SCC 23 set the modern framework. Plaintiffs who lose anti-SLAPP motions usually face full indemnity costs &mdash; this is the single biggest risk in commencing a marginal defamation claim.</p>
+
+      <h2>What a paralegal can &mdash; and cannot &mdash; do</h2>
+      <p>Under By-Law 4 of the Law Society of Ontario, paralegals can act in defamation matters in <strong>Small Claims Court</strong>, where the jurisdictional limit is <strong>$50,000</strong> (raised from $35,000 effective January 1, 2025, under the <em>Courts of Justice Act</em>). Many defamation claims involving online reviews, employer references, neighbourhood disputes, and modest reputational harm fit comfortably inside that envelope. Paralegals cannot represent parties in defamation actions in the Superior Court of Justice, where larger claims are filed, but can assist with intake, document preparation, and referral to counsel.</p>
+      <p>For defamation files within paralegal scope, a paralegal can: send the s. 5 LSA notice within the six-week window, draft and file the Plaintiff&rsquo;s Claim (Form 7A) in Small Claims, conduct settlement negotiations, and appear at settlement conferences and trial.</p>
+
+      <h2>Practical guidance if you have been defamed</h2>
+      <ol>
+        <li><strong>Preserve the evidence immediately.</strong> Screenshot the post or article with the URL and timestamp visible. Online content disappears or gets edited &mdash; capture it first, analyse it second.</li>
+        <li><strong>Diary the deadlines.</strong> Six weeks for s. 5 LSA notice in newspaper/broadcast cases. Three months for the limitation period in newspaper/broadcast cases. Two years otherwise. Mark the calendar before you take any other step.</li>
+        <li><strong>Do not respond publicly in anger.</strong> Replying online, posting your own counter-allegations, or escalating the dispute makes you a publisher of fresh defamatory material and undermines damages by suggesting you were not seriously injured in reputation.</li>
+        <li><strong>Consider a retraction request first.</strong> A clear, dated, prominent retraction may be sufficient remedy in many cases and is cheaper and faster than litigation. Under s. 5(2) of the LSA, a full and fair retraction within the statutory window limits damages in some newspaper and broadcast cases.</li>
+        <li><strong>Get legal advice before suing.</strong> The anti-SLAPP regime makes ill-considered defamation claims expensive to lose. A short consultation can tell you whether the elements are likely to be made out, whether a defence is likely to succeed, and whether the cost-benefit favours litigation.</li>
+      </ol>
+
+      <h2>How we can help</h2>
+      <p>Legal Assist Paralegal Services advises on defamation matters within paralegal scope and refers Superior Court files to counsel. We can help draft and serve a s. 5 LSA notice, evaluate the strength of a Small Claims defamation action, draft retraction demands, and appear at every stage of a Small Claims defamation matter. Call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Defamation files turn on the specific words, the audience, and the context. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'How long do I have to sue for defamation in Ontario?', a: 'For libel in a newspaper or broadcast, you have three months from the date you became aware of the publication under section 6 of the Libel and Slander Act. For all other defamation claims, the general two-year limitation period under section 4 of the Limitations Act, 2002 applies. In newspaper/broadcast cases, you must also serve a written notice under section 5 of the Libel and Slander Act within six weeks of becoming aware of the libel — failure to do so is fatal to the claim.' },
+      { q: 'Is a Google review or Facebook post defamation?', a: 'It can be, if it makes a false statement of fact that lowers the subject in the eyes of a reasonable person. Pure opinion, fair comment on a matter of public interest, and substantially true statements are not actionable. Courts treat online posts as published the moment a third party sees them and as libel (not slander) because they persist in writing.' },
+      { q: 'Can a paralegal handle my defamation claim?', a: 'Yes — in Small Claims Court, where the monetary limit is now $50,000 (raised from $35,000 effective January 1, 2025). Many online-review and reference-letter defamation cases fit inside the Small Claims envelope. Paralegals cannot appear in Superior Court defamation actions but can assist with intake, the section 5 notice, and referral to counsel for larger claims.' },
+      { q: 'What is an anti-SLAPP motion and why does it matter?', a: 'Sections 137.1–137.5 of the Courts of Justice Act let a defendant in a defamation action move quickly to dismiss the claim if it arises out of expression on a matter of public interest. If the motion succeeds, the plaintiff usually pays the defendant’s full indemnity costs. This is the single biggest financial risk in starting a weak or politically charged defamation claim, and it makes a pre-suit assessment essential.' },
+      { q: 'Do I have to prove the statement was false?', a: 'No. Once the plaintiff proves the words were defamatory, referred to the plaintiff, and were published to a third party, falsity and damage are presumed. The burden shifts to the defendant to prove the statement was substantially true (the defence of justification), or to make out another defence such as fair comment, qualified privilege, or responsible communication.' }
     ]
   }
 ];

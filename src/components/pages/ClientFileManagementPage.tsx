@@ -23,6 +23,13 @@ import {
 } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { sendDocumentEmail, EmailActivityLog } from '@/lib/email-service';
+// F-J — paralegal student assignment picker (multi-select on file detail panel)
+import AssignedStudentsPicker from '@/components/paralegal/AssignedStudentsPicker';
+import {
+  canViewFile, filterVisibleFiles, isStudent,
+  buildStudentEditAuditEntry, type UserAccount,
+} from '@/lib/student-permissions';
+import { getCurrentUser } from '@/lib/auth-service';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
 import { GeneratedDocuments } from '@/entities';
 import { generateRetainerPDF } from '@/lib/retainer-pdf-generator';
@@ -307,10 +314,16 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
           }
         }
 
-        setFiles([...mapped, ...newFiles]);
+        // F-J: filter files down to what the current user is allowed to see.
+        // Paralegals/admins get the full list; paralegal_student gets only
+        // files where their _id appears in assignedStudentIds.
+        const currentUser = getCurrentUser() as UserAccount | null;
+        const combined = [...mapped, ...newFiles];
+        setFiles(filterVisibleFiles(currentUser, combined as any) as typeof combined);
       } catch (syncError) {
         console.warn('Could not sync clients from fileassignments:', syncError);
-        setFiles(mapped);
+        const currentUser = getCurrentUser() as UserAccount | null;
+        setFiles(filterVisibleFiles(currentUser, mapped as any) as typeof mapped);
       }
     } catch (error) {
       console.error('Error loading client files from CMS:', error);
@@ -500,6 +513,16 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
         }
       });
 
+      // F-J: enforce edit authz before touching CMS.
+      // Paralegals/admins fall through. Students are blocked unless their
+      // _id is in clientfiles.assignedStudentIds for this file.
+      const editor = getCurrentUser() as UserAccount | null;
+      if (editor && isStudent(editor) && !canViewFile(editor, selectedFile as any)) {
+        throw new Error(
+          'You do not have permission to edit this file. Ask your supervising paralegal to assign it to you.'
+        );
+      }
+
       // 1) Update the file row (mark section complete + any file-level fields)
       await BaseCrudService.update(CLIENT_FILES_COLLECTION, {
         _id: selectedFile._id,
@@ -507,6 +530,33 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
         complianceScore: newScore,
         ...fileUpdates,
       } as any);
+
+      // F-J: audit trail — when a paralegal student edits a file, append a
+      // row to activitylogs so the supervising paralegal can review what
+      // their student changed (LSO By-Law 4 s.2(2) supervision duty).
+      if (editor && isStudent(editor)) {
+        try {
+          const editedKeys = [
+            ...Object.keys(fileUpdates),
+            ...Object.keys(profileUpdates),
+          ];
+          await BaseCrudService.create(
+            'activitylogs',
+            buildStudentEditAuditEntry({
+              studentUser: editor,
+              fileId: selectedFile._id,
+              fileName: `${selectedFile.fileNumber || ''} ${selectedFile.clientName || ''}`.trim(),
+              action: `updated_section_${editingSection}`,
+              detail: editedKeys.length
+                ? `Fields changed: ${editedKeys.join(', ')}`
+                : `Marked section ${editingSection} complete`,
+            }) as any
+          );
+        } catch (auditErr) {
+          // eslint-disable-next-line no-console
+          console.warn('Could not write student edit audit log (non-fatal):', auditErr);
+        }
+      }
 
       // 2) Update the client profile — but only if we have a real row id.
       //    Three-tier resolution because file.clientId is unreliable across
@@ -1987,6 +2037,16 @@ function SectionFileOpening({ file, editing, editValues, onChange }: SectionEdit
         />
         <Field label="File Status" value={file.fileStatus.charAt(0).toUpperCase() + file.fileStatus.slice(1)} icon={FolderOpen} />
       </div>
+
+      {/* F-J — Paralegal student assignment picker */}
+      <div className="md:col-span-2">
+        <AssignedStudentsPicker
+          fileId={file._id}
+          value={(file as any).assignedStudentIds}
+          supervisingParalegalId={(file as any).assignedParalegalId}
+        />
+      </div>
+
       <div>
         <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Matter Description</label>
         {editing ? (
@@ -2014,6 +2074,110 @@ function SectionFileOpening({ file, editing, editValues, onChange }: SectionEdit
             {opposingParties || 'Not yet recorded — will be populated from conflict check'}
           </p>
         )}
+      </div>
+
+      {/* F-J — student intake + pre-trust compliance summary (read-only) */}
+      <StudentComplianceCard fileId={file._id} />
+    </div>
+  );
+}
+
+// ============================================================
+// F-J — Student intake & pre-trust compliance summary (read-only).
+// Surfaces what a paralegal student recorded when opening the file:
+// who opened it, conflict status, ID verification type, and source of
+// funds. Only renders for files a student touched.
+// ============================================================
+function StudentComplianceCard({ fileId }: { fileId: string }) {
+  const [raw, setRaw] = useState<any>(null);
+  const [openedByName, setOpenedByName] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const f = await BaseCrudService.getById<any>('clientfiles', fileId);
+        if (!alive) return;
+        setRaw(f);
+        const sid = f?.openedByStudentId;
+        if (sid) {
+          try {
+            const u = await BaseCrudService.getById<any>('useraccounts', sid);
+            if (alive && u) {
+              setOpenedByName([u.firstName, u.lastName].filter(Boolean).join(' ') || u.email || 'Student');
+            }
+          } catch { /* ignore */ }
+        }
+      } catch {
+        /* ignore — card simply won't render */
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => { alive = false; };
+  }, [fileId]);
+
+  if (loading || !raw) return null;
+
+  // Only show for files a student opened or was assigned to.
+  const isStudentFile = !!raw.openedByStudentId || !!raw.assignedStudentIds;
+  if (!isStudentFile) return null;
+
+  const status = String(raw.conflictStatus || 'pending').toLowerCase();
+  const cleared = status === 'cleared' || status === 'passed';
+  const flagged = status === 'needs_review' || status === 'flagged';
+  const statusLabel = cleared ? 'Cleared' : flagged ? 'Needs review' : 'Pending';
+  const statusClass = cleared
+    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+    : flagged
+    ? 'bg-red-50 text-red-700 border-red-200'
+    : 'bg-gray-100 text-gray-600 border-gray-200';
+
+  const sourceOfFunds = typeof raw.sourceOfFunds === 'string' ? raw.sourceOfFunds : '';
+  const idType = typeof raw.idVerificationType === 'string' ? raw.idVerificationType : '';
+
+  const Row = ({ ok, label }: { ok: boolean; label: string }) => (
+    <div className="flex items-center gap-1.5 text-xs">
+      <span className={`inline-block w-2 h-2 rounded-full ${ok ? 'bg-emerald-500' : 'bg-gray-300'}`} />
+      <span className={ok ? 'text-gray-700' : 'text-gray-400'}>{label}</span>
+    </div>
+  );
+
+  return (
+    <div className="md:col-span-2">
+      <div className="border border-emerald-200 bg-emerald-50/40 rounded-lg p-4">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold uppercase tracking-wider text-emerald-700">
+            Student intake &amp; pre-trust compliance
+          </p>
+          <span className={`text-xs px-2 py-0.5 rounded-full border ${statusClass}`}>
+            Conflict: {statusLabel}
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+          <div>
+            <p className="text-[11px] uppercase tracking-wide text-gray-400">Opened by</p>
+            <p className="text-sm text-gray-900">{openedByName || (raw.openedByStudentId ? 'Student' : '—')}</p>
+          </div>
+          <div>
+            <p className="text-[11px] uppercase tracking-wide text-gray-400">ID verification</p>
+            <p className={`text-sm ${idType ? 'text-gray-900' : 'italic text-gray-400'}`}>{idType || 'Not recorded'}</p>
+          </div>
+          <div className="sm:col-span-2">
+            <p className="text-[11px] uppercase tracking-wide text-gray-400">Source of funds</p>
+            <p className={`text-sm ${sourceOfFunds ? 'text-gray-900' : 'italic text-gray-400'}`}>
+              {sourceOfFunds || 'Not recorded'}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-2 border-t border-emerald-100">
+          <Row ok={!!raw.sectionFileOpening} label="File opening" />
+          <Row ok={!!raw.sectionClientIdentification} label="Client ID" />
+          <Row ok={!!raw.sectionClientVerification} label="ID verified" />
+          <Row ok={!!raw.sectionSourceOfFunds} label="Source of funds" />
+          <Row ok={!!raw.sectionConflictCheck} label="Conflict check" />
+        </div>
       </div>
     </div>
   );
@@ -5955,8 +6119,21 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
       // and G. Financial Records will say "No records logged" even
       // though the 9A Trust Journal has the entry.
       const result = await BaseCrudService.getAll<any>('financialrecords', undefined, { limit: 1000 });
+      // Filter strategy:
+      //   1. Match on fileId when set — the post-LSO-#2 write path always
+      //      stamps fileId, so this is the normal case.
+      //   2. FALLBACK to clientId match when fileId is empty/missing — this
+      //      catches legacy rows from before the LSO compliance update
+      //      (and any row the backfill button hasn't been run against yet).
+      //      Without this fallback, Square deposits made before the deploy
+      //      stayed invisible in G. Financial Records even though the
+      //      Form 9A Trust Journal showed them correctly.
       const fileRecords = result.items
-        .filter((r: any) => r.fileId === file._id)
+        .filter((r: any) => {
+          if (r.fileId && r.fileId === file._id) return true;
+          if (!r.fileId && file.clientId && r.clientId === file.clientId) return true;
+          return false;
+        })
         .map((r: any) => ({
           _id: r._id,
           transactionType: r.transactionType || '',
@@ -6420,9 +6597,23 @@ function SectionCommunicationLog({ file, editing, editValues, onChange }: Sectio
 
   const loadEntries = async () => {
     try {
-      const result = await BaseCrudService.getAll<any>('communicationlog');
+      // ⚠ getAll() defaults to 50-row page — must pass { limit } explicitly
+      // when scanning the whole communicationlog collection. Without this,
+      // an auto-logged Square receipt (or any entry past row 50) is
+      // invisible here and the client's H. Communication Log says "no
+      // entries" even though the row exists in CMS.
+      const result = await BaseCrudService.getAll<any>('communicationlog', undefined, { limit: 1000 });
       const fileEntries = result.items
-        .filter((r: any) => r.fileId === file._id)
+        // Same fileId / clientId fallback used by SectionFinancialRecords:
+        // post-LSO write path stamps fileId, but legacy rows (and rows
+        // written before the LSO #9 Square auto-log shipped) may only
+        // have clientId. Falling back keeps them visible until the
+        // backfill button is run.
+        .filter((r: any) => {
+          if (r.fileId && r.fileId === file._id) return true;
+          if (!r.fileId && file.clientId && r.clientId === file.clientId) return true;
+          return false;
+        })
         .map((r: any) => {
           const dateStr = r.communicationDate ? new Date(r.communicationDate).toISOString() : '';
           return {

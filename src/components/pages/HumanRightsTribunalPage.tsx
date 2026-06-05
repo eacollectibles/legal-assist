@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
+import AuthorityCitations, { HRTO_AUTHORITIES } from '@/components/AuthorityCitations';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { ChevronRight, CheckCircle, Users, FileText, Clock, DollarSign } from 'lucide-react';
@@ -570,6 +571,11 @@ export default function HumanRightsTribunalPage() {
           </div>
         </div>
       </section>
+
+      {/* Governing authorities — Human Rights Code, HRTO Rules of
+          Procedure, Statutory Powers Procedure Act. Per 2026-05-29
+          SEO plan (Service Page SEO #4). */}
+      <AuthorityCitations authorities={HRTO_AUTHORITIES} />
 
       <Footer />
     </div>

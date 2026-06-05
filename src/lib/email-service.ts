@@ -86,6 +86,37 @@ export interface EmailDocumentPayload {
   paralegalName: string;
   documentId: string;
   clientId?: string;
+  /** File ID for tracking — used to scope the document-opened
+   *  pixel to the correct client file's communication log.
+   *  Optional; when present, every outbound retainer email gets
+   *  an invisible 1×1 pixel that posts to /api/track/document-opened
+   *  the first time the recipient opens the email. */
+  fileId?: string;
+}
+
+/**
+ * Build the URL of the 1×1 tracking pixel embedded at the bottom
+ * of outbound retainer emails. When the recipient renders the
+ * message, the pixel loads and the server writes a
+ * "Client opened the retainer email" entry to the client file's
+ * communication log (LSO By-Law 7.1 s.23(14)).
+ *
+ * Idempotent per (documentId, day) — see
+ * /api/track/document-opened.ts.
+ */
+function buildTrackingPixelUrl(
+  documentId: string | undefined,
+  clientId: string | undefined,
+  fileId: string | undefined,
+): string {
+  if (!documentId || !clientId) return '';
+  const base = 'https://www.legalassist.london/api/track/document-opened';
+  const params = new URLSearchParams({
+    doc: documentId,
+    client: clientId,
+  });
+  if (fileId) params.set('file', fileId);
+  return `${base}?${params.toString()}`;
 }
 
 export interface EmailActivityLog {
@@ -149,10 +180,23 @@ async function sendViaEmailJS(
  * Used by: DocumentWorkflowPage, ParalegalDashboardPage, SignaturesTab
  */
 export const sendSignedDocumentEmail = async (payload: EmailDocumentPayload): Promise<EmailActivityLog> => {
+  // Build the tracking pixel and append it to the body so the
+  // server logs "Client opened the retainer email" the first
+  // time the recipient renders the message. Plain <img> with
+  // width=1 height=1 — universally supported by email clients.
+  const pixelUrl = buildTrackingPixelUrl(
+    payload.documentId,
+    payload.clientId,
+    payload.fileId,
+  );
+  const bodyWithPixel = pixelUrl
+    ? `${payload.body}\n\n<img src="${pixelUrl}" width="1" height="1" alt="" style="display:block;width:1px;height:1px;border:0;" />`
+    : payload.body;
+
   const result = await sendViaEmailJS(EMAILJS_CONFIG.templates.document, {
     to_email: payload.to,
     subject: payload.subject,
-    message: payload.body,
+    message: bodyWithPixel,
     from_name: payload.paralegalName || 'Legal Assist Paralegal Services',
     document_name: payload.documentName,
     document_link: payload.documentUrl || '',
@@ -303,12 +347,26 @@ export const sendCourtFormsEmail = async (payload: CourtFormsEmailPayload): Prom
 /**
  * Send a document email (works for ANY status — draft, sent, or signed).
  * Used by: DocumentWorkflowPage for emailing documents before/after signing.
+ *
+ * Mirrors sendSignedDocumentEmail: also appends the 1×1 tracking pixel
+ * to the body when the payload carries a documentId + clientId, so we
+ * get a "Client opened the retainer email" event regardless of which
+ * helper sent it.
  */
 export const sendDocumentEmail = async (payload: EmailDocumentPayload): Promise<EmailActivityLog> => {
+  const pixelUrl = buildTrackingPixelUrl(
+    payload.documentId,
+    payload.clientId,
+    payload.fileId,
+  );
+  const bodyWithPixel = pixelUrl
+    ? `${payload.body}\n\n<img src="${pixelUrl}" width="1" height="1" alt="" style="display:block;width:1px;height:1px;border:0;" />`
+    : payload.body;
+
   const result = await sendViaEmailJS(EMAILJS_CONFIG.templates.document, {
     to_email: payload.to,
     subject: payload.subject,
-    message: payload.body,
+    message: bodyWithPixel,
     from_name: payload.paralegalName || 'Legal Assist Paralegal Services',
     document_name: payload.documentName,
     document_link: payload.documentUrl || '',

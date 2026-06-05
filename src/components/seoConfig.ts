@@ -31,7 +31,14 @@ export interface FAQ {
 }
 
 export interface PageSchema {
-  type: 'Service' | 'LegalService' | 'Article' | 'FAQPage' | 'LocalBusiness';
+  // Widened to accept every schema.org @type that any page in seoConfig
+  // declares. The original tight union ('Service' | 'LegalService' |
+  // 'Article' | 'FAQPage' | 'LocalBusiness') threw TS2322 on About,
+  // location landing, and resource hub pages that legitimately use
+  // 'AboutPage' / 'CollectionPage'. The runtime never enforced this
+  // union — it only matters for the type-checker — so loosening to a
+  // string keeps strict mode happy without changing emitted JSON-LD.
+  type: 'Service' | 'LegalService' | 'Article' | 'FAQPage' | 'LocalBusiness' | 'AboutPage' | 'CollectionPage' | string;
   name?: string;
   serviceType?: string;
   areaServed?: string[];
@@ -6234,312 +6241,11 @@ export const seoConfig: Record<string, SEOConfig> = {
     faqs: [
       { question: 'Do you serve Belleville and the Quinte region?', answer: 'Yes, we serve Belleville, Trenton, Quinte West, Stirling, and the wider Hastings County.' },
       { question: 'Which courthouse do Belleville residents use?', answer: 'Belleville matters are heard at the Belleville courthouse at 15 Bridge Street West.' },
-      { question: 'Do you handle Highway 401 traffic tickets through the Quinte region?', answer: 'Yes, we defend tickets issued on Highway 401 and all roads throughout the Quinte region.' }
-    ]
-  },
-
-  '/locations/brockville': {
-    title: 'Brockville Paralegal | Leeds & Grenville Legal Services',
-    description: 'Brockville paralegal services for Leeds and Grenville. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal brockville, brockville legal services, leeds and grenville paralegal, brockville traffic ticket',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Brockville', areaServed: ['Brockville', 'Prescott', 'Gananoque', 'Leeds and Grenville'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Brockville', url: '/locations/brockville' }],
-    faqs: [
-      { question: 'Do you serve Brockville and Leeds and Grenville?', answer: 'Yes, we serve Brockville, Prescott, Gananoque, Athens, and all of Leeds and Grenville.' },
-      { question: 'Which courthouse do Brockville residents use?', answer: 'Brockville matters are heard at the Brockville courthouse at 41 Court House Avenue.' },
-      { question: 'Do you handle Highway 401 traffic tickets through Brockville?', answer: 'Yes, we defend tickets issued on Highway 401 and all roads in Leeds and Grenville.' }
-    ]
-  },
-
-  '/locations/caledon': {
-    title: 'Caledon Paralegal | Legal Services Peel Region',
-    description: 'Caledon paralegal services for Peel Region. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal caledon, caledon legal services, caledon traffic ticket, peel region paralegal, bolton paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Caledon', areaServed: ['Caledon', 'Bolton', 'Mayfield', 'Peel Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Caledon', url: '/locations/caledon' }],
-    faqs: [
-      { question: 'Do you serve Caledon and Peel Region?', answer: 'Yes, we serve Caledon, Bolton, Mayfield, and all of Peel Region.' },
-      { question: 'Which courthouse do Caledon residents use?', answer: 'Caledon matters are typically heard at the Brampton courthouse at 7755 Hurontario Street.' },
-      { question: 'Do you offer virtual consultations for Caledon?', answer: 'Yes, phone and video consultations are available for all Peel Region residents.' }
-    ]
-  },
-
-  '/locations/clarington': {
-    title: 'Clarington Paralegal | Durham Region Legal Services',
-    description: 'Clarington paralegal services for Durham Region. Bowmanville, Courtice, Newcastle. Traffic, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal clarington, bowmanville paralegal, courtice paralegal, newcastle paralegal, durham region paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Clarington', areaServed: ['Clarington', 'Bowmanville', 'Courtice', 'Newcastle', 'Durham Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Clarington', url: '/locations/clarington' }],
-    faqs: [
-      { question: 'Do you serve Clarington and Durham Region?', answer: 'Yes, we serve Bowmanville, Courtice, Newcastle, Orono, and all of Durham Region.' },
-      { question: 'Which courthouse do Clarington residents use?', answer: 'Clarington matters are typically heard at the Oshawa courthouse at 150 Bond Street East.' },
-      { question: 'Do you handle Highway 401 traffic tickets through Clarington?', answer: 'Yes, we defend tickets issued on Highway 401 and all major roads through Durham Region.' }
-    ]
-  },
-
-  '/locations/cobourg': {
-    title: 'Cobourg Paralegal | Northumberland Legal Services',
-    description: 'Cobourg paralegal services for Northumberland County. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal cobourg, cobourg legal services, northumberland paralegal, port hope paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Cobourg', areaServed: ['Cobourg', 'Port Hope', 'Hamilton Township', 'Northumberland County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Cobourg', url: '/locations/cobourg' }],
-    faqs: [
-      { question: 'Do you serve Cobourg and Northumberland County?', answer: 'Yes, we serve Cobourg, Port Hope, Hamilton Township, Brighton, and all of Northumberland County.' },
-      { question: 'Which courthouse do Cobourg residents use?', answer: 'Cobourg matters are heard at the Cobourg courthouse at 860 William Street.' },
-      { question: 'Do you handle Highway 401 traffic tickets through Cobourg?', answer: 'Yes, we defend tickets issued on Highway 401 throughout Northumberland County.' }
-    ]
-  },
-
-  '/locations/collingwood': {
-    title: 'Collingwood Paralegal | Simcoe County Legal Services',
-    description: 'Collingwood paralegal services for Simcoe County and Georgian Bay. Traffic tickets, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal collingwood, collingwood legal services, blue mountain paralegal, simcoe county paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Collingwood', areaServed: ['Collingwood', 'Blue Mountains', 'Wasaga Beach', 'Simcoe County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Collingwood', url: '/locations/collingwood' }],
-    faqs: [
-      { question: 'Do you serve Collingwood and the Georgian Bay area?', answer: 'Yes, we serve Collingwood, Blue Mountains, Wasaga Beach, Stayner, and the wider Simcoe County region.' },
-      { question: 'Which courthouse do Collingwood residents use?', answer: 'Collingwood matters are typically heard at the Barrie courthouse at 75 Mulcaster Street.' },
-      { question: 'Do you offer virtual consultations for Collingwood?', answer: 'Yes, phone and video consultations are available for the entire Georgian Bay region.' }
-    ]
-  },
-
-  '/locations/cornwall': {
-    title: 'Cornwall Paralegal | SDG Counties Legal Services',
-    description: 'Cornwall paralegal services for Stormont, Dundas & Glengarry. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal cornwall, cornwall legal services, sdg counties paralegal, cornwall traffic ticket, eastern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Cornwall', areaServed: ['Cornwall', 'Stormont', 'Dundas', 'Glengarry'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Cornwall', url: '/locations/cornwall' }],
-    faqs: [
-      { question: 'Do you serve Cornwall and SDG Counties?', answer: 'Yes, we serve Cornwall, Stormont, Dundas, Glengarry, Alexandria, and the wider Eastern Ontario region.' },
-      { question: 'Which courthouse do Cornwall residents use?', answer: 'Cornwall matters are heard at the Cornwall courthouse at 29 Second Street West.' },
-      { question: 'Do you handle Highway 401 traffic tickets through Cornwall?', answer: 'Yes, we defend tickets issued on Highway 401 and Highway 138 throughout SDG Counties.' }
-    ]
-  },
-
-  '/locations/grimsby': {
-    title: 'Grimsby Paralegal | Niagara Region Legal Services',
-    description: 'Grimsby paralegal services for Niagara Region. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal grimsby, grimsby legal services, niagara region paralegal, grimsby traffic ticket',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Grimsby', areaServed: ['Grimsby', 'Beamsville', 'Lincoln', 'Niagara Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Grimsby', url: '/locations/grimsby' }],
-    faqs: [
-      { question: 'Do you serve Grimsby and Niagara Region?', answer: 'Yes, we serve Grimsby, Beamsville, Lincoln, and the wider Niagara Region.' },
-      { question: 'Which courthouse do Grimsby residents use?', answer: 'Grimsby matters are typically heard at the St. Catharines courthouse at 59 Church Street.' },
-      { question: 'Do you handle QEW traffic tickets through Grimsby?', answer: 'Yes, we defend tickets issued on the QEW and all roads through Niagara Region.' }
-    ]
-  },
-
-  '/locations/halton-hills': {
-    title: 'Halton Hills Paralegal | Halton Region Legal Services',
-    description: 'Halton Hills paralegal services for Georgetown, Acton, and Halton Region. Traffic, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal halton hills, georgetown paralegal, acton paralegal, halton region paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Halton Hills', areaServed: ['Halton Hills', 'Georgetown', 'Acton', 'Halton Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Halton Hills', url: '/locations/halton-hills' }],
-    faqs: [
-      { question: 'Do you serve Halton Hills and Halton Region?', answer: 'Yes, we serve Georgetown, Acton, and all of Halton Hills and Halton Region.' },
-      { question: 'Which courthouse do Halton Hills residents use?', answer: 'Halton Hills matters are heard at the Milton courthouse at 491 Steeles Avenue East.' },
-      { question: 'Do you offer virtual consultations for Halton Hills?', answer: 'Yes, phone and video consultations are available for all Halton Region residents.' }
-    ]
-  },
-
-  '/locations/kawartha-lakes': {
-    title: 'Kawartha Lakes Paralegal | Lindsay Legal Services',
-    description: 'City of Kawartha Lakes paralegal services. Lindsay, Fenelon Falls, Bobcaygeon. Traffic, Small Claims, LTB. Call 226-272-5153.',
-    keywords: 'paralegal kawartha lakes, lindsay paralegal, fenelon falls paralegal, bobcaygeon paralegal, victoria county paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Kawartha Lakes', areaServed: ['Kawartha Lakes', 'Lindsay', 'Fenelon Falls', 'Bobcaygeon'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kawartha Lakes', url: '/locations/kawartha-lakes' }],
-    faqs: [
-      { question: 'Do you serve the City of Kawartha Lakes?', answer: 'Yes, we serve Lindsay, Fenelon Falls, Bobcaygeon, Omemee, and all communities in the City of Kawartha Lakes.' },
-      { question: 'Which courthouse do Kawartha Lakes residents use?', answer: 'Kawartha Lakes matters are heard at the Lindsay courthouse at 440 Kent Street West.' },
-      { question: 'Do you handle traffic tickets on Highways 35 and 7?', answer: 'Yes, we defend tickets issued on Highways 35, 7, and all roads through the City of Kawartha Lakes.' }
-    ]
-  },
-
-  '/locations/kingston': {
-    title: 'Kingston Paralegal | Frontenac County Legal Services',
-    description: 'Kingston paralegal services for Frontenac County. Traffic tickets on Highway 401, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal kingston, kingston legal services, kingston traffic ticket, frontenac county paralegal, eastern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Kingston', areaServed: ['Kingston', 'Frontenac County', 'South Frontenac'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Kingston', url: '/locations/kingston' }],
-    faqs: [
-      { question: 'Do you serve Kingston and Frontenac County?', answer: 'Yes, we serve Kingston, South Frontenac, Central Frontenac, and the wider Frontenac County.' },
-      { question: 'Which courthouse do Kingston residents use?', answer: 'Kingston matters are heard at the Kingston courthouse at 279 Wellington Street.' },
-      { question: 'Do you handle Highway 401 traffic tickets through Kingston?', answer: 'Yes, we defend tickets issued on Highway 401 and Highway 15 throughout the Kingston area.' }
-    ]
-  },
-
-  '/locations/midland': {
-    title: 'Midland Paralegal | North Simcoe Legal Services',
-    description: 'Midland paralegal services for North Simcoe. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal midland, midland legal services, penetanguishene paralegal, north simcoe paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Midland', areaServed: ['Midland', 'Penetanguishene', 'Tay', 'Tiny', 'North Simcoe'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Midland', url: '/locations/midland' }],
-    faqs: [
-      { question: 'Do you serve Midland and North Simcoe?', answer: 'Yes, we serve Midland, Penetanguishene, Tay, Tiny, and all of North Simcoe.' },
-      { question: 'Which courthouse do Midland residents use?', answer: 'Midland matters are typically heard at the Midland courthouse at 521 Yonge Street.' },
-      { question: 'Do you offer virtual consultations for Midland?', answer: 'Yes, phone and video consultations are available for all North Simcoe residents.' }
-    ]
-  },
-
-  '/locations/north-bay': {
-    title: 'North Bay Paralegal | Nipissing District Legal Services',
-    description: 'North Bay paralegal services for Nipissing District. Traffic tickets, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal north bay, north bay legal services, nipissing district paralegal, northern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist North Bay', areaServed: ['North Bay', 'Nipissing District', 'East Ferris', 'Powassan'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'North Bay', url: '/locations/north-bay' }],
-    faqs: [
-      { question: 'Do you serve North Bay and Nipissing District?', answer: 'Yes, we serve North Bay, Powassan, Sturgeon Falls, and the wider Nipissing District.' },
-      { question: 'Which courthouse do North Bay residents use?', answer: 'North Bay matters are heard at the North Bay courthouse at 360 Plouffe Street.' },
-      { question: 'Do you handle Highway 11 and Highway 17 traffic tickets through North Bay?', answer: 'Yes, we defend tickets issued on Highway 11, Highway 17, and all major roads through Northern Ontario.' }
-    ]
-  },
-
-  '/locations/orangeville': {
-    title: 'Orangeville Paralegal | Dufferin County Legal Services',
-    description: 'Orangeville paralegal services for Dufferin County. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal orangeville, orangeville legal services, dufferin county paralegal, shelburne paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Orangeville', areaServed: ['Orangeville', 'Shelburne', 'Mono', 'Dufferin County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Orangeville', url: '/locations/orangeville' }],
-    faqs: [
-      { question: 'Do you serve Orangeville and Dufferin County?', answer: 'Yes, we serve Orangeville, Shelburne, Mono, Amaranth, and all of Dufferin County.' },
-      { question: 'Which courthouse do Orangeville residents use?', answer: 'Orangeville matters are heard at the Orangeville courthouse at 10 Louisa Street.' },
-      { question: 'Do you offer virtual consultations for Orangeville?', answer: 'Yes, phone and video consultations are available for all Dufferin County residents.' }
-    ]
-  },
-
-  '/locations/orillia': {
-    title: 'Orillia Paralegal | Simcoe County Legal Services',
-    description: 'Orillia paralegal services for Simcoe County. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal orillia, orillia legal services, orillia traffic ticket, simcoe county paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Orillia', areaServed: ['Orillia', 'Severn', 'Ramara', 'Simcoe County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Orillia', url: '/locations/orillia' }],
-    faqs: [
-      { question: 'Do you serve Orillia and Simcoe County?', answer: 'Yes, we serve Orillia, Severn, Ramara, and the wider Simcoe County region.' },
-      { question: 'Which courthouse do Orillia residents use?', answer: 'Orillia matters are heard at the Orillia courthouse at 75 Mississaga Street East.' },
-      { question: 'Do you handle Highway 11 traffic tickets through Orillia?', answer: 'Yes, we defend tickets issued on Highway 11 and all roads through Simcoe County.' }
-    ]
-  },
-
-  '/locations/ottawa': {
-    title: 'Ottawa Paralegal | Eastern Ontario Legal Services',
-    description: 'Ottawa paralegal services for the National Capital Region. Traffic tickets, Small Claims Court, LTB, Human Rights Tribunal. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal ottawa, ottawa legal services, ottawa traffic ticket, ottawa small claims court, ottawa LTB paralegal, eastern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Ottawa', areaServed: ['Ottawa', 'Nepean', 'Kanata', 'Orleans', 'Gloucester'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Ottawa', url: '/locations/ottawa' }],
-    faqs: [
-      { question: 'Do you serve Ottawa and the National Capital Region?', answer: 'Yes, we serve Ottawa, Nepean, Kanata, Orleans, Gloucester, and the wider National Capital Region.' },
-      { question: 'Which courthouse do Ottawa residents use?', answer: 'Ottawa matters are heard at the Ottawa courthouse at 161 Elgin Street.' },
-      { question: 'Do you handle Highway 417 and Highway 416 traffic tickets through Ottawa?', answer: 'Yes, we defend tickets issued on Highway 417, Highway 416, and all major roads through the Ottawa area.' }
-    ]
-  },
-
-  '/locations/owen-sound': {
-    title: 'Owen Sound Paralegal | Grey County Legal Services',
-    description: 'Owen Sound paralegal services for Grey County. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal owen sound, owen sound legal services, grey county paralegal, bruce peninsula paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Owen Sound', areaServed: ['Owen Sound', 'Meaford', 'Hanover', 'Grey County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Owen Sound', url: '/locations/owen-sound' }],
-    faqs: [
-      { question: 'Do you serve Owen Sound and Grey County?', answer: 'Yes, we serve Owen Sound, Meaford, Hanover, Markdale, and the wider Grey County and Bruce Peninsula region.' },
-      { question: 'Which courthouse do Owen Sound residents use?', answer: 'Owen Sound matters are heard at the Owen Sound courthouse at 415 9th Street East.' },
-      { question: 'Do you offer virtual consultations for Owen Sound?', answer: 'Yes, phone and video consultations are available for all Grey County residents.' }
-    ]
-  },
-
-  '/locations/peterborough': {
-    title: 'Peterborough Paralegal | Kawartha Region Legal Services',
-    description: 'Peterborough paralegal services for Peterborough County. Traffic, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal peterborough, peterborough legal services, peterborough traffic ticket, kawartha paralegal, peterborough county paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Peterborough', areaServed: ['Peterborough', 'Selwyn', 'Peterborough County'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Peterborough', url: '/locations/peterborough' }],
-    faqs: [
-      { question: 'Do you serve Peterborough and Peterborough County?', answer: 'Yes, we serve Peterborough, Selwyn, Lakefield, Norwood, and the wider Peterborough County.' },
-      { question: 'Which courthouse do Peterborough residents use?', answer: 'Peterborough matters are heard at the Peterborough courthouse at 470 Water Street.' },
-      { question: 'Do you handle Highway 115 traffic tickets through Peterborough?', answer: 'Yes, we defend tickets issued on Highway 115, Highway 7, and all roads through Peterborough County.' }
-    ]
-  },
-
-  '/locations/sault-ste-marie': {
-    title: 'Sault Ste. Marie Paralegal | Algoma District Legal Services',
-    description: 'Sault Ste. Marie paralegal services for Algoma District. Traffic tickets, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal sault ste marie, soo paralegal, algoma paralegal, northern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Sault Ste. Marie', areaServed: ['Sault Ste. Marie', 'Algoma District'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Sault Ste. Marie', url: '/locations/sault-ste-marie' }],
-    faqs: [
-      { question: 'Do you serve Sault Ste. Marie and Algoma District?', answer: 'Yes, we serve Sault Ste. Marie, Wawa, Blind River, Elliot Lake, and the wider Algoma District.' },
-      { question: 'Which courthouse do Sault Ste. Marie residents use?', answer: 'Sault Ste. Marie matters are heard at the Sault Ste. Marie courthouse at 426 Queen Street East.' },
-      { question: 'Do you handle Highway 17 traffic tickets through the Soo?', answer: 'Yes, we defend tickets issued on Highway 17 throughout Algoma District.' }
-    ]
-  },
-
-  '/locations/strathroy-chatham': {
-    title: 'Strathroy & Chatham Paralegal | SW Ontario Legal Services',
-    description: 'Strathroy and Chatham-Kent paralegal services. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal strathroy, paralegal chatham, strathroy legal services, chatham-kent paralegal, middlesex county paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Strathroy & Chatham', areaServed: ['Strathroy', 'Strathroy-Caradoc', 'Chatham', 'Chatham-Kent'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Strathroy & Chatham', url: '/locations/strathroy-chatham' }],
-    faqs: [
-      { question: 'Do you serve Strathroy and Chatham-Kent?', answer: 'Yes, we serve Strathroy-Caradoc, Chatham, Wallaceburg, Tilbury, and all of Chatham-Kent and West Middlesex.' },
-      { question: 'Which courthouse do Strathroy and Chatham residents use?', answer: 'Strathroy matters are typically handled in London courthouse; Chatham matters are heard at the Chatham courthouse at 425 Grand Avenue West.' },
-      { question: 'Do you handle Highway 401 traffic tickets through Chatham-Kent?', answer: 'Yes, we defend tickets issued on Highway 401, Highway 402, and all major roads through Southwestern Ontario.' }
-    ]
-  },
-
-  '/locations/sudbury': {
-    title: 'Sudbury Paralegal | Greater Sudbury Legal Services',
-    description: 'Greater Sudbury paralegal services for Northern Ontario. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal sudbury, sudbury legal services, greater sudbury paralegal, northern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Sudbury', areaServed: ['Greater Sudbury', 'Sudbury District'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Sudbury', url: '/locations/sudbury' }],
-    faqs: [
-      { question: 'Do you serve Greater Sudbury?', answer: 'Yes, we serve Greater Sudbury, Coniston, Garson, Chelmsford, Lively, and the wider Sudbury District.' },
-      { question: 'Which courthouse do Sudbury residents use?', answer: 'Sudbury matters are heard at the Sudbury courthouse at 155 Elm Street.' },
-      { question: 'Do you handle Highway 17 and Highway 69 traffic tickets through Sudbury?', answer: 'Yes, we defend tickets issued on Highway 17, Highway 69, and all roads through Northern Ontario.' }
-    ]
-  },
-
-  '/locations/thorold': {
-    title: 'Thorold Paralegal | Niagara Region Legal Services',
-    description: 'Thorold paralegal services for Niagara Region. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal thorold, thorold legal services, niagara region paralegal, thorold traffic ticket',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Thorold', areaServed: ['Thorold', 'Niagara Region'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Thorold', url: '/locations/thorold' }],
-    faqs: [
-      { question: 'Do you serve Thorold and Niagara Region?', answer: 'Yes, we serve Thorold and the wider Niagara Region.' },
-      { question: 'Which courthouse do Thorold residents use?', answer: 'Thorold matters are typically heard at the St. Catharines courthouse at 59 Church Street.' },
-      { question: 'Do you handle QEW traffic tickets through Thorold?', answer: 'Yes, we defend tickets issued on the QEW and all major roads through Niagara Region.' }
-    ]
-  },
-
-  '/locations/thunder-bay': {
-    title: 'Thunder Bay Paralegal | NW Ontario Legal Services',
-    description: 'Thunder Bay paralegal services for Northwestern Ontario. Traffic tickets, Small Claims Court, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal thunder bay, thunder bay legal services, northwestern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Thunder Bay', areaServed: ['Thunder Bay', 'Thunder Bay District'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Thunder Bay', url: '/locations/thunder-bay' }],
-    faqs: [
-      { question: 'Do you serve Thunder Bay and Northwestern Ontario?', answer: 'Yes, we serve Thunder Bay, Oliver Paipoonge, Conmee, and the wider Thunder Bay District.' },
-      { question: 'Which courthouse do Thunder Bay residents use?', answer: 'Thunder Bay matters are heard at the Thunder Bay courthouse at 125 Brodie Street North.' },
-      { question: 'Do you handle Highway 11 and Highway 17 traffic tickets through Thunder Bay?', answer: 'Yes, we defend tickets issued on Highway 11, Highway 17, and all major roads through Northwestern Ontario.' }
-    ]
-  },
-
-  '/locations/timmins': {
-    title: 'Timmins Paralegal | Cochrane District Legal Services',
-    description: 'Timmins paralegal services for Cochrane District. Traffic tickets, Small Claims, LTB. Free consultation. Call 226-272-5153.',
-    keywords: 'paralegal timmins, timmins legal services, cochrane district paralegal, northern ontario paralegal',
-    schema: { type: 'LocalBusiness', name: 'Legal Assist Timmins', areaServed: ['Timmins', 'Cochrane District'] },
-    breadcrumbs: [{ name: 'Home', url: '/' }, { name: 'Locations', url: '/locations' }, { name: 'Timmins', url: '/locations/timmins' }],
-    faqs: [
-      { question: 'Do you serve Timmins and Cochrane District?', answer: 'Yes, we serve Timmins, Cochrane, Kapuskasing, Iroquois Falls, and the wider Cochrane District.' },
-      { question: 'Which courthouse do Timmins residents use?', answer: 'Timmins matters are heard at the Timmins courthouse at 149 Spruce Street South.' },
-      { question: 'Do you handle Highway 11 traffic tickets through Timmins?', answer: 'Yes, we defend tickets issued on Highway 11, Highway 101, and all roads through Northern Ontario.' }
+      { question: 'Do you offer virtual consultations for Belleville?', answer: 'Yes, phone and video consultations are available for all Quinte-region residents.' }
     ]
   },
 };
 
-// ============================================
-// HELPER FUNCTIONS
 // ============================================
 
 /**
@@ -6653,6 +6359,7 @@ export function generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[], baseUrl:
       "name": item.name,
       "item": `${baseUrl}${item.url}`
     }))
+
   };
 }
 

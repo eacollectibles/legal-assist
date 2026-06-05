@@ -19,6 +19,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import AnalyticsWidget from '@/components/paralegal-dashboard/AnalyticsWidget';
+import TodaysInbox from '@/components/paralegal-dashboard/TodaysInbox';
+import DeadlineTracker from '@/components/paralegal-dashboard/DeadlineTracker';
+import LiveTimer from '@/components/paralegal-dashboard/LiveTimer';
 import {
   LayoutDashboard, CalendarDays, Users, MessageSquare,
   FileSignature, FolderOpen, Scale, FileText, Video,
@@ -26,6 +30,7 @@ import {
   Bell, Phone, Menu, X, LogOut, Clock, AlertTriangle,
   CheckCircle, TrendingUp, Briefcase, Shield, ExternalLink,
   DollarSign, CreditCard, BarChart3, ArrowUpRight, ShieldCheck,
+  MessageCircle, GraduationCap,
 } from 'lucide-react';
 import { ParalegalDashboardProvider, useParalegalDashboard } from './paralegal-dashboard/ParalegalDashboardContext';
 import { BaseCrudService } from '@/integrations';
@@ -47,6 +52,7 @@ import AppointmentsTab from './paralegal-dashboard/AppointmentsTab';
 import AssignmentsTab from './paralegal-dashboard/AssignmentsTab';
 import SignaturesTab from './paralegal-dashboard/SignaturesTab';
 import MessagesTab from './paralegal-dashboard/MessagesTab';
+import LiveChatTab from './paralegal-dashboard/LiveChatTab';
 import FileManagementTab from './paralegal-dashboard/FileManagementTab';
 import SettingsTab from './paralegal-dashboard/SettingsTab';
 
@@ -67,6 +73,7 @@ const EXTERNAL_MODULES: Record<string, string> = {
   meetings: '/meeting-dashboard',
   uploadtokens: '/admin/upload-tokens',
   reports: '/admin/reports',
+  students: '/admin/students',
 };
 
 // ============================================================
@@ -98,6 +105,22 @@ function OverviewModule() {
   } = useParalegalDashboard();
 
   const [pendingBookings, setPendingBookings] = useState(0);
+  // Active Files used to be counted from the legacy `fileassignments`
+  // collection filtered to the current paralegal. Two problems:
+  //   1. Most files in this practice are owned through `clientfiles`
+  //      directly (the LSO By-Law 7.1 client-file rows), not through
+  //      the older `fileassignments` join table. Filtering on
+  //      fileassignments returned 0 even when 16 active files existed.
+  //   2. The status field was compared as 'active' lowercase, but
+  //      AssignmentsTab writes 'Active' (capitalised), so even when
+  //      a fileassignment row existed it was excluded.
+  // Fix: pull `clientfiles` directly, case-insensitive status match,
+  // and count firm-wide (matches the Reports page so the two views
+  // agree). For a multi-paralegal firm this could be filtered to
+  // "my files" by joining on assignedParalegalId — but in this
+  // single-paralegal-plus-Candice setup, firm-wide is what the
+  // dashboard is meant to represent.
+  const [activeFiles, setActiveFiles] = useState(0);
 
   useEffect(() => {
     BaseCrudService.getAll<any>('bookings')
@@ -106,18 +129,48 @@ function OverviewModule() {
         setPendingBookings(pending);
       })
       .catch(() => {});
-  }, []);
 
-  // Derive stats
+    // ⚠ getAll() defaults to a 50-row page — we have to ask for more
+    // explicitly or the count will silently cap at 50 once the firm
+    // grows past it.
+    BaseCrudService.getAll<any>('clientfiles', undefined, { limit: 1000 })
+      .then(res => {
+        const active = (res.items || []).filter((f: any) => {
+          const status = String(f.fileStatus || f.status || '').toLowerCase();
+          return status === 'active';
+        }).length;
+        setActiveFiles(active);
+      })
+      .catch(() => {
+        // Fall back to fileassignments-derived count if clientfiles
+        // is unreachable, with the same case-insensitive match.
+        const fallback = fileAssignments.filter(a => {
+          const status = String(a.fileStatus || '').toLowerCase();
+          return status === 'active';
+        }).length;
+        setActiveFiles(fallback);
+      });
+  }, [fileAssignments]);
+
+  // Derive remaining stats
   const assignedClientIds = fileAssignments
     .filter(a => a.paralegalId === currentParalegalId)
     .map(a => a.clientId);
 
-  const activeFiles = fileAssignments.filter(
-    a => a.paralegalId === currentParalegalId && a.fileStatus === 'active'
+  // Unread count: prefer the conversation-aggregated unread, but if
+  // organizeConversations() hasn't run (e.g. fileassignments is
+  // empty for this paralegal), fall back to messages that are
+  // unread and addressed to this paralegal. Without this fallback
+  // the badge always read 0 even when the Messages module had
+  // entries.
+  const unreadFromConversations = conversations.reduce(
+    (t, c) => t + (c.unreadCount || 0),
+    0
+  );
+  const unreadFromMessages = messages.filter(
+    m => m.read === false || m.status === 'unread'
   ).length;
-
-  const unreadCount = conversations.reduce((t, c) => t + c.unreadCount, 0);
+  const unreadCount = unreadFromConversations || unreadFromMessages;
 
   const pendingSignatures = generatedDocuments.filter(
     d => d.requiresSignature && d.status !== 'Signed'
@@ -174,6 +227,26 @@ function OverviewModule() {
           </div>
         ))}
       </div>
+
+      {/* Site Traffic widget + Today's Inbox — Tier 1 features from
+          the 2026-05-30 feature plan. AnalyticsWidget polls
+          /api/analytics/summary every 30s; TodaysInbox aggregates
+          last-24h activity from clientfiles / messages / bookings /
+          financialrecords / generateddocuments. */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <AnalyticsWidget />
+        <TodaysInbox />
+      </div>
+
+      {/* Deadline Tracker — F-A from the second feature wave.
+          Surfaces every open file's next hard deadline based on
+          matter-type-specific Ontario limitation periods. */}
+      <DeadlineTracker />
+
+      {/* Live Timer — F-E. Floating timer overlay that creates
+          docket_entry rows on stop. Rendered at root so it persists
+          across sub-tab navigation. */}
+      <LiveTimer />
 
       {/* Two-column layout: Recent + Upcoming */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -287,6 +360,7 @@ function DashboardShell() {
     { id: 'appointments', label: 'Appointments', icon: CalendarDays, badge: urgentCount || undefined, section: 'main' },
     { id: 'assignments', label: 'Assignments', icon: Users, section: 'clients' },
     { id: 'messages', label: 'Messages', icon: MessageSquare, badge: unreadCount || undefined, section: 'clients' },
+    { id: 'livechat', label: 'Live Chat', icon: MessageCircle, section: 'clients' },
     { id: 'clientfiles', label: 'Client Files', icon: Scale, section: 'compliance' },
     { id: 'trustaccounting', label: 'Trust Accounting', icon: DollarSign, section: 'compliance' },
     { id: 'payments', label: 'Payments', icon: CreditCard, section: 'compliance' },
@@ -300,6 +374,7 @@ function DashboardShell() {
     { id: 'filemanagement', label: 'File Management', icon: FolderOpen, section: 'documents' },
     { id: 'docworkflow', label: 'Document Workflow', icon: FileText, section: 'documents' },
     { id: 'reports', label: 'Reports', icon: BarChart3, section: 'admin' },
+    { id: 'students', label: 'Paralegal Students', icon: GraduationCap, section: 'admin' },
     { id: 'meetings', label: 'Meetings', icon: Video, section: 'admin' },
     { id: 'uploadtokens', label: 'Upload Links', icon: Link2, section: 'admin' },
     { id: 'settings', label: 'Settings', icon: Settings, section: 'admin' },
@@ -343,6 +418,8 @@ function DashboardShell() {
         return <AssignmentsTab />;
       case 'messages':
         return <MessagesTab />;
+      case 'livechat':
+        return <LiveChatTab />;
       case 'signatures':
         return <SignaturesTab />;
       case 'filemanagement':
