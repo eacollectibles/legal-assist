@@ -30,7 +30,7 @@ import {
   Bell, Phone, Menu, X, LogOut, Clock, AlertTriangle,
   CheckCircle, TrendingUp, Briefcase, Shield, ExternalLink,
   DollarSign, CreditCard, BarChart3, ArrowUpRight, ShieldCheck,
-  MessageCircle, GraduationCap,
+  MessageCircle, GraduationCap, CalendarClock, Archive, Wallet,
 } from 'lucide-react';
 import { ParalegalDashboardProvider, useParalegalDashboard } from './paralegal-dashboard/ParalegalDashboardContext';
 import { BaseCrudService } from '@/integrations';
@@ -74,6 +74,9 @@ const EXTERNAL_MODULES: Record<string, string> = {
   uploadtokens: '/admin/upload-tokens',
   reports: '/admin/reports',
   students: '/admin/students',
+  limitationcalc: '/admin/limitation-calculator',
+  fileretention: '/admin/file-retention',
+  trusttopup: '/admin/trust-top-up',
 };
 
 // ============================================================
@@ -368,6 +371,9 @@ function DashboardShell() {
     { id: 'monthendreconciliation', label: 'Month-End Reconciliation', icon: ShieldCheck, section: 'compliance' },
     { id: 'timebilling', label: 'Time & Billing', icon: Clock, section: 'compliance' },
     { id: 'deadlines', label: 'Deadlines', icon: AlertTriangle, section: 'compliance' },
+    { id: 'limitationcalc', label: 'Deadline Calculator', icon: CalendarClock, section: 'compliance' },
+    { id: 'trusttopup', label: 'Trust Top-Up', icon: Wallet, section: 'compliance' },
+    { id: 'fileretention', label: 'File Retention', icon: Archive, section: 'compliance' },
     { id: 'tickler', label: 'Tasks / Tickler', icon: CheckCircle, section: 'compliance' },
     { id: 'conflictsearch', label: 'Conflict Search', icon: Search, section: 'compliance' },
     { id: 'signatures', label: 'Signatures', icon: FileSignature, badge: pendingSignatures || undefined, section: 'documents' },

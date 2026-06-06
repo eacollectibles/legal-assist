@@ -32,6 +32,9 @@ const TicklerTaskPage = lazy(() => import('@/components/pages/TicklerTaskPage'))
 const ConflictSearchPage = lazy(() => import('@/components/pages/ConflictSearchPage'));
 const ReportsAnalyticsPage = lazy(() => import('@/components/pages/ReportsAnalyticsPage'));
 const PayPage = lazy(() => import('@/components/pages/PayPage'));
+const LimitationCalculatorPage = lazy(() => import('@/components/pages/LimitationCalculatorPage'));
+const FileRetentionPage = lazy(() => import('@/components/pages/FileRetentionPage'));
+const TrustTopUpPage = lazy(() => import('@/components/pages/TrustTopUpPage'));
 
 export const adminRoutes = [
   // Main Paralegal Dashboard
@@ -76,6 +79,9 @@ export const adminRoutes = [
   { path: '/admin/tickler', element: TicklerTaskPage },
   { path: '/admin/conflict-search', element: ConflictSearchPage },
   { path: '/admin/reports', element: ReportsAnalyticsPage },
+  { path: '/admin/limitation-calculator', element: LimitationCalculatorPage },
+  { path: '/admin/file-retention', element: FileRetentionPage },
+  { path: '/admin/trust-top-up', element: TrustTopUpPage },
 
   // Public-facing payment page (clients pay invoices via Square)
   { path: '/pay', element: PayPage },

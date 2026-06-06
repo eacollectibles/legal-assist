@@ -63,9 +63,10 @@ export default function StudentDashboardPage() {
     setLoading(true);
     setError('');
     try {
-      const all = await BaseCrudService.getAll<FileRow>('clientfiles', { limit: 1000 });
+      const res: any = await BaseCrudService.getAll<FileRow>('clientfiles', undefined, { limit: 1000 });
+      const all = res?.items || res || [];
       // Client-side filter; server-side authz is the source of truth on individual reads.
-      const visible = filterVisibleFiles(u, (all as any) || []);
+      const visible = filterVisibleFiles(u, all);
       // Sort by most recently updated.
       visible.sort((a, b) => {
         const da = new Date(a.updatedAt || a.createdAt || 0).getTime();
