@@ -54,6 +54,38 @@ export default function StudentManagementPage() {
   const [submitError, setSubmitError] = useState('');
   const [showPwd, setShowPwd] = useState(false);
 
+  // Student activity review queue (activitylogs, activityType 'student_edit')
+  interface AuditRow {
+    _id: string;
+    actorName?: string;
+    actorEmail?: string;
+    fileName?: string;
+    action?: string;
+    detail?: string;
+    createdAt?: string | Date;
+    activityType?: string;
+  }
+  const [auditRows, setAuditRows] = useState<AuditRow[]>([]);
+  const [auditLoading, setAuditLoading] = useState(true);
+  const [auditAll, setAuditAll] = useState(false);
+
+  const loadAudit = async () => {
+    setAuditLoading(true);
+    try {
+      const r: any = await BaseCrudService.getAll('activitylogs', undefined, { limit: 1000 });
+      const all: AuditRow[] = (r?.items || []) as AuditRow[];
+      const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+      const rows = all
+        .filter(a => a.activityType === 'student_edit')
+        .filter(a => auditAll || (a.createdAt && new Date(a.createdAt).getTime() >= cutoff))
+        .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+      setAuditRows(rows);
+    } catch { /* non-fatal panel */ }
+    finally { setAuditLoading(false); }
+  };
+
+  useEffect(() => { void loadAudit(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [auditAll]);
+
   const paralegals = useMemo(() => getActiveParalegals(), []);
 
   useEffect(() => {
@@ -70,7 +102,7 @@ export default function StudentManagementPage() {
     setRefreshing(true);
     setError('');
     try {
-      const r: any = await BaseCrudService.getAll('useraccounts', { limit: 1000 });
+      const r: any = await BaseCrudService.getAll('useraccounts', undefined, { limit: 1000 });
       const all: UserRow[] = (r?.items || r || []) as UserRow[];
       const students = all.filter(u => u.userType === 'paralegal_student');
       // Sort by last name, then first name
@@ -102,7 +134,7 @@ export default function StudentManagementPage() {
     setSubmitting(true);
     try {
       // Check for duplicate email
-      const existing: any = await BaseCrudService.getAll('useraccounts', { limit: 1000 });
+      const existing: any = await BaseCrudService.getAll('useraccounts', undefined, { limit: 1000 });
       const list: UserRow[] = existing?.items || existing || [];
       if (list.some(u => (u.email || '').toLowerCase() === email)) {
         setSubmitError('A user with that email already exists.');
@@ -278,6 +310,57 @@ export default function StudentManagementPage() {
                   </li>
                 );
               })}
+            </ul>
+          )}
+        </div>
+
+        {/* Student activity review queue — surfaces buildStudentEditAuditEntry
+            rows (activitylogs, activityType 'student_edit') so the supervising
+            paralegal can review what students changed (LSO By-Law 4 s. 2(2)
+            supervision). Newest first, last 30 days by default. */}
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mt-8">
+          <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="font-heading font-semibold text-foreground">
+              Student activity {auditLoading ? '' : `(${auditRows.length}${auditAll ? '' : ' in last 30 days'})`}
+            </h2>
+            <div className="flex items-center gap-3">
+              <label className="text-xs text-foreground/60 flex items-center gap-1.5">
+                <input type="checkbox" checked={auditAll} onChange={e => setAuditAll(e.target.checked)} />
+                Show all
+              </label>
+              <Button variant="outline" size="sm" onClick={() => void loadAudit()} disabled={auditLoading}>
+                {auditLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
+              </Button>
+            </div>
+          </div>
+          {auditLoading ? (
+            <div className="p-8 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-foreground/30" /></div>
+          ) : auditRows.length === 0 ? (
+            <div className="p-8 text-center text-sm text-foreground/55">
+              No student edits recorded{auditAll ? '' : ' in the last 30 days'}.
+            </div>
+          ) : (
+            <ul className="divide-y divide-gray-100">
+              {auditRows.slice(0, 50).map(a => (
+                <li key={a._id} className="px-5 py-3">
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div className="min-w-0">
+                      <p className="text-sm text-foreground">
+                        <span className="font-semibold">{a.actorName || a.actorEmail || 'Student'}</span>
+                        {' '}<span className="text-foreground/70">{(a.action || 'edited').replace(/_/g, ' ')}</span>
+                        {a.fileName ? <span className="text-foreground/70"> on <span className="font-medium text-foreground">{a.fileName}</span></span> : null}
+                      </p>
+                      {a.detail && <p className="text-xs text-foreground/55 mt-0.5">{a.detail}</p>}
+                    </div>
+                    <span className="text-xs text-foreground/45 whitespace-nowrap">
+                      {a.createdAt ? new Date(a.createdAt).toLocaleString('en-CA', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : ''}
+                    </span>
+                  </div>
+                </li>
+              ))}
+              {auditRows.length > 50 && (
+                <li className="px-5 py-2 text-xs text-foreground/50">Showing the 50 most recent of {auditRows.length}.</li>
+              )}
             </ul>
           )}
         </div>

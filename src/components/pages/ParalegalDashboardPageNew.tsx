@@ -23,6 +23,7 @@ import AnalyticsWidget from '@/components/paralegal-dashboard/AnalyticsWidget';
 import TodaysInbox from '@/components/paralegal-dashboard/TodaysInbox';
 import DeadlineTracker from '@/components/paralegal-dashboard/DeadlineTracker';
 import LiveTimer from '@/components/paralegal-dashboard/LiveTimer';
+import TrustAlertsCard from '@/components/paralegal-dashboard/TrustAlertsCard';
 import {
   LayoutDashboard, CalendarDays, Users, MessageSquare,
   FileSignature, FolderOpen, Scale, FileText, Video,
@@ -245,6 +246,11 @@ function OverviewModule() {
           Surfaces every open file's next hard deadline based on
           matter-type-specific Ontario limitation periods. */}
       <DeadlineTracker />
+
+      {/* Trust Alerts — low trust-balance files surfaced on the home
+          view so retainer shortfalls are seen daily (By-Law 9 risk).
+          Balance math mirrors TrustTopUpPage / TrustAccountingPage. */}
+      <TrustAlertsCard />
 
       {/* Live Timer — F-E. Floating timer overlay that creates
           docket_entry rows on stop. Rendered at root so it persists

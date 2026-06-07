@@ -56,7 +56,7 @@ export default function AssignedStudentsPicker(props: Props) {
     setLoading(true);
     setError('');
     try {
-      const r: any = await BaseCrudService.getAll('useraccounts', { limit: 1000 });
+      const r: any = await BaseCrudService.getAll('useraccounts', undefined, { limit: 1000 });
       const all: Student[] = (r?.items || r || []) as any;
       let list = all.filter((u: any) => u.userType === 'paralegal_student' && u.accountStatus !== 'suspended');
       // We intentionally do NOT filter by props.supervisingParalegalId here.

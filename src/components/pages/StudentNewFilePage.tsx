@@ -243,8 +243,8 @@ export default function StudentNewFilePage() {
     setScanned(false);
     try {
       const [profsR, filesR]: any = await Promise.all([
-        BaseCrudService.getAll('clientprofiles', { limit: 1000 }),
-        BaseCrudService.getAll('clientfiles', { limit: 1000 }),
+        BaseCrudService.getAll('clientprofiles', undefined, { limit: 1000 }),
+        BaseCrudService.getAll('clientfiles', undefined, { limit: 1000 }),
       ]);
       const profs: any[] = profsR?.items || profsR || [];
       const files: any[] = filesR?.items || filesR || [];

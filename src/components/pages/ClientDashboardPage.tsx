@@ -233,8 +233,8 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
 
   const loadAssignedParalegal = async () => {
     try {
-      const { items: assignments } = await BaseCrudService.getAll('fileassignments');
-      const { items: users } = await BaseCrudService.getAll('useraccounts');
+      const { items: assignments } = await BaseCrudService.getAll('fileassignments', undefined, { limit: 1000 });
+      const { items: users } = await BaseCrudService.getAll('useraccounts', undefined, { limit: 1000 });
       const clientId = currentUser?.clientId;
       const userAssignment = assignments?.find(a => a.clientId === clientId || a.clientId === userAccountId || a.clientId === currentUser?.email);
       if (userAssignment && userAssignment.paralegalId) {
@@ -310,7 +310,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
 
       await BaseCrudService.update('generateddocuments', updatedDoc);
 
-      const { items: clientDocs } = await BaseCrudService.getAll('clientdocuments');
+      const { items: clientDocs } = await BaseCrudService.getAll('clientdocuments', undefined, { limit: 1000 });
       const clientDoc = clientDocs.find(cd => 
         cd.documentName === signingDocument.documentName && 
         cd.clientEmail === currentUser?.email

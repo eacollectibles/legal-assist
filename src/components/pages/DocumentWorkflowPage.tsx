@@ -895,7 +895,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // missing or the schema has been repurposed and the field holds
       // a UUID). We'd rather print "—" than a hex blob in the
       // retainer's Email field.
-      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
+      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts', undefined, { limit: 1000 });
       // Match the useraccount in three ways because Wix sometimes
       // stores the linkage as _id, sometimes as a separate
       // clientProfileId/loginEmail/contactId field. Without all three
@@ -1658,7 +1658,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const userName = currentUser ? JSON.parse(currentUser).firstName + ' ' + JSON.parse(currentUser).lastName : 'Admin';
 
       // Get user account ID for the client FIRST
-      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts');
+      const { items: userAccounts } = await BaseCrudService.getAll('useraccounts', undefined, { limit: 1000 });
       const clientAccount = userAccounts.find(u => u.email === doc.clientEmail);
 
       // CRITICAL FIX: Generate upload token for client to upload additional documents

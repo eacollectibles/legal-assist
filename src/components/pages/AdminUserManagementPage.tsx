@@ -154,31 +154,31 @@ export default function AdminUserManagementPage() {
 
     try {
       // Delete all related data
-      const { items: documents } = await BaseCrudService.getAll('clientdocuments');
+      const { items: documents } = await BaseCrudService.getAll('clientdocuments', undefined, { limit: 1000 });
       const userDocs = documents.filter(doc => doc.clientEmail === email);
       for (const doc of userDocs) {
         await BaseCrudService.delete('clientdocuments', doc._id);
       }
 
-      const { items: messages } = await BaseCrudService.getAll('messages');
+      const { items: messages } = await BaseCrudService.getAll('messages', undefined, { limit: 1000 });
       const userMessages = messages.filter(msg => msg.senderEmail === email || msg.recipientEmail === email);
       for (const msg of userMessages) {
         await BaseCrudService.delete('messages', msg._id);
       }
 
-      const { items: payments } = await BaseCrudService.getAll('paymentrecords');
+      const { items: payments } = await BaseCrudService.getAll('paymentrecords', undefined, { limit: 1000 });
       const userPayments = payments.filter(p => p._id.includes(email));
       for (const payment of userPayments) {
         await BaseCrudService.delete('paymentrecords', payment._id);
       }
 
-      const { items: logs } = await BaseCrudService.getAll('activitylogs');
+      const { items: logs } = await BaseCrudService.getAll('activitylogs', undefined, { limit: 1000 });
       const userLogs = logs.filter(log => log.userId === userId);
       for (const log of userLogs) {
         await BaseCrudService.delete('activitylogs', log._id);
       }
 
-      const { items: notifications } = await BaseCrudService.getAll('notifications');
+      const { items: notifications } = await BaseCrudService.getAll('notifications', undefined, { limit: 1000 });
       const userNotifications = notifications.filter(n => n.userId === userId);
       for (const notif of userNotifications) {
         await BaseCrudService.delete('notifications', notif._id);
