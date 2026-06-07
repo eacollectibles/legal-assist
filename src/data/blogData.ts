@@ -14,6 +14,82 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'without-prejudice-letters-settlement-privilege-ontario',
+    title: 'When "Without Prejudice" Actually Protects a Letter — and When It Does Not',
+    description: 'Lawyers and paralegals stamp "without prejudice" on demand letters every day, and most people assume the words are magic: write them at the top and the letter can never be used in court. Ontario law says otherwise. A plain-English guide to settlement privilege, the three-part test that actually decides whether a communication is protected, and the recognized exceptions that let a "without prejudice" letter into evidence.',
+    category: 'general',
+    date: '2026-06-06',
+    readTime: '9 min',
+    content: `
+      <p>Few phrases are typed onto more letters with less understanding than <strong>&ldquo;without prejudice.&rdquo;</strong> The common belief is that the words work like an invisibility cloak: put them at the top of a letter and nothing in it can ever be shown to a judge or adjudicator. The common belief is wrong in both directions. A letter marked &ldquo;without prejudice&rdquo; can end up in evidence, and a letter that never uses the words can be fully protected. What actually decides the question is a common-law doctrine called <strong>settlement privilege</strong> &mdash; and a three-part test.</p>
+
+      <h2>What settlement privilege protects, and why it exists</h2>
+      <p>Settlement privilege is a rule of evidence that protects communications exchanged by parties as they try to settle a dispute. The Supreme Court of Canada confirmed its modern scope in <em>Sable Offshore Energy Inc. v. Ameron International Corp.</em>, 2013 SCC 37: the privilege exists because parties negotiate more candidly &mdash; and settle more often &mdash; when they know their offers, concessions, and admissions cannot later be used against them if talks fail. Settlement is a public good; the privilege is the price the courts pay for it.</p>
+      <p>Two points from <em>Sable Offshore</em> surprise most people:</p>
+      <ul>
+        <li>The protection is a <strong>class privilege</strong>: once a communication falls within it, protection is presumed, and the party who wants to use the document bears the burden of showing an exception applies.</li>
+        <li>The privilege applies <strong>whether or not the words &ldquo;without prejudice&rdquo; appear anywhere</strong>, and whether or not a settlement was ever reached. It can even protect the concluded settlement amount itself.</li>
+      </ul>
+
+      <h2>The three-part test</h2>
+      <p>Ontario courts apply a three-part test to decide whether settlement privilege attaches to a communication:</p>
+      <ol>
+        <li><strong>A litigious dispute must be in existence or within contemplation.</strong> A mere disagreement is not enough &mdash; litigation (or a tribunal proceeding) must be underway or realistically anticipated by the parties.</li>
+        <li><strong>The communication must be made with the express or implied intention that it not be disclosed</strong> to the court if negotiations fail. A &ldquo;without prejudice&rdquo; label is evidence of that intention, but the intention can also be implied from the circumstances.</li>
+        <li><strong>The purpose of the communication must be to attempt to effect a settlement.</strong> This is where most disputes over the privilege are won and lost.</li>
+      </ol>
+      <p>All three elements must be present. The party claiming the privilege bears the onus of establishing them; once established, the burden flips to the party seeking disclosure to bring the document within an exception.</p>
+
+      <h2>The label is neither necessary nor sufficient</h2>
+      <p>Because the test looks at substance, the heading on the letter settles nothing by itself:</p>
+      <ul>
+        <li>A letter <strong>marked &ldquo;without prejudice&rdquo; is not protected</strong> if it fails the test &mdash; for example, a letter that simply asserts a position, demands payment, or threatens consequences without making or inviting any concession toward settlement. Stamping the words on a bare demand does not transform it into a settlement communication.</li>
+        <li>A letter <strong>not marked &ldquo;without prejudice&rdquo; is still protected</strong> if it genuinely forms part of settlement negotiations. The privilege attaches to the negotiation, not the stationery.</li>
+        <li>Remarkably, even a letter marked <strong>&ldquo;with prejudice&rdquo;</strong> has been held privileged where it was, in substance, part of settlement discussions (<em>Canadian Flight Academy Ltd. v. City of Oshawa</em>) &mdash; although a clear, express statement that a communication is open and may be shown to the court will usually be respected.</li>
+      </ul>
+      <p>The practical question a court or tribunal asks is simple: <em>was this communication a genuine attempt to compromise the dispute?</em> If yes, it is presumptively protected. If it is merely a sabre being rattled, it is not.</p>
+
+      <h2>When a &ldquo;without prejudice&rdquo; letter CAN be used in court</h2>
+      <p>Even where the privilege attaches, it is not absolute. The party seeking to use the communication must show that <strong>a competing public interest outweighs the public interest in encouraging settlement</strong> (<em>Sable Offshore</em>). The recognized exceptions include:</p>
+      <ul>
+        <li><strong>Proving the existence or terms of a settlement.</strong> If the negotiations succeeded and one party now denies the deal, the communications can be disclosed to prove that a settlement was reached and what its terms are. The Supreme Court confirmed this exception in <em>Union Carbide Canada Inc. v. Bombardier Inc.</em>, 2014 SCC 35 &mdash; and held that even a confidentiality clause in a mediation agreement does not displace it unless the parties clearly intended to.</li>
+        <li><strong>Fraud, misrepresentation, or undue influence.</strong> The privilege cannot be used as a shield for dishonesty in the negotiations themselves &mdash; for example, where a party seeks to set aside a settlement procured by misrepresentation.</li>
+        <li><strong>Threats and unambiguous impropriety.</strong> A &ldquo;without prejudice&rdquo; envelope does not protect blackmail, threats of criminal complaints to extract a civil payment, or other clearly improper statements. The privilege protects concessions made in good faith, not misconduct dressed up as negotiation.</li>
+        <li><strong>Costs, after the merits are decided.</strong> Formal offers to settle (Rule 49 in the Superior Court; Rule 14 in Small Claims Court) and &ldquo;without prejudice save as to costs&rdquo; offers are deliberately designed to be shown to the court &mdash; but only after judgment, on the question of costs. They remain protected on the merits.</li>
+        <li><strong>Explaining delay or other limited procedural purposes</strong>, where the fact that negotiations occurred (not their content) is relevant &mdash; for example, to respond to an allegation of unexplained delay.</li>
+      </ul>
+
+      <h2>What this means at the LTB, Small Claims Court, and tribunals</h2>
+      <p>Settlement privilege is a common-law evidence rule, and it applies in administrative tribunals such as the Landlord and Tenant Board and the Human Rights Tribunal of Ontario as well as in court. Mediation at these tribunals typically carries an added layer of statutory or contractual confidentiality. In practice:</p>
+      <ul>
+        <li>Do not attach the other side&rsquo;s &ldquo;without prejudice&rdquo; settlement letter to your application or evidence brief. At best it will be ignored; at worst it damages your credibility and can attract costs consequences.</li>
+        <li>Do not assume your own letter is safe just because of the label. If it contains threats or bare demands rather than a genuine attempt to compromise, it may be admissible &mdash; with your name on it.</li>
+        <li>If you want a letter to be usable later on costs, say so expressly: &ldquo;without prejudice save as to costs.&rdquo;</li>
+        <li>If you want a letter to be fully open and usable in the proceeding, mark it &ldquo;open letter&rdquo; or &ldquo;with prejudice&rdquo; and avoid mixing settlement offers into it.</li>
+      </ul>
+
+      <h2>Practical drafting rules</h2>
+      <ol>
+        <li>Decide <em>before you write</em> whether the letter is an open assertion of your client&rsquo;s position or a confidential attempt to settle &mdash; and keep the two in separate documents.</li>
+        <li>Use &ldquo;without prejudice&rdquo; only on communications that genuinely offer, invite, or respond to compromise. Overuse dilutes the label and invites argument.</li>
+        <li>Never put anything improper in a settlement letter on the assumption it can never surface. The exceptions exist precisely for that case.</li>
+        <li>Keep settlement correspondence physically separate from your evidence brief, and flag privilege issues before disclosure deadlines.</li>
+      </ol>
+
+      <h2>How we can help</h2>
+      <p>Legal Assist Paralegal Services drafts and responds to demand letters and settlement correspondence, and represents clients at the Landlord and Tenant Board, Small Claims Court, and Ontario tribunals. If you have received a &ldquo;without prejudice&rdquo; letter &mdash; or need one written properly &mdash; call <a href="tel:+12262725153">226-272-5153</a> for a free 30-minute consultation.</p>
+
+      <p><em>This article provides general legal information and is not legal advice. Whether settlement privilege protects a particular communication depends on its specific content and context. For your specific situation, consult a qualified legal professional.</em></p>
+    `,
+    faqs: [
+      { q: 'Does writing "without prejudice" on a letter automatically protect it?', a: 'No. The label is evidence of an intention to negotiate confidentially, but it is neither necessary nor sufficient. Protection depends on a three-part test: a litigious dispute must exist or be contemplated, the communication must be intended to be confidential if talks fail, and its purpose must be a genuine attempt to settle. A bare demand or threat does not become privileged just because the words appear at the top.' },
+      { q: 'Can a letter that was never marked "without prejudice" still be protected?', a: 'Yes. Settlement privilege attaches to the substance of the communication, not the label. If the letter genuinely forms part of an attempt to settle an existing or contemplated dispute, it is presumptively protected even without the words — the Supreme Court confirmed this in Sable Offshore Energy v. Ameron (2013).' },
+      { q: 'What is the test for settlement privilege in Ontario?', a: 'Three elements: (1) a litigious dispute in existence or within contemplation; (2) an express or implied intention that the communication not be disclosed to the court if negotiations fail; and (3) a purpose of attempting to effect a settlement. The party claiming privilege must establish the elements; the party seeking disclosure must then show a recognized exception outweighs the public interest in settlement.' },
+      { q: 'When can a without prejudice letter be shown to the court?', a: 'The main exceptions: to prove that a settlement was reached and its terms (Union Carbide v. Bombardier, 2014); where the negotiations involved fraud, misrepresentation, or undue influence; where the letter contains threats or other clearly improper statements; and on the question of costs after judgment, for offers made "without prejudice save as to costs" or under Rule 49.' },
+      { q: "Can I attach the landlord's settlement letter to my LTB application?", a: "You should not. Settlement privilege applies at tribunals like the LTB, and attaching the other side's without prejudice correspondence to your evidence can get the material excluded and hurt your credibility. If the letter contains threats or you believe an exception applies, get advice before using it." },
+    ],
+  },
+  {
     slug: 'ltb-limitation-period-one-year-tenant-claims-ontario',
     title: 'The One-Year Clock on LTB Claims: Limitation Periods Every Ontario Tenant Should Know',
     description: 'The Landlord and Tenant Board is not an open-ended forum. Most tenant applications must be filed within one year under the Residential Tenancies Act — not the two years people assume. A plain-English guide to the s. 29(2) one-year limit, the s. 135 window for illegal rent, when the clock starts, and the traps that bar otherwise winnable claims.',
