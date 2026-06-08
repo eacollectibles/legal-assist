@@ -24,6 +24,7 @@ import {
   ChevronUp, X, CalendarClock, RotateCcw, Timer,
 } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
+import { buildDeadlinesIcs, downloadIcs } from '@/lib/ics-export';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -810,15 +811,36 @@ export default function DeadlineTrackerPage() {
                 </p>
               </div>
             </div>
-            <Button
-              onClick={() => {
-                setAddForm({ fileId: '', ruleId: '', triggerDate: '', notes: '', customName: '', customDate: '' });
-                setShowAddDialog(true);
-              }}
-              className="bg-[#B94A1F] hover:bg-[#a03f1a] text-white"
-            >
-              <Plus className="w-4 h-4 mr-2" /> Add Deadline
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  const events = enrichedDeadlines
+                    .filter(d => d.meta.status === 'active')
+                    .map(d => ({
+                      uid: d._id,
+                      title: `${d.meta.deadlineName}${d.clientName ? ' — ' + d.clientName : ''}`,
+                      date: d.meta.deadlineDate,
+                      description: [d.fileNumber, d.matterType, d.meta.notes].filter(Boolean).join(' · '),
+                      alarmMinutesBefore: 10080, // 7-day reminder
+                    }));
+                  if (events.length === 0) { alert('No active deadlines to export.'); return; }
+                  downloadIcs(buildDeadlinesIcs(events), 'legal-assist-deadlines.ics');
+                }}
+                title="Download active deadlines as a calendar (.ics) file"
+              >
+                <Calendar className="w-4 h-4 mr-2" /> Export .ics
+              </Button>
+              <Button
+                onClick={() => {
+                  setAddForm({ fileId: '', ruleId: '', triggerDate: '', notes: '', customName: '', customDate: '' });
+                  setShowAddDialog(true);
+                }}
+                className="bg-[#B94A1F] hover:bg-[#a03f1a] text-white"
+              >
+                <Plus className="w-4 h-4 mr-2" /> Add Deadline
+              </Button>
+            </div>
           </div>
         </div>
       </header>

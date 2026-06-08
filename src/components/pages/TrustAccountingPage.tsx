@@ -15,6 +15,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, Plus, Download, AlertTriangle, TrendingUp, TrendingDown, Eye, Filter, Search, Loader2, AlertCircle, CheckCircle, DollarSign, FileText, Trash2, CalendarClock, RefreshCw } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { getCurrentUser } from '@/lib/auth-service';
+import { downloadAuditBundle } from '@/lib/audit-export';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -829,13 +830,24 @@ export default function TrustAccountingPage() {
         </a>
 
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="font-heading text-4xl font-bold text-foreground">
-            Trust Account Management
-          </h1>
-          <p className="font-paragraph text-foreground/60 mt-1">
-            LSO By-Law 9 — Trust account records, client ledgers & monthly reconciliation
-          </p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="font-heading text-4xl font-bold text-foreground">
+              Trust Account Management
+            </h1>
+            <p className="font-paragraph text-foreground/60 mt-1">
+              LSO By-Law 9 — Trust account records, client ledgers & monthly reconciliation
+            </p>
+          </div>
+          {/* One-click LSO audit bundle: trust journal, general journal,
+              and file list as date-stamped CSVs (soft-deleted rows excluded). */}
+          <button
+            onClick={() => downloadAuditBundle(financialRecords, clientFiles)}
+            className="inline-flex items-center gap-2 text-sm border border-gray-300 rounded-md px-3 py-2 bg-white hover:bg-gray-50 text-foreground/80"
+            title="Download trust journal, general journal, and file list as CSVs"
+          >
+            <Download className="w-4 h-4" /> Audit export
+          </button>
         </div>
 
         {/* Main Tabs */}

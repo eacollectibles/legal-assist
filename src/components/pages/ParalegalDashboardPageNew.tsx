@@ -25,6 +25,7 @@ import DeadlineTracker from '@/components/paralegal-dashboard/DeadlineTracker';
 import LiveTimer from '@/components/paralegal-dashboard/LiveTimer';
 import TrustAlertsCard from '@/components/paralegal-dashboard/TrustAlertsCard';
 import GlobalSearch from '@/components/paralegal-dashboard/GlobalSearch';
+import UnbilledTimeCard from '@/components/paralegal-dashboard/UnbilledTimeCard';
 import {
   LayoutDashboard, CalendarDays, Users, MessageSquare,
   FileSignature, FolderOpen, Scale, FileText, Video,
@@ -258,6 +259,10 @@ function OverviewModule() {
           view so retainer shortfalls are seen daily (By-Law 9 risk).
           Balance math mirrors TrustTopUpPage / TrustAccountingPage. */}
       <TrustAlertsCard />
+
+      {/* Unbilled Time — flags files with docket time unbilled 30+ days,
+          paired with Trust Alerts as the two revenue-risk widgets. */}
+      <UnbilledTimeCard />
 
       {/* Live Timer — F-E. Floating timer overlay that creates
           docket_entry rows on stop. Rendered at root so it persists
