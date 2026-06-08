@@ -34,6 +34,7 @@ import {
   MessageCircle, GraduationCap, CalendarClock, Archive, Wallet,
 } from 'lucide-react';
 import { ParalegalDashboardProvider, useParalegalDashboard } from './paralegal-dashboard/ParalegalDashboardContext';
+import { getCurrentUser } from '@/lib/auth-service';
 import { BaseCrudService } from '@/integrations';
 import { PHONE_DISPLAY, PHONE_HREF, EMAIL_PRIMARY } from '@/lib/contact';
 
@@ -625,6 +626,23 @@ function DashboardShell() {
 // EXPORT — wrapped in context provider
 // ============================================================
 export default function ParalegalDashboardPage() {
+  // Access gate. This page previously had NO gate at all — any logged-in
+  // user (or a student) who typed /paralegal-dashboard saw the full firm
+  // dashboard. Students go to their own dashboard; clients to theirs;
+  // anonymous users to login. Checked synchronously before first render
+  // so no firm data is fetched for an unauthorized viewer.
+  const me = getCurrentUser() as any;
+  const allowed = !!me && (me.isAdmin === true || me.userType === 'paralegal' || me.userType === 'admin') && me.userType !== 'paralegal_student';
+
+  useEffect(() => {
+    if (!me) { window.location.href = '/login'; return; }
+    if (me.userType === 'paralegal_student') { window.location.href = '/student-dashboard'; return; }
+    if (!allowed) { window.location.href = '/client-dashboard'; }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!allowed) return null;
+
   return (
     <ParalegalDashboardProvider>
       <DashboardShell />

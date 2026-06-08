@@ -42,7 +42,15 @@ export default function ClientDashboardPage() {
       navigate('/client-login');
       return;
     }
-    
+
+    // F-J: paralegal students belong on the student dashboard, never the
+    // client portal — checked BEFORE isAdmin so a student account never
+    // falls through to either of the other dashboards.
+    if ((currentUser as any)?.userType === 'paralegal_student') {
+      navigate('/student-dashboard');
+      return;
+    }
+
     if (currentUser?.isAdmin) {
       navigate('/paralegal-dashboard');
       return;

@@ -1,4 +1,15 @@
 import { lazy } from 'react';
+import { withRoleGate } from '@/lib/route-guards';
+
+// Route-level role gates (see src/lib/route-guards.tsx).
+// `gate()`      = paralegals/admins only; students bounce to /student-dashboard,
+//                 clients to /client-dashboard, anonymous users to /login.
+// `staffGate()` = also admits paralegal students (those pages self-scope what
+//                 students can see — F-J).
+// Public routes (/upload/:token, /sign/:token, /pay, /booking,
+// /meeting-request) are intentionally NOT gated.
+const gate = (C: any) => withRoleGate(C, 'paralegal');
+const staffGate = (C: any) => withRoleGate(C, 'student-or-paralegal');
 
 // Admin & Dashboard Pages - All lazy loaded
 const ParalegalDashboardPage = lazy(() => import('@/components/pages/ParalegalDashboardPageNew'));
@@ -38,50 +49,50 @@ const TrustTopUpPage = lazy(() => import('@/components/pages/TrustTopUpPage'));
 
 export const adminRoutes = [
   // Main Paralegal Dashboard
-  { path: '/paralegal-dashboard', element: ParalegalDashboardPage },
+  { path: '/paralegal-dashboard', element: gate(ParalegalDashboardPage) },
 
   // F-J Paralegal student dashboard + supervisor's student-mgmt page
-  { path: '/student-dashboard', element: StudentDashboardPage },
-  { path: '/student/new-file', element: StudentNewFilePage },
-  { path: '/admin/students', element: StudentManagementPage },
+  { path: '/student-dashboard', element: staffGate(StudentDashboardPage) },
+  { path: '/student/new-file', element: staffGate(StudentNewFilePage) },
+  { path: '/admin/students', element: gate(StudentManagementPage) },
 
   // Admin User Management
-  { path: '/admin/users', element: AdminUserManagementPage },
-  { path: '/admin/users/:userId', element: AdminUserDetailPage },
-  { path: '/admin/messages', element: AdminMessagesPage },
-  { path: '/admin/bookings', element: AdminBookingsPage },
-  { path: '/admin/meeting-requests', element: AdminMeetingRequestsPage },
-  { path: '/admin/grant-admin', element: GrantAdminPage },
-  
-  // Client File Management (LSO By-Law 7.1 Compliance)
-  { path: '/admin/client-files', element: ClientFileManagementPage },
-  { path: '/admin/client-files/:fileId', element: ClientFileManagementPage },
+  { path: '/admin/users', element: gate(AdminUserManagementPage) },
+  { path: '/admin/users/:userId', element: gate(AdminUserDetailPage) },
+  { path: '/admin/messages', element: gate(AdminMessagesPage) },
+  { path: '/admin/bookings', element: gate(AdminBookingsPage) },
+  { path: '/admin/meeting-requests', element: gate(AdminMeetingRequestsPage) },
+  { path: '/admin/grant-admin', element: gate(GrantAdminPage) },
 
-  // Document Management
-  { path: '/admin/documents', element: DocumentWorkflowPage },
-  { path: '/admin/upload-tokens', element: UploadTokenManagementPage },
+  // Client File Management (LSO By-Law 7.1 Compliance)
+  { path: '/admin/client-files', element: gate(ClientFileManagementPage) },
+  { path: '/admin/client-files/:fileId', element: gate(ClientFileManagementPage) },
+
+  // Document Management — students allowed; the page self-scopes (F-J)
+  { path: '/admin/documents', element: staffGate(DocumentWorkflowPage) },
+  { path: '/admin/upload-tokens', element: gate(UploadTokenManagementPage) },
   { path: '/upload/:token', element: PublicUploadPage },
   // Public e-signing — no account required, mints from sign-token-service
   { path: '/sign/:token', element: PublicSignPage },
-  
+
   // Meeting/Booking Management
-  { path: '/meeting-dashboard', element: MeetingDashboardPage },
+  { path: '/meeting-dashboard', element: gate(MeetingDashboardPage) },
   { path: '/meeting-request', element: MeetingRequestPage },
   { path: '/booking', element: BookingPage },
 
   // LSO Compliance — Paralegal-facing tools
-  { path: '/admin/trust-accounting', element: TrustAccountingPage },
-  { path: '/admin/payments', element: PaymentsPage },
-  { path: '/admin/disburse-funds', element: DisburseFundsPage },
-  { path: '/admin/month-end-reconciliation', element: MonthEndReconciliationPage },
-  { path: '/admin/time-billing', element: TimeBillingPage },
-  { path: '/admin/deadlines', element: DeadlineTrackerPage },
-  { path: '/admin/tickler', element: TicklerTaskPage },
-  { path: '/admin/conflict-search', element: ConflictSearchPage },
-  { path: '/admin/reports', element: ReportsAnalyticsPage },
-  { path: '/admin/limitation-calculator', element: LimitationCalculatorPage },
-  { path: '/admin/file-retention', element: FileRetentionPage },
-  { path: '/admin/trust-top-up', element: TrustTopUpPage },
+  { path: '/admin/trust-accounting', element: gate(TrustAccountingPage) },
+  { path: '/admin/payments', element: gate(PaymentsPage) },
+  { path: '/admin/disburse-funds', element: gate(DisburseFundsPage) },
+  { path: '/admin/month-end-reconciliation', element: gate(MonthEndReconciliationPage) },
+  { path: '/admin/time-billing', element: gate(TimeBillingPage) },
+  { path: '/admin/deadlines', element: gate(DeadlineTrackerPage) },
+  { path: '/admin/tickler', element: gate(TicklerTaskPage) },
+  { path: '/admin/conflict-search', element: gate(ConflictSearchPage) },
+  { path: '/admin/reports', element: gate(ReportsAnalyticsPage) },
+  { path: '/admin/limitation-calculator', element: gate(LimitationCalculatorPage) },
+  { path: '/admin/file-retention', element: gate(FileRetentionPage) },
+  { path: '/admin/trust-top-up', element: gate(TrustTopUpPage) },
 
   // Public-facing payment page (clients pay invoices via Square)
   { path: '/pay', element: PayPage },
