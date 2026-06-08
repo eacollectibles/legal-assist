@@ -14,6 +14,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, Plus, Download, AlertTriangle, TrendingUp, TrendingDown, Eye, Filter, Search, Loader2, AlertCircle, CheckCircle, DollarSign, FileText, Trash2, CalendarClock, RefreshCw } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
+import { getCurrentUser } from '@/lib/auth-service';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -275,12 +276,16 @@ export default function TrustAccountingPage() {
         BaseCrudService.getAllPages<ClientFile>('clientfiles'),
       ]);
 
-      setFinancialRecords(financialRes.items || []);
+      // Exclude soft-deleted records (By-Law 9: records are retained, not
+      // hard-deleted — see handleDeleteTransaction). A soft-deleted row
+      // must not appear in the ledger or count toward any trust balance.
+      const liveFinancials = (financialRes.items || []).filter((r: any) => !r.isDeleted);
+      setFinancialRecords(liveFinancials);
       setClientFiles(filesRes.items || []);
 
       // Extract reconciliation history from records with transactionType === 'reconciliation'
       const reconciliations: ReconciliationRecord[] = [];
-      (financialRes.items || []).forEach(record => {
+      liveFinancials.forEach(record => {
         if (record.transactionType === 'reconciliation' && record.description) {
           const data = parseJSONSafely(record.description);
           if (data) {
@@ -647,10 +652,29 @@ export default function TrustAccountingPage() {
 
   const handleDeleteTransaction = async () => {
     if (!deleteTarget) return;
+
+    // Reconciliation rows are part of the month-end audit trail and must
+    // never be removed (By-Law 9). Block them outright.
+    if (deleteTarget.transactionType === 'reconciliation') {
+      setFeedback({ type: 'error', message: 'Reconciliation records cannot be deleted — they are part of the audit trail.' });
+      setShowDeleteConfirm(false);
+      setDeleteTarget(null);
+      return;
+    }
+
     setDeleting(true);
     try {
-      await BaseCrudService.delete('financialrecords', deleteTarget._id);
-      setFeedback({ type: 'success', message: 'Transaction deleted successfully.' });
+      // SOFT delete only. LSO By-Law 9 s. 28 requires trust accounting
+      // records to be retained for at least 7 years, so the row is flagged
+      // rather than removed. Every balance/ledger reader filters `isDeleted`.
+      const me = getCurrentUser() as any;
+      await BaseCrudService.update('financialrecords', {
+        _id: deleteTarget._id,
+        isDeleted: true,
+        deletedAt: new Date().toISOString(),
+        deletedBy: me?.email || me?.firstName || 'paralegal',
+      } as any);
+      setFeedback({ type: 'success', message: 'Transaction removed from the ledger (retained for audit).' });
       setShowDeleteConfirm(false);
       setDeleteTarget(null);
       await loadData();

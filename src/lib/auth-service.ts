@@ -319,10 +319,22 @@ export function getAuthToken(): string | null {
 }
 
 /**
- * Generate a simple token
+ * Generate a session token.
+ *
+ * Uses the Web Crypto CSPRNG (256 bits) rather than the old
+ * btoa(email:Date.now():Math.random()) scheme, which was predictable:
+ * an attacker who knew the email and approximate login time could
+ * brute-force a valid token offline. Falls back to a UUID-based token
+ * only if crypto.getRandomValues is unavailable.
  */
-function generateToken(email: string): string {
-  return btoa(`${email}:${Date.now()}:${Math.random()}`);
+function generateToken(_email?: string): string {
+  try {
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+  } catch {
+    return (crypto.randomUUID?.() || String(Date.now()) + Math.random()).replace(/-/g, '');
+  }
 }
 
 /**

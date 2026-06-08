@@ -80,6 +80,7 @@ export default function TrustTopUpPage() {
   const balanceByFile = useMemo(() => {
     const m: Record<string, number> = {};
     recs.forEach(r => {
+      if ((r as any).isDeleted) return;
       if (r.transactionType === 'deadline' || r.transactionType === 'conflict_search') return;
       if (!isTrustRec(r) || !r.fileId) return;
       const sign = TRUST_SIGN[r.transactionType || ''] ?? 0;

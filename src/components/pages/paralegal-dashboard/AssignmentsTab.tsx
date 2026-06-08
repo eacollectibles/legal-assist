@@ -163,7 +163,8 @@ export default function AssignmentsTab() {
       // Sync: also create a clientfiles entry for LSO By-Law 7.1 compliance page
       try {
         const year = new Date().getFullYear();
-        const fileNumber = `LA-${year}-${String(Date.now()).slice(-4)}`;
+        // Random suffix prevents same-millisecond file-number collisions.
+        const fileNumber = `LA-${year}-${String(Date.now()).slice(-4)}-${crypto.randomUUID().slice(0, 4).toUpperCase()}`;
         const clientFullName = `${newClient.firstName} ${newClient.lastName}`.trim();
         const paralegal = paralegals.find(p => p._id === currentParalegalId);
         const paralegalName = paralegal ? `${paralegal.firstName || ''} ${paralegal.lastName || ''}`.trim() : '';
@@ -287,14 +288,18 @@ export default function AssignmentsTab() {
     }
   };
 
-  const handleSelfAssign = async (clientId: string) => {
+  // Assign or reassign a client file to ANY paralegal — not just yourself.
+  // Updates the existing fileassignments row when there is one, otherwise
+  // creates it. `assignedBy` always records who performed the (re)assignment.
+  const handleAssignTo = async (clientId: string, paralegalId: string) => {
+    if (!clientId || !paralegalId) return;
     try {
       const existingAssignment = fileAssignments.find(a => a.clientId === clientId);
-      
+
       if (existingAssignment) {
         await BaseCrudService.update('fileassignments', {
           _id: existingAssignment._id,
-          paralegalId: currentParalegalId,
+          paralegalId,
           assignedDate: new Date().toISOString(),
           assignedBy: currentParalegalId
         } as any);
@@ -302,7 +307,7 @@ export default function AssignmentsTab() {
         await BaseCrudService.create('fileassignments', {
           _id: crypto.randomUUID(),
           clientId,
-          paralegalId: currentParalegalId,
+          paralegalId,
           assignedDate: new Date().toISOString(),
           assignedBy: currentParalegalId,
           fileStatus: 'Active'
@@ -310,9 +315,11 @@ export default function AssignmentsTab() {
       }
       refreshData();
     } catch (error) {
-      console.error('Error self-assigning:', error);
+      console.error('Error assigning file:', error);
     }
   };
+
+  const handleSelfAssign = (clientId: string) => handleAssignTo(clientId, currentParalegalId);
 
   const [deletingAssignmentId, setDeletingAssignmentId] = useState<string | null>(null);
 
@@ -796,6 +803,18 @@ export default function AssignmentsTab() {
                         <ClipboardList className="h-4 w-4" />
                         View Intake
                       </Button>
+                      {/* Assign to any paralegal directly from the unassigned list */}
+                      <select
+                        defaultValue=""
+                        onChange={(e) => { if (e.target.value) void handleAssignTo(client._id, e.target.value); }}
+                        className="text-sm border border-gray-300 rounded-md px-2 py-2 bg-white text-foreground/80"
+                        title="Assign this client to a paralegal"
+                      >
+                        <option value="">Assign to…</option>
+                        {paralegals.map((p) => (
+                          <option key={p._id} value={p._id}>{p.firstName} {p.lastName}</option>
+                        ))}
+                      </select>
                       <Button size="lg" onClick={() => handleSelfAssign(client._id)} className="gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6">
                         <User className="h-5 w-5" />
                         Assign to Me
@@ -876,7 +895,23 @@ export default function AssignmentsTab() {
                     <strong>Notes:</strong> {assignment.notes}
                   </p>
                 )}
-                <div className="pt-2 flex gap-2">
+                <div className="pt-2 flex gap-2 flex-wrap items-center">
+                  {/* Reassign the file to any other paralegal. The current
+                      assignee is excluded from the list; picking a name
+                      updates the fileassignments row and stamps assignedBy. */}
+                  <select
+                    defaultValue=""
+                    onChange={(e) => { if (e.target.value) void handleAssignTo(assignment.clientId || '', e.target.value); }}
+                    className="text-sm border border-gray-300 rounded-md px-2 py-1.5 bg-white text-foreground/80"
+                    title="Reassign this file to another paralegal"
+                  >
+                    <option value="">Reassign to…</option>
+                    {paralegals
+                      .filter((p) => p._id !== assignment.paralegalId)
+                      .map((p) => (
+                        <option key={p._id} value={p._id}>{p.firstName} {p.lastName}</option>
+                      ))}
+                  </select>
                   {assignment.paralegalId !== currentParalegalId && (
                     <Button
                       size="sm"

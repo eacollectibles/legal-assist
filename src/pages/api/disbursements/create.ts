@@ -258,6 +258,50 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
+  // 4b) Trust overdraft guard (LSO By-Law 9 s. 18 — a trust account must
+  //     never go negative). Before persisting any TRUST withdrawal, compute
+  //     the file's current trust balance from financialrecords and reject if
+  //     the disbursement would overdraw it. General-account disbursements are
+  //     not balance-checked here.
+  if (source === 'trust' && body.fileId) {
+    try {
+      const { BaseCrudService } = await import('@/integrations');
+      const fin: any = await BaseCrudService.getAllPages('financialrecords');
+      // Same sign convention as TrustAccountingPage / TrustTopUpPage.
+      const SIGN: Record<string, number> = {
+        trust_deposit: 1, billing: 1, payment: 1,
+        trust_withdrawal: -1, disbursement: -1, refund: -1, transfer: -1,
+      };
+      let balance = 0;
+      for (const r of (fin?.items || [])) {
+        if (r.fileId !== body.fileId) continue;
+        if (r.journalType && r.journalType !== 'trust') continue;
+        if (r.transactionType === 'deadline' || r.transactionType === 'conflict_search' || r.transactionType === 'tickler') continue;
+        if (r.isDeleted) continue;
+        balance += (SIGN[r.transactionType] ?? 0) * (Number(r.amount) || 0);
+      }
+      const round2 = (n: number) => Math.round(n * 100) / 100;
+      if (round2(body.amount) > round2(balance)) {
+        return json(
+          {
+            success: false,
+            error:
+              `Insufficient trust balance: this file holds $${round2(balance).toFixed(2)} in trust, ` +
+              `but the disbursement is $${round2(body.amount).toFixed(2)}. A trust account cannot go negative (By-Law 9 s. 18).`,
+          },
+          400
+        );
+      }
+    } catch (e: any) {
+      // If the balance cannot be confirmed, refuse rather than risk an
+      // overdraft — fail closed on a trust withdrawal.
+      return json(
+        { success: false, error: 'Could not verify the trust balance for this file; disbursement not recorded. Please retry.' },
+        503
+      );
+    }
+  }
+
   // 5) Persist.
   const transactionType = mapTransactionType(source, type);
   const recordId = crypto.randomUUID();

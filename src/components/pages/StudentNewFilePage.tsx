@@ -167,7 +167,10 @@ export default function StudentNewFilePage() {
       const clientProfileId = crypto.randomUUID();
       const fileId = crypto.randomUUID();
       const year = new Date().getFullYear();
-      const fileNumber = `LA-${year}-${String(Date.now()).slice(-4)}`;
+      // Append a short random suffix so two files created in the same
+      // millisecond cannot collide on the same number (the trailing 4
+      // timestamp digits alone gave only 0–9999 of entropy).
+      const fileNumber = `LA-${year}-${String(Date.now()).slice(-4)}-${crypto.randomUUID().slice(0, 4).toUpperCase()}`;
       const assignedParalegalId = user.supervisingParalegalId || '';
       const assignedParalegalName = supervisor?.displayName || '';
 

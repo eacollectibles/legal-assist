@@ -66,6 +66,7 @@ export default function TrustAlertsCard() {
   const low = useMemo(() => {
     const balance: Record<string, number> = {};
     recs.forEach(r => {
+      if ((r as any).isDeleted) return;
       if (NON_FINANCIAL.has(r.transactionType || '')) return;
       if (!isTrustRec(r) || !r.fileId) return;
       const sign = TRUST_SIGN[r.transactionType || ''] ?? 0;

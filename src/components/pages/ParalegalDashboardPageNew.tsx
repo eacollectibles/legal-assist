@@ -24,6 +24,7 @@ import TodaysInbox from '@/components/paralegal-dashboard/TodaysInbox';
 import DeadlineTracker from '@/components/paralegal-dashboard/DeadlineTracker';
 import LiveTimer from '@/components/paralegal-dashboard/LiveTimer';
 import TrustAlertsCard from '@/components/paralegal-dashboard/TrustAlertsCard';
+import GlobalSearch from '@/components/paralegal-dashboard/GlobalSearch';
 import {
   LayoutDashboard, CalendarDays, Users, MessageSquare,
   FileSignature, FolderOpen, Scale, FileText, Video,
@@ -238,6 +239,11 @@ function OverviewModule() {
           /api/analytics/summary every 30s; TodaysInbox aggregates
           last-24h activity from clientfiles / messages / bookings /
           financialrecords / generateddocuments. */}
+      {/* Global search — one box across clientfiles / clientprofiles /
+          clientdocuments / communicationlog. Collections load lazily on
+          first focus via getAllPages. */}
+      <GlobalSearch />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <AnalyticsWidget />
         <TodaysInbox />

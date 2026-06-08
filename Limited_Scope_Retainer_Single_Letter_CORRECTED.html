@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limited Scope Retainer Agreement – Legal Assist Paralegal Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#111827; --muted:#6B7280; --line:#E5E7EB; --paper:#FFFFFF; --bg:#F9FAFB; --sig:#1F2D5C; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; padding:24px; background:var(--bg); color:var(--ink); font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; }
+  .page{ max-width:920px; margin:0 auto; background:var(--paper); border:1px solid #000; padding:24px; }
+  header{ margin-bottom:14px; }
+  .toprow{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  h1{ font-size:19px; margin:0 0 4px; }
+  .subtitle{ font-size:13px; color:var(--muted); margin:0; }
+  .meta{ font-size:13px; min-width:260px; }
+  .meta strong{ font-weight:700; }
+  hr{ border:none; border-top:1px solid #000; margin:16px 0; }
+  h2{ font-size:13px; margin:16px 0 8px; text-transform:uppercase; letter-spacing:.06em; }
+  h3{ font-size:14px; margin:12px 0 6px; }
+  p{ margin:8px 0; }
+  ul{ margin:8px 0 8px 18px; }
+  li{ margin:6px 0; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }
+  .field{ border-bottom:1px solid #000; padding:4px 0; min-height:24px; }
+  .field span{ font-weight:700; }
+  .nature-box{ border:1px solid #000; padding:12px; margin:12px 0; background:#fff; }
+  .nature-box .nature-label{ font-weight:700; text-transform:uppercase; font-size:12px; letter-spacing:.06em; margin:0 0 6px; }
+  .checkline{ margin:6px 0; }
+  .checkline.inactive{ display:none; }
+  .note-box{ border:1px solid #000; padding:12px; margin:12px 0; background:#fff; }
+  .sig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px; }
+  .sig-card{ border:1px solid #000; padding:14px; min-height:150px; }
+  .sig-title{ font-weight:700; margin:0 0 10px; }
+  .sig-line{ border-bottom:1px solid #000; min-height:24px; margin-top:20px; }
+  .sig-label{ font-size:12px; color:var(--muted); margin-top:4px; }
+  .sig-typed{ font-family: 'Allura', 'Segoe Script', 'Brush Script MT', 'Lucida Handwriting', cursive; font-size:36px; color: var(--sig); padding:4px 0 0; line-height:1.1; }
+  .sig-date{ font-size:13px; color:var(--ink); margin-top:4px; }
+  footer{ margin-top:18px; font-size:12px; text-align:center; color:var(--muted); }
+  @media (max-width:720px){ .grid,.sig-grid{ grid-template-columns:1fr; } }
+  @media print{ body{ background:#fff; padding:0; } .page{ border:none; } }
+
+  /* ----------------------------------------------------------------
+     PAGE-BREAK CONTROL
+     Each whole section is wrapped in <div class="sec"> so a heading and
+     its body never split across a page. If a section will not fit in the
+     space left on the current page, the WHOLE section moves to the next
+     page (leaving white space at the bottom of the prior page — that is
+     the intended trade-off, not an error).
+
+     Both the modern (`break-inside`) and legacy (`page-break-inside`)
+     properties are set so the rule is honoured by Chrome/headless-Chrome
+     AND by older WebKit renderers such as wkhtmltopdf. Protected blocks
+     are plain block-level <div>s (never flex/grid), which those engines
+     paginate most reliably.
+
+     Section 5 (Fee Structure) is longer than one page, so it is NOT a
+     single block — instead its sub-blocks (Retainer Deposit,
+     Disbursements, Payment Terms) are each kept together on their own.
+  ---------------------------------------------------------------------- */
+  h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .sec, .keep-together, .nature-box, .note-box, .sig-grid, .grid, ul, ol {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .sec { margin: 0; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="toprow">
+        <div>
+          <h1>Legal Assist Paralegal Services</h1>
+          <p class="subtitle">Limited Scope Retainer Agreement &ndash; Single Correspondence (One Letter) Service</p>
+        </div>
+        <div class="meta">
+          <div><strong>Client:</strong> {CLIENT_NAME}</div>
+          <div><strong>File Ref:</strong> {MATTER_REFERENCE}</div>
+          <div><strong>Date:</strong> {DATE}</div>
+        </div>
+      </div>
+    </header>
+    <hr>
+
+    <div class="sec">
+      <h2>1. Parties</h2>
+      <div class="grid">
+        <div class="field"><span>Client Name:</span> {CLIENT_NAME}</div>
+        <div class="field"><span>Phone:</span> {CLIENT_PHONE}</div>
+        <div class="field"><span>Email:</span> {CLIENT_EMAIL}</div>
+        <div class="field"><span>File Ref:</span> {MATTER_REFERENCE}</div>
+        <div class="field"><span>Address:</span> {CLIENT_ADDRESS_LINE1}</div>
+        <div class="field"><span>Unit:</span> {CLIENT_ADDRESS_LINE2}</div>
+        <div class="field"><span>City:</span> {CLIENT_CITY}</div>
+        <div class="field"><span>Province:</span> {CLIENT_PROVINCE}</div>
+        <div class="field"><span>Postal Code:</span> {CLIENT_POSTAL_CODE}</div>
+        <div class="field"><span>Recipient / Other Party:</span> &nbsp;</div>
+      </div>
+      <p>
+        This Retainer Agreement is entered into between <strong>Legal Assist Paralegal Services</strong>
+        (the &ldquo;Paralegal&rdquo;) and <strong>{CLIENT_NAME}</strong> (the &ldquo;Client&rdquo;).
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>2. Retainer and Relationship</h2>
+      <p>
+        <strong>This is a LIMITED SCOPE retainer</strong> entered into in accordance with the Law Society of Ontario&rsquo;s Paralegal Rules of Conduct provisions governing limited scope representation. The Client retains the Paralegal to provide ONE legal-correspondence service only: drafting a single letter on the Client&rsquo;s behalf setting out the Client&rsquo;s position, concerns, and any demands, and sending that letter to the identified recipient described above. <strong>The Paralegal&rsquo;s engagement under this retainer ends when the letter has been sent.</strong> The Paralegal is not retained to monitor for, review, or respond to any reply, to engage in further negotiation, to advise on litigation strategy, or to represent the Client in any proceeding arising from the dispute. Any further work requires a separate written retainer.
+      </p>
+      <p>
+        No paralegal-client relationship exists until this agreement is signed and the required retainer payment
+        has been received.
+      </p>
+    </div>
+
+    <div class="sec">
+      <div class="nature-box">
+        <p class="nature-label">Nature of the Dispute and Concerns to be Raised in the Letter</p>
+        <p>{NATURE_OF_MATTER}</p>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>3. Scope of Services</h2>
+      <p>The Paralegal may provide services including, where applicable:</p>
+      <ul>
+        <li>One (1) initial consultation regarding the dispute and the proposed letter</li>
+        <li>Drafting one (1) letter setting out the Client&rsquo;s position, concerns, and any demands</li>
+        <li>Review of the draft with the Client and incorporation of up to one round of reasonable revisions</li>
+        <li>Sending the finalized letter via the agreed delivery method (email, ordinary mail, or courier)</li>
+        <li>Providing the Client with a copy of the sent letter and, where reasonably available, proof of delivery</li>
+      </ul>
+      <div class="note-box">
+        <strong>Important:</strong> This retainer applies only to the specific matter described above, unless expanded in writing.
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>4. Excluded Services</h2>
+      <p>This retainer does not include, unless separately agreed in writing:</p>
+      <ul>
+        <li><strong>Any work after the letter is sent</strong> — including reviewing, advising on, or responding to any reply received from the recipient</li>
+        <li>A second demand letter, follow-up correspondence, or any further communication with the recipient</li>
+        <li>Negotiation, mediation, or settlement discussions with the recipient or their counsel</li>
+        <li>Drafting pleadings or commencing any proceeding (Small Claims, LTB, HRTO, Superior Court, etc.)</li>
+        <li>Representation at any court, tribunal, mediation, settlement conference, or hearing</li>
+        <li>Legal opinion on the merits of the dispute beyond what is reasonably necessary to draft the letter</li>
+        <li>Strategy or analysis of likely response, settlement value, or expected outcome</li>
+        <li>Investigation of facts beyond what the Client provides</li>
+        <li>Advice relating to tax, immigration, criminal, family, or other unrelated legal issues</li>
+        <li>Any assurance that the letter will be answered, that the dispute will be resolved, or that any deadline or limitation period will be paused, tolled, or extended by the letter</li>
+        <li>Monitoring or calendaring of any limitation period, deadline, or response date — these remain solely the Client&rsquo;s responsibility</li>
+      </ul>
+    </div>
+
+    <!-- Section 5 is longer than one page, so it is NOT a single keep-together
+         block. Its heading + intro flow naturally, and each sub-block below
+         is individually protected from splitting. -->
+    <div class="keep-together">
+      <h2>5. Fee Structure</h2>
+      <p>The Client and Paralegal agree to the following billing model:</p>
+      {FEE_CHECKLINES}
+      <p>
+        The selected billing model for this matter is: <strong>{SELECTED_FEE_MODEL}</strong>
+      </p>
+    </div>
+
+    <div class="keep-together">
+      <h3>Retainer Deposit</h3>
+      <p>
+        The Client agrees to pay an initial retainer deposit of <strong>$ {RETAINER_AMOUNT} + HST</strong>.
+        No work will begin until payment has been received.
+      </p>
+      {PAYMENT_SECTION}
+      {PAYMENT_ARRANGEMENT_SECTION}
+    </div>
+
+    <div class="keep-together">
+      <h3>Disbursements</h3>
+      <p>
+        Disbursements are out-of-pocket expenses we incur on the Client&rsquo;s behalf and are billed in
+        addition to legal fees, at cost. Typical disbursements in this matter may include:
+      </p>
+      <ul>
+        <li>Courier or registered mail charges (where used in lieu of email)</li>
+        <li>Postage for ordinary mail delivery</li>
+        <li>Photocopies, printing, or scanning if hard-copy delivery is requested</li>
+      </ul>
+      <p>
+        The Paralegal will provide an estimate where reasonably possible and notify the Client in advance of any
+        disbursement exceeding $250. HST is charged on legal fees and on taxable disbursements (court filing fees
+        that are exempt from HST will not be charged HST).
+      </p>
+    </div>
+
+    <div class="keep-together">
+      <h3>Payment Terms</h3>
+      <ul>
+        <li>Invoices are due upon receipt unless otherwise stated in writing</li>
+        <li>Interest may be charged on overdue accounts at 2% per month (24% annually)</li>
+        <li>The Paralegal may suspend services or withdraw if accounts are not kept current, subject to professional obligations</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <h2>6. Contingency Fee Terms (Not Offered for This Service)</h2>
+      <p>
+        Contingency billing is not available for this limited-scope, single-letter service. Fees are payable as set
+        out in section 5 regardless of whether the recipient responds to the letter or the dispute is resolved.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>7. Client Responsibilities</h2>
+      <p>The Client agrees to:</p>
+      <ul>
+        <li>Provide complete, accurate, and truthful information</li>
+        <li>Promptly provide documents, records, and instructions when requested</li>
+        <li>Review draft materials and advise of any corrections promptly</li>
+        <li>Attend any scheduled consultation and remain reasonably available to review the draft letter</li>
+        <li>Keep contact information current</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <h2>8. Evidence Requirements</h2>
+      <p>
+        The Client acknowledges that the effectiveness of the letter often depends on the information and supporting
+        material provided, including documents, photographs, written communications, receipts, and records.
+        The Paralegal does not create evidence and cannot guarantee the letter will achieve the desired result where
+        the supporting information is incomplete, unavailable, inconsistent, or weak.
+      </p>
+      <p>
+        If the Client fails to provide sufficient information or instructions, the Paralegal may limit services,
+        recommend against proceeding, or withdraw where appropriate.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>9. Continuing Obligations Pending Resolution</h2>
+      <p>
+        The Client understands that retaining the Paralegal does not stay the matter, suspend any deadlines,
+        or eliminate the Client&rsquo;s underlying obligations. The Client remains responsible for complying
+        with all contractual, statutory, or court-imposed obligations until the matter is finally resolved.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>10. Urgent or Last-Minute Matters</h2>
+      <p>
+        If the Client retains the Paralegal close to a deadline or in other urgent circumstances,
+        preparation time may be limited and the content of the letter may be restricted accordingly.
+      </p>
+      <p>
+        The Paralegal is not responsible for prejudice caused by late retention, delayed disclosure,
+        or incomplete instructions received shortly before a deadline.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>11. Availability and Review</h2>
+      <p>
+        The Client agrees to remain reasonably available during the engagement to provide instructions, review the
+        draft letter, and approve the final version for sending. Delays in responding may delay completion of the
+        service, and the Paralegal is not responsible for prejudice caused by the Client&rsquo;s unavailability.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>12. Client Conduct</h2>
+      <p>The Client agrees not to:</p>
+      <ul>
+        <li>Harass, threaten, or intimidate the opposing party, their representative, or any witness</li>
+        <li>Send communications that undermine the purpose or effect of the letter</li>
+        <li>Misrepresent facts or conceal relevant information</li>
+        <li>Take unilateral steps that materially affect the matter without informing the Paralegal</li>
+      </ul>
+      <p>
+        Serious misconduct, dishonesty, abuse, or a breakdown in trust may result in withdrawal,
+        subject to professional obligations.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>13. Settlement</h2>
+      <p>
+        Negotiation and settlement discussions are outside the scope of this retainer (see section 4). If the
+        recipient responds with an offer or proposal, any decision to accept, reject, or respond rests solely with
+        the Client, and any assistance from the Paralegal would require a separate written retainer.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>14. No Guarantee of Outcome</h2>
+      <p>
+        The Client acknowledges that no result has been promised or guaranteed. Whether and how the recipient
+        responds to the letter depends on factors outside the Paralegal&rsquo;s control, including the law, the
+        supporting information, and the recipient&rsquo;s own position and conduct.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>15. Communication Policy</h2>
+      <ul>
+        <li>Normal response time is approximately 1 to 2 business days</li>
+        <li>Immediate responses are not guaranteed</li>
+        <li>Communication must remain respectful and reasonable in frequency</li>
+      </ul>
+      <p>
+        Excessive, abusive, or inappropriate communication may be grounds for withdrawal,
+        subject to professional obligations.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>16. File Abandonment</h2>
+      <p>
+        If the Client stops responding, fails to provide instructions, or does not supply requested materials within a reasonable time,
+        the Paralegal may close the file or withdraw. Fees and disbursements incurred to that point remain payable.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>17. Social Media and Public Statements</h2>
+      <p>
+        The Client is advised not to post online about the opposing party, the dispute, the evidence, or any related proceeding,
+        as social media and public statements may become relevant evidence.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>18. No Action Without Funding</h2>
+      <p>
+        The Paralegal is not required to begin or continue work unless required funds have been paid and the account remains current.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>19. Withdrawal</h2>
+      <p>The Paralegal may withdraw if:</p>
+      <ul>
+        <li>Fees remain unpaid</li>
+        <li>The Client fails to cooperate or provide proper instructions</li>
+        <li>The Client insists on a dishonest, improper, or unethical course of conduct</li>
+        <li>Professional obligations require withdrawal</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <h2>20. Limitation of Liability</h2>
+      <p>
+        To the extent permitted by law, the Paralegal is not responsible for delays, scheduling issues,
+        technology failures outside the Paralegal&rsquo;s control, third-party acts, or the ultimate decision of the recipient of the letter (no adjudicator is involved in this engagement).
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>21. Indemnity</h2>
+      <p>
+        The Client agrees to indemnify and hold the Paralegal harmless from claims, losses, or expenses arising from false,
+        misleading, incomplete, or concealed information provided by the Client, or from unauthorized actions taken by the Client.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>22. Electronic Communication and Signatures</h2>
+      <p>
+        The Client consents to communication by email and other electronic means, electronic document exchange,
+        digital storage of the file, and the use of electronic signatures. Electronic copies shall be treated as effective originals.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>23. Governing Law</h2>
+      <p>
+        This agreement shall be governed by the laws of the Province of Ontario.
+      </p>
+    </div>
+
+    <div class="sec">
+      <h2>24. Acknowledgment</h2>
+      <p>
+        By signing below, the Client confirms that they have read and understood this agreement,
+        had the opportunity to ask questions, and agree to its terms.
+      </p>
+    </div>
+
+    <hr>
+    <div class="sig-grid">
+      <div class="sig-card">
+        <div class="sig-title">Client Electronic Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Client Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Date</div>
+      </div>
+      <div class="sig-card">
+        <div class="sig-title">Paralegal Signature</div>
+        <div class="sig-typed">{PARALEGAL_SIGNATURE}</div>
+        <div class="sig-label">{PARALEGAL_NAME}, {PARALEGAL_CREDENTIAL}</div>
+        <div class="sig-label">LSO #{PARALEGAL_LSO}</div>
+        <div class="sig-date">{PARALEGAL_SIGN_DATE}</div>
+      </div>
+    </div>
+    <footer>
+      Legal Assist Paralegal Services &bull; Limited Scope Retainer Agreement (Single Letter Scope) &bull; <a href="https://www.legalassist.london">www.legalassist.london</a>
+    </footer>
+  </div>
+</body>
+</html>
