@@ -490,7 +490,7 @@ export default function ClientIntakePage() {
 
       // Auto-mark Section E (Conflict Check) in LSO compliance file
       try {
-        const { items: clientFiles } = await BaseCrudService.getAll<any>('clientfiles');
+        const { items: clientFiles } = await BaseCrudService.getAllPages<any>('clientfiles');
         const matchingFile = clientFiles?.find((f: any) => f.clientId === clientId);
         if (matchingFile) {
           // Calculate new compliance score

@@ -238,8 +238,8 @@ export default function TicklerTaskPage() {
     setLoading(true);
     try {
       const [finRes, fileRes] = await Promise.all([
-        BaseCrudService.getAll<any>('financialrecords'),
-        BaseCrudService.getAll<any>('clientfiles'),
+        BaseCrudService.getAllPages<any>('financialrecords'),
+        BaseCrudService.getAllPages<any>('clientfiles'),
       ]);
       const allFin = finRes.items || [];
       setTasks(allFin.filter((r: any) => r.transactionType === 'tickler'));

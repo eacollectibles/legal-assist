@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BaseCrudService } from '@/integrations';
+// F-J: paralegal students may generate documents/retainers here, but are
+// scoped away from existing clients/files (see loadData + handler guards).
+import { getCurrentUser } from '@/lib/auth-service';
+import { isStudent, filterVisibleFiles, buildStudentEditAuditEntry } from '@/lib/student-permissions';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackToDashboard from '@/components/BackToDashboard';
@@ -214,6 +218,12 @@ function classifyTemplateArea(template: DocumentTemplate): string {
 }
 
 export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean } = {}) {
+  // F-J student mode: students can generate NEW documents and retainers,
+  // but must not browse the firm's existing clients, files, or documents.
+  // Data is scoped in loadData; template management is guarded below.
+  const studentUser = getCurrentUser() as any;
+  const studentMode = !!studentUser && isStudent(studentUser);
+
   const [templates, setTemplates] = useState<DocumentTemplate[]>([]);
   const [generatedDocs, setGeneratedDocs] = useState<GeneratedDocument[]>([]);
   const [clients, setClients] = useState<ClientProfile[]>([]);
@@ -527,9 +537,27 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         await Promise.allSettled(cleanups);
       }
 
+      // F-J: scope what students can see. A student may use the workflow
+      // to generate NEW documents/retainers, but only sees (a) clients of
+      // files assigned to them and (b) documents they generated themselves.
+      let visibleDocs = docsRes.items;
+      let visibleClients = clientsRes.items;
+      if (studentMode && studentUser) {
+        const filesR: any = await BaseCrudService.getAllPages('clientfiles');
+        const myFiles = filterVisibleFiles(studentUser, filesR?.items || []);
+        const allowedClientIds = new Set(
+          (myFiles || []).map((f: any) => f.clientId).filter(Boolean)
+        );
+        visibleDocs = (docsRes.items || []).filter((d: any) =>
+          (d.generatedBy && studentUser.email && d.generatedBy === studentUser.email) ||
+          (d.clientId && allowedClientIds.has(d.clientId))
+        );
+        visibleClients = (clientsRes.items || []).filter((c: any) => allowedClientIds.has(c._id));
+      }
+
       setTemplates(cleanedTemplates);
-      setGeneratedDocs(docsRes.items);
-      setClients(clientsRes.items);
+      setGeneratedDocs(visibleDocs);
+      setClients(visibleClients);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -780,6 +808,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   };
 
   const handleCreateTemplate = async () => {
+    if (studentMode) { alert('Template management requires a supervising paralegal. You can still generate documents from existing templates.'); return; }
     try {
       const currentUser = localStorage.getItem('currentUser');
       const userEmail = currentUser ? JSON.parse(currentUser).email : EMAIL_PRIMARY;
@@ -828,6 +857,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   };
 
   const handleEditTemplate = (template: DocumentTemplate) => {
+    if (studentMode) { alert('Template management requires a supervising paralegal.'); return; }
     setIsEditMode(true);
     setEditingTemplateId(template._id);
     setNewTemplate({
@@ -841,6 +871,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   };
 
   const handleToggleTemplateStatus = async (templateId: string, currentStatus: boolean) => {
+    if (studentMode) { alert('Template management requires a supervising paralegal.'); return; }
     try {
       const updatedTemplates = templates.map(t => 
         t._id === templateId ? { ...t, isActive: !currentStatus } : t
@@ -858,6 +889,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   };
 
   const handleDeleteTemplate = async (templateId: string) => {
+    if (studentMode) { alert('Template management requires a supervising paralegal.'); return; }
     if (!confirm('Are you sure you want to delete this template? This action cannot be undone.')) {
       return;
     }
@@ -1599,6 +1631,20 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       // found". Previously this code did setGeneratedDocs() before the
       // create; that's the bug that produced phantom sign links.
       await BaseCrudService.create('generateddocuments', newDoc);
+
+      // F-J: audit student-generated documents so the supervising paralegal
+      // sees them in the Student activity review queue (/admin/students).
+      if (studentMode && studentUser) {
+        try {
+          await BaseCrudService.create('activitylogs', buildStudentEditAuditEntry({
+            studentUser,
+            fileId: '',
+            fileName: client ? `${(client as any).firstName || ''} ${(client as any).lastName || ''}`.trim() : '',
+            action: 'generated_document',
+            detail: docName,
+          }) as any);
+        } catch { /* the audit row must never block generation */ }
+      }
 
       // Only after the CMS write succeeds do we add to local state.
       // The in-memory copy keeps the full HTML so the user can

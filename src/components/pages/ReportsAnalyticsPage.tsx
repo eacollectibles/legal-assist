@@ -292,14 +292,14 @@ export default function ReportsAnalyticsPage() {
     setLoading(true);
     setError(null);
     try {
-      // NOTE: getAll defaults to a 50-row page — without an explicit limit the
-      // metrics silently compute from the first 50 records of each collection.
+      // Metrics must see the whole of each collection — getAllPages follows
+      // pagination to the end (plain getAll caps at 50/1000 rows).
       const [filesRes, finRes, bookRes, apptRes, assignRes] = await Promise.all([
-        BaseCrudService.getAll<any>('clientfiles', undefined, { limit: 1000 }),
-        BaseCrudService.getAll<any>('financialrecords', undefined, { limit: 1000 }),
-        BaseCrudService.getAll<any>('bookings', undefined, { limit: 1000 }),
-        BaseCrudService.getAll<any>('appointments', undefined, { limit: 1000 }),
-        BaseCrudService.getAll<any>('fileassignments', undefined, { limit: 1000 }),
+        BaseCrudService.getAllPages<any>('clientfiles'),
+        BaseCrudService.getAllPages<any>('financialrecords'),
+        BaseCrudService.getAllPages<any>('bookings'),
+        BaseCrudService.getAllPages<any>('appointments'),
+        BaseCrudService.getAllPages<any>('fileassignments'),
       ]);
       setClientFiles(filesRes.items || []);
       setFinancialRecords(finRes.items || []);

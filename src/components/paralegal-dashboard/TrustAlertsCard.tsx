@@ -51,8 +51,8 @@ export default function TrustAlertsCard() {
     (async () => {
       try {
         const [filesR, finR]: any = await Promise.all([
-          BaseCrudService.getAll('clientfiles', undefined, { limit: 1000 }),
-          BaseCrudService.getAll('financialrecords', undefined, { limit: 1000 }),
+          BaseCrudService.getAllPages('clientfiles'),
+          BaseCrudService.getAllPages('financialrecords'),
         ]);
         if (!alive) return;
         setFiles(filesR?.items || []);

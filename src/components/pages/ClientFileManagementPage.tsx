@@ -4682,7 +4682,7 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         'sectionFinancialRecords', 'sectionCommunicationLog', 'sectionCaseDocuments',
         'sectionFileClosing', 'sectionContingencyPlan'
       ];
-      const { items: clientFiles } = await BaseCrudService.getAll<any>('clientfiles');
+      const { items: clientFiles } = await BaseCrudService.getAllPages<any>('clientfiles');
       const matchingFile = clientFiles?.find((f: any) => f._id === file._id || f.clientId === file.clientId);
       if (matchingFile && !matchingFile.sectionRetainerAgreement) {
         const completedCount = sectionKeys.filter(k =>

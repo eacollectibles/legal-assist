@@ -12,7 +12,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, Folder, AlertCircle, LogOut, ShieldCheck, EyeOff, FilePlus2 } from 'lucide-react';
+import { Loader2, Folder, AlertCircle, LogOut, ShieldCheck, EyeOff, FilePlus2, FileText } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BaseCrudService } from '@/integrations';
@@ -118,6 +118,12 @@ export default function StudentDashboardPage() {
                 <FilePlus2 className="w-4 h-4 mr-2" /> Open new file
               </Button>
             )}
+            {/* F-J: document workflow in student mode — generate new
+                documents/retainers; existing clients and other files are
+                scoped out inside DocumentWorkflowPage. */}
+            <Button variant="outline" onClick={() => navigate('/admin/documents')}>
+              <FileText className="w-4 h-4 mr-2" /> Generate documents
+            </Button>
             <Button variant="outline" onClick={handleSignOut}>
               <LogOut className="w-4 h-4 mr-2" /> Sign out
             </Button>

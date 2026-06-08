@@ -246,10 +246,10 @@ export default function MonthEndReconciliationPage() {
     setLoadError('');
     try {
       const [finRes, payRes, filesRes] = await Promise.all([
-        BaseCrudService.getAll<FinancialRecord>('financialrecords', undefined, { limit: 5000 }),
+        BaseCrudService.getAllPages<FinancialRecord>('financialrecords'),
         // payments collection may not exist on older deployments — guard
-        BaseCrudService.getAll<PaymentRow>('payments', undefined, { limit: 5000 }).catch(() => ({ items: [] as PaymentRow[] })),
-        BaseCrudService.getAll<ClientFileRow>('clientfiles', undefined, { limit: 1000 }),
+        BaseCrudService.getAllPages<PaymentRow>('payments').catch(() => ({ items: [] as PaymentRow[] })),
+        BaseCrudService.getAllPages<ClientFileRow>('clientfiles'),
       ]);
       setAllRecords(finRes.items || []);
       setAllPayments(((payRes as any).items || []) as PaymentRow[]);

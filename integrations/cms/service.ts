@@ -159,6 +159,52 @@ export class BaseCrudService {
   }
 
   /**
+   * Retrieves EVERY item in a collection by following pagination until
+   * exhausted. Use this wherever correctness depends on seeing the whole
+   * collection (trust balances, metrics, conflict checks) — getAll() is
+   * hard-capped at 1,000 rows per call and silently truncates beyond that.
+   *
+   * Returns the same `{ items, totalCount }` shape consumers already
+   * destructure, so it is a drop-in replacement for getAll() at read-all
+   * call sites.
+   *
+   * @param opts.pageSize  rows per request (default 1000, the Wix max)
+   * @param opts.maxItems  safety ceiling to prevent unbounded loops on
+   *                       unexpectedly huge collections (default 25,000)
+   */
+  static async getAllPages<T extends WixDataItem>(
+    collectionId: string,
+    includeRefs?: { singleRef?: string[]; multiRef?: string[] } | string[],
+    opts?: { pageSize?: number; maxItems?: number }
+  ): Promise<{ items: T[]; totalCount: number; truncated: boolean }> {
+    const pageSize = Math.min(Math.max(opts?.pageSize ?? 1000, 1), 1000);
+    const maxItems = opts?.maxItems ?? 25000;
+    const all: T[] = [];
+    let skip = 0;
+    let totalCount = 0;
+    let truncated = false;
+
+    // Loop pages until the API reports no next page, or we hit the ceiling.
+    // Each page reuses getAll() so ref-include behaviour stays identical.
+    for (;;) {
+      const page = await this.getAll<T>(collectionId, includeRefs, { limit: pageSize, skip });
+      all.push(...page.items);
+      totalCount = page.totalCount || all.length;
+      if (!page.hasNext || page.items.length === 0) break;
+      if (all.length >= maxItems) {
+        truncated = true;
+        console.warn(
+          `getAllPages(${collectionId}): stopped at safety ceiling of ${maxItems} items (collection reports ${totalCount}).`
+        );
+        break;
+      }
+      skip += pageSize;
+    }
+
+    return { items: all, totalCount, truncated };
+  }
+
+  /**
    * Retrieves a single item by ID with full reference support
    * Use this for detail pages where you need multi-reference fields populated
    * @param includeRefs - { singleRef: [...], multiRef: [...] } or string[] for backward compatibility

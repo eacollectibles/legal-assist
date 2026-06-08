@@ -271,8 +271,8 @@ export default function TrustAccountingPage() {
     setLoadError(null);
     try {
       const [financialRes, filesRes] = await Promise.all([
-        BaseCrudService.getAll<FinancialRecord>('financialrecords', undefined, { limit: 5000 }),
-        BaseCrudService.getAll<ClientFile>('clientfiles', undefined, { limit: 1000 }),
+        BaseCrudService.getAllPages<FinancialRecord>('financialrecords'),
+        BaseCrudService.getAllPages<ClientFile>('clientfiles'),
       ]);
 
       setFinancialRecords(financialRes.items || []);

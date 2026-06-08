@@ -499,9 +499,11 @@ export default function DeadlineTrackerPage() {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
+      // Deadlines live in financialrecords — read the WHOLE collection or
+      // saved deadlines silently disappear from the tracker as it grows.
       const [finRes, fileRes] = await Promise.all([
-        BaseCrudService.getAll<any>('financialrecords'),
-        BaseCrudService.getAll<any>('clientfiles'),
+        BaseCrudService.getAllPages<any>('financialrecords'),
+        BaseCrudService.getAllPages<any>('clientfiles'),
       ]);
       const allFin = finRes.items || [];
       setDeadlines(allFin.filter(r => r.transactionType === 'deadline'));

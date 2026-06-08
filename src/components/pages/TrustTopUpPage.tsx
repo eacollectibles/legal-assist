@@ -66,8 +66,8 @@ export default function TrustTopUpPage() {
     setLoading(true);
     try {
       const [filesR, finR]: any = await Promise.all([
-        BaseCrudService.getAll('clientfiles', undefined, { limit: 1000 }),
-        BaseCrudService.getAll('financialrecords', undefined, { limit: 5000 }),
+        BaseCrudService.getAllPages('clientfiles'),
+        BaseCrudService.getAllPages('financialrecords'),
       ]);
       setFiles(filesR?.items || filesR || []);
       setRecs(finR?.items || finR || []);

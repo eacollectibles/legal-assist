@@ -241,11 +241,13 @@ export default function ConflictSearchPage() {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
+      // Conflict checks must see the ENTIRE database — getAllPages follows
+      // pagination so nothing is missed (getAll alone caps at 50/1000 rows).
       const [fileRes, profileRes, commRes, finRes] = await Promise.all([
-        BaseCrudService.getAll<any>('clientfiles'),
-        BaseCrudService.getAll<any>('clientprofiles'),
-        BaseCrudService.getAll<any>('communicationlog'),
-        BaseCrudService.getAll<any>('financialrecords'),
+        BaseCrudService.getAllPages<any>('clientfiles'),
+        BaseCrudService.getAllPages<any>('clientprofiles'),
+        BaseCrudService.getAllPages<any>('communicationlog'),
+        BaseCrudService.getAllPages<any>('financialrecords'),
       ]);
       setClientFiles(fileRes.items || []);
       setClientProfiles(profileRes.items || []);

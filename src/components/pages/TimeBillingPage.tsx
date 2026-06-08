@@ -242,8 +242,8 @@ export default function TimeBillingPage() {
     setError(null);
     try {
       const [financialRes, clientFileRes] = await Promise.all([
-        BaseCrudService.getAll<any>('financialrecords'),
-        BaseCrudService.getAll<any>('clientfiles'),
+        BaseCrudService.getAllPages<any>('financialrecords'),
+        BaseCrudService.getAllPages<any>('clientfiles'),
       ]);
 
       const records = financialRes.items || [];
