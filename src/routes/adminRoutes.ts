@@ -64,9 +64,14 @@ export const adminRoutes = [
   { path: '/admin/meeting-requests', element: gate(AdminMeetingRequestsPage) },
   { path: '/admin/grant-admin', element: gate(GrantAdminPage) },
 
-  // Client File Management (LSO By-Law 7.1 Compliance)
-  { path: '/admin/client-files', element: gate(ClientFileManagementPage) },
-  { path: '/admin/client-files/:fileId', element: gate(ClientFileManagementPage) },
+  // Client File Management (LSO By-Law 7.1 Compliance).
+  // staffGate (students allowed): the page scopes students to their own
+  // assigned files via filterVisibleFiles / canViewFile and redacts
+  // financials — a student who opens a file they aren't assigned to is
+  // bounced inside the page. Paralegal-only gating here would lock a
+  // student out of files she opened herself, so it must be staffGate.
+  { path: '/admin/client-files', element: staffGate(ClientFileManagementPage) },
+  { path: '/admin/client-files/:fileId', element: staffGate(ClientFileManagementPage) },
 
   // Document Management — students allowed; the page self-scopes (F-J)
   { path: '/admin/documents', element: staffGate(DocumentWorkflowPage) },

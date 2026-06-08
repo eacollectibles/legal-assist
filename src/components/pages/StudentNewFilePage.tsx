@@ -89,6 +89,15 @@ export default function StudentNewFilePage() {
     lastName: '',
     email: '',
     phone: '',
+    // Client mailing address — written to clientprofiles so the retainer
+    // generator can fill {CLIENT_ADDRESS_LINE1/2}, {CLIENT_CITY},
+    // {CLIENT_PROVINCE}, {CLIENT_POSTAL_CODE}. Field names match what
+    // DocumentWorkflowPage reads: streetAddress, unit, city, state, zipCode.
+    streetAddress: '',
+    unit: '',
+    city: '',
+    province: 'Ontario',
+    postalCode: '',
     matterType: 'traffic',
     description: '',
     opposingParties: '',
@@ -179,6 +188,12 @@ export default function StudentNewFilePage() {
         firstName,
         lastName,
         phoneNumber: draft.phone.trim(),
+        // Address fields the retainer generator reads (DocumentWorkflowPage).
+        streetAddress: draft.streetAddress.trim(),
+        unit: draft.unit.trim(),
+        city: draft.city.trim(),
+        state: draft.province.trim() || 'Ontario',
+        zipCode: draft.postalCode.trim(),
         caseType: draft.matterType,
         opposingPartyNames: opposingNames.join(', '),
         intakeCompleted: false,
@@ -451,6 +466,23 @@ export default function StudentNewFilePage() {
               <Field label="Email (for receipt)" type="email" value={draft.email} onChange={v => setDraft({ ...draft, email: v })} />
               <Field label="Phone" value={draft.phone} onChange={v => setDraft({ ...draft, phone: v })} />
             </div>
+
+            {/* Client mailing address — required for retainer generation. */}
+            <div className="pt-1">
+              <p className="text-xs font-semibold uppercase tracking-wide text-foreground/50 mb-2">Client mailing address (for the retainer)</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="sm:col-span-2">
+                  <Field label="Street address" value={draft.streetAddress} onChange={v => setDraft({ ...draft, streetAddress: v })} />
+                </div>
+                <Field label="Unit / Apt (optional)" value={draft.unit} onChange={v => setDraft({ ...draft, unit: v })} />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+                <Field label="City / Town" value={draft.city} onChange={v => setDraft({ ...draft, city: v })} />
+                <Field label="Province" value={draft.province} onChange={v => setDraft({ ...draft, province: v })} />
+                <Field label="Postal code" value={draft.postalCode} onChange={v => setDraft({ ...draft, postalCode: v })} />
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs font-medium text-foreground/70 mb-1">Matter type</label>
               <select

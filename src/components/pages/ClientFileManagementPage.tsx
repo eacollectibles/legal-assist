@@ -6,7 +6,7 @@
  * compliance scoring, and audit readiness.
  */
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackToDashboard from '@/components/BackToDashboard';
@@ -151,6 +151,7 @@ function generateFileNumber(existingFiles: ClientFile[]): string {
 export default function ClientFileManagementPage({ embedded }: { embedded?: boolean } = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const routeParams = useParams();
   const [files, setFiles] = useState<ClientFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<ClientFile | null>(null);
   const [activeSection, setActiveSection] = useState<string>('fileOpening');
@@ -781,14 +782,16 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
     }
   };
 
-  // Check if a specific file is requested via URL
+  // Check if a specific file is requested via URL — supports both the
+  // /admin/client-files/:fileId path form (used by the student dashboard
+  // and reassignment links) and the ?file= query form (legacy links).
   useEffect(() => {
-    const fileId = searchParams.get('file');
+    const fileId = routeParams.fileId || searchParams.get('file');
     if (fileId) {
       const file = files.find(f => f._id === fileId);
       if (file) setSelectedFile(file);
     }
-  }, [searchParams, files]);
+  }, [routeParams.fileId, searchParams, files]);
 
   const filteredFiles = files.filter(f => {
     const matchesSearch = searchQuery === '' ||
