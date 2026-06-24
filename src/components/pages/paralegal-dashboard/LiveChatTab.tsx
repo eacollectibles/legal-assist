@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { BaseCrudService } from '@/integrations';
 import { getDefaultParalegal } from '@/lib/paralegals';
+import { getCurrentUser } from '@/lib/auth-service';
+import { isStudent, buildStudentEditAuditEntry, type UserAccount } from '@/lib/student-permissions';
 import {
   type ChatConversation, type ChatMessage,
   listConversations, pollConversation, sendMessage,
@@ -52,7 +54,17 @@ const TYPING_WINDOW_MS = 3_000;
 type Status = 'online' | 'away' | 'offline';
 
 export default function LiveChatTab() {
-  const paralegal = getDefaultParalegal();
+  // Operator identity. Paralegals chat as themselves (default paralegal);
+  // a paralegal student chats under her own name, flagged "(Student)", and
+  // every send she makes is logged to the supervisor review queue.
+  const currentUser = getCurrentUser() as UserAccount | null;
+  const studentMode = !!currentUser && isStudent(currentUser);
+  const paralegal = studentMode && currentUser
+    ? {
+        id: currentUser._id,
+        displayName: `${[currentUser.firstName, currentUser.lastName].filter(Boolean).join(' ') || 'Student'} (Student)`,
+      }
+    : getDefaultParalegal();
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
   const [filter, setFilter] = useState<'open' | 'closed' | 'all'>('open');
   const [search, setSearch] = useState('');
@@ -214,8 +226,22 @@ export default function LiveChatTab() {
         threadScrollRef.current?.scrollTo({ top: threadScrollRef.current.scrollHeight });
       });
       void refreshList();
+
+      // F-J: a student's outbound client message is recorded in the
+      // supervising paralegal's review queue (non-fatal).
+      if (studentMode && currentUser) {
+        try {
+          await BaseCrudService.create('activitylogs', buildStudentEditAuditEntry({
+            studentUser: currentUser,
+            fileId: active?.fileId || '',
+            fileName: active?.clientName || active?.clientEmail || 'Live chat',
+            action: 'sent_chat_message',
+            detail: `To ${active?.clientName || active?.clientEmail || 'client'}: ${text}`.slice(0, 280),
+          }) as any);
+        } catch { /* audit is best-effort */ }
+      }
     }
-  }, [composer, selectedId, paralegal.id, paralegal.displayName, refreshList]);
+  }, [composer, selectedId, paralegal.id, paralegal.displayName, refreshList, studentMode, currentUser, active]);
 
   // ── Upload attachment ──
   const onPickFile = useCallback(() => fileInputRef.current?.click(), []);

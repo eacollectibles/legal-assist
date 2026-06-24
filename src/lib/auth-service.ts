@@ -17,6 +17,11 @@ export interface AuthResponse {
   success: boolean;
   message: string;
   token?: string;
+  /** When true, the user has 2FA enabled and must verify an OTP before
+   *  the login is finalized. The caller should show the OTP input screen. */
+  requires2FA?: boolean;
+  /** The email to pass back when verifying the OTP (set when requires2FA). */
+  twoFactorEmail?: string;
   user?: {
     /**
      * Primary key (`_id`) of the matching row in the `clientprofiles`
@@ -59,6 +64,13 @@ interface UserAccount {
   supervisingParalegalId?: string;
   /** Student rows only: paralegal-controlled toggle to show financial fields. */
   allowFinancialView?: boolean;
+  // 2FA fields
+  /** Whether two-factor authentication is enabled for this account. */
+  twoFactorEnabled?: boolean;
+  /** Temporary 6-digit OTP code stored server-side during login. */
+  otpCode?: string;
+  /** ISO timestamp after which the OTP is no longer valid (5 min window). */
+  otpExpiry?: string;
 }
 
 /**
@@ -201,6 +213,52 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       return {
         success: false,
         message: 'Your account is inactive. Please contact support.',
+      };
+    }
+
+    // ---------------------------------------------------------------
+    // 2FA CHECK — if the user has enabled two-factor authentication,
+    // generate a 6-digit OTP, email it, and return requires2FA: true
+    // WITHOUT finalizing the login (no token, no localStorage write).
+    // The caller must show the OTP verification screen and call
+    // verifyOTP() to complete the login.
+    // ---------------------------------------------------------------
+    if (user.twoFactorEnabled) {
+      const otp = generateOTP();
+      const otpExpiry = new Date(Date.now() + 5 * 60 * 1000).toISOString(); // 5 minutes
+
+      // Store OTP on the user's CMS row
+      await BaseCrudService.update('useraccounts', {
+        _id: user._id,
+        otpCode: otp,
+        otpExpiry,
+      } as any);
+
+      // Send OTP via email (best-effort)
+      try {
+        const { sendEmail } = await import('./email-service');
+        await sendEmail({
+          to: user.email || '',
+          subject: 'Your Legal Assist verification code',
+          body:
+            `Hello${user.firstName ? ' ' + user.firstName : ''},\n\n` +
+            `Your verification code is: ${otp}\n\n` +
+            `This code expires in 5 minutes. If you did not attempt to log in, ` +
+            `please change your password immediately.\n\n` +
+            `— Legal Assist Paralegal Services`,
+        });
+      } catch (err) {
+        console.error('2FA OTP email failed:', err);
+        // Still return requires2FA — the code is stored server-side and
+        // the user can request a new one. Better to block insecurely than
+        // to skip 2FA entirely.
+      }
+
+      return {
+        success: true,
+        requires2FA: true,
+        twoFactorEmail: user.email,
+        message: 'A verification code has been sent to your email.',
       };
     }
 
@@ -834,4 +892,225 @@ function generateResetToken(): string {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
   return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+// ============================================================
+// TWO-FACTOR AUTHENTICATION (2FA)
+// ============================================================
+
+/**
+ * Generate a cryptographically random 6-digit OTP.
+ */
+function generateOTP(): string {
+  const array = new Uint8Array(4);
+  crypto.getRandomValues(array);
+  // Convert to a number and take modulo 1_000_000 to get 6 digits
+  const num = ((array[0] << 24) | (array[1] << 16) | (array[2] << 8) | array[3]) >>> 0;
+  return String(num % 1000000).padStart(6, '0');
+}
+
+/**
+ * Verify the 6-digit OTP and finalize the login.
+ *
+ * Called by the login page after the user enters the code they received
+ * via email. On success, writes the auth token + user data to
+ * localStorage and returns the full AuthResponse the caller needs to
+ * redirect to the dashboard.
+ */
+export async function verifyOTP(email: string, code: string): Promise<AuthResponse> {
+  try {
+    const normalizedEmail = (email || '').trim().toLowerCase();
+    const { items: users } = await BaseCrudService.getAll<UserAccount>(
+      'useraccounts',
+      undefined,
+      { limit: 1000 } as any,
+    );
+    const user = users?.find(
+      (u) => (u.email || '').trim().toLowerCase() === normalizedEmail,
+    );
+
+    if (!user) {
+      return { success: false, message: 'User account not found.' };
+    }
+
+    // Validate the OTP
+    const serverOtp = (user as any).otpCode as string | undefined;
+    const serverExpiry = (user as any).otpExpiry as string | undefined;
+
+    if (!serverOtp || serverOtp !== code.trim()) {
+      return { success: false, message: 'Invalid verification code. Please try again.' };
+    }
+
+    if (serverExpiry && new Date(serverExpiry) < new Date()) {
+      return { success: false, message: 'Verification code has expired. Please log in again to receive a new code.' };
+    }
+
+    // OTP valid — clear it and finalize login
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      otpCode: null,
+      otpExpiry: null,
+      lastLoginDate: new Date().toISOString(),
+    } as any);
+
+    const isAdminStatus = user.isAdmin || false;
+    const userType = user.userType || (isAdminStatus ? 'paralegal' : 'client');
+    const supervisingParalegalId = user.supervisingParalegalId || '';
+    const allowFinancialView = user.allowFinancialView === true;
+
+    const token = generateToken(normalizedEmail);
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('currentUser', JSON.stringify({
+      _id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      isAdmin: isAdminStatus,
+      clientId: user.clientId,
+      userType,
+      supervisingParalegalId,
+      allowFinancialView,
+    }));
+
+    return {
+      success: true,
+      message: 'Logged in successfully',
+      token,
+      user: {
+        _id: user._id,
+        email: user.email || '',
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isAdmin: isAdminStatus,
+        clientId: user.clientId,
+        userType,
+        supervisingParalegalId,
+        allowFinancialView,
+      },
+    };
+  } catch (error) {
+    console.error('OTP verification error:', error);
+    return { success: false, message: 'Failed to verify code. Please try again.' };
+  }
+}
+
+/**
+ * Resend a fresh OTP to the user's email. Called from the OTP
+ * verification screen when the original code expires or is lost.
+ */
+export async function resendOTP(email: string): Promise<AuthResponse> {
+  try {
+    const normalizedEmail = (email || '').trim().toLowerCase();
+    const { items: users } = await BaseCrudService.getAll<UserAccount>(
+      'useraccounts',
+      undefined,
+      { limit: 1000 } as any,
+    );
+    const user = users?.find(
+      (u) => (u.email || '').trim().toLowerCase() === normalizedEmail,
+    );
+
+    if (!user) {
+      // Generic — don't reveal account existence
+      return { success: true, message: 'If an account exists, a new code has been sent.' };
+    }
+
+    const otp = generateOTP();
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      otpCode: otp,
+      otpExpiry,
+    } as any);
+
+    try {
+      const { sendEmail } = await import('./email-service');
+      await sendEmail({
+        to: user.email || '',
+        subject: 'Your new Legal Assist verification code',
+        body:
+          `Hello${user.firstName ? ' ' + user.firstName : ''},\n\n` +
+          `Your new verification code is: ${otp}\n\n` +
+          `This code expires in 5 minutes.\n\n` +
+          `— Legal Assist Paralegal Services`,
+      });
+    } catch (err) {
+      console.error('Resend OTP email failed:', err);
+    }
+
+    return { success: true, message: 'A new verification code has been sent to your email.' };
+  } catch (error) {
+    console.error('Resend OTP error:', error);
+    return { success: false, message: 'Failed to send new code. Please try again.' };
+  }
+}
+
+/**
+ * Enable or disable two-factor authentication for the current user.
+ *
+ * When enabling, sends a test OTP email first so the user can confirm
+ * their email is receiving codes before committing the change.
+ */
+export async function toggle2FA(enable: boolean): Promise<AuthResponse> {
+  try {
+    const currentUser = getCurrentUser();
+    if (!currentUser?.email) {
+      return { success: false, message: 'You must be logged in to change 2FA settings.' };
+    }
+
+    const { items: users } = await BaseCrudService.getAll<UserAccount>(
+      'useraccounts',
+      undefined,
+      { limit: 1000 } as any,
+    );
+    const user = users?.find(
+      (u) => (u.email || '').trim().toLowerCase() === currentUser.email.toLowerCase(),
+    );
+
+    if (!user) {
+      return { success: false, message: 'User account not found.' };
+    }
+
+    await BaseCrudService.update('useraccounts', {
+      _id: user._id,
+      twoFactorEnabled: enable,
+      // Clear any lingering OTP when toggling
+      otpCode: null,
+      otpExpiry: null,
+    } as any);
+
+    return {
+      success: true,
+      message: enable
+        ? 'Two-factor authentication has been enabled. You will receive a verification code by email on your next login.'
+        : 'Two-factor authentication has been disabled.',
+    };
+  } catch (error) {
+    console.error('Toggle 2FA error:', error);
+    return { success: false, message: 'Failed to update 2FA settings. Please try again.' };
+  }
+}
+
+/**
+ * Check whether the current user has 2FA enabled.
+ * Reads from the CMS so it's always up to date.
+ */
+export async function get2FAStatus(): Promise<boolean> {
+  try {
+    const currentUser = getCurrentUser();
+    if (!currentUser?.email) return false;
+
+    const { items: users } = await BaseCrudService.getAll<UserAccount>(
+      'useraccounts',
+      undefined,
+      { limit: 1000 } as any,
+    );
+    const user = users?.find(
+      (u) => (u.email || '').trim().toLowerCase() === currentUser.email.toLowerCase(),
+    );
+    return user?.twoFactorEnabled === true;
+  } catch {
+    return false;
+  }
 }

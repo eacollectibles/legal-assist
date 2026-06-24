@@ -170,6 +170,21 @@ allow-list model.
 - `assignedStudentIds` (Text) — comma-separated list of student
   useraccount `_id` values permitted to view + edit this file.
 
+**New `studentmessages` collection (add via Wix CMS)** — supervisor →
+student message feed shown on `/student-dashboard`. Composed from
+`/admin/students` (per-student message button).
+- `_id` (Text, primary)
+- `studentId` (Text) — recipient useraccount `_id`
+- `studentName` (Text)
+- `fromParalegalId` (Text) — sender's `paralegals.ts` id (best-effort)
+- `fromName` (Text) — sender display name (shown to the student)
+- `fromEmail` (Text)
+- `body` (Text)
+- `readByStudent` (Boolean) — student dashboard flips true on "Mark read"
+- `createdAt` (Date and Time)
+Permissions: paralegal/admin Insert; the student needs Read + Update
+(to set `readByStudent`). Without Update, the read flag silently no-ops.
+
 **Key files:**
 - `src/lib/student-permissions.ts` — auth helpers (`canViewFile`,
   `filterVisibleFiles`, `redactFinancialsFor`, `shouldRedactFinancials`).

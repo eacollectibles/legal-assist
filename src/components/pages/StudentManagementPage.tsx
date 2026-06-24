@@ -13,7 +13,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, UserPlus, Users, ShieldCheck, ShieldOff, RefreshCw, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Loader2, UserPlus, Users, ShieldCheck, ShieldOff, RefreshCw, AlertCircle, Eye, EyeOff, MessageSquare, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { BaseCrudService } from '@/integrations';
@@ -85,6 +85,44 @@ export default function StudentManagementPage() {
   };
 
   useEffect(() => { void loadAudit(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [auditAll]);
+
+  // Supervisor → student message composer
+  const [msgTarget, setMsgTarget] = useState<UserRow | null>(null);
+  const [msgBody, setMsgBody] = useState('');
+  const [msgSending, setMsgSending] = useState(false);
+  const [msgError, setMsgError] = useState('');
+  const [msgSent, setMsgSent] = useState('');
+
+  const sendMessage = async () => {
+    if (!msgTarget) return;
+    const body = msgBody.trim();
+    if (!body) { setMsgError('Write a message first.'); return; }
+    setMsgSending(true);
+    setMsgError('');
+    try {
+      const me: any = getCurrentUser();
+      const fromName = me ? `${me.firstName || ''} ${me.lastName || ''}`.trim() || me.email : 'Supervising paralegal';
+      await BaseCrudService.create('studentmessages', {
+        _id: crypto.randomUUID(),
+        studentId: msgTarget._id,
+        studentName: `${msgTarget.firstName || ''} ${msgTarget.lastName || ''}`.trim(),
+        fromParalegalId: me?.supervisingParalegalId || '',
+        fromName,
+        fromEmail: me?.email || '',
+        body,
+        readByStudent: false,
+        createdAt: new Date(),
+      });
+      setMsgSent(`Message sent to ${msgTarget.firstName || 'the student'}.`);
+      setMsgBody('');
+      setMsgTarget(null);
+      setTimeout(() => setMsgSent(''), 4000);
+    } catch (e: any) {
+      setMsgError(e?.message || 'Could not send the message.');
+    } finally {
+      setMsgSending(false);
+    }
+  };
 
   const paralegals = useMemo(() => getActiveParalegals(), []);
 
@@ -234,6 +272,13 @@ export default function StudentManagementPage() {
           </div>
         )}
 
+        {msgSent && (
+          <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
+            <Send className="w-5 h-5 text-emerald-600" />
+            <p className="text-sm text-emerald-800">{msgSent}</p>
+          </div>
+        )}
+
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-heading font-semibold text-foreground">
@@ -289,6 +334,14 @@ export default function StudentManagementPage() {
                         </div>
                       </div>
                       <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => { setMsgTarget(u); setMsgBody(''); setMsgError(''); }}
+                          title="Send a message to this student"
+                        >
+                          <MessageSquare className="w-3.5 h-3.5" />
+                        </Button>
                         <Button
                           variant="outline"
                           size="sm"
@@ -365,6 +418,41 @@ export default function StudentManagementPage() {
           )}
         </div>
       </div>
+
+      {/* Message composer modal */}
+      {msgTarget && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full">
+            <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-primary" />
+              <h3 className="font-heading font-semibold text-foreground">
+                Message {msgTarget.firstName} {msgTarget.lastName}
+              </h3>
+            </div>
+            <div className="p-5 space-y-3">
+              <p className="text-xs text-foreground/60">
+                This appears in the student's dashboard under "Messages from your supervisor."
+              </p>
+              <textarea
+                value={msgBody}
+                onChange={e => setMsgBody(e.target.value)}
+                rows={5}
+                autoFocus
+                placeholder="e.g. Please finish the client identification section on the Wahlah file before Friday."
+                className="w-full text-sm border border-gray-200 rounded px-3 py-2 min-h-[110px]"
+              />
+              {msgError && <div className="text-xs text-red-600">{msgError}</div>}
+            </div>
+            <div className="flex items-center justify-end gap-2 px-5 py-3 border-t border-gray-100 bg-gray-50 rounded-b-xl">
+              <Button variant="outline" size="sm" onClick={() => setMsgTarget(null)} disabled={msgSending}>Cancel</Button>
+              <Button size="sm" onClick={() => void sendMessage()} disabled={msgSending || !msgBody.trim()}>
+                {msgSending ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : <Send className="w-3.5 h-3.5 mr-1" />}
+                Send
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add-student modal */}
       {showAdd && (

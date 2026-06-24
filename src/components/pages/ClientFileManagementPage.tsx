@@ -27,7 +27,7 @@ import { sendDocumentEmail, EmailActivityLog } from '@/lib/email-service';
 import AssignedStudentsPicker from '@/components/paralegal/AssignedStudentsPicker';
 import {
   canViewFile, filterVisibleFiles, isStudent,
-  buildStudentEditAuditEntry, type UserAccount,
+  buildStudentEditAuditEntry, shouldRedactFinancials, type UserAccount,
 } from '@/lib/student-permissions';
 import { getCurrentUser } from '@/lib/auth-service';
 import EmailDocumentDialog, { EmailFormData } from '@/components/EmailDocumentDialog';
@@ -56,6 +56,14 @@ interface ClientFile {
   complianceScore: number;
   conflictStatus?: 'passed' | 'flagged';
   sections: ComplianceSections;
+  // F-J — carried through from the raw clientfiles row so student
+  // visibility filtering (filterVisibleFiles / canViewFile) works on
+  // this page. Dropping these is what made deep-linked student files
+  // fail to open.
+  assignedStudentIds?: string;
+  assignedParalegalId?: string;
+  openedByStudentId?: string;
+  status?: string;
 }
 
 interface ComplianceSections {
@@ -219,6 +227,11 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
         dateOpened: item.dateOpened || item._createdDate || new Date().toISOString(),
         complianceScore: item.complianceScore ?? calcComplianceScore(item.sections || DEFAULT_SECTIONS),
         conflictStatus: item.conflictStatus,
+        // F-J — preserve the fields student visibility filtering depends on.
+        assignedStudentIds: item.assignedStudentIds || '',
+        assignedParalegalId: item.assignedParalegalId || '',
+        openedByStudentId: item.openedByStudentId || '',
+        status: item.status || item.fileStatus || '',
         sections: {
           fileOpening: item.sections?.fileOpening ?? item.sectionFileOpening ?? false,
           clientIdentification: item.sections?.clientIdentification ?? item.sectionClientIdentification ?? false,
@@ -787,10 +800,64 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
   // and reassignment links) and the ?file= query form (legacy links).
   useEffect(() => {
     const fileId = routeParams.fileId || searchParams.get('file');
-    if (fileId) {
-      const file = files.find(f => f._id === fileId);
-      if (file) setSelectedFile(file);
-    }
+    if (!fileId) return;
+    if (selectedFile && selectedFile._id === fileId) return;
+
+    // Primary path: the file is already in the (visibility-filtered) list.
+    const file = files.find(f => f._id === fileId);
+    if (file) { setSelectedFile(file); return; }
+
+    // Fallback: the list may not contain it yet (still loading, or a
+    // student whose row arrived through a different path). Fetch the row
+    // directly and select it ONLY if the current user is allowed to see
+    // it — canViewFile enforces the same student/paralegal rule as the
+    // list filter, so this never widens access.
+    let alive = true;
+    (async () => {
+      try {
+        const raw = await BaseCrudService.getById<any>(CLIENT_FILES_COLLECTION, fileId);
+        if (!alive || !raw) return;
+        const viewer = getCurrentUser() as UserAccount | null;
+        if (!canViewFile(viewer, raw)) return;
+        const mappedOne: ClientFile = {
+          _id: raw._id,
+          fileNumber: raw.fileNumber || '',
+          clientId: raw.clientId || raw._id,
+          clientName: raw.clientName || '',
+          clientEmail: raw.clientEmail || '',
+          matterType: raw.matterType || '',
+          matterDescription: raw.matterDescription || '',
+          tribunal: raw.tribunal || '',
+          assignedParalegalName: raw.assignedParalegalName || '',
+          fileStatus: raw.fileStatus || 'active',
+          dateOpened: raw.dateOpened || raw._createdDate || new Date().toISOString(),
+          complianceScore: raw.complianceScore ?? calcComplianceScore(raw.sections || DEFAULT_SECTIONS),
+          conflictStatus: raw.conflictStatus,
+          assignedStudentIds: raw.assignedStudentIds || '',
+          assignedParalegalId: raw.assignedParalegalId || '',
+          openedByStudentId: raw.openedByStudentId || '',
+          status: raw.status || raw.fileStatus || '',
+          sections: {
+            fileOpening: raw.sections?.fileOpening ?? raw.sectionFileOpening ?? false,
+            clientIdentification: raw.sections?.clientIdentification ?? raw.sectionClientIdentification ?? false,
+            clientVerification: raw.sections?.clientVerification ?? raw.sectionClientVerification ?? false,
+            sourceOfFunds: raw.sections?.sourceOfFunds ?? raw.sectionSourceOfFunds ?? false,
+            conflictCheck: raw.sections?.conflictCheck ?? raw.sectionConflictCheck ?? false,
+            retainerAgreement: raw.sections?.retainerAgreement ?? raw.sectionRetainerAgreement ?? false,
+            financialRecords: raw.sections?.financialRecords ?? raw.sectionFinancialRecords ?? false,
+            communicationLog: raw.sections?.communicationLog ?? raw.sectionCommunicationLog ?? false,
+            caseDocuments: raw.sections?.caseDocuments ?? raw.sectionCaseDocuments ?? false,
+            fileClosing: raw.sections?.fileClosing ?? raw.sectionFileClosing ?? false,
+            contingencyPlan: raw.sections?.contingencyPlan ?? raw.sectionContingencyPlan ?? false,
+          },
+        };
+        setSelectedFile(mappedOne);
+        setFiles(prev => prev.some(f => f._id === mappedOne._id) ? prev : [mappedOne, ...prev]);
+      } catch (err) {
+        console.warn('Could not resolve deep-linked file:', err);
+      }
+    })();
+    return () => { alive = false; };
   }, [routeParams.fileId, searchParams, files]);
 
   const filteredFiles = files.filter(f => {
@@ -1904,14 +1971,16 @@ function EditableField({
   );
 }
 
-function EmptySection({ message, actionLabel, onAction }: { message: string; actionLabel: string; onAction?: () => void }) {
+function EmptySection({ message, actionLabel, onAction }: { message: string; actionLabel?: string; onAction?: () => void }) {
   return (
     <div className="text-center py-8">
       <AlertCircle className="w-10 h-10 text-amber-300 mx-auto mb-3" />
       <p className="text-sm text-gray-500 mb-4">{message}</p>
-      <Button variant="outline" size="sm" onClick={onAction}>
-        <Plus className="w-3.5 h-3.5 mr-1.5" /> {actionLabel}
-      </Button>
+      {actionLabel && (
+        <Button variant="outline" size="sm" onClick={onAction}>
+          <Plus className="w-3.5 h-3.5 mr-1.5" /> {actionLabel}
+        </Button>
+      )}
     </div>
   );
 }
@@ -6091,6 +6160,17 @@ const EMPTY_FINANCIAL_ENTRY: FinancialEntry = {
 };
 
 function SectionFinancialRecords({ file }: SectionEditProps) {
+  // F-J: students without allowFinancialView see the ledger structure but
+  // dollar amounts/balances are masked, and they cannot add/edit entries.
+  // The supervising paralegal flips allowFinancialView to unlock.
+  const financialViewer = getCurrentUser() as UserAccount | null;
+  const redactMoney = shouldRedactFinancials(financialViewer);
+  const money = (n: number | string) => {
+    if (redactMoney) return '••••';
+    const v = typeof n === 'number' ? n : parseFloat(n || '0');
+    return `$${(isNaN(v) ? 0 : v).toFixed(2)}`;
+  };
+
   const [records, setRecords] = useState<FinancialEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -6343,7 +6423,9 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
               </div>
               <div className="text-right">
                 <p className="text-2xl font-bold">
-                  {txType?.sign === '-' ? '−' : txType?.sign === '+' ? '+' : ''} CA${parseFloat(viewingRecord.amount).toFixed(2)}
+                  {redactMoney
+                    ? money(viewingRecord.amount)
+                    : `${txType?.sign === '-' ? '−' : txType?.sign === '+' ? '+' : ''} CA${parseFloat(viewingRecord.amount).toFixed(2)}`}
                 </p>
               </div>
             </div>
@@ -6448,32 +6530,44 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
         </div>
       )}
 
+      {/* F-J: financial-view-restricted student notice */}
+      {redactMoney && (
+        <div className="bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 flex items-center gap-2">
+          <Lock className="w-4 h-4 text-slate-500 flex-shrink-0" />
+          <p className="text-xs text-slate-600">
+            Financial amounts are hidden for your account. Ask your supervising
+            paralegal to enable financial view if you need to see trust balances
+            and transaction amounts.
+          </p>
+        </div>
+      )}
+
       {/* Financial Summary */}
       {records.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="p-3 bg-blue-50 rounded-lg text-center">
             <p className="text-xs text-blue-600 font-medium">Trust Balance</p>
-            <p className={`text-lg font-bold ${trustBalance >= 0 ? 'text-blue-800' : 'text-red-700'}`}>
-              ${trustBalance.toFixed(2)}
+            <p className={`text-lg font-bold ${redactMoney ? 'text-blue-800' : trustBalance >= 0 ? 'text-blue-800' : 'text-red-700'}`}>
+              {money(trustBalance)}
             </p>
           </div>
           <div className="p-3 bg-amber-50 rounded-lg text-center">
             <p className="text-xs text-amber-600 font-medium">Total Billed</p>
-            <p className="text-lg font-bold text-amber-800">${totalBilled.toFixed(2)}</p>
+            <p className="text-lg font-bold text-amber-800">{money(totalBilled)}</p>
           </div>
           <div className="p-3 bg-green-50 rounded-lg text-center">
             <p className="text-xs text-green-600 font-medium">Total Paid</p>
-            <p className="text-lg font-bold text-green-800">${totalPaid.toFixed(2)}</p>
+            <p className="text-lg font-bold text-green-800">{money(totalPaid)}</p>
           </div>
           <div className="p-3 bg-orange-50 rounded-lg text-center">
             <p className="text-xs text-orange-600 font-medium">Disbursements</p>
-            <p className="text-lg font-bold text-orange-800">${totalDisbursements.toFixed(2)}</p>
+            <p className="text-lg font-bold text-orange-800">{money(totalDisbursements)}</p>
           </div>
         </div>
       )}
 
-      {/* Add Transaction Button */}
-      {!showAddForm && !editingId && (
+      {/* Add Transaction Button — hidden for students without financial view */}
+      {!showAddForm && !editingId && !redactMoney && (
         <Button variant="outline" size="sm" onClick={() => { setShowAddForm(true); setSaveError(''); }} className="w-full">
           <Plus className="w-3.5 h-3.5 mr-1.5" /> Add Transaction
         </Button>
@@ -6503,7 +6597,9 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
                         {TRANSACTION_TYPES.find(t => t.value === record.transactionType)?.label || record.transactionType}
                       </span>
                       <span className="text-sm font-semibold text-gray-900">
-                        {TRANSACTION_TYPES.find(t => t.value === record.transactionType)?.sign === '-' ? '−' : ''} CA${parseFloat(record.amount).toFixed(2)}
+                        {redactMoney
+                          ? money(record.amount)
+                          : `${TRANSACTION_TYPES.find(t => t.value === record.transactionType)?.sign === '-' ? '−' : ''} CA${parseFloat(record.amount).toFixed(2)}`}
                       </span>
                       {record.paymentMethod && (
                         <span className="text-xs text-gray-400">{PAYMENT_METHODS.find(m => m.value === record.paymentMethod)?.label}</span>
@@ -6521,9 +6617,11 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
                     <Button variant="outline" size="sm" onClick={() => setViewingRecord(record)} title="View receipt">
                       <Eye className="w-3 h-3" />
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => { setEditingId(record._id || null); setEditEntry(record); setSaveError(''); }} title="Edit transaction">
-                      <Edit3 className="w-3 h-3" />
-                    </Button>
+                    {!redactMoney && (
+                      <Button variant="outline" size="sm" onClick={() => { setEditingId(record._id || null); setEditEntry(record); setSaveError(''); }} title="Edit transaction">
+                        <Edit3 className="w-3 h-3" />
+                      </Button>
+                    )}
                   </div>
                 </div>
               )}
@@ -6531,7 +6629,9 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
           ))}
         </div>
       ) : !showAddForm ? (
-        <EmptySection message="No financial records logged for this file yet." actionLabel="Add Transaction" onAction={() => setShowAddForm(true)} />
+        redactMoney
+          ? <EmptySection message="No financial records logged for this file yet." />
+          : <EmptySection message="No financial records logged for this file yet." actionLabel="Add Transaction" onAction={() => setShowAddForm(true)} />
       ) : null}
     </div>
   );
@@ -6686,6 +6786,23 @@ function SectionCommunicationLog({ file, editing, editValues, onChange }: Sectio
         });
       }
 
+      // F-J: if a paralegal student logged this, surface it in the
+      // supervising paralegal's review queue (non-fatal).
+      try {
+        const actor = getCurrentUser() as UserAccount | null;
+        if (actor && isStudent(actor)) {
+          await BaseCrudService.create('activitylogs', buildStudentEditAuditEntry({
+            studentUser: actor,
+            fileId: file._id,
+            fileName: `${file.fileNumber || ''} ${file.clientName || ''}`.trim(),
+            action: 'logged_communication',
+            detail: `${newEntry.communicationType || 'communication'} — ${newEntry.summary}`.slice(0, 280),
+          }) as any);
+        }
+      } catch (auditErr) {
+        console.warn('Could not write student comm-log audit (non-fatal):', auditErr);
+      }
+
       await loadEntries();
       setNewEntry(EMPTY_COMM_ENTRY);
       setShowAddForm(false);
@@ -6716,6 +6833,21 @@ function SectionCommunicationLog({ file, editing, editValues, onChange }: Sectio
         author: editEntry.author,
         direction: commType?.direction === 'both' ? 'both' : editEntry.direction,
       } as any);
+
+      try {
+        const actor = getCurrentUser() as UserAccount | null;
+        if (actor && isStudent(actor)) {
+          await BaseCrudService.create('activitylogs', buildStudentEditAuditEntry({
+            studentUser: actor,
+            fileId: file._id,
+            fileName: `${file.fileNumber || ''} ${file.clientName || ''}`.trim(),
+            action: 'edited_communication',
+            detail: `${editEntry.communicationType || 'communication'} — ${editEntry.summary}`.slice(0, 280),
+          }) as any);
+        }
+      } catch (auditErr) {
+        console.warn('Could not write student comm-log edit audit (non-fatal):', auditErr);
+      }
 
       setEditingId(null);
       await loadEntries();

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle, CheckCircle, Loader, Save, Lock, Shield, Briefcase, Building2, FileCheck, AlertTriangle, Mail, Phone, Calendar, MapPin, User, Heart, Clock } from 'lucide-react';
+import { AlertCircle, CheckCircle, Loader, Save, Lock, Shield, ShieldCheck, ShieldOff, Briefcase, Building2, FileCheck, AlertTriangle, Mail, Phone, Calendar, MapPin, User, Heart, Clock } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
-import { changePassword } from '@/lib/auth-service';
+import { changePassword, toggle2FA, get2FAStatus } from '@/lib/auth-service';
 import { ClientProfile, CurrentUser } from './types';
 
 interface ProfileTabProps {
@@ -36,6 +36,48 @@ export default function ProfileTab({
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+
+  // 2FA state
+  const [is2FAEnabled, setIs2FAEnabled] = useState(false);
+  const [is2FALoading, setIs2FALoading] = useState(true);
+  const [is2FAToggling, setIs2FAToggling] = useState(false);
+  const [twoFASuccess, setTwoFASuccess] = useState('');
+  const [twoFAError, setTwoFAError] = useState('');
+
+  // Load 2FA status on mount
+  useEffect(() => {
+    let mounted = true;
+    get2FAStatus().then((enabled) => {
+      if (mounted) {
+        setIs2FAEnabled(enabled);
+        setIs2FALoading(false);
+      }
+    });
+    return () => { mounted = false; };
+  }, []);
+
+  // Handle 2FA toggle
+  const handle2FAToggle = async () => {
+    const newState = !is2FAEnabled;
+    setIs2FAToggling(true);
+    setTwoFAError('');
+    setTwoFASuccess('');
+
+    try {
+      const result = await toggle2FA(newState);
+      if (result.success) {
+        setIs2FAEnabled(newState);
+        setTwoFASuccess(result.message);
+        setTimeout(() => setTwoFASuccess(''), 5000);
+      } else {
+        setTwoFAError(result.message);
+      }
+    } catch (err) {
+      setTwoFAError('Failed to update two-factor authentication settings.');
+    } finally {
+      setIs2FAToggling(false);
+    }
+  };
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -733,6 +775,93 @@ export default function ProfileTab({
                       </Button>
                     </div>
                   </form>
+                </div>
+              )}
+            </div>
+
+            {/* Two-Factor Authentication Section */}
+            <div className="pt-8 border-t border-gray-200">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <h3 className="font-heading text-xl font-bold text-foreground flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5" />
+                    Two-Factor Authentication
+                  </h3>
+                  <p className="font-paragraph text-sm text-foreground/70 mt-1">
+                    Add an extra layer of security to your account. When enabled, you will receive a 6-digit verification code by email each time you sign in.
+                  </p>
+                </div>
+
+                {is2FALoading ? (
+                  <div className="flex items-center gap-2 text-foreground/50 mt-1">
+                    <Loader className="w-4 h-4 animate-spin" />
+                    <span className="font-paragraph text-sm">Loading...</span>
+                  </div>
+                ) : (
+                  <Button
+                    onClick={handle2FAToggle}
+                    disabled={is2FAToggling}
+                    variant={is2FAEnabled ? 'outline' : 'default'}
+                    className={
+                      is2FAEnabled
+                        ? 'border-red-300 text-red-700 hover:bg-red-50 flex items-center gap-2 mt-1'
+                        : 'bg-primary hover:bg-primary/90 text-white flex items-center gap-2 mt-1'
+                    }
+                  >
+                    {is2FAToggling ? (
+                      <Loader className="w-4 h-4 animate-spin" />
+                    ) : is2FAEnabled ? (
+                      <ShieldOff className="w-4 h-4" />
+                    ) : (
+                      <ShieldCheck className="w-4 h-4" />
+                    )}
+                    {is2FAToggling
+                      ? 'Updating...'
+                      : is2FAEnabled
+                        ? 'Disable 2FA'
+                        : 'Enable 2FA'}
+                  </Button>
+                )}
+              </div>
+
+              {/* 2FA status indicator */}
+              {!is2FALoading && (
+                <div className={`mt-4 rounded-lg p-4 flex items-center gap-3 ${
+                  is2FAEnabled
+                    ? 'bg-green-50 border border-green-200'
+                    : 'bg-yellow-50 border border-yellow-200'
+                }`}>
+                  {is2FAEnabled ? (
+                    <>
+                      <ShieldCheck className="w-5 h-5 text-green-600 flex-shrink-0" />
+                      <p className="font-paragraph text-sm text-green-800">
+                        Two-factor authentication is <strong>enabled</strong>. A verification code will be sent to your email when you sign in.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+                      <p className="font-paragraph text-sm text-yellow-800">
+                        Two-factor authentication is <strong>not enabled</strong>. We recommend enabling it for additional account security.
+                      </p>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* 2FA success message */}
+              {twoFASuccess && (
+                <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <p className="font-paragraph text-green-800 text-sm">{twoFASuccess}</p>
+                </div>
+              )}
+
+              {/* 2FA error message */}
+              {twoFAError && (
+                <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-4 flex gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <p className="font-paragraph text-red-800 text-sm">{twoFAError}</p>
                 </div>
               )}
             </div>

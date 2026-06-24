@@ -16,6 +16,7 @@ const ParalegalDashboardPage = lazy(() => import('@/components/pages/ParalegalDa
 // F-J Paralegal student dashboard (scoped to assigned files only)
 const StudentDashboardPage = lazy(() => import('@/components/pages/StudentDashboardPage'));
 const StudentNewFilePage = lazy(() => import('@/components/pages/StudentNewFilePage'));
+const StudentLiveChatPage = lazy(() => import('@/components/pages/StudentLiveChatPage'));
 const StudentManagementPage = lazy(() => import('@/components/pages/StudentManagementPage'));
 const AdminUserManagementPage = lazy(() => import('@/components/pages/AdminUserManagementPage'));
 const AdminUserDetailPage = lazy(() => import('@/components/pages/AdminUserDetailPage'));
@@ -54,6 +55,9 @@ export const adminRoutes = [
   // F-J Paralegal student dashboard + supervisor's student-mgmt page
   { path: '/student-dashboard', element: staffGate(StudentDashboardPage) },
   { path: '/student/new-file', element: staffGate(StudentNewFilePage) },
+  // Live chat — students + paralegals. Students see all open chats and
+  // may reply; LiveChatTab logs each student send to the review queue.
+  { path: '/student-chat', element: staffGate(StudentLiveChatPage) },
   { path: '/admin/students', element: gate(StudentManagementPage) },
 
   // Admin User Management

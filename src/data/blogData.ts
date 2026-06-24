@@ -3497,6 +3497,130 @@ export const blogPosts: BlogPost[] = [
       { q: 'What is an anti-SLAPP motion and why does it matter?', a: 'Sections 137.1–137.5 of the Courts of Justice Act let a defendant in a defamation action move quickly to dismiss the claim if it arises out of expression on a matter of public interest. If the motion succeeds, the plaintiff usually pays the defendant’s full indemnity costs. This is the single biggest financial risk in starting a weak or politically charged defamation claim, and it makes a pre-suit assessment essential.' },
       { q: 'Do I have to prove the statement was false?', a: 'No. Once the plaintiff proves the words were defamatory, referred to the plaintiff, and were published to a third party, falsity and damage are presumed. The burden shifts to the defendant to prove the statement was substantially true (the defence of justification), or to make out another defence such as fair comment, qualified privilege, or responsible communication.' }
     ]
+  },
+  {
+    slug: 'property-encroachment-ontario-neighbour-dispute',
+    title: 'Your Neighbour Built Over the Property Line &mdash; What Can You Do in Ontario?',
+    description: 'A neighbour\'s fence, shed, driveway, or tree crosses onto your land. Ontario law gives you options ranging from a polite conversation to a Small Claims Court action for damages. A practical guide to property encroachment, the surveys that prove it, the Line Fences Act, and when you need a paralegal versus a lawyer.',
+    category: 'small-claims',
+    date: '2026-06-20',
+    readTime: '8 min',
+    content: `
+      <p>You get a survey done before putting up a new fence &mdash; and the plan shows that your neighbour&rsquo;s shed sits two feet inside your property line. Or their driveway was re-paved last summer and now it clearly extends onto your land. Maybe a retaining wall, garden bed, or deck has been quietly creeping over the boundary for years. This is a <strong>property encroachment</strong>, and it is one of the most common &mdash; and most emotionally charged &mdash; disputes between Ontario homeowners.</p>
+      <p>This guide explains what an encroachment actually is under Ontario law, how to prove one, and what remedies are available depending on the situation.</p>
+
+      <h2>What counts as an encroachment?</h2>
+      <p>An encroachment occurs when a structure, object, or improvement on one property physically extends across a boundary and onto a neighbouring property. Common examples include:</p>
+      <ul>
+        <li>Fences, hedges, or retaining walls built past the property line</li>
+        <li>Sheds, garages, or carports that extend onto the neighbour&rsquo;s lot</li>
+        <li>Driveways, walkways, or paved areas that cross the boundary</li>
+        <li>Decks, patios, or pools built partially on the adjacent property</li>
+        <li>Eavestroughs, roof overhangs, or downspouts that discharge onto neighbouring land</li>
+        <li>Tree roots or branches that cross the property line (these have their own rules)</li>
+      </ul>
+      <p>The legal theory is straightforward: an encroachment is a continuing trespass to land. The property owner whose land is being occupied has a right to ask for it to stop.</p>
+
+      <h2>Step 1: Get a survey</h2>
+      <p>You cannot win an encroachment dispute on assumptions. Before doing anything else, hire an <strong>Ontario Land Surveyor (OLS)</strong> licensed under the <em>Surveyors Act</em> to prepare a <strong>Surveyor&rsquo;s Real Property Report (SRPR)</strong>. This is a scaled drawing that shows the exact location of all structures, fences, and improvements relative to the legal property boundaries.</p>
+      <p>A survey typically costs $1,500 to $3,000 depending on lot size and complexity, and is essential for two reasons:</p>
+      <ul>
+        <li>It provides admissible evidence of the encroachment&rsquo;s existence and extent.</li>
+        <li>It often resolves the dispute without litigation &mdash; many neighbours genuinely did not realize they had crossed the line and will agree to correct it once the survey is in hand.</li>
+      </ul>
+      <p>If you already have a survey from when you purchased the property, check the date. Surveys older than a few years may not reflect recent construction or changes by the neighbour.</p>
+
+      <h2>Step 2: Talk to your neighbour</h2>
+      <p>With survey in hand, a direct conversation is almost always the best first step. Many encroachments are unintentional &mdash; a contractor eyeballed a fence line, a previous owner built a shed without checking, or both properties relied on the same wrong marker for decades.</p>
+      <p>If your neighbour is cooperative, several practical outcomes are possible:</p>
+      <ul>
+        <li><strong>Removal or relocation:</strong> the neighbour moves the fence, shed, or driveway back to the correct line at their own cost.</li>
+        <li><strong>Boundary agreement:</strong> if the encroachment is minor and neither party wants to move a permanent structure, the parties can sign a written boundary or encroachment agreement. This should be prepared or reviewed by a lawyer, registered on title, and will bind future owners.</li>
+        <li><strong>Purchase or lease:</strong> for significant encroachments (e.g., a corner of a garage), the encroaching neighbour may offer to purchase the strip of land or enter a long-term licence or lease.</li>
+      </ul>
+      <p>Whatever the outcome, <strong>put it in writing</strong>. A handshake deal about a property boundary is a future lawsuit waiting to happen, especially when one of the properties is sold.</p>
+
+      <h2>The Line Fences Act &mdash; fence disputes specifically</h2>
+      <p>If the dispute is specifically about a <strong>boundary fence</strong> &mdash; its location, construction, maintenance, or cost-sharing &mdash; Ontario&rsquo;s <em>Line Fences Act</em> provides a dedicated process before you go to court.</p>
+      <p>Either property owner can apply to the local municipality for the appointment of <strong>fence viewers</strong>. These are municipal officials (often a mix of councillors and staff) who attend the property, inspect the fence or proposed fence line, and issue a written award. The award can address:</p>
+      <ul>
+        <li>Where the fence should be located (on the surveyed boundary)</li>
+        <li>What type and height of fence is appropriate</li>
+        <li>How the cost of building or repairing the fence is to be divided between the two owners</li>
+      </ul>
+      <p>A fence viewers&rsquo; award is binding and enforceable. Either party can appeal it to the Superior Court of Justice within 30 days. This process is faster and cheaper than a lawsuit for pure fence disputes, though it does not award monetary damages for past trespass.</p>
+
+      <h2>Legal remedies when negotiation fails</h2>
+      <p>If the neighbour refuses to discuss the issue or denies the encroachment, formal legal action may be necessary. The available remedies depend on what you are asking for:</p>
+
+      <h3>Monetary damages &mdash; Small Claims Court (up to $50,000)</h3>
+      <p>If the encroachment has caused you a quantifiable financial loss, you can sue in <strong>Small Claims Court</strong>. Damages in encroachment cases can include:</p>
+      <ul>
+        <li>Diminished property value caused by the encroachment</li>
+        <li>The reasonable cost of removing the encroaching structure (if you had to pay for removal yourself)</li>
+        <li>Loss of use of the encroached-upon land (e.g., you could not build your own planned structure)</li>
+        <li>Compensation for the neighbour&rsquo;s occupation of your land (sometimes calculated as a reasonable licence fee)</li>
+      </ul>
+      <p>The Small Claims Court filing fee is $108 for infrequent claimants. A licensed paralegal can represent you throughout the process.</p>
+
+      <h3>Injunction &mdash; Superior Court only</h3>
+      <p>If what you really need is a <strong>court order forcing the neighbour to remove the encroachment</strong>, that requires an injunction. Small Claims Court cannot grant injunctions &mdash; only the Superior Court of Justice can. This means you will need a <strong>lawyer</strong> (not a paralegal) for the injunction itself, as paralegals cannot appear in Superior Court.</p>
+      <p>However, the practical reality is that many encroachment disputes settle before reaching trial. A well-drafted demand letter from a paralegal, backed by a survey, is often enough to motivate a neighbour to act. And if the monetary component of the claim fits within $50,000, a paralegal can handle the Small Claims portion while referring the injunction aspect to a lawyer if needed.</p>
+
+      <h3>Declaratory relief</h3>
+      <p>In some cases, the core dispute is not about damages or removal but about <strong>where the boundary actually is</strong>. Either party can apply to the Superior Court for a declaration of the legal boundary. Again, this requires a lawyer, but the survey evidence will form the backbone of the case.</p>
+
+      <h2>Can my neighbour claim ownership through long use?</h2>
+      <p>This is the question everyone asks: &ldquo;They&rsquo;ve had that fence in the wrong place for 20 years &mdash; do they now own the strip?&rdquo;</p>
+      <p>The answer depends on which land registration system your property is under:</p>
+      <ul>
+        <li><strong>Registry system:</strong> adverse possession (sometimes called &ldquo;squatter&rsquo;s rights&rdquo;) is still available. If someone has openly, continuously, and exclusively occupied a strip of your land for at least <strong>10 years</strong> without your permission, they may be able to claim possessory title under the <em>Real Property Limitations Act</em>.</li>
+        <li><strong>Land Titles system:</strong> adverse possession claims are <strong>largely eliminated</strong> under the <em>Land Titles Act</em>. Section 51 provides that no title to land registered under Land Titles can be acquired by adverse possession. Since most Ontario properties have been converted to Land Titles, this means the neighbour cannot simply &ldquo;claim&rdquo; the strip by long use in most cases.</li>
+      </ul>
+      <p>You can check which system applies to your property through a title search at the local Land Registry Office, or your real estate lawyer may have this information from your purchase.</p>
+
+      <h2>Trees and overhanging branches</h2>
+      <p>Tree encroachment follows slightly different rules. Under Ontario common law:</p>
+      <ul>
+        <li>You have the right to <strong>trim branches and roots</strong> that cross onto your property, up to the property line. You do not need the neighbour&rsquo;s permission, but you must not damage the health of the tree.</li>
+        <li>You <strong>cannot enter your neighbour&rsquo;s property</strong> to trim the tree, even if the branches originate from their side.</li>
+        <li>If a neighbour&rsquo;s tree causes <strong>actual damage</strong> to your property &mdash; roots cracking your foundation, branches damaging your roof &mdash; you may have a claim for damages in Small Claims Court.</li>
+        <li>Many municipalities also have <strong>tree by-laws</strong> that regulate or prohibit the removal of trees over a certain size, even on private property. Check your municipality&rsquo;s by-laws before cutting.</li>
+      </ul>
+
+      <h2>Practical tips before you escalate</h2>
+      <ul>
+        <li><strong>Document everything.</strong> Take dated photos of the encroachment from multiple angles. Note when it first appeared or when you first noticed it.</li>
+        <li><strong>Send a written notice.</strong> If the conversation doesn&rsquo;t work, send a polite but clear letter (or have your paralegal send one) putting the neighbour on notice that the encroachment exists and requesting a response within a reasonable time (usually 30 days).</li>
+        <li><strong>Check your title insurance.</strong> If you purchased title insurance when you bought your home, your policy may cover encroachment-related losses or legal costs. Review the policy or call your insurer before spending money on litigation.</li>
+        <li><strong>Consider municipal zoning and setback requirements.</strong> The encroaching structure may violate municipal zoning by-laws (e.g., minimum setbacks from property lines). A complaint to the municipal building or zoning department can sometimes achieve removal through by-law enforcement, without a lawsuit.</li>
+        <li><strong>Act promptly.</strong> Delay can weaken your position. Under the <em>Limitations Act, 2002</em>, most civil claims must be commenced within two years of discovering the issue. And under the Registry system, inaction for 10 years can create adverse possession rights.</li>
+      </ul>
+
+      <h2>When to call a paralegal vs. a lawyer</h2>
+      <p>A <strong>licensed paralegal</strong> can handle your encroachment dispute if:</p>
+      <ul>
+        <li>You are seeking monetary damages within the $50,000 Small Claims Court limit</li>
+        <li>You need a demand letter or negotiation support</li>
+        <li>The Line Fences Act process applies (fence viewers, municipal application)</li>
+      </ul>
+      <p>You will need a <strong>lawyer</strong> if:</p>
+      <ul>
+        <li>You need an injunction ordering the removal of the encroaching structure</li>
+        <li>The claim exceeds $50,000</li>
+        <li>The dispute involves a boundary declaration or title correction</li>
+        <li>Adverse possession is being claimed or defended</li>
+      </ul>
+      <p>In many cases, a paralegal can handle the initial stages &mdash; demand letter, negotiation, and Small Claims filing &mdash; and refer to a lawyer only if the matter escalates to Superior Court.</p>
+    `,
+    faqs: [
+      { q: 'How much does a property survey cost in Ontario?', a: 'A Surveyor\'s Real Property Report (SRPR) typically costs $1,500 to $3,000, depending on the size and complexity of the lot. Urban lots with straightforward boundaries tend to be at the lower end. The survey is the single most important piece of evidence in any encroachment dispute and is usually required before a court will act.' },
+      { q: 'Can my neighbour claim my land if their fence has been in the wrong spot for years?', a: 'It depends on your land registration system. Under the Land Titles system (which covers most Ontario properties), adverse possession is not available — your neighbour cannot gain title to the strip no matter how long the fence has been there. Under the older Registry system, a claim may be possible after 10 years of open, continuous, and exclusive possession without your permission.' },
+      { q: 'Can Small Claims Court order my neighbour to remove an encroachment?', a: 'No. Small Claims Court can award monetary damages (up to $50,000) but cannot grant injunctions. If you need a court order requiring removal, you must apply to the Superior Court of Justice, which requires a lawyer. However, a Small Claims judgment for ongoing damages often motivates the neighbour to remove the encroachment voluntarily.' },
+      { q: 'What is the Line Fences Act?', a: 'The Line Fences Act is an Ontario statute that provides a process for resolving disputes about boundary fences. Either property owner can apply to the municipality for the appointment of fence viewers, who inspect the properties and issue a binding award about the fence\'s location, type, and cost-sharing. It is faster and cheaper than court for pure fence disputes.' },
+      { q: 'Can I cut tree branches that hang over my property from my neighbour\'s tree?', a: 'Yes. Under Ontario common law, you have the right to trim branches and roots that cross onto your property, up to the property line. You must not damage the health of the tree, and you cannot enter your neighbour\'s property to do the trimming. Check your municipality\'s tree by-laws first, as some regulate removal of trees over a certain size.' },
+      { q: 'How long do I have to sue over an encroachment?', a: 'Under the Limitations Act, 2002, you generally have two years from the date you discovered (or ought to have discovered) the encroachment to commence a civil claim. However, encroachments are considered a continuing trespass, so the limitation period may reset with each day the encroachment continues. Acting promptly is still advisable to avoid complications.' }
+    ]
   }
 ];
 

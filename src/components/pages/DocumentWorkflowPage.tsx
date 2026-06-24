@@ -789,6 +789,24 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         console.warn('Could not stamp generateddocuments with sign info:', e);
       }
 
+      // F-J: students may send sign links without a supervisor gate, but
+      // the send is recorded in the supervising paralegal's review queue
+      // so there is after-the-fact visibility (LSO By-Law 4 s.2(2)).
+      if (studentMode && studentUser) {
+        try {
+          await BaseCrudService.create('activitylogs', buildStudentEditAuditEntry({
+            studentUser,
+            fileId: (signLinkDocument as any).fileId || '',
+            fileName: signLinkDocument.documentName || '',
+            action: 'sent_sign_link',
+            detail: `Sign link sent to ${signLinkRecipientName.trim()} <${signLinkRecipientEmail.trim()}> for "${signLinkDocument.documentName}".`.slice(0, 280),
+          }) as any);
+        } catch (auditErr) {
+          // eslint-disable-next-line no-console
+          console.warn('Could not write student sign-link audit (non-fatal):', auditErr);
+        }
+      }
+
       setSignLinkResult(link);
       // Best-effort copy to clipboard
       try {
