@@ -110,6 +110,12 @@ export default function Footer() {
               >
                 All Guides &rarr;
               </Link>
+              <Link
+                to="/pay"
+                className="font-paragraph text-sm sm:text-base text-secondary-foreground/80 hover:text-primary-foreground active:text-primary hover:bg-secondary-foreground/10 active:bg-secondary-foreground/15 transition-colors min-h-[48px] flex items-center px-3 -mx-3 rounded-lg focus-ring"
+              >
+                Make a Payment
+              </Link>
             </nav>
           </div>
 
