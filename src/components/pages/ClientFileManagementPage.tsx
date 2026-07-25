@@ -36,6 +36,8 @@ import { generateRetainerPDF } from '@/lib/retainer-pdf-generator';
 import { generateRetainerHTML } from '@/lib/retainer-html-generator';
 import { getActiveParalegals, DEFAULT_PARALEGAL_ID } from '@/lib/paralegals';
 import SectionDocuments from '@/components/SectionDocuments';
+import StatementOfAccountDialog from '@/components/paralegal/StatementOfAccountDialog';
+import EmailImportDialog from '@/components/paralegal/EmailImportDialog';
 
 // ============================================================
 // TYPES
@@ -54,7 +56,11 @@ interface ClientFile {
   fileStatus: string;
   dateOpened: string;
   complianceScore: number;
-  conflictStatus?: 'passed' | 'flagged';
+  // 'pending' included: a newly auto-created file has not had its conflict
+  // check run yet, and four call sites legitimately write it (here x2,
+  // AssignmentsTab, StudentNewFilePage). The type was simply too narrow — the
+  // data was always correct.
+  conflictStatus?: 'pending' | 'passed' | 'flagged';
   sections: ComplianceSections;
   // F-J — carried through from the raw clientfiles row so student
   // visibility filtering (filterVisibleFiles / canViewFile) works on
@@ -646,12 +652,14 @@ export default function ClientFileManagementPage({ embedded }: { embedded?: bool
           const seedLast = seedRestParts.join(' ').trim();
           const newProfileId = crypto.randomUUID();
           const seedPayload: any = {
-            _id: newProfileId,
             firstName: profileUpdates.firstName ?? seedFirst ?? '',
             lastName: profileUpdates.lastName ?? seedLast ?? '',
             email: selectedFile.clientEmail || '',
             ...profileUpdates,
-            // Make sure the right id wins even if profileUpdates spread above it
+            // `_id` is set AFTER the spread so the right id always wins, even if
+            // profileUpdates carries one. (There used to be a second `_id` above
+            // the spread as well — a duplicate key, ts(1117). It was dead: this
+            // one always overwrote it. Behaviour is unchanged.)
             _id: newProfileId,
           };
           try {
@@ -3351,7 +3359,7 @@ function SectionSourceOfFunds({ file, editing, editValues, onChange }: SectionEd
 
   const loadFundRecord = async () => {
     try {
-      const result = await BaseCrudService.getAll<any>('fundsource');
+      const result = await BaseCrudService.getAllPages<any>('fundsource');
       const match = result.items.find((r: any) => r.fileId === file._id);
       if (match) {
         setFundRecord(match);
@@ -4692,7 +4700,13 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
         clientId: file.clientId,
       });
 
-      if (activityLog.success) {
+      // BUG FIX: this tested `activityLog.success`, which does not exist on
+      // EmailActivityLog (the field is `deliveryStatus`). It was therefore
+      // always `undefined` -> falsy -> this entire block NEVER ran, so a
+      // retainer emailed to a client was never flipped from 'draft' to 'sent'
+      // and sat in draft forever. sendSignedDocumentEmail() throws on failure,
+      // so reaching this line already means the send succeeded.
+      if (activityLog.deliveryStatus === 'sent') {
         // Update retainer status to 'sent' if it was still in draft
         if (emailingAgreement.retainerStatus === 'draft' && emailingAgreement._id) {
           try {
@@ -5070,7 +5084,7 @@ function SectionRetainerAgreement({ file }: SectionEditProps) {
   const loadAgreements = async () => {
     setLoading(true);
     try {
-      const result = await BaseCrudService.getAll<any>('retaineragreements');
+      const result = await BaseCrudService.getAllPages<any>('retaineragreements');
       const fileAgreements = (result.items || [])
         .filter((r: any) => r.fileId === file._id)
         .map((r: any) => ({
@@ -6145,6 +6159,8 @@ interface FinancialEntry {
   invoiceNumber: string;
   recordedBy: string;
   receiptFileName: string;
+  /** JSON-encoded docket metadata (hours, rate, activityCode, status) for docket_entry rows */
+  trustAccountId?: string;
 }
 
 const EMPTY_FINANCIAL_ENTRY: FinancialEntry = {
@@ -6157,6 +6173,7 @@ const EMPTY_FINANCIAL_ENTRY: FinancialEntry = {
   invoiceNumber: '',
   recordedBy: '',
   receiptFileName: '',
+  trustAccountId: '',
 };
 
 function SectionFinancialRecords({ file }: SectionEditProps) {
@@ -6181,6 +6198,7 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
   const [viewingRecord, setViewingRecord] = useState<FinancialEntry | null>(null);
   const [saveError, setSaveError] = useState<string>('');
   const [saveSuccess, setSaveSuccess] = useState<string>('');
+  const [showSOADialog, setShowSOADialog] = useState(false);
 
   useEffect(() => {
     loadRecords();
@@ -6228,6 +6246,7 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
           invoiceNumber: r.invoiceNumber || '',
           recordedBy: r.recordedBy || '',
           receiptFileName: r.receiptFileName || '',
+          trustAccountId: r.trustAccountId || '',
         }))
         .sort((a: FinancialEntry, b: FinancialEntry) => (b.transactionDate || '').localeCompare(a.transactionDate || ''));
       setRecords(fileRecords);
@@ -6566,11 +6585,16 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
         </div>
       )}
 
-      {/* Add Transaction Button — hidden for students without financial view */}
+      {/* Add Transaction + Generate SOA — hidden for students without financial view */}
       {!showAddForm && !editingId && !redactMoney && (
-        <Button variant="outline" size="sm" onClick={() => { setShowAddForm(true); setSaveError(''); }} className="w-full">
-          <Plus className="w-3.5 h-3.5 mr-1.5" /> Add Transaction
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => { setShowAddForm(true); setSaveError(''); }} className="flex-1">
+            <Plus className="w-3.5 h-3.5 mr-1.5" /> Add Transaction
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => setShowSOADialog(true)} className="flex-1">
+            <FileText className="w-3.5 h-3.5 mr-1.5" /> Generate Statement of Account
+          </Button>
+        </div>
       )}
 
       {/* Add Form */}
@@ -6633,6 +6657,15 @@ function SectionFinancialRecords({ file }: SectionEditProps) {
           ? <EmptySection message="No financial records logged for this file yet." />
           : <EmptySection message="No financial records logged for this file yet." actionLabel="Add Transaction" onAction={() => setShowAddForm(true)} />
       ) : null}
+
+      {/* Statement of Account dialog */}
+      <StatementOfAccountDialog
+        open={showSOADialog}
+        onClose={() => setShowSOADialog(false)}
+        file={file as any}
+        records={records}
+        existingInvoiceCount={records.filter(r => r.transactionType === 'invoice' || r.invoiceNumber).length}
+      />
     </div>
   );
 }
@@ -6693,6 +6726,7 @@ function SectionCommunicationLog({ file, editing, editValues, onChange }: Sectio
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editEntry, setEditEntry] = useState<CommEntry>(EMPTY_COMM_ENTRY);
   const [filter, setFilter] = useState<string>('all');
+  const [showEmailImport, setShowEmailImport] = useState(false);
 
   useEffect(() => {
     loadEntries();
@@ -6982,9 +7016,14 @@ function SectionCommunicationLog({ file, editing, editValues, onChange }: Sectio
 
       {/* Filter & Add */}
       <div className="flex items-center gap-2 flex-wrap">
-        <Button variant="outline" size="sm" onClick={() => setShowAddForm(true)} className={showAddForm ? 'hidden' : ''}>
-          <Plus className="w-3.5 h-3.5 mr-1.5" /> Log Communication
-        </Button>
+        <div className={`flex gap-2 ${showAddForm ? 'hidden' : ''}`}>
+          <Button variant="outline" size="sm" onClick={() => setShowAddForm(true)}>
+            <Plus className="w-3.5 h-3.5 mr-1.5" /> Log Communication
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => setShowEmailImport(true)}>
+            <Upload className="w-3.5 h-3.5 mr-1.5" /> Import Emails
+          </Button>
+        </div>
         {entries.length > 0 && (
           <div className="flex gap-1 ml-auto">
             {[
@@ -7061,6 +7100,14 @@ function SectionCommunicationLog({ file, editing, editValues, onChange }: Sectio
       ) : !showAddForm ? (
         <EmptySection message="No communications logged for this file yet." actionLabel="Log Communication" onAction={() => setShowAddForm(true)} />
       ) : null}
+
+      {/* Email Import Dialog */}
+      <EmailImportDialog
+        open={showEmailImport}
+        onClose={() => setShowEmailImport(false)}
+        file={file as any}
+        onImportComplete={() => loadEntries()}
+      />
     </div>
   );
 }
@@ -7130,7 +7177,7 @@ function SectionCaseDocuments({ file }: SectionEditProps) {
   const loadDocuments = async () => {
     setLoading(true);
     try {
-      const allDocs = await BaseCrudService.getAll<any>('casedocuments');
+      const allDocs = await BaseCrudService.getAllPages<any>('casedocuments');
       const fileDocs = (allDocs.items || []).filter((d: any) => d.fileId === file._id);
       setDocuments(fileDocs);
     } catch (err) {
@@ -7743,7 +7790,7 @@ function SectionFileClosing({ file, editing, editValues, onChange }: SectionEdit
 
   const loadClosingRecord = async () => {
     try {
-      const result = await BaseCrudService.getAll<any>('fileclosing');
+      const result = await BaseCrudService.getAllPages<any>('fileclosing');
       const match = result.items.find((r: any) => r.fileId === file._id);
       if (match) {
         setClosingRecord(match);

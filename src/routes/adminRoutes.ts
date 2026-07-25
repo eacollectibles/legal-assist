@@ -47,6 +47,7 @@ const PayPage = lazy(() => import('@/components/pages/PayPage'));
 const LimitationCalculatorPage = lazy(() => import('@/components/pages/LimitationCalculatorPage'));
 const FileRetentionPage = lazy(() => import('@/components/pages/FileRetentionPage'));
 const TrustTopUpPage = lazy(() => import('@/components/pages/TrustTopUpPage'));
+const EmailImportPage = lazy(() => import('@/components/pages/EmailImportPage'));
 
 export const adminRoutes = [
   // Main Paralegal Dashboard
@@ -102,6 +103,7 @@ export const adminRoutes = [
   { path: '/admin/limitation-calculator', element: gate(LimitationCalculatorPage) },
   { path: '/admin/file-retention', element: gate(FileRetentionPage) },
   { path: '/admin/trust-top-up', element: gate(TrustTopUpPage) },
+  { path: '/admin/email-import', element: gate(EmailImportPage) },
 
   // Public-facing payment page (clients pay invoices via Square)
   { path: '/pay', element: PayPage },
