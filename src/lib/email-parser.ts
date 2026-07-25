@@ -233,6 +233,23 @@ function parseEmlString(raw: string, filename: string): ParsedEmail {
     bodyPlain = stripHtml(bodyHtml);
   }
 
+  // Last-resort: if bodyPlain still looks like base64, decode it.
+  // This catches cases where encoding headers were lost in forwarding.
+  if (bodyPlain && looksLikeBase64(bodyPlain)) {
+    try {
+      const decoded = decodeBase64Text(bodyPlain.replace(/\s/g, ''));
+      if (decoded && !looksLikeBase64(decoded)) {
+        bodyPlain = decoded;
+        // Also fix bodyText so both are consistent
+        if (!bodyText.trim() || bodyText.trim() === bodyPlain) {
+          bodyText = decoded;
+        }
+      }
+    } catch {
+      // keep original
+    }
+  }
+
   return {
     filename,
     messageId,
@@ -443,6 +460,23 @@ function parseMultipart(body: string, boundary: string): MultipartResult {
 
 // ─── Content Decoding ───────────────────────────────────────────────
 
+/**
+ * Quick check: does the string look like base64-encoded data?
+ * Returns true if, after stripping whitespace, it contains only valid
+ * base64 characters and is long enough to be plausible.
+ */
+function looksLikeBase64(str: string): boolean {
+  const stripped = str.replace(/\s/g, '');
+  if (stripped.length < 40) return false;
+  // Must be only base64 chars (A-Z, a-z, 0-9, +, /, =)
+  if (!/^[A-Za-z0-9+/=]+$/.test(stripped)) return false;
+  // Must not look like normal English text (base64 has very uniform char distribution)
+  const spaces = (str.match(/ /g) || []).length;
+  const ratio = spaces / str.length;
+  // Real text has ~15-20% spaces; base64 has near zero (only whitespace is line wraps)
+  return ratio < 0.05;
+}
+
 function decodeBody(body: string, encoding: string): string {
   const clean = body.replace(/\r\n$/, '');
 
@@ -454,8 +488,19 @@ function decodeBody(body: string, encoding: string): string {
     case '7bit':
     case '8bit':
     case 'binary':
-    default:
+    default: {
+      // Fallback: if encoding header was missing or wrong but the body
+      // is clearly base64, decode it anyway. Common with Apple Mail
+      // forwarded messages and some Outlook exports.
+      if (looksLikeBase64(clean)) {
+        const decoded = decodeBase64Text(clean.replace(/\s/g, ''));
+        // Only use the decoded version if it produced readable text
+        if (decoded && decoded !== clean.replace(/\s/g, '') && !looksLikeBase64(decoded)) {
+          return decoded;
+        }
+      }
       return clean;
+    }
   }
 }
 
