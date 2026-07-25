@@ -97,14 +97,34 @@ interface GeneratedDocument {
   documentUrl?: string;
   signedDocumentUrl?: string;
   uploadToken?: string; // CRITICAL FIX: Store upload token on document
+  /** The rendered HTML of the generated document. Exists on the
+   *  `generateddocuments` collection; this local view was missing it, which is
+   *  why `doc.documentContent` errored where the PDF is regenerated. */
+  documentContent?: string;
   _createdDate?: Date | string;
 }
 
+/**
+ * Local view of the `clientprofiles` collection.
+ *
+ * This used to declare only _id/firstName/lastName/phoneNumber, while the code
+ * below read streetAddress/city/state/zipCode off it — hence a pile of ts(2339)
+ * errors. The field names here are taken from the auto-generated CMS types in
+ * src/entities/index.ts, so they match the collection exactly.
+ *
+ * NOTE the unit field is `unitNumber`. There is no `unit` and no `addressLine2`
+ * anywhere in the CMS — see the ADDRESS_LINE2 substitution below.
+ */
 interface ClientProfile {
   _id: string;
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;
+  streetAddress?: string;
+  unitNumber?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
 }
 
 interface UserAccount {
@@ -281,6 +301,23 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
   const [cfkRentalUnitOverride, setCfkRentalUnitOverride] = useState('');
   const [cfkLandlordRep, setCfkLandlordRep] = useState('');
   const [cfkFeeOverride, setCfkFeeOverride] = useState('');
+  // ----------------------------------------------------------------
+  // Closing Letter — per-matter inputs (see Closing-Letter-Template.html).
+  // Only surfaced when the selected template is a Closing Letter (see
+  // `isClosingLetter` below). Feed the token-substitution block:
+  //   clMatterDesc     → {MATTER_DESCRIPTION} (blank ⇒ auto from file)
+  //   clOutcome        → {OUTCOME_SUMMARY}
+  //   clAccountStatus  → {ACCOUNT_STATUS}
+  //   clTrustStatus    → {TRUST_STATUS}
+  //   clPropertyReturn → {PROPERTY_RETURN}
+  // {DESTRUCTION_YEAR} is computed (current year + 7). Each field falls
+  // back to a safe default for a fully-paid, nothing-outstanding close.
+  // ----------------------------------------------------------------
+  const [clMatterDesc, setClMatterDesc] = useState('');
+  const [clOutcome, setClOutcome] = useState('');
+  const [clAccountStatus, setClAccountStatus] = useState('');
+  const [clTrustStatus, setClTrustStatus] = useState('');
+  const [clPropertyReturn, setClPropertyReturn] = useState('');
   // Generation in-flight + user-visible error so the click isn't silent.
   const [isGenerating, setIsGenerating] = useState(false);
   const [generateError, setGenerateError] = useState<string | null>(null);
@@ -986,7 +1023,12 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       documentContent = documentContent.replace(/\{CLIENT_PHONE\}/g, client.phoneNumber || '—');
       documentContent = documentContent.replace(/\{CLIENT_EMAIL\}/g, clientEmailAddress || '—');
       documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE1\}/g, client.streetAddress || '—');
-      documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE2\}/g, client.unit || client.addressLine2 || '—');
+      // BUG FIX: this read `client.unit || client.addressLine2`. NEITHER field
+      // exists in the `clientprofiles` collection — the real field is
+      // `unitNumber`. So {CLIENT_ADDRESS_LINE2} evaluated to '—' on EVERY
+      // generated document: the client's unit/apartment number has never
+      // printed on a retainer, even though it was captured at intake.
+      documentContent = documentContent.replace(/\{CLIENT_ADDRESS_LINE2\}/g, client.unitNumber || '—');
       documentContent = documentContent.replace(/\{CLIENT_CITY\}/g, client.city || '—');
       // Default to Ontario when the client's province field is empty.
       // Section B's EditableField shows "Ontario" as a visual default
@@ -1004,6 +1046,26 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         '—';
       documentContent = documentContent.replace(/\{MATTER_REFERENCE\}/g, matterRef);
       documentContent = documentContent.replace(/\{DATE\}/g, format(new Date(), 'MMMM d, yyyy'));
+
+      // ---- Closing Letter tokens (see Closing-Letter-Template.html) ----
+      // Narrative fields come from the "Closing letter details" inputs in
+      // the Generate dialog; each falls back to a safe default for a clean,
+      // fully-paid, nothing-outstanding close. {DESTRUCTION_YEAR} is the
+      // close year + 7 (LSO 7-year retention). These are harmless no-ops
+      // for any template that doesn't contain the tokens.
+      const clMatterDescription =
+        clMatterDesc.trim() ||
+        (client as any).matterType ||
+        (client as any).caseType ||
+        (client as any).serviceType ||
+        (client as any).matterDescription ||
+        matterRef;
+      documentContent = documentContent.replace(/\{MATTER_DESCRIPTION\}/g, clMatterDescription || '—');
+      documentContent = documentContent.replace(/\{DESTRUCTION_YEAR\}/g, String(new Date().getFullYear() + 7));
+      documentContent = documentContent.replace(/\{OUTCOME_SUMMARY\}/g, clOutcome.trim() || 'The work we were retained to perform on this matter has been completed.');
+      documentContent = documentContent.replace(/\{ACCOUNT_STATUS\}/g, clAccountStatus.trim() || 'Your account has been paid in full and nothing further is owing.');
+      documentContent = documentContent.replace(/\{TRUST_STATUS\}/g, clTrustStatus.trim() || 'No funds remain in trust for this matter.');
+      documentContent = documentContent.replace(/\{PROPERTY_RETURN\}/g, clPropertyReturn.trim() || 'We are not holding any original documents belonging to you.');
 
       // Retainer-specific field replacements.
       // In a flat-fee retainer the "Retainer Deposit Amount" IS the flat
@@ -1206,7 +1268,9 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       const natureValue = natureOfMatter.trim();
       const phoneValue = (client.phoneNumber || '').trim();
       const addressValue = (client.streetAddress || '').trim();
-      const unitValue = (client.unit || (client as any).addressLine2 || '').trim();
+      // Same fix as {CLIENT_ADDRESS_LINE2} above: the CMS field is `unitNumber`,
+      // not `unit`/`addressLine2` (neither of which exists).
+      const unitValue = (client.unitNumber || '').trim();
       // File reference: prefer the client's CL-XXXXXX id, then the
       // file number, then the document name the paralegal typed in
       // the dialog (mirrors the older {MATTER_REFERENCE} behaviour
@@ -1690,6 +1754,12 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
       setCfkRentalUnitOverride('');
       setCfkLandlordRep('');
       setCfkFeeOverride('');
+      // Reset Closing Letter per-matter inputs
+      setClMatterDesc('');
+      setClOutcome('');
+      setClAccountStatus('');
+      setClTrustStatus('');
+      setClPropertyReturn('');
       // Reset payment-arrangement fields for next doc
       setPaymentArrangementEnabled(false);
       setPaymentArrangementType('full');
@@ -2099,12 +2169,15 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
         clientId: emailingDocument.clientId,
       });
 
-      // Save comprehensive activity log to database with Graph headers
-      const logDescription = `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"${
-        activityLog.graphRequestId ? `. Graph Request ID: ${activityLog.graphRequestId}` : ''
-      }${activityLog.graphClientRequestId ? `. Client Request ID: ${activityLog.graphClientRequestId}` : ''}${
-        activityLog.graphAgsDiagnostic ? `. AGS Diagnostic: ${activityLog.graphAgsDiagnostic}` : ''
-      }`;
+      // Activity log for the send.
+      //
+      // The three `graph*` fields that used to be appended here
+      // (graphRequestId / graphClientRequestId / graphAgsDiagnostic) were
+      // diagnostics from the old Microsoft Graph mail path. Email now goes
+      // through EmailJS (src/lib/email-service.ts) and EmailActivityLog has no
+      // such fields — so those ternaries were always '' and just produced
+      // compiler errors. Removed rather than re-typed: they are dead.
+      const logDescription = `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"`;
       
       await BaseCrudService.create('activitylogs', {
         _id: activityLog._id,
@@ -2337,6 +2410,12 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                   setCfkRentalUnitOverride('');
                   setCfkLandlordRep('');
                   setCfkFeeOverride('');
+                  // Reset Closing Letter per-matter inputs
+                  setClMatterDesc('');
+                  setClOutcome('');
+                  setClAccountStatus('');
+                  setClTrustStatus('');
+                  setClPropertyReturn('');
                 }
               }}>
                 <DialogTrigger asChild>
@@ -2750,6 +2829,75 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                       );
                     })()}
 
+                    {/* Closing Letter — per-matter inputs, only shown when a
+                        Closing Letter template is selected. Blank fields fall
+                        back to safe defaults in the token-substitution block. */}
+                    {(() => {
+                      const selectedTemplate = templates.find(t => t._id === selectedTemplateId);
+                      const nm = (selectedTemplate?.templateName || '').toLowerCase();
+                      const tt = (selectedTemplate?.templateType || '').toLowerCase();
+                      const isClosingLetter =
+                        tt.includes('closing') ||
+                        nm.includes('closing letter') ||
+                        nm.includes('closure');
+                      if (!isClosingLetter) return null;
+                      return (
+                        <div className="space-y-3 p-4 border-2 border-sky-200 bg-sky-50 rounded-lg">
+                          <p className="text-sm font-semibold text-sky-900">Closing letter details</p>
+                          <p className="text-xs text-sky-800">
+                            Leave any field blank to use a safe default for a fully-paid,
+                            nothing-outstanding close. The file-retention year auto-fills
+                            to this year + 7.
+                          </p>
+                          <div className="space-y-1">
+                            <Label htmlFor="clMatterDesc">Matter description</Label>
+                            <Input
+                              id="clMatterDesc"
+                              value={clMatterDesc}
+                              onChange={(e) => setClMatterDesc(e.target.value)}
+                              placeholder="Blank = auto from the file (e.g. LTB T2 application)"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="clOutcome">Outcome summary</Label>
+                            <Input
+                              id="clOutcome"
+                              value={clOutcome}
+                              onChange={(e) => setClOutcome(e.target.value)}
+                              placeholder="How the matter concluded (order, settlement, charge resolved, work complete)"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="clAccountStatus">Account status</Label>
+                            <Input
+                              id="clAccountStatus"
+                              value={clAccountStatus}
+                              onChange={(e) => setClAccountStatus(e.target.value)}
+                              placeholder="Default: paid in full, nothing owing"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="clTrustStatus">Trust status</Label>
+                            <Input
+                              id="clTrustStatus"
+                              value={clTrustStatus}
+                              onChange={(e) => setClTrustStatus(e.target.value)}
+                              placeholder="Default: no funds remain in trust"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="clPropertyReturn">Documents / property</Label>
+                            <Input
+                              id="clPropertyReturn"
+                              value={clPropertyReturn}
+                              onChange={(e) => setClPropertyReturn(e.target.value)}
+                              placeholder="Default: no original documents held"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
+
                     {/* Nature of the Charge / Matter — fillable, drives
                         the {NATURE_OF_MATTER} placeholder in any
                         retainer template that has it. */}
@@ -3092,7 +3240,7 @@ export default function DocumentWorkflowPage({ embedded }: { embedded?: boolean 
                                 {doc.status?.toUpperCase()}
                               </span>
                             </Badge>
-                            {doc.requiresSignature && (
+                            {doc.requiresSignature && doc.status !== 'signed' && (
                               <Badge variant="outline">Signature Required</Badge>
                             )}
                           </div>

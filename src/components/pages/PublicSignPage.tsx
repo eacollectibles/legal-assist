@@ -30,7 +30,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AlertCircle, CheckCircle, FileText, Loader2 } from 'lucide-react';
+import { AlertCircle, CheckCircle, Download, FileText, Loader2 } from 'lucide-react';
 import DocumentSignature, { SignatureData } from '@/components/DocumentSignature';
 import {
   uploadToWixMedia,
@@ -74,6 +74,9 @@ export default function PublicSignPage() {
   const [signerName, setSignerName] = useState('');
   const [signerEmail, setSignerEmail] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  // Stores the final signed PDF URL after successful submission so
+  // the client can download a copy from the "done" screen.
+  const [signedPdfUrl, setSignedPdfUrl] = useState<string | null>(null);
   // Section-by-section initialing. The document template can mark up
   // acknowledgment items with `data-initial-target="<id>"` on the .box
   // element; we extract those targets + the adjacent .txt content here
@@ -534,6 +537,10 @@ export default function PublicSignPage() {
         });
       } catch { /* non-fatal */ }
 
+      // Persist the signed PDF URL so the "done" screen can offer a
+      // download link. Prefer the Wix Media URL; fall back to the
+      // inline data URL.
+      setSignedPdfUrl(finalUrl);
       setPhase('done');
     } catch (err: any) {
       // Log the full error object including stack so the paralegal can
@@ -630,6 +637,32 @@ export default function PublicSignPage() {
                 a copy has been forwarded to our office. You will receive a
                 confirmation email shortly.
               </p>
+              {signedPdfUrl && (
+                <div className="flex gap-3 pt-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      // For Wix Media URLs, open in a new tab (download
+                      // via the CDN). For data: URLs, create an anchor
+                      // element and trigger the download.
+                      if (signedPdfUrl.startsWith('data:')) {
+                        const a = document.createElement('a');
+                        a.href = signedPdfUrl;
+                        a.download = `Signed_${(doc?.documentName || 'Document').replace(/[^A-Za-z0-9_-]+/g, '_')}.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                      } else {
+                        window.open(signedPdfUrl, '_blank', 'noopener');
+                      }
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Signed Copy
+                  </Button>
+                </div>
+              )}
               <p className="font-paragraph text-sm text-foreground/60">
                 You may now close this window.
               </p>
