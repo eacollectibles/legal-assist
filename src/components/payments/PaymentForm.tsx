@@ -109,18 +109,24 @@ export default function PaymentForm({
     return idempotencyKeyRef.current;
   }
 
+  // ── Credit card processing fee (2.6%) ──
+  const CC_FEE_RATE = 0.026;
+
   function dollarsToCents(s: string): number | null {
     const n = Number(String(s).replace(/[^\d.]/g, ''));
     if (!Number.isFinite(n) || n <= 0) return null;
     return Math.round(n * 100);
   }
 
+  const baseAmountCents = dollarsToCents(amountDollars);
+  const processingFeeCents = baseAmountCents ? Math.round(baseAmountCents * CC_FEE_RATE) : 0;
+  const totalCents = baseAmountCents ? baseAmountCents + processingFeeCents : 0;
+
   async function handleSubmit(ev: React.FormEvent) {
     ev.preventDefault();
     setError('');
 
-    const amountCents = dollarsToCents(amountDollars);
-    if (!amountCents) {
+    if (!baseAmountCents) {
       setError('Enter a valid amount greater than $0.');
       return;
     }
@@ -128,6 +134,9 @@ export default function PaymentForm({
       setError('Please enter the client / cardholder name.');
       return;
     }
+
+    // Charge the total (base + 2.6% processing fee)
+    const amountCents = totalCents;
 
     setSubmitting(true);
     try {
@@ -179,7 +188,10 @@ export default function PaymentForm({
           clientId: defaults?.clientId,
           clientName: clientName.trim(),
           buyerEmail: buyerEmail.trim() || undefined,
-          note: note.trim() || undefined,
+          note: [
+            note.trim(),
+            `[Subtotal: $${(baseAmountCents! / 100).toFixed(2)} + CC processing fee: $${(processingFeeCents / 100).toFixed(2)}]`,
+          ].filter(Boolean).join(' '),
           // Per-Pay-click idempotency key. Stable across retries of the
           // same click, so a network blip can't double-charge.
           idempotencyKey: ensureIdempotencyKey(),
@@ -400,6 +412,24 @@ export default function PaymentForm({
         <SquareCardForm handleRef={cardHandleRef} />
       </div>
 
+      {/* Fee breakdown — visible once an amount is entered */}
+      {baseAmountCents !== null && baseAmountCents > 0 && (
+        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-1.5 text-sm font-paragraph">
+          <div className="flex justify-between text-foreground/70">
+            <span>Subtotal</span>
+            <span>${(baseAmountCents / 100).toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-foreground/70">
+            <span>Credit Card Processing Fee (2.6%)</span>
+            <span>${(processingFeeCents / 100).toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between font-semibold text-foreground border-t border-gray-300 pt-1.5">
+            <span>Total</span>
+            <span>${(totalCents / 100).toFixed(2)} CAD</span>
+          </div>
+        </div>
+      )}
+
       {error && (
         <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
           {error}
@@ -412,7 +442,7 @@ export default function PaymentForm({
           disabled={submitting}
           className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-paragraph font-semibold py-3 hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {submitting ? 'Processing…' : `Pay${amountDollars ? ` $${Number(amountDollars).toFixed(2)}` : ''}`}
+          {submitting ? 'Processing…' : `Pay${totalCents ? ` $${(totalCents / 100).toFixed(2)}` : ''}`}
         </button>
         {onCancel && (
           <button
