@@ -683,7 +683,11 @@ export default function MonthEndReconciliationPage() {
     if (!issue.recordId) return;
     setSavingFix((m) => ({ ...m, [issue.key]: true }));
     try {
-      const update: Record<string, any> = { _id: issue.recordId };
+      // Typed as `{ _id: string } & …` rather than a bare Record<string, any>:
+      // BaseCrudService.update requires a WixDataItem (i.e. an `_id`), and a
+      // plain Record does not structurally satisfy that. The _id was always set
+      // at runtime — this is a typing fix, not a behaviour change.
+      const update: { _id: string } & Record<string, any> = { _id: issue.recordId };
       if (validatorId === 'V1' || validatorId === 'V7') {
         update.referenceNumber = value.trim();
       } else if (validatorId === 'V4') {

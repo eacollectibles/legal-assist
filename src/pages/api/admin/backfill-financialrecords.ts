@@ -5,6 +5,7 @@ import type { APIRoute } from 'astro';
 // to the worker as part of the deployed bundle.
 import { createClient, ApiKeyStrategy } from '@wix/sdk';
 import { items as wixDataItems } from '@wix/data';
+import { requireAuth } from '@/lib/server/require-auth';
 
 /**
  * POST /api/admin/backfill-financialrecords
@@ -86,15 +87,17 @@ function getSecretValue(locals: any, name: string): string {
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  // 1. Origin gate so this can't be triggered by random web pages.
-  const origin = request.headers.get('origin') || '';
-  const referer = request.headers.get('referer') || '';
-  const fromAllowed =
-    (origin && ALLOWED_ORIGINS.has(origin)) ||
-    (!origin && [...ALLOWED_ORIGINS].some((o) => referer.startsWith(o)));
-  if (!fromAllowed) {
-    return json({ success: false, error: 'Forbidden origin.' }, 403);
-  }
+  // 1. AUTHENTICATION (was: origin header only).
+  //
+  //    This endpoint runs with a site-level Wix API key that deliberately
+  //    BYPASSES per-role CMS permissions (that is why it exists), and it
+  //    writes across `financialrecords` — the trust ledger. An Origin header
+  //    is set by the caller and is trivially spoofed, so it never actually
+  //    restricted anyone. Admin-only, and now provably so.
+  //
+  //    requireAuth() also performs the same-origin check as CSRF defence.
+  const gate = await requireAuth(request, locals, { roles: ['admin'] });
+  if (!gate.ok) return gate.response!;
 
   // 2. Pick up the API-key + site-id pair from Wix Secrets Manager.
   const apiKey = getSecretValue(locals, 'LA_WIX_API_KEY');

@@ -102,6 +102,10 @@ interface ClientDocument {
   fileSize?: number;
   documentCategory?: string;
   notes?: string;
+  /** Exists on the `clientdocuments` collection; this local view was missing it.
+   *  (Note there is NO `previousVersions` field — see the removed
+   *  handleRevertToVersion below.) */
+  version?: number;
 }
 
 interface Message {
@@ -257,7 +261,7 @@ export default function ParalegalDashboardPage() {
     try {
       // In a real app, get from auth context
       // For now, get the first admin user as the current paralegal
-      const { items } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+      const { items } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
       const paralegal = items.find(u => u.isAdmin);
       if (paralegal) {
         setCurrentParalegalId(paralegal._id);
@@ -271,11 +275,11 @@ export default function ParalegalDashboardPage() {
     setIsLoading(true);
     try {
       const [appointmentsRes, assignmentsRes, usersRes, clientsRes, documentsRes] = await Promise.all([
-        BaseCrudService.getAll<Appointment>('appointments'),
-        BaseCrudService.getAll<FileAssignment>('fileassignments'),
-        BaseCrudService.getAll<UserAccount>('useraccounts'),
-        BaseCrudService.getAll<ClientProfile>('clientprofiles'),
-        BaseCrudService.getAll<ClientDocument>('clientdocuments')
+        BaseCrudService.getAllPages<Appointment>('appointments'),
+        BaseCrudService.getAllPages<FileAssignment>('fileassignments'),
+        BaseCrudService.getAllPages<UserAccount>('useraccounts'),
+        BaseCrudService.getAllPages<ClientProfile>('clientprofiles'),
+        BaseCrudService.getAllPages<ClientDocument>('clientdocuments')
       ]);
 
       setAppointments(appointmentsRes.items);
@@ -601,39 +605,20 @@ export default function ParalegalDashboardPage() {
     return matchesSearch && matchesCategory && matchesDate;
   });
 
-  const handleRevertToVersion = async (documentId: string, versionIndex: number) => {
-    try {
-      const doc = documents.find(d => d._id === documentId);
-      if (!doc || !doc.previousVersions || !doc.previousVersions[versionIndex]) return;
-
-      const previousVersion = doc.previousVersions[versionIndex];
-      
-      // Create new version entry with current data
-      const newPreviousVersions = [
-        ...(doc.previousVersions || []),
-        {
-          version: doc.version || 1,
-          fileUrl: doc.fileUrl || '',
-          uploadDate: doc.uploadDate || new Date(),
-          notes: doc.notes
-        }
-      ];
-
-      // Update document with reverted version
-      await BaseCrudService.update('clientdocuments', {
-        _id: documentId,
-        fileUrl: previousVersion.fileUrl,
-        version: (doc.version || 1) + 1,
-        previousVersions: newPreviousVersions,
-        notes: `Reverted to version ${previousVersion.version}`
-      });
-
-      loadData();
-      setIsVersionHistoryOpen(false);
-    } catch (error) {
-      console.error('Error reverting to version:', error);
-    }
-  };
+  // REMOVED: handleRevertToVersion()
+  //
+  // It was dead code twice over. (1) Nothing called it — the compiler reported
+  // it as "declared but never read". (2) It was built entirely on
+  // `doc.previousVersions`, a field that does not exist on the `clientdocuments`
+  // collection (see the auto-generated types in src/entities/index.ts), so the
+  // very first line — `if (!doc.previousVersions) return;` — would have bailed
+  // out every time even if something had called it.
+  //
+  // Document version HISTORY was never actually persisted, so there is nothing
+  // to revert to. If you want this feature, it needs a `previousVersions` field
+  // on the collection first; only then is the UI worth wiring up. Deleting the
+  // corpse rather than re-typing it, so the compiler stops reporting six errors
+  // for a feature that never worked.
 
   const handleShareDocument = async () => {
     if (!selectedDocument || !shareEmail) return;
@@ -678,7 +663,7 @@ export default function ParalegalDashboardPage() {
   const loadGeneratedDocuments = async () => {
     setIsLoadingGeneratedDocs(true);
     try {
-      const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
+      const { items } = await BaseCrudService.getAllPages<GeneratedDocuments>('generateddocuments');
       
       // Sort by generation date, newest first
       items.sort((a, b) => {
@@ -771,12 +756,11 @@ export default function ParalegalDashboardPage() {
         clientId: emailingDocument.clientId,
       });
 
-      // Save comprehensive activity log to database with Graph headers
-      const logDescription = `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"${
-        activityLog.graphRequestId ? `. Graph Request ID: ${activityLog.graphRequestId}` : ''
-      }${activityLog.graphClientRequestId ? `. Client Request ID: ${activityLog.graphClientRequestId}` : ''}${
-        activityLog.graphAgsDiagnostic ? `. AGS Diagnostic: ${activityLog.graphAgsDiagnostic}` : ''
-      }`;
+      // Activity log for the send. The old `graph*` diagnostic fields belonged
+      // to the retired Microsoft Graph mail path; EmailActivityLog (EmailJS)
+      // has no such fields, so those ternaries were always '' — dead code, and
+      // the source of several compiler errors. Removed.
+      const logDescription = `Document "${emailingDocument.documentName}" emailed to ${emailData.to}. Status: ${activityLog.deliveryStatus}. Subject: "${activityLog.renderedSubject}"`;
       
       await BaseCrudService.create('activitylogs', {
         _id: activityLog._id,
@@ -867,7 +851,7 @@ export default function ParalegalDashboardPage() {
 
   const loadMessages = async () => {
     try {
-      const { items } = await BaseCrudService.getAll<Message>('messages');
+      const { items } = await BaseCrudService.getAllPages<Message>('messages');
       // Sort by date, newest first
       const sortedMessages = (items || []).sort((a, b) => {
         const dateA = new Date(a.sentDate || 0).getTime();

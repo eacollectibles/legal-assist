@@ -861,6 +861,17 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
     // elements so paragraphs and signature blocks don't get cut in
     // half across pages.
     // ----------------------------------------------------------------
+
+    // Position arrays for the cut algorithm.  Populated from the CLONED
+    // DOM in onclone so coordinates match the canvas html2canvas renders.
+    // Falls back to original-host measurement if clone measurement fails.
+    const sectionTops: number[] = [];
+    const blockBottoms: number[] = [];
+    const forcedBreaks: number[] = [];
+    const dangerZones: Array<[number, number]> = [];
+    const endMarkerZones: Array<[number, number]> = [];
+    let positionsFromClone = false;
+
     const canvas = await html2canvas(host, {
       scale: 2,
       useCORS: true,
@@ -935,6 +946,83 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
             )
           );
         } catch { /* */ }
+
+        // --------------------------------------------------------
+        // Collect cut-algorithm positions from the CLONE.
+        // The clone's layout (fallback fonts, position:static) is
+        // what html2canvas rasterises. Measuring from the original
+        // host (position:absolute, Inter font loaded) gives wrong
+        // Y positions because Inter → Arial font-metric reflow
+        // shifts every element's position.
+        // --------------------------------------------------------
+        if (clonedHost) {
+          try {
+            const cr = clonedHost.getBoundingClientRect();
+            const maxY = clonedHost.scrollHeight * 2;
+
+            clonedHost.querySelectorAll('h1, h2, h3, h4').forEach((el) => {
+              const r = (el as HTMLElement).getBoundingClientRect();
+              const top = (r.top - cr.top) * 2;
+              const bottom = (r.bottom - cr.top) * 2;
+              if (bottom > 0 && top < maxY) {
+                sectionTops.push(top);
+                dangerZones.push([top - 60, bottom + 60]);
+              }
+            });
+
+            clonedHost
+              .querySelectorAll('.page-break-before, [data-pagebreak-before="true"]')
+              .forEach((el) => {
+                const r = (el as HTMLElement).getBoundingClientRect();
+                const yInCanvas = (r.top - cr.top) * 2;
+                if (yInCanvas > 0 && yInCanvas < maxY) {
+                  forcedBreaks.push(yInCanvas);
+                }
+              });
+
+            clonedHost
+              .querySelectorAll('p, table, hr, ul, ol, li, .signature-block, [data-keep-together]')
+              .forEach((el) => {
+                const r = (el as HTMLElement).getBoundingClientRect();
+                const yInCanvas = (r.bottom - cr.top) * 2;
+                if (yInCanvas > 0 && yInCanvas < maxY) {
+                  blockBottoms.push(yInCanvas);
+                }
+              });
+
+            clonedHost.querySelectorAll('[data-atomic="true"]').forEach((el) => {
+              const r = (el as HTMLElement).getBoundingClientRect();
+              const top = (r.top - cr.top) * 2;
+              const bottom = (r.bottom - cr.top) * 2;
+              if (bottom > 0 && top < maxY) {
+                dangerZones.push([top - 8, bottom + 8]);
+              }
+            });
+
+            clonedHost.querySelectorAll('.end-marker').forEach((el) => {
+              const r = (el as HTMLElement).getBoundingClientRect();
+              const top = (r.top - cr.top) * 2;
+              const bottom = (r.bottom - cr.top) * 2;
+              if (bottom > 0 && top < maxY) {
+                endMarkerZones.push([top, bottom]);
+              }
+            });
+
+            dangerZones.sort((a, b) => a[0] - b[0]);
+            endMarkerZones.sort((a, b) => a[0] - b[0]);
+            sectionTops.sort((a, b) => a - b);
+            blockBottoms.sort((a, b) => a - b);
+            forcedBreaks.sort((a, b) => a - b);
+            positionsFromClone = true;
+            // eslint-disable-next-line no-console
+            console.log('[htmlToPDF] clone positions collected:',
+              'forcedBreaks', forcedBreaks.length,
+              'sectionTops', sectionTops.length,
+              'blockBottoms', blockBottoms.length);
+          } catch {
+            // Clone measurement failed; fall back to original host.
+          }
+        }
       },
     });
 
@@ -993,56 +1081,74 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
 
     const fullImg = canvas.toDataURL('image/jpeg', 0.95);
 
-    // Find Y coordinates of safe break points in the host content.
-    // Two flavours, both mapped from host pixels to canvas pixels
-    // (factor 2 because html2canvas scale: 2):
-    //
-    //   1. Section TOPS (h1/h2/h3/h4) — cut here so the next page
-    //      starts with the heading. Strongly preferred so headings
-    //      aren't sliced in half across pages.
-    //   2. Block BOTTOMS (p, table, ul, ol, hr, signature-block) —
-    //      cut here so we end a page at a paragraph boundary.
-    //
-    // Without (1) the old algorithm could only snap to ends of blocks
-    // and so frequently cut headings mid-character ("CONTINGENCY FEE
-    // TERMS (IF APPLICABLE)" → "AND ALL APPLICABLE" on the next page).
-    const hostRect = host.getBoundingClientRect();
-    const sectionTops: number[] = [];
-    const blockBottoms: number[] = [];
-    // Forced page-break candidates — elements that MUST start a new
-    // page. Marked with class="page-break-before" or
-    // data-pagebreak-before="true" in the template. Overrides MIN_FILL.
-    const forcedBreaks: number[] = [];
+    // --- Fallback: measure from original host if clone path failed ---
+    // Normally positions are collected from the CLONED DOM (in onclone)
+    // so they match the canvas. This fallback only runs if the clone
+    // measurement threw or clonedHost was null.
+    if (!positionsFromClone) {
+      // eslint-disable-next-line no-console
+      console.warn('[htmlToPDF] clone positions unavailable — falling back to original host');
+      const hostRect = host.getBoundingClientRect();
 
-    // "Danger zones" — Y ranges (in canvas pixels) where a horizontal
-    // page cut would slice through the middle of a heading. Any cut
-    // candidate that falls inside one of these zones MUST be pulled
-    // back up to the top of the zone so the heading lands on the next
-    // page. Each zone is widened by an 8-px buffer on either side so
-    // we don't cut right at the heading's edge either.
-    const dangerZones: Array<[number, number]> = [];
-    host
-      .querySelectorAll('h1, h2, h3, h4')
-      .forEach((el) => {
+      host.querySelectorAll('h1, h2, h3, h4').forEach((el) => {
         const r = (el as HTMLElement).getBoundingClientRect();
         const top = (r.top - hostRect.top) * 2;
         const bottom = (r.bottom - hostRect.top) * 2;
         if (bottom > 0 && top < canvas.height) {
           sectionTops.push(top);
-          // Widened from 16 → 60 canvas px (~30 px CSS). This is the
-          // "no cut" buffer around every heading. The 16px buffer was
-          // too narrow — when a heading had any meaningful margin-top
-          // (28px for h2) the cut could land between the previous
-          // paragraph and the heading, orphaning the heading. 60px
-          // covers the heading + first ~2 lines of content, so the
-          // algorithm always pushes the heading + first paragraph
-          // together to the next page rather than orphaning the
-          // heading on the previous page.
           dangerZones.push([top - 60, bottom + 60]);
         }
       });
-    // Sort danger zones by top edge for fast lookup.
-    dangerZones.sort((a, b) => a[0] - b[0]);
+      dangerZones.sort((a, b) => a[0] - b[0]);
+
+      host.querySelectorAll('.page-break-before, [data-pagebreak-before="true"]').forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const yInCanvas = (r.top - hostRect.top) * 2;
+        if (yInCanvas > 0 && yInCanvas < canvas.height) {
+          forcedBreaks.push(yInCanvas);
+        }
+      });
+
+      host.querySelectorAll('p, table, hr, ul, ol, li, .signature-block, [data-keep-together]').forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const yInCanvas = (r.bottom - hostRect.top) * 2;
+        if (yInCanvas > 0 && yInCanvas < canvas.height) {
+          blockBottoms.push(yInCanvas);
+        }
+      });
+
+      host.querySelectorAll('[data-atomic="true"]').forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const top = (r.top - hostRect.top) * 2;
+        const bottom = (r.bottom - hostRect.top) * 2;
+        if (bottom > 0 && top < canvas.height) {
+          dangerZones.push([top - 8, bottom + 8]);
+        }
+      });
+      dangerZones.sort((a, b) => a[0] - b[0]);
+
+      host.querySelectorAll('.end-marker').forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect();
+        const top = (r.top - hostRect.top) * 2;
+        const bottom = (r.bottom - hostRect.top) * 2;
+        if (bottom > 0 && top < canvas.height) {
+          endMarkerZones.push([top, bottom]);
+        }
+      });
+      endMarkerZones.sort((a, b) => a[0] - b[0]);
+
+      sectionTops.sort((a, b) => a - b);
+      blockBottoms.sort((a, b) => a - b);
+      forcedBreaks.sort((a, b) => a - b);
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(
+      '[htmlToPDF] positionsFromClone:', positionsFromClone,
+      '| forcedBreaks:', forcedBreaks.length,
+      '| sectionTops:', sectionTops.length,
+      '| blockBottoms:', blockBottoms.length,
+    );
 
     /**
      * If `y` falls inside any heading's danger zone, return the
@@ -1056,76 +1162,6 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
       return y;
     };
 
-    host
-      .querySelectorAll(
-        '.page-break-before, [data-pagebreak-before="true"]'
-      )
-      .forEach((el) => {
-        const r = (el as HTMLElement).getBoundingClientRect();
-        const yInCanvas = (r.top - hostRect.top) * 2;
-        if (yInCanvas > 0 && yInCanvas < canvas.height) {
-          forcedBreaks.push(yInCanvas);
-        }
-      });
-
-    host
-      .querySelectorAll(
-        // Added `li` so the cut algorithm can land between bullet
-        // items, not only at the end of the whole <ul>/<ol>. Without
-        // this, a list that overflows the page would split MID-BULLET
-        // because the algorithm only saw the list's bottom as a cut
-        // candidate — and that was past the page boundary.
-        'p, table, hr, ul, ol, li, .signature-block, [data-keep-together]'
-      )
-      .forEach((el) => {
-        const r = (el as HTMLElement).getBoundingClientRect();
-        const yInCanvas = (r.bottom - hostRect.top) * 2;
-        if (yInCanvas > 0 && yInCanvas < canvas.height) {
-          blockBottoms.push(yInCanvas);
-        }
-      });
-
-    // Atomic blocks marked `data-atomic="true"` (signature blocks,
-    // initials tables, etc.) cannot be cut through. Add their full
-    // [top, bottom] range to dangerZones so any cut landing inside
-    // gets pulled to the top (pushing the element to the next page).
-    host
-      .querySelectorAll('[data-atomic="true"]')
-      .forEach((el) => {
-        const r = (el as HTMLElement).getBoundingClientRect();
-        const top = (r.top - hostRect.top) * 2;
-        const bottom = (r.bottom - hostRect.top) * 2;
-        if (bottom > 0 && top < canvas.height) {
-          dangerZones.push([top - 8, bottom + 8]);
-        }
-      });
-    dangerZones.sort((a, b) => a[0] - b[0]);
-
-    // End-of-section markers — OPPOSITE behaviour to dangerZones.
-    // A `.end-marker` is the closing visual stamp on a section. It
-    // MUST stay on the same page as the section's last content
-    // paragraph; it must NEVER be orphaned to the top of the next
-    // page (which is what was happening when end-markers were
-    // pushed into dangerZones — the pull-UP behaviour evicted the
-    // marker forward instead of keeping it with its section).
-    //
-    // We register each marker's [top, bottom] in a separate
-    // `endMarkerZones` array and apply a "push past" pass after
-    // the heading-slice safety check. If the chosen cut lands
-    // inside a marker OR within ~24 px just before it (which would
-    // orphan the marker), the cut is shifted DOWN to right after
-    // the marker so the marker rides on the current page.
-    const endMarkerZones: Array<[number, number]> = [];
-    host.querySelectorAll('.end-marker').forEach((el) => {
-      const r = (el as HTMLElement).getBoundingClientRect();
-      const top = (r.top - hostRect.top) * 2;
-      const bottom = (r.bottom - hostRect.top) * 2;
-      if (bottom > 0 && top < canvas.height) {
-        endMarkerZones.push([top, bottom]);
-      }
-    });
-    endMarkerZones.sort((a, b) => a[0] - b[0]);
-
     /**
      * If `y` falls inside an end-marker OR within ~24 px just
      * before one, return the coordinate just AFTER the marker
@@ -1134,23 +1170,12 @@ async function htmlToPDF(htmlContent: string): Promise<string> {
      */
     const keepMarkerWithSection = (y: number): number => {
       for (const [top, bottom] of endMarkerZones) {
-        // Case 1: cut lands inside the marker → would split it.
-        // Case 2: cut lands just BEFORE the marker → would orphan
-        //         it to the next page. 24 px in canvas coords
-        //         (~12 CSS px) is the empirical threshold — wide
-        //         enough to catch typical "natural break right
-        //         before the marker" cuts, tight enough not to
-        //         disturb breaks that are well above the marker.
         if (y >= top - 24 && y < bottom + 4) {
           return bottom + 4;
         }
       }
       return y;
     };
-
-    sectionTops.sort((a, b) => a - b);
-    blockBottoms.sort((a, b) => a - b);
-    forcedBreaks.sort((a, b) => a - b);
 
     const canvasPerPage = (pageHeight * canvas.width) / imgWidth;
     // Minimum acceptable page fill ratio. If we accept ANY break point

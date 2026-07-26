@@ -86,9 +86,19 @@ const RETAINER_TEMPLATES: Record<string, string> = {
 };
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  // Origin gate.
+  // Origin gate — FIXED. The previous form was `if (origin && ...)`, which
+  // skipped the check entirely when NO Origin header was sent, leaving this
+  // billable Anthropic-backed endpoint open to anonymous scripts.
+  //
+  // This one stays PUBLIC on purpose (the intake form calls it before the
+  // visitor has an account), so we cannot require a session here. Keep it
+  // rate-limited at the edge; origin alone is not a real control.
   const origin = request.headers.get('origin') || '';
-  if (origin && !origin.startsWith(PUBLIC_ORIGIN) && !origin.includes('localhost')) {
+  const referer = request.headers.get('referer') || '';
+  const trusted = (v: string) =>
+    !!v && (v.startsWith(PUBLIC_ORIGIN) || v.includes('localhost'));
+  const fromAllowed = origin ? trusted(origin) : trusted(referer);
+  if (!fromAllowed) {
     return new Response(JSON.stringify({ error: 'forbidden' }), {
       status: 403, headers: { 'Content-Type': 'application/json' },
     });

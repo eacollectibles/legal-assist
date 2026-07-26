@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { requireAuth, STAFF_ROLES } from '@/lib/server/require-auth';
 
 /**
  * POST /api/sms/send
@@ -34,8 +35,6 @@ import type { APIRoute } from 'astro';
  * given number to honor TCPA / CRTC implied-consent rules.
  */
 
-const PUBLIC_ORIGIN = 'https://www.legalassist.london';
-
 function getSecret(locals: any, name: string): string {
   const env =
     locals?.runtime?.env ||
@@ -60,13 +59,10 @@ function normalizeE164(raw: string): string {
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  // Origin gate.
-  const origin = request.headers.get('origin') || '';
-  if (origin && !origin.startsWith(PUBLIC_ORIGIN) && !origin.includes('localhost')) {
-    return new Response(JSON.stringify({ success: false, error: 'forbidden' }), {
-      status: 403, headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  // Auth gate — staff only. requireAuth() also performs the same-origin
+  // check as CSRF defence, replacing the old Origin-only gate.
+  const gate = await requireAuth(request, locals, { roles: STAFF_ROLES });
+  if (!gate.ok) return gate.response!;
 
   let body: any;
   try { body = await request.json(); }

@@ -130,7 +130,7 @@ function OverviewModule() {
   const [activeFiles, setActiveFiles] = useState(0);
 
   useEffect(() => {
-    BaseCrudService.getAll<any>('bookings')
+    BaseCrudService.getAllPages<any>('bookings')
       .then(res => {
         const pending = (res.items || []).filter((b: any) => b.status === 'pending').length;
         setPendingBookings(pending);
@@ -174,9 +174,12 @@ function OverviewModule() {
     (t, c) => t + (c.unreadCount || 0),
     0
   );
-  const unreadFromMessages = messages.filter(
-    m => m.read === false || m.status === 'unread'
-  ).length;
+  // BUG FIX: this tested `m.read === false || m.status === 'unread'`. Neither
+  // field exists on Message — the real field is `isRead` (see
+  // paralegal-dashboard/types.ts and the `messages` collection). Both operands
+  // were therefore always `undefined`, so this count was ALWAYS 0 and the
+  // dashboard's unread-message badge never counted a single message.
+  const unreadFromMessages = messages.filter((m) => m.isRead !== true).length;
   const unreadCount = unreadFromConversations || unreadFromMessages;
 
   const pendingSignatures = generatedDocuments.filter(

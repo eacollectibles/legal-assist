@@ -249,7 +249,7 @@ async function fetchTribunalCases(
   for (const getProxyUrl of CORS_PROXIES) {
     try {
       const proxyUrl = getProxyUrl(config.rssUrl);
-      console.log(`Trying ${tribunalCode} via proxy...`);
+      // trying ${tribunalCode} via proxy
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000);
@@ -258,7 +258,7 @@ async function fetchTribunalCases(
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        console.log(`Proxy returned ${response.status}, trying next...`);
+        // proxy returned ${response.status}
         continue;
       }
 
@@ -274,18 +274,18 @@ async function fetchTribunalCases(
       }
 
       if (!xml || xml.length < 100) {
-        console.log(`Empty response, trying next proxy...`);
+        // empty response
         continue;
       }
 
       const items = parseRSSXML(xml);
 
       if (items.length === 0) {
-        console.log(`No items parsed from ${tribunalCode}, trying next proxy...`);
+        // no items parsed from ${tribunalCode}
         continue;
       }
 
-      console.log(`Got ${items.length} items from ${tribunalCode}`);
+      // got ${items.length} items from ${tribunalCode}
 
       return items.slice(0, limit).map((item, index) => {
         const citation = extractCitation(item.title);
@@ -311,7 +311,7 @@ async function fetchTribunalCases(
         };
       });
     } catch (error) {
-      console.log(`Proxy failed for ${tribunalCode}:`, error instanceof Error ? error.message : 'unknown');
+      // proxy failed for ${tribunalCode}
       continue;
     }
   }
@@ -357,7 +357,7 @@ const SAMPLE_CASES: LegalCase[] = [
 export async function fetchAllCases(
   limitPerTribunal: number = 15
 ): Promise<LegalCase[]> {
-  console.log('Fetching live legal news from CanLII...');
+  // fetching live legal news from CanLII
 
   const relevantTribunals: TribunalCode[] = ['onltb', 'onhrt', 'oncj', 'onscsm'];
 
@@ -371,14 +371,14 @@ export async function fetchAllCases(
   results.forEach((result, i) => {
     if (result.status === 'fulfilled' && result.value.length > 0) {
       allCases.push(...result.value);
-      console.log(`${relevantTribunals[i]}: ${result.value.length} cases`);
+      // ${relevantTribunals[i]}: ${result.value.length} cases
     } else {
       console.warn(`${relevantTribunals[i]}: failed or empty`);
     }
   });
 
   if (allCases.length === 0) {
-    console.log('All live feeds failed, using sample data');
+    // all live feeds failed, using sample data
     return SAMPLE_CASES;
   }
 
@@ -387,7 +387,7 @@ export async function fetchAllCases(
     new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
   );
 
-  console.log(`Total: ${allCases.length} live cases fetched`);
+  // total: ${allCases.length} live cases fetched
   return allCases;
 }
 

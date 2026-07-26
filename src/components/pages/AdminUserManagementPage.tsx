@@ -64,7 +64,7 @@ export default function AdminUserManagementPage() {
       const allUsers = await getAllUsers();
       
       // Load all messages to count unread messages per user
-      const { items: allMessages } = await BaseCrudService.getAll<Messages>('messages');
+      const { items: allMessages } = await BaseCrudService.getAllPages<Messages>('messages');
       
       // Count unread messages for each user (messages sent by user to admin that are unread)
       const usersWithUnreadCounts = allUsers.map(user => {

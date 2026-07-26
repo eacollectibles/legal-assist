@@ -87,10 +87,14 @@ export function ParalegalDashboardProvider({ children }: ProviderProps) {
             resolve({ items: [] as T[] });
           }, timeoutMs)
         );
-        const fetcher = BaseCrudService.getAll<T>(collection).catch((err) => {
-          console.warn(`[Dashboard] Failed to load ${collection}:`, err);
-          return { items: [] as T[] };
-        });
+        // `as any`: safeGet's T is intentionally unconstrained (callers pass
+        // plain view models), but getAllPages requires T extends WixDataItem.
+        const fetcher = (BaseCrudService.getAllPages as any)(collection).catch(
+          (err: any) => {
+            console.warn(`[Dashboard] Failed to load ${collection}:`, err);
+            return { items: [] as T[] };
+          }
+        ) as Promise<{ items: T[] }>;
         return Promise.race([fetcher, timeout]);
       };
 

@@ -1,0 +1,150 @@
+<!--
+  Legal Assist — FILE CLOSING LETTER (Disengagement Letter) — HTML Template v1.0
+  ==============================================================================
+  Purpose: sent to the client when a matter concludes and the file is closed.
+  Complies with LSO Paralegal Rules of Conduct (r. 3.02 competence/communication,
+  r. 8 withdrawal/closing) and By-Law 9 (trust records retention).
+
+  HOW TO INSTALL (no code changes needed):
+    1. In the app, open Document Workflow → Templates → "New Template".
+    2. Template Name:  "Closing Letter"
+       Template Type:  "Closing Letter"   (any value; the workflow renders by tokens)
+    3. Paste this entire file into the template HTML/content field and save.
+    4. To send: pick a client file, choose this template, click Generate, then
+       Email to Client. The existing flow fills the tokens below, renders a PDF,
+       emails it with the read-tracking pixel, and writes a communicationlog row.
+
+  AUTO-FILLED TOKENS (substituted by DocumentWorkflowPage.tsx):
+    {CLIENT_NAME} {CLIENT_EMAIL} {CLIENT_PHONE}
+    {CLIENT_ADDRESS_LINE1} {CLIENT_ADDRESS_LINE2} {CLIENT_CITY}
+    {CLIENT_PROVINCE} {CLIENT_POSTAL_CODE}
+    {MATTER_REFERENCE} {DATE}
+    {PARALEGAL_SIGNATURE} {PARALEGAL_NAME} {PARALEGAL_LSO}
+    {PARALEGAL_CREDENTIAL} {PARALEGAL_EMAIL} {PARALEGAL_SIGN_DATE}
+
+  CASE-SPECIFIC TOKENS — auto-filled from the "Closing letter details" inputs
+  that appear in the Generate dialog when this template is selected. Leave a
+  field blank to use the safe default shown (a fully-paid, nothing-outstanding
+  close). {DESTRUCTION_YEAR} is computed automatically (close year + 7).
+    {MATTER_DESCRIPTION} — blank ⇒ auto from the file's matter type/reference.
+    {OUTCOME_SUMMARY}    — default: "The work we were retained to perform on
+                           this matter has been completed."
+    {ACCOUNT_STATUS}     — default: "Your account has been paid in full and
+                           nothing further is owing."
+    {TRUST_STATUS}       — default: "No funds remain in trust for this matter."
+    {PROPERTY_RETURN}    — default: "We are not holding any original documents
+                           belonging to you."
+    {DESTRUCTION_YEAR}   — computed (close year + 7).
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Closing Letter — Legal Assist Paralegal Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Allura&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0f2a4a; --gold:#b08a3e; --ink:#1f2937; --ink-2:#374151; --mute:#6b7280; --line:#e2e8f0; --line-2:#cbd5e1; --danger:#b91c1c; --danger-soft:#fef2f2; --warm:#fdfaf3; }
+  * { box-sizing: border-box; }
+  @page { size: Letter; margin: 12mm 14mm; }
+  .sig-wrap, .foot { page-break-inside: avoid; break-inside: avoid; }
+  html, body { margin:0; padding:0; background:#fff; color:var(--ink); font:400 12px/1.4 Inter, Arial, Helvetica, sans-serif; -webkit-font-smoothing:antialiased; }
+  .doc { max-width:760px; margin:0 auto; padding:16px 40px 12px; }
+  p { margin:0 0 7px; }
+  strong { color:var(--ink); }
+  a { color:var(--navy); }
+  /* Letterhead header */
+  .lh { display:flex; align-items:center; gap:14px; padding-bottom:14px; border-bottom:3px solid var(--gold); }
+  .lh .mark { width:44px; height:44px; border-radius:8px; background:var(--navy); color:var(--gold); display:inline-flex; align-items:center; justify-content:center; font:700 18px/1 Inter, sans-serif; flex:0 0 44px; }
+  .lh .firm { font:700 17px/1.2 Inter, sans-serif; color:var(--navy); flex:1 1 auto; }
+  .lh .firm small { display:block; font:400 11px/1.3 Inter, sans-serif; color:var(--mute); letter-spacing:0.03em; margin-top:2px; }
+  .lh .contact { flex:0 0 auto; text-align:right; font:500 10.5px/1.5 Inter, sans-serif; color:var(--ink-2); }
+  .lh .contact a { color:var(--navy); text-decoration:none; font-weight:600; }
+  .lh .contact .lab { display:block; font:700 8.5px/1 Inter, sans-serif; color:var(--mute); letter-spacing:0.06em; margin-bottom:3px; }
+  .meta { margin-top:14px; }
+  .recip { margin-top:11px; font:500 12px/1.4 Inter, sans-serif; color:var(--ink); }
+  .recip .lab { color:var(--mute); font-size:11px; letter-spacing:0.03em; }
+  .reline { margin:11px 0 3px; font:700 13px/1.3 Inter, sans-serif; color:var(--navy); }
+  h2 { font:700 12.5px/1.3 Inter, sans-serif; color:var(--navy); margin:11px 0 3px; }
+  .callout { margin:10px 0; padding:9px 14px; border-radius:8px; background:var(--danger-soft); border-left:4px solid var(--danger); }
+  .callout h4 { margin:0 0 5px; font:700 12px/1.2 Inter, sans-serif; color:var(--danger); letter-spacing:0.02em; }
+  .callout p { margin:0; font-size:12.5px; color:var(--ink-2); }
+  .fill { background:#fff6cf; border-bottom:1px dashed #c9a227; padding:0 2px; font-style:italic; color:#6b5300; }
+  .sig-wrap { margin-top:6px; }
+  .sig-cursive { min-height:32px; }
+  .sig-line { border-top:1.5px solid var(--ink); width:260px; margin:2px 0 4px; }
+  .sig-name { font:700 13.5px/1.3 Inter, sans-serif; color:var(--ink); }
+  .sig-meta { font:500 11.5px/1.4 Inter, sans-serif; color:var(--mute); }
+  .foot { margin-top:8px; padding-top:6px; border-top:1px solid var(--line); font:500 9.5px/1.35 Inter, sans-serif; color:var(--mute); display:flex; justify-content:space-between; gap:14px; }
+  .foot a { color:var(--mute); }
+  @media (max-width:640px){ .doc{ padding:16px 18px; } .lh{ flex-wrap:wrap; } .lh .contact{ flex:1 1 100%; text-align:left; margin-top:8px; } }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="lh">
+    <span class="mark">LA</span>
+    <div class="firm">Legal Assist Paralegal Services<small>Licensed Paralegals in the Province of Ontario</small></div>
+    <div class="contact">
+      <span class="lab">Office</span>
+      226&#8209;272&#8209;5153<br>
+      <a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a><br>
+      <a href="https://legalassist.london">legalassist.london</a>
+    </div>
+  </div>
+
+  <div class="meta">{DATE}</div>
+
+  <div class="recip">
+    <strong>{CLIENT_NAME}</strong><br>
+    {CLIENT_ADDRESS_LINE1}<br>
+    {CLIENT_CITY}, {CLIENT_PROVINCE} {CLIENT_POSTAL_CODE}<br>
+    <span class="lab">Email:</span> {CLIENT_EMAIL}
+  </div>
+
+  <div class="reline"><span style="color:var(--ink);">Re:</span> Closing of Your File &mdash; {MATTER_REFERENCE}</div>
+  <div style="font:500 12px/1.4 Inter, sans-serif; color:var(--mute); margin-bottom:12px;">Matter: {MATTER_DESCRIPTION}</div>
+
+  <p>Dear {CLIENT_NAME}:</p>
+
+  <p>Thank you for allowing Legal Assist Paralegal Services to act for you. I am writing to confirm that the work we were retained to perform on the above&#8209;noted matter is now complete, and that <strong>your file is now closed</strong>.</p>
+
+  <p><strong>Outcome.</strong> {OUTCOME_SUMMARY}</p>
+
+  <p><strong>No further steps.</strong> Now that this file is closed, we are <strong>not taking any further action</strong> on this matter, and our retainer for it has ended. We are not responsible for any further steps, filings, deadlines, or follow&#8209;up unless you and I enter into a new written retainer for that work.</p>
+
+  <h2>Your account, trust funds, and documents</h2>
+  <p>{ACCOUNT_STATUS} {TRUST_STATUS} Our trust records for this matter are kept in accordance with Law Society of Ontario By&#8209;Law 9. {PROPERTY_RETURN} Please let us know if you would like copies of anything from the file.</p>
+
+  <h2>How long we keep your file</h2>
+  <p>We keep your closed file for a minimum of <strong>seven (7) years</strong>, after which it may be <strong>securely destroyed without further notice</strong> (anticipated on or after {DESTRUCTION_YEAR}). Trust&#8209;account records are kept for at least <strong>ten (10) years</strong> under By&#8209;Law 9. If you want your original materials back before then, please ask us in writing.</p>
+
+  <div class="callout">
+    <h4>Important &mdash; Future Deadlines Are Your Responsibility</h4>
+    <p>This matter is concluded and we are no longer monitoring any dates for you. Other rights &mdash; such as an appeal, a review, a request to reopen, enforcement, or a related new claim &mdash; may carry their own strict deadlines (for example, a two&#8209;year limitation period, a 30&#8209;day review or appeal window, or a short notice period). If any new or related issue arises, seek legal advice <strong>promptly</strong>, because waiting can permanently bar a claim.</p>
+  </div>
+
+  <h2>If you need us again</h2>
+  <p>It has been a pleasure to assist you. If a new matter arises we would be glad to help &mdash; it simply requires a new written retainer. Reach us at <strong>226&#8209;272&#8209;5153</strong> or <a href="mailto:{PARALEGAL_EMAIL}">{PARALEGAL_EMAIL}</a>, and we always appreciate a referral. Thank you again for your trust and cooperation throughout this matter.</p>
+
+  <div class="sig-wrap">
+    <p style="margin-bottom:4px;">Yours truly,</p>
+    <div class="sig-cursive">{PARALEGAL_SIGNATURE}</div>
+    <div class="sig-line"></div>
+    <div class="sig-name">{PARALEGAL_NAME}</div>
+    <div class="sig-meta">{PARALEGAL_CREDENTIAL} &mdash; Law Society of Ontario</div>
+    <div class="sig-meta">Licence No. {PARALEGAL_LSO}</div>
+    <div class="sig-meta">Legal Assist Paralegal Services &middot; {PARALEGAL_EMAIL}</div>
+  </div>
+
+  <div class="foot">
+    <div>Legal Assist Paralegal Services &middot; 226&#8209;272&#8209;5153 &middot; <a href="https://legalassist.london">legalassist.london</a><br>Licensed &amp; insured by the Law Society of Ontario &middot; Verify at <a href="https://lso.ca/directory">lso.ca/directory</a></div>
+    <div style="text-align:right; white-space:nowrap;">File Closing Letter<br>{MATTER_REFERENCE}</div>
+  </div>
+
+</div>
+</body>
+</html>

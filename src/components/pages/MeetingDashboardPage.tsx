@@ -55,7 +55,7 @@ export default function MeetingDashboardPage({ embedded }: { embedded?: boolean 
     setIsLoading(true);
     setError('');
     try {
-      const { items } = await BaseCrudService.getAll<Bookings>('bookings');
+      const { items } = await BaseCrudService.getAllPages<Bookings>('bookings');
       setBookings(items);
     } catch (err) {
       setError('Failed to load meetings. Please try again.');

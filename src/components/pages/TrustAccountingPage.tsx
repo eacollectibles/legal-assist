@@ -32,6 +32,10 @@ interface FinancialRecord {
   _updatedDate?: Date | string;
   clientId?: string;
   fileId?: string;
+  /** 'trust' | 'general' — which ledger the row belongs to. Actively read and
+   *  written here, and /api/admin/backfill-financialrecords exists purely to
+   *  populate it on legacy rows; the local type just never declared it. */
+  journalType?: string;
   transactionType?: string;
   amount?: number;
   transactionDate?: Date | string;

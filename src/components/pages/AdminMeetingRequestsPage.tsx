@@ -39,7 +39,7 @@ export default function AdminMeetingRequestsPage() {
   const loadRequests = async () => {
     setIsLoading(true);
     try {
-      const { items } = await BaseCrudService.getAll<Bookings>('bookings');
+      const { items } = await BaseCrudService.getAllPages<Bookings>('bookings');
       setRequests(items || []);
     } catch (error) {
       console.error('Failed to load requests:', error);

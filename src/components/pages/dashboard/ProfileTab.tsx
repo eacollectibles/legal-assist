@@ -115,7 +115,7 @@ export default function ProfileTab({
         await BaseCrudService.create('clientprofiles', profileData);
       }
 
-      const { items } = await BaseCrudService.getAll<ClientProfile>('clientprofiles');
+      const { items } = await BaseCrudService.getAllPages<ClientProfile>('clientprofiles');
       const savedProfile = items?.find(p => p._id === profileId);
       
       if (!savedProfile) {

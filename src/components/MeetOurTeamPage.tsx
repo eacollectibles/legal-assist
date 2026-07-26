@@ -27,7 +27,7 @@ const teamMembers = [
     name: 'Johnny Demers',
     title: 'Founder & Licensed Paralegal',
     subtitle: 'P1 Licence Holder',
-    licenseNumber: 'P#XXXXX', // Replace with actual LSO number
+    licenseNumber: 'P22020',
     image: 'https://static.wixstatic.com/media/99571b_johnny_demers_paralegal~mv2.jpg?id=johnny-demers-headshot',
     imageAlt: 'Johnny Demers, Licensed Paralegal and Founder of Legal Assist Paralegal Services in London Ontario',
     bio: `Johnny Demers is the founder and principal paralegal of Legal Assist Paralegal Services. With a deep commitment to accessible justice, Johnny established Legal Assist to provide professional legal representation to individuals and small businesses across Southwestern Ontario who might otherwise struggle to afford quality legal help.`,
@@ -42,12 +42,12 @@ Before founding Legal Assist, Johnny developed extensive knowledge in various ar
       'Employment Disputes'
     ],
     education: [
-      'Paralegal Diploma - [Program Name]',
+      'Paralegal Diploma — Fanshawe College',
       'Licensed by the Law Society of Ontario'
     ],
     personalNote: `"I founded Legal Assist because I believe everyone deserves quality legal representation, regardless of their financial situation. The legal system can be intimidating, but it doesn't have to be. My goal is to guide clients through their legal matters with clarity, compassion, and unwavering dedication to their best interests."`,
-    email: 'johnny@legalassist.ca',
-    phone: '(519) 555-0100',
+    email: 'jeanfrancois@legalassist.london',
+    phone: '226-272-5153',
     linkedIn: 'https://linkedin.com/in/johnnydemers',
     featured: true
   },
@@ -56,7 +56,7 @@ Before founding Legal Assist, Johnny developed extensive knowledge in various ar
     name: 'Candice Fogarty',
     title: 'Managing Paralegal',
     subtitle: 'P1 Licence Holder',
-    licenseNumber: 'P#XXXXX', // Replace with actual LSO number
+    licenseNumber: 'P21479',
     image: 'https://static.wixstatic.com/media/99571b_candice_fogarty_paralegal~mv2.jpg?id=candice-fogarty-headshot',
     imageAlt: 'Candice Fogarty, Managing Paralegal at Legal Assist Paralegal Services in London Ontario',
     bio: `Candice Fogarty serves as Managing Paralegal at Legal Assist, bringing exceptional organizational skills and a client-centered approach to the firm. Her dedication to thorough case preparation and compassionate client service has made her an invaluable member of the team.`,
@@ -71,12 +71,12 @@ Candice is known for her ability to break down complicated legal procedures into
       'Employment Standards Claims'
     ],
     education: [
-      'Paralegal Diploma - [Program Name]',
+      'Paralegal Diploma — Fanshawe College',
       'Licensed by the Law Society of Ontario'
     ],
     personalNote: `"What drives me is seeing the relief on a client's face when they finally understand their situation and know they have someone in their corner. Legal challenges can feel overwhelming, but with the right support and guidance, positive outcomes are absolutely achievable."`,
-    email: 'candice@legalassist.ca',
-    phone: '(519) 555-0101',
+    email: 'candice@legalassist.london',
+    phone: '226-272-5153',
     linkedIn: 'https://linkedin.com/in/candicefogarty',
     featured: true
   }

@@ -39,7 +39,7 @@ export default function AdminBookingsPage() {
   const loadBookings = async () => {
     setIsLoading(true);
     try {
-      const { items } = await BaseCrudService.getAll<Bookings>('bookings');
+      const { items } = await BaseCrudService.getAllPages<Bookings>('bookings');
       setBookings(items || []);
     } catch (error) {
       console.error('Failed to load bookings:', error);

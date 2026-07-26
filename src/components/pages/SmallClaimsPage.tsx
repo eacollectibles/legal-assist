@@ -583,7 +583,10 @@ export default function SmallClaimsPage() {
 
         <div className="w-full py-16 md:py-24 bg-white">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-            <RelatedServices currentService="small-claims" />
+            {/* Was `currentService="small-claims"` — not a prop on this
+                component, so `services` was undefined and the block rendered
+                nothing. Pass the actual cluster. */}
+            <RelatedServices services={relatedServicesConfig.smallClaims} />
           </div>
         </div>
       </ServicePageLayout>

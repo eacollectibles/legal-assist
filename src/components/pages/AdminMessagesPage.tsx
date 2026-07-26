@@ -113,7 +113,7 @@ export default function AdminMessagesPage() {
   const loadMessages = async () => {
     setIsLoading(true);
     try {
-      const { items } = await BaseCrudService.getAll<Message>('messages');
+      const { items } = await BaseCrudService.getAllPages<Message>('messages');
       // Sort by date, newest first
       const sortedMessages = (items || []).sort((a, b) => {
         const dateA = new Date(a.sentDate || 0).getTime();

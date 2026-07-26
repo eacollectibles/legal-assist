@@ -140,6 +140,11 @@ export interface GeneratedDocument {
   clientEmail?: string;
   clientName?: string;
   status?: string;
+  /** Exists on the `generateddocuments` collection but was missing from this
+   *  local view. Because of that, the dashboard's `pendingSignatures` filter
+   *  (`d.requiresSignature && d.status !== 'Signed'`) read `undefined` and the
+   *  "pending signatures" counter was permanently 0. */
+  requiresSignature?: boolean;
   documentType?: string;
   createdDate?: Date | string;
   signedDate?: Date | string;

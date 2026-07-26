@@ -25,7 +25,7 @@ export default function SettingsTab() {
 
     try {
       // Fetch user account
-      const userAccounts = await BaseCrudService.getAll<any>('useraccounts');
+      const userAccounts = await BaseCrudService.getAllPages<any>('useraccounts');
       const userAccount = userAccounts.items.find((u: any) => u.email === userEmail);
 
       if (!userAccount) {

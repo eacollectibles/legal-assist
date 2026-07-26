@@ -66,7 +66,7 @@ export default function UploadTokenManagementPage({ embedded }: { embedded?: boo
         new Date(b.createdDate || 0).getTime() - new Date(a.createdDate || 0).getTime()
       ));
 
-      const { items: clientsData } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      const { items: clientsData } = await BaseCrudService.getAllPages<ClientProfiles>('clientprofiles');
       setClients(clientsData);
     } catch (error) {
       console.error('Error loading data:', error);

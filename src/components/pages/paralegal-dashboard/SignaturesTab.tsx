@@ -33,7 +33,7 @@ export default function SignaturesTab() {
   const loadGeneratedDocuments = async () => {
     setIsLoadingGeneratedDocs(true);
     try {
-      const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
+      const { items } = await BaseCrudService.getAllPages<GeneratedDocuments>('generateddocuments');
       
       // Sort by date, newest first
       const sorted = (items || []).sort((a, b) => {
@@ -193,7 +193,7 @@ export default function SignaturesTab() {
       // If no stored content, try to regenerate from the original template
       if (!content && doc.templateId) {
         try {
-          const { items: templates } = await BaseCrudService.getAll<any>('documenttemplates');
+          const { items: templates } = await BaseCrudService.getAllPages<any>('documenttemplates');
           const template = templates?.find((t: any) => t._id === doc.templateId);
           if (template?.templateContent) {
             content = template.templateContent;
@@ -201,7 +201,7 @@ export default function SignaturesTab() {
             // Try to fill in client data if available
             if (doc.clientId) {
               try {
-                const { items: clientProfiles } = await BaseCrudService.getAll<any>('clientprofiles');
+                const { items: clientProfiles } = await BaseCrudService.getAllPages<any>('clientprofiles');
                 const client = clientProfiles?.find((c: any) => c._id === doc.clientId);
                 if (client) {
                   content = content!

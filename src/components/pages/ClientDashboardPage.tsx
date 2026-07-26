@@ -125,7 +125,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
 
   const loadUserAccountId = async () => {
     try {
-      const { items } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+      const { items } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
       const account = items?.find(acc => acc.email === currentUser?.email);
       if (account) {
         setUserAccountId(account._id);
@@ -138,7 +138,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadDocuments = async () => {
     setIsLoading(true);
     try {
-      const { items } = await BaseCrudService.getAll<ClientDocument>('clientdocuments');
+      const { items } = await BaseCrudService.getAllPages<ClientDocument>('clientdocuments');
       const userDocuments = items?.filter(doc => doc.clientEmail === currentUser?.email) || [];
       setDocuments(userDocuments);
     } catch (error) {
@@ -164,7 +164,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
       }
 
       // Fallback: search all profiles if direct lookup fails
-      const { items } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      const { items } = await BaseCrudService.getAllPages<ClientProfiles>('clientprofiles');
       let userProfile = items?.find(p => p._id === clientId);
       if (!userProfile) {
         // Last resort: match by firstName + lastName from currentUser
@@ -187,7 +187,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadPayments = async () => {
     setIsLoadingPayments(true);
     try {
-      const { items } = await BaseCrudService.getAll<PaymentRecord>('paymentrecords');
+      const { items } = await BaseCrudService.getAllPages<PaymentRecord>('paymentrecords');
       const userPayments = items?.filter(p => 
         p._id.includes(currentUser?.email || '') || 
         p._id.startsWith(currentUser?.email || '')
@@ -203,7 +203,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadMessages = async () => {
     setIsLoadingMessages(true);
     try {
-      const { items } = await BaseCrudService.getAll<Message>('messages');
+      const { items } = await BaseCrudService.getAllPages<Message>('messages');
       const userMessages = items?.filter(m => 
         m.senderEmail === currentUser?.email || m.recipientEmail === currentUser?.email
       ) || [];
@@ -223,7 +223,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadNotifications = async () => {
     setIsLoadingNotifications(true);
     try {
-      const { items } = await BaseCrudService.getAll<Notification>('notifications');
+      const { items } = await BaseCrudService.getAllPages<Notification>('notifications');
       const userNotifications = items?.filter(n => n.userId === userAccountId) || [];
       userNotifications.sort((a, b) => {
         const dateA = new Date(a.createdDate || 0).getTime();
@@ -259,7 +259,7 @@ function ClientDashboardContent({ currentUser }: { currentUser: CurrentUser }) {
   const loadGeneratedDocuments = async () => {
     setIsLoadingGeneratedDocs(true);
     try {
-      const { items } = await BaseCrudService.getAll<GeneratedDocuments>('generateddocuments');
+      const { items } = await BaseCrudService.getAllPages<GeneratedDocuments>('generateddocuments');
       const clientId = currentUser?.clientId;
       const userDocs = items?.filter(doc => {
         if (doc.clientEmail === currentUser?.email) return true;

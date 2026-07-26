@@ -218,7 +218,7 @@ export default function ClientIntakePage() {
       // `_id` so all subsequent calls work.
       if (!profile) {
         try {
-          const { items: allProfiles } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+          const { items: allProfiles } = await BaseCrudService.getAllPages<ClientProfiles>('clientprofiles');
           const match = allProfiles?.find((p: any) => p.clientId === storedClientId);
           if (match?._id) {
             profile = match;
@@ -371,9 +371,9 @@ export default function ClientIntakePage() {
     try {
       // Fetch ALL data sources to search
       const [clientsRes, documentsRes, assignmentsRes] = await Promise.all([
-        BaseCrudService.getAll<ClientProfiles>('clientprofiles'),
-        BaseCrudService.getAll<ClientDocuments>('clientdocuments'),
-        BaseCrudService.getAll<FileAssignments>('fileassignments'),
+        BaseCrudService.getAllPages<ClientProfiles>('clientprofiles'),
+        BaseCrudService.getAllPages<ClientDocuments>('clientdocuments'),
+        BaseCrudService.getAllPages<FileAssignments>('fileassignments'),
       ]);
 
       const allClients = clientsRes.items || [];

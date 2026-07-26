@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { createClient, ApiKeyStrategy } from '@wix/sdk';
 import { items as wixDataItems } from '@wix/data';
+import { requireAuth, STAFF_ROLES } from '@/lib/server/require-auth';
 
 /**
  * POST /api/intake/check-conflict
@@ -80,14 +81,23 @@ function nameMatch(a: string, b: string): boolean {
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  // Origin gate.
-  const origin = request.headers.get('origin') || '';
-  if (origin && !origin.startsWith(PUBLIC_ORIGIN) && !origin.includes('localhost')) {
-    return new Response(JSON.stringify({ error: 'forbidden' }), {
-      status: 403,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  // ---------------------------------------------------------------------
+  // AUTHENTICATION (was: origin header only).
+  //
+  // This endpoint answers "does this person already appear in your files?"
+  // and returns matchedValue + fileId. Unauthenticated, that is a
+  // confidentiality oracle: anyone could ask whether a named individual is a
+  // client of the firm, and enumerate. That is exactly what LSO Rule 3.03
+  // (confidentiality) and PIPEDA forbid disclosing.
+  //
+  // The previous gate was an Origin check, which (a) is a client-set header
+  // and trivially spoofed, and (b) was written as `if (origin && ...)` — so
+  // sending NO Origin header at all skipped it entirely.
+  //
+  // Conflict checks are staff-only. Require a real, signed session.
+  // ---------------------------------------------------------------------
+  const gate = await requireAuth(request, locals, { roles: STAFF_ROLES });
+  if (!gate.ok) return gate.response!;
 
   let body: any;
   try {

@@ -40,9 +40,9 @@ export default function MyFileTab({ currentUser, profile, documents, isLoadingPr
 
   const loadFileAssignment = async () => {
     try {
-      const { items } = await BaseCrudService.getAll<any>('fileassignments');
+      const { items } = await BaseCrudService.getAllPages<any>('fileassignments');
       // Find the file assignment for this client
-      const { items: clients } = await BaseCrudService.getAll<any>('clientprofiles');
+      const { items: clients } = await BaseCrudService.getAllPages<any>('clientprofiles');
       const clientProfile = clients?.find((c: any) => {
         const userEmail = currentUser?.email?.toLowerCase();
         // Match by email from the user accounts

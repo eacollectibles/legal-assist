@@ -122,7 +122,7 @@ export default function SectionDocuments({
   const loadDocuments = async () => {
     setLoading(true);
     try {
-      const result = await BaseCrudService.getAll<any>(COLLECTION);
+      const result = await BaseCrudService.getAllPages<any>(COLLECTION);
       const sectionDocs = (result.items || [])
         .filter((d: any) => d.clientId === clientId && d.documentCategory === categoryKey)
         .map((d: any): SectionDocument => ({
@@ -208,7 +208,13 @@ export default function SectionDocuments({
       r.readAsDataURL(file);
     });
     const img = await new Promise<HTMLImageElement>((resolve, reject) => {
-      const i = new Image();
+      // MUST be `window.Image`, not `Image`. This module imports `Image` from
+      // lucide-react (an icon component), which SHADOWS the DOM constructor.
+      // `new Image()` was therefore constructing a React component: `onload`
+      // never fired, this promise never settled, and image compression hung
+      // forever on upload. TypeScript was reporting it as ts(2350)
+      // "Only a void function can be called with the 'new' keyword."
+      const i = new window.Image();
       i.onload = () => resolve(i);
       i.onerror = reject;
       i.src = dataUrl;

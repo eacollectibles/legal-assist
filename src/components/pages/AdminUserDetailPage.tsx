@@ -139,7 +139,7 @@ export default function AdminUserDetailPage() {
       });
 
       // Load client profile (if exists)
-      const { items: profiles } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      const { items: profiles } = await BaseCrudService.getAllPages<ClientProfiles>('clientprofiles');
       const profile = profiles.find(p => p._id === userId);
       if (profile) {
         setClientProfile(profile);
@@ -147,23 +147,23 @@ export default function AdminUserDetailPage() {
       }
 
       // Load documents for this user
-      const { items: userDocs } = await BaseCrudService.getAll<ClientDocuments>('clientdocuments');
+      const { items: userDocs } = await BaseCrudService.getAllPages<ClientDocuments>('clientdocuments');
       const userDocuments = userDocs.filter(doc => doc.clientEmail === account?.email);
       setDocuments(userDocuments);
 
       // Load messages for this user
-      const { items: allMessages } = await BaseCrudService.getAll<Messages>('messages');
+      const { items: allMessages } = await BaseCrudService.getAllPages<Messages>('messages');
       const userMessages = allMessages.filter(
         msg => msg.senderEmail === account?.email || msg.recipientEmail === account?.email
       );
       setMessages(userMessages);
 
       // Load payment records
-      const { items: allPayments } = await BaseCrudService.getAll<PaymentRecords>('paymentrecords');
+      const { items: allPayments } = await BaseCrudService.getAllPages<PaymentRecords>('paymentrecords');
       setPayments(allPayments);
 
       // Load activity logs for this user
-      const { items: allLogs } = await BaseCrudService.getAll<ActivityLog>('activitylogs');
+      const { items: allLogs } = await BaseCrudService.getAllPages<ActivityLog>('activitylogs');
       const userLogs = allLogs.filter(log => log.userId === userId);
       // Sort by timestamp, newest first
       userLogs.sort((a, b) => {
@@ -285,20 +285,20 @@ export default function AdminUserDetailPage() {
         ...editedProfile
       };
 
-      console.log('Saving profile for user:', userId, 'Profile exists:', !!clientProfile);
+      // saving profile for user
 
       if (clientProfile) {
         // Update existing profile
         await BaseCrudService.update<ClientProfiles>('clientprofiles', profileData);
-        console.log('Profile updated successfully');
+        // profile updated
       } else {
         // Create new profile
         await BaseCrudService.create('clientprofiles', profileData);
-        console.log('Profile created successfully');
+        // profile created
       }
 
       // Verify the profile was saved by fetching it back
-      const { items: profiles } = await BaseCrudService.getAll<ClientProfiles>('clientprofiles');
+      const { items: profiles } = await BaseCrudService.getAllPages<ClientProfiles>('clientprofiles');
       const savedProfile = profiles.find(p => p._id === userId);
       
       if (!savedProfile) {
@@ -308,7 +308,7 @@ export default function AdminUserDetailPage() {
         return;
       }
 
-      console.log('Profile verified in database:', savedProfile);
+      // profile verified in database
       setClientProfile(savedProfile);
       setEditedProfile({ ...savedProfile });
 

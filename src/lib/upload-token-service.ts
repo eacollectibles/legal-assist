@@ -96,7 +96,7 @@ export async function createUploadToken(params: CreateUploadTokenParams): Promis
  * Validate an upload token
  */
 export async function validateUploadToken(token: string): Promise<ValidateTokenResult> {
-  const { items } = await BaseCrudService.getAll<UploadTokens>('uploadtokens');
+  const { items } = await BaseCrudService.getAllPages<UploadTokens>('uploadtokens');
   const uploadToken = items.find(t => t.token === token);
 
   if (!uploadToken) {
@@ -186,7 +186,7 @@ export async function updateTokenExpiry(tokenId: string, expiryHours: number): P
  * Get all tokens for a client
  */
 export async function getClientTokens(clientId: string): Promise<UploadTokens[]> {
-  const { items } = await BaseCrudService.getAll<UploadTokens>('uploadtokens');
+  const { items } = await BaseCrudService.getAllPages<UploadTokens>('uploadtokens');
   return items.filter(t => t.clientId === clientId);
 }
 
@@ -194,7 +194,7 @@ export async function getClientTokens(clientId: string): Promise<UploadTokens[]>
  * Get all tokens created by a paralegal
  */
 export async function getParalegalTokens(paralegalId: string): Promise<UploadTokens[]> {
-  const { items } = await BaseCrudService.getAll<UploadTokens>('uploadtokens');
+  const { items } = await BaseCrudService.getAllPages<UploadTokens>('uploadtokens');
   return items.filter(t => t.createdByParalegalId === paralegalId);
 }
 

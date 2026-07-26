@@ -39,10 +39,10 @@ export const FIRM_INFO: ParalegalInfo = {
   lsoLicenseNumber: 'P22020',
   phone: '226-272-5153',
   email: 'jeanfrancois@legalassist.london',
-  address: '123 Main Street, Suite 200', // TODO: Replace with real address
+  address: '394 Wharncliffe Road South, Lower Level',
   city: 'London',
   province: 'ON',
-  postalCode: 'N6A 1B2', // TODO: Replace with real postal code
+  postalCode: 'N6J 2M4',
   fax: '',
 };
 
@@ -443,7 +443,7 @@ export async function autoFillPDFForm(
         try {
           (field as any).check();
           checkboxCount++;
-          console.log(`Checked checkbox: ${name} (${checkboxMatch})`);
+          // checkbox checked: ${name}
         } catch { /* ignore */ }
       }
       // Don't auto-check "in person" — we default to electronic
@@ -462,7 +462,7 @@ export async function autoFillPDFForm(
         if (electronicOption) {
           radioGroup.select(electronicOption);
           checkboxCount++;
-          console.log(`Selected radio: ${name} → ${electronicOption}`);
+          // radio selected: ${name}
         }
       } catch { /* ignore */ }
       continue;
@@ -494,7 +494,7 @@ export async function autoFillPDFForm(
             try {
               (field as any).updateAppearances(italicFont);
             } catch { /* some fields don't support updateAppearances */ }
-            console.log(`Signed: ${name} → "${autoValue}" (italic)`);
+            // e-signed: ${name}
           } else {
             (field as any).setText(autoValue);
           }
@@ -504,7 +504,7 @@ export async function autoFillPDFForm(
     }
   }
 
-  console.log(`Auto-filled ${filledCount} text fields, ${checkboxCount} checkboxes out of ${fields.length} total fields`);
+  // Auto-filled ${filledCount} text fields, ${checkboxCount} checkboxes out of ${fields.length} total
 
   return pdfDoc.save();
 }

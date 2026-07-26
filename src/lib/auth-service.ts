@@ -103,7 +103,7 @@ function generateClientId(): string {
  */
 export async function signup(credentials: AuthCredentials): Promise<AuthResponse> {
   try {
-    const { items: existingUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: existingUsers } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     if (existingUsers?.some(u => u.email === credentials.email)) {
       return {
         success: false,
@@ -144,7 +144,7 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
       intakeCompleted: false,
     });
 
-    const { items: verifyUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: verifyUsers } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     const userExists = verifyUsers?.some(u => u.email === credentials.email);
     
     if (!userExists) {
@@ -187,11 +187,97 @@ export async function signup(credentials: AuthCredentials): Promise<AuthResponse
 }
 
 /**
- * Log in an existing user
+ * Attempt login against the SERVER endpoint (/api/session/login).
+ *
+ * PATH NOTE: /api/session/, not /api/auth/ — @wix/astro already ships its own
+ * /api/auth/login and /api/auth/logout routes, and defining ours at the same
+ * paths made Astro warn about a route collision (a hard error in later Astro).
+ *
+ * This is the path we want every login to take. It compares the password hash
+ * on the server (hashes never reach the browser), transparently upgrades the
+ * legacy SHA-256 hash to PBKDF2, and — crucially — sets an httpOnly, signed
+ * session cookie that /api/* endpoints can actually verify. The old flow could
+ * not do any of that: it pulled every useraccounts row (hashes included) into
+ * the browser and minted a random "token" the server never saw.
+ *
+ * Returns null when the endpoint is unreachable/not deployed, so the caller can
+ * fall back to the legacy client-side path (dual-path rollout — see login()).
+ * A genuine "wrong password" is NOT null; it returns a failed AuthResponse so
+ * we don't silently fall back and re-leak the hash table.
+ */
+async function loginViaServer(
+  credentials: Omit<AuthCredentials, 'firstName' | 'lastName'>
+): Promise<AuthResponse | null> {
+  let res: Response;
+  try {
+    res = await fetch('/api/session/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin', // required for the Set-Cookie to stick
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
+  } catch {
+    return null; // network/endpoint unavailable -> fall back
+  }
+
+  // 5xx means the server endpoint is misconfigured (e.g. secrets not set yet).
+  // Fall back so a half-configured deploy can't lock everyone out.
+  if (res.status >= 500) return null;
+
+  let data: any;
+  try {
+    data = await res.json();
+  } catch {
+    return null;
+  }
+
+  if (!data?.success) {
+    return { success: false, message: data?.message || 'Invalid email or password' };
+  }
+
+  if (data.requires2FA) {
+    return {
+      success: true,
+      requires2FA: true,
+      email: data.email || credentials.email,
+      message: data.message || 'Two-factor verification required.',
+    } as AuthResponse;
+  }
+
+  // Mirror the legacy localStorage contract so the rest of the app (which
+  // reads `currentUser`) keeps working unchanged. The real credential is now
+  // the httpOnly cookie; this is just UI state.
+  const u = data.user || {};
+  const token = generateToken(credentials.email);
+  localStorage.setItem('authToken', token);
+  localStorage.setItem('currentUser', JSON.stringify(u));
+
+  return { success: true, user: u, token } as AuthResponse;
+}
+
+/**
+ * Log in an existing user.
+ *
+ * DUAL-PATH: try the server endpoint first; if it is unreachable or not yet
+ * configured, fall back to the original client-side comparison so logins keep
+ * working during rollout. Once LA_SESSION_SECRET is set in Wix Secrets Manager
+ * and the server path is confirmed, the fallback below can be deleted (and
+ * should be — it is the path that leaks password hashes to the browser).
  */
 export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'lastName'>): Promise<AuthResponse> {
+  const serverResult = await loginViaServer(credentials);
+  if (serverResult) return serverResult;
+
+  console.warn(
+    '[auth] Server login unavailable — falling back to legacy client-side login. ' +
+      'Set LA_SESSION_SECRET / LA_WIX_API_KEY / LA_WIX_SITE_ID to enable the secure path.'
+  );
+
   try {
-    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: users } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     const hashedPassword = await hashPassword(credentials.password);
     const user = users?.find(u => u.email === credentials.email && u.passwordHash === hashedPassword);
 
@@ -267,7 +353,7 @@ export async function login(credentials: Omit<AuthCredentials, 'firstName' | 'la
       lastLoginDate: new Date().toISOString(),
     });
 
-    const { items: updatedUsers } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: updatedUsers } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     const updatedUser = updatedUsers?.find(u => u.email === credentials.email);
     const isAdminStatus = updatedUser?.isAdmin || false;
 
@@ -422,7 +508,7 @@ export async function setAdminStatus(email: string, isAdminStatus: boolean): Pro
       return false;
     }
 
-    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: users } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     const user = users?.find(u => u.email === email);
 
     if (!user) {
@@ -455,7 +541,7 @@ export async function getAllUsers(): Promise<any[]> {
       return [];
     }
 
-    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: users } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     
     return (users || []).map(u => ({
       _id: u._id,
@@ -487,7 +573,7 @@ export async function changePassword(currentPassword: string, newPassword: strin
       };
     }
 
-    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: users } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     const user = users?.find(u => u.email === currentUser.email);
 
     if (!user) {
@@ -672,7 +758,7 @@ export async function requestPasswordReset(email: string): Promise<AuthResponse>
   };
 
   try {
-    const { items: users } = await BaseCrudService.getAll<UserAccount>('useraccounts');
+    const { items: users } = await BaseCrudService.getAllPages<UserAccount>('useraccounts');
     const user = users?.find(u => (u.email || '').toLowerCase() === normalizedEmail);
 
     if (!user) {

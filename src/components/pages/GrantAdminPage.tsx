@@ -19,7 +19,7 @@ export default function GrantAdminPage() {
 
     try {
       // Find the user by email
-      const { items } = await BaseCrudService.getAll<UserAccounts>('useraccounts');
+      const { items } = await BaseCrudService.getAllPages<UserAccounts>('useraccounts');
       const user = items.find(u => u.email === targetEmail);
 
       if (!user) {

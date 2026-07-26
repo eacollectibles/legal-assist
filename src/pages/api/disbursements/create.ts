@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { requireAuth, STAFF_ROLES } from '@/lib/server/require-auth';
 
 /**
  * POST /api/disbursements/create
@@ -134,16 +135,19 @@ function mapTransactionType(
   return 'payment';
 }
 
-export const POST: APIRoute = async ({ request }) => {
-  // 1) Origin / Referer check — same allow-list as Square endpoint.
-  const origin = request.headers.get('origin') || '';
-  const referer = request.headers.get('referer') || '';
-  const fromAllowed =
-    (origin && ALLOWED_ORIGINS.has(origin)) ||
-    (!origin && [...ALLOWED_ORIGINS].some((o) => referer.startsWith(o)));
-  if (!fromAllowed) {
-    return json({ success: false, error: 'Forbidden origin.' }, 403);
-  }
+export const POST: APIRoute = async ({ request, locals }) => {
+  // 1) AUTHENTICATION (was: origin header only).
+  //
+  //    This endpoint DEBITS the trust or general account — it writes a real
+  //    money-out row into `financialrecords`, which is a By-Law 9 record.
+  //    An Origin header is set by the caller, so the old gate stopped nothing:
+  //    an anonymous script could inject fraudulent ledger entries and corrupt
+  //    the trust reconciliation.
+  //
+  //    Moving money is staff-only. requireAuth() also does the same-origin
+  //    check, so CSRF defence is retained on top of authentication.
+  const gate = await requireAuth(request, locals, { roles: STAFF_ROLES });
+  if (!gate.ok) return gate.response!;
 
   // 2) JSON parse.
   let body: DisbursementBody;
